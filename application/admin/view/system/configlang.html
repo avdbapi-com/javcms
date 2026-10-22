@@ -1,0 +1,90 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{include file="../../../application/admin/view/public/head" /}
+<link rel="stylesheet" href="__STATIC__/css/admin_seo.css?v={:filemtime(ROOT_PATH . 'static/css/admin_seo.css')}">
+
+<div class="page-container">
+    {include file="../../../application/admin/view/public/page_head" icon="ai-languages" title="admin/ux/seo/lang_title" help="admin/ux/seo/lang_page_help" /}
+
+    <form class="ax-form layui-form" action="" data-ax-dirty>
+        <input type="hidden" name="__token__" value="{$Request.token}" />
+        <p hidden data-seo-need-default>{:lang('admin/ux/seo/lang_need_default')}</p>
+
+        <section class="ax-section" aria-labelledby="lang-visitors">
+            <h2 id="lang-visitors">{:lang('admin/ux/seo/lang_visitors')}</h2>
+            <p class="ax-help">{:lang('admin/ux/seo/lang_visitors_help')}</p>
+            <div class="ax-field ax-field--sm">
+                <label for="lang-default">{:lang('admin/ux/seo/lang_default')}</label>
+                <select id="lang-default" name="lang_default" class="layui-input" lay-ignore aria-describedby="lang-default-help">
+                    {volist name="lang_rows" id="r"}
+                    <option value="{$r.code}" {if condition="$r.code eq $lang_default"}selected{/if}>{$r.name|htmlspecialchars} ({$r.code})</option>
+                    {/volist}
+                </select>
+                <p class="ax-help" id="lang-default-help">{:lang('admin/ux/seo/lang_default_help')}</p>
+            </div>
+            <div class="ax-field" role="group" aria-labelledby="lang-offered-l">
+                <label id="lang-offered-l">{:lang('admin/ux/seo/lang_offered')}</label>
+                <div>
+                    {volist name="lang_rows" id="r"}
+                    <input type="checkbox" lay-skin="primary" lay-filter="seoLang" name="lang_offered[]" value="{$r.code}" title="{$r.name|htmlspecialchars}" {if condition="$r.offered"}checked {/if}>
+                    {/volist}
+                </div>
+                <p class="ax-help">{:lang('admin/ux/seo/lang_offered_help')}</p>
+            </div>
+        </section>
+
+        <section class="ax-section" aria-labelledby="lang-search">
+            <h2 id="lang-search">{:lang('admin/ux/seo/lang_search')}</h2>
+            <div class="ax-field" role="group" aria-labelledby="lang-indexed-l">
+                <label id="lang-indexed-l">{:lang('admin/ux/seo/lang_indexed')}</label>
+                <div>
+                    {volist name="lang_rows" id="r"}
+                    <input type="checkbox" lay-skin="primary" lay-filter="seoLang" name="lang_indexed[]" value="{$r.code}" title="{$r.name|htmlspecialchars}" {if condition="$r.indexed"}checked {/if}{if condition="!$r.offered"} disabled{/if}>
+                    {/volist}
+                </div>
+                <p class="ax-help">{:lang('admin/ux/seo/lang_indexed_help')}</p>
+            </div>
+            <p class="ax-help">{:lang('admin/ux/seo/lang_sitemap_line', [lang($lang_sitemaps ? 'admin/ux/seo/on' : 'admin/ux/seo/off')])}{if condition="$lang_can_sitemap"} <a href="{:url('make/opt')}" data-tab="n81">{:lang('admin/ux/seo/lang_change')}</a>{/if}</p>
+        </section>
+
+        <section class="ax-section" aria-labelledby="lang-home">
+            <h2 id="lang-home">{:lang('admin/ux/seo/lang_home_card')}</h2>
+            <p class="ax-help">{:lang('admin/ux/seo/lang_home_help')}</p>
+            <div class="ax-table-wrap" data-seo-home-table>
+                <table class="ax-table ax-table--cards seo-table">
+                    <thead><tr><th>{:lang('admin/ux/seo/lang_col')}</th><th>{:lang('admin/ux/seo/home_title')}</th><th>{:lang('admin/ux/seo/home_desc')}</th></tr></thead>
+                    <tbody>
+                        {volist name="lang_rows" id="r"}
+                        <tr data-seo-home="{$r.code}" {if condition="!$r.offered || $r.code eq $lang_default"}hidden{/if}>
+                            <td data-label="{:lang('admin/ux/seo/lang_col')}" lang="{$r.code}">{$r.name|htmlspecialchars}</td>
+                            <td data-label="{:lang('admin/ux/seo/home_title')}"><input type="text" class="layui-input" name="lang_home[{$r.code}][title]" maxlength="70" value="{$r.title|htmlspecialchars=ENT_QUOTES,'UTF-8'}" lang="{$r.code}" aria-label="{:lang('admin/ux/seo/home_title')} ({$r.name|htmlspecialchars})"></td>
+                            <td data-label="{:lang('admin/ux/seo/home_desc')}"><input type="text" class="layui-input" name="lang_home[{$r.code}][desc]" maxlength="300" value="{$r.desc|htmlspecialchars=ENT_QUOTES,'UTF-8'}" lang="{$r.code}" aria-label="{:lang('admin/ux/seo/home_desc')} ({$r.name|htmlspecialchars})"></td>
+                        </tr>
+                        {/volist}
+                    </tbody>
+                </table>
+            </div>
+            <div data-seo-home-empty hidden>
+                {include file="../../../application/admin/view/public/empty_state" icon="ai-languages" text="admin/ux/seo/lang_home_empty" /}
+            </div>
+        </section>
+
+        <div class="ax-savebar">
+            <span class="ax-savebar__status" role="status"></span>
+            <div class="ax-savebar__end">
+                <button type="submit" class="ax-btn ax-btn--primary" lay-submit="" lay-filter="formSubmit"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-save"/></svg>{:lang('admin/ux/kit/save')}</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+{include file="../../../application/admin/view/public/foot" /}
+<script type="application/json" id="seo-strings">{$seo_js}</script>
+<script defer src="__STATIC__/js/admin_seo.js?v={:filemtime(ROOT_PATH . 'static/js/admin_seo.js')}"></script>
+</body>
+</html>

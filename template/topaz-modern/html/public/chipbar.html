@@ -1,0 +1,8 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{include file="public/types"}<nav class="tp-catchips" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.categories')}" data-ai-group><a class="tp-chip" href="{:mac_url('label/sort')}" {if condition="$tplAid eq 9995"}aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::navIcon('all-videos', '', ['size'=>'sm', 'i'=>0])}{:\\app\\common\\util\\TemplateText::get('all')}</a>{foreach name="tpTypes" item="tpT" key="tpTk"}<a class="tp-chip tp-gem-i-{$tpT.gem}" href="{$tpT.url|htmlspecialchars=ENT_QUOTES}" {if condition="$tpT.id eq $tpTypeNow || $tpT.id eq $tpTypePid"}aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::icon('category', $tpT['tn'], ['size'=>'sm', 'i'=>$tpTk + 1, 'tint'=>'none'])}{$tpT.name|htmlspecialchars=ENT_QUOTES}<i aria-hidden="true"></i></a>{/foreach}</nav>

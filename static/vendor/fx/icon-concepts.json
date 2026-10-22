@@ -1,0 +1,2533 @@
+{
+"about": "Semantic icon ids shared by every vendored sprite (same <symbol id> in each family). names = source icon per variant; \"family:name\" marks a fallback from another set.",
+"concepts": [
+{
+"group": "nav",
+"id": "menu",
+"names": {
+"lucide": "menu",
+"phosphor-regular": "list",
+"phosphor-light": "list",
+"phosphor-bold": "list",
+"phosphor-fill": "list",
+"phosphor-duotone": "list",
+"tabler-outline": "menu-2",
+"tabler-filled": "menu-2",
+"remix-line": "menu-line",
+"remix-fill": "menu-fill"
+}
+},
+{
+"group": "nav",
+"id": "close",
+"names": {
+"lucide": "x",
+"phosphor-regular": "x",
+"phosphor-light": "x",
+"phosphor-bold": "x",
+"phosphor-fill": "x",
+"phosphor-duotone": "x",
+"tabler-outline": "x",
+"tabler-filled": "x",
+"remix-line": "close-line",
+"remix-fill": "close-fill"
+}
+},
+{
+"group": "nav",
+"id": "search",
+"names": {
+"lucide": "search",
+"phosphor-regular": "magnifying-glass",
+"phosphor-light": "magnifying-glass",
+"phosphor-bold": "magnifying-glass",
+"phosphor-fill": "magnifying-glass",
+"phosphor-duotone": "magnifying-glass",
+"tabler-outline": "search",
+"tabler-filled": "search",
+"remix-line": "search-line",
+"remix-fill": "search-fill"
+}
+},
+{
+"group": "nav",
+"id": "home",
+"names": {
+"lucide": "house",
+"phosphor-regular": "house",
+"phosphor-light": "house",
+"phosphor-bold": "house",
+"phosphor-fill": "house",
+"phosphor-duotone": "house",
+"tabler-outline": "home",
+"tabler-filled": "home",
+"remix-line": "home-5-line",
+"remix-fill": "home-5-fill"
+}
+},
+{
+"group": "nav",
+"id": "grid",
+"names": {
+"lucide": "layout-grid",
+"phosphor-regular": "squares-four",
+"phosphor-light": "squares-four",
+"phosphor-bold": "squares-four",
+"phosphor-fill": "squares-four",
+"phosphor-duotone": "squares-four",
+"tabler-outline": "layout-grid",
+"tabler-filled": "layout-grid",
+"remix-line": "layout-grid-line",
+"remix-fill": "layout-grid-fill"
+}
+},
+{
+"group": "nav",
+"id": "list",
+"names": {
+"lucide": "list",
+"phosphor-regular": "list-bullets",
+"phosphor-light": "list-bullets",
+"phosphor-bold": "list-bullets",
+"phosphor-fill": "list-bullets",
+"phosphor-duotone": "list-bullets",
+"tabler-outline": "list",
+"tabler-filled": "list",
+"remix-line": "list-unordered",
+"remix-fill": "list-unordered"
+}
+},
+{
+"group": "nav",
+"id": "filter",
+"names": {
+"lucide": "funnel",
+"phosphor-regular": "funnel",
+"phosphor-light": "funnel",
+"phosphor-bold": "funnel",
+"phosphor-fill": "funnel",
+"phosphor-duotone": "funnel",
+"tabler-outline": "filter",
+"tabler-filled": "filter",
+"remix-line": "filter-3-line",
+"remix-fill": "filter-3-fill"
+}
+},
+{
+"group": "nav",
+"id": "sliders",
+"names": {
+"lucide": "sliders-horizontal",
+"phosphor-regular": "sliders-horizontal",
+"phosphor-light": "sliders-horizontal",
+"phosphor-bold": "sliders-horizontal",
+"phosphor-fill": "sliders-horizontal",
+"phosphor-duotone": "sliders-horizontal",
+"tabler-outline": "adjustments-horizontal",
+"tabler-filled": "adjustments-horizontal",
+"remix-line": "equalizer-3-line",
+"remix-fill": "equalizer-3-fill"
+}
+},
+{
+"group": "nav",
+"id": "sort",
+"names": {
+"lucide": "arrow-down-wide-narrow",
+"phosphor-regular": "sort-descending",
+"phosphor-light": "sort-descending",
+"phosphor-bold": "sort-descending",
+"phosphor-fill": "sort-descending",
+"phosphor-duotone": "sort-descending",
+"tabler-outline": "sort-descending",
+"tabler-filled": "tabler-outline:sort-descending",
+"remix-line": "sort-desc",
+"remix-fill": "sort-desc"
+}
+},
+{
+"group": "nav",
+"id": "chevron-down",
+"names": {
+"lucide": "chevron-down",
+"phosphor-regular": "caret-down",
+"phosphor-light": "caret-down",
+"phosphor-bold": "caret-down",
+"phosphor-fill": "caret-down",
+"phosphor-duotone": "caret-down",
+"tabler-outline": "chevron-down",
+"tabler-filled": "chevron-down",
+"remix-line": "arrow-down-s-line",
+"remix-fill": "arrow-down-s-fill"
+}
+},
+{
+"group": "nav",
+"id": "chevron-up",
+"names": {
+"lucide": "chevron-up",
+"phosphor-regular": "caret-up",
+"phosphor-light": "caret-up",
+"phosphor-bold": "caret-up",
+"phosphor-fill": "caret-up",
+"phosphor-duotone": "caret-up",
+"tabler-outline": "chevron-up",
+"tabler-filled": "tabler-outline:chevron-up",
+"remix-line": "arrow-up-s-line",
+"remix-fill": "arrow-up-s-fill"
+}
+},
+{
+"group": "nav",
+"id": "chevron-left",
+"names": {
+"lucide": "chevron-left",
+"phosphor-regular": "caret-left",
+"phosphor-light": "caret-left",
+"phosphor-bold": "caret-left",
+"phosphor-fill": "caret-left",
+"phosphor-duotone": "caret-left",
+"tabler-outline": "chevron-left",
+"tabler-filled": "tabler-outline:chevron-left",
+"remix-line": "arrow-left-s-line",
+"remix-fill": "arrow-left-s-fill"
+}
+},
+{
+"group": "nav",
+"id": "chevron-right",
+"names": {
+"lucide": "chevron-right",
+"phosphor-regular": "caret-right",
+"phosphor-light": "caret-right",
+"phosphor-bold": "caret-right",
+"phosphor-fill": "caret-right",
+"phosphor-duotone": "caret-right",
+"tabler-outline": "chevron-right",
+"tabler-filled": "chevron-right",
+"remix-line": "arrow-right-s-line",
+"remix-fill": "arrow-right-s-fill"
+}
+},
+{
+"group": "nav",
+"id": "chevrons-left",
+"names": {
+"lucide": "chevrons-left",
+"phosphor-regular": "caret-double-left",
+"phosphor-light": "caret-double-left",
+"phosphor-bold": "caret-double-left",
+"phosphor-fill": "caret-double-left",
+"phosphor-duotone": "caret-double-left",
+"tabler-outline": "chevrons-left",
+"tabler-filled": "tabler-outline:chevrons-left",
+"remix-line": "arrow-left-double-line",
+"remix-fill": "arrow-left-double-fill"
+}
+},
+{
+"group": "nav",
+"id": "chevrons-right",
+"names": {
+"lucide": "chevrons-right",
+"phosphor-regular": "caret-double-right",
+"phosphor-light": "caret-double-right",
+"phosphor-bold": "caret-double-right",
+"phosphor-fill": "caret-double-right",
+"phosphor-duotone": "caret-double-right",
+"tabler-outline": "chevrons-right",
+"tabler-filled": "tabler-outline:chevrons-right",
+"remix-line": "arrow-right-double-line",
+"remix-fill": "arrow-right-double-fill"
+}
+},
+{
+"group": "nav",
+"id": "arrow-left",
+"names": {
+"lucide": "arrow-left",
+"phosphor-regular": "arrow-left",
+"phosphor-light": "arrow-left",
+"phosphor-bold": "arrow-left",
+"phosphor-fill": "arrow-left",
+"phosphor-duotone": "arrow-left",
+"tabler-outline": "arrow-left",
+"tabler-filled": "tabler-outline:arrow-left",
+"remix-line": "arrow-left-line",
+"remix-fill": "arrow-left-fill"
+}
+},
+{
+"group": "nav",
+"id": "arrow-right",
+"names": {
+"lucide": "arrow-right",
+"phosphor-regular": "arrow-right",
+"phosphor-light": "arrow-right",
+"phosphor-bold": "arrow-right",
+"phosphor-fill": "arrow-right",
+"phosphor-duotone": "arrow-right",
+"tabler-outline": "arrow-right",
+"tabler-filled": "tabler-outline:arrow-right",
+"remix-line": "arrow-right-line",
+"remix-fill": "arrow-right-fill"
+}
+},
+{
+"group": "nav",
+"id": "arrow-up",
+"names": {
+"lucide": "arrow-up",
+"phosphor-regular": "arrow-up",
+"phosphor-light": "arrow-up",
+"phosphor-bold": "arrow-up",
+"phosphor-fill": "arrow-up",
+"phosphor-duotone": "arrow-up",
+"tabler-outline": "arrow-up",
+"tabler-filled": "tabler-outline:arrow-up",
+"remix-line": "arrow-up-line",
+"remix-fill": "arrow-up-fill"
+}
+},
+{
+"group": "nav",
+"id": "arrow-down",
+"names": {
+"lucide": "arrow-down",
+"phosphor-regular": "arrow-down",
+"phosphor-light": "arrow-down",
+"phosphor-bold": "arrow-down",
+"phosphor-fill": "arrow-down",
+"phosphor-duotone": "arrow-down",
+"tabler-outline": "arrow-down",
+"tabler-filled": "tabler-outline:arrow-down",
+"remix-line": "arrow-down-line",
+"remix-fill": "arrow-down-fill"
+}
+},
+{
+"group": "nav",
+"id": "arrow-up-right",
+"names": {
+"lucide": "arrow-up-right",
+"phosphor-regular": "arrow-up-right",
+"phosphor-light": "arrow-up-right",
+"phosphor-bold": "arrow-up-right",
+"phosphor-fill": "arrow-up-right",
+"phosphor-duotone": "arrow-up-right",
+"tabler-outline": "arrow-up-right",
+"tabler-filled": "tabler-outline:arrow-up-right",
+"remix-line": "arrow-right-up-line",
+"remix-fill": "arrow-right-up-fill"
+}
+},
+{
+"group": "nav",
+"id": "external-link",
+"names": {
+"lucide": "external-link",
+"phosphor-regular": "arrow-square-out",
+"phosphor-light": "arrow-square-out",
+"phosphor-bold": "arrow-square-out",
+"phosphor-fill": "arrow-square-out",
+"phosphor-duotone": "arrow-square-out",
+"tabler-outline": "external-link",
+"tabler-filled": "external-link",
+"remix-line": "external-link-line",
+"remix-fill": "external-link-fill"
+}
+},
+{
+"group": "nav",
+"id": "more-horizontal",
+"names": {
+"lucide": "ellipsis",
+"phosphor-regular": "dots-three",
+"phosphor-light": "dots-three",
+"phosphor-bold": "dots-three",
+"phosphor-fill": "dots-three",
+"phosphor-duotone": "dots-three",
+"tabler-outline": "dots",
+"tabler-filled": "dots",
+"remix-line": "more-line",
+"remix-fill": "more-fill"
+}
+},
+{
+"group": "nav",
+"id": "more-vertical",
+"names": {
+"lucide": "ellipsis-vertical",
+"phosphor-regular": "dots-three-vertical",
+"phosphor-light": "dots-three-vertical",
+"phosphor-bold": "dots-three-vertical",
+"phosphor-fill": "dots-three-vertical",
+"phosphor-duotone": "dots-three-vertical",
+"tabler-outline": "dots-vertical",
+"tabler-filled": "dots-vertical",
+"remix-line": "more-2-line",
+"remix-fill": "more-2-fill"
+}
+},
+{
+"group": "nav",
+"id": "plus",
+"names": {
+"lucide": "plus",
+"phosphor-regular": "plus",
+"phosphor-light": "plus",
+"phosphor-bold": "plus",
+"phosphor-fill": "plus",
+"phosphor-duotone": "plus",
+"tabler-outline": "plus",
+"tabler-filled": "plus",
+"remix-line": "add-line",
+"remix-fill": "add-fill"
+}
+},
+{
+"group": "nav",
+"id": "minus",
+"names": {
+"lucide": "minus",
+"phosphor-regular": "minus",
+"phosphor-light": "minus",
+"phosphor-bold": "minus",
+"phosphor-fill": "minus",
+"phosphor-duotone": "minus",
+"tabler-outline": "minus",
+"tabler-filled": "tabler-outline:minus",
+"remix-line": "subtract-line",
+"remix-fill": "subtract-fill"
+}
+},
+{
+"group": "nav",
+"id": "check",
+"names": {
+"lucide": "check",
+"phosphor-regular": "check",
+"phosphor-light": "check",
+"phosphor-bold": "check",
+"phosphor-fill": "check",
+"phosphor-duotone": "check",
+"tabler-outline": "check",
+"tabler-filled": "check",
+"remix-line": "check-line",
+"remix-fill": "check-fill"
+}
+},
+{
+"group": "nav",
+"id": "layout-dashboard",
+"names": {
+"lucide": "layout-dashboard",
+"phosphor-regular": "squares-four",
+"phosphor-light": "squares-four",
+"phosphor-bold": "squares-four",
+"phosphor-fill": "squares-four",
+"phosphor-duotone": "squares-four",
+"tabler-outline": "layout-dashboard",
+"tabler-filled": "layout-dashboard",
+"remix-line": "dashboard-line",
+"remix-fill": "dashboard-fill"
+}
+},
+{
+"group": "nav",
+"id": "sitemap",
+"names": {
+"lucide": "network",
+"phosphor-regular": "tree-structure",
+"phosphor-light": "tree-structure",
+"phosphor-bold": "tree-structure",
+"phosphor-fill": "tree-structure",
+"phosphor-duotone": "tree-structure",
+"tabler-outline": "sitemap",
+"tabler-filled": "sitemap",
+"remix-line": "node-tree",
+"remix-fill": "node-tree"
+}
+},
+{
+"group": "nav",
+"id": "map",
+"names": {
+"lucide": "map",
+"phosphor-regular": "map-trifold",
+"phosphor-light": "map-trifold",
+"phosphor-bold": "map-trifold",
+"phosphor-fill": "map-trifold",
+"phosphor-duotone": "map-trifold",
+"tabler-outline": "map",
+"tabler-filled": "tabler-outline:map",
+"remix-line": "map-2-line",
+"remix-fill": "map-2-fill"
+}
+},
+{
+"group": "nav",
+"id": "map-pin",
+"names": {
+"lucide": "map-pin",
+"phosphor-regular": "map-pin",
+"phosphor-light": "map-pin",
+"phosphor-bold": "map-pin",
+"phosphor-fill": "map-pin",
+"phosphor-duotone": "map-pin",
+"tabler-outline": "map-pin",
+"tabler-filled": "map-pin",
+"remix-line": "map-pin-line",
+"remix-fill": "map-pin-fill"
+}
+},
+{
+"group": "nav",
+"id": "compass",
+"names": {
+"lucide": "compass",
+"phosphor-regular": "compass",
+"phosphor-light": "compass",
+"phosphor-bold": "compass",
+"phosphor-fill": "compass",
+"phosphor-duotone": "compass",
+"tabler-outline": "compass",
+"tabler-filled": "compass",
+"remix-line": "compass-3-line",
+"remix-fill": "compass-3-fill"
+}
+},
+{
+"group": "nav",
+"id": "telescope",
+"names": {
+"lucide": "telescope",
+"phosphor-regular": "binoculars",
+"phosphor-light": "binoculars",
+"phosphor-bold": "binoculars",
+"phosphor-fill": "binoculars",
+"phosphor-duotone": "binoculars",
+"tabler-outline": "telescope",
+"tabler-filled": "tabler-outline:telescope",
+"remix-line": "search-eye-line",
+"remix-fill": "search-eye-fill"
+}
+},
+{
+"group": "status",
+"id": "check-circle",
+"names": {
+"lucide": "circle-check",
+"phosphor-regular": "check-circle",
+"phosphor-light": "check-circle",
+"phosphor-bold": "check-circle",
+"phosphor-fill": "check-circle",
+"phosphor-duotone": "check-circle",
+"tabler-outline": "circle-check",
+"tabler-filled": "circle-check",
+"remix-line": "checkbox-circle-line",
+"remix-fill": "checkbox-circle-fill"
+}
+},
+{
+"group": "status",
+"id": "info",
+"names": {
+"lucide": "info",
+"phosphor-regular": "info",
+"phosphor-light": "info",
+"phosphor-bold": "info",
+"phosphor-fill": "info",
+"phosphor-duotone": "info",
+"tabler-outline": "info-circle",
+"tabler-filled": "info-circle",
+"remix-line": "information-line",
+"remix-fill": "information-fill"
+}
+},
+{
+"group": "status",
+"id": "alert",
+"names": {
+"lucide": "triangle-alert",
+"phosphor-regular": "warning",
+"phosphor-light": "warning",
+"phosphor-bold": "warning",
+"phosphor-fill": "warning",
+"phosphor-duotone": "warning",
+"tabler-outline": "alert-triangle",
+"tabler-filled": "alert-triangle",
+"remix-line": "alert-line",
+"remix-fill": "alert-fill"
+}
+},
+{
+"group": "status",
+"id": "error",
+"names": {
+"lucide": "circle-x",
+"phosphor-regular": "x-circle",
+"phosphor-light": "x-circle",
+"phosphor-bold": "x-circle",
+"phosphor-fill": "x-circle",
+"phosphor-duotone": "x-circle",
+"tabler-outline": "circle-x",
+"tabler-filled": "circle-x",
+"remix-line": "close-circle-line",
+"remix-fill": "close-circle-fill"
+}
+},
+{
+"group": "status",
+"id": "help",
+"names": {
+"lucide": "circle-question-mark",
+"phosphor-regular": "question",
+"phosphor-light": "question",
+"phosphor-bold": "question",
+"phosphor-fill": "question",
+"phosphor-duotone": "question",
+"tabler-outline": "help-circle",
+"tabler-filled": "help-circle",
+"remix-line": "question-line",
+"remix-fill": "question-fill"
+}
+},
+{
+"group": "status",
+"id": "loader",
+"names": {
+"lucide": "loader-circle",
+"phosphor-regular": "circle-notch",
+"phosphor-light": "circle-notch",
+"phosphor-bold": "circle-notch",
+"phosphor-fill": "circle-notch",
+"phosphor-duotone": "circle-notch",
+"tabler-outline": "loader-2",
+"tabler-filled": "tabler-outline:loader-2",
+"remix-line": "loader-4-line",
+"remix-fill": "loader-4-fill"
+}
+},
+{
+"group": "status",
+"id": "refresh",
+"names": {
+"lucide": "refresh-cw",
+"phosphor-regular": "arrows-clockwise",
+"phosphor-light": "arrows-clockwise",
+"phosphor-bold": "arrows-clockwise",
+"phosphor-fill": "arrows-clockwise",
+"phosphor-duotone": "arrows-clockwise",
+"tabler-outline": "refresh",
+"tabler-filled": "tabler-outline:refresh",
+"remix-line": "refresh-line",
+"remix-fill": "refresh-fill"
+}
+},
+{
+"group": "status",
+"id": "ban",
+"names": {
+"lucide": "ban",
+"phosphor-regular": "prohibit",
+"phosphor-light": "prohibit",
+"phosphor-bold": "prohibit",
+"phosphor-fill": "prohibit",
+"phosphor-duotone": "prohibit",
+"tabler-outline": "ban",
+"tabler-filled": "tabler-outline:ban",
+"remix-line": "forbid-line",
+"remix-fill": "forbid-fill"
+}
+},
+{
+"group": "status",
+"id": "flag",
+"names": {
+"lucide": "flag",
+"phosphor-regular": "flag",
+"phosphor-light": "flag",
+"phosphor-bold": "flag",
+"phosphor-fill": "flag",
+"phosphor-duotone": "flag",
+"tabler-outline": "flag",
+"tabler-filled": "flag",
+"remix-line": "flag-line",
+"remix-fill": "flag-fill"
+}
+},
+{
+"group": "status",
+"id": "wifi-off",
+"names": {
+"lucide": "wifi-off",
+"phosphor-regular": "wifi-slash",
+"phosphor-light": "wifi-slash",
+"phosphor-bold": "wifi-slash",
+"phosphor-fill": "wifi-slash",
+"phosphor-duotone": "wifi-slash",
+"tabler-outline": "wifi-off",
+"tabler-filled": "tabler-outline:wifi-off",
+"remix-line": "wifi-off-line",
+"remix-fill": "wifi-off-fill"
+}
+},
+{
+"group": "status",
+"id": "ghost",
+"names": {
+"lucide": "ghost",
+"phosphor-regular": "ghost",
+"phosphor-light": "ghost",
+"phosphor-bold": "ghost",
+"phosphor-fill": "ghost",
+"phosphor-duotone": "ghost",
+"tabler-outline": "ghost",
+"tabler-filled": "ghost",
+"remix-line": "ghost-line",
+"remix-fill": "ghost-fill"
+}
+},
+{
+"group": "status",
+"id": "smile",
+"names": {
+"lucide": "smile",
+"phosphor-regular": "smiley",
+"phosphor-light": "smiley",
+"phosphor-bold": "smiley",
+"phosphor-fill": "smiley",
+"phosphor-duotone": "smiley",
+"tabler-outline": "mood-smile",
+"tabler-filled": "mood-smile",
+"remix-line": "emotion-line",
+"remix-fill": "emotion-fill"
+}
+},
+{
+"group": "status",
+"id": "frown",
+"names": {
+"lucide": "frown",
+"phosphor-regular": "smiley-sad",
+"phosphor-light": "smiley-sad",
+"phosphor-bold": "smiley-sad",
+"phosphor-fill": "smiley-sad",
+"phosphor-duotone": "smiley-sad",
+"tabler-outline": "mood-sad",
+"tabler-filled": "mood-sad",
+"remix-line": "emotion-sad-line",
+"remix-fill": "emotion-sad-fill"
+}
+},
+{
+"group": "status",
+"id": "inbox",
+"names": {
+"lucide": "inbox",
+"phosphor-regular": "tray",
+"phosphor-light": "tray",
+"phosphor-bold": "tray",
+"phosphor-fill": "tray",
+"phosphor-duotone": "tray",
+"tabler-outline": "inbox",
+"tabler-filled": "tabler-outline:inbox",
+"remix-line": "inbox-line",
+"remix-fill": "inbox-fill"
+}
+},
+{
+"group": "status",
+"id": "package",
+"names": {
+"lucide": "package-open",
+"phosphor-regular": "package",
+"phosphor-light": "package",
+"phosphor-bold": "package",
+"phosphor-fill": "package",
+"phosphor-duotone": "package",
+"tabler-outline": "package",
+"tabler-filled": "tabler-outline:package",
+"remix-line": "inbox-archive-line",
+"remix-fill": "inbox-archive-fill"
+}
+},
+{
+"group": "status",
+"id": "party",
+"names": {
+"lucide": "party-popper",
+"phosphor-regular": "confetti",
+"phosphor-light": "confetti",
+"phosphor-bold": "confetti",
+"phosphor-fill": "confetti",
+"phosphor-duotone": "confetti",
+"tabler-outline": "confetti",
+"tabler-filled": "confetti",
+"remix-line": "cake-3-line",
+"remix-fill": "cake-3-fill"
+}
+},
+{
+"group": "ui",
+"id": "settings",
+"names": {
+"lucide": "settings",
+"phosphor-regular": "gear",
+"phosphor-light": "gear",
+"phosphor-bold": "gear",
+"phosphor-fill": "gear",
+"phosphor-duotone": "gear",
+"tabler-outline": "settings",
+"tabler-filled": "settings",
+"remix-line": "settings-3-line",
+"remix-fill": "settings-3-fill"
+}
+},
+{
+"group": "ui",
+"id": "sun",
+"names": {
+"lucide": "sun",
+"phosphor-regular": "sun",
+"phosphor-light": "sun",
+"phosphor-bold": "sun",
+"phosphor-fill": "sun",
+"phosphor-duotone": "sun",
+"tabler-outline": "sun",
+"tabler-filled": "sun",
+"remix-line": "sun-line",
+"remix-fill": "sun-fill"
+}
+},
+{
+"group": "ui",
+"id": "moon",
+"names": {
+"lucide": "moon",
+"phosphor-regular": "moon",
+"phosphor-light": "moon",
+"phosphor-bold": "moon",
+"phosphor-fill": "moon",
+"phosphor-duotone": "moon",
+"tabler-outline": "moon",
+"tabler-filled": "moon",
+"remix-line": "moon-line",
+"remix-fill": "moon-fill"
+}
+},
+{
+"group": "ui",
+"id": "contrast",
+"names": {
+"lucide": "sun-moon",
+"phosphor-regular": "circle-half",
+"phosphor-light": "circle-half",
+"phosphor-bold": "circle-half",
+"phosphor-fill": "circle-half",
+"phosphor-duotone": "circle-half",
+"tabler-outline": "contrast",
+"tabler-filled": "contrast",
+"remix-line": "contrast-2-line",
+"remix-fill": "contrast-2-fill"
+}
+},
+{
+"group": "ui",
+"id": "globe",
+"names": {
+"lucide": "globe",
+"phosphor-regular": "globe",
+"phosphor-light": "globe",
+"phosphor-bold": "globe",
+"phosphor-fill": "globe",
+"phosphor-duotone": "globe",
+"tabler-outline": "world",
+"tabler-filled": "world",
+"remix-line": "global-line",
+"remix-fill": "global-fill"
+}
+},
+{
+"group": "ui",
+"id": "languages",
+"names": {
+"lucide": "languages",
+"phosphor-regular": "translate",
+"phosphor-light": "translate",
+"phosphor-bold": "translate",
+"phosphor-fill": "translate",
+"phosphor-duotone": "translate",
+"tabler-outline": "language",
+"tabler-filled": "tabler-outline:language",
+"remix-line": "translate-2",
+"remix-fill": "translate-2"
+}
+},
+{
+"group": "ui",
+"id": "palette",
+"names": {
+"lucide": "palette",
+"phosphor-regular": "palette",
+"phosphor-light": "palette",
+"phosphor-bold": "palette",
+"phosphor-fill": "palette",
+"phosphor-duotone": "palette",
+"tabler-outline": "palette",
+"tabler-filled": "palette",
+"remix-line": "palette-line",
+"remix-fill": "palette-fill"
+}
+},
+{
+"group": "ui",
+"id": "wand",
+"names": {
+"lucide": "wand-sparkles",
+"phosphor-regular": "magic-wand",
+"phosphor-light": "magic-wand",
+"phosphor-bold": "magic-wand",
+"phosphor-fill": "magic-wand",
+"phosphor-duotone": "magic-wand",
+"tabler-outline": "wand",
+"tabler-filled": "tabler-outline:wand",
+"remix-line": "magic-line",
+"remix-fill": "magic-fill"
+}
+},
+{
+"group": "ui",
+"id": "keyboard",
+"names": {
+"lucide": "keyboard",
+"phosphor-regular": "keyboard",
+"phosphor-light": "keyboard",
+"phosphor-bold": "keyboard",
+"phosphor-fill": "keyboard",
+"phosphor-duotone": "keyboard",
+"tabler-outline": "keyboard",
+"tabler-filled": "keyboard",
+"remix-line": "keyboard-line",
+"remix-fill": "keyboard-fill"
+}
+},
+{
+"group": "ui",
+"id": "maximize",
+"names": {
+"lucide": "maximize",
+"phosphor-regular": "arrows-out",
+"phosphor-light": "arrows-out",
+"phosphor-bold": "arrows-out",
+"phosphor-fill": "arrows-out",
+"phosphor-duotone": "arrows-out",
+"tabler-outline": "maximize",
+"tabler-filled": "tabler-outline:maximize",
+"remix-line": "fullscreen-line",
+"remix-fill": "fullscreen-fill"
+}
+},
+{
+"group": "ui",
+"id": "minimize",
+"names": {
+"lucide": "minimize",
+"phosphor-regular": "arrows-in",
+"phosphor-light": "arrows-in",
+"phosphor-bold": "arrows-in",
+"phosphor-fill": "arrows-in",
+"phosphor-duotone": "arrows-in",
+"tabler-outline": "minimize",
+"tabler-filled": "tabler-outline:minimize",
+"remix-line": "fullscreen-exit-line",
+"remix-fill": "fullscreen-exit-fill"
+}
+},
+{
+"group": "ui",
+"id": "eye",
+"names": {
+"lucide": "eye",
+"phosphor-regular": "eye",
+"phosphor-light": "eye",
+"phosphor-bold": "eye",
+"phosphor-fill": "eye",
+"phosphor-duotone": "eye",
+"tabler-outline": "eye",
+"tabler-filled": "eye",
+"remix-line": "eye-line",
+"remix-fill": "eye-fill"
+}
+},
+{
+"group": "ui",
+"id": "eye-off",
+"names": {
+"lucide": "eye-off",
+"phosphor-regular": "eye-slash",
+"phosphor-light": "eye-slash",
+"phosphor-bold": "eye-slash",
+"phosphor-fill": "eye-slash",
+"phosphor-duotone": "eye-slash",
+"tabler-outline": "eye-off",
+"tabler-filled": "tabler-outline:eye-off",
+"remix-line": "eye-off-line",
+"remix-fill": "eye-off-fill"
+}
+},
+{
+"group": "ui",
+"id": "target",
+"names": {
+"lucide": "target",
+"phosphor-regular": "target",
+"phosphor-light": "target",
+"phosphor-bold": "target",
+"phosphor-fill": "target",
+"phosphor-duotone": "target",
+"tabler-outline": "target",
+"tabler-filled": "tabler-outline:target",
+"remix-line": "focus-3-line",
+"remix-fill": "focus-3-fill"
+}
+},
+{
+"group": "ui",
+"id": "code",
+"names": {
+"lucide": "code",
+"phosphor-regular": "code",
+"phosphor-light": "code",
+"phosphor-bold": "code",
+"phosphor-fill": "code",
+"phosphor-duotone": "code",
+"tabler-outline": "code",
+"tabler-filled": "tabler-outline:code",
+"remix-line": "code-line",
+"remix-fill": "code-fill"
+}
+},
+{
+"group": "ui",
+"id": "qr-code",
+"names": {
+"lucide": "qr-code",
+"phosphor-regular": "qr-code",
+"phosphor-light": "qr-code",
+"phosphor-bold": "qr-code",
+"phosphor-fill": "qr-code",
+"phosphor-duotone": "qr-code",
+"tabler-outline": "qrcode",
+"tabler-filled": "tabler-outline:qrcode",
+"remix-line": "qr-code-line",
+"remix-fill": "qr-code-fill"
+}
+},
+{
+"group": "ui",
+"id": "copy",
+"names": {
+"lucide": "copy",
+"phosphor-regular": "copy",
+"phosphor-light": "copy",
+"phosphor-bold": "copy",
+"phosphor-fill": "copy",
+"phosphor-duotone": "copy",
+"tabler-outline": "copy",
+"tabler-filled": "copy",
+"remix-line": "file-copy-line",
+"remix-fill": "file-copy-fill"
+}
+},
+{
+"group": "ui",
+"id": "link",
+"names": {
+"lucide": "link",
+"phosphor-regular": "link",
+"phosphor-light": "link",
+"phosphor-bold": "link",
+"phosphor-fill": "link",
+"phosphor-duotone": "link",
+"tabler-outline": "link",
+"tabler-filled": "link",
+"remix-line": "link",
+"remix-fill": "link"
+}
+},
+{
+"group": "ui",
+"id": "share",
+"names": {
+"lucide": "share-2",
+"phosphor-regular": "share-network",
+"phosphor-light": "share-network",
+"phosphor-bold": "share-network",
+"phosphor-fill": "share-network",
+"phosphor-duotone": "share-network",
+"tabler-outline": "share",
+"tabler-filled": "tabler-outline:share",
+"remix-line": "share-line",
+"remix-fill": "share-fill"
+}
+},
+{
+"group": "ui",
+"id": "download",
+"names": {
+"lucide": "download",
+"phosphor-regular": "download-simple",
+"phosphor-light": "download-simple",
+"phosphor-bold": "download-simple",
+"phosphor-fill": "download-simple",
+"phosphor-duotone": "download-simple",
+"tabler-outline": "download",
+"tabler-filled": "download",
+"remix-line": "download-line",
+"remix-fill": "download-fill"
+}
+},
+{
+"group": "ui",
+"id": "upload",
+"names": {
+"lucide": "upload",
+"phosphor-regular": "upload-simple",
+"phosphor-light": "upload-simple",
+"phosphor-bold": "upload-simple",
+"phosphor-fill": "upload-simple",
+"phosphor-duotone": "upload-simple",
+"tabler-outline": "upload",
+"tabler-filled": "tabler-outline:upload",
+"remix-line": "upload-line",
+"remix-fill": "upload-fill"
+}
+},
+{
+"group": "ui",
+"id": "trash",
+"names": {
+"lucide": "trash-2",
+"phosphor-regular": "trash",
+"phosphor-light": "trash",
+"phosphor-bold": "trash",
+"phosphor-fill": "trash",
+"phosphor-duotone": "trash",
+"tabler-outline": "trash",
+"tabler-filled": "trash",
+"remix-line": "delete-bin-line",
+"remix-fill": "delete-bin-fill"
+}
+},
+{
+"group": "ui",
+"id": "edit",
+"names": {
+"lucide": "pencil",
+"phosphor-regular": "pencil-simple",
+"phosphor-light": "pencil-simple",
+"phosphor-bold": "pencil-simple",
+"phosphor-fill": "pencil-simple",
+"phosphor-duotone": "pencil-simple",
+"tabler-outline": "pencil",
+"tabler-filled": "pencil",
+"remix-line": "pencil-line",
+"remix-fill": "pencil-fill"
+}
+},
+{
+"group": "ui",
+"id": "clipboard",
+"names": {
+"lucide": "clipboard",
+"phosphor-regular": "clipboard",
+"phosphor-light": "clipboard",
+"phosphor-bold": "clipboard",
+"phosphor-fill": "clipboard",
+"phosphor-duotone": "clipboard",
+"tabler-outline": "clipboard",
+"tabler-filled": "clipboard",
+"remix-line": "clipboard-line",
+"remix-fill": "clipboard-fill"
+}
+},
+{
+"group": "account",
+"id": "user",
+"names": {
+"lucide": "user",
+"phosphor-regular": "user",
+"phosphor-light": "user",
+"phosphor-bold": "user",
+"phosphor-fill": "user",
+"phosphor-duotone": "user",
+"tabler-outline": "user",
+"tabler-filled": "user",
+"remix-line": "user-line",
+"remix-fill": "user-fill"
+}
+},
+{
+"group": "account",
+"id": "user-circle",
+"names": {
+"lucide": "circle-user",
+"phosphor-regular": "user-circle",
+"phosphor-light": "user-circle",
+"phosphor-bold": "user-circle",
+"phosphor-fill": "user-circle",
+"phosphor-duotone": "user-circle",
+"tabler-outline": "user-circle",
+"tabler-filled": "tabler-outline:user-circle",
+"remix-line": "account-circle-line",
+"remix-fill": "account-circle-fill"
+}
+},
+{
+"group": "account",
+"id": "users",
+"names": {
+"lucide": "users",
+"phosphor-regular": "users",
+"phosphor-light": "users",
+"phosphor-bold": "users",
+"phosphor-fill": "users",
+"phosphor-duotone": "users",
+"tabler-outline": "users",
+"tabler-filled": "tabler-outline:users",
+"remix-line": "group-line",
+"remix-fill": "group-fill"
+}
+},
+{
+"group": "account",
+"id": "user-plus",
+"names": {
+"lucide": "user-plus",
+"phosphor-regular": "user-plus",
+"phosphor-light": "user-plus",
+"phosphor-bold": "user-plus",
+"phosphor-fill": "user-plus",
+"phosphor-duotone": "user-plus",
+"tabler-outline": "user-plus",
+"tabler-filled": "tabler-outline:user-plus",
+"remix-line": "user-add-line",
+"remix-fill": "user-add-fill"
+}
+},
+{
+"group": "account",
+"id": "id-card",
+"names": {
+"lucide": "id-card",
+"phosphor-regular": "identification-card",
+"phosphor-light": "identification-card",
+"phosphor-bold": "identification-card",
+"phosphor-fill": "identification-card",
+"phosphor-duotone": "identification-card",
+"tabler-outline": "id",
+"tabler-filled": "id",
+"remix-line": "profile-line",
+"remix-fill": "profile-fill"
+}
+},
+{
+"group": "account",
+"id": "log-in",
+"names": {
+"lucide": "log-in",
+"phosphor-regular": "sign-in",
+"phosphor-light": "sign-in",
+"phosphor-bold": "sign-in",
+"phosphor-fill": "sign-in",
+"phosphor-duotone": "sign-in",
+"tabler-outline": "login",
+"tabler-filled": "tabler-outline:login",
+"remix-line": "login-box-line",
+"remix-fill": "login-box-fill"
+}
+},
+{
+"group": "account",
+"id": "log-out",
+"names": {
+"lucide": "log-out",
+"phosphor-regular": "sign-out",
+"phosphor-light": "sign-out",
+"phosphor-bold": "sign-out",
+"phosphor-fill": "sign-out",
+"phosphor-duotone": "sign-out",
+"tabler-outline": "logout",
+"tabler-filled": "tabler-outline:logout",
+"remix-line": "logout-box-line",
+"remix-fill": "logout-box-fill"
+}
+},
+{
+"group": "account",
+"id": "lock",
+"names": {
+"lucide": "lock",
+"phosphor-regular": "lock",
+"phosphor-light": "lock",
+"phosphor-bold": "lock",
+"phosphor-fill": "lock",
+"phosphor-duotone": "lock",
+"tabler-outline": "lock",
+"tabler-filled": "lock",
+"remix-line": "lock-line",
+"remix-fill": "lock-fill"
+}
+},
+{
+"group": "account",
+"id": "unlock",
+"names": {
+"lucide": "lock-open",
+"phosphor-regular": "lock-open",
+"phosphor-light": "lock-open",
+"phosphor-bold": "lock-open",
+"phosphor-fill": "lock-open",
+"phosphor-duotone": "lock-open",
+"tabler-outline": "lock-open",
+"tabler-filled": "tabler-outline:lock-open",
+"remix-line": "lock-unlock-line",
+"remix-fill": "lock-unlock-fill"
+}
+},
+{
+"group": "account",
+"id": "key",
+"names": {
+"lucide": "key-round",
+"phosphor-regular": "key",
+"phosphor-light": "key",
+"phosphor-bold": "key",
+"phosphor-fill": "key",
+"phosphor-duotone": "key",
+"tabler-outline": "key",
+"tabler-filled": "key",
+"remix-line": "key-2-line",
+"remix-fill": "key-2-fill"
+}
+},
+{
+"group": "account",
+"id": "shield",
+"names": {
+"lucide": "shield-check",
+"phosphor-regular": "shield-check",
+"phosphor-light": "shield-check",
+"phosphor-bold": "shield-check",
+"phosphor-fill": "shield-check",
+"phosphor-duotone": "shield-check",
+"tabler-outline": "shield-check",
+"tabler-filled": "shield-check",
+"remix-line": "shield-check-line",
+"remix-fill": "shield-check-fill"
+}
+},
+{
+"group": "account",
+"id": "mail",
+"names": {
+"lucide": "mail",
+"phosphor-regular": "envelope",
+"phosphor-light": "envelope",
+"phosphor-bold": "envelope",
+"phosphor-fill": "envelope",
+"phosphor-duotone": "envelope",
+"tabler-outline": "mail",
+"tabler-filled": "mail",
+"remix-line": "mail-line",
+"remix-fill": "mail-fill"
+}
+},
+{
+"group": "account",
+"id": "at-sign",
+"names": {
+"lucide": "at-sign",
+"phosphor-regular": "at",
+"phosphor-light": "at",
+"phosphor-bold": "at",
+"phosphor-fill": "at",
+"phosphor-duotone": "at",
+"tabler-outline": "at",
+"tabler-filled": "tabler-outline:at",
+"remix-line": "at-line",
+"remix-fill": "at-fill"
+}
+},
+{
+"group": "account",
+"id": "bell",
+"names": {
+"lucide": "bell",
+"phosphor-regular": "bell",
+"phosphor-light": "bell",
+"phosphor-bold": "bell",
+"phosphor-fill": "bell",
+"phosphor-duotone": "bell",
+"tabler-outline": "bell",
+"tabler-filled": "bell",
+"remix-line": "notification-3-line",
+"remix-fill": "notification-3-fill"
+}
+},
+{
+"group": "account",
+"id": "coins",
+"names": {
+"lucide": "coins",
+"phosphor-regular": "coins",
+"phosphor-light": "coins",
+"phosphor-bold": "coins",
+"phosphor-fill": "coins",
+"phosphor-duotone": "coins",
+"tabler-outline": "coins",
+"tabler-filled": "tabler-outline:coins",
+"remix-line": "coins-line",
+"remix-fill": "coins-fill"
+}
+},
+{
+"group": "community",
+"id": "message",
+"names": {
+"lucide": "message-circle",
+"phosphor-regular": "chat-circle",
+"phosphor-light": "chat-circle",
+"phosphor-bold": "chat-circle",
+"phosphor-fill": "chat-circle",
+"phosphor-duotone": "chat-circle",
+"tabler-outline": "message-circle",
+"tabler-filled": "message-circle",
+"remix-line": "chat-3-line",
+"remix-fill": "chat-3-fill"
+}
+},
+{
+"group": "community",
+"id": "messages",
+"names": {
+"lucide": "messages-square",
+"phosphor-regular": "chats",
+"phosphor-light": "chats",
+"phosphor-bold": "chats",
+"phosphor-fill": "chats",
+"phosphor-duotone": "chats",
+"tabler-outline": "messages",
+"tabler-filled": "messages",
+"remix-line": "message-2-line",
+"remix-fill": "message-2-fill"
+}
+},
+{
+"group": "community",
+"id": "send",
+"names": {
+"lucide": "send",
+"phosphor-regular": "paper-plane-tilt",
+"phosphor-light": "paper-plane-tilt",
+"phosphor-bold": "paper-plane-tilt",
+"phosphor-fill": "paper-plane-tilt",
+"phosphor-duotone": "paper-plane-tilt",
+"tabler-outline": "send",
+"tabler-filled": "send",
+"remix-line": "send-plane-line",
+"remix-fill": "send-plane-fill"
+}
+},
+{
+"group": "community",
+"id": "quote",
+"names": {
+"lucide": "quote",
+"phosphor-regular": "quotes",
+"phosphor-light": "quotes",
+"phosphor-bold": "quotes",
+"phosphor-fill": "quotes",
+"phosphor-duotone": "quotes",
+"tabler-outline": "quote",
+"tabler-filled": "quote",
+"remix-line": "double-quotes-l",
+"remix-fill": "double-quotes-l"
+}
+},
+{
+"group": "community",
+"id": "notebook",
+"names": {
+"lucide": "notebook-pen",
+"phosphor-regular": "notebook",
+"phosphor-light": "notebook",
+"phosphor-bold": "notebook",
+"phosphor-fill": "notebook",
+"phosphor-duotone": "notebook",
+"tabler-outline": "notebook",
+"tabler-filled": "tabler-outline:notebook",
+"remix-line": "book-2-line",
+"remix-fill": "book-2-fill"
+}
+},
+{
+"group": "community",
+"id": "thumbs-up",
+"names": {
+"lucide": "thumbs-up",
+"phosphor-regular": "thumbs-up",
+"phosphor-light": "thumbs-up",
+"phosphor-bold": "thumbs-up",
+"phosphor-fill": "thumbs-up",
+"phosphor-duotone": "thumbs-up",
+"tabler-outline": "thumb-up",
+"tabler-filled": "thumb-up",
+"remix-line": "thumb-up-line",
+"remix-fill": "thumb-up-fill"
+}
+},
+{
+"group": "community",
+"id": "thumbs-down",
+"names": {
+"lucide": "thumbs-down",
+"phosphor-regular": "thumbs-down",
+"phosphor-light": "thumbs-down",
+"phosphor-bold": "thumbs-down",
+"phosphor-fill": "thumbs-down",
+"phosphor-duotone": "thumbs-down",
+"tabler-outline": "thumb-down",
+"tabler-filled": "thumb-down",
+"remix-line": "thumb-down-line",
+"remix-fill": "thumb-down-fill"
+}
+},
+{
+"group": "community",
+"id": "heart",
+"names": {
+"lucide": "heart",
+"phosphor-regular": "heart",
+"phosphor-light": "heart",
+"phosphor-bold": "heart",
+"phosphor-fill": "heart",
+"phosphor-duotone": "heart",
+"tabler-outline": "heart",
+"tabler-filled": "heart",
+"remix-line": "heart-line",
+"remix-fill": "heart-fill"
+}
+},
+{
+"group": "community",
+"id": "star",
+"names": {
+"lucide": "star",
+"phosphor-regular": "star",
+"phosphor-light": "star",
+"phosphor-bold": "star",
+"phosphor-fill": "star",
+"phosphor-duotone": "star",
+"tabler-outline": "star",
+"tabler-filled": "star",
+"remix-line": "star-line",
+"remix-fill": "star-fill"
+}
+},
+{
+"group": "community",
+"id": "bookmark",
+"names": {
+"lucide": "bookmark",
+"phosphor-regular": "bookmark-simple",
+"phosphor-light": "bookmark-simple",
+"phosphor-bold": "bookmark-simple",
+"phosphor-fill": "bookmark-simple",
+"phosphor-duotone": "bookmark-simple",
+"tabler-outline": "bookmark",
+"tabler-filled": "bookmark",
+"remix-line": "bookmark-line",
+"remix-fill": "bookmark-fill"
+}
+},
+{
+"group": "content",
+"id": "calendar",
+"names": {
+"lucide": "calendar",
+"phosphor-regular": "calendar-blank",
+"phosphor-light": "calendar-blank",
+"phosphor-bold": "calendar-blank",
+"phosphor-fill": "calendar-blank",
+"phosphor-duotone": "calendar-blank",
+"tabler-outline": "calendar",
+"tabler-filled": "calendar",
+"remix-line": "calendar-line",
+"remix-fill": "calendar-fill"
+}
+},
+{
+"group": "content",
+"id": "clock",
+"names": {
+"lucide": "clock",
+"phosphor-regular": "clock",
+"phosphor-light": "clock",
+"phosphor-bold": "clock",
+"phosphor-fill": "clock",
+"phosphor-duotone": "clock",
+"tabler-outline": "clock",
+"tabler-filled": "clock",
+"remix-line": "time-line",
+"remix-fill": "time-fill"
+}
+},
+{
+"group": "content",
+"id": "history",
+"names": {
+"lucide": "history",
+"phosphor-regular": "clock-counter-clockwise",
+"phosphor-light": "clock-counter-clockwise",
+"phosphor-bold": "clock-counter-clockwise",
+"phosphor-fill": "clock-counter-clockwise",
+"phosphor-duotone": "clock-counter-clockwise",
+"tabler-outline": "history",
+"tabler-filled": "tabler-outline:history",
+"remix-line": "history-line",
+"remix-fill": "history-fill"
+}
+},
+{
+"group": "content",
+"id": "timer",
+"names": {
+"lucide": "timer",
+"phosphor-regular": "timer",
+"phosphor-light": "timer",
+"phosphor-bold": "timer",
+"phosphor-fill": "timer",
+"phosphor-duotone": "timer",
+"tabler-outline": "clock-hour-4",
+"tabler-filled": "clock-hour-4",
+"remix-line": "timer-line",
+"remix-fill": "timer-fill"
+}
+},
+{
+"group": "content",
+"id": "hourglass",
+"names": {
+"lucide": "hourglass",
+"phosphor-regular": "hourglass",
+"phosphor-light": "hourglass",
+"phosphor-bold": "hourglass",
+"phosphor-fill": "hourglass",
+"phosphor-duotone": "hourglass",
+"tabler-outline": "hourglass",
+"tabler-filled": "hourglass",
+"remix-line": "hourglass-line",
+"remix-fill": "hourglass-fill"
+}
+},
+{
+"group": "content",
+"id": "tag",
+"names": {
+"lucide": "tag",
+"phosphor-regular": "tag",
+"phosphor-light": "tag",
+"phosphor-bold": "tag",
+"phosphor-fill": "tag",
+"phosphor-duotone": "tag",
+"tabler-outline": "tag",
+"tabler-filled": "tag",
+"remix-line": "price-tag-3-line",
+"remix-fill": "price-tag-3-fill"
+}
+},
+{
+"group": "content",
+"id": "tags",
+"names": {
+"lucide": "tags",
+"phosphor-regular": "tag-chevron",
+"phosphor-light": "tag-chevron",
+"phosphor-bold": "tag-chevron",
+"phosphor-fill": "tag-chevron",
+"phosphor-duotone": "tag-chevron",
+"tabler-outline": "tags",
+"tabler-filled": "tags",
+"remix-line": "price-tag-line",
+"remix-fill": "price-tag-fill"
+}
+},
+{
+"group": "content",
+"id": "hash",
+"names": {
+"lucide": "hash",
+"phosphor-regular": "hash",
+"phosphor-light": "hash",
+"phosphor-bold": "hash",
+"phosphor-fill": "hash",
+"phosphor-duotone": "hash",
+"tabler-outline": "hash",
+"tabler-filled": "tabler-outline:hash",
+"remix-line": "hashtag",
+"remix-fill": "hashtag"
+}
+},
+{
+"group": "content",
+"id": "folder",
+"names": {
+"lucide": "folder",
+"phosphor-regular": "folder",
+"phosphor-light": "folder",
+"phosphor-bold": "folder",
+"phosphor-fill": "folder",
+"phosphor-duotone": "folder",
+"tabler-outline": "folder",
+"tabler-filled": "folder",
+"remix-line": "folder-line",
+"remix-fill": "folder-fill"
+}
+},
+{
+"group": "content",
+"id": "layers",
+"names": {
+"lucide": "layers",
+"phosphor-regular": "stack",
+"phosphor-light": "stack",
+"phosphor-bold": "stack",
+"phosphor-fill": "stack",
+"phosphor-duotone": "stack",
+"tabler-outline": "stack-2",
+"tabler-filled": "stack-2",
+"remix-line": "stack-line",
+"remix-fill": "stack-fill"
+}
+},
+{
+"group": "content",
+"id": "library",
+"names": {
+"lucide": "library-big",
+"phosphor-regular": "books",
+"phosphor-light": "books",
+"phosphor-bold": "books",
+"phosphor-fill": "books",
+"phosphor-duotone": "books",
+"tabler-outline": "books",
+"tabler-filled": "tabler-outline:books",
+"remix-line": "book-shelf-line",
+"remix-fill": "book-shelf-fill"
+}
+},
+{
+"group": "content",
+"id": "image",
+"names": {
+"lucide": "image",
+"phosphor-regular": "image",
+"phosphor-light": "image",
+"phosphor-bold": "image",
+"phosphor-fill": "image",
+"phosphor-duotone": "image",
+"tabler-outline": "photo",
+"tabler-filled": "photo",
+"remix-line": "image-line",
+"remix-fill": "image-fill"
+}
+},
+{
+"group": "content",
+"id": "camera",
+"names": {
+"lucide": "camera",
+"phosphor-regular": "camera",
+"phosphor-light": "camera",
+"phosphor-bold": "camera",
+"phosphor-fill": "camera",
+"phosphor-duotone": "camera",
+"tabler-outline": "camera",
+"tabler-filled": "camera",
+"remix-line": "camera-line",
+"remix-fill": "camera-fill"
+}
+},
+{
+"group": "content",
+"id": "newspaper",
+"names": {
+"lucide": "newspaper",
+"phosphor-regular": "newspaper",
+"phosphor-light": "newspaper",
+"phosphor-bold": "newspaper",
+"phosphor-fill": "newspaper",
+"phosphor-duotone": "newspaper",
+"tabler-outline": "news",
+"tabler-filled": "tabler-outline:news",
+"remix-line": "newspaper-line",
+"remix-fill": "newspaper-fill"
+}
+},
+{
+"group": "content",
+"id": "book-open",
+"names": {
+"lucide": "book-open",
+"phosphor-regular": "book-open",
+"phosphor-light": "book-open",
+"phosphor-bold": "book-open",
+"phosphor-fill": "book-open",
+"phosphor-duotone": "book-open",
+"tabler-outline": "book",
+"tabler-filled": "book",
+"remix-line": "book-open-line",
+"remix-fill": "book-open-fill"
+}
+},
+{
+"group": "content",
+"id": "file-text",
+"names": {
+"lucide": "file-text",
+"phosphor-regular": "file-text",
+"phosphor-light": "file-text",
+"phosphor-bold": "file-text",
+"phosphor-fill": "file-text",
+"phosphor-duotone": "file-text",
+"tabler-outline": "file-text",
+"tabler-filled": "file-text",
+"remix-line": "file-text-line",
+"remix-fill": "file-text-fill"
+}
+},
+{
+"group": "content",
+"id": "rss",
+"names": {
+"lucide": "rss",
+"phosphor-regular": "rss",
+"phosphor-light": "rss",
+"phosphor-bold": "rss",
+"phosphor-fill": "rss",
+"phosphor-duotone": "rss",
+"tabler-outline": "rss",
+"tabler-filled": "tabler-outline:rss",
+"remix-line": "rss-line",
+"remix-fill": "rss-fill"
+}
+},
+{
+"group": "content",
+"id": "chart",
+"names": {
+"lucide": "chart-column",
+"phosphor-regular": "chart-bar",
+"phosphor-light": "chart-bar",
+"phosphor-bold": "chart-bar",
+"phosphor-fill": "chart-bar",
+"phosphor-duotone": "chart-bar",
+"tabler-outline": "chart-bar",
+"tabler-filled": "tabler-outline:chart-bar",
+"remix-line": "bar-chart-line",
+"remix-fill": "bar-chart-fill"
+}
+},
+{
+"group": "content",
+"id": "activity",
+"names": {
+"lucide": "activity",
+"phosphor-regular": "pulse",
+"phosphor-light": "pulse",
+"phosphor-bold": "pulse",
+"phosphor-fill": "pulse",
+"phosphor-duotone": "pulse",
+"tabler-outline": "activity",
+"tabler-filled": "tabler-outline:activity",
+"remix-line": "pulse-line",
+"remix-fill": "pulse-fill"
+}
+},
+{
+"group": "content",
+"id": "percent",
+"names": {
+"lucide": "percent",
+"phosphor-regular": "percent",
+"phosphor-light": "percent",
+"phosphor-bold": "percent",
+"phosphor-fill": "percent",
+"phosphor-duotone": "percent",
+"tabler-outline": "percentage",
+"tabler-filled": "tabler-outline:percentage",
+"remix-line": "percent-line",
+"remix-fill": "percent-fill"
+}
+},
+{
+"group": "badge",
+"id": "flame",
+"names": {
+"lucide": "flame",
+"phosphor-regular": "fire",
+"phosphor-light": "fire",
+"phosphor-bold": "fire",
+"phosphor-fill": "fire",
+"phosphor-duotone": "fire",
+"tabler-outline": "flame",
+"tabler-filled": "flame",
+"remix-line": "fire-line",
+"remix-fill": "fire-fill"
+}
+},
+{
+"group": "badge",
+"id": "trending-up",
+"names": {
+"lucide": "trending-up",
+"phosphor-regular": "trend-up",
+"phosphor-light": "trend-up",
+"phosphor-bold": "trend-up",
+"phosphor-fill": "trend-up",
+"phosphor-duotone": "trend-up",
+"tabler-outline": "trending-up",
+"tabler-filled": "tabler-outline:trending-up",
+"remix-line": "line-chart-line",
+"remix-fill": "line-chart-fill"
+}
+},
+{
+"group": "badge",
+"id": "sparkles",
+"names": {
+"lucide": "sparkles",
+"phosphor-regular": "sparkle",
+"phosphor-light": "sparkle",
+"phosphor-bold": "sparkle",
+"phosphor-fill": "sparkle",
+"phosphor-duotone": "sparkle",
+"tabler-outline": "sparkles",
+"tabler-filled": "sparkles",
+"remix-line": "sparkling-line",
+"remix-fill": "sparkling-fill"
+}
+},
+{
+"group": "badge",
+"id": "zap",
+"names": {
+"lucide": "zap",
+"phosphor-regular": "lightning",
+"phosphor-light": "lightning",
+"phosphor-bold": "lightning",
+"phosphor-fill": "lightning",
+"phosphor-duotone": "lightning",
+"tabler-outline": "bolt",
+"tabler-filled": "bolt",
+"remix-line": "flashlight-line",
+"remix-fill": "flashlight-fill"
+}
+},
+{
+"group": "badge",
+"id": "gem",
+"names": {
+"lucide": "gem",
+"phosphor-regular": "diamond",
+"phosphor-light": "diamond",
+"phosphor-bold": "diamond",
+"phosphor-fill": "diamond",
+"phosphor-duotone": "diamond",
+"tabler-outline": "diamond",
+"tabler-filled": "diamond",
+"remix-line": "vip-diamond-line",
+"remix-fill": "vip-diamond-fill"
+}
+},
+{
+"group": "badge",
+"id": "crown",
+"names": {
+"lucide": "crown",
+"phosphor-regular": "crown",
+"phosphor-light": "crown",
+"phosphor-bold": "crown",
+"phosphor-fill": "crown",
+"phosphor-duotone": "crown",
+"tabler-outline": "crown",
+"tabler-filled": "crown",
+"remix-line": "vip-crown-line",
+"remix-fill": "vip-crown-fill"
+}
+},
+{
+"group": "badge",
+"id": "trophy",
+"names": {
+"lucide": "trophy",
+"phosphor-regular": "trophy",
+"phosphor-light": "trophy",
+"phosphor-bold": "trophy",
+"phosphor-fill": "trophy",
+"phosphor-duotone": "trophy",
+"tabler-outline": "trophy",
+"tabler-filled": "trophy",
+"remix-line": "trophy-line",
+"remix-fill": "trophy-fill"
+}
+},
+{
+"group": "badge",
+"id": "award",
+"names": {
+"lucide": "award",
+"phosphor-regular": "medal",
+"phosphor-light": "medal",
+"phosphor-bold": "medal",
+"phosphor-fill": "medal",
+"phosphor-duotone": "medal",
+"tabler-outline": "award",
+"tabler-filled": "award",
+"remix-line": "award-line",
+"remix-fill": "award-fill"
+}
+},
+{
+"group": "badge",
+"id": "rocket",
+"names": {
+"lucide": "rocket",
+"phosphor-regular": "rocket",
+"phosphor-light": "rocket",
+"phosphor-bold": "rocket",
+"phosphor-fill": "rocket",
+"phosphor-duotone": "rocket",
+"tabler-outline": "rocket",
+"tabler-filled": "tabler-outline:rocket",
+"remix-line": "rocket-line",
+"remix-fill": "rocket-fill"
+}
+},
+{
+"group": "badge",
+"id": "gift",
+"names": {
+"lucide": "gift",
+"phosphor-regular": "gift",
+"phosphor-light": "gift",
+"phosphor-bold": "gift",
+"phosphor-fill": "gift",
+"phosphor-duotone": "gift",
+"tabler-outline": "gift",
+"tabler-filled": "gift",
+"remix-line": "gift-line",
+"remix-fill": "gift-fill"
+}
+},
+{
+"group": "badge",
+"id": "shuffle",
+"names": {
+"lucide": "shuffle",
+"phosphor-regular": "shuffle",
+"phosphor-light": "shuffle",
+"phosphor-bold": "shuffle",
+"phosphor-fill": "shuffle",
+"phosphor-duotone": "shuffle",
+"tabler-outline": "arrows-shuffle",
+"tabler-filled": "tabler-outline:arrows-shuffle",
+"remix-line": "shuffle-line",
+"remix-fill": "shuffle-fill"
+}
+},
+{
+"group": "badge",
+"id": "repeat",
+"names": {
+"lucide": "repeat",
+"phosphor-regular": "repeat",
+"phosphor-light": "repeat",
+"phosphor-bold": "repeat",
+"phosphor-fill": "repeat",
+"phosphor-duotone": "repeat",
+"tabler-outline": "repeat",
+"tabler-filled": "tabler-outline:repeat",
+"remix-line": "repeat-line",
+"remix-fill": "repeat-fill"
+}
+},
+{
+"group": "badge",
+"id": "ticket",
+"names": {
+"lucide": "ticket",
+"phosphor-regular": "ticket",
+"phosphor-light": "ticket",
+"phosphor-bold": "ticket",
+"phosphor-fill": "ticket",
+"phosphor-duotone": "ticket",
+"tabler-outline": "ticket",
+"tabler-filled": "ticket",
+"remix-line": "ticket-2-line",
+"remix-fill": "ticket-2-fill"
+}
+},
+{
+"group": "media",
+"id": "play",
+"names": {
+"lucide": "play",
+"phosphor-regular": "play",
+"phosphor-light": "play",
+"phosphor-bold": "play",
+"phosphor-fill": "play",
+"phosphor-duotone": "play",
+"tabler-outline": "player-play",
+"tabler-filled": "player-play",
+"remix-line": "play-line",
+"remix-fill": "play-fill"
+}
+},
+{
+"group": "media",
+"id": "pause",
+"names": {
+"lucide": "pause",
+"phosphor-regular": "pause",
+"phosphor-light": "pause",
+"phosphor-bold": "pause",
+"phosphor-fill": "pause",
+"phosphor-duotone": "pause",
+"tabler-outline": "player-pause",
+"tabler-filled": "player-pause",
+"remix-line": "pause-line",
+"remix-fill": "pause-fill"
+}
+},
+{
+"group": "media",
+"id": "play-circle",
+"names": {
+"lucide": "circle-play",
+"phosphor-regular": "play-circle",
+"phosphor-light": "play-circle",
+"phosphor-bold": "play-circle",
+"phosphor-fill": "play-circle",
+"phosphor-duotone": "play-circle",
+"tabler-outline": "player-play",
+"tabler-filled": "player-play",
+"remix-line": "play-circle-line",
+"remix-fill": "play-circle-fill"
+}
+},
+{
+"group": "media",
+"id": "stop",
+"names": {
+"lucide": "square",
+"phosphor-regular": "stop",
+"phosphor-light": "stop",
+"phosphor-bold": "stop",
+"phosphor-fill": "stop",
+"phosphor-duotone": "stop",
+"tabler-outline": "player-stop",
+"tabler-filled": "player-stop",
+"remix-line": "stop-line",
+"remix-fill": "stop-fill"
+}
+},
+{
+"group": "media",
+"id": "skip-forward",
+"names": {
+"lucide": "skip-forward",
+"phosphor-regular": "skip-forward",
+"phosphor-light": "skip-forward",
+"phosphor-bold": "skip-forward",
+"phosphor-fill": "skip-forward",
+"phosphor-duotone": "skip-forward",
+"tabler-outline": "player-skip-forward",
+"tabler-filled": "player-skip-forward",
+"remix-line": "skip-forward-line",
+"remix-fill": "skip-forward-fill"
+}
+},
+{
+"group": "media",
+"id": "skip-back",
+"names": {
+"lucide": "skip-back",
+"phosphor-regular": "skip-back",
+"phosphor-light": "skip-back",
+"phosphor-bold": "skip-back",
+"phosphor-fill": "skip-back",
+"phosphor-duotone": "skip-back",
+"tabler-outline": "player-skip-back",
+"tabler-filled": "player-skip-back",
+"remix-line": "skip-back-line",
+"remix-fill": "skip-back-fill"
+}
+},
+{
+"group": "media",
+"id": "fast-forward",
+"names": {
+"lucide": "fast-forward",
+"phosphor-regular": "fast-forward",
+"phosphor-light": "fast-forward",
+"phosphor-bold": "fast-forward",
+"phosphor-fill": "fast-forward",
+"phosphor-duotone": "fast-forward",
+"tabler-outline": "player-track-next",
+"tabler-filled": "player-track-next",
+"remix-line": "speed-line",
+"remix-fill": "speed-fill"
+}
+},
+{
+"group": "media",
+"id": "rewind",
+"names": {
+"lucide": "rewind",
+"phosphor-regular": "rewind",
+"phosphor-light": "rewind",
+"phosphor-bold": "rewind",
+"phosphor-fill": "rewind",
+"phosphor-duotone": "rewind",
+"tabler-outline": "player-track-prev",
+"tabler-filled": "player-track-prev",
+"remix-line": "rewind-line",
+"remix-fill": "rewind-fill"
+}
+},
+{
+"group": "media",
+"id": "volume",
+"names": {
+"lucide": "volume-2",
+"phosphor-regular": "speaker-high",
+"phosphor-light": "speaker-high",
+"phosphor-bold": "speaker-high",
+"phosphor-fill": "speaker-high",
+"phosphor-duotone": "speaker-high",
+"tabler-outline": "volume",
+"tabler-filled": "tabler-outline:volume",
+"remix-line": "volume-up-line",
+"remix-fill": "volume-up-fill"
+}
+},
+{
+"group": "media",
+"id": "volume-off",
+"names": {
+"lucide": "volume-x",
+"phosphor-regular": "speaker-x",
+"phosphor-light": "speaker-x",
+"phosphor-bold": "speaker-x",
+"phosphor-fill": "speaker-x",
+"phosphor-duotone": "speaker-x",
+"tabler-outline": "volume-off",
+"tabler-filled": "tabler-outline:volume-off",
+"remix-line": "volume-mute-line",
+"remix-fill": "volume-mute-fill"
+}
+},
+{
+"group": "media",
+"id": "captions",
+"names": {
+"lucide": "captions",
+"phosphor-regular": "subtitles",
+"phosphor-light": "subtitles",
+"phosphor-bold": "subtitles",
+"phosphor-fill": "subtitles",
+"phosphor-duotone": "subtitles",
+"tabler-outline": "badge-cc",
+"tabler-filled": "badge-cc",
+"remix-line": "closed-captioning-line",
+"remix-fill": "closed-captioning-fill"
+}
+},
+{
+"group": "media",
+"id": "film",
+"names": {
+"lucide": "film",
+"phosphor-regular": "film-strip",
+"phosphor-light": "film-strip",
+"phosphor-bold": "film-strip",
+"phosphor-fill": "film-strip",
+"phosphor-duotone": "film-strip",
+"tabler-outline": "movie",
+"tabler-filled": "tabler-outline:movie",
+"remix-line": "film-line",
+"remix-fill": "film-fill"
+}
+},
+{
+"group": "media",
+"id": "clapperboard",
+"names": {
+"lucide": "clapperboard",
+"phosphor-regular": "film-slate",
+"phosphor-light": "film-slate",
+"phosphor-bold": "film-slate",
+"phosphor-fill": "film-slate",
+"phosphor-duotone": "film-slate",
+"tabler-outline": "movie",
+"tabler-filled": "tabler-outline:movie",
+"remix-line": "clapperboard-line",
+"remix-fill": "clapperboard-fill"
+}
+},
+{
+"group": "media",
+"id": "video",
+"names": {
+"lucide": "video",
+"phosphor-regular": "video-camera",
+"phosphor-light": "video-camera",
+"phosphor-bold": "video-camera",
+"phosphor-fill": "video-camera",
+"phosphor-duotone": "video-camera",
+"tabler-outline": "video",
+"tabler-filled": "video",
+"remix-line": "video-line",
+"remix-fill": "video-fill"
+}
+},
+{
+"group": "media",
+"id": "tv",
+"names": {
+"lucide": "tv",
+"phosphor-regular": "television",
+"phosphor-light": "television",
+"phosphor-bold": "television",
+"phosphor-fill": "television",
+"phosphor-duotone": "television",
+"tabler-outline": "device-tv",
+"tabler-filled": "device-tv",
+"remix-line": "tv-2-line",
+"remix-fill": "tv-2-fill"
+}
+},
+{
+"group": "media",
+"id": "monitor-play",
+"names": {
+"lucide": "monitor-play",
+"phosphor-regular": "monitor-play",
+"phosphor-light": "monitor-play",
+"phosphor-bold": "monitor-play",
+"phosphor-fill": "monitor-play",
+"phosphor-duotone": "monitor-play",
+"tabler-outline": "device-desktop",
+"tabler-filled": "device-desktop",
+"remix-line": "computer-line",
+"remix-fill": "computer-fill"
+}
+},
+{
+"group": "media",
+"id": "smartphone",
+"names": {
+"lucide": "smartphone",
+"phosphor-regular": "device-mobile",
+"phosphor-light": "device-mobile",
+"phosphor-bold": "device-mobile",
+"phosphor-fill": "device-mobile",
+"phosphor-duotone": "device-mobile",
+"tabler-outline": "device-mobile",
+"tabler-filled": "device-mobile",
+"remix-line": "smartphone-line",
+"remix-fill": "smartphone-fill"
+}
+},
+{
+"group": "media",
+"id": "cast",
+"names": {
+"lucide": "cast",
+"phosphor-regular": "screencast",
+"phosphor-light": "screencast",
+"phosphor-bold": "screencast",
+"phosphor-fill": "screencast",
+"phosphor-duotone": "screencast",
+"tabler-outline": "cast",
+"tabler-filled": "tabler-outline:cast",
+"remix-line": "cast-line",
+"remix-fill": "cast-fill"
+}
+},
+{
+"group": "media",
+"id": "pip",
+"names": {
+"lucide": "picture-in-picture-2",
+"phosphor-regular": "picture-in-picture",
+"phosphor-light": "picture-in-picture",
+"phosphor-bold": "picture-in-picture",
+"phosphor-fill": "picture-in-picture",
+"phosphor-duotone": "picture-in-picture",
+"tabler-outline": "picture-in-picture",
+"tabler-filled": "picture-in-picture",
+"remix-line": "picture-in-picture-line",
+"remix-fill": "picture-in-picture-fill"
+}
+},
+{
+"group": "media",
+"id": "headphones",
+"names": {
+"lucide": "headphones",
+"phosphor-regular": "headphones",
+"phosphor-light": "headphones",
+"phosphor-bold": "headphones",
+"phosphor-fill": "headphones",
+"phosphor-duotone": "headphones",
+"tabler-outline": "headphones",
+"tabler-filled": "headphones",
+"remix-line": "headphone-line",
+"remix-fill": "headphone-fill"
+}
+},
+{
+"group": "media",
+"id": "mic",
+"names": {
+"lucide": "mic",
+"phosphor-regular": "microphone",
+"phosphor-light": "microphone",
+"phosphor-bold": "microphone",
+"phosphor-fill": "microphone",
+"phosphor-duotone": "microphone",
+"tabler-outline": "microphone",
+"tabler-filled": "microphone",
+"remix-line": "mic-line",
+"remix-fill": "mic-fill"
+}
+},
+{
+"group": "media",
+"id": "music",
+"names": {
+"lucide": "music",
+"phosphor-regular": "music-notes",
+"phosphor-light": "music-notes",
+"phosphor-bold": "music-notes",
+"phosphor-fill": "music-notes",
+"phosphor-duotone": "music-notes",
+"tabler-outline": "music",
+"tabler-filled": "tabler-outline:music",
+"remix-line": "music-2-line",
+"remix-fill": "music-2-fill"
+}
+},
+{
+"group": "media",
+"id": "live",
+"names": {
+"lucide": "radio",
+"phosphor-regular": "broadcast",
+"phosphor-light": "broadcast",
+"phosphor-bold": "broadcast",
+"phosphor-fill": "broadcast",
+"phosphor-duotone": "broadcast",
+"tabler-outline": "broadcast",
+"tabler-filled": "tabler-outline:broadcast",
+"remix-line": "live-line",
+"remix-fill": "live-fill"
+}
+},
+{
+"group": "share",
+"id": "brand-telegram",
+"names": {
+"lucide": "tabler-outline:brand-telegram",
+"phosphor-regular": "telegram-logo",
+"phosphor-light": "telegram-logo",
+"phosphor-bold": "telegram-logo",
+"phosphor-fill": "telegram-logo",
+"phosphor-duotone": "telegram-logo",
+"tabler-outline": "brand-telegram",
+"tabler-filled": "tabler-outline:brand-telegram",
+"remix-line": "telegram-line",
+"remix-fill": "telegram-fill"
+}
+},
+{
+"group": "share",
+"id": "brand-x",
+"names": {
+"lucide": "tabler-outline:brand-x",
+"phosphor-regular": "x-logo",
+"phosphor-light": "x-logo",
+"phosphor-bold": "x-logo",
+"phosphor-fill": "x-logo",
+"phosphor-duotone": "x-logo",
+"tabler-outline": "brand-x",
+"tabler-filled": "brand-x",
+"remix-line": "twitter-x-line",
+"remix-fill": "twitter-x-fill"
+}
+},
+{
+"group": "share",
+"id": "brand-facebook",
+"names": {
+"lucide": "tabler-outline:brand-facebook",
+"phosphor-regular": "facebook-logo",
+"phosphor-light": "facebook-logo",
+"phosphor-bold": "facebook-logo",
+"phosphor-fill": "facebook-logo",
+"phosphor-duotone": "facebook-logo",
+"tabler-outline": "brand-facebook",
+"tabler-filled": "brand-facebook",
+"remix-line": "facebook-circle-line",
+"remix-fill": "facebook-circle-fill"
+}
+},
+{
+"group": "share",
+"id": "brand-reddit",
+"names": {
+"lucide": "tabler-outline:brand-reddit",
+"phosphor-regular": "reddit-logo",
+"phosphor-light": "reddit-logo",
+"phosphor-bold": "reddit-logo",
+"phosphor-fill": "reddit-logo",
+"phosphor-duotone": "reddit-logo",
+"tabler-outline": "brand-reddit",
+"tabler-filled": "tabler-outline:brand-reddit",
+"remix-line": "reddit-line",
+"remix-fill": "reddit-fill"
+}
+},
+{
+"group": "share",
+"id": "brand-whatsapp",
+"names": {
+"lucide": "tabler-outline:brand-whatsapp",
+"phosphor-regular": "whatsapp-logo",
+"phosphor-light": "whatsapp-logo",
+"phosphor-bold": "whatsapp-logo",
+"phosphor-fill": "whatsapp-logo",
+"phosphor-duotone": "whatsapp-logo",
+"tabler-outline": "brand-whatsapp",
+"tabler-filled": "brand-whatsapp",
+"remix-line": "whatsapp-line",
+"remix-fill": "whatsapp-fill"
+}
+}
+]
+}

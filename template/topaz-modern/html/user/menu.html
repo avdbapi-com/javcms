@@ -1,0 +1,26 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}$tplAct = strtolower((string)request()->action()); $tplPortrait = !empty($obj['user_portrait']) ? mac_url_img($obj['user_portrait']) : ''; $tplInitial = mb_strtoupper(mb_substr((string)($obj['user_name'] ?? ''), 0, 1));{/php}
+<aside class="tp-uc-side" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.member_center')}">
+  <div class="tp-uc-card">
+    {if condition="$tplPortrait neq ''"}<img class="tp-uc-avatar tp-uc-avatar--ring" src="{$tplPortrait|htmlspecialchars=ENT_QUOTES}" alt="" width="64" height="64">{else/}<span class="tp-uc-avatar tp-uc-avatar--ring" aria-hidden="true">{$tplInitial|htmlspecialchars=ENT_QUOTES}</span>{/if}
+    <div class="tp-uc-who"><strong>{$obj.user_name|htmlspecialchars=ENT_QUOTES}</strong><span class="tp-uc-badge"><svg class="tp-i" aria-hidden="true"><use href="{$tplIcons}#r-crown"/></svg>{$obj.group.group_name|htmlspecialchars=ENT_QUOTES}</span><small>{:\\app\\common\\util\\TemplateText::get('ui.points')}: {$obj.user_points|intval}</small></div>
+  </div>
+  <nav class="tp-uc-nav" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.member_center')}">
+    <a href="{:mac_url('user/index')}" {if condition="$tplAct eq 'index' || $tplAct eq 'ajax_info' || $tplAct eq 'ajax_login'"}aria-current="page"{/if}><svg class="tp-i" aria-hidden="true"><use href="{$tplIcons}#user"/></svg><span>{:\\app\\common\\util\\TemplateText::get('ui.my_account')}</span></a>
+    <a href="{:mac_url('user/info')}" {if condition="in_array($tplAct, ['info','portrait','bind','unbind'])"}aria-current="page"{/if}><svg class="tp-i" aria-hidden="true"><use href="{$tplIcons}#edit"/></svg><span>{:\\app\\common\\util\\TemplateText::get('ui.modify_the_information')}</span></a>
+    <a href="{:mac_url('user/favs')}" {if condition="$tplAct eq 'favs' || $tplAct eq 'ulog'"}aria-current="page"{/if}><svg class="tp-i" aria-hidden="true"><use href="{$tplIcons}#star"/></svg><span>{:\\app\\common\\util\\TemplateText::get('ui.my_collection')}</span></a>
+    <a href="{:mac_url('user/plays')}" {if condition="$tplAct eq 'plays'"}aria-current="page"{/if}><svg class="tp-i" aria-hidden="true"><use href="{$tplIcons}#history"/></svg><span>{:\\app\\common\\util\\TemplateText::get('ui.play_record')}</span></a>
+    <a href="{:mac_url('user/downs')}" {if condition="$tplAct eq 'downs'"}aria-current="page"{/if}><svg class="tp-i" aria-hidden="true"><use href="{$tplIcons}#download"/></svg><span>{:\\app\\common\\util\\TemplateText::get('ui.download_record')}</span></a>
+    <a href="{:mac_url('user/plog')}" {if condition="$tplAct eq 'plog'"}aria-current="page"{/if}><svg class="tp-i" aria-hidden="true"><use href="{$tplIcons}#coin"/></svg><span>{:\\app\\common\\util\\TemplateText::get('ui.points_record')}</span></a>
+    <a href="{:mac_url('user/upgrade')}" {if condition="$tplAct eq 'upgrade'"}aria-current="page"{/if}><svg class="tp-i" aria-hidden="true"><use href="{$tplIcons}#crown"/></svg><span>{:\\app\\common\\util\\TemplateText::get('ui.upgrade_member')}</span></a>
+    <a href="{:mac_url('user/popedom')}" {if condition="$tplAct eq 'popedom'"}aria-current="page"{/if}><svg class="tp-i" aria-hidden="true"><use href="{$tplIcons}#key"/></svg><span>{:\\app\\common\\util\\TemplateText::get('ui.my_authority')}</span></a>
+    <a href="{:mac_url('user/comment')}" {if condition="in_array($tplAct, ['comment','gbook'])"}aria-current="page"{/if}><svg class="tp-i" aria-hidden="true"><use href="{$tplIcons}#chat"/></svg><span>{:\\app\\common\\util\\TemplateText::get('ui.comments')}</span></a>
+    <a href="{:mac_url('user/logout')}" rel="nofollow"><svg class="tp-i" aria-hidden="true"><use href="{$tplIcons}#logout"/></svg><span>{:\\app\\common\\util\\TemplateText::get('ui.quit')}</span></a>
+  </nav>
+</aside>

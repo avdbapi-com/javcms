@@ -1,0 +1,21 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}
+$tplRelKey = isset($tplRelKey) ? (string)$tplRelKey : 'ui.more_to_watch';
+$tplRelBy = isset($tplRelBy) ? (string)$tplRelBy : 'time';
+$tplRelNot = (string)intval($obj['vod_id'] ?? 0);
+$tplRelType = (string)($obj['type']['type_name'] ?? '');
+$tplCardN = 100;
+{/php}
+<section class="e-sec" aria-labelledby="e-related-title">
+  <div class="e-head" data-ai-group>
+    <h2 class="e-title" id="e-related-title">{:\\app\\common\\util\\AutoIcon::ui('flame', ['class'=>'e-ico'])}{:\\app\\common\\util\\TemplateText::get($tplRelKey)}</h2>
+    {if condition="$tplRelType neq ''"}<a class="e-more" href="{:mac_url_type($obj['type'])}"><span>{:\\app\\common\\util\\TemplateText::get('ui.view_more')}</span>{:\\app\\common\\util\\AutoIcon::ui('chevron-right', ['class'=>'e-ico'])}</a>{/if}
+  </div>
+  <ul class="e-grid" data-grid-fill>{maccms:vod num="10" type="current" not="'.$tplRelNot.'" order="desc" by="'.$tplRelBy.'" paging="no" id="vo"}{include file="public/vodbox"}{/maccms:vod}</ul>
+</section>

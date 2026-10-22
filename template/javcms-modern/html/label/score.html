@@ -1,0 +1,31 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="javcms" data-template-variant="modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/score"}
+{assign name="$maccms.aid" value="9997" /}
+{include file="public/include"}
+</head>
+<body class="jc-list jc-label">
+<div class="shadow"></div>
+{include file="public/head"}
+<div class="wrapped">
+	<main id="main-content">
+		{include file="public/nav"}
+		<div class="content"><section class="section jc-page"><div class="wrap jc-wrap">
+<div class="jc-head"><h1 class="jc-h1 jc-reveal jc-h1-ico" data-ai-hot>{:\\app\\common\\util\\AutoIcon::navIcon('top', '', ['size'=>'lg', 'plate'=>true])}<span>{:\\app\\common\\util\\TemplateText::get('top_rated')}</span></h1><div class="jc-head-tools">{php}$jcSortMode = 'label'; $jcSortActive = 'score';{/php}{include file="public/sortmenu"}</div></div>
+<div class="jc-grid" data-grid-fill>{maccms:vod num="20" paging="yes" type="all" order="desc" by="score" pageurl="label/score"}{include file="public/vodbox"}{/maccms:vod}</div>
+{php}$jcListCount = (is_array($__LIST__) && !isset($__LIST__['list'])) ? count($__LIST__) : ((isset($__LIST__['list']) && is_array($__LIST__['list'])) ? count($__LIST__['list']) : 0);{/php}{if condition="$jcListCount eq 0"}{include file="public/empty"}{/if}
+{include file="public/paging"}
+		</div></section></div>
+	</main>
+	{include file="public/foot"}
+</div>
+</body>
+</html>

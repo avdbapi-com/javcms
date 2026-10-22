@@ -1,0 +1,87 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="ember-modern" data-fx="vt" data-fx-vt-style="ember-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/vod_play"}
+{include file="public/include"}
+</head>
+<body class="t-page-watch">
+{php}$tplLiveHits = 1; $tplShowScore = 1;{/php}
+{include file="public/metavars"}
+{php}
+$tplPageUrl = '';
+try { $tplPageUrl = \app\common\util\Sitemap::absolute(mac_url_vod_play($obj, array('sid' => (int)($param['sid'] ?? 1), 'nid' => (int)($param['nid'] ?? 1)))); } catch (\Throwable $tplUrlError) { $tplPageUrl = ''; }
+$tplEpCount = 0;
+foreach ((array)($obj['vod_play_list'] ?? array()) as $tplSrc) { $tplEpCount += is_array($tplSrc['urls'] ?? null) ? count($tplSrc['urls']) : 0; }
+$tplLinkPre = (string)($obj['player_info']['link_pre'] ?? '');
+$tplLinkNext = (string)($obj['player_info']['link_next'] ?? '');
+$tplGbookUrl = mac_url('gbook/index');
+$tplReportUrl = $tplGbookUrl . (strpos($tplGbookUrl, '?') === false ? '?' : '&') . 'id=' . intval($obj['vod_id'] ?? 0);
+$tplChNow = sprintf('%02d', max(1, (int)($param['nid'] ?? 1)));
+$tplHrNot = (string)intval($obj['vod_id'] ?? 0);
+{/php}
+{include file="public/head"}
+<span class="gallery-history-entry" hidden data-name="{$tplTitle|htmlspecialchars=ENT_QUOTES}" data-link="{:mac_url_vod_detail($obj)}" data-pic="{$tplPoster|htmlspecialchars=ENT_QUOTES}"></span>
+<main id="main-content" class="t-main t-wrap" tabindex="-1">
+  <nav class="t-crumb" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.main_navigation')}" style="margin-top:16px">
+    <a href="{$maccms.path|htmlspecialchars=ENT_QUOTES}">{:\\app\\common\\util\\TemplateText::get('ui.home')}</a>
+    {if condition="$tplTypeName neq ''"}<svg class="t-i t-flip" aria-hidden="true"><use href="{$tplIcons}#chev-right"></use></svg><a href="{:mac_url_type($obj['type'])}">{:\\app\\common\\util\\AutoIcon::icon('category', (string)($obj['type']['type_name'] ?? ''), ['size'=>'sm'])}{$tplTypeName|htmlspecialchars=ENT_QUOTES}</a>{/if}
+    <svg class="t-i t-flip" aria-hidden="true"><use href="{$tplIcons}#chev-right"></use></svg><a href="{:mac_url_vod_detail($obj)}">{if condition="$tplCode neq ''"}{$tplCode|htmlspecialchars=ENT_QUOTES}{else/}{:\\app\\common\\util\\TemplateText::get('ui.details')}{/if}</a>
+  </nav>
+  <div class="t-watch">
+    <div class="t-watch-main">
+      <div class="t-watch-head t-status"><span class="t-live">{:\\app\\common\\util\\TemplateText::get('emt.playing')}</span><span>{:\\app\\common\\util\\TemplateText::get('emt.ch')} <b>{$tplChNow}</b></span><span>{:\\app\\common\\util\\TemplateText::get('emt.live_heat')} <b class="t-tierink heat-{$tplTier}">{$tplHitsFmt}</b></span></div>
+      <div class="t-player-line" aria-hidden="true"></div>
+      <div class="t-player-wrap t-hud">
+        <div class="t-player" id="t-player"><div class="t-irboot" aria-hidden="true"><span class="t-irboot-read">{:\\app\\common\\util\\TemplateText::get('emt.acquiring_signal')}</span></div>{$player_data}{$player_js}</div>
+      </div>
+      {if condition="$tplEpCount gt 1"}
+      {maccms:foreach name="obj.vod_play_list" id="tplSource" key="tplSid"}
+      <section class="t-eps"><h2>{$tplSource.player_info.show|htmlspecialchars=ENT_QUOTES}</h2>
+        <div class="t-chips">{maccms:foreach name="tplSource.urls" id="tplEp" key="tplNid"}<a href="{:mac_url_vod_play($obj,['sid'=>$tplSource['sid'],'nid'=>$tplEp['nid']])}" {if condition="$param.sid eq $tplSource.sid && $param.nid eq $tplEp.nid"}aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::ui('play', ['size'=>'sm', 'tint'=>'none'])}{:\\app\\common\\util\\TemplateText::get('emt.ch')} {$tplEp.nid|sprintf='%02d',###} &middot; {$tplEp.name|htmlspecialchars=ENT_QUOTES}</a>{/maccms:foreach}</div>
+      </section>
+      {/maccms:foreach}
+      {/if}
+      <h1{php}echo \app\common\util\AvdbLanguage::langAttr(isset($obj) && is_array($obj) ? $obj : []);{/php} class="t-wh1">{$tplTitle|htmlspecialchars=ENT_QUOTES}</h1>
+      <div class="t-heatchips heat-{$tplTier}">
+        {if condition="$tplCode neq ''"}<span><svg class="t-i" aria-hidden="true"><use href="{$tplIcons}#tag"></use></svg>{$tplCode|htmlspecialchars=ENT_QUOTES}</span>{/if}
+        {if condition="$tplDuration neq ''"}<span><svg class="t-i" aria-hidden="true"><use href="{$tplIcons}#clock"></use></svg>{$tplDuration|htmlspecialchars=ENT_QUOTES}</span>{/if}
+        <span class="is-heat"><svg class="t-i" aria-hidden="true"><use href="{$tplIcons}#temperature"></use></svg>{$tplHitsFmt}&deg;</span>
+      </div>
+      <div class="t-actbar">
+        <button class="t-btn t-fav" type="button" data-t-fav data-id="{$obj.vod_id|intval}" data-mid="1" aria-pressed="false"><svg class="t-i" aria-hidden="true"><use href="{$tplIcons}#heart"></use></svg>{:\\app\\common\\util\\TemplateText::get('favorites')}</button>
+        <button class="t-btn t-copy" type="button" data-fx="copy" data-fx-copy="{$tplPageUrl|htmlspecialchars=ENT_QUOTES}" data-fx-copied="{:\\app\\common\\util\\TemplateText::get('emt.copied')}"><svg class="t-i" aria-hidden="true"><use href="{$tplIcons}#share"></use></svg><span data-fx-copy-label>{:\\app\\common\\util\\TemplateText::get('emt.share')}</span></button>
+        <a class="t-btn" href="{:mac_url_vod_detail($obj)}"><svg class="t-i" aria-hidden="true"><use href="{$tplIcons}#info"></use></svg>{:\\app\\common\\util\\TemplateText::get('ui.details')}</a>
+        {if condition="$tplLinkPre neq ''"}<a class="t-btn" href="{$tplLinkPre|htmlspecialchars=ENT_QUOTES}"><svg class="t-i t-flip" aria-hidden="true"><use href="{$tplIcons}#chev-left"></use></svg>{:\\app\\common\\util\\TemplateText::get('previous_episode')}</a>{/if}
+        {if condition="$tplLinkNext neq ''"}<a class="t-btn" href="{$tplLinkNext|htmlspecialchars=ENT_QUOTES}">{:\\app\\common\\util\\TemplateText::get('next_episode')}<svg class="t-i t-flip" aria-hidden="true"><use href="{$tplIcons}#chev-right"></use></svg></a>{/if}
+        {notempty name="obj.vod_down_list"}<a class="t-btn" href="{:mac_url_vod_down($obj,['sid'=>1,'nid'=>1])}"><svg class="t-i" aria-hidden="true"><use href="{$tplIcons}#download"></use></svg>{:\\app\\common\\util\\TemplateText::get('downloads')}</a>{/notempty}
+        <a class="t-btn" href="{$tplReportUrl|htmlspecialchars=ENT_QUOTES}"><svg class="t-i" aria-hidden="true"><use href="{$tplIcons}#flag"></use></svg>{:\\app\\common\\util\\TemplateText::get('emt.report_problem')}</a>
+      </div>
+      {include file="public/meta"}
+      {if condition="$tplDesc neq ''"}
+      <section class="t-desc" aria-labelledby="t-desc-title">
+        <h2 id="t-desc-title">{:\\app\\common\\util\\AutoIcon::ui('info', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ui.details')}</h2>
+        <p class="t-desc-body" id="t-desc-body">{$tplDesc|htmlspecialchars=ENT_QUOTES}</p>
+        <button class="t-readmore" type="button" data-t-readmore aria-controls="t-desc-body" aria-expanded="false"><span class="t-morel">{:\\app\\common\\util\\TemplateText::get('emt.read_more')}</span><span class="t-less">{:\\app\\common\\util\\TemplateText::get('emt.read_less')}</span><svg class="t-i" aria-hidden="true"><use href="{$tplIcons}#chev-down"></use></svg></button>
+      </section>
+      {/if}
+    </div>
+    <aside class="t-heatside" aria-labelledby="t-heatside-title">
+      <h2 id="t-heatside-title"><svg class="t-i" aria-hidden="true"><use href="{$tplIcons}#flame"></use></svg>{:\\app\\common\\util\\TemplateText::get('emt.heat_list')}</h2>
+      <div class="t-hrows">{maccms:vod num="8" type="current" not="'.$tplHrNot.'" order="desc" by="hits_week" paging="no" id="tplHr"}{php}$tplHrName = trim(strip_tags(\app\common\util\AvdbLanguage::decodeEntities(!empty($tplHr['vod_display_name']) ? $tplHr['vod_display_name'] : ($tplHr['vod_name'] ?? '')))); $tplHrHits = intval($tplHr['vod_hits'] ?? 0); $tplHrTier = $tplHrHits >= 5000 ? 5 : ($tplHrHits >= 1000 ? 4 : ($tplHrHits >= 250 ? 3 : ($tplHrHits >= 50 ? 2 : ($tplHrHits >= 5 ? 1 : 0)))); $tplHrPic = mac_url_img(mac_default($tplHr['vod_pic'] ?? '', $maccms['path_tpl'] . 'assets/brand/ph-dark.svg'));{/php}<a class="t-hrow heat-{$tplHrTier}" href="{:mac_url_vod_play($tplHr)}"><span class="t-hr-thumb"><img src="{$tplHrPic|htmlspecialchars=ENT_QUOTES}" alt="" width="120" height="68" loading="lazy" decoding="async"></span><span><span class="t-hr-t">{$tplHrName|htmlspecialchars=ENT_QUOTES}</span><span class="t-hr-bar" aria-hidden="true"><i></i></span><span class="t-hr-m"><svg class="t-i" aria-hidden="true"><use href="{$tplIcons}#flame"></use></svg> {$tplHrHits|number_format}</span></span></a>{/maccms:vod}</div>
+    </aside>
+  </div>
+  {php}$tplRelKey = 'ui.more_to_watch'; $tplRelBy = 'time';{/php}
+  {include file="public/related"}
+  {if condition="$GLOBALS['config']['comment']['status'] eq 1"}<section class="t-comments"><div class="mac_comment" data-id="{$obj.vod_id|intval}" data-mid="1"><h2>{:\\app\\common\\util\\AutoIcon::ui('message', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ui.comments')}</h2><p>{:\\app\\common\\util\\TemplateText::get('ui.loading_comments')}</p></div></section><script>MAC.Comment.Init();MAC.Comment.Show(1);</script>{/if}
+  <div class="t-notice"><span>{:\\app\\common\\util\\TemplateText::get('emt.adult_notice')}</span><strong>{:\\app\\common\\util\\TemplateText::get('emt.under_18')}</strong></div>
+</main>
+{include file="public/foot"}
+</body>
+</html>

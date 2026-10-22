@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Video player</title>
+<style>html,body{width:100%;height:100%;margin:0;padding:0;background:#000;overflow:hidden}#player,#player>iframe{display:block;width:100%;height:100%;border:0}
+</style>
+</head>
+<body>
+<div id="player"></div>
+<script src="artplayer.js"></script>
+<script>
+/* JavCMS ArtPlayer page (ADS-BRIEF 7.3): plays DIRECT video files (mp4, webm, m3u8) for the player adapter
+   static/player/javcms.js. The pre-roll gate already ran in the parent page before this frame was created; no ad
+   plays inside this page (UD4: no mid-roll / post-roll). Any other URL (a provider page) is shown in a plain iframe
+   with the same attributes as the provider adapter (no sandbox). */
+(function () {
+    'use strict';
+    var P = window.parent, M = {}, D = {};
+    try { M = P.MacPlayer || {}; D = P.player_aaaa || {}; } catch (error) {}
+    var box = document.getElementById('player');
+    var vod = D.vod_data || {};
+
+    function safe(value) {
+        try {
+            var url = new URL(String(value || '').trim(), window.location.href);
+            return url.protocol === 'https:' || url.protocol === 'http:' ? url.href : '';
+        } catch (error) {
+            return '';
+        }
+    }
+    function loadScript(src) {
+        return new Promise(function (resolve, reject) {
+            var s = document.createElement('script');
+            s.src = src;
+            s.onload = resolve;
+            s.onerror = reject;
+            document.head.appendChild(s);
+        });
+    }
+    try { document.documentElement.lang = P.document.documentElement.lang || 'en'; } catch (error) {}
+
+    var url = safe(M.PlayUrl);
+    if (!url) return;
+    var type = /\.m3u8(\?|#|$)/i.test(url) ? 'm3u8' : (/\.(mp4|m4v|webm)(\?|#|$)/i.test(url) ? 'file' : '');
+    if (!type || typeof window.Artplayer !== 'function') {
+        // Not a direct video file: the provider's own player, as a plain iframe (never sandboxed).
+        var frame = document.createElement('iframe');
+        frame.src = url;
+        frame.title = String(D.frame_title || 'Video player');
+        frame.setAttribute('allow', 'autoplay; fullscreen; picture-in-picture; encrypted-media');
+        frame.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+        frame.setAttribute('loading', 'eager');
+        box.appendChild(frame);
+        return;
+    }
+
+    new window.Artplayer({
+        container: box,
+        url: url,
+        type: type === 'm3u8' ? 'm3u8' : '',
+        title: String(vod.vod_name || ''),
+        poster: safe(vod.vod_poster || vod.vod_pic),
+        volume: 0.8,
+        autoplay: true,
+        pip: true,
+        setting: true,
+        playbackRate: true,
+        aspectRatio: true,
+        fullscreen: true,
+        fullscreenWeb: false,
+        miniProgressBar: true,
+        playsInline: true,
+        airplay: true,
+        lock: true,
+        theme: '#23ade5',
+        lang: (navigator.language || 'en').toLowerCase(),
+        icons: {
+            loading: '<img src="ploading.gif" alt="">',
+            indicator: '<img width="16" height="16" src="indicator.svg" alt="">'
+        },
+        customType: {
+            // Native HLS first (Safari, iOS, Chrome 14x+), then hls.js 1.7.3 light, loaded only when needed.
+            m3u8: function (video, src, player) {
+                if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                    video.src = src;
+                    return;
+                }
+                (window.Hls ? Promise.resolve() : loadScript('hls.min.js')).then(function () {
+                    if (!window.Hls || !window.Hls.isSupported()) throw new Error('hls');
+                    var hls = new window.Hls();
+                    hls.loadSource(src);
+                    hls.attachMedia(video);
+                    player.on('destroy', function () { hls.destroy(); });
+                }).catch(function () {
+                    player.notice.show = 'This browser cannot play this video.';
+                });
+            }
+        }
+    });
+}());
+</script>
+</body>
+</html>

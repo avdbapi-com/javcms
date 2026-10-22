@@ -1,0 +1,31 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="honey-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex, follow">
+<meta name="theme-color" content="#100b05">
+<script src="{:MAC_PATH}static/template-ui/theme.js"></script>
+<title>{:htmlspecialchars(rtrim(\\app\\common\\util\\TemplateText::raw('ui.website_maintenance'), '. '), ENT_QUOTES)}</title>
+<link rel="icon" href="{:MAC_PATH_TEMPLATE}assets/brand/favicon.svg?v=20261012c" type="image/svg+xml">
+<link rel="stylesheet" href="{:MAC_PATH}static/vendor/fonts/quicksand.css">
+<link rel="stylesheet" href="{:MAC_PATH}static/vendor/fx/fonts/fraunces@5.3.0/fraunces.css">
+<link rel="stylesheet" href="{:MAC_PATH}static/vendor/fx/fonts/fallbacks.css">
+<link rel="stylesheet" href="{:MAC_PATH_TEMPLATE}assets/css/nectar.css?v=20261014-ma1">
+</head>
+<body class="nc-page-state nc-page-close">
+<main id="main-content" class="nc-main nc-main-bare"><div class="nc-wrap nc-state"><section class="nc-statecard">
+<img class="nc-close-mark" src="{:MAC_PATH_TEMPLATE}assets/brand/mark.svg?v=20261012c" alt="" width="72" height="72">
+<p class="nc-close-code" aria-hidden="true">503</p>
+<h1>{:\\app\\common\\util\\TemplateText::get('ui.the_site_is_undergoing_maintenance')}</h1>
+<p class="nc-statemsg">{$close_tip|htmlspecialchars=ENT_QUOTES}</p>
+</section></div></main>
+</body>
+</html>

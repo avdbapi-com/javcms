@@ -1,0 +1,30 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="topaz" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+<script src="{:MAC_PATH}static/template-ui/theme.js?v=20261007-theme1"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex, follow">
+<title>{:\\app\\common\\util\\TemplateText::get('ui.website_maintenance')}</title>
+<link rel="icon" href="{:MAC_PATH}static/template-ui/favicon-javcms.svg" type="image/svg+xml">
+<link rel="stylesheet" href="{:MAC_PATH}static/vendor/fonts/fonts.css">
+<link rel="stylesheet" href="{:MAC_PATH_TEMPLATE}assets/css/topaz.css?v=20261014-pl1">
+</head>
+<body class="tz-page-state tz-standalone">
+<main id="main-content" class="tz-main tz-wrap tz-state">
+  <section class="tz-state-card">
+    <span class="tz-tile tz-tile--lg" aria-hidden="true"><svg class="tz-i" viewBox="0 0 24 24"><path fill="currentColor" d="M8 5.14v13.72a1 1 0 0 0 1.52.85l10.6-6.86a1 1 0 0 0 0-1.7L9.52 4.29A1 1 0 0 0 8 5.14z"/></svg></span>
+    <span class="tz-state-big" aria-hidden="true">503</span>
+    <h1>{:\\app\\common\\util\\TemplateText::get('ui.the_site_is_undergoing_maintenance')}</h1>
+    <p>{$close_tip|htmlspecialchars=ENT_QUOTES}</p>
+  </section>
+</main>
+</body>
+</html>

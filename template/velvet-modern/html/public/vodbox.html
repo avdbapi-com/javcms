@@ -1,0 +1,14 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}if (!isset($vpPlain)) { $vpPlain = function ($v) { $v = (string)$v; for ($i = 0; $i < 4; $i++) { $d = html_entity_decode($v, ENT_QUOTES | ENT_HTML5, 'UTF-8'); if ($d === $v) { break; } $v = $d; } return trim($v); }; }
+$vpCardTitle = $vpPlain(($vo['vod_display_name'] ?? '') !== '' ? $vo['vod_display_name'] : ($vo['vod_name'] ?? ''));
+$vpCardCode = \app\common\util\AvdbLanguage::displayCode($vo); $vpCardCode = (string)preg_replace('/-(UNCENSORED-LEAK(?:ED)?|ENGLISH-SUBTITLES?)$/i', '', $vpCardCode);
+if ($vpCardCode === '' || stripos($vpCardCode, 'avdb-') === 0 || strlen($vpCardCode) > 32) { $vpCardCode = ''; }
+$vpCardHits = intval($vo['vod_hits'] ?? 0); if (isset($vpSeen) && is_array($vpSeen)) { $vpSeen[] = intval($vo['vod_id'] ?? 0); }
+$vpCardMedal = (!empty($vpRankOn) && isset($vpK) && intval($vpK) >= 1 && intval($vpK) <= 10 && isset($vpRoman)) ? ($vpRoman[intval($vpK) - 1] ?? '') : '';
+{/php}<article class="vp-card"><a class="vp-card-link" href="{:mac_url_vod_play($vo)}" title="{$vpCardTitle|htmlspecialchars=ENT_QUOTES}"><span class="vp-thumb" data-fx="spotlight skeleton"><img src="{$vo.vod_pic|mac_default=$tplNoPic|mac_url_img|htmlspecialchars=ENT_QUOTES}" onerror="vpImg(this)" alt="" width="320" height="180" loading="lazy" decoding="async"><span class="vp-frame" aria-hidden="true"></span>{if condition="$vpCardMedal neq ''"}<span class="vp-medal" aria-hidden="true">{$vpCardMedal}</span>{/if}{if condition="!empty($vpRibbon)"}<span class="vp-ribbon">{:\\app\\common\\util\\TemplateText::get('vp.premiere')}</span>{/if}{notempty name="vo.vod_duration"}<span class="vp-stub">{$vo.vod_duration|htmlspecialchars=ENT_QUOTES}</span>{/notempty}<span class="vp-play" aria-hidden="true"><svg class="vp-i"><use href="{$maccms.path_tpl}assets/icons.svg?v=20261010-r1#play"></use></svg></span></span><span class="vp-card-body"><span{php}echo \app\common\util\AvdbLanguage::langAttr(isset($vo) && is_array($vo) ? $vo : []);{/php} class="vp-card-title">{$vpCardTitle|htmlspecialchars=ENT_QUOTES}</span><span class="vp-card-meta"><span><svg class="vp-i" aria-hidden="true"><use href="{$maccms.path_tpl}assets/icons.svg?v=20261010-r1#eye"></use></svg><span class="vp-sr">{:\\app\\common\\util\\TemplateText::get('views')} </span>{:number_format($vpCardHits)}</span>{if condition="$vpCardCode neq ''"}<i aria-hidden="true">&#10022;</i><span class="vp-code">{$vpCardCode|htmlspecialchars=ENT_QUOTES,'UTF-8',false}</span>{/if}</span></span></a></article>

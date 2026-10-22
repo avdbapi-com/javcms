@@ -1,0 +1,11 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{maccms:type order="asc" by="sort" ids="parent" id="hnType" key="hnTypeKey" flag="vod" hide_empty="1" not="'.intval($GLOBALS['jvPbShown'] ?? 0).'"}<section class="hn-section index-list" aria-labelledby="hn-sec-cat-{$hnType.type_id}"><div class="top-header" data-ai-group><h2 class="area-title hn-split" data-ai-hot id="hn-sec-cat-{$hnType.type_id}">{:\\app\\common\\util\\AutoIcon::icon('category', $hnType['type_name'], ['size'=>'lg', 'plate'=>true, 'class'=>'hn-cell'])}<a href="{:mac_url_type($hnType,[],'type')}">{:\\app\\common\\util\\TemplateText::get(htmlspecialchars_decode((string)$hnType['type_name'], ENT_QUOTES))}</a></h2><a class="more" href="{:mac_url_type($hnType,[],'type')}">{:\\app\\common\\util\\TemplateText::get('ui.view_more')}{:\\app\\common\\util\\AutoIcon::ui('chevron-right', ['class'=>'hn-i', 'tint'=>'none'])}</a></div>
+<div class="hn-grid" data-grid-fill>{maccms:vod num="10" type="'.$hnType['type_id'].'" order="desc" by="time" paging="no"}{include file="public/vodbox"}{/maccms:vod}</div>
+<a class="hn-more-pill" href="{:mac_url_type($hnType,[],'type')}">{:\\app\\common\\util\\TemplateText::get('ui.view_more')}{:\\app\\common\\util\\AutoIcon::ui('chevron-right', ['class'=>'hn-i', 'tint'=>'none'])}</a></section>
+{/maccms:type}

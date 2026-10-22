@@ -1,0 +1,31 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="velvet" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/auto"}
+{include file="public/include"}
+</head>
+<body class="vv-page-list">
+{include file="public/head"}
+<main id="main-content" class="vv-main">
+  <div class="vv-wrap">
+    <div class="vv-list-head">
+      <div class="vv-list-title"><span class="vv-tile vv-tile--new vv-tile--sm" aria-hidden="true">{:\\app\\common\\util\\AutoIcon::ui('list', ['class'=>'vv-i'])}</span><h1>{:\\app\\common\\util\\TemplateText::get('ui.latest_100_updates')}</h1></div>
+      {include file="public/labelchips"}
+    </div>
+    {include file="public/catrail"}
+    <div class="vv-grid" data-grid-fill>
+      {maccms:vod num="100" type="all" order="desc" by="time" paging="no"}{include file="public/vodbox"}{/maccms:vod}
+    </div>
+    {empty name="__LIST__"}{include file="public/empty"}{/empty}
+  </div>
+</main>
+{include file="public/foot"}
+</body>
+</html>

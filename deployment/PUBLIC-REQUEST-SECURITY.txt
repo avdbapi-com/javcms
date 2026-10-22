@@ -1,0 +1,93 @@
+Public request protections
+==========================
+
+Protection is enabled automatically by index.php before framework, session and
+database initialization. It also checks the resolved public controller/action
+before user initialization, so custom route aliases receive the same limits.
+It does not install a cron task, require Redis, call external services, or trust
+cookies as rate-limit identities.
+
+Defaults per verified client IP / per installation, in a 60-second window:
+  Public POST requests:       60 / 600
+  Comment and guestbook:       6 / 120
+  Login/register/recovery:    20 / 120
+  Email/SMS account messages:  3 / 30
+  Hit/vote/report/referral:  120 / 2400
+  Search suggestions:        60 / 600
+  Public CAPTCHA requests:   60 / 600
+Sensitive requests also consume the general POST budget when using POST.
+Normal page/API reads are not assigned a general flood limit. Existing provider
+search limits retain their configured limits and response fields, with atomic
+storage shared between PHP workers rather than a cache read/write race.
+
+Denied requests return HTTP 429 and Retry-After. Unavailable or busy guard storage
+returns HTTP 503 with Retry-After for guarded actions. Plain reads continue without
+opening limiter storage. Error responses are private/no-store and never include
+request contents, credentials or filesystem paths. Counters have bounded storage,
+live entries are not evicted to admit new attackers, and lock acquisition does
+not wait. Storage coordinates workers on ONE installation/host. Multi-host
+deployments require edge/shared enforcement; do not treat local files as shared
+across independent machines.
+
+Client identity uses the actual network peer. Cloudflare's CF-Connecting-IP is
+accepted only when that peer matches the bundled official Cloudflare IPv4/IPv6
+CIDRs. Arbitrary CF/client/X-Forwarded-For headers do not override a direct peer.
+Other reverse proxies must be explicitly trusted in optional guard configuration;
+do not trust every peer or every private/loopback address automatically.
+
+Comment and guestbook submissions use the raw POST method, scalar field
+allowlists, a 1,000-character raw input ceiling, authenticated server-side identity
+and configured CAPTCHA/login/audit settings. Public callers cannot submit a
+record ID to update an existing row or set administrative fields. Comment
+parents must belong to the requested published media. Existing native CSRF
+checks remain in JAVCMS. Hit updates retain detail-cache refresh while allowing
+listing caches to expire normally, rather than invalidating all listings per hit.
+Escaped content must also fit the native 255-character database column and escaped
+names must fit 60 characters. Overflow returns a validation error before SQL;
+it is not silently truncated. No database schema migration is required.
+Public guarded POST requests with a Transfer-Encoding header return HTTP 411
+before framework startup. Send these requests with a normal Content-Length;
+ordinary browsers already do this. Exact callback exemptions and separate API,
+admin and installer entry points retain their existing request handling.
+
+Resource bounds
+---------------
+Interactive public index requests use at most 60 execution seconds and 256 MiB
+of PHP memory. Separate admin/API/install entry points keep their existing job
+settings. PHP cannot limit a body before PHP itself parses it: use the web-server
+body cap as well. Apache root/profile .htaccess caps files named index.php at
+8 MiB; this also inherits into nested index.php files. Common comment/guestbook
+paths additionally have a 64 KiB Apache body cap. Standard Content-Length body
+requests are rejected before PHP in the tested Apache handlers. A chunked
+octet-stream can invoke PHP before Apache discards its body; the public guard
+therefore rejects streaming guarded POST requests before framework startup.
+Recognized community routes are capped at 64 KiB before framework startup;
+custom aliases are checked again before user/model initialization. Normal text
+is far smaller than this. Callback/API entrances are separate.
+
+Apache applies LimitRequestBody without a server restart when .htaccess overrides
+are allowed. OpenLiteSpeed's rewrite-only .htaccess must not be represented as
+enforcing this Apache directive: configure its request-body limit at the
+server/vhost level. Nginx/OpenResty needs client_max_body_size in the public PHP
+location. IIS needs request-filtering maxAllowedContentLength. Preserve larger
+limits where authenticated admin/API import or upload jobs require them.
+The optional deployment profiles are not a claim that those servers were run.
+
+Search floods can also be refused by the web server before PHP runs (1.2.0, optional):
+nginx/limits-http.conf (http level) plus the commented "search-flood limits" lines in
+nginx/locations.conf, or apache/limits-server.conf (server level, mod_qos). Only search
+requests are limited there (30 a minute per address, 8 at the same time for the whole
+site, answers 429 / 503 with Retry-After); behind a proxy or CDN set the visitor address
+first (nginx realip, Apache mod_remoteip). On IIS, Dynamic IP Restrictions plays the same
+role. PHP keeps its own budgets and render slots whether or not these are used.
+
+These controls limit expensive application work. Volumetric attacks can exhaust
+network or web-server capacity before PHP runs; use hosting/CDN/firewall controls
+for that layer. No application can guarantee immunity to every DDoS attack.
+
+References reviewed 2026-10-07:
+https://www.php.net/manual/en/function.flock.php
+https://httpd.apache.org/docs/2.4/mod/core.html#limitrequestbody
+https://www.cloudflare.com/ips-v4
+https://www.cloudflare.com/ips-v6
+https://developers.cloudflare.com/fundamentals/security/protect-your-origin-server/

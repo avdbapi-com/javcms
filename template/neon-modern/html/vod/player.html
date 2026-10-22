@@ -1,0 +1,25 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html><html data-template-theme="neon-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex, follow"><title>{:\\app\\common\\util\\TemplateText::get('ui.iframeplayer')}</title><link rel="stylesheet" href="{$maccms.path_tpl|htmlspecialchars=ENT_QUOTES}assets/css/player.css?v=20261009-1"><script>var maccms=<?php echo json_encode(['path'=>(string)($maccms['path'] ?? ''),'mid'=>(string)($maccms['mid'] ?? '1'),'url'=>(string)($maccms['site_url'] ?? ''),'wapurl'=>(string)($maccms['site_wapurl'] ?? ''),'mob_status'=>(string)($maccms['mob_status'] ?? '0')], JSON_HEX_TAG|JSON_HEX_AMP|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES); ?>;var templatePlayerMessages={:\\app\\common\\util\\TemplateText::json(['ui.access_required'])};</script><script src="{$maccms.path|htmlspecialchars=ENT_QUOTES}static/vendor/jquery/jquery-3.7.1.min.js"></script></head><body><div id="native-player">{$player_data}{$player_js}</div>
+<script>
+document.querySelectorAll("#native-player iframe").forEach(function (frame) {
+frame.setAttribute("allow", "autoplay; fullscreen; picture-in-picture; encrypted-media");
+frame.setAttribute("allowfullscreen", "allowfullscreen");
+});
+</script>
+<?php $templatePlayerPoints=(int)(($GLOBALS['config']['user']['vod_points_type'] ?? '0') == '1' ? ($obj['vod_points'] ?? 0) : ($obj['vod_points_play'] ?? 0)); ?>
+{if condition="$popedom.code gt 1"}<section class="player_showtry" id="player-preview-notice" hidden aria-labelledby="preview-heading"><div class="native-preview-card"><p class="native-preview-kicker">{:\\app\\common\\util\\TemplateText::get('ui.video_access')}</p><h1 id="preview-heading" tabindex="-1">{:\\app\\common\\util\\TemplateText::get('ui.access_required')}</h1>{if condition="$templatePlayerPoints eq 0"}<p>{:\\app\\common\\util\\TemplateText::get('ui.preview_membership_limit', ['minutes'=>$popedom.trysee])}</p><p class="native-preview-note">{:\\app\\common\\util\\TemplateText::get('ui.tip_buy_vip_membership_group_to_enjoy_super_permissions_thank_you_for_your_support')}</p><div class="native-preview-actions"><a href="{:mac_url('user/index')}" target="_blank" rel="noopener noreferrer">{:\\app\\common\\util\\TemplateText::get('ui.member_center')}</a><a class="native-preview-primary" href="{:mac_url('user/upgrade')}" target="_blank" rel="noopener noreferrer">{:\\app\\common\\util\\TemplateText::get('ui.immediately_upgrade')}</a></div>{else/}<p>{:\\app\\common\\util\\TemplateText::get('ui.preview_points_limit', ['minutes'=>$popedom.trysee,'points'=>$templatePlayerPoints])}</p><p class="native-preview-note">{:\\app\\common\\util\\TemplateText::get('ui.tip_payment_watch_permanently_do_not_repeat_the_fee_thank_you_for_your_support')}</p><div class="native-preview-actions">{if condition="$user.group.group_id eq 1"}<a class="native-preview-primary" href="{:mac_url('user/login')}" target="_blank" rel="noopener noreferrer">{:\\app\\common\\util\\TemplateText::get('ui.log_in_immediately')}</a>{else/}<button class="native-preview-primary" type="button" onclick="templatePlayerPurchase(this)" data-id="{$obj.vod_id|intval}" data-sid="{$param.sid|intval}" data-nid="{$param.nid|intval}" data-type="4" data-mid="1">{:\\app\\common\\util\\TemplateText::get('ui.confirm_the_purchase')}</button><a href="{:mac_url('user/buy')}" target="_blank" rel="noopener noreferrer">{:\\app\\common\\util\\TemplateText::get('ui.immediately_recharge')}</a>{/if}</div>{/if}<p id="player-status" role="status" aria-live="polite"></p></div></section>
+<script>
+function templatePlayerPurchase(control){
+try {
+if(window.parent!==window&&window.parent.location.origin===location.origin&&window.parent.MAC&&window.parent.MAC.User&&typeof window.parent.MAC.User.BuyPopedom==='function'){window.parent.MAC.User.BuyPopedom(control);return;
+}
+}catch(error){}
+var status=document.getElementById('player-status');if(status)status.textContent=templatePlayerMessages['ui.access_required'];}
+window.setTimeout(function(){var notice=document.getElementById('player-preview-notice'),target=document.querySelector('.MacPlayer')||document.getElementById('native-player');if(!notice||!target)return;notice.hidden=false;target.replaceChildren(notice);target.classList.add('native-preview-ended');},Math.min(2147483647,Math.max(0,<?php echo json_encode((float)($popedom['trysee'] ?? 0)); ?>)*60000));
+</script>{/if}</body></html>

@@ -1,0 +1,24 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}
+// Page head: a neon-sign H1 (flicker-on + axis tilt) with an optional count / query chip.
+// Inputs: $nnPH (title, plain text), $nnPHCount (int|null), $nnPHQuery (plain text|''), $nnPHText (true = text face instead of the sign face), $nnPHIcon (sprite id|'').
+$nnPH = isset($nnPH) ? (string)$nnPH : ''; $nnPHCount = isset($nnPHCount) ? $nnPHCount : null; $nnPHQuery = isset($nnPHQuery) ? (string)$nnPHQuery : ''; $nnPHText = !empty($nnPHText); $nnPHIcon = isset($nnPHIcon) ? (string)$nnPHIcon : ''; $nnPHCat = isset($nnPHCat) ? (string)$nnPHCat : '';
+$nnPHAiMap = ['sparkles' => ['nav', 'latest'], 'flame' => ['nav', 'hot'], 'star' => ['nav', 'top'], 'heart' => ['nav', 'liked'], 'people' => ['nav', 'actors'], 'folder' => ['nav', 'topics'], 'list' => ['nav', 'articles'], 'train' => ['nav', 'latest-100'], 'film' => ['nav', 'all'], 'search' => ['ui', 'search'], 'comment' => ['ui', 'messages'], 'download' => ['ui', 'download']];
+$nnPHActor = isset($nnPHActor) ? (string)$nnPHActor : ''; $nnPHTag = isset($nnPHTag) ? (string)$nnPHTag : '';
+$nnPHAi = ''; $nnPHTone = ''; if ($nnPHActor !== '') { $nnPHAi = \app\common\util\AutoIcon::avatar($nnPHActor, '', ['size' => 'md', 'decorative' => true, 'class' => 'nn-ph-av']); } elseif ($nnPHTag !== '' && \app\common\util\AutoIcon::keepTag($nnPHTag)) { $nnPHTone = ' nn-tone-' . \app\common\util\AutoIcon::slot($nnPHTag); $nnPHAi = \app\common\util\AutoIcon::icon('tag', $nnPHTag, ['size' => 'xl', 'plate' => true, 'class' => 'nn-ph-ai']); } elseif ($nnPHCat !== '') { $nnPHTone = ' nn-tone-' . \app\common\util\AutoIcon::slot($nnPHCat); $nnPHAi = \app\common\util\AutoIcon::icon('category', $nnPHCat, ['size' => 'xl', 'plate' => true, 'class' => 'nn-ph-ai']); } elseif ($nnPHIcon !== '' && isset($nnPHAiMap[$nnPHIcon])) { $nnPHAi = $nnPHAiMap[$nnPHIcon][0] === 'nav' ? \app\common\util\AutoIcon::navIcon($nnPHAiMap[$nnPHIcon][1], '', ['class' => 'nn-ph-ai']) : \app\common\util\AutoIcon::ui($nnPHAiMap[$nnPHIcon][1], ['class' => 'nn-ph-ai']); }
+$nnPHParts = ['', '']; if ($nnPHCount !== null) { $nnPHParts = explode('%%N%%', \app\common\util\TemplateText::raw('nn.videos_count', ['count' => '%%N%%']), 2); if (count($nnPHParts) < 2) { $nnPHParts[] = ''; } }
+$nnPHDir = preg_match('/[\x{0590}-\x{08FF}\x{FB1D}-\x{FDFF}\x{FE70}-\x{FEFF}]/u', $nnPH . $nnPHQuery) ? 'rtl' : 'ltr';
+{/php}<header class="nn-pagehead">
+  <h1 class="nn-pagesign nn-sign nn-tube nn-flick{$nnPHTone}{if condition="$nnPHText"} nn-pagesign--text{/if}"{if condition="!$nnPHText"} data-nn-tilt{/if} dir="{$nnPHDir}">{$nnPHAi}{$nnPH|htmlspecialchars=ENT_QUOTES}</h1>
+  <div class="nn-pagehead-side">
+    {if condition="$nnPHQuery neq ''"}<span class="nn-pagequery nn-sign" dir="{$nnPHDir}">{$nnPHQuery|htmlspecialchars=ENT_QUOTES}</span>{/if}
+    {if condition="$nnPHCount !== null"}<p class="nn-pagecount"><span>{$nnPHParts.0|htmlspecialchars=ENT_QUOTES}</span><b class="nn-ltr">{:number_format((float)$nnPHCount)}</b><span>{$nnPHParts.1|htmlspecialchars=ENT_QUOTES}</span></p>{/if}
+    {if condition="isset($nnPHSearch) && $nnPHSearch"}<a class="nn-btn" href="{:mac_url('vod/search')}">{:\\app\\common\\util\\AutoIcon::ui('search')}{:\\app\\common\\util\\TemplateText::get('ui.search')}</a>{/if}
+  </div>
+</header>{php}$nnPH = ''; $nnPHCount = null; $nnPHQuery = ''; $nnPHText = false; $nnPHIcon = ''; $nnPHSearch = false; $nnPHCat = ''; $nnPHAi = ''; $nnPHActor = ''; $nnPHTag = '';{/php}

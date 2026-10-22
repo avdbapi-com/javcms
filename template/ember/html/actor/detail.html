@@ -1,0 +1,43 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="ember" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/actor_detail"}
+{include file="public/include"}
+</head>
+<body class="e-page-detail">
+{php}$themeNotProvided = \app\common\util\TemplateText::raw('not_provided');{/php}
+{include file="public/head"}
+<main id="main-content" class="e-main container">
+  <nav class="e-crumb" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.main_navigation')}"><a href="{$maccms.path}">{:\\app\\common\\util\\TemplateText::get('ui.home')}</a>{:\\app\\common\\util\\AutoIcon::ui('chevron-right', ['class'=>'e-ico'])}<a href="{:mac_url('actor/index')}">{:\\app\\common\\util\\TemplateText::get('ui.performers')}</a></nav>
+  <div class="e-vtitle"><h1>{:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)($obj['actor_name'] ?? '')), ENT_QUOTES, 'UTF-8')}</h1></div>
+  <div class="e-detail is-person">
+    <div class="e-cover is-portrait e-actor-cover">{:\\app\\common\\util\\AutoIcon::avatar($obj['actor_name'], $obj['actor_pic'] ?? '', ['size'=>'xl', 'decorative'=>true, 'class'=>'e-actor-av'])}</div>
+    <div class="e-detail-side">
+      <dl class="e-box e-meta-box">
+        <div class="e-row"><dt>{:\\app\\common\\util\\AutoIcon::ui('user', ['class'=>'e-ico'])}{:\\app\\common\\util\\TemplateText::get('ui.name')}</dt><dd>{:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)($obj['actor_name'] ?? '')), ENT_QUOTES, 'UTF-8')}</dd></div>
+        {notempty name="obj.actor_sex"}<div class="e-row"><dt>{:\\app\\common\\util\\AutoIcon::ui('users', ['class'=>'e-ico'])}{:\\app\\common\\util\\TemplateText::get('ui.gender')}</dt><dd>{$obj.actor_sex}</dd></div>{/notempty}
+        {notempty name="obj.actor_birthday"}<div class="e-row"><dt>{:\\app\\common\\util\\AutoIcon::ui('calendar', ['class'=>'e-ico'])}{:\\app\\common\\util\\TemplateText::get('ui.birthday')}</dt><dd>{:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)($obj['actor_birthday'] ?? '')), ENT_QUOTES, 'UTF-8')}</dd></div>{/notempty}
+        {notempty name="obj.actor_area"}<div class="e-row"><dt>{:\\app\\common\\util\\AutoIcon::ui('globe', ['class'=>'e-ico'])}{:\\app\\common\\util\\TemplateText::get('ui.nation')}</dt><dd>{:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)($obj['actor_area'] ?? '')), ENT_QUOTES, 'UTF-8')}</dd></div>{/notempty}
+        {notempty name="obj.actor_birtharea"}<div class="e-row"><dt>{:\\app\\common\\util\\AutoIcon::ui('map-pin', ['class'=>'e-ico'])}{:\\app\\common\\util\\TemplateText::get('ui.place_of_birth')}</dt><dd>{:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)($obj['actor_birtharea'] ?? '')), ENT_QUOTES, 'UTF-8')}</dd></div>{/notempty}
+        {notempty name="obj.actor_height"}<div class="e-row"><dt>{:\\app\\common\\util\\AutoIcon::ui('arrow-up', ['class'=>'e-ico'])}{:\\app\\common\\util\\TemplateText::get('ui.height')}</dt><dd>{:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)($obj['actor_height'] ?? '')), ENT_QUOTES, 'UTF-8')}</dd></div>{/notempty}
+        {notempty name="obj.actor_weight"}<div class="e-row"><dt>{:\\app\\common\\util\\AutoIcon::ui('activity', ['class'=>'e-ico'])}{:\\app\\common\\util\\TemplateText::get('ui.weight')}</dt><dd>{:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)($obj['actor_weight'] ?? '')), ENT_QUOTES, 'UTF-8')}</dd></div>{/notempty}
+      </dl>
+      {notempty name="obj.actor_content"}<div class="e-desc">{$obj.actor_content|mac_filter_html}</div>{/notempty}
+    </div>
+  </div>
+  <section class="e-sec" aria-labelledby="e-actor-videos">
+    <div class="e-head" data-ai-group><h2 class="e-title" id="e-actor-videos">{:\\app\\common\\util\\AutoIcon::ui('video', ['class'=>'e-ico'])}{:\\app\\common\\util\\TemplateText::get('videos')}</h2></div>
+    <ul class="e-grid" data-grid-fill>{maccms:vod num="20" actor="'.$obj['actor_name'].'" order="desc" by="time" paging="no" id="vo"}{include file="public/vodbox"}{/maccms:vod}</ul>
+  </section>
+  {if condition="$GLOBALS['config']['comment']['status'] eq 1"}<section class="e-comments"><div class="mac_comment" data-id="{$obj.actor_id|intval}" data-mid="8"><h2>{:\\app\\common\\util\\TemplateText::get('ui.comments')}</h2><p>{:\\app\\common\\util\\TemplateText::get('ui.loading_comments')}</p></div></section><script>MAC.Comment.Init();MAC.Comment.Show(1);</script>{/if}
+</main>
+{include file="public/foot"}
+</body>
+</html>

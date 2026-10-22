@@ -1,0 +1,177 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}
+/* Step 1 of the editor (ADS-BRIEF 4.3): 8 big cards, "More formats", "Not possible on a website", then the source fields
+   of the chosen card. Groups (data-g) are shown / hidden by admin_jcx.js; only fields of visible groups are sent. */
+$jxPic = function ($c) {
+    $r = ['image' => [[10, 17, 44, 10, 1]], 'code' => [[10, 17, 44, 10, 2]], 'preroll' => [[8, 7, 48, 28, 1]], 'feed' => [[6, 8, 15, 12, 0], [24, 8, 15, 12, 0], [42, 8, 15, 12, 1], [6, 24, 15, 12, 0], [24, 24, 15, 12, 0], [42, 24, 15, 12, 0]],
+        'sticky' => [[2, 37, 60, 6, 1]], 'pop' => [[14, 10, 46, 30, 1]], 'push' => [[36, 28, 25, 11, 1]], 'link' => [[10, 20, 30, 3, 1]], 'expand' => [[8, 8, 48, 7, 0], [8, 17, 48, 18, 1]],
+        'corner' => [[38, 22, 23, 18, 1]], 'full' => [[5, 4, 54, 36, 1]], 'overlay' => [[10, 30, 44, 11, 1]], 'rails' => [[1, 6, 7, 34, 1], [56, 6, 7, 34, 1]], 'masthead' => [[4, 4, 56, 15, 1]],
+        'widget' => [[5, 16, 12, 14, 1], [19, 16, 12, 14, 1], [33, 16, 12, 14, 1], [47, 16, 12, 14, 1]], 'html5' => [[16, 10, 32, 24, 1]], 'outstream' => [[14, 14, 36, 20, 1]],
+        'sponsored' => [[10, 10, 44, 24, 0], [12, 12, 12, 4, 1]], 'webpush' => [[44, 2, 18, 9, 1]]];
+    $s = '<svg class="jx-card__pic" viewBox="0 0 64 44" aria-hidden="true" focusable="false"><rect x="0.5" y="0.5" width="63" height="43" rx="4" fill="none" stroke="currentColor" stroke-opacity=".45"/>';
+    foreach ($r[$c] ?? [] as $b) {
+        $s .= '<rect x="' . $b[0] . '" y="' . $b[1] . '" width="' . $b[2] . '" height="' . $b[3] . '" rx="2" fill="currentColor" fill-opacity="' . ($b[4] ? '.85' : '.22') . '"' . ($b[4] === 2 ? ' stroke="currentColor" stroke-dasharray="2 2" fill-opacity=".35"' : '') . '/>';
+    }
+    if ($c === 'preroll' || $c === 'outstream') { $s .= '<path d="M29 15l9 6-9 6z" fill="var(--ax-bg,#000)"/>'; }
+    return $s . '</svg>';
+};
+$jxCard = function ($c, $d) use ($jxE, $jxPic) {
+    $n = in_array($c, ['image', 'code', 'preroll', 'feed', 'sticky', 'pop', 'push', 'link'], true) ? 'card_' . $c : 'fmt_' . $c;
+    $h = '<button type="button" class="jx-card" role="radio" aria-checked="false" data-card="' . $jxE($c) . '" aria-describedby="jxCardH-' . $jxE($c) . '">'
+        . $jxPic($c) . '<span class="jx-card__t">' . $jxE(lang('admin/ux/jcx/' . $n)) . '</span>'
+        . '<span class="jx-card__h" id="jxCardH-' . $jxE($c) . '">' . $jxE(lang('admin/ux/jcx/' . $n . '_help'))
+        . '<span class="jx-card__aka">' . $jxE(str_replace('%s', lang('admin/ux/jcx/' . $c . '_aka'), lang('admin/ux/jcx/aka'))) . '</span></span>';
+    if ($d[4]) { $h .= '<span class="ax-chip ax-chip--danger jx-card__risk">' . $jxE(lang('admin/ux/jcx/chrome_risk')) . '</span>'; }
+    return $h . '</button>';
+};
+$jxUp = function ($m, $label, $help, $accept, $id) use ($jxE) {
+    return '<div class="ax-field jx-up" data-up="' . $jxE($m) . '" data-accept="' . $jxE($accept) . '"><label id="' . $id . '-l">' . $jxE(lang('admin/ux/jcx/' . $label)) . '</label>'
+        . '<div class="jx-up__row"><input type="file" id="' . $id . '" class="jx-up__file" hidden aria-labelledby="' . $id . '-l" accept="' . $jxE($accept === 'image' ? 'image/jpeg,image/png,image/gif,image/webp' : ($accept === 'video' ? 'video/mp4,video/webm' : '.zip,application/zip')) . '" lay-ignore>'
+        . '<button type="button" class="ax-btn ax-btn--sm" data-jx-act="choose" aria-describedby="' . $id . '-h">' . $jxE(lang('admin/ux/jcx/choose_file')) . '</button>'
+        . '<span class="jx-up__name" aria-live="polite"></span><img class="jx-up__img" alt="" hidden>'
+        . '<button type="button" class="ax-btn ax-btn--sm ax-btn--ghost" data-jx-act="unfile" hidden>' . $jxE(lang('admin/ux/jcx/remove_file')) . '</button>'
+        . '<input type="hidden" data-m="' . $jxE($m) . '"></div>'
+        . '<p class="ax-help" id="' . $id . '-h">' . $jxE(lang('admin/ux/jcx/' . $help)) . '</p><p class="ax-help ax-danger-text jx-err" data-err="item_media.' . $jxE($m) . '" hidden></p></div>';
+};
+$jxIn = function ($f, $label, $help, $type = 'text', $attr = '', $size = 'md') use ($jxE) {
+    $id = 'jxf-' . str_replace(['.', '_'], '-', $f);
+    $tag = $type === 'textarea' ? '<textarea id="' . $id . '" class="layui-textarea" rows="3" data-f="' . $jxE($f) . '" aria-describedby="' . $id . '-h" ' . $attr . '></textarea>'
+        : '<input id="' . $id . '" type="' . $type . '" class="layui-input" data-f="' . $jxE($f) . '" aria-describedby="' . $id . '-h" ' . $attr . '>';
+    return '<div class="ax-field ax-field--' . $size . '"><label for="' . $id . '">' . $jxE(lang('admin/ux/jcx/' . $label)) . '</label>' . $tag
+        . '<p class="ax-help" id="' . $id . '-h">' . $jxE(lang('admin/ux/jcx/' . $help)) . '</p><p class="ax-help ax-danger-text jx-err" data-err="' . $jxE($f) . '" hidden></p></div>';
+};
+{/php}
+<section class="ax-section jx-stepsec" data-step="1" aria-labelledby="jxS1T">
+    <h2 id="jxS1T">{:$jxE(lang('admin/ux/jcx/step_what'))}</h2>
+    <div class="jx-cards" role="radiogroup" aria-labelledby="jxS1T">
+        {volist name="cards" id="d" key="k"}{if condition="$d[3]"}{:$jxCard($key, $d)}{/if}{/volist}
+    </div>
+    <p class="ax-help ax-danger-text jx-err" data-err="card" hidden></p>
+    <details class="jx-more" {if condition="$card neq '' && !$cards[$card][3]"}open{/if}>
+        <summary>{:$jxE(lang('admin/ux/jcx/more_formats'))}</summary>
+        <div class="jx-cards jx-cards--sm" role="radiogroup" aria-label="{:$jxE(lang('admin/ux/jcx/more_formats'))}">
+            {volist name="cards" id="d"}{if condition="!$d[3]"}{:$jxCard($key, $d)}{/if}{/volist}
+        </div>
+    </details>
+    <details class="jx-more" id="jxNotWeb">
+        <summary>{:$jxE(lang('admin/ux/jcx/not_web_title'))}</summary>
+        <ul class="jx-notweb">{volist name="not_web" id="nw"}<li>{:$jxE(lang('admin/ux/jcx/not_web_' . $nw))}</li>{/volist}</ul>
+    </details>
+</section>
+
+<section class="ax-section jx-stepsec jx-src" data-step="1" data-g="src" aria-labelledby="jxSrcT" hidden>
+    <h2 id="jxSrcT">{:$jxE(lang('admin/ux/jcx/step_source'))}: <span data-jx-cardname></span></h2>
+
+    <div class="ax-field" data-g="kindsw" role="radiogroup" aria-labelledby="jxKindL">
+        <label id="jxKindL">{:$jxE(lang('admin/ux/jcx/kind_what'))}</label>
+        <div class="jx-radios"><label class="jx-check"><input type="radio" name="jxKind" value="own" lay-ignore checked> {:$jxE(lang('admin/ux/jcx/own_box'))}</label>
+        <label class="jx-check"><input type="radio" name="jxKind" value="net" lay-ignore> {:$jxE(lang('admin/ux/jcx/net_box'))}</label></div>
+    </div>
+
+    {include file="../../../application/admin/view/jcx/_presets" /}
+
+    <div data-g="img">
+        {:$jxUp('src', 'upload_image', 'help_image', 'image', 'jxUpSrc')}
+        <div data-g="imgm">{:$jxUp('srcm', 'upload_phone_image', 'help_image_phone', 'image', 'jxUpSrcm')}</div>
+        <div data-g="still" hidden>{:$jxUp('still', 'upload_still', 'help_still', 'image', 'jxUpStill')}</div>
+        <p class="ax-help jx-sizefound" data-jx-size aria-live="polite"></p>
+    </div>
+    <div data-g="expand">{:$jxUp('expand_img', 'upload_expand', 'help_expand', 'image', 'jxUpExp')}</div>
+    <div data-g="wall">{:$jxUp('wallpaper', 'upload_wallpaper', 'help_wallpaper', 'image', 'jxUpWall')}</div>
+    <div data-g="push">
+        {:$jxUp('src', 'upload_icon', 'help_icon', 'image', 'jxUpIcon')}
+        {:$jxIn('item_title', 'title_f', 'help_title', 'text', 'maxlength="40"')}
+        {:$jxIn('item_text', 'text_f', 'help_text', 'text', 'maxlength="90"')}
+    </div>
+    <div data-g="native">
+        {:$jxUp('src', 'upload_card', 'help_card', 'image', 'jxUpCard')}
+        {:$jxIn('item_title', 'title_f', 'help_title', 'text', 'maxlength="120"')}
+        {:$jxIn('item_brand', 'brand', 'help_brand', 'text', 'maxlength="60"', 'sm')}
+        {:$jxIn('item_cta', 'cta', 'help_cta', 'text', 'maxlength="30"', 'sm')}
+    </div>
+    <div data-g="cards">
+        <div class="ax-field"><label id="jxCardsL">{:$jxE(lang('admin/ux/jcx/cards'))}</label><p class="ax-help">{:$jxE(lang('admin/ux/jcx/help_cards'))}</p></div>
+        <ol class="jx-cardlist" data-jx-cards aria-labelledby="jxCardsL"></ol>
+        <button type="button" class="ax-btn ax-btn--sm" data-jx-act="card-add"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-plus"/></svg>{:$jxE(lang('admin/ux/jcx/card_add'))}</button>
+        <p class="ax-help ax-danger-text jx-err" data-err="item_media.cards" hidden></p>
+        <div class="ax-field" role="radiogroup" aria-labelledby="jxLayL"><label id="jxLayL">{:$jxE(lang('admin/ux/jcx/layout'))}</label>
+            <div class="jx-radios"><label class="jx-check"><input type="radio" name="jxLayout" value="grid" data-o="layout" lay-ignore checked> {:$jxE(lang('admin/ux/jcx/layout_grid'))}</label><label class="jx-check"><input type="radio" name="jxLayout" value="carousel" data-o="layout" lay-ignore> {:$jxE(lang('admin/ux/jcx/layout_carousel'))}</label><label class="jx-check"><input type="radio" name="jxLayout" value="collection" data-o="layout" lay-ignore> {:$jxE(lang('admin/ux/jcx/layout_collection'))}</label></div>
+            <p class="ax-help">{:$jxE(lang('admin/ux/jcx/help_layout'))}</p></div>
+    </div>
+    <div data-g="video">
+        <div class="ax-field" data-g="vwhat" role="radiogroup" aria-labelledby="jxVwL"><label id="jxVwL">{:$jxE(lang('admin/ux/jcx/v_what'))}</label>
+            <div class="jx-radios"><label class="jx-check"><input type="radio" name="jxVWhat" value="file" lay-ignore checked> {:$jxE(lang('admin/ux/jcx/v_file'))}</label>
+            <label class="jx-check"><input type="radio" name="jxVWhat" value="vast" lay-ignore> {:$jxE(lang('admin/ux/jcx/v_vast'))}</label></div></div>
+        <div data-g="vfile">
+            {:$jxUp('vsrc', 'upload_video', 'help_video', 'video', 'jxUpVid')}
+            {:$jxIn('media.vurl', 'or_url', 'help_video_url', 'url', 'placeholder="https://"')}
+            {:$jxUp('poster', 'upload_poster', 'help_poster', 'image', 'jxUpPoster')}
+        </div>
+        <div data-g="vvast">
+            {:$jxIn('media.vast', 'v_vast_urls', 'help_v_vast', 'textarea', 'placeholder="https://"')}
+            <p class="jx-btns"><button type="button" class="ax-btn ax-btn--sm" data-jx-act="vast-test"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-play"/></svg>{:$jxE(lang('admin/ux/jcx/v_test'))}</button> <span class="ax-help" data-jx-vtest aria-live="polite"></span></p>
+            <video class="jx-vtest" controls muted playsinline hidden></video>
+        </div>
+        <div data-g="vpre">
+            <div class="ax-field" role="radiogroup" aria-labelledby="jxSkipL"><label id="jxSkipL">{:$jxE(lang('admin/ux/jcx/v_skip'))}</label>
+                <div class="jx-radios"><label class="jx-check"><input type="radio" name="jxSkip" value="0" data-o="skip" lay-ignore> {:$jxE(lang('admin/ux/jcx/v_noskip'))}</label>
+                <label class="jx-check"><input type="radio" name="jxSkip" value="5" data-o="skip" lay-ignore checked> {:$jxE(lang('admin/ux/jcx/v_skip5'))}</label>
+                <label class="jx-check"><input type="radio" name="jxSkip" value="10" data-o="skip" lay-ignore> {:$jxE(lang('admin/ux/jcx/v_skip10'))}</label></div>
+                <p class="ax-help">{:$jxE(lang('admin/ux/jcx/help_v_skip'))}</p>
+                <label class="jx-check"><input type="checkbox" data-jx-bumper lay-ignore aria-describedby="jxBumpH"> {:$jxE(lang('admin/ux/jcx/v_bumper_check'))}</label>
+                <p class="ax-help" id="jxBumpH">{:$jxE(lang('admin/ux/jcx/help_v_bumper'))}</p></div>
+            <div class="ax-field" role="radiogroup" aria-labelledby="jxStartL"><label id="jxStartL">{:$jxE(lang('admin/ux/jcx/v_start'))}</label>
+                <div class="jx-radios"><label class="jx-check"><input type="radio" name="jxStart" value="click" data-o="start" lay-ignore checked> {:$jxE(lang('admin/ux/jcx/v_start_click'))}</label>
+                <label class="jx-check"><input type="radio" name="jxStart" value="muted" data-o="start" lay-ignore> {:$jxE(lang('admin/ux/jcx/v_start_muted'))}</label></div>
+                <p class="ax-help">{:$jxE(lang('admin/ux/jcx/help_v_start'))}</p></div>
+            <div class="ax-field ax-field--md"><label for="jxVOften">{:$jxE(lang('admin/ux/jcx/often'))}</label>
+                <select id="jxVOften" class="layui-input" data-jx-voften lay-ignore aria-describedby="jxVOftenH">
+                    <option value="0" selected>{:$jxE(lang('admin/ux/jcx/v_often_every'))}</option><option value="30">{:$jxE(lang('admin/ux/jcx/v_often_30m'))}</option>
+                    <option value="60">{:$jxE(lang('admin/ux/jcx/v_often_1h'))}</option><option value="1440">{:$jxE(lang('admin/ux/jcx/v_often_day'))}</option></select>
+                <p class="ax-help" id="jxVOftenH">{:$jxE(lang('admin/ux/jcx/help_v_often'))}</p></div>
+        </div>
+        <div data-g="vout">
+            <label class="jx-check"><input type="checkbox" data-o="vertical" lay-ignore aria-describedby="jxVertH"> {:$jxE(lang('admin/ux/jcx/vertical'))}</label><p class="ax-help" id="jxVertH">{:$jxE(lang('admin/ux/jcx/help_vertical'))}</p>
+            <div class="ax-field"><label>{:$jxE(lang('admin/ux/jcx/buttons'))}</label><p class="ax-help">{:$jxE(lang('admin/ux/jcx/help_buttons'))}</p>
+                <div class="jx-btnrows"><div class="jx-btnrow"><input type="text" class="layui-input" data-btn="label" maxlength="30" placeholder="{:$jxE(lang('admin/ux/jcx/button_label'))}" aria-label="{:$jxE(lang('admin/ux/jcx/button_label'))} 1"><input type="url" class="layui-input" data-btn="url" placeholder="https://" aria-label="{:$jxE(lang('admin/ux/jcx/link'))} 1"></div><div class="jx-btnrow"><input type="text" class="layui-input" data-btn="label" maxlength="30" placeholder="{:$jxE(lang('admin/ux/jcx/button_label'))}" aria-label="{:$jxE(lang('admin/ux/jcx/button_label'))} 2"><input type="url" class="layui-input" data-btn="url" placeholder="https://" aria-label="{:$jxE(lang('admin/ux/jcx/link'))} 2"></div><div class="jx-btnrow"><input type="text" class="layui-input" data-btn="label" maxlength="30" placeholder="{:$jxE(lang('admin/ux/jcx/button_label'))}" aria-label="{:$jxE(lang('admin/ux/jcx/button_label'))} 3"><input type="url" class="layui-input" data-btn="url" placeholder="https://" aria-label="{:$jxE(lang('admin/ux/jcx/link'))} 3"></div></div></div>
+        </div>
+    </div>
+    <div data-g="zip">
+        {:$jxUp('zip', 'upload_zip', 'help_zip', 'zip', 'jxUpZip')}
+    </div>
+    <div data-g="sponsored">
+        {:$jxIn('opts.target_id', 'target_id', 'help_target_id', 'number', 'min="1" step="1"', 'sm')}
+    </div>
+    <div data-g="linkunit">
+        {:$jxIn('item_text', 'link_text', 'help_link_text', 'text', 'maxlength="120"')}
+    </div>
+    <div data-g="url">
+        {:$jxIn('item_url', 'link', 'help_link', 'url', 'placeholder="https://" maxlength="500"')}
+    </div>
+    <div data-g="alt">
+        {:$jxIn('item_alt', 'alt', 'help_alt', 'text', 'maxlength="160"')}
+    </div>
+    <div data-g="size">
+        <div class="ax-field ax-field--md"><label for="jxSize">{:$jxE(lang('admin/ux/jcx/size'))}</label>
+            <select id="jxSize" class="layui-input" data-jx-size-sel lay-ignore aria-describedby="jxSizeH">
+                <option value="">—</option>
+                {volist name="iab" id="z"}<option value="{$z[0]}x{$z[1]}">{$z[0]} × {$z[1]} · {:$jxE(lang('admin/ux/jcx/sz_' . $z[0] . 'x' . $z[1]))}</option>{/volist}
+                <option value="custom">{:$jxE(lang('admin/ux/jcx/size_custom'))}</option></select>
+            <p class="ax-help" id="jxSizeH">{:$jxE(lang('admin/ux/jcx/help_size'))}</p></div>
+        <div class="jx-row" data-jx-custom hidden>
+            {:$jxIn('item_w', 'size_w', 'help_size', 'number', 'min="0" max="1000"', 'sm')}
+            {:$jxIn('item_h', 'size_h', 'help_size', 'number', 'min="0" max="1050"', 'sm')}
+        </div>
+        <div class="jx-row" data-g="sizem">
+            {:$jxIn('item_wm', 'size_phone', 'help_size', 'number', 'min="0" max="1000" placeholder="320"', 'sm')}
+            {:$jxIn('item_hm', 'size_h', 'help_size', 'number', 'min="0" max="1050" placeholder="50"', 'sm')}
+        </div>
+        <p class="ax-help ax-danger-text jx-err" data-err="item_hm" hidden></p>
+    </div>
+</section>

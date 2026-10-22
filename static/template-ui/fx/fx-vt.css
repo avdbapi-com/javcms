@@ -1,0 +1,40 @@
+/*
+ * This file is part of JavCMS - https://javcms.net
+ * Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+ * License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+ * See the LICENSE and NOTICE files that come with JavCMS.
+ * Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Telegram: https://t.me/avdb_api
+ */
+/*! JavCMS FX kit - cross-document page transitions | JavCMS Community License 1.0 | original code
+ * Opt-in: link this file on EVERY page of the theme (both pages must opt in) and add data-fx="vt" on <html>.
+ * Chrome/Edge 126+, Safari 18.2+: soft lift/fade between pages; back navigations reverse the motion.
+ * Other browsers navigate normally. Style: <html data-fx-vt-style="fade|slide|zoom"> (default: lift).
+ * Persistent parts: give them a unique name in the theme, e.g. <header style="view-transition-name:site-header">. */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition { navigation: auto; }
+  ::view-transition-old(root) { animation: fx-vt-out .26s cubic-bezier(.4, 0, 1, 1) both; }
+  ::view-transition-new(root) { animation: fx-vt-in .42s cubic-bezier(0, 0, .2, 1) .04s both; }
+  html:active-view-transition-type(back)::view-transition-old(root) { animation-name: fx-vt-out-back; }
+  html:active-view-transition-type(back)::view-transition-new(root) { animation-name: fx-vt-in-back; }
+  html[data-fx-vt-style="fade"]::view-transition-old(root) { animation-name: fx-vt-fade-out; }
+  html[data-fx-vt-style="fade"]::view-transition-new(root) { animation-name: fx-vt-fade-in; }
+  html[data-fx-vt-style="slide"]::view-transition-old(root) { animation: fx-vt-slide-out .38s cubic-bezier(.65, 0, .35, 1) both; }
+  html[data-fx-vt-style="slide"]::view-transition-new(root) { animation: fx-vt-slide-in .38s cubic-bezier(.65, 0, .35, 1) both; }
+  html[dir="rtl"][data-fx-vt-style="slide"]::view-transition-old(root) { animation-name: fx-vt-slide-in-rev; }
+  html[dir="rtl"][data-fx-vt-style="slide"]::view-transition-new(root) { animation-name: fx-vt-slide-out-rev; }
+  html[data-fx-vt-style="zoom"]::view-transition-old(root) { animation: fx-vt-zoom-out .3s cubic-bezier(.4, 0, 1, 1) both; }
+  html[data-fx-vt-style="zoom"]::view-transition-new(root) { animation: fx-vt-zoom-in .45s cubic-bezier(0, 0, .2, 1) both; }
+}
+@keyframes fx-vt-out { to { opacity: 0; transform: translateY(-12px) scale(.99); } }
+@keyframes fx-vt-in { from { opacity: 0; transform: translateY(16px); } }
+@keyframes fx-vt-out-back { to { opacity: 0; transform: translateY(12px); } }
+@keyframes fx-vt-in-back { from { opacity: 0; transform: translateY(-16px) scale(.99); } }
+@keyframes fx-vt-fade-out { to { opacity: 0; } }
+@keyframes fx-vt-fade-in { from { opacity: 0; } }
+@keyframes fx-vt-slide-out { to { transform: translateX(-30%); opacity: 0; } }
+@keyframes fx-vt-slide-in { from { transform: translateX(30%); opacity: 0; } }
+@keyframes fx-vt-slide-out-rev { from { transform: translateX(-30%); opacity: 0; } }
+@keyframes fx-vt-slide-in-rev { to { transform: translateX(30%); opacity: 0; } }
+@keyframes fx-vt-zoom-out { to { opacity: 0; transform: scale(.96); } }
+@keyframes fx-vt-zoom-in { from { opacity: 0; transform: scale(1.03); } }

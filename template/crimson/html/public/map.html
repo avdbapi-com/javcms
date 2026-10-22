@@ -1,0 +1,23 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="crimson" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/auto"}
+{include file="public/include"}
+</head>
+<body class="ct-list ct-map">
+{include file="public/head"}
+<main id="main-content" class="ct-wrap">
+<div class="ct-phead"><div class="ct-phead-main"><h1 class="ct-h1">{:\\app\\common\\util\\AutoIcon::navIcon('latest-100', '', ['class'=>'ct-h1-ico'])}<span>{:\\app\\common\\util\\TemplateText::get('ui.latest_100_updates')}</span></h1></div><div class="ct-phead-tools"><a class="ct-pill ct-pill--sm" href="{:mac_url('label/new')}">{:\\app\\common\\util\\TemplateText::get('ui.latest_videos')}{:\\app\\common\\util\\AutoIcon::ui('chevron-right', ['class'=>'ct-ico ct-chev-r'])}</a></div></div>
+<nav class="ct-cattiles" aria-label="{:\\app\\common\\util\\TemplateText::get('crimson.browse_categories')}" data-ai-group>{maccms:type ids="parent" flag="vod" order="asc" by="sort" id="ctMapCat" key="ctMapK" hide_empty="1"}<a class="ct-cattile" href="{:mac_url_type($ctMapCat,[],'type')}">{:\\app\\common\\util\\AutoIcon::icon('category', $ctMapCat['type_name'], ['size'=>'lg', 'plate'=>true, 'i'=>intval($ctMapK)])}<span>{:\\app\\common\\util\\TemplateText::get(htmlspecialchars_decode((string)$ctMapCat['type_name'], ENT_QUOTES))}</span></a>{/maccms:type}</nav>
+{php}$ctRank = 0;{/php}<ol class="ct-maplist">{maccms:vod num="100" type="all" order="desc" by="time" paging="no" id="vo"}{php}$ctRank++; $ctMTitle = trim((string)($vo['vod_display_name'] ?? '')); if ($ctMTitle === '') { $ctMTitle = trim(strip_tags((string)($vo['vod_name'] ?? ''))); } for ($ctMI = 0; $ctMI < 4 && strpos($ctMTitle, '&') !== false; $ctMI++) { $ctMD = html_entity_decode($ctMTitle, ENT_QUOTES | ENT_HTML5, 'UTF-8'); if ($ctMD === $ctMTitle) { break; } $ctMTitle = $ctMD; } $ctMDir = preg_match('/[\x{0590}-\x{08FF}\x{FB1D}-\x{FDFF}\x{FE70}-\x{FEFF}]/u', $ctMTitle) ? 'rtl' : 'auto';{/php}<li><span class="ct-rank">{$ctRank}</span><a href="{:mac_url_vod_detail($vo)}" dir="{$ctMDir}">{$ctMTitle|htmlspecialchars=ENT_QUOTES}</a><time datetime="{$vo.vod_time|date='Y-m-d',###}" dir="ltr">{$vo.vod_time|date='Y-m-d',###}</time></li>{/maccms:vod}</ol>
+</main>
+{include file="public/foot"}
+</body>
+</html>

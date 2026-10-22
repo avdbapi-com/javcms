@@ -1,0 +1,27 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}$tpH1 = isset($tpH1) ? (string)$tpH1 : ''; $tpSub = isset($tpSub) ? (string)$tpSub : ''; $tpCrumb = isset($tpCrumb) ? (string)$tpCrumb : $tpH1; $tpCrumbUrl = isset($tpCrumbUrl) ? (string)$tpCrumbUrl : ''; $tpCount = isset($tpCount) ? (int)$tpCount : -1; $tpEyebrow = isset($tpEyebrow) ? (string)$tpEyebrow : \app\common\util\TemplateText::raw('tp.the_collection'); $tpH1Plain = !empty($tpH1Plain); $tpH1Html = isset($tpH1Html) ? (string)$tpH1Html : '';
+/* the vitrine head shows one gem-plated xl glyph above the eyebrow: the category concept on category pages, otherwise the page's own key */
+$tpHeadRow = isset($tpTypeById[$tpTypeNow]) ? $tpTypeById[$tpTypeNow] : (isset($tpTypeById[$tpTypePid]) ? $tpTypeById[$tpTypePid] : null);
+$tpHeadCa = strtolower((string)($maccms['controller_action'] ?? ''));
+$tpHeadKeys = [9999 => 'latest', 9998 => 'hot', 9997 => 'top', 9996 => 'liked', 9995 => 'all-videos'];
+$tpHeadCaKeys = ['actor/index' => 'actors', 'actor/search' => 'actors', 'topic/index' => 'topics', 'topic/search' => 'topics', 'art/index' => 'articles', 'art/type' => 'articles', 'art/search' => 'articles', 'art/detail' => 'articles', 'map/index' => 'latest-100', 'vod/index' => 'all-videos', 'vod/search' => 'search', 'search/index' => 'search'];
+$tpHeadOpt = ['size' => 'xl', 'plate' => true, 'class' => 'tp-head-ai'];
+if (!isset($tpH1Ico)) { $tpH1Ico = ''; }
+if ($tpH1Ico === '' && $tpHeadRow !== null && in_array($tpHeadCa, ['vod/type', 'vod/show'], true)) { $tpH1Ico = \app\common\util\AutoIcon::icon('category', $tpHeadRow['tn'], $tpHeadOpt + ['tint' => 'none']); }
+elseif ($tpH1Ico === '' && isset($tpHeadKeys[$tplAid])) { $tpH1Ico = \app\common\util\AutoIcon::navIcon($tpHeadKeys[$tplAid], '', $tpHeadOpt); }
+elseif ($tpH1Ico === '' && isset($tpHeadCaKeys[$tpHeadCa])) { $tpH1Ico = \app\common\util\AutoIcon::navIcon($tpHeadCaKeys[$tpHeadCa], '', $tpHeadOpt); }
+$tpCrumbIco = ($tpHeadRow !== null && in_array($tpHeadCa, ['vod/type', 'vod/show'], true)) ? \app\common\util\AutoIcon::icon('category', $tpHeadRow['tn'], ['size' => 'sm', 'tint' => 'none']) : '';{/php}
+<header class="tp-head{if condition="$tpCatGem egt 0"} tp-gem-i-{$tpCatGem}{/if}">
+  <nav class="tp-crumbs" aria-label="{:\\app\\common\\util\\TemplateText::get('tp.breadcrumb')}"><a href="{$maccms.path}">{:\\app\\common\\util\\AutoIcon::ui('home', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ui.home')}</a>{:\\app\\common\\util\\AutoIcon::ui('chevron-right', ['size'=>'xs', 'class'=>'tp-crumb-sep'])}{if condition="$tpCrumbUrl neq ''"}<a href="{$tpCrumbUrl|htmlspecialchars=ENT_QUOTES}">{$tpCrumbIco}{$tpCrumb|htmlspecialchars=ENT_QUOTES}</a>{else/}<span aria-current="page">{$tpCrumbIco}{$tpCrumb|htmlspecialchars=ENT_QUOTES}</span>{/if}</nav>
+  {if condition="$tpH1Ico neq ''"}<span class="tp-head-gem" aria-hidden="true">{$tpH1Ico}</span>{/if}
+  <p class="tp-eyebrow"><svg class="tp-i" aria-hidden="true"><use href="{$tplIcons}#r-diamond"/></svg>{$tpEyebrow|htmlspecialchars=ENT_QUOTES}</p>
+  {if condition="$tpH1Html neq ''"}<h1 class="tp-h1 tp-h1--plain">{$tpH1Html}</h1>{else/}<h1 class="tp-h1{if condition="$tpH1Plain"} tp-h1--plain{/if}"><span class="tp-conv" data-tp-conv><span class="tp-conv-t">{$tpH1|htmlspecialchars=ENT_QUOTES}</span><span class="tp-conv-c tp-conv-c--a" aria-hidden="true">{$tpH1|htmlspecialchars=ENT_QUOTES}</span><span class="tp-conv-c tp-conv-c--b" aria-hidden="true">{$tpH1|htmlspecialchars=ENT_QUOTES}</span></span></h1>{/if}
+  {if condition="$tpCount egt 0"}<p class="tp-head-count"><i class="tp-dia" aria-hidden="true"></i><span>{php}$tpCountTxt = htmlspecialchars(\app\common\util\TemplateText::raw('tp.pieces', ['count' => '%%N%%']), ENT_QUOTES, 'UTF-8'); echo str_replace('%%N%%', '<b class="tp-num" data-tp-nf="' . $tpCount . '">' . number_format($tpCount) . '</b>', $tpCountTxt);{/php}</span></p>{/if}
+  {if condition="$tpSub neq ''"}<p class="tp-head-sub">{$tpSub|htmlspecialchars=ENT_QUOTES}</p>{/if}
+</header>{php}$tpH1 = ''; $tpSub = ''; $tpCrumb = ''; $tpCrumbUrl = ''; $tpCount = -1; $tpEyebrow = ''; $tpH1Plain = false; $tpH1Html = ''; $tpH1Ico = ''; $tpCrumbIco = '';{/php}

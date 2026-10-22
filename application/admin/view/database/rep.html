@@ -1,0 +1,134 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Based on MacCMS 10 (Apache-2.0) by magicblack, changed by JavCMS.
+JavCMS changes: Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors,
+JavCMS Community License 1.0. The MacCMS parts stay under the Apache License 2.0.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{include file="../../../application/admin/view/public/head" /}
+<link rel="stylesheet" href="__STATIC__/css/admin_database_workspace_v1.css?{$MAC_VERSION}&rev=3">
+<div class="page-container admin-database-form-workspace-v1 db-kit">
+    {include file="../../../application/admin/view/public/page_head" icon="ai-replace-all" title="admin/database/batch_replace" /}
+
+    <div class="ax-notice ax-notice--warn" role="note">
+        <svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-triangle-alert"/></svg>
+        <div><p>{:lang('admin/ux/kit/cannot_undo')} <a href="{:url('database/index')}">{:lang('admin/ux/tools/sql_backup_first')}</a></p></div>
+    </div>
+
+    <form class="layui-form ax-form db-rep-form" id="db-rep-form" action="{:url('database/rep')}" method="post">
+        <input type="hidden" name="__token__" value="{$Request.token}" />
+        <section class="ax-section">
+            <div class="ax-field ax-field--md">
+                <label for="db-rep-table">{:lang('admin/database/select_table')}</label>
+                <select name="table" id="db-rep-table" lay-filter="table" lay-search>
+                    <option value="">{:lang('admin/database/select_table')}</option>
+                    {volist name="list" id="vo"}
+                    <option value="{$vo.Name|htmlspecialchars}">{$vo.Name|htmlspecialchars}{if condition="$vo.Comment neq ''"} - {$vo.Comment|htmlspecialchars}{/if}</option>
+                    {/volist}
+                </select>
+            </div>
+            <div class="ax-field">
+                <span class="db-label" id="db-rep-cols-label">{:lang('admin/database/select_col')}</span>
+                <div class="fields db-field-chips" role="group" aria-labelledby="db-rep-cols-label"><span class="ax-faint">{:lang('admin/ux/tools/rep_pick_table')}</span></div>
+            </div>
+            <div class="ax-field ax-field--md">
+                <label for="field">{:lang('admin/database/field')}</label>
+                <input type="text" id="field" name="field" class="layui-input" autocomplete="off" spellcheck="false">
+            </div>
+            <div class="ax-field">
+                <label for="db-rep-find">{:lang('admin/database/findstr')}</label>
+                <textarea id="db-rep-find" name="findstr" class="layui-textarea db-code-input" rows="3" spellcheck="false"></textarea>
+            </div>
+            <div class="ax-field">
+                <label for="db-rep-to">{:lang('admin/database/tostr')}</label>
+                <textarea id="db-rep-to" name="tostr" class="layui-textarea db-code-input" rows="3" spellcheck="false" aria-describedby="db-rep-to-help"></textarea>
+                <p class="ax-help" id="db-rep-to-help">{:lang('admin/ux/tools/rep_empty_ok')}</p>
+            </div>
+            <div class="ax-field ax-field--md">
+                <label for="db-rep-where">{:lang('admin/database/where')}</label>
+                <input type="text" id="db-rep-where" name="where" class="layui-input" placeholder="{:lang('admin/ux/tools/rep_placeholder')}" autocomplete="off" spellcheck="false" aria-describedby="db-rep-where-help">
+                <p class="ax-help" id="db-rep-where-help">{:lang('admin/ux/tools/rep_where_help')}</p>
+            </div>
+            <p class="db-rep-result" id="db-rep-result" role="status" aria-live="polite"></p>
+            <div class="db-actions-row">
+                <button type="button" class="ax-btn" id="db-rep-preview"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-eye"/></svg>{:lang('admin/ux/tools/rep_preview')}</button>
+                <button type="submit" class="ax-btn ax-btn--primary" id="db-rep-run"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-replace-all"/></svg>{:lang('admin/ux/tools/rep_replace')}</button>
+            </div>
+        </section>
+    </form>
+</div>
+
+{include file="../../../application/admin/view/public/foot" /}
+<script type="text/javascript">
+    layui.use(['form', 'layer'], function () {
+        var form = layui.form, $ = layui.jquery;
+        var T = {$rep_js};
+        var $form = $('#db-rep-form'), $result = $('#db-rep-result');
+        var token = $form.find('input[name="__token__"]');
+
+        form.on('select(table)', function (data) {
+            var box = $('.fields').empty();
+            if (data.value === '') { return; }
+            $.post(T.columns_url, { table: data.value }, function (res) {
+                if (res.code == 1) {
+                    $.each(res.data, function (index, row) {
+                        $('<button type="button" class="ax-chip db-col-chip"></button>').text(row.Field).attr('data-field', row.Field).appendTo(box);
+                    });
+                } else {
+                    AxUX.toast(res.msg, 'error');
+                }
+            });
+        });
+        $(document).on('click', '.db-col-chip', function () {
+            $('#field').val($(this).attr('data-field'));
+            $('.db-col-chip').attr('aria-pressed', 'false');
+            $(this).attr('aria-pressed', 'true');
+        });
+
+        function check() {
+            if (!$('#db-rep-table').val()) { return T.need_table; }
+            if (!$.trim($('#field').val())) { return T.need_field; }
+            if ($('#db-rep-find').val() === '') { return T.need_find; }
+            return '';
+        }
+        function send(extra) {
+            var data = $form.serializeArray();
+            $.each(extra, function (k, v) { data.push({ name: k, value: v }); });
+            $('#db-rep-preview, #db-rep-run').prop('disabled', true);
+            return $.ajax({ type: 'POST', url: $form.attr('action'), data: $.param(data), dataType: 'json', timeout: 300000 }).then(function (res) {
+                if (res && res.data && res.data.__token__) { token.val(res.data.__token__); }
+                return res || { code: 0, msg: T.failed };
+            }, function () { return { code: 0, msg: T.failed }; }).always(function () { $('#db-rep-preview, #db-rep-run').prop('disabled', false); });
+        }
+        function say(res) {
+            $result.text(res.msg).toggleClass('is-error', res.code != 1);
+        }
+        $('#db-rep-preview').on('click', function () {
+            var bad = check();
+            if (bad) { AxUX.toast(bad, 'warn'); return; }
+            send({ preview: 1 }).then(say);
+        });
+        $form.on('submit', function (e) {
+            e.preventDefault();
+            var bad = check();
+            if (bad) { AxUX.toast(bad, 'warn'); return; }
+            send({ preview: 1 }).then(function (res) {
+                say(res);
+                if (res.code != 1) { return; }
+                var n = res.data.count;
+                if (!n) { AxUX.toast(res.msg, 'info'); return; }
+                AxUX.confirm({ title: T.confirm_title, message: T.count.replace('{n}', n) + ' ' + T.cannot_undo, count: n, confirmLabel: T.replace, danger: true }).then(function (yes) {
+                    if (!yes) { return; }
+                    send({ confirm: 1 }).then(function (r) {
+                        say(r);
+                        AxUX.toast(r.msg, r.code == 1 ? 'ok' : 'error');
+                    });
+                });
+            });
+        });
+    });
+</script>
+
+</body>
+</html>

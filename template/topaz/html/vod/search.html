@@ -1,0 +1,52 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="topaz" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/vod_search"}
+{include file="public/include"}
+</head>
+<body class="tz-page-list tz-page-search">
+{include file="public/head"}
+{php}if (!isset($tzPlain)) { $tzPlain = function ($v) { $v = (string)$v; for ($i = 0; $i < 6; $i++) { $d = html_entity_decode($v, ENT_QUOTES | ENT_HTML5, 'UTF-8'); if ($d === $v) { break; } $v = $d; } return trim($v); }; }
+$tplQ = []; foreach (['actor', 'class', 'tag', 'director'] as $tplQk) { $tplQ[$tplQk] = $tzPlain(isset($param[$tplQk]) ? $param[$tplQk] : ''); }
+$tplLbl = []; foreach (['actor' => 'ui.actor', 'class' => 'genres', 'tag' => 'ui.tag', 'director' => 'ui.director'] as $tplLk => $tplLv) { $tplLbl[$tplLk] = preg_replace('/[\s:：]+$/u', '', \app\common\util\TemplateText::raw($tplLv)); }
+$tplBy = isset($param['by']) ? (string)$param['by'] : '';
+$tplKeep = []; foreach (['wd', 'actor', 'class', 'tag', 'director', 'area', 'lang', 'year', 'letter'] as $tplKf) { if (isset($param[$tplKf]) && $param[$tplKf] !== '') { $tplKeep[$tplKf] = html_entity_decode((string)$param[$tplKf], ENT_QUOTES | ENT_HTML5, 'UTF-8'); } }
+$tplSortUrl = function ($by) use ($tplKeep) { $q = $tplKeep; if ($by !== '') { $q['by'] = $by; } return mac_url_search($q, 'vod'); };
+$tplReset = ($tplBy !== '' && $tplBy !== 'time') ? $tplSortUrl('') : '';
+$tplSorts = [
+  ['label' => \app\common\util\TemplateText::raw('ui.latest'), 'url' => $tplSortUrl('time'), 'on' => ($tplBy === '' || $tplBy === 'time'), 'icon' => 'sort'],
+  ['label' => \app\common\util\TemplateText::raw('topaz.most_viewed'), 'url' => $tplSortUrl('hits'), 'on' => ($tplBy === 'hits'), 'icon' => 'eye'],
+  ['label' => \app\common\util\TemplateText::raw('top_rated'), 'url' => $tplSortUrl('score'), 'on' => ($tplBy === 'score'), 'icon' => 'star'],
+];{/php}
+<main id="main-content" class="tz-main tz-wrap tz-list">
+  <header class="tz-callout" data-ai-hot>
+    <nav class="tz-crumbs" aria-label="{:\\app\\common\\util\\TemplateText::get('topaz.breadcrumb')}"><a href="{$maccms.path}">{:\\app\\common\\util\\TemplateText::get('ui.home')}</a>{:\\app\\common\\util\\AutoIcon::ui('chevron-right', ['class'=>'tz-i tz-dir', 'tint'=>'none'])}<span aria-current="page">{:\\app\\common\\util\\TemplateText::get('search_results')}</span></nav>
+    <span class="tz-eyebrow">{:\\app\\common\\util\\TemplateText::get('topaz.library')}</span>
+    {if condition="$param.wd neq ''"}<h1 class="tz-cat-h1">{:\\app\\common\\util\\AutoIcon::navIcon('search', '', ['size'=>'xl', 'plate'=>true])}<span>{:\\app\\common\\util\\TemplateText::raw('ui.search_for_query', ['query'=>$param['wd']])}</span></h1>
+    {elseif condition="$tplQ.actor neq ''"/}<h1 class="tz-cat-h1">{:\\app\\common\\util\\AutoIcon::navIcon('performers', '', ['size'=>'xl', 'plate'=>true])}<span>{$tplLbl.actor|htmlspecialchars=ENT_QUOTES}: {$tplQ.actor|htmlspecialchars=ENT_QUOTES}</span></h1>
+    {elseif condition="$tplQ.class neq ''"/}<h1 class="tz-cat-h1">{:\\app\\common\\util\\AutoIcon::icon('tag', $tplQ['class'], ['size'=>'xl', 'plate'=>true])}<span>{$tplLbl.class|htmlspecialchars=ENT_QUOTES}: {$tplQ.class|htmlspecialchars=ENT_QUOTES}</span></h1>
+    {elseif condition="$tplQ.tag neq ''"/}<h1 class="tz-cat-h1">{:\\app\\common\\util\\AutoIcon::icon('tag', $tplQ['tag'], ['size'=>'xl', 'plate'=>true])}<span>{$tplLbl.tag|htmlspecialchars=ENT_QUOTES}: {$tplQ.tag|htmlspecialchars=ENT_QUOTES}</span></h1>
+    {elseif condition="$tplQ.director neq ''"/}<h1 class="tz-cat-h1">{:\\app\\common\\util\\AutoIcon::ui('clapperboard', ['size'=>'xl', 'plate'=>true])}<span>{$tplLbl.director|htmlspecialchars=ENT_QUOTES}: {$tplQ.director|htmlspecialchars=ENT_QUOTES}</span></h1>
+    {elseif condition="$tplBy eq 'hits'"/}<h1 class="tz-cat-h1">{:\\app\\common\\util\\AutoIcon::navIcon('hot', '', ['size'=>'xl', 'plate'=>true])}<span>{:\\app\\common\\util\\TemplateText::get('ui.popular_videos')}</span></h1>
+    {elseif condition="$tplBy eq 'score'"/}<h1 class="tz-cat-h1">{:\\app\\common\\util\\AutoIcon::navIcon('top', '', ['size'=>'xl', 'plate'=>true])}<span>{:\\app\\common\\util\\TemplateText::get('ui.video_with_the_highest_score')}</span></h1>
+    {elseif condition="!empty($param['letter'])"/}<h1 class="tz-cat-h1">{:\\app\\common\\util\\AutoIcon::navIcon('search', '', ['size'=>'xl', 'plate'=>true])}<span>{:\\app\\common\\util\\TemplateText::get('topaz.browse_az')}: <bdi>{$param.letter|htmlspecialchars=ENT_QUOTES}</bdi></span></h1>
+    {else/}<h1 class="tz-cat-h1">{:\\app\\common\\util\\AutoIcon::navIcon('all', '', ['size'=>'xl', 'plate'=>true])}<span>{:\\app\\common\\util\\TemplateText::get('ui.all_videos')}</span></h1>{/if}
+    <p>{:\\app\\common\\util\\TemplateText::get('topaz.library_sub')}</p>
+  </header>
+  {if condition="$param.wd eq '' && $tplQ.actor eq '' && $tplQ.class eq '' && $tplQ.tag eq '' && $tplQ.director eq '' && ($tplBy eq '' || $tplBy eq 'time' || !empty($param['letter']))"}{include file="public/hotwords"}{/if}
+  {php}ob_start(); {/php}{maccms:vod num="20" paging="yes" type="all" order="desc" by="time" pageurl="vod/search" id="vo"}{include file="public/vodbox"}{/maccms:vod}{php}$tzGrid = ob_get_clean(); $tzTotal = isset($__PAGING__['record_total']) ? intval($__PAGING__['record_total']) : 0;{/php}
+  {if condition="$tzTotal gt 0"}{include file="public/sortmenu"}{/if}
+  <div class="tz-grid" data-grid-fill>{php}echo $tzGrid;{/php}</div>
+  {if condition="$__PAGING__.record_total eq 0"}{include file="public/empty"}{/if}
+  {include file="public/list_note"}{include file="public/paging"}
+</main>
+{include file="public/foot"}
+</body>
+</html>

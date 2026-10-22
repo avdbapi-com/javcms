@@ -1,0 +1,85 @@
+# Apache 2.4; copy to the application root as .htaccess.
+# Preserve panel-managed PHP handlers outside this block.
+Options -Indexes -MultiViews
+DirectoryIndex index.php
+AcceptPathInfo On
+RewriteEngine On
+
+# Private source/config/cache and operator artifacts are not HTTP resources.
+RewriteRule ^(?:application|runtime|vendor|thinkphp|extend|deployment|backup|backups)(?:/|$) - [F,L,NC]
+# Theme page templates are rendered by PHP; their source (template/<theme>/html/) is not a public file.
+RewriteRule ^template/[^/]+/html(?:/|$) - [F,L,NC]
+RewriteRule (^|/)\.(?!well-known(?:/|$)) - [F,L,NC]
+RewriteRule ^\.well-known/(?!acme-challenge/)[\s\S]*$ - [F,L,NC]
+RewriteRule \.(?:ini|log|sql|sqlite|bak|conf|ya?ml)(?:/|$) - [F,L,NC]
+RewriteRule ^(?:composer\.(?:json|lock)|package(?:-lock)?\.json|(?:README|INSTALL|UPGRADE|CHANGELOG)(?:\.(?:md|txt))?|docs/[^/]*\.md|LICENSE(?:\.[^/]+)?|NOTICE(?:\.[^/]+)?|[^/]+\.(?:zip|gz|7z|tar))(?:/|$) - [F,L,NC]
+# IIS configuration is not a public file on other servers either.
+RewriteRule (?:^|/)web\.config$ - [F,L,NC]
+
+# No executable uploads, including alternate/multiple script extensions.
+RewriteRule ^upload/.*\.(?:php[0-9]?|phtml|phar|cgi|pl|py|asp|aspx|jsp|sh)(?:[./]|$) - [F,L,NC]
+
+# Keep the selected entry point for explicit PATH_INFO requests.
+RewriteRule ^(index|api|javcms|install)\.php/(.*)$ $1.php?s=/$2 [B,QSA,END]
+RewriteRule ^(?:index|api|javcms|install)\.php$ - [END]
+# Only the four public PHP entrances execute. Rename javcms in both rules if needed.
+RewriteRule \.(?:php[0-9]?|phtml|phar)(?:[./]|$) - [F,L,NC]
+
+# robots.txt is generated per site (Sitemap line for the configured domain); a root robots.txt only adds custom rules.
+RewriteRule ^robots\.txt$ index.php?s=/robots.txt [QSA,END]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?s=/$1 [B,QSA,END]
+
+# Example ad videos (static/jcx/x/h/): HLS fMP4 segments have no type in most default MIME tables.
+<IfModule mod_mime.c>
+AddType video/iso.segment .m4s
+</IfModule>
+
+# Compress SVG too: the auto-icon sprites are image/svg+xml, which most default filter lists omit.
+<IfModule mod_filter.c>
+<IfModule mod_brotli.c>
+AddOutputFilterByType BROTLI_COMPRESS image/svg+xml
+</IfModule>
+<IfModule mod_deflate.c>
+AddOutputFilterByType DEFLATE image/svg+xml
+</IfModule>
+</IfModule>
+
+# Compress pages, feeds, sitemaps, styles, scripts, JSON and the web app manifest (SEO-ADMIN-BRIEF G).
+# Responses that PHP already compressed (gzip sitemaps) carry Content-Encoding and are left alone.
+<IfModule mod_filter.c>
+<IfModule mod_deflate.c>
+AddOutputFilterByType DEFLATE text/html text/plain text/css text/xml application/xml application/javascript text/javascript application/json application/manifest+json
+</IfModule>
+</IfModule>
+
+# Static files (scripts, styles, JSON, images, fonts, media): browsers must not guess another content type.
+# PHP pages send this header themselves (SecurityHeaders), so it is set only for these file types.
+<IfModule mod_headers.c>
+<FilesMatch "(?i)\.(?:js|mjs|css|json|map|txt|xml|svg|ico|png|jpe?g|gif|webp|avif|bmp|woff2?|ttf|otf|eot|mp4|webm|m3u8|m4s|ts|vtt|mp3|pdf|webmanifest)$">
+    Header set X-Content-Type-Options "nosniff"
+</FilesMatch>
+</IfModule>
+
+# Static files of the site and of the themes (static/, template/<theme>/ assets): browsers and CDNs keep them 30 days
+# (1.2.0, XVID-SCALE-BRIEF L2). static/jcx/ (ad configuration and scripts) changes with the ad settings and keeps the
+# server default. Only real files answered 200 get the header (PHP 404 pages for missing assets do not).
+<IfModule mod_headers.c>
+<If "%{REQUEST_URI} =~ m#(?i)/(?:static|template)/[^?]*\.(?:css|js|mjs|png|jpe?g|gif|webp|avif|svg|ico|woff2?|ttf|otf|eot)$# && %{REQUEST_URI} !~ m#(?i)/static/jcx/#">
+    Header set Cache-Control "public, max-age=2592000" "expr=%{REQUEST_STATUS} == 200"
+</If>
+</IfModule>
+
+# Bound public index request bodies before PHP parses them. API/admin/install entrances remain separate.
+<Files "index.php">
+    LimitRequestBody 8388608
+</Files>
+
+# Reject common community bodies before PHP initial input parsing.
+<Files "index.php">
+<If "%{REQUEST_URI} =~ m#(?i)(?:^|/)(?:comment|gbook)(?:[/.]|$)# || %{QUERY_STRING} =~ m#(?i)(?:^|&)s=(?:/|%2f)(?:index(?:/|%2f))?(?:comment|gbook)(?:/|%2f|\.|&|$)#">
+    LimitRequestBody 65536
+</If>
+</Files>

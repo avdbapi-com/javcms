@@ -1,0 +1,510 @@
+/*
+ * This file is part of JavCMS - https://javcms.net
+ * Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+ * License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+ * See the LICENSE and NOTICE files that come with JavCMS.
+ * Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Telegram: https://t.me/avdb_api
+ */
+/* JavCMS admin UI kit (static/css/admin_ux.css). Brief ADMIN-IA-BRIEF.md sections 3 and 6.
+   Loaded LAST from application/admin/view/public/head.html (after admin_studio.css), with ?v=<filemtime>.
+   One token set (--ax-*) + the shared components. Class prefix .ax-; class names are the contract every builder uses
+   (guide: the JavCMS build tools). Dark is the default and the only mode offered.
+   Rules that must beat older stylesheets use the prefix "body.admin-studio:is(.admin-dark,:not(.admin-dark))" (same
+   weight as admin_studio.css, later in the file order) or !important where the old rule has !important. */
+
+/* ---------- 6.1 Tokens ---------- */
+:root {
+  color-scheme: dark;
+  --ax-bg: #121417;
+  --ax-surface: #1a1d22;
+  --ax-raised: #23272e;
+  --ax-overlay: #2b3038;
+  --ax-line: #2c313a;          /* dividers only */
+  --ax-field: #667080;         /* input / checkbox / button outline, >= 3:1 on surface */
+  --ax-text: #eceff4;
+  --ax-muted: #a3abb8;
+  --ax-faint: #8a93a1;         /* smallest help text */
+  --ax-accent: #82b1ff;
+  --ax-accent-hover: #9cc1ff;
+  --ax-on-accent: #0d1626;
+  --ax-accent-soft: rgba(130,177,255,.14);
+  --ax-danger: #ff8a9b;
+  --ax-danger-bg: #3a1f27;
+  --ax-danger-bg-hover: #4a2530;
+  --ax-danger-solid: #c4313a;
+  --ax-warn: #f5c451;
+  --ax-warn-soft: rgba(245,196,81,.12);
+  --ax-ok: #4ccf8f;
+  --ax-ok-soft: rgba(76,207,143,.12);
+  --ax-r-sm: 6px; --ax-r: 8px; --ax-r-lg: 12px;
+  --ax-h: 40px;                /* control height desktop; 44 px below 768 px */
+  --ax-pad: 24px;              /* page gutter (matches .page-container padding) */
+  --ax-font: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --ax-mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
+  --ax-shadow: 0 16px 40px rgba(0,0,0,.45);
+  --ax-ease: cubic-bezier(.2,.7,.2,1);
+}
+/* Light tokens: defined, not offered in this pass (brief D19). */
+html[data-ax-theme="light"] {
+  color-scheme: light;
+  --ax-bg: #f5f7fa; --ax-surface: #ffffff; --ax-raised: #eef1f5; --ax-overlay: #ffffff;
+  --ax-line: #dde2e8; --ax-field: #7a8494; --ax-text: #1a1d22; --ax-muted: #4b5563; --ax-faint: #5b6472;
+  --ax-accent: #2563ad; --ax-accent-hover: #1d4f8c; --ax-on-accent: #ffffff; --ax-accent-soft: rgba(37,99,173,.10);
+  --ax-danger: #b4232f; --ax-danger-bg: #fde8ea; --ax-danger-bg-hover: #f9d3d7; --ax-danger-solid: #c4313a;
+  --ax-warn: #8a5a00; --ax-warn-soft: rgba(138,90,0,.10); --ax-ok: #1f7a4d; --ax-ok-soft: rgba(31,122,77,.10);
+  --ax-shadow: 0 16px 40px rgba(15,23,42,.18);
+}
+@media (max-width: 767.98px) {
+  :root { --ax-h: 44px; --ax-pad: 16px; }
+}
+@media (max-width: 480px) {
+  :root { --ax-pad: 12px; }
+}
+
+/* The older stylesheets read --studio-* / --admin-dark-*: point them at the kit tokens so every page uses one palette. */
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) {
+  --studio-bg: var(--ax-bg); --studio-surface: var(--ax-surface); --studio-raised: var(--ax-raised);
+  --studio-text: var(--ax-text); --studio-muted: var(--ax-muted); --studio-accent: var(--ax-accent);
+  --studio-line: var(--ax-line); --studio-danger: var(--ax-danger);
+  --admin-dark-border-strong: var(--ax-field);
+  background: var(--ax-bg); color: var(--ax-text);
+}
+
+/* V21: one font family (Inter, else the system UI font). */
+body.admin-studio:is(.admin-dark,:not(.admin-dark)),
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) :is(h1, h2, h3, h4, h5, h6, button, input, select, textarea, .btn, [class*="layui-"]):not(.layui-icon):not([class*="layui-icon-"]) {
+  font-family: var(--ax-font) !important;
+}
+body.admin-studio :is(code, kbd, pre, samp, .ax-code, .ax-mono) { font-family: var(--ax-mono) !important; }
+
+/* ---------- V8: field outlines >= 3:1 and ONE focus ring ---------- */
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) :is(.layui-input, .layui-textarea, .layui-select, select, textarea, .form-control, .form-select,
+  input:is([type="text"], [type="number"], [type="password"], [type="email"], [type="url"], [type="search"], [type="tel"], [type="date"], [type="datetime-local"], :not([type]))) {
+  border-color: var(--ax-field) !important;
+}
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .layui-form-select .layui-input,
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .page-container form .layui-form-select .layui-input { border-color: var(--ax-field) !important; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) :is(.layui-input, .layui-textarea, select, textarea, .form-control):hover { border-color: #7b8596 !important; }
+/* layui animates "all" on fields and toggles: the ring would fade in from a 3 px default outline. Animate colours only. */
+body.admin-studio :is(.layui-input, .layui-textarea, .layui-select, .layui-form-checkbox, .layui-form-checkbox > i, .layui-form-radio, .layui-form-radio > i, .layui-form-switch) {
+  transition-property: border-color, background-color, color !important;
+}
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .layui-form-checkbox[lay-skin="primary"] > i,
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .layui-form-radio > i,
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .layui-form-switch { border-color: var(--ax-field) !important; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .layui-form-checkbox[lay-skin="primary"]:is(:hover, .layui-form-checked) > i { border-color: var(--ax-accent) !important; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .layui-form-switch.layui-form-onswitch { border-color: var(--ax-accent) !important; background: var(--ax-accent) !important; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .layui-form-switch.layui-form-onswitch > div { color: var(--ax-on-accent) !important; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .layui-form-switch.layui-form-onswitch > i { background: var(--ax-on-accent) !important; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .layui-form-radioed > i,
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .layui-form-radio:hover > i { color: var(--ax-accent) !important; }
+
+/* Focus: 2 px accent outline, 2 px offset, on every focusable (inputs included); no glow, no second colour. */
+html body.admin-studio:is(.admin-dark,:not(.admin-dark)) :is(a[href], button, input, select, textarea, summary, [tabindex], [contenteditable="true"],
+  .layui-form-checkbox, .layui-form-switch, .layui-form-radio, .layui-tab-title li, .layui-laypage a):focus-visible {
+  outline: 2px solid var(--ax-accent) !important;
+  outline-offset: 2px !important;
+  box-shadow: none !important;
+}
+html body.admin-studio:is(.admin-dark,:not(.admin-dark)) :is(.layui-input, .layui-textarea, select, textarea, .form-control, .form-select):focus {
+  border-color: var(--ax-accent) !important;
+  outline: 2px solid var(--ax-accent) !important;
+  outline-offset: 2px !important;
+  box-shadow: none !important;
+}
+/* layui radio / checkbox skins have no padding: keep the ring off the label text */
+body.admin-studio .layui-form-radio:focus-visible, body.admin-studio .layui-form-checkbox:focus-visible { border-radius: var(--ax-r-sm); }
+
+/* ---------- 3. Icons (sprite static/admin/icons/admin-icons.svg, Lucide 1.48.0, ISC) ---------- */
+.ax-ic {
+  display: inline-block; width: 16px; height: 16px; flex: 0 0 auto; vertical-align: -3px;
+  fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round;
+  transition: transform .16s ease-out;
+}
+.ax-ic--nav { width: 18px; height: 18px; color: var(--ax-muted); }
+.ax-ic--lg { width: 20px; height: 20px; }
+.ax-ic--xl { width: 32px; height: 32px; }
+:is(a, button, .ax-btn):hover > .ax-ic--nav, :is(a, button):focus-visible > .ax-ic--nav { color: var(--ax-text); transform: translateX(2px); }
+.is-active > .ax-ic--nav, [aria-current="page"] > .ax-ic--nav { color: var(--ax-accent); }
+.is-active > .ax-ic--nav { animation: ax-draw .3s ease-out 1; stroke-dasharray: 1; }
+@keyframes ax-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+.ax-ic--chevron { transition: transform .2s ease-out; }
+[aria-expanded="true"] > .ax-ic--chevron { transform: rotate(90deg); }
+.ax-menu > [aria-expanded="true"] > .ax-ic--chevron { transform: rotate(180deg); }
+
+/* ---------- 6.2 / 1. Page header (partial public/page_head.html) ---------- */
+.ax-page-head { display: flex; align-items: flex-start; gap: 12px; margin: 0 0 20px; }
+.ax-page-head__icon { flex: 0 0 auto; width: 36px; height: 36px; display: grid; place-items: center; border-radius: var(--ax-r); background: var(--ax-accent-soft); color: var(--ax-accent); }
+.ax-page-head__icon .ax-ic { width: 20px; height: 20px; }
+.ax-page-head__text { flex: 1 1 auto; min-width: 0; }
+body.admin-studio .ax-page-head h1 { margin: 0; color: var(--ax-text); font: 650 22px/1.3 var(--ax-font); letter-spacing: -.01em; overflow-wrap: anywhere; }
+.ax-page-head__help { margin: 4px 0 0; color: var(--ax-faint); font-size: 13px; line-height: 1.45; max-width: 75ch; }
+.ax-page-head__actions { display: flex; flex-wrap: wrap; gap: 8px; flex: 0 0 auto; }
+
+/* ---------- 2. Buttons ----------
+   Every rule is written twice: "body.admin-studio .x" (beats old link / button colours of the admin pages) and ".x"
+   (pages without that body class). Modifiers and states come after the base rule with the same weight. */
+body.admin-studio .ax-btn, .ax-btn {
+  box-sizing: border-box; display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: var(--ax-h); margin: 0; padding: 0 14px;
+  border: 1px solid var(--ax-field); border-radius: var(--ax-r-sm);
+  background: var(--ax-raised); color: var(--ax-text);
+  font: 550 13px/1.2 var(--ax-font); white-space: nowrap; text-decoration: none; cursor: pointer;
+  transition: background-color .16s ease, border-color .16s ease, color .16s ease;
+}
+body.admin-studio .ax-btn:hover, .ax-btn:hover { background: var(--ax-overlay); color: var(--ax-text); text-decoration: none; }
+.ax-btn:hover > .ax-ic, .ax-btn:focus-visible > .ax-ic { transform: scale(1.06); }
+body.admin-studio .ax-btn--primary, .ax-btn--primary { background: var(--ax-accent); border-color: var(--ax-accent); color: var(--ax-on-accent); }
+body.admin-studio .ax-btn--primary:hover, .ax-btn--primary:hover { background: var(--ax-accent-hover); border-color: var(--ax-accent-hover); color: var(--ax-on-accent); }
+body.admin-studio .ax-btn--danger, .ax-btn--danger { background: var(--ax-danger-bg); border-color: transparent; color: var(--ax-danger); }
+body.admin-studio .ax-btn--danger:hover, .ax-btn--danger:hover { background: var(--ax-danger-bg-hover); color: var(--ax-danger); }
+body.admin-studio .ax-btn--danger-solid, .ax-btn--danger-solid { background: var(--ax-danger-solid); border-color: var(--ax-danger-solid); color: #fff; }
+body.admin-studio .ax-btn--danger-solid:hover, .ax-btn--danger-solid:hover { background: #a9262f; border-color: #a9262f; color: #fff; }
+body.admin-studio .ax-btn--ghost, .ax-btn--ghost { background: transparent; border-color: transparent; color: var(--ax-muted); }
+body.admin-studio .ax-btn--ghost:hover, .ax-btn--ghost:hover { background: var(--ax-raised); color: var(--ax-text); }
+body.admin-studio .ax-btn--sm, .ax-btn--sm { min-height: 32px; padding: 0 10px; font-size: 12.5px; }
+body.admin-studio .ax-btn--icon, .ax-btn--icon { width: var(--ax-h); min-width: var(--ax-h); padding: 0; }
+body.admin-studio .ax-btn--sm.ax-btn--icon, .ax-btn--sm.ax-btn--icon { width: 32px; min-width: 32px; }
+body.admin-studio :is(.ax-btn[disabled], .ax-btn.is-disabled, .ax-btn[aria-disabled="true"]), .ax-btn[disabled], .ax-btn.is-disabled, .ax-btn[aria-disabled="true"] { opacity: .45; cursor: not-allowed; pointer-events: none; }
+
+/* V11 (kit part): reset / restore / upload buttons are secondary, never yellow or filled blue next to Save. */
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) :is(.layui-btn-warm, .btn-warning, .upload-btn, .layui-btn.layui-btn-normal.upload, button.layui-upload, a.layui-upload) {
+  background: var(--ax-raised) !important; border: 1px solid var(--ax-field) !important; color: var(--ax-text) !important;
+}
+/* Old classes: keep their meaning, use kit colours (danger = red tint, V2). */
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) :is(.btn-danger, .layui-btn-danger) { background: var(--ax-danger-bg) !important; border-color: transparent !important; color: var(--ax-danger) !important; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) :is(.btn, .layui-btn) > .ax-ic { margin-right: 8px; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) :is(.btn, .layui-btn):has(> .ax-ic) { display: inline-flex; align-items: center; }
+
+/* ---------- 3. Toolbar ---------- */
+.ax-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0 0 12px; }
+.ax-toolbar__spacer { flex: 1 1 auto; }
+.ax-toolbar__count { color: var(--ax-muted); font-size: 13px; }
+
+/* ---------- 4. Menu (AxUX.menu) ---------- */
+.ax-menu { position: relative; display: inline-block; }
+.ax-menu__list {
+  position: absolute; z-index: 60; top: calc(100% + 4px); left: 0; min-width: 200px; max-width: min(320px, calc(100vw - 24px));
+  max-height: min(60vh, 420px); overflow: auto; margin: 0; padding: 6px; list-style: none;
+  background: var(--ax-overlay); border: 1px solid var(--ax-line); border-radius: var(--ax-r); box-shadow: var(--ax-shadow);
+  opacity: 0; transform: translateY(4px); transition: opacity .16s ease, transform .16s ease;
+}
+.ax-menu__list[hidden] { display: none; }
+.ax-menu.is-open > .ax-menu__list { opacity: 1; transform: none; }
+.ax-menu--end > .ax-menu__list { left: auto; right: 0; }
+.ax-menu--up > .ax-menu__list { top: auto; bottom: calc(100% + 4px); }
+body.admin-studio .ax-menu__item, .ax-menu__item {
+  box-sizing: border-box; display: flex; align-items: center; gap: 8px; width: 100%; min-height: 36px; margin: 0; padding: 8px 10px;
+  border: 0; border-radius: var(--ax-r-sm); background: transparent; color: var(--ax-text);
+  font: 500 13px/1.3 var(--ax-font); text-align: left; text-decoration: none; white-space: normal; cursor: pointer;
+}
+body.admin-studio .ax-menu__item:is(:hover, :focus), .ax-menu__item:is(:hover, :focus) { background: var(--ax-raised); color: var(--ax-text); text-decoration: none; outline: none; }
+.ax-menu__item:focus-visible { outline: 2px solid var(--ax-accent); outline-offset: -2px; }
+body.admin-studio .ax-menu__item--danger, .ax-menu__item--danger { color: var(--ax-danger); }
+body.admin-studio .ax-menu__item--danger:is(:hover, :focus), .ax-menu__item--danger:is(:hover, :focus) { background: var(--ax-danger-bg); color: var(--ax-danger); }
+.ax-menu__sep { height: 1px; margin: 6px 4px; background: var(--ax-line); border: 0; }
+.ax-menu__label { padding: 6px 10px 4px; color: var(--ax-faint); font-size: 12px; }
+/* the existing studio bulk menu (details.studio-bulk-menu): destructive entries are red too (V2) */
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-bulk-menu > div > :is(.btn-danger, .layui-btn-danger) { color: var(--ax-danger) !important; }
+
+/* ---------- 5. Filter bar ---------- */
+.ax-filters { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 0 0 12px; }
+.ax-filters > :is(input[type="search"], input[type="text"]) { flex: 1 1 260px; min-width: 0; }
+.ax-filters > select { flex: 0 1 200px; min-width: 160px; }
+.ax-filters > details { flex: 1 0 100%; }
+.ax-filters :is(input, select) { min-height: var(--ax-h); }
+.ax-filters > details { grid-column: 1 / -1; }
+.ax-filters > details > summary { width: max-content; color: var(--ax-muted); cursor: pointer; font-size: 13px; padding: 4px 0; }
+.ax-filters > details > summary:hover { color: var(--ax-text); }
+.ax-filters__more { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 200px)); gap: 8px; margin-top: 8px; }
+
+/* ---------- 6. Chips (filter views) ---------- */
+.ax-chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 16px; padding: 0; list-style: none; }
+body.admin-studio a.ax-chip, .ax-chip {
+  box-sizing: border-box; display: inline-flex; align-items: center; gap: 6px; min-height: 32px; padding: 0 12px;
+  border: 1px solid var(--ax-line); border-radius: 999px; background: var(--ax-surface); color: var(--ax-muted);
+  font: 500 13px/1 var(--ax-font); text-decoration: none; white-space: nowrap;
+}
+body.admin-studio a.ax-chip:hover, a.ax-chip:hover { border-color: var(--ax-field); color: var(--ax-text); text-decoration: none; }
+body.admin-studio a.ax-chip[aria-current="page"], .ax-chip[aria-current="page"] { border-color: var(--ax-accent); background: var(--ax-accent-soft); color: var(--ax-text); }
+.ax-chip__n { min-width: 20px; padding: 2px 6px; border-radius: 999px; background: var(--ax-raised); color: var(--ax-text); font-size: 11.5px; text-align: center; }
+
+/* ---------- 13. Status chip (dot + text) ---------- */
+body.admin-studio :is(.ax-chip--ok, .ax-chip--off, .ax-chip--warn, .ax-chip--danger), .ax-chip--ok, .ax-chip--off, .ax-chip--warn, .ax-chip--danger { min-height: 24px; padding: 0 8px; border-color: transparent; background: var(--ax-raised); font-size: 12px; cursor: default; }
+:is(.ax-chip--ok, .ax-chip--off, .ax-chip--warn, .ax-chip--danger)::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; flex: 0 0 auto; }
+body.admin-studio .ax-chip--ok, .ax-chip--ok { color: var(--ax-ok); }
+body.admin-studio .ax-chip--off, .ax-chip--off { color: var(--ax-faint); }
+body.admin-studio .ax-chip--warn, .ax-chip--warn { color: var(--ax-warn); }
+body.admin-studio .ax-chip--danger, .ax-chip--danger { color: var(--ax-danger); }
+
+/* ---------- 7. Field + help, sections, forms ---------- */
+.ax-field { display: grid; gap: 6px; margin: 0 0 16px; min-width: 0; }
+body.admin-studio .ax-field > label, .ax-field > label { color: var(--ax-text); font: 600 13px/1.3 var(--ax-font); }
+body.admin-studio .ax-field :is(input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]), select, textarea), .ax-field :is(input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]), select, textarea) {
+  box-sizing: border-box; width: 100%; min-height: var(--ax-h); padding: 8px 12px;
+  border: 1px solid var(--ax-field); border-radius: var(--ax-r-sm); background: var(--ax-surface); color: var(--ax-text); font: inherit;
+}
+.ax-field--sm :is(input, select, textarea) { max-width: 220px; }
+.ax-field--md :is(input, select, textarea) { max-width: 420px; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) :is(.ax-help, .layui-form-mid.layui-word-aux, .layui-word-aux, .help-block) { color: var(--ax-faint) !important; font-size: 12.5px !important; line-height: 1.45; }
+.ax-help { margin: 0; }
+.ax-section { margin: 0 0 16px; padding: 20px; border: 1px solid var(--ax-line); border-radius: var(--ax-r-lg); background: var(--ax-surface); min-width: 0; }
+body.admin-studio .ax-section > h2, .ax-section > h2 { margin: 0 0 4px; color: var(--ax-text); font: 650 15px/1.3 var(--ax-font); }
+.ax-section > h2 + .ax-help { margin-bottom: 16px; }
+.ax-section--danger { border-color: rgba(255,138,155,.35); }
+body.admin-studio .ax-section--danger > h2 { color: var(--ax-danger); }
+/* V23: forms max 960 px, left aligned; lists stay full width */
+.ax-form { box-sizing: border-box; max-width: 960px; margin-left: 0; margin-right: auto; }
+
+/* ---------- 8. Table ---------- */
+.ax-table-wrap { overflow-x: auto; border: 1px solid var(--ax-line); border-radius: var(--ax-r-lg); background: var(--ax-surface); }
+body.admin-studio .ax-table, .ax-table { width: 100%; margin: 0; border-collapse: collapse; color: var(--ax-text); font-size: 13px; background: transparent; }
+body.admin-studio .ax-table th, .ax-table th { position: sticky; top: 0; z-index: 1; padding: 10px 12px; background: var(--ax-raised); color: var(--ax-muted); font-weight: 600; text-align: left; white-space: nowrap; border: 0; }
+body.admin-studio .ax-table td, .ax-table td { padding: 10px 12px; border: 0; border-top: 1px solid var(--ax-line); vertical-align: middle; }
+.ax-table tbody tr:hover > td { background: rgba(255,255,255,.02); }
+.ax-table :is(th, td).ax-num { text-align: right; font-variant-numeric: tabular-nums; }
+.ax-row-actions { display: flex; align-items: center; justify-content: flex-end; gap: 4px; white-space: nowrap; }
+:is(td, th).ax-row-actions { display: table-cell; text-align: right; }
+td.ax-row-actions > * { vertical-align: middle; }
+td.ax-row-actions > * + * { margin-left: 4px; }
+body.admin-studio .ax-row-actions .ax-btn, .ax-row-actions .ax-btn { min-height: 32px; padding: 0 10px; }
+body.admin-studio .ax-row-actions .ax-btn--icon, .ax-row-actions .ax-btn--icon { width: 32px; min-width: 32px; padding: 0; }
+/* R2-1: in a narrow frame (1024 px laptop, sidebar open) the table scrolls sideways; the row actions stay pinned to the right edge */
+@media (min-width: 640.02px) {
+  body.admin-studio .ax-table-wrap .ax-table td.ax-row-actions { position: sticky; right: 0; z-index: 1; background-color: var(--ax-surface); }
+  body.admin-studio .ax-table-wrap .ax-table th.ax-row-actions { position: sticky; right: 0; z-index: 2; background-color: var(--ax-raised); }
+  body.admin-studio .ax-table-wrap .ax-table tbody tr:hover > td.ax-row-actions { background-image: linear-gradient(rgba(255,255,255,.02), rgba(255,255,255,.02)); }
+  /* R3-6: the same 2 % tint (alpha .02 = 5/255 = 1.96 %) as a solid colour, so the pinned cell's own background-color matches the hovered row */
+  @supports (background-color: color-mix(in srgb, red, blue)) {
+    body.admin-studio .ax-table-wrap .ax-table tbody tr:hover > td.ax-row-actions { background-image: none; background-color: color-mix(in srgb, var(--ax-surface), #fff 1.96%); }
+  }
+  body.admin-studio .ax-table-wrap.is-scrollable .ax-table :is(td, th).ax-row-actions { box-shadow: -10px 0 10px -10px rgba(0,0,0,.7), inset 1px 0 0 var(--ax-line); }
+  /* each pinned cell is its own stacking layer: lift the row whose menu is open above the next rows and the header */
+  body.admin-studio .ax-table-wrap .ax-table td.ax-row-actions:is(:focus-within, :has([aria-expanded="true"])) { z-index: 3; }
+}
+@media (max-width: 640px) {
+  .ax-table--cards thead { display: none; }
+  body.admin-studio .ax-table--cards, body.admin-studio #pageListForm > .ax-table--cards { min-width: 0 !important; width: 100% !important; } /* old compat rules force 920 px */
+  .ax-table--cards, .ax-table--cards tbody, .ax-table--cards tr, .ax-table--cards td { display: block; width: 100%; box-sizing: border-box; }
+  .ax-table--cards tr { padding: 8px 12px; border-top: 1px solid var(--ax-line); }
+  .ax-table--cards tr:first-child { border-top: 0; }
+  body.admin-studio .ax-table--cards td, .ax-table--cards td { display: flex; justify-content: space-between; gap: 12px; padding: 4px 0; border: 0; text-align: right; overflow-wrap: anywhere; }
+  .ax-table--cards td::before { content: attr(data-label); flex: 0 0 auto; max-width: 45%; color: var(--ax-muted); font-size: 12px; text-align: left; }
+  .ax-table--cards td:not([data-label])::before, .ax-table--cards td[data-label=""]::before { content: none; }
+  .ax-table--cards td.ax-row-actions { display: flex; flex-wrap: wrap; justify-content: flex-start; padding-top: 8px; }
+  .ax-table--cards td.ax-row-actions::before { content: none; }
+  .ax-table--cards :is(input[type="checkbox"], .layui-form-checkbox) { min-width: 44px; min-height: 44px; }
+  /* the 44 px row checkbox: the small box centred, no dark slab */
+  body.admin-studio .ax-table--cards .layui-form-checkbox[lay-skin="primary"] { display: inline-flex; align-items: center; justify-content: center; background: transparent !important; padding: 0; }
+  body.admin-studio .ax-table--cards .layui-form-checkbox[lay-skin="primary"] > i { position: static; }
+  /* empty-state row (<td colspan>): full width, never squeezed to a sliver */
+  .ax-table--cards td[colspan], body.admin-studio .ax-table--cards td[colspan] { display: block; height: auto !important; padding: 0; text-align: center; }
+  .ax-table--cards td[colspan] > .ax-empty { width: 100%; box-sizing: border-box; margin: 8px 0; }
+}
+
+/* ---------- 9. Empty state (partial public/empty_state.html) ---------- */
+.ax-empty { display: grid; justify-items: center; gap: 10px; margin: 0 0 16px; padding: 40px 24px; text-align: center; color: var(--ax-muted);
+  border: 1px dashed var(--ax-field); border-radius: var(--ax-r-lg); background: var(--ax-surface); }
+.ax-empty > .ax-ic { width: 32px; height: 32px; color: var(--ax-faint); }
+.ax-empty__text { margin: 0; color: var(--ax-text); font-size: 15px; font-weight: 550; max-width: 60ch; }
+.ax-empty__actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 4px; }
+
+/* ---------- 10. Sticky save bar (+ V4, O28, N32) ---------- */
+.ax-savebar {
+  position: sticky; bottom: 0; z-index: 20; box-sizing: border-box; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  margin: 24px calc(var(--ax-pad) * -1) 0; padding: 12px var(--ax-pad);
+  border-top: 1px solid var(--ax-line); background: var(--ax-bg);
+}
+.ax-savebar__status { color: var(--ax-muted); font-size: 13px; }
+.ax-savebar__end { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; margin-left: auto; min-width: 0; max-width: 100%; } /* wraps: Save never runs off a phone screen */
+body.admin-studio .ax-savebar > .ax-btn--primary, .ax-savebar > .ax-btn--primary { margin-left: auto; min-width: 96px; }
+.ax-savebar__end > .ax-btn--primary { min-width: 96px; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .page-container .layui-form-item.studio-form-actions { background: var(--ax-bg) !important; border-top-color: var(--ax-line) !important; }
+/* An ancestor with overflow:hidden becomes the sticky box and hides the bar: clip instead (V4). */
+body.admin-studio .page-container :is(.layui-tab, .layui-tab-content, form):has(.studio-form-actions, .ax-savebar) { overflow: clip !important; overflow-clip-margin: 8px; }
+html:has(.studio-form-actions, .ax-savebar) { scroll-padding-bottom: 96px; }
+html:has(.studio-vod-editor, .admin-vod-info) { scroll-padding-top: 120px; }
+@media (max-width: 767.98px) {
+  html:has(.studio-form-actions, .ax-savebar) { scroll-padding-bottom: 136px; }
+  .ax-savebar { gap: 8px; }
+  .ax-savebar > .ax-btn--primary, .ax-savebar__end { flex: 1 1 auto; }
+  .ax-savebar__end > .ax-btn { flex: 1 1 auto; }
+  /* layui shifts fields 1-3 px left (pane overlap, phone rule), under the clip edge: keep them inside */
+  body.admin-studio .page-container .layui-form-item :is(.layui-input-inline, .layui-input-block) { left: 0; }
+}
+
+/* ---------- 11. Editor header ---------- */
+.ax-editor-head { display: flex; align-items: center; gap: 12px; margin: 0 0 20px; min-width: 0; }
+body.admin-studio .ax-editor-head h1, .ax-editor-head h1 { margin: 0; min-width: 0; color: var(--ax-text); font: 650 20px/1.3 var(--ax-font); overflow-wrap: anywhere; }
+.ax-editor-head__end { display: flex; gap: 8px; margin-left: auto; }
+
+/* Tap targets on phones (P2-11): small buttons, row actions, filter chips, radios and checkboxes get a 44 px hit area. */
+@media (max-width: 767.98px) {
+  body.admin-studio :is(.ax-btn--sm, .ax-row-actions .ax-btn, a.ax-chip), :is(.ax-btn--sm, .ax-row-actions .ax-btn, a.ax-chip) { min-height: 44px; }
+  body.admin-studio :is(.ax-btn--sm.ax-btn--icon, .ax-row-actions .ax-btn--icon), :is(.ax-btn--sm.ax-btn--icon, .ax-row-actions .ax-btn--icon) { width: 44px; min-width: 44px; }
+  body.admin-studio .page-container :is(.layui-form-radio, .layui-form-checkbox[lay-skin="primary"]) { display: inline-flex; align-items: center; min-height: 44px; margin-top: 0; margin-bottom: 0; vertical-align: middle; }
+  body.admin-studio .page-container .layui-form-checkbox[lay-skin="primary"]:not(.ax-table--cards *) > i { top: 50%; transform: translateY(-50%); }
+  /* R2-6: Bulk / More menu items, inline list inputs, and switches (the switch keeps its look; an invisible 46 px hit area around it) */
+  body.admin-studio .ax-menu__item:not(#adminShell *) { min-height: 44px; } /* page menus only: the shell account menu is sized by its owner */
+  body.admin-studio .ax-inline-input { min-height: 44px; }
+  body.admin-studio .layui-form-switch { margin-top: 10px; margin-bottom: 10px; }
+  body.admin-studio .layui-form-switch::after { content: ""; position: absolute; top: -11px; bottom: -11px; left: -6px; right: -6px; }
+}
+
+/* ---------- 12. Tabs (.ax-tabs and the restyled .layui-tab-title) ---------- */
+.ax-tabs { display: flex; gap: 4px; margin: 0 0 20px; padding: 0; overflow-x: auto; border-bottom: 1px solid var(--ax-line); list-style: none; scrollbar-width: thin; }
+body.admin-studio .ax-tabs > *, .ax-tabs > * { flex: 0 0 auto; display: inline-flex; align-items: center; min-height: 40px; padding: 0 14px; border: 0; background: transparent; color: var(--ax-muted); font: 550 13.5px/1 var(--ax-font); text-decoration: none; white-space: nowrap; cursor: pointer; }
+body.admin-studio .ax-tabs > :hover, .ax-tabs > :hover { color: var(--ax-text); }
+body.admin-studio .ax-tabs > :is(.is-active, [aria-selected="true"], [aria-current="page"]), .ax-tabs > :is(.is-active, [aria-selected="true"], [aria-current="page"]) { color: var(--ax-text); box-shadow: inset 0 -2px 0 var(--ax-accent); }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .page-container .layui-tab-title li { border-radius: var(--ax-r-sm) var(--ax-r-sm) 0 0 !important; background: transparent !important; color: var(--ax-muted) !important; transform: none !important; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .page-container .layui-tab-title li:hover { color: var(--ax-text) !important; background: transparent !important; border-color: transparent !important; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .page-container .layui-tab-title li.layui-this { color: var(--ax-text) !important; background: transparent !important; border-color: transparent !important; box-shadow: inset 0 -2px 0 var(--ax-accent) !important; }
+/* no tab bar for a single tab */
+body.admin-studio .page-container .layui-tab-title:has(> li:only-child) { display: none !important; }
+/* O28: settings tab bars scroll sideways on phones instead of stacking into a list */
+@media (max-width: 767.98px) {
+  body.admin-studio .page-container .layui-tab-title { display: flex !important; flex-flow: row nowrap !important; overflow-x: auto !important; overflow-y: hidden !important; white-space: nowrap !important; padding: 0 0 2px !important; gap: 2px !important; scrollbar-width: thin; }
+  body.admin-studio .page-container .layui-tab-title li { flex: 0 0 auto !important; width: auto !important; min-width: 0 !important; text-align: center !important; padding: 0 12px !important; }
+  body.admin-studio .page-container .layui-tab-title li:only-child:not(:first-child) { display: none; }
+  /* the strip scrolls, so layui's overflow button (a white square) is not needed */
+  body.admin-studio .page-container .layui-tab-title > .layui-tab-bar { display: none !important; }
+  /* R2-2: Import options (vertical inner tabs): an old compat rule (admin_dark_compat.css, max-width 700px) set overflow:visible, so 3 of 5 tabs could not be reached */
+  body.admin-studio.admin-dark .page-container > form.layui-form-pane > .layui-tab.maccms-inner-tab-vertical > .layui-tab-title { overflow-x: auto !important; overflow-y: hidden !important; max-width: 100%; }
+}
+/* wider screens: if layui still adds its overflow button, draw it dark */
+body.admin-studio .page-container .layui-tab-title > .layui-tab-bar { background: var(--ax-surface) !important; border-color: var(--ax-line) !important; color: var(--ax-muted) !important; }
+
+/* ---------- 15. Notice ---------- */
+.ax-notice { display: flex; align-items: flex-start; gap: 10px; margin: 0 0 16px; padding: 12px 14px; border-radius: var(--ax-r); background: var(--ax-accent-soft); color: var(--ax-text); font-size: 13px; line-height: 1.5; }
+.ax-notice > .ax-ic { margin-top: 1px; color: var(--ax-accent); }
+.ax-notice--warn { background: var(--ax-warn-soft); }
+.ax-notice--warn > .ax-ic { color: var(--ax-warn); }
+.ax-notice--danger { background: var(--ax-danger-bg); }
+.ax-notice--danger > .ax-ic { color: var(--ax-danger); }
+.ax-notice > div { min-width: 0; }
+.ax-notice p { margin: 0; }
+.ax-notice p + p { margin-top: 4px; }
+
+/* ---------- 16. Raw output page (make/* generators, progress, public/jump.html, public/msg.html) ---------- */
+body.ax-raw-output { box-sizing: border-box; margin: 0; padding: 24px; background: var(--ax-bg); color: var(--ax-text); font: 13px/1.6 var(--ax-mono); }
+body.ax-raw-output > :not(.ax-msg) { max-width: 960px; }
+body.ax-raw-output a { color: var(--ax-accent); }
+body.ax-raw-output :is(font, span)[color], body.ax-raw-output font { color: inherit; }
+.ax-msg { box-sizing: border-box; width: min(100%, 560px); margin: 8vh auto 0; padding: 32px; border: 1px solid var(--ax-line); border-radius: var(--ax-r-lg); background: var(--ax-surface); text-align: center; font-family: var(--ax-font); font-size: 15px; }
+.ax-msg__icon { display: grid; place-items: center; width: 56px; height: 56px; margin: 0 auto 16px; border-radius: 50%; background: var(--ax-ok-soft); color: var(--ax-ok); }
+.ax-msg__icon .ax-ic { width: 28px; height: 28px; }
+.ax-msg--error .ax-msg__icon { background: var(--ax-danger-bg); color: var(--ax-danger); }
+.ax-msg__text { margin: 0; color: var(--ax-text); font-size: 18px; font-weight: 650; line-height: 1.4; overflow-wrap: anywhere; }
+.ax-msg__jump { margin: 20px 0 0; color: var(--ax-muted); font-size: 13.5px; }
+body.admin-studio .ax-msg__jump .ax-btn, .ax-msg__jump .ax-btn { margin: 0 0 10px; }
+@media (max-width: 560px) { body.ax-raw-output { padding: 16px; } .ax-msg { padding: 24px 16px; } }
+
+/* ---------- 17. Toast (AxUX.toast) ---------- */
+.ax-toasts { position: fixed; z-index: 2147483000; right: 16px; bottom: 16px; display: flex; flex-direction: column; align-items: flex-end; gap: 8px; pointer-events: none; }
+.ax-toast { display: flex; align-items: center; gap: 10px; max-width: min(420px, calc(100vw - 32px)); padding: 12px 14px; border: 1px solid var(--ax-line); border-radius: var(--ax-r); background: var(--ax-overlay); color: var(--ax-text); box-shadow: var(--ax-shadow); font: 500 13.5px/1.4 var(--ax-font); pointer-events: auto;
+  opacity: 0; transform: translateY(4px); transition: opacity .16s ease, transform .16s ease; }
+.ax-toast.is-in { opacity: 1; transform: none; }
+.ax-toast > .ax-ic { color: var(--ax-accent); }
+.ax-toast--ok > .ax-ic { color: var(--ax-ok); }
+.ax-toast--warn > .ax-ic { color: var(--ax-warn); }
+.ax-toast--error { border-color: rgba(255,138,155,.4); }
+.ax-toast--error > .ax-ic { color: var(--ax-danger); }
+@media (max-width: 767.98px) { .ax-toasts { left: 12px; right: 12px; bottom: 12px; align-items: center; } }
+
+/* ---------- 14. Confirm dialog (AxUX.confirm) ---------- */
+.ax-dialog-backdrop { position: fixed; inset: 0; z-index: 2147482000; display: grid; place-items: center; padding: 16px; background: rgba(5,7,10,.62); opacity: 0; transition: opacity .16s ease; }
+.ax-dialog-backdrop.is-in { opacity: 1; }
+.ax-dialog { box-sizing: border-box; width: min(100%, 460px); max-height: calc(100vh - 32px); overflow: auto; padding: 20px; border: 1px solid var(--ax-line); border-radius: var(--ax-r-lg); background: var(--ax-surface); color: var(--ax-text); box-shadow: var(--ax-shadow); font-family: var(--ax-font);
+  transform: translateY(4px); transition: transform .16s ease; }
+.ax-dialog-backdrop.is-in .ax-dialog { transform: none; }
+.ax-dialog__head { display: flex; align-items: center; gap: 10px; margin: 0 0 10px; }
+.ax-dialog__icon { display: grid; place-items: center; width: 36px; height: 36px; flex: 0 0 auto; border-radius: var(--ax-r); background: var(--ax-accent-soft); color: var(--ax-accent); }
+.ax-dialog--danger .ax-dialog__icon { background: var(--ax-danger-bg); color: var(--ax-danger); }
+.ax-dialog__icon .ax-ic { width: 20px; height: 20px; }
+body.admin-studio .ax-dialog__title, .ax-dialog__title { margin: 0; color: var(--ax-text); font: 650 17px/1.3 var(--ax-font); }
+.ax-dialog__msg { margin: 0 0 16px; color: var(--ax-muted); font-size: 14px; line-height: 1.55; white-space: pre-line; overflow-wrap: anywhere; }
+.ax-dialog__typed { display: grid; gap: 6px; margin: 0 0 16px; }
+.ax-dialog__typed label { color: var(--ax-text); font-size: 13px; font-weight: 600; }
+.ax-dialog__typed strong { font-family: var(--ax-mono); color: var(--ax-danger); }
+body.admin-studio .ax-dialog__typed input, .ax-dialog__typed input { box-sizing: border-box; width: 100%; min-height: var(--ax-h); padding: 8px 12px; border: 1px solid var(--ax-field); border-radius: var(--ax-r-sm); background: var(--ax-bg); color: var(--ax-text); font: 14px/1.4 var(--ax-mono); }
+.ax-dialog__actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; }
+@media (max-width: 480px) { .ax-dialog__actions > .ax-btn { flex: 1 1 auto; } }
+html.ax-dialog-open, html.ax-dialog-open body { overflow: hidden; }
+
+/* ---------- old layui confirm (until every confirm uses AxUX.confirm) ---------- */
+body.admin-studio .layui-layer-dialog .layui-layer-btn a { min-height: 36px; line-height: 34px; border-radius: var(--ax-r-sm); }
+
+/* ---------- 18. Layer on phone: every iframe dialog is full screen below 768 px (N8) ---------- */
+@media (max-width: 767.98px) {
+  body.admin-studio .layui-layer.layui-layer-iframe {
+    position: fixed !important; left: 0 !important; top: 0 !important; width: 100vw !important; max-width: 100vw !important;
+    height: 100vh !important; height: 100dvh !important; border-radius: 0 !important; border: 0 !important;
+    display: flex !important; flex-direction: column !important;
+  }
+  body.admin-studio .layui-layer.layui-layer-iframe > .layui-layer-title { flex: 0 0 auto; }
+  body.admin-studio .layui-layer.layui-layer-iframe > .layui-layer-content { flex: 1 1 0 !important; min-height: 0 !important; height: auto !important; }
+  body.admin-studio .layui-layer.layui-layer-iframe > .layui-layer-content > iframe { display: block; width: 100% !important; height: 100% !important; }
+  body.admin-studio .layui-layer.layui-layer-iframe > .layui-layer-setwin { top: 12px !important; }
+  body.admin-studio .layui-layer-page { max-width: calc(100vw - 16px) !important; }
+}
+
+/* ---------- 20. Code viewer ---------- */
+body.admin-studio pre.ax-code, pre.ax-code {
+  box-sizing: border-box; max-width: 100%; margin: 0 0 16px; padding: 12px 0; overflow: auto; counter-reset: ax-line;
+  border: 1px solid var(--ax-line); border-radius: var(--ax-r); background: var(--ax-surface); color: var(--ax-text);
+  font: 13px/1.6 var(--ax-mono); white-space: pre; tab-size: 4;
+}
+pre.ax-code > .ax-code__line { display: block; padding: 0 16px 0 0; }
+pre.ax-code > .ax-code__line::before { counter-increment: ax-line; content: counter(ax-line); display: inline-block; width: 3.5em; margin-right: 12px; padding-right: 8px; border-right: 1px solid var(--ax-line); color: var(--ax-faint); text-align: right; user-select: none; }
+pre.ax-code:not(:has(> .ax-code__line)) { padding: 12px 16px; }
+
+/* ---------- utilities ---------- */
+.ax-sr-only { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.ax-muted { color: var(--ax-muted); }
+.ax-faint { color: var(--ax-faint); }
+.ax-danger-text { color: var(--ax-danger); }
+.ax-stack { display: grid; gap: 16px; }
+
+/* ---------- Limits: reduced motion turns every kit transition and animation off ---------- */
+@media (prefers-reduced-motion: reduce) {
+  [class*="ax-"], [class*="ax-"] *, [class*="ax-"]::before, [class*="ax-"]::after,
+  #adminShell, #adminShell *, .studio-shell, .studio-shell * { transition: none !important; animation: none !important; }
+}
+
+/* ---------- Hardening round (2026-10-13) ---------- */
+/* REVIEW-admin-visual-r3 R3-2 (kit part): mac_day($t,'color') prints <font color="#FF0000"> for today's dates in 17 lists
+   (4.23:1 on the dark surface, and pure red reads as an error). Old tool logs print <font color=red|green> for failed / ok lines:
+   keep their meaning, with readable kit colours. */
+body.admin-studio font[color="#FF0000" i] { color: var(--ax-accent) !important; }
+font[color="red" i] { color: var(--ax-danger) !important; }
+font[color="green" i] { color: var(--ax-ok) !important; }
+/* REVIEW-admin-visual-r2 R2-12 / r3: no dark slab beside the row checkbox in table mode either (cards already had this) */
+body.admin-studio .ax-table .layui-form-checkbox[lay-skin="primary"] { background: transparent !important; }
+/* Pager: the total and "Go to page" are plain text (admin_studio.css), but an old dark-compat rule painted a tight box
+   behind them with no padding ("Tổng: 1" touched its edges). */
+body.admin-studio.admin-dark .page-container #pages > .layui-laypage > :is(.layui-laypage-count, .layui-laypage-limits, .layui-laypage-skip) { background: transparent !important; }
+/* review-visual-r4: row / cell menus inside a table scroll box float next to their button (admin_ux.js placeFloat), so the
+   box's overflow never clips them; the pinned cell that holds an open menu is lifted above the next rows (HO-content-h3-2). */
+.ax-menu--float > .ax-menu__list { position: fixed; right: auto; bottom: auto; z-index: 70; }
+
+/* ---------- close-polish (2026-10-14) ---------- */
+/* Stat cards (R4-4 referral rewards): plain numbers, never buttons. */
+.ax-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin: 0 0 16px; }
+.ax-stat { min-width: 0; padding: 14px 16px; border: 1px solid var(--ax-line); border-radius: var(--ax-r); background: var(--ax-surface); }
+body.admin-studio .ax-stat p, .ax-stat p { margin: 0; }
+body.admin-studio .ax-stat__label, .ax-stat__label { color: var(--ax-muted); font: 500 13px/1.4 var(--ax-font); overflow-wrap: anywhere; }
+body.admin-studio .ax-stat__value, .ax-stat__value { margin: 2px 0 !important; color: var(--ax-text); font: 650 24px/1.25 var(--ax-font); font-variant-numeric: tabular-nums; }
+body.admin-studio .ax-stat__sub, .ax-stat__sub { color: var(--ax-faint); font: 400 12.5px/1.4 var(--ax-font); overflow-wrap: anywhere; }
+@media (max-width: 640px) { .ax-stats { grid-template-columns: 1fr; gap: 8px; } }
+@media (max-width: 767.98px) {
+  /* R3-4: the shell account menu items get the same 44 px tap height as page menus */
+  body.admin-studio #adminShell .studio-account__list .ax-menu__item { min-height: 44px; }
+  /* R2-14: the phone footer is a real 44 px bar with readable links (the copyright line stays hidden on phones) */
+  body.admin-studio #adminShell.studio-shell { grid-template-rows: var(--sh-head-h) minmax(0, 1fr) 44px; }
+  body.admin-studio #adminShell .studio-footer { height: 44px; padding: 0 4px; font-size: 13px; }
+  body.admin-studio #adminShell .studio-footer__links { flex: 1 1 auto; justify-content: space-around; gap: 4px; }
+  body.admin-studio #adminShell .studio-footer__links a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 12px; color: var(--ax-muted); }
+  /* R3-5: role editor Back and preset buttons */
+  body.admin-studio .page-container.admin-administrator-editor-v1 a.admin-remaining-editor-return, body.admin-studio .admin-administrator-editor-v1 .role-presets .ax-btn { min-height: 44px; }
+}

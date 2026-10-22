@@ -1,0 +1,9 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<section class="nc-sec" aria-labelledby="nc-sec-hot" data-ai-group><div class="nc-sec-head"><span class="nc-hexbadge" aria-hidden="true">{:\\app\\common\\util\\AutoIcon::ui('flame')}</span><div class="nc-sec-titles"><h2 class="nc-sec-title" id="nc-sec-hot" data-nc-melt="view"><a href="{:mac_url('label/hot')}">{:\\app\\common\\util\\TemplateText::get('ui.popular_videos')}</a></h2><p class="nc-sec-cap">{:\\app\\common\\util\\TemplateText::get('nc.cap_popular')}</p></div><a class="nc-more" href="{:mac_url('label/hot')}">{:\\app\\common\\util\\TemplateText::get('nc.view_all')}<svg class="nc-i nc-flip" aria-hidden="true"><use href="{$ncIco}chevron-right"></use></svg></a></div>
+<div class="nc-grid" data-grid-fill data-fx="stagger" data-fx-style="drop">{maccms:vod num="10" type="all" order="desc" by="hits_day" paging="no"}{include file="public/vodbox"}{/maccms:vod}</div></section>

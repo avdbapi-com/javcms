@@ -1,0 +1,26 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="jav" data-template-variant="classic" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/auto"}
+{include file="block/include"}
+</head>
+<body class="gallery-page page-list">
+{include file="block/head"}
+{php}ob_start();{/php}{maccms:vod num="20" paging="yes" pageurl="vod/index" order="desc" by="time"}<li>{include file="block/vod_box"}</li>{/maccms:vod}{php}$tplGridHtml = ob_get_clean(); $tplTotal = isset($__PAGING__['record_total']) ? (int)$__PAGING__['record_total'] : 0;{/php}
+<main id="main-content" class="container list-page">
+  <div class="list-head"><div class="list-title"><h1>{:\\app\\common\\util\\AutoIcon::navIcon('all-videos', '', ['size'=>'xl', 'plate'=>true])}<span>{:\\app\\common\\util\\TemplateText::get('ui.all_videos')}</span></h1><p class="list-count"><strong>{$tplTotal|number_format}</strong> {:\\app\\common\\util\\TemplateText::get('videos')}</p></div></div>
+  {if condition="$tplTotal gt 0"}<ul class="stui-vodlist" data-grid-fill>{$tplGridHtml}</ul>{else /}<div class="empty-state">{:\\app\\common\\util\\AutoIcon::scene('search-empty')}<p>{:\\app\\common\\util\\TemplateText::get('no_results')}</p></div>{/if}
+  {include file="block/page"}
+</main>
+{include file="block/page_all"}
+{include file="block/copy"}
+{include file="block/foot"}
+</body>
+</html>

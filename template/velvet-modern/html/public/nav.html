@@ -1,0 +1,20 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<nav class="vp-nav" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.main_navigation')}">
+  <div class="vp-wrap vp-nav-in">
+    <ul class="vp-navlist" data-vp-navlist>
+      <li><a href="{$maccms.path}"{if condition="$maccms.aid eq 1"} class="is-active" aria-current="page"{/if}><span>{:\\app\\common\\util\\TemplateText::get('ui.home')}</span></a></li>
+      <li class="vp-nav-extra"><a href="{:mac_url('label/new')}"{if condition="$maccms.aid eq 9999"} class="is-active" aria-current="page"{/if}><span>{:\\app\\common\\util\\TemplateText::get('ui.latest')}</span></a></li>
+      <li class="vp-nav-extra"><a href="{:mac_url('label/hot')}"{if condition="$maccms.aid eq 9998"} class="is-active" aria-current="page"{/if}><span>{:\\app\\common\\util\\TemplateText::get('ui.popular')}</span></a></li>
+      {maccms:type ids="parent" flag="vod" order="asc" by="sort" id="tplNav" hide_empty="1"}<li><a href="{:mac_url_type($tplNav)}"{if condition="$tplNav.type_id eq $GLOBALS['type_id'] || $tplNav.type_id eq $GLOBALS['type_pid']"} class="is-active" aria-current="page"{/if}><span>{:\\app\\common\\util\\TemplateText::get(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)($tplNav['type_name'] ?? '')))}</span></a></li>{/maccms:type}
+      {maccms:actor num="1" order="desc" by="time" id="vpHasActor"}<li class="vp-nav-extra"><a href="{:mac_url('actor/index')}"{if condition="$maccms.aid eq 9994"} class="is-active" aria-current="page"{/if}><span>{:\\app\\common\\util\\TemplateText::get('ui.performers')}</span></a></li>{/maccms:actor}
+      {maccms:topic num="1" order="desc" by="time" id="vpHasTopic"}<li class="vp-nav-extra"><a href="{:mac_url('topic/index')}"><span>{:\\app\\common\\util\\TemplateText::get('ui.collections')}</span></a></li>{/maccms:topic}
+      {maccms:art num="1" order="desc" by="time" id="vpHasArt"}<li class="vp-nav-extra"><a href="{:mac_url('art/index')}"><span>{:\\app\\common\\util\\TemplateText::get('ui.articles')}</span></a></li>{/maccms:art}
+    </ul>
+  </div>
+</nav>

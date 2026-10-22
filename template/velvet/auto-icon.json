@@ -1,0 +1,16 @@
+{
+ "$schema": "javcms.auto-icon.v1",
+ "family": "phosphor-regular",
+ "motion": "float glow",
+ "enter": "blur",
+ "plate": "tile",
+ "plateMotion": "pulse",
+ "avatar": "tile gradient",
+ "tint": "slot",
+ "hue": [
+  320,
+  70
+ ],
+ "map": {},
+ "nav": {}
+}

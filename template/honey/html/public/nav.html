@@ -1,0 +1,14 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<nav class="hn-strip" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.categories')}"><div class="hn-strip-in" data-hn-strip data-ai-group>
+<a class="hn-tab{if condition="$hnAid eq 1"} is-on{/if}" href="{$maccms.path}"{if condition="$hnAid eq 1"} aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::navIcon('home', '', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ui.home')}</a>
+<a class="hn-tab{if condition="$hnAid eq 9998"} is-on{/if}" href="{:mac_url('label/hot')}"{if condition="$hnAid eq 9998"} aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::navIcon('hot', '', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ui.popular')}</a>
+<a class="hn-tab{if condition="$hnAid eq 9999"} is-on{/if}" href="{:mac_url('label/new')}"{if condition="$hnAid eq 9999"} aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::navIcon('latest', '', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ui.latest')}</a>
+{maccms:type ids="parent" flag="vod" order="asc" by="sort" id="hnStrip" key="hnStripK" hide_empty="1"}<a class="hn-tab{if condition="$hnStrip.type_id eq $hnCatId || $hnStrip.type_id eq $hnCatPid"} is-on{/if}" href="{:mac_url_type($hnStrip)}"{if condition="$hnStrip.type_id eq $hnCatId || $hnStrip.type_id eq $hnCatPid"} aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::icon('category', $hnStrip['type_name'], ['size'=>'sm', 'i'=>$hnStripK + 3])}{:\\app\\common\\util\\TemplateText::get(htmlspecialchars_decode((string)$hnStrip['type_name'], ENT_QUOTES))}</a>{/maccms:type}
+{if condition="$hnHasActor"}<a class="hn-tab" href="{:mac_url('actor/index')}">{:\\app\\common\\util\\AutoIcon::navIcon('actors', '', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ui.performers')}</a>{/if}{if condition="$hnHasTopic"}<a class="hn-tab" href="{:mac_url_topic_index()}">{:\\app\\common\\util\\AutoIcon::navIcon('topics', '', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ui.collections')}</a>{/if}{if condition="$hnHasArt"}<a class="hn-tab" href="{:mac_url('art/index')}">{:\\app\\common\\util\\AutoIcon::navIcon('articles', '', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ui.articles')}</a>{/if}
+</div><button class="hn-strip-more" type="button" data-hn-sheet-open aria-controls="hn-sheet" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.categories')}">{:\\app\\common\\util\\AutoIcon::ui('layout-dashboard', ['class'=>'hn-i', 'tint'=>'none'])}</button></nav>

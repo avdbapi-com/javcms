@@ -1,0 +1,1017 @@
+{
+ "about": "Self-hosted OFL fonts for JavCMS modern themes. Each family has its own CSS; link only the families a theme uses.",
+ "fonts": [
+  {
+   "slug": "unbounded",
+   "family": "Unbounded",
+   "role": "display: wide geometric, very bold headlines",
+   "category": "sans-serif",
+   "fontsource": "5.3.0",
+   "css": "fonts/unbounded@5.3.0/unbounded.css",
+   "dir": "fonts/unbounded@5.3.0/",
+   "weights": [
+    200,
+    300,
+    400,
+    500,
+    600,
+    700,
+    800,
+    900
+   ],
+   "styles": [
+    "normal"
+   ],
+   "axes": {
+    "wght": [
+     "200",
+     "900"
+    ]
+   },
+   "subsets": [
+    "latin",
+    "latin-ext",
+    "vietnamese",
+    "cyrillic",
+    "cyrillic-ext"
+   ],
+   "available_subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "preload": [
+    "fonts/unbounded@5.3.0/unbounded-latin-wght-normal.woff2"
+   ],
+   "files": [
+    {
+     "file": "unbounded-cyrillic-ext-wght-normal.woff2",
+     "subset": "cyrillic-ext",
+     "style": "normal",
+     "weight": "200 900",
+     "bytes": 1840
+    },
+    {
+     "file": "unbounded-cyrillic-wght-normal.woff2",
+     "subset": "cyrillic",
+     "style": "normal",
+     "weight": "200 900",
+     "bytes": 31424
+    },
+    {
+     "file": "unbounded-vietnamese-wght-normal.woff2",
+     "subset": "vietnamese",
+     "style": "normal",
+     "weight": "200 900",
+     "bytes": 13884
+    },
+    {
+     "file": "unbounded-latin-ext-wght-normal.woff2",
+     "subset": "latin-ext",
+     "style": "normal",
+     "weight": "200 900",
+     "bytes": 118348
+    },
+    {
+     "file": "unbounded-latin-wght-normal.woff2",
+     "subset": "latin",
+     "style": "normal",
+     "weight": "200 900",
+     "bytes": 50904
+    }
+   ],
+   "total_bytes": 216400,
+   "license": "OFL-1.1",
+   "copyright": "Copyright 2022 The Unbounded Project Authors (https://github.com/googlefonts/unbounded)"
+  },
+  {
+   "slug": "space-grotesk",
+   "family": "Space Grotesk",
+   "role": "display/text: technical grotesk",
+   "category": "sans-serif",
+   "fontsource": "5.3.0",
+   "css": "fonts/space-grotesk@5.3.0/space-grotesk.css",
+   "dir": "fonts/space-grotesk@5.3.0/",
+   "weights": [
+    300,
+    400,
+    500,
+    600,
+    700
+   ],
+   "styles": [
+    "normal"
+   ],
+   "axes": {
+    "wght": [
+     "300",
+     "700"
+    ]
+   },
+   "subsets": [
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "available_subsets": [
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "preload": [
+    "fonts/space-grotesk@5.3.0/space-grotesk-latin-wght-normal.woff2"
+   ],
+   "files": [
+    {
+     "file": "space-grotesk-vietnamese-wght-normal.woff2",
+     "subset": "vietnamese",
+     "style": "normal",
+     "weight": "300 700",
+     "bytes": 6712
+    },
+    {
+     "file": "space-grotesk-latin-ext-wght-normal.woff2",
+     "subset": "latin-ext",
+     "style": "normal",
+     "weight": "300 700",
+     "bytes": 18940
+    },
+    {
+     "file": "space-grotesk-latin-wght-normal.woff2",
+     "subset": "latin",
+     "style": "normal",
+     "weight": "300 700",
+     "bytes": 22288
+    }
+   ],
+   "total_bytes": 47940,
+   "license": "OFL-1.1",
+   "copyright": "Copyright 2020 The Space Grotesk Project Authors (https://github.com/floriankarsten/space-grotesk)"
+  },
+  {
+   "slug": "syne",
+   "family": "Syne",
+   "role": "display: art-gallery, extended at heavy weights",
+   "category": "sans-serif",
+   "fontsource": "5.3.0",
+   "css": "fonts/syne@5.3.0/syne.css",
+   "dir": "fonts/syne@5.3.0/",
+   "weights": [
+    400,
+    500,
+    600,
+    700,
+    800
+   ],
+   "styles": [
+    "normal"
+   ],
+   "axes": {
+    "wght": [
+     "400",
+     "800"
+    ]
+   },
+   "subsets": [
+    "latin",
+    "latin-ext",
+    "greek"
+   ],
+   "available_subsets": [
+    "greek",
+    "latin",
+    "latin-ext"
+   ],
+   "preload": [
+    "fonts/syne@5.3.0/syne-latin-wght-normal.woff2"
+   ],
+   "files": [
+    {
+     "file": "syne-greek-wght-normal.woff2",
+     "subset": "greek",
+     "style": "normal",
+     "weight": "400 800",
+     "bytes": 11200
+    },
+    {
+     "file": "syne-latin-ext-wght-normal.woff2",
+     "subset": "latin-ext",
+     "style": "normal",
+     "weight": "400 800",
+     "bytes": 14724
+    },
+    {
+     "file": "syne-latin-wght-normal.woff2",
+     "subset": "latin",
+     "style": "normal",
+     "weight": "400 800",
+     "bytes": 34608
+    }
+   ],
+   "total_bytes": 60532,
+   "license": "OFL-1.1",
+   "copyright": "Copyright 2019 The Syne Project Authors (https://gitlab.com/bonjour-monde/fonderie/syne-typeface)"
+  },
+  {
+   "slug": "bricolage-grotesque",
+   "family": "Bricolage Grotesque",
+   "role": "display/text: quirky grotesk with optical size + width axes",
+   "category": "sans-serif",
+   "fontsource": "5.3.0",
+   "css": "fonts/bricolage-grotesque@5.3.0/bricolage-grotesque.css",
+   "dir": "fonts/bricolage-grotesque@5.3.0/",
+   "weights": [
+    200,
+    300,
+    400,
+    500,
+    600,
+    700,
+    800
+   ],
+   "styles": [
+    "normal"
+   ],
+   "axes": {
+    "opsz": [
+     "12",
+     "96"
+    ],
+    "wdth": [
+     "75",
+     "100"
+    ],
+    "wght": [
+     "200",
+     "800"
+    ]
+   },
+   "subsets": [
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "available_subsets": [
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "preload": [
+    "fonts/bricolage-grotesque@5.3.0/bricolage-grotesque-latin-standard-normal.woff2"
+   ],
+   "files": [
+    {
+     "file": "bricolage-grotesque-vietnamese-standard-normal.woff2",
+     "subset": "vietnamese",
+     "style": "normal",
+     "weight": "200 800",
+     "bytes": 22028
+    },
+    {
+     "file": "bricolage-grotesque-latin-ext-standard-normal.woff2",
+     "subset": "latin-ext",
+     "style": "normal",
+     "weight": "200 800",
+     "bytes": 53588
+    },
+    {
+     "file": "bricolage-grotesque-latin-standard-normal.woff2",
+     "subset": "latin",
+     "style": "normal",
+     "weight": "200 800",
+     "bytes": 131548
+    }
+   ],
+   "total_bytes": 207164,
+   "license": "OFL-1.1",
+   "copyright": "Copyright 2022 The Bricolage Grotesque Project Authors (https://github.com/ateliertriay/bricolage)"
+  },
+  {
+   "slug": "fraunces",
+   "family": "Fraunces",
+   "role": "display serif: soft \"wonky\" old-style, SOFT/WONK/opsz axes",
+   "category": "serif",
+   "fontsource": "5.3.0",
+   "css": "fonts/fraunces@5.3.0/fraunces.css",
+   "dir": "fonts/fraunces@5.3.0/",
+   "weights": [
+    100,
+    200,
+    300,
+    400,
+    500,
+    600,
+    700,
+    800,
+    900
+   ],
+   "styles": [
+    "italic",
+    "normal"
+   ],
+   "axes": {
+    "ital": [
+     "0",
+     "1"
+    ],
+    "opsz": [
+     "9",
+     "144"
+    ],
+    "wght": [
+     "100",
+     "900"
+    ],
+    "SOFT": [
+     "0",
+     "100"
+    ],
+    "WONK": [
+     "0",
+     "1"
+    ]
+   },
+   "subsets": [
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "available_subsets": [
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "preload": [
+    "fonts/fraunces@5.3.0/fraunces-latin-full-normal.woff2",
+    "fonts/fraunces@5.3.0/fraunces-latin-wght-italic.woff2"
+   ],
+   "files": [
+    {
+     "file": "fraunces-vietnamese-full-normal.woff2",
+     "subset": "vietnamese",
+     "style": "normal",
+     "weight": "100 900",
+     "bytes": 34308
+    },
+    {
+     "file": "fraunces-latin-ext-full-normal.woff2",
+     "subset": "latin-ext",
+     "style": "normal",
+     "weight": "100 900",
+     "bytes": 105244
+    },
+    {
+     "file": "fraunces-latin-full-normal.woff2",
+     "subset": "latin",
+     "style": "normal",
+     "weight": "100 900",
+     "bytes": 121016
+    },
+    {
+     "file": "fraunces-vietnamese-wght-italic.woff2",
+     "subset": "vietnamese",
+     "style": "italic",
+     "weight": "100 900",
+     "bytes": 12948
+    },
+    {
+     "file": "fraunces-latin-ext-wght-italic.woff2",
+     "subset": "latin-ext",
+     "style": "italic",
+     "weight": "100 900",
+     "bytes": 40528
+    },
+    {
+     "file": "fraunces-latin-wght-italic.woff2",
+     "subset": "latin",
+     "style": "italic",
+     "weight": "100 900",
+     "bytes": 45656
+    }
+   ],
+   "total_bytes": 359700,
+   "license": "OFL-1.1",
+   "copyright": "Copyright 2020 The Fraunces Project Authors (github.com/undercasetype/Fraunces) Fraunces-Italic[SOFT,WONK,opsz,wght].ttf: Copyright 2020 The Fraunces Project Authors (github.com/undercasetype/Fraunces)"
+  },
+  {
+   "slug": "playfair-display",
+   "family": "Playfair Display",
+   "role": "display serif: high-contrast, elegant",
+   "category": "serif",
+   "fontsource": "5.3.0",
+   "css": "fonts/playfair-display@5.3.0/playfair-display.css",
+   "dir": "fonts/playfair-display@5.3.0/",
+   "weights": [
+    400,
+    500,
+    600,
+    700,
+    800,
+    900
+   ],
+   "styles": [
+    "italic",
+    "normal"
+   ],
+   "axes": {
+    "ital": [
+     "0",
+     "1"
+    ],
+    "wght": [
+     "400",
+     "900"
+    ]
+   },
+   "subsets": [
+    "latin",
+    "latin-ext",
+    "vietnamese",
+    "cyrillic"
+   ],
+   "available_subsets": [
+    "cyrillic",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "preload": [
+    "fonts/playfair-display@5.3.0/playfair-display-latin-wght-normal.woff2",
+    "fonts/playfair-display@5.3.0/playfair-display-latin-wght-italic.woff2"
+   ],
+   "files": [
+    {
+     "file": "playfair-display-cyrillic-wght-normal.woff2",
+     "subset": "cyrillic",
+     "style": "normal",
+     "weight": "400 900",
+     "bytes": 21152
+    },
+    {
+     "file": "playfair-display-vietnamese-wght-normal.woff2",
+     "subset": "vietnamese",
+     "style": "normal",
+     "weight": "400 900",
+     "bytes": 9112
+    },
+    {
+     "file": "playfair-display-latin-ext-wght-normal.woff2",
+     "subset": "latin-ext",
+     "style": "normal",
+     "weight": "400 900",
+     "bytes": 21140
+    },
+    {
+     "file": "playfair-display-latin-wght-normal.woff2",
+     "subset": "latin",
+     "style": "normal",
+     "weight": "400 900",
+     "bytes": 38404
+    },
+    {
+     "file": "playfair-display-cyrillic-wght-italic.woff2",
+     "subset": "cyrillic",
+     "style": "italic",
+     "weight": "400 900",
+     "bytes": 23304
+    },
+    {
+     "file": "playfair-display-vietnamese-wght-italic.woff2",
+     "subset": "vietnamese",
+     "style": "italic",
+     "weight": "400 900",
+     "bytes": 9568
+    },
+    {
+     "file": "playfair-display-latin-ext-wght-italic.woff2",
+     "subset": "latin-ext",
+     "style": "italic",
+     "weight": "400 900",
+     "bytes": 23380
+    },
+    {
+     "file": "playfair-display-latin-wght-italic.woff2",
+     "subset": "latin",
+     "style": "italic",
+     "weight": "400 900",
+     "bytes": 38804
+    }
+   ],
+   "total_bytes": 184864,
+   "license": "OFL-1.1",
+   "copyright": "Copyright 2017 The Playfair Display Project Authors (https://github.com/clauseggers/Playfair-Display), with Reserved Font Name \"Playfair Display\". PlayfairDisplay-Italic[wght].ttf: Copyright 2017 The Playfair Display Project Authors (https://github.com/clauseggers/Playfair-Display), with Reserved Font Name \"Playfair Display\"."
+  },
+  {
+   "slug": "tilt-neon",
+   "family": "Tilt Neon",
+   "role": "display: neon-tube strokes, XROT/YROT 3D tilt axes",
+   "category": "display",
+   "fontsource": "5.3.0",
+   "css": "fonts/tilt-neon@5.3.0/tilt-neon.css",
+   "dir": "fonts/tilt-neon@5.3.0/",
+   "weights": [
+    400
+   ],
+   "styles": [
+    "normal"
+   ],
+   "axes": {
+    "XROT": [
+     "-45",
+     "45"
+    ],
+    "YROT": [
+     "-45",
+     "45"
+    ]
+   },
+   "subsets": [
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "available_subsets": [
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "preload": [
+    "fonts/tilt-neon@5.3.0/tilt-neon-latin-full-normal.woff2"
+   ],
+   "files": [
+    {
+     "file": "tilt-neon-vietnamese-full-normal.woff2",
+     "subset": "vietnamese",
+     "style": "normal",
+     "weight": "400",
+     "bytes": 30848
+    },
+    {
+     "file": "tilt-neon-latin-ext-full-normal.woff2",
+     "subset": "latin-ext",
+     "style": "normal",
+     "weight": "400",
+     "bytes": 117056
+    },
+    {
+     "file": "tilt-neon-latin-full-normal.woff2",
+     "subset": "latin",
+     "style": "normal",
+     "weight": "400",
+     "bytes": 166304
+    }
+   ],
+   "total_bytes": 314208,
+   "license": "OFL-1.1",
+   "copyright": "Copyright 2019 The Tilt Project Authors (https://github.com/googlefonts/Tilt-Fonts)"
+  },
+  {
+   "slug": "orbitron",
+   "family": "Orbitron",
+   "role": "display: sci-fi / HUD (latin only)",
+   "category": "sans-serif",
+   "fontsource": "5.3.0",
+   "css": "fonts/orbitron@5.3.0/orbitron.css",
+   "dir": "fonts/orbitron@5.3.0/",
+   "weights": [
+    400,
+    500,
+    600,
+    700,
+    800,
+    900
+   ],
+   "styles": [
+    "normal"
+   ],
+   "axes": {
+    "wght": [
+     "400",
+     "900"
+    ]
+   },
+   "subsets": [
+    "latin"
+   ],
+   "available_subsets": [
+    "latin"
+   ],
+   "preload": [
+    "fonts/orbitron@5.3.0/orbitron-latin-wght-normal.woff2"
+   ],
+   "files": [
+    {
+     "file": "orbitron-latin-wght-normal.woff2",
+     "subset": "latin",
+     "style": "normal",
+     "weight": "400 900",
+     "bytes": 11800
+    }
+   ],
+   "total_bytes": 11800,
+   "license": "OFL-1.1",
+   "copyright": "Copyright 2018 The Orbitron Project Authors (https://github.com/theleagueof/orbitron)"
+  },
+  {
+   "slug": "oswald",
+   "family": "Oswald",
+   "role": "display: condensed poster / labels",
+   "category": "sans-serif",
+   "fontsource": "5.3.0",
+   "css": "fonts/oswald@5.3.0/oswald.css",
+   "dir": "fonts/oswald@5.3.0/",
+   "weights": [
+    200,
+    300,
+    400,
+    500,
+    600,
+    700
+   ],
+   "styles": [
+    "normal"
+   ],
+   "axes": {
+    "wght": [
+     "200",
+     "700"
+    ]
+   },
+   "subsets": [
+    "latin",
+    "latin-ext",
+    "vietnamese",
+    "cyrillic",
+    "cyrillic-ext"
+   ],
+   "available_subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "preload": [
+    "fonts/oswald@5.3.0/oswald-latin-wght-normal.woff2"
+   ],
+   "files": [
+    {
+     "file": "oswald-cyrillic-ext-wght-normal.woff2",
+     "subset": "cyrillic-ext",
+     "style": "normal",
+     "weight": "200 700",
+     "bytes": 19404
+    },
+    {
+     "file": "oswald-cyrillic-wght-normal.woff2",
+     "subset": "cyrillic",
+     "style": "normal",
+     "weight": "200 700",
+     "bytes": 15688
+    },
+    {
+     "file": "oswald-vietnamese-wght-normal.woff2",
+     "subset": "vietnamese",
+     "style": "normal",
+     "weight": "200 700",
+     "bytes": 7576
+    },
+    {
+     "file": "oswald-latin-ext-wght-normal.woff2",
+     "subset": "latin-ext",
+     "style": "normal",
+     "weight": "200 700",
+     "bytes": 23952
+    },
+    {
+     "file": "oswald-latin-wght-normal.woff2",
+     "subset": "latin",
+     "style": "normal",
+     "weight": "200 700",
+     "bytes": 28488
+    }
+   ],
+   "total_bytes": 95108,
+   "license": "OFL-1.1",
+   "copyright": "Copyright 2016 The Oswald Project Authors (https://github.com/googlefonts/OswaldFont)"
+  },
+  {
+   "slug": "lexend",
+   "family": "Lexend",
+   "role": "text: geometric, very readable",
+   "category": "sans-serif",
+   "fontsource": "5.3.0",
+   "css": "fonts/lexend@5.3.0/lexend.css",
+   "dir": "fonts/lexend@5.3.0/",
+   "weights": [
+    100,
+    200,
+    300,
+    400,
+    500,
+    600,
+    700,
+    800,
+    900
+   ],
+   "styles": [
+    "normal"
+   ],
+   "axes": {
+    "wght": [
+     "100",
+     "900"
+    ]
+   },
+   "subsets": [
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "available_subsets": [
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "preload": [
+    "fonts/lexend@5.3.0/lexend-latin-wght-normal.woff2"
+   ],
+   "files": [
+    {
+     "file": "lexend-vietnamese-wght-normal.woff2",
+     "subset": "vietnamese",
+     "style": "normal",
+     "weight": "100 900",
+     "bytes": 13840
+    },
+    {
+     "file": "lexend-latin-ext-wght-normal.woff2",
+     "subset": "latin-ext",
+     "style": "normal",
+     "weight": "100 900",
+     "bytes": 34476
+    },
+    {
+     "file": "lexend-latin-wght-normal.woff2",
+     "subset": "latin",
+     "style": "normal",
+     "weight": "100 900",
+     "bytes": 39680
+    }
+   ],
+   "total_bytes": 87996,
+   "license": "OFL-1.1",
+   "copyright": "Copyright 2019 The Lexend Project Authors (https://github.com/googlefonts/lexend)"
+  },
+  {
+   "slug": "manrope",
+   "family": "Manrope",
+   "role": "text: modern UI sans, widest script coverage",
+   "category": "sans-serif",
+   "fontsource": "5.3.0",
+   "css": "fonts/manrope@5.3.0/manrope.css",
+   "dir": "fonts/manrope@5.3.0/",
+   "weights": [
+    200,
+    300,
+    400,
+    500,
+    600,
+    700,
+    800
+   ],
+   "styles": [
+    "normal"
+   ],
+   "axes": {
+    "wght": [
+     "200",
+     "800"
+    ]
+   },
+   "subsets": [
+    "latin",
+    "latin-ext",
+    "vietnamese",
+    "cyrillic",
+    "cyrillic-ext",
+    "greek"
+   ],
+   "available_subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "preload": [
+    "fonts/manrope@5.3.0/manrope-latin-wght-normal.woff2"
+   ],
+   "files": [
+    {
+     "file": "manrope-cyrillic-ext-wght-normal.woff2",
+     "subset": "cyrillic-ext",
+     "style": "normal",
+     "weight": "200 800",
+     "bytes": 2552
+    },
+    {
+     "file": "manrope-cyrillic-wght-normal.woff2",
+     "subset": "cyrillic",
+     "style": "normal",
+     "weight": "200 800",
+     "bytes": 14500
+    },
+    {
+     "file": "manrope-greek-wght-normal.woff2",
+     "subset": "greek",
+     "style": "normal",
+     "weight": "200 800",
+     "bytes": 9444
+    },
+    {
+     "file": "manrope-vietnamese-wght-normal.woff2",
+     "subset": "vietnamese",
+     "style": "normal",
+     "weight": "200 800",
+     "bytes": 8520
+    },
+    {
+     "file": "manrope-latin-ext-wght-normal.woff2",
+     "subset": "latin-ext",
+     "style": "normal",
+     "weight": "200 800",
+     "bytes": 15120
+    },
+    {
+     "file": "manrope-latin-wght-normal.woff2",
+     "subset": "latin",
+     "style": "normal",
+     "weight": "200 800",
+     "bytes": 24836
+    }
+   ],
+   "total_bytes": 74972,
+   "license": "OFL-1.1",
+   "copyright": "Copyright 2019 The Manrope Project Authors (https://github.com/sharanda/manrope)"
+  },
+  {
+   "slug": "chakra-petch",
+   "family": "Chakra Petch",
+   "role": "display/text: techy squared sans with Thai",
+   "category": "sans-serif",
+   "fontsource": "5.3.0",
+   "css": "fonts/chakra-petch@5.3.0/chakra-petch.css",
+   "dir": "fonts/chakra-petch@5.3.0/",
+   "weights": [
+    300,
+    400,
+    500,
+    600,
+    700
+   ],
+   "styles": [
+    "normal"
+   ],
+   "axes": {},
+   "subsets": [
+    "latin",
+    "latin-ext",
+    "vietnamese",
+    "thai"
+   ],
+   "available_subsets": [
+    "latin",
+    "latin-ext",
+    "thai",
+    "vietnamese"
+   ],
+   "preload": [
+    "fonts/chakra-petch@5.3.0/chakra-petch-latin-400-normal.woff2",
+    "fonts/chakra-petch@5.3.0/chakra-petch-latin-500-normal.woff2",
+    "fonts/chakra-petch@5.3.0/chakra-petch-latin-600-normal.woff2",
+    "fonts/chakra-petch@5.3.0/chakra-petch-latin-700-normal.woff2"
+   ],
+   "files": [
+    {
+     "file": "chakra-petch-thai-400-normal.woff2",
+     "subset": "thai",
+     "style": "normal",
+     "weight": "400",
+     "bytes": 7036
+    },
+    {
+     "file": "chakra-petch-vietnamese-400-normal.woff2",
+     "subset": "vietnamese",
+     "style": "normal",
+     "weight": "400",
+     "bytes": 3640
+    },
+    {
+     "file": "chakra-petch-latin-ext-400-normal.woff2",
+     "subset": "latin-ext",
+     "style": "normal",
+     "weight": "400",
+     "bytes": 8860
+    },
+    {
+     "file": "chakra-petch-latin-400-normal.woff2",
+     "subset": "latin",
+     "style": "normal",
+     "weight": "400",
+     "bytes": 9756
+    },
+    {
+     "file": "chakra-petch-thai-500-normal.woff2",
+     "subset": "thai",
+     "style": "normal",
+     "weight": "500",
+     "bytes": 7512
+    },
+    {
+     "file": "chakra-petch-vietnamese-500-normal.woff2",
+     "subset": "vietnamese",
+     "style": "normal",
+     "weight": "500",
+     "bytes": 3728
+    },
+    {
+     "file": "chakra-petch-latin-ext-500-normal.woff2",
+     "subset": "latin-ext",
+     "style": "normal",
+     "weight": "500",
+     "bytes": 9028
+    },
+    {
+     "file": "chakra-petch-latin-500-normal.woff2",
+     "subset": "latin",
+     "style": "normal",
+     "weight": "500",
+     "bytes": 9956
+    },
+    {
+     "file": "chakra-petch-thai-600-normal.woff2",
+     "subset": "thai",
+     "style": "normal",
+     "weight": "600",
+     "bytes": 7564
+    },
+    {
+     "file": "chakra-petch-vietnamese-600-normal.woff2",
+     "subset": "vietnamese",
+     "style": "normal",
+     "weight": "600",
+     "bytes": 3688
+    },
+    {
+     "file": "chakra-petch-latin-ext-600-normal.woff2",
+     "subset": "latin-ext",
+     "style": "normal",
+     "weight": "600",
+     "bytes": 9056
+    },
+    {
+     "file": "chakra-petch-latin-600-normal.woff2",
+     "subset": "latin",
+     "style": "normal",
+     "weight": "600",
+     "bytes": 9968
+    },
+    {
+     "file": "chakra-petch-thai-700-normal.woff2",
+     "subset": "thai",
+     "style": "normal",
+     "weight": "700",
+     "bytes": 7288
+    },
+    {
+     "file": "chakra-petch-vietnamese-700-normal.woff2",
+     "subset": "vietnamese",
+     "style": "normal",
+     "weight": "700",
+     "bytes": 3696
+    },
+    {
+     "file": "chakra-petch-latin-ext-700-normal.woff2",
+     "subset": "latin-ext",
+     "style": "normal",
+     "weight": "700",
+     "bytes": 9068
+    },
+    {
+     "file": "chakra-petch-latin-700-normal.woff2",
+     "subset": "latin",
+     "style": "normal",
+     "weight": "700",
+     "bytes": 9900
+    }
+   ],
+   "total_bytes": 119744,
+   "license": "OFL-1.1",
+   "copyright": "Copyright 2018 The Chakra Petch Project Authors (https://github.com/m4rc1e/Chakra-Petch.git) ChakraPetch-LightItalic.ttf: Copyright 2018 The Chakra Petch Project Authors (https://github.com/m4rc1e/Chakra-Petch.git) ChakraPetch-Regular.ttf: Copyright 2018 The Chakra Petch Project Authors (https://github.com/m4rc1e/Chakra-Petch.git) ChakraPetch-Italic.ttf: Copyright 2018 The Chakra Petch Project Authors (https://github.com/m4rc1e/Chakra-Petch.git) ChakraPetch-Medium.ttf: Copyright 2018 The Chakra Petch Project Authors (https://github.com/m4rc1e/Chakra-Petch.git) ChakraPetch-MediumItalic.ttf: Copyright 2018 The Chakra Petch Project Authors (https://github.com/m4rc1e/Chakra-Petch.git) ChakraPetch-SemiBold.ttf: Copyright 2018 The Chakra Petch Project Authors (https://github.com/m4rc1e/Chakra-Petch.git) ChakraPetch-SemiBoldItalic.ttf: Copyright 2018 The Chakra Petch Project Authors (https://github.com/m4rc1e/Chakra-Petch.git) ChakraPetch-Bold.ttf: Copyright 2018 The Chakra Petch Project Authors (https://github.com/m4rc1e/Chakra-Petch.git) ChakraPetch-BoldItalic.ttf: Copyright 2018 The Chakra Petch Project Authors (https://github.com/m4rc1e/Chakra-Petch.git)"
+  }
+ ]
+}

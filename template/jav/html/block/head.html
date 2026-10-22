@@ -1,0 +1,77 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}
+$tplTypeId = defined('MAC_TYPE_ID') ? (int)constant('MAC_TYPE_ID') : 0;
+$tplTypePid = defined('MAC_TYPE_PID') ? (int)constant('MAC_TYPE_PID') : 0;
+$tplHot = array_values(array_filter(array_map(function ($w) { return trim(\app\common\util\AvdbLanguage::decodeEntities($w)); }, explode(',', (string)($maccms['search_hot'] ?? ''))), function ($w) { return mb_strlen($w, 'UTF-8') >= 2; }));
+$tplHot = array_slice($tplHot, 0, 12);
+$tplLogo = trim((string)($maccms['site_logo'] ?? '')) !== '' ? mac_safe_url(mac_url_img($maccms['site_logo'])) : '';
+if ($tplLogo === '') { $tplLogo = htmlspecialchars($maccms['path_tpl'] . 'statics/img/logo_f.png', ENT_QUOTES, 'UTF-8'); }
+$tplHasActor = mac_data_count(0, 'all', 'actor') > 0;
+$tplHasTopic = mac_data_count(0, 'all', 'topic') > 0;
+$tplHasArt = mac_data_count(0, 'all', 'art') > 0;
+$tplLangs = \app\common\util\TemplateText::languages();
+$tplCurLang = \app\common\util\TemplateText::locale();
+{/php}
+<a class="skip-link" href="#main-content">{:\\app\\common\\util\\TemplateText::get('skip_to_content')}</a>
+<header class="stui-header" data-header>
+  <div class="container">
+    <div class="stui-header__bar">
+      <a class="stui-header__logo" href="{$maccms.path}" aria-label="{:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$maccms['site_name']), ENT_QUOTES, 'UTF-8')}"><img src="{$tplLogo}" alt="{:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$maccms['site_name']), ENT_QUOTES, 'UTF-8')}" width="200" height="60" decoding="async"></a>
+      <ul class="stui_header__user">
+        <li class="hdr-search">
+          <button class="hdr-link" type="button" aria-expanded="false" aria-controls="hdr-search-panel" data-dropdown>{:\\app\\common\\util\\AutoIcon::ui('search', ['class'=>'hdr-ai'])}<span class="hdr-text">{:\\app\\common\\util\\TemplateText::get('search')}</span></button>
+          <div class="dropdown search" id="hdr-search-panel" hidden>
+            <form class="item" role="search" method="get" action="{:mac_url('vod/search')}">
+              <input type="search" name="wd" class="form-control" value="{$param.wd|default=''|htmlspecialchars=ENT_QUOTES,'UTF-8',false}" placeholder="{:\\app\\common\\util\\TemplateText::get('search_titles_or_performers')}" aria-label="{:\\app\\common\\util\\TemplateText::get('search')}" autocomplete="off" maxlength="60" required minlength="2">
+              <button class="submit" type="submit" aria-label="{:\\app\\common\\util\\TemplateText::get('search')}">{:\\app\\common\\util\\AutoIcon::ui('search')}</button>
+            </form>
+            {notempty name="tplHot"}<p class="hot-words__head">{:\\app\\common\\util\\AutoIcon::navIcon('trending', '', ['size'=>'sm'])}<span>{:\\app\\common\\util\\TemplateText::get('jav.hot_searches')}</span></p><ul class="hot-words" data-ai-group>{volist name="tplHot" id="tplWord" key="tplHotK"}<li><a href="{:mac_url_search(['wd'=>$tplWord])}">{:\\app\\common\\util\\AutoIcon::keepTag($tplWord) ? \\app\\common\\util\\AutoIcon::icon('tag', $tplWord, ['size'=>'sm', 'i'=>$tplHotK]) : ''}{$tplWord|htmlspecialchars=ENT_QUOTES}</a></li>{/volist}</ul>{/notempty}
+          </div>
+        </li>
+        <li class="hdr-menu">
+          <button class="hdr-link" type="button" aria-expanded="false" aria-controls="hdr-menu-panel" data-dropdown><span class="menu-morph" aria-hidden="true"><span></span><span></span><span></span></span><span class="hdr-text">{:\\app\\common\\util\\TemplateText::get('menu')}</span></button>
+          <div class="dropdown type" id="hdr-menu-panel" hidden>
+            <ul class="type-grid" data-ai-group>
+              <li{if condition="$maccms.aid eq 1"} class="active"{/if}><a href="{$maccms.path}"{if condition="$maccms.aid eq 1"} aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::navIcon('home', '', ['size'=>'lg', 'plate'=>true, 'i'=>0])}<span>{:\\app\\common\\util\\TemplateText::get('home')}</span></a></li>
+              {maccms:type ids="parent" order="asc" by="sort" flag="vod" id="tplNav" key="tplNavK" hide_empty="1"}<li{if condition="$tplNav.type_id eq $tplTypeId || $tplNav.type_id eq $tplTypePid"} class="active"{/if}><a href="{:mac_url_type($tplNav)}"{if condition="$tplNav.type_id eq $tplTypeId || $tplNav.type_id eq $tplTypePid"} aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::icon('category', $tplNav['type_name'], ['size'=>'lg', 'plate'=>true, 'i'=>$tplNavK])}<span>{:\\app\\common\\util\\TemplateText::get(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$tplNav['type_name']))}</span></a></li>{/maccms:type}
+              <li><a href="{:mac_url('label/new')}">{:\\app\\common\\util\\AutoIcon::navIcon('latest', '', ['size'=>'lg', 'plate'=>true, 'i'=>10])}<span>{:\\app\\common\\util\\TemplateText::get('ui.latest_videos')}</span></a></li>
+              <li><a href="{:mac_url('label/hot')}">{:\\app\\common\\util\\AutoIcon::navIcon('hot', '', ['size'=>'lg', 'plate'=>true, 'i'=>11])}<span>{:\\app\\common\\util\\TemplateText::get('ui.popular_videos')}</span></a></li>
+              {if condition="$tplHasActor"}<li><a href="{:mac_url('actor/index')}">{:\\app\\common\\util\\AutoIcon::navIcon('actors', '', ['size'=>'lg', 'plate'=>true, 'i'=>12])}<span>{:\\app\\common\\util\\TemplateText::get('performers')}</span></a></li>{/if}
+              {if condition="$tplHasTopic"}<li><a href="{:mac_url('topic/index')}">{:\\app\\common\\util\\AutoIcon::navIcon('topics', '', ['size'=>'lg', 'plate'=>true, 'i'=>13])}<span>{:\\app\\common\\util\\TemplateText::get('ui.collections')}</span></a></li>{/if}
+              {if condition="$tplHasArt"}<li><a href="{:mac_url('art/index')}">{:\\app\\common\\util\\AutoIcon::navIcon('articles', '', ['size'=>'lg', 'plate'=>true, 'i'=>14])}<span>{:\\app\\common\\util\\TemplateText::get('ui.articles')}</span></a></li>{/if}
+            </ul>
+            <div class="menu-extra">
+              <a href="{:mac_url('user/index')}" data-account-link>{:\\app\\common\\util\\AutoIcon::ui('user-circle', ['size'=>'sm'])} {:\\app\\common\\util\\TemplateText::get('account')}</a>
+              <a href="{:mac_url('gbook/index')}">{:\\app\\common\\util\\AutoIcon::ui('messages', ['size'=>'sm'])} {:\\app\\common\\util\\TemplateText::get('guestbook')}</a>
+              <a href="{:mac_url('map/index')}">{:\\app\\common\\util\\AutoIcon::navIcon('latest-100', '', ['size'=>'sm'])} {:\\app\\common\\util\\TemplateText::get('ui.latest_updates')}</a>
+            </div>
+            <div class="menu-langs" role="group" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.language')}">{:\\app\\common\\util\\AutoIcon::ui('languages', ['class'=>'menu-langs__ico'])}{volist name="tplLangs" id="tplLang"}<a href="{:\\app\\common\\util\\TemplateText::languageUrl($key)}" lang="{$key|htmlspecialchars=ENT_QUOTES}" hreflang="{$key|htmlspecialchars=ENT_QUOTES}"{if condition="$key eq $tplCurLang"} aria-current="true"{/if}>{$tplLang|htmlspecialchars=ENT_QUOTES}</a>{/volist}</div>
+          </div>
+        </li>
+        <li class="hdr-history">
+          <button class="hdr-link hdr-icon" type="button" aria-expanded="false" aria-controls="hdr-history-panel" aria-label="{:\\app\\common\\util\\TemplateText::get('viewing_history')}" title="{:\\app\\common\\util\\TemplateText::get('viewing_history')}" data-dropdown>{:\\app\\common\\util\\AutoIcon::ui('history', ['class'=>'hdr-ai'])}</button>
+          <div class="dropdown history" id="hdr-history-panel" hidden>
+            <div class="head"><a class="historyclean" href="#">{:\\app\\common\\util\\AutoIcon::ui('trash', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('clear')}</a><h5>{:\\app\\common\\util\\AutoIcon::ui('clock', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('viewing_history')}</h5></div>
+            <ul class="clearfix" id="stui_history"></ul>
+          </div>
+        </li>
+        <li class="hdr-gbook"><a class="hdr-link hdr-icon" href="{:mac_url('gbook/index')}" aria-label="{:\\app\\common\\util\\TemplateText::get('guestbook')}" title="{:\\app\\common\\util\\TemplateText::get('guestbook')}">{:\\app\\common\\util\\AutoIcon::ui('messages', ['class'=>'hdr-ai'])}</a></li>
+        <li class="hdr-account"><a class="hdr-link hdr-icon" href="{:mac_url('user/index')}" aria-label="{:\\app\\common\\util\\TemplateText::get('account')}" title="{:\\app\\common\\util\\TemplateText::get('account')}" data-account-link>{:\\app\\common\\util\\AutoIcon::ui('user-circle', ['class'=>'hdr-ai'])}</a></li>
+        {if condition="count($tplLangs) gt 1"}<li class="hdr-lang avdb-language">{:\\app\\common\\util\\AutoIcon::ui('languages', ['size'=>'sm', 'class'=>'hdr-lang__ico'])}<select id="avdb-ui-lang" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.language')}">{volist name="tplLangs" id="tplLang"}<option value="{$key|htmlspecialchars=ENT_QUOTES}"{if condition="$key eq $tplCurLang"} selected{/if}>{$tplLang|htmlspecialchars=ENT_QUOTES}</option>{/volist}</select></li>{/if}
+        <li class="hdr-mode"><button class="tui-color-toggle hdr-link hdr-icon" type="button" data-color-toggle data-light-label="{:\\app\\common\\util\\TemplateText::get('ui.light_mode')}" data-dark-label="{:\\app\\common\\util\\TemplateText::get('ui.dark_mode')}" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.light_mode')}" title="{:\\app\\common\\util\\TemplateText::get('ui.light_mode')}"><span class="jv-mode" aria-hidden="true"><svg class="tui-color-sun" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.4 1.4m11.2 11.2L19 19M5 19l1.4-1.4M17.6 6.4L19 5"/></svg><svg class="tui-color-moon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 13a9 9 0 0 1-9.8-9.8A9 9 0 1 0 20.8 13Z"/></svg></span></button></li>
+      </ul>
+    </div>
+    <nav class="stui-header__menu" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.main_navigation')}">
+      <ul>
+        <li{if condition="$maccms.aid eq 1"} class="active"{/if}><a href="{$maccms.path}"{if condition="$maccms.aid eq 1"} aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::navIcon('home', '', ['i'=>0])}<span>{:\\app\\common\\util\\TemplateText::get('home')}</span></a></li>
+        {maccms:type ids="parent" order="asc" by="sort" flag="vod" id="tplNav" key="tplNavK" hide_empty="1"}<li{if condition="$tplNav.type_id eq $tplTypeId || $tplNav.type_id eq $tplTypePid"} class="active"{/if}><a href="{:mac_url_type($tplNav)}"{if condition="$tplNav.type_id eq $tplTypeId || $tplNav.type_id eq $tplTypePid"} aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::icon('category', $tplNav['type_name'], ['i'=>$tplNavK])}<span>{:\\app\\common\\util\\TemplateText::get(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$tplNav['type_name']))}</span></a></li>{/maccms:type}
+      </ul>
+    </nav>
+  </div>
+</header>

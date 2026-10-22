@@ -1,0 +1,16 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<section class="tz-coll tz-coll--cool" id="tz-week" data-tz-pager data-tz-reveal aria-labelledby="tz-week-h">
+  <header class="tz-coll-head" data-ai-group data-ai-hot>
+    <div class="tz-coll-title"><span class="tz-coll-ico" aria-hidden="true">{:\\app\\common\\util\\AutoIcon::ui('trending-up', ['class'=>'tz-i', 'tint'=>'none'])}</span><div><h2 id="tz-week-h">{:\\app\\common\\util\\TemplateText::get('topaz.top_week')}</h2><p>{:\\app\\common\\util\\TemplateText::get('topaz.top_week_sub')}</p></div></div>
+    <div class="tz-seg"><a class="tz-seg-all" href="{:mac_url('label/hot')}">{:\\app\\common\\util\\TemplateText::get('view_all')}</a><button class="tz-seg-btn" type="button" data-tz-prev aria-controls="tz-week-grid" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.previous_page')}" disabled>{:\\app\\common\\util\\AutoIcon::ui('chevron-left', ['class'=>'tz-i tz-dir', 'tint'=>'none'])}</button><button class="tz-seg-btn" type="button" data-tz-next aria-controls="tz-week-grid" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.next_page')}">{:\\app\\common\\util\\AutoIcon::ui('chevron-right', ['class'=>'tz-i tz-dir', 'tint'=>'none'])}</button></div>
+  </header>
+  <div class="tz-grid" id="tz-week-grid" data-grid-fill>{maccms:vod num="20" type="all" order="desc" by="hits_week" paging="no" id="vo" key="tzK"}{php}$tzCardHide = $tzK > 10;{/php}{include file="public/vodbox"}{/maccms:vod}{php}$tzCardHide = false;{/php}</div>
+  {empty name="__LIST__"}{include file="public/empty"}{/empty}
+  <p class="tz-sr" aria-live="polite" data-tz-pager-status></p>
+</section>

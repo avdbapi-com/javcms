@@ -1,0 +1,50 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="onyx" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/vod_search"}
+{include file="public/include"}
+</head>
+<body class="page-list page-search">
+{include file="public/head"}
+{php}$tplQ = []; foreach (['wd', 'actor', 'class', 'tag', 'director', 'area', 'year', 'lang'] as $tplK) { $tplV = isset($param[$tplK]) ? trim(htmlspecialchars_decode((string)$param[$tplK], ENT_QUOTES)) : ''; if ($tplV !== '') { $tplQ[$tplK] = $tplV; } }
+$tplCut = (int)($GLOBALS['config']['app']['search_len'] ?? 0); if ($tplCut < 1) { $tplCut = 10; } $tplIn = array_merge((array)input(), $_REQUEST); $tplLong = []; foreach ($tplQ as $tplK => $tplV) { $tplR = $tplIn[$tplK] ?? ''; $tplLong[$tplK] = is_scalar($tplR) && mb_strlen(htmlspecialchars(urldecode(trim((string)$tplR)))) > $tplCut; }
+$tplShow = []; foreach ($tplQ as $tplK => $tplV) { $tplD = $tplV; for ($tplI = 0; $tplI < 3; $tplI++) { $tplE = html_entity_decode($tplD, ENT_QUOTES | ENT_HTML5, 'UTF-8'); if ($tplE === $tplD) { break; } $tplD = $tplE; } if (!empty($tplLong[$tplK])) { $tplD = rtrim((string)preg_replace('/&(#[xX]?[0-9a-fA-F]*|[a-zA-Z]{0,8})$/', '', $tplD)) . '…'; } $tplShow[$tplK] = $tplD; }
+$tplWdShow = (string)($param['wd'] ?? ''); if (!empty($tplLong['wd'])) { $tplWdShow = rtrim((string)preg_replace('/&(#[xX]?[0-9a-fA-F]*|[a-zA-Z]{0,8})$/', '', $tplWdShow)) . '…'; }
+$tplBy = isset($param['by']) ? (string)$param['by'] : ''; $tplSorts = [
+  ['label' => \app\common\util\TemplateText::raw('latest'), 'url' => mac_url_search($tplQ), 'on' => ($tplBy === '' || $tplBy === 'time')],
+  ['label' => \app\common\util\TemplateText::raw('ui.popular'), 'url' => mac_url_search(array_merge($tplQ, ['by' => 'hits'])), 'on' => ($tplBy === 'hits')],
+  ['label' => \app\common\util\TemplateText::raw('top_rated'), 'url' => mac_url_search(array_merge($tplQ, ['by' => 'score'])), 'on' => ($tplBy === 'score')],
+  ['label' => \app\common\util\TemplateText::raw('most_liked'), 'url' => mac_url_search(array_merge($tplQ, ['by' => 'up'])), 'on' => ($tplBy === 'up')],
+];{/php}
+<main id="main-content" class="wrap">
+  <div class="list-layout">
+    <div class="list-head">
+      {if condition="$param.wd neq ''"}<h1>{:\\app\\common\\util\\AutoIcon::ui('search')}{:\\app\\common\\util\\TemplateText::raw('ui.search_for_query', ['query'=>$tplWdShow])}</h1>
+      {elseif condition="$param.actor neq ''"/}<h1>{:\\app\\common\\util\\AutoIcon::avatar($tplShow['actor'] ?? '', '', ['size'=>'sm', 'decorative'=>true])}{:\\app\\common\\util\\TemplateText::get('ui.actor')} {:htmlspecialchars($tplShow['actor'] ?? '', ENT_QUOTES, 'UTF-8')}</h1>
+      {elseif condition="$param.class neq ''"/}<h1>{:\\app\\common\\util\\AutoIcon::icon('tag', $tplShow['class'] ?? '')}{:\\app\\common\\util\\TemplateText::get('ui.categories_5749e2')} {:htmlspecialchars($tplShow['class'] ?? '', ENT_QUOTES, 'UTF-8')}</h1>
+      {elseif condition="$param.tag neq ''"/}<h1>{:\\app\\common\\util\\AutoIcon::icon('tag', $tplShow['tag'] ?? '')}{:\\app\\common\\util\\TemplateText::get('ui.tag')} {:htmlspecialchars($tplShow['tag'] ?? '', ENT_QUOTES, 'UTF-8')}</h1>
+      {elseif condition="$param.director neq ''"/}<h1>{:\\app\\common\\util\\AutoIcon::ui('clapperboard')}{:\\app\\common\\util\\TemplateText::get('ui.director')} {:htmlspecialchars($tplShow['director'] ?? '', ENT_QUOTES, 'UTF-8')}</h1>
+      {elseif condition="$tplBy eq 'hits'"/}<h1>{:\\app\\common\\util\\AutoIcon::navIcon('hot')}{:\\app\\common\\util\\TemplateText::get('ui.popular_videos')}</h1>
+      {elseif condition="$tplBy eq 'score'"/}<h1>{:\\app\\common\\util\\AutoIcon::navIcon('top')}{:\\app\\common\\util\\TemplateText::get('top_rated')}</h1>
+      {elseif condition="$tplBy eq 'up'"/}<h1>{:\\app\\common\\util\\AutoIcon::navIcon('liked')}{:\\app\\common\\util\\TemplateText::get('most_liked')}</h1>
+      {else/}<h1>{:\\app\\common\\util\\AutoIcon::navIcon('latest')}{:\\app\\common\\util\\TemplateText::get('ui.latest_videos')}</h1>{/if}
+      {include file="public/sortbar"}
+    </div>
+    <section class="list-main">
+      <div class="grid" data-grid-fill>{maccms:vod num="20" paging="yes" type="all" order="desc" by="time" pageurl="vod/search" id="vo"}{include file="public/vodbox"}{/maccms:vod}</div>
+      {if condition="$__PAGING__.record_total eq 0"}<div class="empty">{:\\app\\common\\util\\AutoIcon::scene('search-empty')}<p>{:\\app\\common\\util\\TemplateText::get('ui.no_results_found_try_another_category_or_search')}</p><a class="btn btn-fill" href="{$maccms.path}">{:\\app\\common\\util\\TemplateText::get('ui.back_to_home')}</a>{include file="public/hotwords"}</div>{/if}
+      {include file="public/list_note"}{include file="public/paging"}
+    </section>
+    {include file="public/listside"}
+  </div>
+</main>
+{include file="public/foot"}
+</body>
+</html>

@@ -1,0 +1,8 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<div class="vv-empty">{if condition="strtolower($maccms['controller_action']) eq 'vod/search' || strtolower($maccms['controller_action']) eq 'actor/search'"}{:\\app\\common\\util\\AutoIcon::scene('search-empty')}{else/}{:\\app\\common\\util\\AutoIcon::scene('empty-library')}{/if}<p>{:\\app\\common\\util\\TemplateText::get('ui.no_results_found_try_another_category_or_search')}</p><a class="vv-btn vv-btn-ghost" href="{:mac_url('label/new')}">{:\\app\\common\\util\\AutoIcon::navIcon('latest', '', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ui.latest_videos')}</a></div>

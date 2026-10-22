@@ -1,0 +1,21 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="crimson-modern" data-fx="vt" data-fx-vt-style="crimson-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/auto"}
+{include file="public/include"}
+</head>
+<body class="ci-gate-page">
+{include file="public/head"}
+<main id="main-content" class="ci-wrap">
+<section class="ci-gate" data-ci-gate="{:mac_url('user/favs')}"><img src="{$maccms.path_tpl|htmlspecialchars=ENT_QUOTES}assets/brand/avatar.svg" width="84" height="84" alt=""><h1 class="ci-h1">{:\\app\\common\\util\\TemplateText::get('favorites')}</h1><p>{:\\app\\common\\util\\TemplateText::get('ink.gate_favs')}</p><a class="ci-btn" href="{:mac_url('user/login')}">{:\\app\\common\\util\\TemplateText::get('ui.log_in')}</a><a class="ci-pill" href="{:mac_url('user/reg')}">{:\\app\\common\\util\\TemplateText::get('ui.create_account')}</a></section>
+</main>
+{include file="public/foot"}
+</body>
+</html>

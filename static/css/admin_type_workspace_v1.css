@@ -1,0 +1,73 @@
+/*
+ * This file is part of JavCMS - https://javcms.net
+ * Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+ * License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+ * See the LICENSE and NOTICE files that come with JavCMS.
+ * Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Telegram: https://t.me/avdb_api
+ */
+/* admin-type-workspace-v1: local dark responsive category/type workspace. */
+/* V9 palette -> kit tokens (admin-content builder) */
+html body.admin-dark .page-container.p10.admin-type-workspace-v1:has(> #pageListForm), html body.admin-dark .page-container.admin-type-editor-workspace-v1 { --type-surface: var(--ax-surface); --type-panel: var(--ax-surface); --type-line: var(--ax-line); --type-text: var(--ax-text); --type-muted: var(--ax-muted); --type-accent: var(--ax-accent); }
+body.admin-dark .page-container.p10.admin-type-workspace-v1:has(> #pageListForm),
+body.admin-dark .page-container.admin-type-editor-workspace-v1 {
+    --type-surface: #101c2f;
+    --type-panel: #15263f;
+    --type-line: rgba(161,183,212,.2);
+    --type-text: #f2f7ff;
+    --type-muted: #9eafc7;
+    --type-accent: #63d8ea;
+    color: var(--type-muted);
+}
+body.admin-dark .page-container.p10.admin-type-workspace-v1:has(> #pageListForm) { padding: clamp(10px,1.8vw,20px) !important; }
+body.admin-dark .page-container.p10.admin-type-workspace-v1:has(> #pageListForm) .my-toolbar-box { margin: 0 0 14px; padding: 14px; border: 1px solid var(--type-line); border-radius: 14px; background: linear-gradient(145deg,var(--type-panel),var(--type-surface)); box-shadow: 0 12px 28px rgba(0,0,0,.18); }
+body.admin-dark .page-container.p10.admin-type-workspace-v1:has(> #pageListForm) .btn-primary-group { display:flex; flex-wrap:wrap; gap:8px; margin:0; }
+body.admin-dark .page-container.p10.admin-type-workspace-v1:has(> #pageListForm) .btn-primary-group .btn { margin:0 !important; border-radius:8px; font-weight:800; }
+body.admin-dark .page-container.p10.admin-type-workspace-v1:has(> #pageListForm) > #pageListForm { margin:0; padding:8px; overflow-x:auto; border:1px solid var(--type-line); border-radius:14px; background:linear-gradient(145deg,var(--type-surface),#0c182b); box-shadow:0 12px 28px rgba(0,0,0,.14); }
+body.admin-dark .page-container.p10.admin-type-workspace-v1:has(> #pageListForm) > #pageListForm .layui-table { min-width:1280px; margin:0; background:transparent; }
+body.admin-dark .page-container.p10.admin-type-workspace-v1:has(> #pageListForm) > #pageListForm .layui-table thead th { position:sticky; top:0; z-index:1; color:var(--type-muted); background:#152235; font-size:11px; letter-spacing:.06em; text-transform:uppercase; }
+body.admin-dark .page-container.p10.admin-type-workspace-v1:has(> #pageListForm) > #pageListForm .layui-table tbody tr { transition:background .16s ease,box-shadow .16s ease; }
+body.admin-dark .page-container.p10.admin-type-workspace-v1:has(> #pageListForm) > #pageListForm .layui-table tbody tr:hover { box-shadow:inset 3px 0 0 var(--type-accent); }
+body.admin-dark .page-container.p10.admin-type-workspace-v1:has(> #pageListForm) > #pageListForm .layui-table td { vertical-align:middle; color:var(--type-muted); }
+body.admin-dark .page-container.p10.admin-type-workspace-v1:has(> #pageListForm) > #pageListForm .layui-table td input.layui-input { min-width:88px; height:32px; border:1px solid var(--type-line); border-radius:7px; background:#0d192b; color:var(--type-text); }
+body.admin-dark .page-container.p10.admin-type-workspace-v1:has(> #pageListForm) > #pageListForm .layui-table td input.layui-input:focus { border-color:var(--type-accent); box-shadow:0 0 0 3px rgba(99,216,234,.12); }
+body.admin-dark .page-container.p10.admin-type-workspace-v1:has(> #pageListForm) > #pageListForm .layui-table td .badge,
+body.admin-dark .page-container.p10.admin-type-workspace-v1:has(> #pageListForm) > #pageListForm .layui-table td .label { display:inline-flex; align-items:center; min-height:23px; margin:2px 3px 2px 0; border-radius:999px; white-space:nowrap; }
+body.admin-dark .page-container.p10.admin-type-workspace-v1:has(> #pageListForm) > #pageListForm .layui-table td.w200,
+body.admin-dark .page-container.p10.admin-type-workspace-v1:has(> #pageListForm) > #pageListForm .layui-table td:last-child { white-space:normal; }
+body.admin-dark .page-container.p10.admin-type-workspace-v1:has(> #pageListForm) > #pageListForm .layui-table td:last-child .badge { color:var(--type-text); background:rgba(99,216,234,.12); border:1px solid rgba(99,216,234,.25); }
+body.admin-dark .page-container.p10.admin-type-workspace-v1:has(> #pageListForm) a:focus-visible,
+body.admin-dark .page-container.p10.admin-type-workspace-v1:has(> #pageListForm) button:focus-visible,
+body.admin-dark .page-container.p10.admin-type-workspace-v1:has(> #pageListForm) input:focus-visible,
+body.admin-dark .page-container.p10.admin-type-workspace-v1:has(> #pageListForm) select:focus-visible,
+body.admin-dark .page-container.admin-type-editor-workspace-v1 > form.layui-form-pane a:focus-visible,
+body.admin-dark .page-container.admin-type-editor-workspace-v1 > form.layui-form-pane button:focus-visible,
+body.admin-dark .page-container.admin-type-editor-workspace-v1 > form.layui-form-pane input:focus-visible,
+body.admin-dark .page-container.admin-type-editor-workspace-v1 > form.layui-form-pane select:focus-visible { outline:2px solid var(--type-accent); outline-offset:2px; }
+body.admin-dark .page-container.admin-type-editor-workspace-v1 { padding:clamp(10px,1.8vw,20px) !important; }
+body.admin-dark .page-container.admin-type-editor-workspace-v1 > form.layui-form-pane { max-width:980px; margin:0 auto; padding:18px; border:1px solid var(--type-line); border-radius:14px; background:linear-gradient(145deg,var(--type-panel),var(--type-surface)); box-shadow:0 12px 28px rgba(0,0,0,.18); }
+body.admin-dark .page-container.admin-type-editor-workspace-v1 > form.layui-form-pane > .layui-elem-quote { margin:0 0 18px; border:1px solid rgba(99,216,234,.22); border-radius:10px; color:var(--type-muted); background:rgba(99,216,234,.08); }
+body.admin-dark .page-container.admin-type-editor-workspace-v1 > form.layui-form-pane .layui-form-item { margin:0 0 12px; padding:10px 0; border-bottom:1px solid rgba(161,183,212,.1); }
+body.admin-dark .page-container.admin-type-editor-workspace-v1 > form.layui-form-pane .layui-form-label { width:150px; color:var(--type-muted); font-weight:700; }
+body.admin-dark .page-container.admin-type-editor-workspace-v1 > form.layui-form-pane .layui-input-block { margin-left:170px; }
+body.admin-dark .page-container.admin-type-editor-workspace-v1 > form.layui-form-pane .layui-input-inline { min-width:0; max-width:calc(100% - 180px); }
+body.admin-dark .page-container.admin-type-editor-workspace-v1 > form.layui-form-pane .layui-input,
+body.admin-dark .page-container.admin-type-editor-workspace-v1 > form.layui-form-pane .layui-form-select input,
+body.admin-dark .page-container.admin-type-editor-workspace-v1 > form.layui-form-pane select { height:38px; border:1px solid var(--type-line); border-radius:8px; background:#0d192b; color:var(--type-text); }
+body.admin-dark .page-container.admin-type-editor-workspace-v1 > form.layui-form-pane .layui-input:focus,
+body.admin-dark .page-container.admin-type-editor-workspace-v1 > form.layui-form-pane .layui-form-select input:focus { border-color:var(--type-accent); box-shadow:0 0 0 3px rgba(99,216,234,.12); }
+body.admin-dark .page-container.admin-type-editor-workspace-v1 > form.layui-form-pane .layui-upload { border-radius:8px; }
+body.admin-dark .page-container.admin-type-editor-workspace-v1 > form.layui-form-pane .center { border-bottom:0; padding-top:16px; }
+body.admin-dark .page-container.admin-type-editor-workspace-v1 > form.layui-form-pane .center .layui-input-block { margin-left:0; text-align:center; }
+body.admin-dark .page-container.admin-type-editor-workspace-v1 > form.layui-form-pane .center .btn { min-height:38px; margin:0 6px 0 0 !important; border-radius:8px; font-weight:800; }
+@media (max-width:760px) {
+    body.admin-dark .page-container.p10.admin-type-workspace-v1:has(> #pageListForm) .btn-primary-group .btn { flex:1 1 calc(50% - 8px); text-align:center; }
+    body.admin-dark .page-container.p10.admin-type-workspace-v1:has(> #pageListForm) > #pageListForm { padding:5px; }
+    body.admin-dark .page-container.admin-type-editor-workspace-v1 > form.layui-form-pane { padding:12px; }
+    body.admin-dark .page-container.admin-type-editor-workspace-v1 > form.layui-form-pane .layui-form-label { display:block; float:none; width:100%; height:auto; min-height:0; margin:0; padding:0 0 6px; text-align:left; }
+    body.admin-dark .page-container.admin-type-editor-workspace-v1 > form.layui-form-pane .layui-input-block { margin-left:0; }
+    body.admin-dark .page-container.admin-type-editor-workspace-v1 > form.layui-form-pane .layui-input-inline { display:block; float:none; left:auto; width:100% !important; max-width:100%; min-width:0; margin:0 0 8px; }
+    body.admin-dark .page-container.admin-type-editor-workspace-v1 > form.layui-form-pane .layui-input-inline.w100,
+    body.admin-dark .page-container.admin-type-editor-workspace-v1 > form.layui-form-pane .layui-input-inline.w600 { width:100% !important; }
+    body.admin-dark .page-container.admin-type-editor-workspace-v1 > form.layui-form-pane .center .btn { display:block; width:100%; margin:0 0 8px !important; }
+}

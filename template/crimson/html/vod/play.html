@@ -1,0 +1,63 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="crimson" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/vod_play"}
+{include file="public/include"}
+</head>
+<body class="ct-watch-page">
+{include file="public/head"}
+<main id="main-content" class="ct-wrap">
+{include file="public/metavars"}
+{php}
+$ctShareUrl = '';
+try { $ctShareUrl = \app\common\util\Sitemap::absolute(mac_url_vod_play($obj)); } catch (\Throwable $ctShareError) { $ctShareUrl = ''; }
+$ctSourceTotal = 0; $ctEpisodeTotal = 0;
+if (!empty($obj['vod_play_list']) && is_array($obj['vod_play_list'])) { foreach ($obj['vod_play_list'] as $ctSrcItem) { $ctSourceTotal++; $ctEpisodeTotal += (isset($ctSrcItem['urls']) && is_array($ctSrcItem['urls'])) ? count($ctSrcItem['urls']) : 0; } }
+$ctShowEpisodes = ($ctSourceTotal > 1 || $ctEpisodeTotal > 1) ? 1 : 0;
+$ctLinkPre = (string)($obj['player_info']['link_pre'] ?? '');
+$ctLinkNext = (string)($obj['player_info']['link_next'] ?? '');
+$ctSid = intval($param['sid'] ?? 1); $ctNid = intval($param['nid'] ?? 1);
+$ctTitleDir = preg_match('/[\x{0590}-\x{08FF}\x{FB1D}-\x{FDFF}\x{FE70}-\x{FEFF}]/u', (string)$ctTitle) ? 'rtl' : 'auto';
+{/php}
+<span hidden data-ct-playlog data-id="{$obj.vod_id}" data-sid="{$ctSid}" data-nid="{$ctNid}"></span>
+<div class="ct-watch">
+	<div class="ct-wmain">
+		<div class="ct-player" data-frame-title="{:\\app\\common\\util\\TemplateText::get('ui.iframeplayer')}">{$player_data}{$player_js}</div>
+		<header class="ct-whead">
+			<h1{php}echo \app\common\util\AvdbLanguage::langAttr(isset($obj) && is_array($obj) ? $obj : []);{/php} class="ct-wtitle" dir="{$ctTitleDir}">{$ctTitle|htmlspecialchars=ENT_QUOTES}</h1>
+			<ul class="ct-stats">
+				<li title="{:\\app\\common\\util\\TemplateText::get('ui.views')}">{:\\app\\common\\util\\AutoIcon::ui('eye', ['class'=>'ct-ico'])}<span class="mac_hits" data-mid="1" data-id="{$obj.vod_id}" data-type="hits" dir="ltr">{$obj.vod_hits}</span><span class="ct-sr">{:\\app\\common\\util\\TemplateText::get('ui.views')}</span></li>
+				{if condition="$ctRelease neq ''"}<li>{:\\app\\common\\util\\AutoIcon::ui('calendar', ['class'=>'ct-ico'])}<span dir="ltr">{$ctRelease|htmlspecialchars=ENT_QUOTES}</span></li>{/if}
+				{if condition="$ctDuration neq ''"}<li>{:\\app\\common\\util\\AutoIcon::ui('clock', ['class'=>'ct-ico'])}<span dir="ltr">{$ctDuration|htmlspecialchars=ENT_QUOTES}</span></li>{/if}
+				{if condition="$ctScore gt 0"}<li title="{:\\app\\common\\util\\TemplateText::get('ui.score')}">{:\\app\\common\\util\\AutoIcon::ui('star', ['class'=>'ct-ico ct-star'])}<span dir="ltr">{$obj.vod_score|htmlspecialchars=ENT_QUOTES} / 10</span></li>{/if}
+			</ul>
+		</header>
+		<div class="ct-actions">
+			<a class="ct-act" href="{:mac_url_vod_detail($obj)}">{:\\app\\common\\util\\AutoIcon::ui('info', ['class'=>'ct-ico'])}<span>{:\\app\\common\\util\\TemplateText::get('ui.details')}</span></a>
+			<button class="ct-act" type="button" data-ct-fav data-mid="1" data-id="{$obj.vod_id}">{:\\app\\common\\util\\AutoIcon::ui('heart', ['class'=>'ct-ico'])}<span>{:\\app\\common\\util\\TemplateText::get('favorites')}</span></button>
+			<button class="ct-act" type="button" data-ct-share data-url="{$ctShareUrl|htmlspecialchars=ENT_QUOTES}" aria-expanded="false" aria-controls="ct-share">{:\\app\\common\\util\\AutoIcon::ui('share', ['class'=>'ct-ico'])}<span>{:\\app\\common\\util\\TemplateText::get('share')}</span></button>
+			<a class="ct-act" href="{$ctReportUrl|htmlspecialchars=ENT_QUOTES}" rel="nofollow">{:\\app\\common\\util\\AutoIcon::ui('flag', ['class'=>'ct-ico'])}<span>{:\\app\\common\\util\\TemplateText::get('ui.report')}</span></a>
+		</div>
+		<div class="ct-share" id="ct-share"><label class="ct-sr" for="ct-share-url">{:\\app\\common\\util\\TemplateText::get('ui.sharing_address')}</label><input id="ct-share-url" type="text" readonly value="{$ctShareUrl|htmlspecialchars=ENT_QUOTES}"><button class="ct-btn" type="button" data-ct-copy="ct-share-url">{:\\app\\common\\util\\AutoIcon::ui('link', ['class'=>'ct-ico'])}{:\\app\\common\\util\\TemplateText::get('ui.copy_link')}</button></div>
+		{if condition="$ctLinkPre neq '' || $ctLinkNext neq ''"}<nav class="ct-epnav" aria-label="{:\\app\\common\\util\\TemplateText::get('playback_sources')}">{if condition="$ctLinkPre neq ''"}<a class="ct-pill ct-pill--sm" href="{$ctLinkPre|htmlspecialchars=ENT_QUOTES}">{:\\app\\common\\util\\AutoIcon::ui('chevron-left', ['class'=>'ct-ico ct-chev-r'])}{:\\app\\common\\util\\TemplateText::get('previous_episode')}</a>{/if}{if condition="$ctLinkNext neq ''"}<a class="ct-pill ct-pill--sm" href="{$ctLinkNext|htmlspecialchars=ENT_QUOTES}">{:\\app\\common\\util\\TemplateText::get('next_episode')}{:\\app\\common\\util\\AutoIcon::ui('chevron-right', ['class'=>'ct-ico ct-chev-r'])}</a>{/if}</nav>{/if}
+		{if condition="$ctShowEpisodes eq 1"}<section class="ct-panel ct-eps" aria-labelledby="ct-eps-h"><h2 class="ct-panel-h" id="ct-eps-h">{:\\app\\common\\util\\AutoIcon::ui('list', ['class'=>'ct-ico'])}{:\\app\\common\\util\\TemplateText::get('playback_sources')}</h2>{maccms:foreach name="obj.vod_play_list" id="ctSrc" key="ctSidKey"}<h3 class="ct-label">{$ctSrc.player_info.show|htmlspecialchars=ENT_QUOTES}</h3><div class="ct-chips">{maccms:foreach name="ctSrc.urls" id="ctEp" key="ctNidKey"}<a class="ct-chip" href="{:mac_url_vod_play($obj,['sid'=>$ctSrc['sid'],'nid'=>$ctEp['nid']])}"{if condition="$ctSid eq $ctSrc.sid && $ctNid eq $ctEp.nid"} aria-current="page"{/if}>{$ctEp.name|htmlspecialchars=ENT_QUOTES}</a>{/maccms:foreach}</div>{/maccms:foreach}</section>{/if}
+		{if condition="$ctDesc neq ''"}<section class="ct-panel ct-desc" data-ct-desc aria-labelledby="ct-desc-h"><h2 class="ct-panel-h" id="ct-desc-h">{:\\app\\common\\util\\AutoIcon::ui('edit', ['class'=>'ct-ico'])}{:\\app\\common\\util\\TemplateText::get('description')}</h2><p dir="auto">{$ctDesc|htmlspecialchars=ENT_QUOTES}</p><button class="ct-desc-toggle" type="button" hidden aria-expanded="false" data-more="{:\\app\\common\\util\\TemplateText::get('crimson.show_more')}" data-less="{:\\app\\common\\util\\TemplateText::get('crimson.show_less')}">{:\\app\\common\\util\\TemplateText::get('crimson.show_more')}</button></section>{/if}
+	</div>
+	<aside class="ct-wside" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.details')}">
+		{include file="public/meta"}
+		{include file="public/people"}
+	</aside>
+</div>
+	{include file="public/related"}
+	{if condition="$GLOBALS['config']['comment']['status'] eq 1"}<section class="ct-panel ct-comments ct-span" aria-labelledby="ct-cmt-h"><h2 class="ct-panel-h" id="ct-cmt-h">{:\\app\\common\\util\\AutoIcon::ui('messages', ['class'=>'ct-ico'])}{:\\app\\common\\util\\TemplateText::get('ui.comments')}</h2><div class="mac_comment" data-id="{$obj.vod_id}" data-mid="1"><p class="ct-tip">{:\\app\\common\\util\\TemplateText::get('ui.loading_comments')}</p></div></section><script>MAC.Comment.Init();MAC.Comment.Show(1);</script>{/if}
+</main>
+{include file="public/foot"}
+</body>
+</html>

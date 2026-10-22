@@ -1,0 +1,240 @@
+/*
+ * This file is part of JavCMS - https://javcms.net
+ * Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+ * License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+ * See the LICENSE and NOTICE files that come with JavCMS.
+ * Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Telegram: https://t.me/avdb_api
+ */
+/* admin-remaining-editor-return-v1 */
+.admin-remaining-editor-v1 {
+    max-width: 1240px;
+    margin: 0 auto;
+    color: #d5dfed;
+}
+.admin-remaining-editor-v1 .admin-remaining-editor-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin: 0 0 14px;
+    padding: 13px 15px;
+    border: 1px solid #263b55;
+    border-radius: 13px;
+    background: linear-gradient(135deg, #14253b 0%, #101b2d 58%, #111827 100%);
+    box-shadow: 0 10px 26px rgba(0, 0, 0, .16);
+}
+.admin-remaining-editor-v1 .admin-remaining-editor-toolbar__identity {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    gap: 14px;
+}
+.admin-remaining-editor-v1 .admin-remaining-editor-return {
+    display: inline-flex;
+    align-items: center;
+    flex: 0 0 auto;
+    gap: 7px;
+    min-height: 36px;
+    padding: 0 13px;
+    border: 1px solid rgba(99, 216, 234, .38);
+    border-radius: 9px;
+    color: #aeeef5;
+    background: rgba(99, 216, 234, .11);
+    font-size: 12px;
+    font-weight: 800;
+    text-decoration: none;
+    transition: .16s ease;
+}
+.admin-remaining-editor-v1 .admin-remaining-editor-return:hover,
+.admin-remaining-editor-v1 .admin-remaining-editor-return:focus-visible {
+    color: #071521;
+    background: #63d8ea;
+    border-color: #63d8ea;
+    outline: 0;
+}
+.admin-remaining-editor-v1 .admin-remaining-editor-return__icon {
+    font-size: 18px;
+    line-height: 1;
+}
+.admin-remaining-editor-v1 .admin-remaining-editor-titleline {
+    display: grid;
+    min-width: 0;
+    gap: 3px;
+}
+.admin-remaining-editor-v1 .admin-remaining-editor-kicker {
+    color: #75e7c2;
+    font-size: 10px;
+    font-weight: 850;
+    letter-spacing: .14em;
+}
+.admin-remaining-editor-v1 .admin-remaining-editor-title {
+    overflow: hidden;
+    color: #f4f8ff;
+    font-size: 18px;
+    line-height: 1.2;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.admin-remaining-editor-v1 > form {
+    margin: 0;
+    padding: 18px;
+    border: 1px solid #263b55;
+    border-radius: 13px;
+    background: #111c2d;
+    box-shadow: 0 10px 26px rgba(0, 0, 0, .13);
+}
+.admin-remaining-editor-v1 .layui-tab {
+    margin: 0 0 14px;
+    border: 1px solid #263b55;
+    border-radius: 11px;
+    overflow: hidden;
+    background: #142238;
+}
+.admin-remaining-editor-v1 .layui-tab-title {
+    height: auto;
+    min-height: 42px;
+    padding: 0 7px;
+    border-bottom: 1px solid #263b55;
+    background: #172943;
+}
+.admin-remaining-editor-v1 .layui-tab-title li {
+    height: 42px;
+    line-height: 42px;
+    padding: 0 14px;
+    color: #90a4bc;
+    font-size: 12px;
+    font-weight: 750;
+}
+.admin-remaining-editor-v1 .layui-tab-title li.layui-this {
+    color: #bdf7de;
+    font-weight: 850;
+}
+.admin-remaining-editor-v1 .layui-tab-title li.layui-this:after {
+    border-color: #35d39b;
+}
+.admin-remaining-editor-v1 .layui-tab-content {
+    padding: 16px 17px 6px;
+}
+.admin-remaining-editor-v1 .layui-form-item {
+    margin-bottom: 11px;
+    padding-bottom: 3px;
+}
+.admin-remaining-editor-v1 .layui-form-label {
+    color: #9eb0c5;
+    font-weight: 750;
+}
+.admin-remaining-editor-v1 .layui-input,
+.admin-remaining-editor-v1 .layui-textarea,
+.admin-remaining-editor-v1 .layui-form-select input,
+.admin-remaining-editor-v1 select {
+    border: 1px solid #2a405c;
+    border-radius: 8px;
+    color: #dce8f5;
+    background: #0d1727;
+}
+.admin-remaining-editor-v1 .layui-input:focus,
+.admin-remaining-editor-v1 .layui-textarea:focus,
+.admin-remaining-editor-v1 .layui-form-select input:focus {
+    border-color: #63d8ea;
+    box-shadow: 0 0 0 3px rgba(99, 216, 234, .12);
+}
+.admin-remaining-editor-v1 .layui-form-select dl {
+    border-color: #2a405c;
+    background: #111c2d;
+}
+.admin-remaining-editor-v1 .layui-form-select dl dd {
+    color: #b7c7d9;
+}
+.admin-remaining-editor-v1 .layui-form-select dl dd:hover,
+.admin-remaining-editor-v1 .layui-form-select dl dd.layui-this {
+    color: #071521;
+    background: #63d8ea;
+}
+.admin-remaining-editor-v1 textarea {
+    max-width: 100%;
+    box-sizing: border-box;
+}
+.admin-remaining-editor-v1 .center {
+    border-top: 1px solid rgba(159, 184, 216, .12);
+    padding-top: 16px;
+}
+.admin-remaining-editor-v1 .center .btn {
+    min-height: 38px;
+    margin: 0 6px 0 0 !important;
+    border-radius: 8px;
+    font-weight: 850;
+}
+.admin-remaining-editor-v1 .center .btn-primary {
+    color: #071521;
+    border-color: #63d8ea;
+    background: #63d8ea;
+}
+.admin-remaining-editor-v1 .center .btn-primary:hover {
+    border-color: #9debf3;
+    background: #9debf3;
+}
+.admin-remaining-editor-v1 .center .btn-warning {
+    border: 1px solid rgba(255, 190, 95, .3);
+    color: #ffd79c;
+    background: rgba(255, 190, 95, .14);
+}
+@media (max-width: 700px) {
+    .admin-remaining-editor-v1 {
+        padding: 8px !important;
+    }
+    .admin-remaining-editor-v1 .admin-remaining-editor-toolbar {
+        align-items: stretch;
+        padding: 12px;
+    }
+    .admin-remaining-editor-v1 .admin-remaining-editor-toolbar__identity {
+        align-items: stretch;
+        width: 100%;
+        gap: 10px;
+    }
+    .admin-remaining-editor-v1 .admin-remaining-editor-return {
+        align-self: center;
+        padding: 0 10px;
+    }
+    .admin-remaining-editor-v1 .admin-remaining-editor-title {
+        font-size: 16px;
+    }
+    .admin-remaining-editor-v1 > form {
+        padding: 12px;
+    }
+    .admin-remaining-editor-v1 .layui-tab-content {
+        padding: 12px 10px 4px;
+    }
+    .admin-remaining-editor-v1 .layui-form-label {
+        float: none;
+        display: block;
+        width: auto;
+        padding: 0 0 6px;
+        line-height: 1.35;
+        text-align: left;
+    }
+    .admin-remaining-editor-v1 .layui-input-block,
+    .admin-remaining-editor-v1 .layui-input-inline {
+        margin-left: 0;
+        max-width: none;
+    }
+    .admin-remaining-editor-v1 .layui-input-inline {
+        width: 100%;
+    }
+    .admin-remaining-editor-v1 .layui-tab-title {
+        display: flex;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+    .admin-remaining-editor-v1 .layui-tab-title li {
+        flex: 0 0 auto;
+    }
+}
+
+/* repair-content: the rich-text editor box (UMeditor .edui-container z-index 999, UEditor .edui-editor) covered the sticky kit save bar. */
+body.admin-studio .page-container:has(.edui-container, .edui-editor) .ax-savebar { z-index: 1000; }
+/* repair-content (beginner #11): on phones the kit clip box cut 3 px off the left of "Upload image" and the field borders. */
+@media (max-width: 767.98px) {
+  body.admin-studio .page-container:is(.admin-remaining-editor-v1, .admin-actor-editor-page) .layui-tab > .layui-tab-content { padding-left: 4px !important; padding-right: 4px !important; }
+  body.admin-studio .page-container:is(.admin-remaining-editor-v1, .admin-actor-editor-page) form.layui-form { overflow-clip-margin: 8px; }
+}

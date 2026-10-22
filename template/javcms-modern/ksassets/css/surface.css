@@ -1,0 +1,89 @@
+/*
+ * This file is part of JavCMS - https://javcms.net
+ * Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+ * License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+ * See the LICENSE and NOTICE files that come with JavCMS.
+ * Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Telegram: https://t.me/avdb_api
+ */
+/* Native community and account surfaces. Theme palette/radius stay inherited. */
+html[data-template-theme="javcms"] :is(.comment_form,.gbook_form,.mac_login_form,#gallery-modal-login){display:grid;gap:12px;min-width:0;max-width:100%}
+html[data-template-theme="javcms"] :is(.comment_form,.gbook_form,.mac_login_form,#gallery-modal-login)>label{margin:0;font-weight:600;color:var(--ink)}
+html[data-template-theme="javcms"] :is(.comment_form,.gbook_form,.mac_login,.fed-user-form) :is(input:not([type="hidden"]):not([type="button"]):not([type="submit"]):not([type="checkbox"]):not([type="radio"]),textarea,select){box-sizing:border-box;min-width:0;max-width:100%;min-height:44px;padding:10px 12px;border:1px solid var(--line);border-radius:var(--radius,6px);background:var(--surface,var(--paper));color:var(--ink);font:inherit;line-height:1.4}
+html[data-template-theme="javcms"] :is(.comment_form,.gbook_form) textarea{width:100%;min-height:128px!important;resize:vertical;margin:0}
+html[data-template-theme="javcms"] .verification-field{display:grid;grid-template-columns:minmax(0,1fr) 112px;align-items:center;gap:8px 12px;min-width:0;max-width:100%;width:100%}
+html[data-template-theme="javcms"] .verification-field>label{grid-column:1/-1;margin:0;font-weight:600;color:var(--ink)}
+html[data-template-theme="javcms"] .verification-field>input{width:100%!important;min-width:0;min-height:44px;margin:0!important;float:none}
+html[data-template-theme="javcms"] .verification-field>img{width:112px;max-width:100%;min-height:44px;height:44px;object-fit:contain;float:none;margin:0!important;padding:0;border:1px solid var(--line);border-radius:var(--radius,6px);background:#fff;cursor:pointer}
+html[data-template-theme="javcms"] .verification-field:not(:has(>img)){grid-template-columns:minmax(0,1fr)}
+html[data-template-theme="javcms"] :is(.mac_verify_img,.fed-user-code){cursor:pointer}
+html[data-template-theme="javcms"] :is(.comment_submit,.comment_reply,.comment_report,.comment-pages button,.gbook_submit,.login_form_submit,.fed-user-submit,#btn_send_sms,#btn_send,#btn_bind_send){min-height:44px;max-width:100%;padding:10px 16px;border:1px solid transparent;border-radius:var(--radius,6px);background:var(--accent,var(--coral-dark));color:#fff;line-height:1.4;font:inherit;font-weight:600;cursor:pointer;white-space:normal}
+html[data-template-theme="javcms"] :is(.comment_submit,.gbook_submit){justify-self:start;width:auto;margin:0}
+html[data-template-theme="javcms"] .comment_report{background:var(--surface,var(--paper));color:var(--ink);border-color:var(--line);font-size:14px}
+html[data-template-theme="javcms"] :is(.comment-list,.message-list){display:grid;gap:16px;margin-block:20px}
+html[data-template-theme="javcms"] :is(.comment-list,.message-list)>article{min-width:0;padding:16px;border:1px solid var(--line);border-radius:var(--radius,6px);background:var(--surface,var(--paper));overflow-wrap:anywhere}
+html[data-template-theme="javcms"] :is(.comment-list,.message-list) .comment-head{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:8px 16px}
+html[data-template-theme="javcms"] :is(.comment-list,.message-list) :is(p,time){line-height:1.65}
+html[data-template-theme="javcms"] .comment-response{margin:12px 0 0;padding:12px;border-inline-start:3px solid var(--accent,var(--coral-dark));background:var(--paper);background:color-mix(in srgb,var(--paper) 86%,var(--accent) 14%);border-radius:var(--radius,6px)}
+html[data-template-theme="javcms"] .comment-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+html[data-template-theme="javcms"] :is(.comment-list,.message-list) time{font-size:13px;color:var(--muted)}
+html[data-template-theme="javcms"] .site-reply{padding-inline-start:12px;border-inline-start:3px solid var(--accent,var(--coral-dark))}
+html[data-template-theme="javcms"] .community-empty{padding:20px;margin:0;border:1px dashed var(--line);border-radius:var(--radius,6px);background:var(--surface,var(--paper));color:var(--muted);line-height:1.65;overflow-wrap:anywhere}
+html[data-template-theme="javcms"] .comment-pages{display:flex;flex-wrap:wrap;gap:8px}
+html[data-template-theme="javcms"] .reply_box .msg_code{display:grid;gap:12px;margin:0;min-width:0}
+html[data-template-theme="javcms"] .reply_box .remaining-w{float:none;text-align:start;font-size:14px;color:var(--muted)}
+html[data-template-theme="javcms"] .login_form_group{min-width:0}
+html[data-template-theme="javcms"] .mac_login input{margin:0}
+html[data-template-theme="javcms"] .login_form_link{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 16px}
+html[data-template-theme="javcms"] :is(.login_form_link a,.fed-user-form>a){display:inline-flex;align-items:center;min-height:44px;float:none!important;text-align:start;line-height:1.4;color:var(--link,var(--accent));overflow-wrap:anywhere}
+html[data-template-theme="javcms"] .fed-user-form .fed-user-tips:empty{display:none}
+html[data-template-theme="javcms"] .fed-user-form :is(.fed-list-head,.fed-user-tips){flex-basis:100%}
+html[data-template-theme="javcms"] .fed-user-form+.fed-user-form{margin-block-start:24px;padding-block-start:24px;border-block-start:1px solid var(--line)}
+html[data-template-theme="javcms"] .fed-user-title{flex-wrap:wrap;gap:12px;align-items:baseline}
+html[data-template-theme="javcms"] .fed-user-title :is(h1,h2){overflow-wrap:anywhere}
+html[data-template-theme="javcms"] .account-record{padding-block:16px;border-block-end:1px solid var(--line);overflow-wrap:anywhere;line-height:1.65}
+html[data-template-theme="javcms"] .account-order{display:grid;grid-template-columns:minmax(100px,.4fr) minmax(0,1fr);gap:12px 16px;line-height:1.5}
+html[data-template-theme="javcms"] .account-order :is(dt,dd){margin:0;overflow-wrap:anywhere}
+html[data-template-theme="javcms"] .account-order dt{color:var(--muted)}
+html[data-template-theme="javcms"] :is(.state-page,.mac_msg_jump){min-width:0;max-width:calc(100% - 32px);overflow-wrap:anywhere;text-align:start}
+html[data-template-theme="javcms"] .state-page:has(.mac_comment){padding:0;border:0;background:transparent}
+html[data-template-theme="javcms"] .state-page .mac_comment{margin-block:0}
+html[data-template-theme="javcms"] .mac_msg_jump .jump{line-height:1.7}
+html[data-template-theme="javcms"] .mac_msg_jump .jump a{display:inline-flex;align-items:center;min-height:44px;padding-inline:8px}
+html[data-template-theme="javcms"] :is(.filter summary,.filter .selects-list a,.language-links a){min-height:44px;display:flex;align-items:center;line-height:1.4}
+html[data-template-theme="javcms"] :is(.filter .selects-list,.language-links){background:var(--surface,var(--paper));color:var(--ink);border-color:var(--line)}
+html[data-template-theme="javcms"] .filter .selects-list a{color:var(--ink);white-space:normal;padding-block:10px}
+html[data-template-theme="javcms"] select option{background:var(--surface,var(--paper));color:var(--ink)}
+html[data-template-theme="javcms"] :is(.mac_comment,.gbook_form,.mac_login,.fed-user-form,.filter,.language-menu,.mac_msg_jump) :is(a,button,input,textarea,select,summary,img[role="button"]):focus-visible{outline:3px solid var(--focus,var(--accent));outline-offset:3px}
+html[data-template-theme="javcms"]{scrollbar-color:var(--muted) var(--canvas)}
+html[data-template-theme="javcms"] :is(.fed-main-left .fed-user-list,.selects-list){scrollbar-width:thin;scrollbar-color:var(--muted) var(--surface)}
+@media(max-width:767px){
+ html[data-template-theme="javcms"] .mac_comment{padding:16px}
+ html[data-template-theme="javcms"] .fed-main-left .fed-user-list{padding-block-end:8px}
+ html[data-template-theme="javcms"] .fed-main-left .fed-user-list a{min-height:44px;white-space:normal;line-height:1.4}
+ html[data-template-theme="javcms"] .account-order{grid-template-columns:1fr;gap:4px}
+ html[data-template-theme="javcms"] .account-order dd{margin-block-end:12px}
+ html[data-template-theme="javcms"] :is(.comment_submit,.gbook_submit){width:100%;justify-self:stretch}
+}
+
+html[data-template-theme="javcms"] .fed-main-left .fed-tabs-title>span{width:auto!important;min-width:0;overflow-wrap:anywhere}
+html[data-template-theme="javcms"] :is(body.fed-min-width,.gallery-account) table{display:block;width:100%;max-width:100%;overflow-x:auto;border-collapse:collapse;color:var(--ink);background:var(--surface,var(--paper))}
+html[data-template-theme="javcms"] :is(body.fed-min-width,.gallery-account) :is(th,td){padding:12px;text-align:start;border-block-end:1px solid var(--line);overflow-wrap:anywhere}
+html[data-template-theme="javcms"] :is(body.fed-min-width,.gallery-account) th{color:var(--ink);background:var(--canvas)}
+
+html[data-template-theme="javcms"] .fed-user-form>a{width:auto!important;flex:0 1 auto;padding:8px 0}
+html[data-template-theme="javcms"] .fed-user-form>a.fed-text-right{float:none!important;margin-inline-start:auto;text-align:end}
+html[data-template-theme="javcms"] .mac_comment button.comment_report{background:var(--surface,var(--paper))!important;color:var(--ink)!important;border-color:var(--line)}
+html[data-template-theme="javcms"] .mac_login .login_form_group{height:auto;min-height:44px;margin:0}
+html[data-template-theme="javcms"] .mac_login .mac_login_form input.login_form_submit{box-sizing:border-box;width:100%;height:auto;min-height:44px;background:var(--accent,var(--coral-dark))!important;color:#fff;border:1px solid transparent!important;border-radius:var(--radius,6px);line-height:1.4;padding:10px 16px}
+
+html[data-template-theme="javcms"] .mac_login{height:auto;min-height:0;max-width:100%;font-family:inherit}
+html[data-template-theme="javcms"] .mac_login .mac_login_form .login_form_group{margin:0}
+html[data-template-theme="javcms"] .mac_login .mac_login_form .login_form_group input:not([type="button"]){height:44px;line-height:1.4;padding:10px 12px;background:var(--surface,var(--paper));color:var(--ink);border-color:var(--line)}
+html[data-template-theme="javcms"] .mac_login .mac_login_form .login_form_link a{font-size:14px;color:var(--link,var(--accent));margin-inline:0;min-height:44px}
+html[data-template-theme="javcms"] a.skip-link{position:fixed;inset-block-start:8px;inset-inline-start:8px;z-index:10000;display:inline-flex;align-items:center;justify-content:center;min-height:44px;max-width:calc(100vw - 16px);box-sizing:border-box;padding:10px 16px;border:1px solid var(--line);border-radius:var(--radius,6px);background:var(--surface,var(--paper));color:var(--ink);font:inherit;line-height:1.4;text-decoration:underline;transform:translateY(calc(-100% - 16px));pointer-events:none}
+html[data-template-theme="javcms"] a.skip-link:focus{transform:none;pointer-events:auto;outline:3px solid var(--focus,var(--accent));outline-offset:3px}
+
+/* Native downloads use outlined episode links, including the legacy .btn class. */
+html[data-template-theme="javcms"] .block-post>.itemplay>a.btn{background:var(--surface,var(--paper));color:var(--ink);border-color:var(--line)}
+@media(max-width:767px){html[data-template-theme="javcms"] main .section:has(>.gbook_form)>h1{font-size:24px;line-height:1.3}}

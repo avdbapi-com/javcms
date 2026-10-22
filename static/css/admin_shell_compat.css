@@ -1,0 +1,689 @@
+/*
+ * This file is part of JavCMS - https://javcms.net
+ * Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+ * License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+ * See the LICENSE and NOTICE files that come with JavCMS.
+ * Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Telegram: https://t.me/avdb_api
+ */
+/* Modern admin shell compatibility theme. Scope is deliberate: legacy IDs and tab geometry remain unchanged. */
+#adminShell.admin-shell-compat {
+    overflow-x: hidden;
+    --admin-bg: #f0f3f7;
+    --admin-surface: #fcfdfe;
+    --admin-border: #e8edf3;
+    --admin-ink: #1a2233;
+    --admin-muted: #64748b;
+    --admin-accent: #2db87d;
+    --admin-accent-strong: #1f9d69;
+    background: var(--admin-bg);
+    color: var(--admin-ink);
+}
+#adminShell.admin-shell-compat .header-top { display: none; }
+#adminShell.admin-shell-compat .layui-header:not(.header-top) {
+    height: 60px;
+    background: var(--admin-surface) !important;
+    border-bottom: 1px solid var(--admin-border);
+    box-shadow: 0 1px 8px rgba(26,34,51,.06);
+}
+#adminShell.admin-shell-compat .header-logo {
+    width: 200px;
+    height: 60px;
+    line-height: 60px;
+    padding-left: 22px;
+    box-sizing: border-box;
+    color: var(--admin-ink);
+    text-indent: 0;
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: -.01em;
+    background: none;
+    -webkit-background-clip: initial;
+}
+#adminShell.admin-shell-compat .header-fold { color: var(--admin-muted); }
+#adminShell.admin-shell-compat .header-fold a,
+#adminShell.admin-shell-compat .layui-header .layui-nav a,
+#adminShell.admin-shell-compat .layout-right .nav-item a { color: var(--admin-muted); }
+#adminShell.admin-shell-compat .header-fold a:hover,
+#adminShell.admin-shell-compat .layui-header .layui-nav a:hover,
+#adminShell.admin-shell-compat .layout-right .nav-item a:hover { color: var(--admin-accent-strong); }
+#adminShell.admin-shell-compat .bottom-nav { margin-left: 8px; }
+#adminShell.admin-shell-compat .main-nav .layui-nav-item a {
+    height: 60px;
+    line-height: 60px;
+    margin: 0 4px;
+    padding: 0 14px;
+    color: var(--admin-muted);
+    border-radius: 8px;
+    transition: background .16s ease, color .16s ease;
+}
+#adminShell.admin-shell-compat .main-nav .layui-nav-item a:hover,
+#adminShell.admin-shell-compat .main-nav .layui-nav-item.layui-this a {
+    color: var(--admin-accent-strong);
+    background: rgba(45,184,125,.10);
+}
+#adminShell.admin-shell-compat .layui-layout-admin .layui-side,
+#adminShell.admin-shell-compat #switchNav {
+    top: 60px;
+    bottom: 30px;
+    width: 200px;
+    background: #1a2233 !important;
+    border-right: 1px solid rgba(255,255,255,.06);
+}
+#adminShell.admin-shell-compat .navBar { padding: 14px 10px; }
+#adminShell.admin-shell-compat .layui-nav-tree { background: transparent; }
+#adminShell.admin-shell-compat .layui-nav-tree > .layui-nav-item > a {
+    margin: 0 0 8px;
+    padding: 0 14px;
+    height: 40px;
+    line-height: 40px;
+    color: #dbe5ef;
+    border-radius: 8px;
+    font-weight: 600;
+}
+#adminShell.admin-shell-compat .layui-nav-tree > .layui-nav-item > a:hover,
+#adminShell.admin-shell-compat .layui-nav-tree > .layui-nav-item.layui-nav-itemed > a { background: rgba(255,255,255,.08); color: #fff; }
+#adminShell.admin-shell-compat .layui-nav-child { background: transparent !important; padding: 0 0 8px; }
+#adminShell.admin-shell-compat .layui-nav-tree .layui-nav-child a {
+    height: 36px;
+    line-height: 36px;
+    margin: 2px 0;
+    padding-left: 42px;
+    color: #9eafc2;
+    border-radius: 7px;
+    font-size: 13px;
+}
+#adminShell.admin-shell-compat .layui-nav-tree .layui-nav-child a:hover,
+#adminShell.admin-shell-compat .layui-nav-tree .layui-nav-child dd.layui-this a {
+    color: #fff;
+    background: rgba(45,184,125,.20);
+}
+#adminShell.admin-shell-compat .layui-body,
+#adminShell.admin-shell-compat #switchBody {
+    top: 60px;
+    left: 200px;
+    right: 0;
+    bottom: 30px;
+    background: var(--admin-bg);
+}
+#adminShell.admin-shell-compat #top_tabs_box {
+    background: var(--admin-surface);
+    border: 1px solid var(--admin-border);
+    border-radius: 10px 10px 0 0;
+    box-shadow: 0 3px 14px rgba(26,34,51,.05);
+}
+#adminShell.admin-shell-compat #top_tabs_box .layui-tab-title { background: #f7f9fb; border-bottom: 1px solid var(--admin-border); }
+#adminShell.admin-shell-compat #B_history { background: transparent; }
+#adminShell.admin-shell-compat #B_history li { color: var(--admin-muted); border-right: 1px solid var(--admin-border); }
+#adminShell.admin-shell-compat #B_history li.layui-this { color: var(--admin-accent-strong); background: var(--admin-surface); font-weight: 600; }
+#adminShell.admin-shell-compat .tab-go-left,
+#adminShell.admin-shell-compat .tab-go-right { background: #f7f9fb; border-color: var(--admin-border); }
+#adminShell.admin-shell-compat .tab-go-left i,
+#adminShell.admin-shell-compat .tab-go-right i { color: var(--admin-muted); }
+#adminShell.admin-shell-compat .tab-right,
+#adminShell.admin-shell-compat .closeBox { background: var(--admin-surface) !important; border-color: var(--admin-border); }
+#adminShell.admin-shell-compat .layui-tab-content { background: var(--admin-surface); left: 0; right: 1px; width: auto; }
+#adminShell.admin-shell-compat .footer { background: var(--admin-surface); border-top: 1px solid var(--admin-border); color: var(--admin-muted); }
+#adminShell.admin-shell-compat .footer a { color: var(--admin-accent-strong); }
+#adminShell.admin-shell-compat :focus-visible { outline: 3px solid rgba(45,184,125,.38); outline-offset: 2px; }
+@media (max-width: 768px) {
+    #adminShell.admin-shell-compat .layui-header:not(.header-top) { height: 60px; }
+    #adminShell.admin-shell-compat .header-logo { width: 150px; font-size: 15px; padding-left: 16px; }
+    #adminShell.admin-shell-compat .bottom-nav { left: 0; right: 0; width: auto; margin-left: 0; overflow: hidden; }
+    #adminShell.admin-shell-compat .main-nav .layui-nav-item a { padding: 0 10px; margin: 0 2px; font-size: 13px; }
+    #adminShell.admin-shell-compat .layui-layout-admin .layui-side { top: 60px; }
+    #adminShell.admin-shell-compat .layui-body { top: 60px; left: 0; bottom: 30px; }
+    body.site-mobile { overflow: hidden; }
+    body.site-mobile #adminShell.admin-shell-compat .site-mobile-shade { z-index: 100000; }
+    body.site-mobile #adminShell.admin-shell-compat #switchNav { z-index: 100001; }
+    body.site-mobile #adminShell.admin-shell-compat .layui-header:not(.header-top) .bottom-nav { opacity: .18; pointer-events: none; }
+    #adminShell.admin-shell-compat #B_history { right: 138px; width: auto; max-width: none; overflow-x: auto; overflow-y: hidden; }
+    #adminShell.admin-shell-compat #top_tabs_box { border-radius: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+    #adminShell.admin-shell-compat * { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+}
+
+/* v7: contain the legacy top navigation inside the modern 60px header band. */
+#adminShell.admin-shell-compat .bottom-nav {
+    position: absolute;
+    left: 250px;
+    right: 84px;
+    top: 0;
+    height: 60px;
+    margin-left: 0;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    white-space: nowrap;
+}
+#adminShell.admin-shell-compat .bottom-nav > .main-nav {
+    display: flex;
+    flex: 1 1 auto;
+    align-items: center;
+    min-width: 0;
+    height: 60px;
+    line-height: 60px;
+    float: none;
+    overflow: hidden;
+    white-space: nowrap;
+}
+#adminShell.admin-shell-compat .bottom-nav > .main-nav > .layui-nav-item { flex: 0 0 auto; }
+#adminShell.admin-shell-compat .bottom-nav > .main-nav {
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+}
+#adminShell.admin-shell-compat .bottom-nav > .main-nav::-webkit-scrollbar { display: none; }
+#adminShell.admin-shell-compat .bottom-nav > .layui-layout-right {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    height: 60px;
+    float: none;
+}
+#adminShell.admin-shell-compat .bottom-nav > .layui-layout-right .layui-nav-item,
+#adminShell.admin-shell-compat .bottom-nav > .layui-layout-right .layui-nav-item > a { height: 60px; line-height: 60px; }
+@media (max-width: 768px) {
+    #adminShell.admin-shell-compat .bottom-nav { display: none; }
+    #adminShell.admin-shell-compat .header-logo { width: 100%; padding-left: 54px; text-align: left; }
+    #adminShell.admin-shell-compat .site-tree-mobile { color: var(--admin-muted); }
+}
+
+/* Dark theme override: keep v8 geometry while replacing only the visual tokens. */
+#adminShell.admin-shell-compat {
+    --admin-bg: #0b1220;
+    --admin-surface: #111827;
+    --admin-border: #26354d;
+    --admin-ink: #e7eef8;
+    --admin-muted: #94a3b8;
+    --admin-accent: #35d39b;
+    --admin-accent-strong: #6ee7b7;
+    background: var(--admin-bg);
+    color: var(--admin-ink);
+}
+#adminShell.admin-shell-compat .layui-header:not(.header-top) { background: #111827 !important; border-color: #26354d; box-shadow: 0 1px 12px rgba(0,0,0,.28); }
+#adminShell.admin-shell-compat .header-logo { color: #e7eef8; }
+#adminShell.admin-shell-compat .header-fold a,
+#adminShell.admin-shell-compat .layui-header .layui-nav a,
+#adminShell.admin-shell-compat .layout-right .nav-item a { color: #94a3b8; }
+#adminShell.admin-shell-compat .layui-layout-admin .layui-side,
+#adminShell.admin-shell-compat #switchNav { background: #0b1220 !important; border-color: #1d2a3e; }
+#adminShell.admin-shell-compat .layui-nav-tree > .layui-nav-item > a { color: #d4deeb; }
+#adminShell.admin-shell-compat .layui-nav-tree > .layui-nav-item > a:hover,
+#adminShell.admin-shell-compat .layui-nav-tree > .layui-nav-item.layui-nav-itemed > a { background: #17263b; color: #fff; }
+#adminShell.admin-shell-compat .layui-nav-tree .layui-nav-child a { color: #91a4ba; }
+#adminShell.admin-shell-compat .layui-nav-tree .layui-nav-child a:hover,
+#adminShell.admin-shell-compat .layui-nav-tree .layui-nav-child dd.layui-this a { background: rgba(53,211,155,.18); color: #eafff8; }
+#adminShell.admin-shell-compat .main-nav .layui-nav-item a { color: #94a3b8; }
+#adminShell.admin-shell-compat .main-nav .layui-nav-item a:hover,
+#adminShell.admin-shell-compat .main-nav .layui-nav-item.layui-this a { color: #6ee7b7; background: rgba(53,211,155,.13); }
+#adminShell.admin-shell-compat .layui-body,
+#adminShell.admin-shell-compat #switchBody { background: #0b1220; }
+#adminShell.admin-shell-compat #top_tabs_box { background: #111827; border-color: #26354d; box-shadow: 0 3px 16px rgba(0,0,0,.22); }
+#adminShell.admin-shell-compat #top_tabs_box .layui-tab-title { background: #162033; border-color: #26354d; }
+#adminShell.admin-shell-compat #B_history li { color: #94a3b8; border-color: #26354d; }
+#adminShell.admin-shell-compat #B_history li.layui-this { color: #6ee7b7; background: #111827; }
+#adminShell.admin-shell-compat .tab-go-left,
+#adminShell.admin-shell-compat .tab-go-right { background: #162033; border-color: #26354d; }
+#adminShell.admin-shell-compat .tab-go-left i,
+#adminShell.admin-shell-compat .tab-go-right i { color: #94a3b8; }
+#adminShell.admin-shell-compat .tab-right,
+#adminShell.admin-shell-compat .closeBox { background: #111827 !important; border-color: #26354d; }
+#adminShell.admin-shell-compat .layui-tab-content { background: #0b1220; }
+#adminShell.admin-shell-compat .footer { background: #111827; border-color: #26354d; color: #94a3b8; }
+#adminShell.admin-shell-compat .footer a { color: #6ee7b7; }
+@media (max-width: 768px) {
+    #adminShell.admin-shell-compat .site-tree-mobile { color: #94a3b8; background: #162033; }
+}
+
+/* responsive-v1: keep every permission-filtered top-level module reachable on narrow screens. */
+#adminShell.admin-shell-compat .bottom-nav {
+    right: 0;
+}
+#adminShell.admin-shell-compat .bottom-nav > .layui-layout-right {
+    width: 48px;
+    flex: 0 0 48px;
+    justify-content: center;
+    overflow: visible;
+}
+#adminShell.admin-shell-compat .bottom-nav > .layui-layout-right .layui-nav-item,
+#adminShell.admin-shell-compat .bottom-nav > .layui-layout-right .layui-nav-item > a {
+    width: 48px;
+    padding: 0;
+    text-align: center;
+}
+@media (max-width: 768px) {
+    #adminShell.admin-shell-compat .layui-header.layui-bg-molv {
+        height: 108px;
+        min-height: 108px;
+    }
+    /* Keep the compact brand visible at phone widths; the drawer button remains at the left. */
+    #adminShell.admin-shell-compat .layui-header.layui-bg-molv .header-logo {
+        display: block !important;
+        width: 100%;
+        height: 60px;
+        line-height: 60px;
+        padding-left: 56px;
+        text-align: left;
+        box-sizing: border-box;
+    }
+    #adminShell.admin-shell-compat .layui-header.layui-bg-molv .bottom-nav {
+        display: flex !important;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 60px;
+        width: auto;
+        height: 48px;
+        min-height: 48px;
+        margin: 0;
+        padding: 0 4px;
+        box-sizing: border-box;
+        align-items: stretch;
+        overflow: hidden;
+        background: #111827;
+        border-top: 1px solid #26354d;
+        border-bottom: 1px solid #26354d;
+    }
+    #adminShell.admin-shell-compat .bottom-nav > .main-nav {
+        flex: 1 1 auto;
+        width: auto;
+        min-width: 0;
+        height: 48px;
+        line-height: 48px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+    }
+    #adminShell.admin-shell-compat .bottom-nav > .main-nav::-webkit-scrollbar { display: none; }
+    #adminShell.admin-shell-compat .bottom-nav > .main-nav > .layui-nav-item {
+        flex: 0 0 auto;
+        height: 48px;
+    }
+    #adminShell.admin-shell-compat .main-nav .layui-nav-item a {
+        min-width: 76px;
+        height: 48px;
+        line-height: 48px;
+        margin: 0 2px;
+        padding: 0 12px;
+        text-align: center;
+        border-radius: 7px;
+        font-size: 13px;
+    }
+    #adminShell.admin-shell-compat .bottom-nav > .layui-layout-right {
+        display: flex;
+        flex: 0 0 48px;
+        width: 48px;
+        height: 48px;
+        margin-left: 4px;
+        align-items: center;
+        border-left: 1px solid #26354d;
+    }
+    #adminShell.admin-shell-compat .bottom-nav > .layui-layout-right .layui-nav-item,
+    #adminShell.admin-shell-compat .bottom-nav > .layui-layout-right .layui-nav-item > a {
+        width: 48px;
+        height: 48px;
+        line-height: 48px;
+    }
+    #adminShell.admin-shell-compat .layui-layout-admin .layui-side,
+    #adminShell.admin-shell-compat #switchNav {
+        top: 108px;
+    }
+    #adminShell.admin-shell-compat .layui-body,
+    #adminShell.admin-shell-compat #switchBody {
+        top: 108px;
+    }
+    #adminShell.admin-shell-compat .site-mobile-shade {
+        top: 0;
+    }
+    body.site-mobile #adminShell.admin-shell-compat .layui-header.layui-bg-molv .bottom-nav {
+        opacity: .18;
+        pointer-events: none;
+    }
+}
+
+/* responsive-v1 geometry correction: keep the utility in normal flex flow and remove layui's 60px nav minimum on phones. */
+#adminShell.admin-shell-compat .bottom-nav > .layui-layout-right {
+    position: static;
+    top: auto;
+    right: auto;
+}
+@media (max-width: 768px) {
+    #adminShell.admin-shell-compat .bottom-nav > .main-nav,
+    #adminShell.admin-shell-compat .bottom-nav > .layui-layout-right {
+        min-height: 48px;
+    }
+}
+
+/* responsive-v1 final cascade guards: legacy layui positions utility absolutely and enforces a 60px nav minimum. */
+#adminShell.admin-shell-compat .bottom-nav { right: 0 !important; }
+#adminShell.admin-shell-compat .bottom-nav > .layui-layout-right { position: static !important; }
+@media (max-width: 768px) {
+    #adminShell.admin-shell-compat .bottom-nav > .main-nav,
+    #adminShell.admin-shell-compat .bottom-nav > .layui-layout-right {
+        height: 48px !important;
+        min-height: 48px !important;
+    }
+}
+
+/* responsive-v2: release the desktop 200px body offset on phones so the workspace uses the full width. */
+@media (max-width: 768px) {
+    #adminShell.admin-shell-compat .layui-body,
+    #adminShell.admin-shell-compat #switchBody,
+    #adminShell.admin-shell-compat .layui-layout-admin .layui-footer,
+    #adminShell.admin-shell-compat .footer {
+        left: 0 !important;
+        right: 0 !important;
+        width: auto !important;
+    }
+}
+
+
+/* admin-shell-layout-v8: bounded structural backport of pinned
+   maccms10/application/admin/view_new/index/index.html and
+   static_new/css/admin_index_shell.css. Legacy hooks stay in place:
+   #foldSwitch, #switchNav, .bottom-nav, #switchBody, #B_history,
+   #page-prev/#page-next, #J_refresh, closePageAll/closePageOther,
+   .admin-nav-item and their data-id/href values. */
+#adminShell.admin-shell-layout-v8 {
+    --shell-v8-rail: 216px;
+    --shell-v8-rail-collapsed: 64px;
+    --shell-v8-header: 58px;
+    --shell-v8-tabs: 44px;
+    --shell-v8-footer: 32px;
+    display: grid !important;
+    grid-template-columns: var(--shell-v8-rail) minmax(0, 1fr);
+    grid-template-rows: var(--shell-v8-header) minmax(0, 1fr) var(--shell-v8-footer);
+    grid-template-areas: "head head" "rail main" "foot foot";
+    height: 100vh;
+    min-height: 560px;
+    overflow: hidden;
+    background: #0b1220;
+    transition: grid-template-columns .22s cubic-bezier(.22,1,.36,1);
+}
+#adminShell.admin-shell-layout-v8 .header-top { display: none !important; }
+#adminShell.admin-shell-layout-v8 > .layui-header.layui-bg-molv {
+    grid-area: head;
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    width: auto !important;
+    height: var(--shell-v8-header) !important;
+    min-height: var(--shell-v8-header) !important;
+    display: grid;
+    grid-template-columns: var(--shell-v8-rail) minmax(0,1fr) auto;
+    align-items: center;
+    z-index: 1100;
+    background: #111827 !important;
+    border-bottom: 1px solid #26354d;
+    box-shadow: 0 1px 12px rgba(0,0,0,.28);
+}
+#adminShell.admin-shell-layout-v8 .header-logo {
+    width: auto !important;
+    height: var(--shell-v8-header) !important;
+    line-height: var(--shell-v8-header) !important;
+    padding: 0 18px !important;
+    background: transparent !important;
+    color: #e7eef8 !important;
+    font-size: 17px;
+    font-weight: 750;
+    letter-spacing: -.015em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+#adminShell.admin-shell-layout-v8 .header-fold {
+    position: absolute;
+    left: calc(var(--shell-v8-rail) - 15px);
+    top: calc(var(--shell-v8-header) - 15px);
+    z-index: 1200;
+}
+#adminShell.admin-shell-layout-v8 .header-fold a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border: 1px solid #3b506e;
+    border-radius: 999px;
+    background: #162033;
+    color: #b8c4d6;
+    box-shadow: 0 4px 14px rgba(0,0,0,.24);
+    transition: color .16s ease, background-color .16s ease, transform .16s ease;
+}
+#adminShell.admin-shell-layout-v8 .header-fold a:hover { color: #071a14; background: #35d39b; transform: scale(1.05); }
+#adminShell.admin-shell-layout-v8 .bottom-nav {
+    position: static !important;
+    grid-column: 2;
+    grid-row: 1;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    width: auto !important;
+    height: var(--shell-v8-header) !important;
+    min-height: var(--shell-v8-header) !important;
+    margin: 0 !important;
+    padding: 0 12px;
+    display: flex !important;
+    align-items: center;
+    overflow: hidden;
+    white-space: nowrap;
+    background: transparent;
+}
+#adminShell.admin-shell-layout-v8 .bottom-nav > .main-nav {
+    display: flex;
+    align-items: center;
+    flex: 1 1 auto;
+    min-width: 0;
+    height: var(--shell-v8-header);
+    margin: 0;
+    padding: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    white-space: nowrap;
+}
+#adminShell.admin-shell-layout-v8 .bottom-nav > .main-nav::-webkit-scrollbar { display:none; }
+#adminShell.admin-shell-layout-v8 .main-nav .layui-nav-item { flex: 0 0 auto; }
+#adminShell.admin-shell-layout-v8 .main-nav .layui-nav-item a {
+    height: 34px !important;
+    line-height: 34px !important;
+    margin: 0 3px !important;
+    padding: 0 13px !important;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    color: #94a3b8;
+    font-size: 13px;
+    font-weight: 600;
+    transition: color .16s ease, background-color .16s ease, border-color .16s ease;
+}
+#adminShell.admin-shell-layout-v8 .main-nav .layui-nav-item a:hover,
+#adminShell.admin-shell-layout-v8 .main-nav .layui-nav-item.layui-this a { color:#6ee7b7; background:rgba(53,211,155,.12); border-color:rgba(53,211,155,.18); }
+#adminShell.admin-shell-layout-v8 .bottom-nav > .layui-layout-right {
+    position: static !important;
+    width: 46px;
+    min-width: 46px;
+    height: var(--shell-v8-header);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:0;
+    padding:0;
+    border-left:1px solid #26354d;
+}
+#adminShell.admin-shell-layout-v8 .bottom-nav > .layui-layout-right .layui-nav-item,
+#adminShell.admin-shell-layout-v8 .bottom-nav > .layui-layout-right .layui-nav-item > a { width:46px; height:var(--shell-v8-header); line-height:var(--shell-v8-header); padding:0; text-align:center; }
+#adminShell.admin-shell-layout-v8 > #switchNav {
+    grid-area: rail;
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    bottom: auto !important;
+    width: auto !important;
+    height: auto !important;
+    z-index: 1000;
+    background: #0b1220 !important;
+    border-right: 1px solid #26354d;
+    overflow: hidden;
+}
+#adminShell.admin-shell-layout-v8 #switchNav .navBar {
+    height: 100%;
+    padding: 12px 10px 18px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    scrollbar-width: thin;
+}
+#adminShell.admin-shell-layout-v8 #switchNav .layui-nav-tree { background: transparent; }
+#adminShell.admin-shell-layout-v8 #switchNav .layui-nav-tree > .layui-nav-item > a {
+    height: 38px;
+    line-height: 38px;
+    margin: 0 0 7px;
+    padding: 0 12px;
+    border-radius: 9px;
+    color: #d4deeb;
+    font-size: 13px;
+    font-weight: 700;
+}
+#adminShell.admin-shell-layout-v8 #switchNav .layui-nav-tree > .layui-nav-item > a:hover,
+#adminShell.admin-shell-layout-v8 #switchNav .layui-nav-tree > .layui-nav-item.layui-nav-itemed > a { background:#17263b; color:#fff; }
+#adminShell.admin-shell-layout-v8 #switchNav .layui-nav-tree .layui-nav-child { padding: 0 0 9px; background:transparent !important; }
+#adminShell.admin-shell-layout-v8 #switchNav .layui-nav-tree .layui-nav-child dd { margin:2px 0; }
+#adminShell.admin-shell-layout-v8 #switchNav .layui-nav-tree .layui-nav-child a {
+    min-height: 35px;
+    height: 35px;
+    line-height: 35px;
+    margin: 0;
+    padding: 0 10px 0 39px;
+    border-radius: 7px;
+    color:#91a4ba;
+    font-size:13px;
+    transition: color .16s ease, background-color .16s ease;
+}
+#adminShell.admin-shell-layout-v8 #switchNav .layui-nav-tree .layui-nav-child a:hover,
+#adminShell.admin-shell-layout-v8 #switchNav .layui-nav-tree .layui-nav-child dd.layui-this a { background:rgba(53,211,155,.18); color:#eafff8; }
+#adminShell.admin-shell-layout-v8 #switchNav .layui-nav-tree .layui-nav-child a i { width:18px; margin-left:-25px; margin-right:7px; color:#7d91a9; }
+#adminShell.admin-shell-layout-v8 > #switchBody {
+    grid-area: main;
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    width: auto !important;
+    height: auto !important;
+    min-width: 0;
+    min-height: 0;
+    display:flex;
+    z-index:900;
+    overflow:hidden;
+    background:#0b1220;
+}
+#adminShell.admin-shell-layout-v8 #top_tabs_box {
+    display:flex;
+    flex-direction:column;
+    flex:1 1 auto;
+    min-width:0;
+    min-height:0;
+    width:100%;
+    height:auto !important;
+    margin:0 !important;
+    padding:0 !important;
+    overflow:hidden;
+    background:#111827;
+    border:0;
+    border-radius:0;
+    box-shadow:none;
+}
+#adminShell.admin-shell-layout-v8 #top_tabs_box > .layui-tab-title {
+    order:0;
+    position:relative;
+    top:auto;
+    left:auto;
+    right:auto;
+    display:flex;
+    align-items:stretch;
+    flex:0 0 var(--shell-v8-tabs);
+    height:var(--shell-v8-tabs);
+    min-height:var(--shell-v8-tabs);
+    padding:0 8px;
+    margin:0;
+    overflow:hidden;
+    background:#162033;
+    border-bottom:1px solid #26354d;
+}
+#adminShell.admin-shell-layout-v8 #B_history {
+    position:static !important;
+    display:flex;
+    align-items:stretch;
+    flex:1 1 auto;
+    min-width:0;
+    width:auto !important;
+    max-width:none !important;
+    height:var(--shell-v8-tabs);
+    margin:0 !important;
+    padding:0;
+    overflow-x:auto;
+    overflow-y:hidden;
+    background:transparent;
+    scrollbar-width:none;
+}
+#adminShell.admin-shell-layout-v8 #B_history::-webkit-scrollbar { display:none; }
+#adminShell.admin-shell-layout-v8 #B_history li { height:var(--shell-v8-tabs); line-height:var(--shell-v8-tabs); padding:0 16px; border-right:1px solid #26354d; color:#94a3b8; white-space:nowrap; }
+#adminShell.admin-shell-layout-v8 #B_history li.layui-this { color:#6ee7b7; background:#111827; font-weight:700; box-shadow:inset 0 -2px 0 #35d39b; }
+#adminShell.admin-shell-layout-v8 .tab-go-left,
+#adminShell.admin-shell-layout-v8 .tab-go-right { position:static; flex:0 0 30px; height:var(--shell-v8-tabs); line-height:var(--shell-v8-tabs); background:#162033; border:0; color:#94a3b8; }
+#adminShell.admin-shell-layout-v8 .tab-right { position:static; display:flex; align-items:center; flex:0 0 auto; height:var(--shell-v8-tabs); background:#111827 !important; border:0; }
+#adminShell.admin-shell-layout-v8 .closeBox { height:var(--shell-v8-tabs); background:#111827 !important; }
+#adminShell.admin-shell-layout-v8 .layui-tab-content {
+    position:relative !important;
+    top:auto !important;
+    left:auto !important;
+    right:auto !important;
+    bottom:auto !important;
+    flex:1 1 auto;
+    min-width:0;
+    min-height:0;
+    width:auto !important;
+    height:auto !important;
+    padding:0 !important;
+    overflow:hidden;
+    background:#0b1220;
+}
+#adminShell.admin-shell-layout-v8 .layui-tab-content > .layui-tab-item { height:100%; min-height:0; overflow:hidden; }
+#adminShell.admin-shell-layout-v8 .hs-iframe,
+#adminShell.admin-shell-layout-v8 .x-iframe { display:block; width:100% !important; height:100% !important; min-height:0; border:0; background:#0b1220; }
+#adminShell.admin-shell-layout-v8 > .footer { grid-area:foot; position:relative !important; left:auto !important; right:auto !important; bottom:auto !important; width:auto !important; height:var(--shell-v8-footer); min-height:var(--shell-v8-footer); z-index:1100; display:flex; align-items:center; justify-content:center; padding:0 14px; background:#111827; border-top:1px solid #26354d; color:#94a3b8; font-size:11px; }
+#adminShell.admin-shell-layout-v8 > .footer .fr { float:none; }
+#adminShell.admin-shell-layout-v8 > .footer a { color:#6ee7b7; }
+#adminShell.admin-shell-layout-v8:has(#switchNav.close) { grid-template-columns:var(--shell-v8-rail-collapsed) minmax(0,1fr); }
+#adminShell.admin-shell-layout-v8:has(#switchNav.close) .header-logo { font-size:0; justify-content:center; padding:0 !important; }
+#adminShell.admin-shell-layout-v8:has(#switchNav.close) .header-fold { left:calc(var(--shell-v8-rail-collapsed) - 15px); }
+#adminShell.admin-shell-layout-v8:has(#switchNav.close) #switchNav .layui-nav-tree > .layui-nav-item > a { justify-content:center; padding:0; font-size:0; }
+#adminShell.admin-shell-layout-v8:has(#switchNav.close) #switchNav .layui-nav-tree > .layui-nav-item > a i { font-size:16px; margin:0; }
+#adminShell.admin-shell-layout-v8:has(#switchNav.close) #switchNav .layui-nav-child { display:none !important; }
+@media (max-width: 767px) {
+    #adminShell.admin-shell-layout-v8 { display:block !important; height:100vh; min-height:0; overflow:hidden; }
+    #adminShell.admin-shell-layout-v8 > .layui-header.layui-bg-molv { display:flex; height:56px !important; min-height:56px !important; }
+    #adminShell.admin-shell-layout-v8 .header-logo { width:auto !important; flex:1 1 auto; height:56px !important; line-height:56px !important; padding:0 54px !important; text-align:left; font-size:15px; }
+    #adminShell.admin-shell-layout-v8 .header-fold { left:10px; top:13px; }
+    #adminShell.admin-shell-layout-v8 .header-fold a { width:34px; height:30px; border-radius:8px; }
+    #adminShell.admin-shell-layout-v8 .bottom-nav { display:none !important; }
+    #adminShell.admin-shell-layout-v8 > #switchNav { position:fixed !important; top:0 !important; left:0 !important; bottom:0 !important; width:280px !important; height:100vh !important; z-index:100001; transform:translateX(-100%); transition:transform .22s cubic-bezier(.22,1,.36,1); }
+    #adminShell.admin-shell-layout-v8.site-mobile > #switchNav,
+    body.site-mobile #adminShell.admin-shell-layout-v8 > #switchNav { transform:translateX(0); }
+    #adminShell.admin-shell-layout-v8 > #switchBody { position:fixed !important; top:56px !important; left:0 !important; right:0 !important; bottom:var(--shell-v8-footer) !important; width:auto !important; height:auto !important; }
+    #adminShell.admin-shell-layout-v8 > .footer { position:fixed !important; left:0 !important; right:0 !important; bottom:0 !important; width:auto !important; }
+    #adminShell.admin-shell-layout-v8 .site-mobile-shade { display:block; position:fixed; inset:0; z-index:100000; background:rgba(2,6,23,.62); opacity:0; pointer-events:none; transition:opacity .22s ease; }
+    body.site-mobile #adminShell.admin-shell-layout-v8 .site-mobile-shade { opacity:1; pointer-events:auto; }
+    #adminShell.admin-shell-layout-v8 #B_history li { padding:0 12px; }
+}
+
+/* v8 tab/tool contrast: the legacy Layui menu otherwise keeps a light text token. */
+#adminShell.admin-shell-layout-v8 .closeBox .layui-nav-item > a,
+#adminShell.admin-shell-layout-v8 .closeBox .layui-nav-item > a:hover { color:#b8c4d6 !important; background:transparent !important; }
+#adminShell.admin-shell-layout-v8 .closeBox .layui-nav-child { min-width:190px; padding:6px; border:1px solid #26354d; border-radius:10px; background:#111827 !important; box-shadow:0 12px 28px rgba(0,0,0,.32); }
+#adminShell.admin-shell-layout-v8 .closeBox .layui-nav-child dd a { height:34px; line-height:34px; padding:0 12px; border-radius:7px; color:#b8c4d6 !important; background:transparent !important; }
+#adminShell.admin-shell-layout-v8 .closeBox .layui-nav-child dd a:hover { color:#071a14 !important; background:#35d39b !important; }

@@ -1,0 +1,159 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Based on MacCMS 10 (Apache-2.0) by magicblack, changed by JavCMS.
+JavCMS changes: Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors,
+JavCMS Community License 1.0. The MacCMS parts stay under the Apache License 2.0.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{include file="../../../application/admin/view/public/head" /}
+<link rel="stylesheet" href="__STATIC__/css/admin_scheduled_tasks.css?v=20261013-r1">
+<div class="page-container p10 admin-scheduled-editor">
+    <div class="ax-editor-head">
+        <a class="ax-btn ax-btn--ghost" href="{:url('index')}" data-ax-back data-ax-back-msg="{:lang('admin/ux/system/leave_unsaved')}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-arrow-left"/></svg>{:lang('admin/ux/kit/back')}</a>
+        <h1>{$title|htmlspecialchars}</h1>
+    </div>
+        <p class="ax-help">{:lang('admin/tasksetup/editor_intro')}</p>
+    <form data-ax-dirty class="layui-form layui-form-pane admin-timming-form" method="post" action="">
+        <input type="hidden" name="__token__" value="{$Request.token}" />
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">{:lang('status')}</label>
+                        <div class="layui-input-inline">
+                            <input name="status" type="radio" id="rad-1" value="0" title="{:lang('disable')}" {if condition="$info['status'] neq 1"}checked {/if}>
+                            <input name="status" type="radio" id="rad-2" value="1" title="{:lang('enable')}" {if condition="$info['status'] eq 1"}checked {/if}>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label" for="name">{:lang('name')}</label>
+                        <div class="layui-input-inline w500">
+                            <input type="text" class="layui-input" value="{$info.name|htmlspecialchars}" lay-verify="required" placeholder="{:lang('admin/timming/unique_id')}" id="name" name="name" {if condition="$info.name neq ''"} readonly="readonly"{/if}>
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">{:lang('admin/timming/call_method')}/api.php/timming/index?name={$info.name|rawurlencode}</div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label" for="des">{:lang('remarks')}</label>
+                        <div class="layui-input-inline w500">
+                            <input type="text" class="layui-input" value="{$info.des|htmlspecialchars}" placeholder="" id="des" name="des">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label" for="task-file">{:lang('admin/timming/exec_file')}</label>
+                        <div class="layui-input-inline w500">
+                            <select id="task-file" name="file">
+                                <option value="collect" {if condition="$info['file'] eq 'collect'"}selected{/if}>{:lang('admin/timming/collect')}</option>
+                                <option value="make" {if condition="$info['file'] eq 'make'"}selected{/if}>{:lang('admin/timming/make')}</option>
+                                <option value="cj" {if condition="$info['file'] eq 'cj'"}selected{/if}>{:lang('admin/timming/cj')}</option>
+                                <option value="cache" {if condition="$info['file'] eq 'cache'"}selected{/if}>{:lang('admin/timming/cache')}</option>
+                                {if condition="$info['file'] eq 'urlsend'"}<option value="urlsend" selected>{:lang('admin/timming/urlsend')}</option>{/if}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">{:lang('admin/timming/exec_cycle')}</label>
+                        <div class="layui-input-block role-list-form">
+                            <input type="checkbox" name="weeks[]" class="layui-checkbox" lay-skin="primary" value="1" title="{:lang('monday')}" {if condition="in_array('1', $selectedWeeks, true)"}checked{/if}>
+                            <input type="checkbox" name="weeks[]" class="layui-checkbox" lay-skin="primary" value="2" title="{:lang('tuesday')}" {if condition="in_array('2', $selectedWeeks, true)"}checked{/if}>
+                            <input type="checkbox" name="weeks[]" class="layui-checkbox" lay-skin="primary" value="3" title="{:lang('wednesday')}" {if condition="in_array('3', $selectedWeeks, true)"}checked{/if}>
+                            <input type="checkbox" name="weeks[]" class="layui-checkbox" lay-skin="primary" value="4" title="{:lang('thursday')}" {if condition="in_array('4', $selectedWeeks, true)"}checked{/if}>
+                            <input type="checkbox" name="weeks[]" class="layui-checkbox" lay-skin="primary" value="5" title="{:lang('friday')}" {if condition="in_array('5', $selectedWeeks, true)"}checked{/if}>
+                            <input type="checkbox" name="weeks[]" class="layui-checkbox" lay-skin="primary" value="6" title="{:lang('saturday')}" {if condition="in_array('6', $selectedWeeks, true)"}checked{/if}>
+                            <input type="checkbox" name="weeks[]" class="layui-checkbox" lay-skin="primary" value="0" title="{:lang('sunday')}" {if condition="in_array('0', $selectedWeeks, true)"}checked{/if}>
+
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">{:lang('admin/timming/exec_time')}</label>
+                        <div class="layui-input-block role-list-form">
+                            <input type="checkbox" name="hours[]" class="layui-checkbox" lay-skin="primary" value="00" title="00" {if condition="in_array('00', $selectedHours, true)"}checked{/if}>
+                            <input type="checkbox" name="hours[]" class="layui-checkbox" lay-skin="primary" value="01" title="01" {if condition="in_array('01', $selectedHours, true)"}checked{/if}>
+                            <input type="checkbox" name="hours[]" class="layui-checkbox" lay-skin="primary" value="02" title="02" {if condition="in_array('02', $selectedHours, true)"}checked{/if}>
+                            <input type="checkbox" name="hours[]" class="layui-checkbox" lay-skin="primary" value="03" title="03" {if condition="in_array('03', $selectedHours, true)"}checked{/if}>
+                            <input type="checkbox" name="hours[]" class="layui-checkbox" lay-skin="primary" value="04" title="04" {if condition="in_array('04', $selectedHours, true)"}checked{/if}>
+                            <input type="checkbox" name="hours[]" class="layui-checkbox" lay-skin="primary" value="05" title="05" {if condition="in_array('05', $selectedHours, true)"}checked{/if}>
+                            <input type="checkbox" name="hours[]" class="layui-checkbox" lay-skin="primary" value="06" title="06" {if condition="in_array('06', $selectedHours, true)"}checked{/if}>
+                            <input type="checkbox" name="hours[]" class="layui-checkbox" lay-skin="primary" value="07" title="07" {if condition="in_array('07', $selectedHours, true)"}checked{/if}>
+                            <input type="checkbox" name="hours[]" class="layui-checkbox" lay-skin="primary" value="08" title="08" {if condition="in_array('08', $selectedHours, true)"}checked{/if}>
+                            <input type="checkbox" name="hours[]" class="layui-checkbox" lay-skin="primary" value="09" title="09" {if condition="in_array('09', $selectedHours, true)"}checked{/if}>
+                            <input type="checkbox" name="hours[]" class="layui-checkbox" lay-skin="primary" value="10" title="10" {if condition="in_array('10', $selectedHours, true)"}checked{/if}>
+                            <input type="checkbox" name="hours[]" class="layui-checkbox" lay-skin="primary" value="11" title="11" {if condition="in_array('11', $selectedHours, true)"}checked{/if}>
+                            <input type="checkbox" name="hours[]" class="layui-checkbox" lay-skin="primary" value="12" title="12" {if condition="in_array('12', $selectedHours, true)"}checked{/if}>
+                            <input type="checkbox" name="hours[]" class="layui-checkbox" lay-skin="primary" value="13" title="13" {if condition="in_array('13', $selectedHours, true)"}checked{/if}>
+                            <input type="checkbox" name="hours[]" class="layui-checkbox" lay-skin="primary" value="14" title="14" {if condition="in_array('14', $selectedHours, true)"}checked{/if}>
+                            <input type="checkbox" name="hours[]" class="layui-checkbox" lay-skin="primary" value="15" title="15" {if condition="in_array('15', $selectedHours, true)"}checked{/if}>
+                            <input type="checkbox" name="hours[]" class="layui-checkbox" lay-skin="primary" value="16" title="16" {if condition="in_array('16', $selectedHours, true)"}checked{/if}>
+                            <input type="checkbox" name="hours[]" class="layui-checkbox" lay-skin="primary" value="17" title="17" {if condition="in_array('17', $selectedHours, true)"}checked{/if}>
+                            <input type="checkbox" name="hours[]" class="layui-checkbox" lay-skin="primary" value="18" title="18" {if condition="in_array('18', $selectedHours, true)"}checked{/if}>
+                            <input type="checkbox" name="hours[]" class="layui-checkbox" lay-skin="primary" value="19" title="19" {if condition="in_array('19', $selectedHours, true)"}checked{/if}>
+                            <input type="checkbox" name="hours[]" class="layui-checkbox" lay-skin="primary" value="20" title="20" {if condition="in_array('20', $selectedHours, true)"}checked{/if}>
+                            <input type="checkbox" name="hours[]" class="layui-checkbox" lay-skin="primary" value="21" title="21" {if condition="in_array('21', $selectedHours, true)"}checked{/if}>
+                            <input type="checkbox" name="hours[]" class="layui-checkbox" lay-skin="primary" value="22" title="22" {if condition="in_array('22', $selectedHours, true)"}checked{/if}>
+                            <input type="checkbox" name="hours[]" class="layui-checkbox" lay-skin="primary" value="23" title="23" {if condition="in_array('23', $selectedHours, true)"}checked{/if}>
+                        </div>
+                    </div>
+        
+
+        <p class="admin-task-guide">{:lang('admin/tasksetup/window_help')}</p>
+        <details class="admin-task-advanced"><summary>{:lang('admin/tasksetup/advanced_params')}</summary>
+        <p>{:lang('admin/tasksetup/param_help')}</p>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label" for="param">{:lang('admin/timming/attach_param')}</label>
+                        <div class="layui-input-block">
+                            <input type="text" class="layui-input" value="{$info.param|htmlspecialchars}" placeholder="{:lang('admin/timming/attach_param_tip')}" id="param" name="param">
+                        </div>
+                    </div>
+
+        </details>
+        <div class="layui-form-item center admin-timming-form-actions">
+            <div class="layui-input-block">
+                <button type="button" class="ax-btn ax-btn--sm formCheckAll" lay-filter="formCheckAll"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-check"/></svg>{:lang('check_all')}</button>
+                <button type="button" class="ax-btn ax-btn--sm formCheckOther" lay-filter="formCheckOther">{:lang('check_other')}</button>
+
+                <button type="submit" class="ax-btn ax-btn--primary" lay-submit="" lay-filter="formSubmit" data-child="true"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-save"/></svg>{:lang('admin/ux/kit/save')}</button>
+                <button class="ax-btn" type="reset"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-rotate-ccw"/></svg>{:lang('admin/ux/system/undo_changes')}</button>
+            </div>
+        </div>
+    </form>
+
+</div>
+{include file="../../../application/admin/view/public/foot" /}
+<script type="text/javascript">
+
+    layui.use(['form', 'layer'], function () {
+        // Get the Layui form and layer components.
+        var form = layui.form
+                , layer = layui.layer
+                , $ = layui.jquery;
+
+        // Register the empty-name validation rule.
+        form.verify({
+            show: function (value) {
+                if (value == "") {
+                    return "{:lang('name_empty')}";
+                }
+            }
+        });
+
+        $('.formCheckAll').click(function(){
+            var child = $('.role-list-form').find('input');
+            /* Select all weekday and hour checkboxes. */
+            child.each(function(index, item) {
+                item.checked = true;
+            });
+            form.render('checkbox');
+        });
+        $('.formCheckOther').click(function(){
+            var child = $('.role-list-form').find('input');
+            /* Invert the selection of weekday and hour checkboxes. */
+            child.each(function(index, item) {
+                item.checked = (item.checked  ? false : true);
+            });
+            form.render('checkbox');
+        });
+
+
+    });
+</script>
+
+<script>document.addEventListener('click', function (e) { var b = e.target.closest('[data-ax-back]'); if (!b) { return; } var idx; try { idx = window.parent !== window && parent.layer ? parent.layer.getFrameIndex(window.name) : undefined; } catch (err) { idx = undefined; } if (idx === undefined || idx === null) { return; } e.preventDefault(); var go = function () { parent.layer.close(idx); }; if (window.AxUX && AxUX.isDirty()) { AxUX.confirm({ message: b.getAttribute('data-ax-back-msg'), count: 1 }).then(function (yes) { if (yes) { AxUX.markClean(); go(); } }); } else { go(); } });</script>
+</body>
+</html>

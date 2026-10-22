@@ -1,0 +1,79 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}
+$nnSplit = function ($value) { $out = []; foreach (explode(',', (string)$value) as $nnPart) { $nnPart = trim($nnPart); if ($nnPart !== '' && !in_array($nnPart, $out, true)) { $out[] = $nnPart; } } return $out; };
+$nnField = function ($display, $raw) use ($obj) { $nnVal = trim((string)($obj[$display] ?? '')); if ($nnVal === '' && !isset($obj[$display])) { $nnVal = trim(html_entity_decode(strip_tags((string)($obj[$raw] ?? '')), ENT_QUOTES, 'UTF-8')); } return $nnVal; };
+$nnPlain = function ($value) { return trim(html_entity_decode(html_entity_decode((string)$value, ENT_QUOTES, 'UTF-8'), ENT_QUOTES, 'UTF-8')); };
+$nnCode = \app\common\util\AvdbLanguage::displayCode($obj); /* 2.11 rule 1: code only from vod_display_code */
+if ($nnCode === '' || stripos($nnCode, 'avdb-') === 0 || strlen($nnCode) > 40) { $nnCode = ''; }
+$nnTitle = trim((string)($obj['vod_display_name'] ?? ''));
+if ($nnTitle === '') { $nnTitle = $nnPlain($obj['vod_name'] ?? ''); }
+$nnActors = $nnSplit($nnField('vod_display_actor', 'vod_actor'));
+$nnGenres = $nnSplit($nnField('vod_display_class', 'vod_class'));
+$nnTagSkip = array_map('mb_strtolower', array_map($nnPlain, array_merge($nnActors, $nnGenres)));
+$nnCodeLow = mb_strtolower($nnCode);
+$nnTitleLows = array_values(array_filter([mb_strtolower($nnTitle), mb_strtolower($nnPlain($obj['vod_name'] ?? ''))], 'strlen'));
+$nnTags = [];
+$nnTagList = $nnSplit($nnField('vod_display_tag', 'vod_tag'));
+// Tag lists generated from the title ("CODE Title, word, word, PREFIX, NUMBER") repeat the code and title words: drop those.
+$nnAutoTags = false;
+foreach ($nnTagList as $nnTag) { if ($nnCodeLow !== '' && strpos(mb_strtolower($nnPlain($nnTag)), $nnCodeLow) === 0) { $nnAutoTags = true; break; } }
+$nnCodeParts = $nnCodeLow !== '' ? preg_split('/[^a-z0-9]+/', $nnCodeLow) : [];
+$nnStopWords = ['a', 'an', 'and', 'are', 'as', 'at', 'be', 'by', 'for', 'from', 'he', 'her', 'his', 'i', 'in', 'is', 'it', 'me', 'my', 'of', 'on', 'or', 'she', 'so', 'the', 'to', 'up', 'us', 'we', 'who', 'with', 'you', 'your', 'what', 'when', 'how', 'not', 'no', 'all', 'out', 'this', 'that', 'was', 'can', 'do', 'get', 'got', 'has', 'have'];
+foreach ($nnTagList as $nnTag) {
+  $nnTagLow = mb_strtolower($nnPlain($nnTag));
+  $nnTagLen = mb_strlen($nnTagLow);
+  if ($nnTagLen < 2 || $nnTagLen > 40 || preg_match('/^[0-9]+$/', $nnTagLow) || in_array($nnTagLow, $nnTagSkip, true)) { continue; }
+  if ($nnCodeLow !== '' && strpos($nnTagLow, $nnCodeLow) === 0) { continue; }
+  if ($nnTagLen >= 16) { foreach ($nnTitleLows as $nnTitleLow) { if (strpos($nnTitleLow, $nnTagLow) !== false) { continue 2; } } }
+  if ($nnAutoTags) {
+    if ($nnTagLen < 3 || in_array($nnTagLow, $nnCodeParts, true) || in_array($nnTagLow, $nnStopWords, true)) { continue; }
+    if (strpos($nnTagLow, ' ') === false) { foreach ($nnTitleLows as $nnTitleLow) { if (preg_match('/(^|[^a-z0-9])' . preg_quote($nnTagLow, '/') . '([^a-z0-9]|$)/u', $nnTitleLow)) { continue 2; } } }
+  }
+  $nnTags[] = $nnTag;
+  if (count($nnTags) >= 24) { break; }
+}
+$nnDirectors = $nnSplit($nnField('vod_display_director', 'vod_director'));
+$nnStudio = $nnPlain($nnField('vod_display_writer', 'vod_writer'));
+$nnArea = $nnPlain($nnField('vod_display_area', 'vod_area'));
+if (mb_strlen($nnArea) > 40) { $nnArea = ''; }
+$nnRelease = trim((string)($obj['vod_pubdate'] ?? ''));
+if ($nnRelease === '' && !empty($obj['vod_year'])) { $nnRelease = (string)$obj['vod_year']; }
+if ($nnRelease !== '' && preg_match('/[A-Za-z]/', $nnRelease)) { $nnTs = strtotime(str_replace([',', '.'], ' ', $nnRelease)); if ($nnTs) { $nnRelease = date('Y-m-d', $nnTs); } }
+$nnDuration = trim((string)($obj['vod_duration'] ?? ''));
+$nnTypeName = \app\common\util\TemplateText::raw(trim(\app\common\util\AvdbLanguage::decodeEntities((string)($obj['type']['type_name'] ?? ''))));
+$nnDesc = $nnField('vod_display_content', 'vod_content');
+if ($nnDesc === '') { $nnDesc = $nnField('vod_display_blurb', 'vod_blurb'); }
+$nnScore = (float)($obj['vod_score'] ?? 0);
+$nnPlayUrl = (string)((!empty($obj['vod_play_list']) && is_array($obj['vod_play_list'])) ? mac_url_vod_play($obj, 'first') : '');
+$nnShareUrl = '';
+try { $nnShareUrl = \app\common\util\Sitemap::absolute(mac_url_vod_play($obj)); } catch (\Throwable $nnShareError) { $nnShareUrl = ''; }
+$nnReportName = $nnCode !== '' ? $nnCode : mb_substr($nnTitle, 0, 80);
+$nnTitleDir = preg_match('/[\x{0590}-\x{08FF}\x{FB1D}-\x{FDFF}\x{FE70}-\x{FEFF}]/u', $nnTitle) ? 'rtl' : 'ltr';
+$nnDescDir = preg_match('/[\x{0590}-\x{08FF}\x{FB1D}-\x{FDFF}\x{FE70}-\x{FEFF}]/u', $nnDesc) ? 'rtl' : 'ltr';
+$nnCommentsOn = (int)($GLOBALS['config']['comment']['status'] ?? 0) === 1;
+// Related videos: same lead genre in the same category (the lead genre is the first entry of the stored vod_class).
+// verify r4 G7 (slim index set: no vod_class / vod_score index; the old per-group query sorted the whole category, 0.47 s
+// cold at 600 k videos, and a failed query was not cached): AvdbLanguage::relatedGenreIds picks the genre among the
+// newest rows of the category (one list-layer read per category on idx_type_list), for a rare genre the exact query with
+// the FilterMatch MATCH pre-filter (bounded), ordered by the block's sort and filled with the category's newest rows, so
+// the blocks' own fill does not sort the whole category. The top 40 ids of each (genre, category, order) group are cached
+// for cache_time including empty answers and failures; the current video and the ids already shown are dropped in PHP.
+// Returns a comma list of ids for the ids attribute of the vod tag.
+$nnRelPrefix = trim((string)explode(',', (string)($obj['vod_class'] ?? ''))[0]);
+$nnRelType = intval($obj['type_id'] ?? 0);
+$nnPickIds = function ($order, $num, $exclude) use ($nnRelPrefix, $nnRelType) {
+  if ($nnRelPrefix === '' || mb_strlen($nnRelPrefix) > 60 || $num < 1) { return ''; }
+  $nnPickBy = preg_match('/^vod_(hits|score|time)\b/', (string)$order, $nnPickM) ? $nnPickM[1] : 'score';
+  $nnPick = \app\common\util\AvdbLanguage::relatedGenreIds($nnRelType, $nnRelPrefix, 40, $nnPickBy, true, true, true);
+  $nnSkip = array_map('intval', (array)$exclude);
+  $nnOut = [];
+  foreach ($nnPick as $nnPickId) { if ($nnPickId > 0 && !in_array($nnPickId, $nnSkip, true)) { $nnOut[] = $nnPickId; if (count($nnOut) >= $num) { break; } } }
+  return implode(',', $nnOut);
+};
+{/php}

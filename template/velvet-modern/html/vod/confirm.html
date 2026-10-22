@@ -1,0 +1,34 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="velvet-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+<meta name="robots" content="noindex, follow" />
+<title>{:\\app\\common\\util\\TemplateText::get('ui.purchase_permission_to_use_points')}</title>
+{include file="public/include"}
+</head>
+<body class="vp-page-gate">
+<main id="main-content" class="vp-standalone">
+  <div class="vp-intermission vp-state">
+    <span class="vp-state-icon" aria-hidden="true"><svg class="vp-i"><use href="{$maccms.path_tpl}assets/icons.svg?v=20261010-r1#crown"></use></svg></span>
+    <p class="vp-eyebrow">{:\\app\\common\\util\\TemplateText::get('ui.video_access')}</p>
+    <h1>{:\\app\\common\\util\\TemplateText::get('ui.access_required')}</h1>
+    <div class="vp-state-msg">{$popedom.msg}</div>
+    <p>{:\\app\\common\\util\\TemplateText::get('ui.tip_payment_watch_permanently_do_not_repeat_the_fee_thank_you_for_your_support')}</p>
+    <div class="vp-state-actions">
+      {if condition="$user.group.group_id eq 1"}
+      <a class="vp-btn vp-btn-gold" href="{:mac_url('user/login')}" target="_top">{:\\app\\common\\util\\TemplateText::get('ui.log_in_immediately')}</a>
+      {else/}
+      <button class="vp-btn vp-btn-gold" type="button" onclick="MAC.User.BuyPopedom(this)" data-id="{$obj.vod_id|intval}" data-sid="{$param.sid|intval}" data-nid="{$param.nid|intval}" data-type="{if condition="$obj.player_info.flag eq 'play'"}4{else/}5{/if}" data-mid="1">{:\\app\\common\\util\\TemplateText::get('ui.confirm_the_purchase')}</button>
+      <a class="vp-btn vp-btn-ghost" href="{:url('user/buy')}" target="_top">{:\\app\\common\\util\\TemplateText::get('ui.immediately_recharge')}</a>
+      {/if}
+    </div>
+  </div>
+</main>
+</body>
+</html>

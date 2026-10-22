@@ -1,0 +1,101 @@
+<?php
+/*
+ * This file is part of JavCMS - https://javcms.net
+ * Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+ * License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+ * See the LICENSE and NOTICE files that come with JavCMS.
+ * Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Telegram: https://t.me/avdb_api
+ */
+namespace app\common\util;
+
+class ApiHelper
+{
+    public static function wrapper()
+    {
+        return array(
+            'type_id' => '',
+            'type_id_1' => '',
+            'group_id' => '',
+            'vod_id' => 'id',
+            'vod_name' => 'name',
+            'vod_sub' => 'slug',
+            'vod_en' => 'origin_name',
+            'vod_status' => '',
+            'vod_letter' => '',
+            'vod_color' => '',
+            'vod_tag' => 'tag',
+            'vod_class' => 'category',
+            'vod_pic' => 'poster_url',
+            'vod_pic_thumb' => 'thumb_url',
+            'vod_pic_slide' => '',
+            'vod_pic_screenshot' => '',
+            'vod_actor' => 'actor',
+            'vod_director' => 'director',
+            'vod_writer' => '',
+            'vod_behind' => '',
+            'vod_blurb' => '',
+            'vod_remarks' => 'movie_code',
+            'vod_pubdate' => 'created_at',
+            'vod_total' => '',
+            'vod_serial' => '',
+            'vod_tv' => '',
+            'vod_weekday' => '',
+            'vod_area' => 'country',
+            'vod_lang' => '',
+            'vod_year' => 'year',
+            'vod_version' => 'quality',
+            'vod_state' => 'status',
+            'vod_author' => 'author',
+            'vod_jumpurl' => '',
+            'vod_tpl' => '',
+            'vod_tpl_play' => '',
+            'vod_tpl_down' => '',
+            'vod_isend' => '',
+            'vod_lock' => '',
+            'vod_level' => '',
+            'vod_copyright' => '',
+            'vod_points' => '',
+            'vod_points_play' => '',
+            'vod_points_down' => '',
+            'vod_hits' => '',
+            'vod_hits_day' => '',
+            'vod_hits_week' => '',
+            'vod_hits_month' => '',
+            'vod_duration' => 'time',
+            'vod_up' => '',
+            'vod_down' => '',
+            'vod_score' => '',
+            'vod_score_all' => '',
+            'vod_score_num' => '',
+            'vod_time' => '',
+            'vod_time_add' => '',
+            'vod_time_hits' => '',
+            'vod_time_make' => '',
+            'vod_trysee' => '',
+            'vod_douban_id' => '',
+            'vod_douban_score' => '',
+            'vod_reurl' => '',
+            'vod_rel_vod' => '',
+            'vod_rel_art' => '',
+            'vod_pwd' => '',
+            'vod_pwd_url' => '',
+            'vod_pwd_play' => '',
+            'vod_pwd_play_url' => '',
+            'vod_pwd_down' => '',
+            'vod_pwd_down_url' => '',
+            'vod_content' => 'description',
+            'vod_play_from' => '',
+            'vod_play_server' => '',
+            'vod_play_note' => '',
+            'vod_play_url' => '',
+            'vod_down_from' => '',
+            'vod_down_server' => '',
+            'vod_down_note' => '',
+            'vod_down_url' => '',
+            'vod_plot' => '',
+            'vod_plot_name' => '',
+            'vod_plot_detail' => '',
+        );
+    }
+}

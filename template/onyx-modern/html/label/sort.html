@@ -1,0 +1,40 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="onyx-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/sort"}
+{assign name="$maccms.aid" value="9995" /}
+{include file="public/include"}
+</head>
+<body class="page-list page-label page-sort">
+{include file="public/head"}
+{php}$tplAid = (int)($maccms['aid'] ?? 0); $tplSorts = [
+  ['label' => \app\common\util\TemplateText::raw('latest'), 'url' => mac_url('label/new'), 'on' => ($tplAid === 9999)],
+  ['label' => \app\common\util\TemplateText::raw('ui.popular'), 'url' => mac_url('label/hot'), 'on' => ($tplAid === 9998)],
+  ['label' => \app\common\util\TemplateText::raw('top_rated'), 'url' => mac_url('label/score'), 'on' => ($tplAid === 9997)],
+  ['label' => \app\common\util\TemplateText::raw('most_liked'), 'url' => mac_url('label/up'), 'on' => ($tplAid === 9996)],
+  ['label' => \app\common\util\TemplateText::raw('ui.all_videos'), 'url' => mac_url('label/sort'), 'on' => ($tplAid === 9995)],
+]; {/php}{php}$tplPage = max(1, (int)($param['page'] ?? 1)); $tplIdxBase = ($tplPage - 1) * 20; $oxUpd = \app\common\util\TemplateText::raw('ox.updated_at', ['time' => date('H:i')]);{/php}
+<main id="main-content" class="ox-main">
+  <header class="ox-list-hd">
+    <nav class="ox-crumbs" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.main_navigation')}"><a href="{$maccms.path}">{:\\app\\common\\util\\TemplateText::get('ox.index')}</a><span aria-hidden="true">/</span><span aria-current="page">{:\\app\\common\\util\\TemplateText::get('ui.all_videos')}</span></nav>
+    <span class="ox-h1-ai" data-ai-hot>{:\\app\\common\\util\\AutoIcon::navIcon('all-videos', '', ['size'=>'xl', 'plate'=>true])}</span><h1 class="ox-list-h1" data-ox-desk-scramble>{:\\app\\common\\util\\TemplateText::get('ui.all_videos')}</h1>
+    <p class="ox-list-meta"><span>{:\\app\\common\\util\\TemplateText::get('ox.rank_all')}</span><span>{$oxUpd|htmlspecialchars=ENT_QUOTES}</span></p>
+  </header>
+  {include file="public/listside"}
+  <section class="ox-list-main" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.all_videos')}">
+    <div class="ox-grid" data-grid-fill data-ox-stagger>{maccms:vod num="20" paging="yes" type="all" order="desc" by="time" pageurl="label/sort" id="vo"}{include file="public/vodbox"}{/maccms:vod}</div>
+    {if condition="$__PAGING__.record_total eq 0"}{include file="public/empty"}{/if}
+    {include file="public/paging"}
+  </section>
+  {include file="public/listtags"}
+</main>
+{include file="public/foot"}
+</body>
+</html>

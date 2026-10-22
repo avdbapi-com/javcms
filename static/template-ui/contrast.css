@@ -1,0 +1,140 @@
+/*
+ * This file is part of JavCMS - https://javcms.net
+ * Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+ * License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+ * See the LICENSE and NOTICE files that come with JavCMS.
+ * Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Telegram: https://t.me/avdb_api
+ */
+/* Shared readable colors. Layout and each template's visual identity stay local. */
+html{--readable-link:#283c99;--readable-muted:#626872}
+html[data-color-mode="dark"]{--readable-link:#bfd0ff;--readable-muted:#bcc4d1}
+input::placeholder,textarea::placeholder{color:var(--readable-muted)!important;opacity:1}
+/* Update the palette together. Keep movement animations without fading colors. */
+html[data-color-mode] *,html[data-color-mode] *::before,html[data-color-mode] *::after{
+ transition-property:transform,opacity,visibility,left,right,top,bottom,height,max-height,width!important
+}
+/* A dark scrim keeps thumbnail labels readable even over a white cover image. */
+html[data-template-theme="jav"] .stui-vodlist__thumb .pic-text{background:rgba(0,0,0,.8);color:#fff}
+
+/* Classic styles predate color preferences. Pair every surface with its text. */
+html[data-template-variant="classic"]{
+ --canvas:#11161d;--surface:#1b232e;--paper:#1b232e;--ink:#f4f6fa;
+ --muted:#bcc4d1;--line:#4b5667;--accent:#965000;--accent-soft:#372c22;
+ --coral-soft:#372c22;--coral-dark:#965000;--link:#ffbd73;
+ --readable-link:#ffbd73;--focus:#ffbd73;--error:#ffb6bd;color-scheme:dark
+}
+html[data-template-variant="classic"][data-color-mode="light"]{
+ --canvas:#f7f7fa;--surface:#fff;--paper:#fff;--ink:#202329;
+ --muted:#59616c;--line:#bbc2cc;--accent-soft:#f8eadc;
+ --coral-soft:#f8eadc;--link:#965000;--readable-link:#965000;
+ --readable-muted:#59616c;--focus:#965000;--error:#a32638;color-scheme:light
+}
+html[data-template-variant="classic"] body,
+html[data-template-variant="classic"] .wrapped{
+ background-color:var(--canvas);color:var(--ink)
+}
+html[data-template-variant="classic"] body{background-image:none}
+html[data-template-variant="classic"] :is(h1,h2,h3,h4,h5,h6){color:var(--ink)}
+html[data-template-variant="classic"] :is(.heading,.gallery-heading,.block-tags,.tags,.state-page,.gallery-password){color:var(--ink)}
+html[data-template-variant="classic"] :is(.text-muted,.fed-text-muted,.gallery-empty,.empty-state){color:var(--muted)!important}
+html[data-template-variant="classic"] :is(.gallery-account,.mac_comment,.state-page,.gallery-password,.mac_msg_jump){background-color:var(--paper);color:var(--ink)}
+html[data-template-variant="classic"] :is(.fed-back-whits,.fed-back-ashen,.fed-part-layout,.fed-form-info,.fed-list-info){background-color:var(--paper)!important;color:var(--ink)!important}
+html[data-template-variant="classic"] :is(.gallery-account,.gallery-password,.mac_comment,.state-page) :is(input:not([type=checkbox]):not([type=radio]),select,textarea){background:var(--surface);color:var(--ink);border-color:var(--line)}
+html[data-template-variant="classic"] :is(.gallery-account,.gallery-password,.mac_comment,.state-page) :is(a,button,input[type=submit],input[type=button]).submit_btn,
+html[data-template-variant="classic"] :is(.gallery-account,.gallery-password,.mac_comment,.state-page) :is(button,input[type=submit],input[type=button]){background:var(--accent)!important;color:#fff!important}
+html[data-template-variant="classic"] :is(.gallery-account,.gallery-password,.mac_comment,.state-page) a:not(.submit_btn){color:var(--readable-link)}
+html[data-template-variant="classic"] :is(.fed-user-form,.gallery-permission-actions) a{color:var(--readable-link)}
+html[data-template-variant="classic"] table{background:var(--paper);color:var(--ink)}
+html[data-template-variant="classic"] :is(.fed-user-submit,.fed-btns-info,.submit_btn){background:var(--accent)!important;color:#fff!important}
+html[data-template-variant="classic"] :is(table th,table thead){background:var(--canvas);color:var(--ink)}
+html[data-template-variant="classic"] :focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+
+/* JAV Classic: preserve the original card layout and warm highlights. */
+html[data-template-variant="classic"][data-template-theme="jav"] :is(.stui-header,.stui-pannel,.stui-vodlist__detail,.stui-content__detail,.stui-content__side,.stui-player__side,.stui-player__detail,.stui-player__side .head){background-color:var(--paper);color:var(--ink)}
+html[data-template-variant="classic"][data-template-theme="jav"] :is(.stui-header,.stui-pannel){background-image:none}
+html[data-template-variant="classic"][data-template-theme="jav"] :is(.stui-header__menu,.stui-header__user,.stui_header__user,.stui-vodlist__detail,.stui-pannel__head,.stui-content__detail,.stui-content__side,.stui-player__side,.stui-footer) a{color:var(--ink)}
+html[data-template-variant="classic"][data-template-theme="jav"] :is(.stui-header__menu,.stui-header__user,.stui_header__user) a:hover,
+html[data-template-variant="classic"][data-template-theme="jav"] .stui-header__menu li.active a,
+html[data-template-variant="classic"][data-template-theme="jav"] .stui-vodlist__detail .title a:hover,
+html[data-template-variant="classic"][data-template-theme="jav"] .STYLE2{color:var(--readable-link)!important}
+html[data-template-variant="classic"][data-template-theme="jav"] :is(.stui-vodlist__detail .text,.stui-content__detail .data,.stui-content__side,.stui-player__detail .data,.stui-footer){color:var(--muted)}
+html[data-template-variant="classic"][data-template-theme="jav"] :is(.stui-page__item a,.stui-play__list a){background:var(--surface);color:var(--ink);border-color:var(--line)}
+html[data-template-variant="classic"][data-template-theme="jav"] :is(.stui-play__list .active a,.stui-page__item .active a){background:var(--accent);color:#fff}
+html[data-template-variant="classic"][data-template-theme="jav"] .stui-content__detail .play-btn a{background:var(--accent);color:#fff}
+html[data-template-variant="classic"][data-template-theme="jav"] :is(.stui-pannel__head .title,.stui-pannel__head .title span,.stui-player__side a,.stui-player__side h3,.stui-player__detail a,.stui-content__detail .detail-more){color:var(--ink)}
+html[data-template-variant="classic"][data-template-theme="jav"] :is(.stui-vodlist__head a,.stui-vodlist__head a span,.stui-content__detail .title,.stui-player__detail .title,.stui-screen .head .text){color:var(--ink)}
+html[data-template-variant="classic"][data-template-theme="jav"] :is(.stui-vodlist__head .pull-right,.gallery-footer a,.STYLE1){color:var(--muted)}
+html[data-template-variant="classic"][data-template-theme="jav"] .stui-screen .head{background:var(--surface);color:var(--ink)}
+html[data-template-variant="classic"][data-template-theme="jav"] .stui-player__detail .more a{background:var(--surface);color:var(--ink)}
+html[data-template-variant="classic"][data-template-theme="jav"] .stui-player__side .stui-play__list .active a{background:var(--accent);color:#fff}
+
+/* JAVCMS Classic: titles, controls, statistics and menus used fixed dark colors. */
+html[data-template-variant="classic"][data-template-theme="javcms"] :is(.header,.sidebar,.footer,.block-footer,.selects-list){background:var(--surface);color:var(--ink)}
+html[data-template-variant="classic"][data-template-theme="javcms"] :is(.header a,.sidebar a,.sidebar .title,.sidebar .name,.footer a,.section .heading a,.block-post .title-post,.block-post .name,.block-post .info-post a){color:var(--ink)}
+html[data-template-variant="classic"][data-template-theme="javcms"] :is(.header a.active,.sidebar a:hover,.block-post .item:hover .title-post,.block-post .item:hover .name,.stat .atten){color:var(--readable-link)}
+html[data-template-variant="classic"][data-template-theme="javcms"] :is(.stat,.stat span,.sidebar .value,.copyright,.footer .block-footer .copyright,.block-post .action-info){color:var(--muted)}
+html[data-template-variant="classic"][data-template-theme="javcms"] .stat .atten{color:var(--readable-link)}
+html[data-template-variant="classic"][data-template-theme="javcms"] :is(.filter .select-item,.filter-trailer .select-item,.filter .selects-list,.pagination a,.block-post .itemplay a,.sidebar .btn){background:var(--surface);color:var(--ink);border:1px solid var(--line)}
+html[data-template-variant="classic"][data-template-theme="javcms"] :is(.filter .text-ch,.filter .icon,.filter .selects-list a,.pagination a,.sidebar .btn span){color:var(--ink)}
+html[data-template-variant="classic"][data-template-theme="javcms"] :is(.filter:hover,.filter[open],.filter.show) .select-item:before{background:var(--accent-soft)}
+html[data-template-variant="classic"][data-template-theme="javcms"] :is(.filter:hover,.filter[open],.filter.show) :is(.text-ch,.icon){color:var(--ink)}
+html[data-template-variant="classic"][data-template-theme="javcms"] :is(.filter .selects-list a:hover,.pagination a:hover){background:var(--accent-soft);color:var(--readable-link)}
+html[data-template-variant="classic"][data-template-theme="javcms"] :is(.pagination .item.active a,.pagination .page-current){background:var(--accent);color:#fff}
+html[data-template-variant="classic"][data-template-theme="javcms"] .header .search input{background:var(--surface);color:var(--ink);border-color:var(--line)}
+html[data-template-variant="classic"][data-template-theme="javcms"] :is(.btn,.tags .item){background:var(--surface);color:var(--ink);border:1px solid var(--line)}
+html[data-template-variant="classic"][data-template-theme="javcms"] :is(.btn span,.block-tags .label,.tags>span,.tags .item span){color:var(--ink)}
+html[data-template-variant="classic"][data-template-theme="javcms"] .block-post .itemplay a.active-play{background:var(--accent);color:#fff!important}
+html[data-template-variant="classic"][data-template-theme="javcms"] .btn.active{background:var(--accent-soft);color:var(--ink)}
+html[data-template-theme="javcms"] .tags>span{color:var(--muted)!important}
+
+/* On modern JAV pages the button color was also used for text on dark panels. */
+html[data-template-variant="modern"][data-template-theme="jav"] :is(.stui-vodlist__head .pull-right,.gallery-account .fed-user-form a,.stui-player__detail .more a,.stui-player .stui-player__detail .more a,.stui-content__detail .data a,.stui-gbook__item .name .pull-right,.news-content a,.gallery-page .news-nav li.active a,.gallery-account .fed-user-list a,.stui-content .stui-content__detail .play-btn .gallery-secondary,.gallery-profile-summary>a,.gallery-account-return,.gallery-permission-actions a,.gallery-comments-body .gallery-comment-report){color:var(--readable-link)}
+html[data-template-variant="modern"][data-template-theme="jav"] :is(.gallery-permission-primary,.gallery-account-nav a.active){color:#fff!important}
+html[data-template-variant="modern"][data-template-theme="jav"] :is(.stui-player__detail .more a,.stui-player__side .tab li a,.stui-player__side .tab li.active a){color:var(--readable-link)}
+
+/* Native form popups and local scrolling follow the selected color mode. */
+html{--readable-scrollbar:#6b7788;--readable-scrollbar-track:#f7f7fa}
+html[data-color-mode="dark"]{--readable-scrollbar:#8290a6;--readable-scrollbar-track:#11161d}
+html,body,body *{scrollbar-color:var(--readable-scrollbar) var(--readable-scrollbar-track)}
+:root body::-webkit-scrollbar,:root body *::-webkit-scrollbar{width:12px;height:12px}
+:root body::-webkit-scrollbar-track,:root body *::-webkit-scrollbar-track{background:var(--readable-scrollbar-track)}
+:root body::-webkit-scrollbar-thumb,:root body *::-webkit-scrollbar-thumb{background:var(--readable-scrollbar);border:3px solid var(--readable-scrollbar-track);border-radius:12px}
+@media(forced-colors:active){html,html[data-color-mode]{--readable-scrollbar:CanvasText;--readable-scrollbar-track:Canvas}}
+select,select option,select optgroup{background-color:var(--surface,var(--paper));color:var(--ink)}
+html[data-color-mode="light"] select{color-scheme:light}
+html[data-color-mode="dark"] select{color-scheme:dark}
+
+/* Open classic header popups must pair their backgrounds and foregrounds. */
+html[data-template-variant="classic"][data-template-theme="jav"] .stui_header__user .dropdown,
+html[data-template-variant="classic"][data-template-theme="jav"] .stui_header__user .dropdown::after{background:var(--surface);color:var(--ink)}
+html[data-template-variant="classic"][data-template-theme="jav"] .dropdown :is(a,h5,.icon){color:var(--ink)}
+html[data-template-variant="classic"][data-template-theme="jav"] .dropdown :is(input,.form-control),
+html[data-template-variant="classic"][data-template-theme="jav"] .dropdown.type li a{background:var(--surface);color:var(--ink);border-color:var(--line)}
+html[data-template-variant="classic"][data-template-theme="jav"] .dropdown.search .submit .icon{color:var(--ink)}
+html[data-template-variant="classic"][data-template-theme="jav"] .dropdown.type li.active a,
+html[data-template-variant="classic"][data-template-theme="jav"] .dropdown.type li a:hover{background:var(--accent);color:#fff!important}
+html[data-template-variant="classic"][data-template-theme="jav"] .dropdown.history .head a{color:var(--readable-link)}
+html[data-template-variant="classic"][data-template-theme="jav"] .dropdown li a span{color:var(--muted)}
+
+/* Category/filter chips previously kept fixed gray/yellow text in both modes. */
+html[data-template-variant="classic"][data-template-theme="jav"] .stui-screen :is(.head,.item){background:var(--surface);color:var(--ink)}
+html[data-template-variant="classic"][data-template-theme="jav"] .stui-screen :is(.head a,.head span,.item ul li a,.item ul li span){color:var(--ink)}
+html[data-template-variant="classic"][data-template-theme="jav"] .stui-screen .item ul{border-color:var(--line)}
+html[data-template-variant="classic"][data-template-theme="jav"] .stui-screen :is(.item ul li.active a,.item ul li a:hover){color:var(--readable-link)}
+
+/* Fading the whole button weakened white-text contrast on light account pages. */
+html[data-template-variant="classic"] .fed-btns-info:not([disabled]):not([aria-disabled="true"]):hover,
+html[data-template-variant="classic"] :is(.gallery-account,.gallery-password,.mac_comment,.state-page) :is(button,input[type=button],input[type=submit]):not(:disabled):not([aria-disabled="true"]):hover{opacity:1}
+
+/* Native glyphs inherited fixed orange/gray colors even after their labels changed. */
+html[data-template-variant="classic"][data-template-theme="javcms"] .stat span i::before{color:var(--muted)}
+html[data-template-variant="classic"][data-template-theme="javcms"] .stat span.atten i::before{color:var(--readable-link)}
+html[data-template-variant="classic"][data-template-theme="javcms"] .header :is(.btn-search span,.classic-menu-toggle,.link-icon)::before{color:var(--ink)!important}
+html[data-template-variant="classic"][data-template-theme="javcms"] .header .classic-menu-toggle::before{color:var(--readable-link)!important}
+html[data-template-variant="classic"][data-template-theme="javcms"] .header .nav a.active{color:var(--readable-link)!important}
+html[data-template-variant="classic"][data-template-theme="javcms"] .pagination .page-number{color:var(--muted)}
+html[data-template-variant="classic"][data-template-theme="javcms"] .pagination .page-number.active{background:var(--accent);color:#fff}
+
+/* Keep brand text paired with the modern coral/dark header during interaction. */
+html[data-template-variant="modern"][data-template-theme="javcms"] .gallery-header .gallery-brand:is(:hover,:focus-visible){color:var(--header-ink)}

@@ -1,0 +1,20 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}$nxHasActor = false; $nxHasTopic = false; $nxHasArt = false;{/php}{maccms:actor num="1" id="nxProbeActor"}{php}$nxHasActor = true;{/php}{/maccms:actor}{maccms:topic num="1" id="nxProbeTopic"}{php}$nxHasTopic = true;{/php}{/maccms:topic}{maccms:art num="1" id="nxProbeArt"}{php}$nxHasArt = true;{/php}{/maccms:art}
+<nav class="nx-catbar" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.main_navigation')}"><div class="nx-wrap nx-catbar-in">
+<a href="{$maccms.path}"{if condition="$maccms.aid eq 1"} aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::navIcon('home', '', ['i'=>0])}<span>{:\\app\\common\\util\\TemplateText::get('ui.home')}</span></a>
+{maccms:type ids="parent" flag="vod" order="asc" by="sort" id="nxNav" key="nxNavK" hide_empty="1"}<a href="{:mac_url_type($nxNav)}"{if condition="$nxNav.type_id eq $GLOBALS['type_id'] || $nxNav.type_id eq $GLOBALS['type_pid']"} aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::icon('category', $nxNav['type_name'], ['i'=>$nxNavK])}<span>{:\\app\\common\\util\\TemplateText::get(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)($nxNav['type_name'] ?? '')))}</span></a>{/maccms:type}
+<span class="nx-sep" aria-hidden="true"></span>
+<a href="{:mac_url('label/new')}"{if condition="$maccms.aid eq 9999"} aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::navIcon('latest', '', ['i'=>9])}<span>{:\\app\\common\\util\\TemplateText::get('ui.latest_videos')}</span></a>
+<a href="{:mac_url('label/hot')}"{if condition="$maccms.aid eq 9998"} aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::navIcon('hot', '', ['i'=>10])}<span>{:\\app\\common\\util\\TemplateText::get('ui.popular_videos')}</span></a>
+<a href="{:mac_url('label/score')}"{if condition="$maccms.aid eq 9997"} aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::navIcon('top', '', ['i'=>11])}<span>{:\\app\\common\\util\\TemplateText::get('top_rated')}</span></a>
+{if condition="$nxHasActor"}<a href="{:mac_url('actor/index')}">{:\\app\\common\\util\\AutoIcon::navIcon('actors', '', ['i'=>12])}<span>{:\\app\\common\\util\\TemplateText::get('performers')}</span></a>{/if}
+{if condition="$nxHasTopic"}<a href="{:mac_url('topic/index')}">{:\\app\\common\\util\\AutoIcon::navIcon('topics', '', ['i'=>13])}<span>{:\\app\\common\\util\\TemplateText::get('collections')}</span></a>{/if}
+{if condition="$nxHasArt"}<a href="{:mac_url('art/index')}">{:\\app\\common\\util\\AutoIcon::navIcon('articles', '', ['i'=>14])}<span>{:\\app\\common\\util\\TemplateText::get('articles')}</span></a>{/if}
+<details class="nx-catmore" hidden><summary>{:\\app\\common\\util\\AutoIcon::ui('layout-dashboard', ['i'=>15])}<span>{:\\app\\common\\util\\TemplateText::get('neon.more')}</span>{:\\app\\common\\util\\AutoIcon::ui('chevron-down', ['class'=>'nx-caret', 'tint'=>'none'])}</summary><div class="nx-catmore-menu"></div></details>
+</div></nav>

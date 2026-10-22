@@ -1,0 +1,30 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="ember" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+<meta name="robots" content="noindex, follow">
+<title>{:\\app\\common\\util\\TemplateText::get('ui.open_in_your_browser')}</title>
+{include file="public/include"}
+</head>
+<body>
+{include file="public/head"}
+<main id="main-content" class="e-main container">
+  <div class="e-state">
+    <h1>{:\\app\\common\\util\\TemplateText::get('ui.open_in_your_browser')}</h1>
+    <p>{:\\app\\common\\util\\TemplateText::get('ui.use_your_browser_menu_to_open_this_page_in_a_full_browser')}</p>
+    <div class="e-form" style="margin-top:16px;text-align:start">
+      <label for="browser-address">{:\\app\\common\\util\\TemplateText::get('ui.page_address')}</label>
+      <input id="browser-address" type="text" value="{$maccms.http_url|htmlspecialchars=ENT_QUOTES}" readonly>
+      <button class="e-btn" type="button" data-copy-target="browser-address">{:\\app\\common\\util\\TemplateText::get('ui.copy_link')}</button>
+    </div>
+  </div>
+</main>
+{include file="public/foot"}
+</body>
+</html>

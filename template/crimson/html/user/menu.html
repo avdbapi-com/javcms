@@ -1,0 +1,19 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}
+$ctUAct = strtolower((string)request()->action());
+$ctUAlias = ['cards' => 'orders', 'order_info' => 'orders', 'pay' => 'orders', 'payment_weixin' => 'orders', 'bind' => 'info', 'unbind' => 'info', 'portrait' => 'info', 'ajax_info' => 'index', 'ulog' => 'plays'];
+$ctUOn = isset($ctUAlias[$ctUAct]) ? $ctUAlias[$ctUAct] : $ctUAct;
+$ctUMenu = [];
+foreach ([['index','user-circle','ui.account_overview_c42e0c'], ['info','edit','edit_profile'], ['favs','heart','favorites'], ['plays','history','crimson.watch_history'], ['downs','download','ui.download_record'], ['plog','coins','ui.points_record'], ['upgrade','crown','ui.upgrade_member'], ['buy','ticket','ui.recharge_center'], ['orders','list','crimson.orders'], ['popedom','lock','ui.my_authority'], ['comment','messages','ui.comments'], ['gbook','mail','ui.recent_messages']] as $ctUItem) { $ctUMenu[] = ['href' => mac_url('user/' . $ctUItem[0]), 'icon' => $ctUItem[1], 'text' => \app\common\util\TemplateText::get($ctUItem[2]), 'on' => $ctUOn === $ctUItem[0] ? 1 : 0]; }
+$ctUFace = trim((string)($obj['user_portrait'] ?? '')); $ctUFace = $ctUFace === '' ? $maccms['path_tpl'] . 'assets/img/mascot.svg' : mac_url_img($ctUFace);
+{/php}<aside class="ct-umenu" aria-label="{:\\app\\common\\util\\TemplateText::get('account_navigation')}">
+<nav class="ct-chips ct-umenu-chips" aria-label="{:\\app\\common\\util\\TemplateText::get('account_navigation')}">{volist name="ctUMenu" id="ctU"}<a class="ct-chip" href="{$ctU.href|htmlspecialchars=ENT_QUOTES}"{if condition="$ctU.on eq 1"} aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::ui($ctU['icon'], ['class'=>'ct-ico'])}{$ctU.text}</a>{/volist}<a class="ct-chip" href="{:mac_url('user/logout')}">{:\\app\\common\\util\\AutoIcon::ui('log-out', ['class'=>'ct-ico'])}{:\\app\\common\\util\\TemplateText::get('ui.quit')}</a></nav>
+<div class="ct-umenu-card"><div class="ct-panel ct-umini"><img class="ct-umini-face" src="{$ctUFace|htmlspecialchars=ENT_QUOTES}" width="52" height="52" alt=""><div class="ct-umini-text"><strong dir="auto">{$obj.user_name|htmlspecialchars=ENT_QUOTES}</strong><span>{$obj.group.group_name|htmlspecialchars=ENT_QUOTES} &middot; <span dir="ltr">{$obj.user_points|intval}</span> {:\\app\\common\\util\\TemplateText::get('ui.integral')}</span></div></div>
+<ul class="ct-ulist">{volist name="ctUMenu" id="ctU"}<li><a class="ct-uitem" href="{$ctU.href|htmlspecialchars=ENT_QUOTES}"{if condition="$ctU.on eq 1"} aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::ui($ctU['icon'], ['class'=>'ct-ico'])}{$ctU.text}{:\\app\\common\\util\\AutoIcon::ui('chevron-right', ['class'=>'ct-ico ct-chev-r'])}</a></li>{/volist}<li><a class="ct-uitem" href="{:mac_url('user/logout')}">{:\\app\\common\\util\\AutoIcon::ui('log-out', ['class'=>'ct-ico'])}{:\\app\\common\\util\\TemplateText::get('ui.quit')}</a></li></ul></div>
+</aside>

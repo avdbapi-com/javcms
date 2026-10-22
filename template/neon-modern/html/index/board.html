@@ -1,0 +1,35 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}$nnBoardNo = 0; if (!isset($nnSeen) || !is_array($nnSeen)) { $nnSeen = []; } $nnBoardNot = implode(',', array_map('intval', $nnSeen));{/php}
+<section class="nn-section nn-board-sec" aria-labelledby="nn-h-board">
+  <div class="nn-sec-head nn-board-head">
+    <div class="nn-board-titles"><h2 class="nn-hsign nn-sign nn-tube nn-tube--mint" id="nn-h-board"><svg class="nn-ico" aria-hidden="true"><use href="{$nnSvg|htmlspecialchars=ENT_QUOTES}#train"></use></svg>{:\\app\\common\\util\\TemplateText::get('nn.departures')}</h2><p class="nn-board-sub">{:\\app\\common\\util\\TemplateText::get('nn.tonight_top')}</p></div>
+    <a class="nn-more" href="{:mac_url('label/hot')}">{:\\app\\common\\util\\TemplateText::get('nn.full_board')}<svg class="nn-ico" aria-hidden="true"><use href="{$nnSvg|htmlspecialchars=ENT_QUOTES}#chev"></use></svg></a>
+  </div>
+  <div class="nn-board" data-nn-board>
+    <div class="nn-board-cols" aria-hidden="true"><span>{:\\app\\common\\util\\TemplateText::get('nn.rank')}</span><span></span><span>{:\\app\\common\\util\\TemplateText::get('nn.code')}</span><span>{:\\app\\common\\util\\TemplateText::get('nn.title')}</span><span>{:\\app\\common\\util\\TemplateText::get('ui.views')}</span><span>{:\\app\\common\\util\\TemplateText::get('nn.duration')}</span></div>
+    <ol class="nn-board-list">
+    {maccms:vod num="10" type="all" not="'.$nnBoardNot.'" order="desc" by="hits_week" paging="no" id="vo"}{php}
+    $nnBoardNo++; $nnSeen[] = intval($vo['vod_id']);
+    $nnBT = trim((string)($vo['vod_display_name'] ?? '')); if ($nnBT === '') { $nnBT = trim(\app\common\util\AvdbLanguage::decodeEntities(strip_tags((string)($vo['vod_name'] ?? '')))); }
+    $nnBC = \app\common\util\AvdbLanguage::displayCode($vo); if ($nnBC === '' || stripos($nnBC, 'avdb-') === 0 || strlen($nnBC) > 16 || preg_match('/\s{2,}|[<>]/', $nnBC)) { $nnBC = ''; }
+    $nnBV = $nnBT; if ($nnBC !== '' && stripos($nnBT, $nnBC . ' ') === 0) { $nnBV = trim(substr($nnBT, strlen($nnBC))); if ($nnBV === '') { $nnBV = $nnBT; } }
+    $nnBDir = preg_match('/[\x{0590}-\x{08FF}\x{FB1D}-\x{FDFF}\x{FE70}-\x{FEFF}]/u', $nnBT) ? 'rtl' : 'ltr';
+    $nnBDur = trim((string)($vo['vod_duration'] ?? '')); $nnBHits = number_format(intval($vo['vod_hits'] ?? 0));
+    $nnBImg = trim((string)($vo['vod_pic'] ?? '')); $nnBImg = $nnBImg !== '' ? (string)mac_url_img($nnBImg) : $tplNoPic;
+    {/php}<li class="nn-board-row{if condition="$nnBoardNo elt 3"} is-top is-top-{$nnBoardNo}{/if}" data-nn-row><a href="{:mac_url_vod_play($vo)}">
+      <span class="nn-board-rank nn-ltr" data-nn-flap>{$nnBoardNo|sprintf='%02d',###}</span>
+      <span class="nn-board-thumb"><img src="{$nnBImg|htmlspecialchars=ENT_QUOTES}" alt="" width="96" height="54" loading="lazy" decoding="async"></span>
+      <span class="nn-board-code nn-ltr"{if condition="$nnBC neq ''"} data-nn-flap{/if}>{if condition="$nnBC neq ''"}{$nnBC|htmlspecialchars=ENT_QUOTES}{else/}&mdash;{/if}</span>
+      <span class="nn-board-title" dir="{$nnBDir}">{:\\app\\common\\util\\AutoIcon::icon('category', (string)($vo['type']['type_name'] ?? ''), ['size'=>'sm', 'class'=>'nn-bt-ai'])}{if condition="$nnBC neq '' && $nnBV neq $nnBT"}<span class="nn-sr">{$nnBC|htmlspecialchars=ENT_QUOTES} </span>{/if}{$nnBV|htmlspecialchars=ENT_QUOTES}</span>
+      <span class="nn-board-views nn-ltr"><svg class="nn-ico" aria-hidden="true"><use href="{$nnSvg|htmlspecialchars=ENT_QUOTES}#eye"></use></svg>{$nnBHits}<span class="nn-sr"> {:\\app\\common\\util\\TemplateText::get('ui.views')}</span></span>
+      <span class="nn-board-dur nn-ltr">{if condition="$nnBDur neq ''"}{$nnBDur|htmlspecialchars=ENT_QUOTES}{/if}</span>
+    </a></li>{/maccms:vod}
+    </ol>
+  </div>
+</section>

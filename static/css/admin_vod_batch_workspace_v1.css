@@ -1,0 +1,42 @@
+/*
+ * This file is part of JavCMS - https://javcms.net
+ * Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+ * License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+ * See the LICENSE and NOTICE files that come with JavCMS.
+ * Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Telegram: https://t.me/avdb_api
+ */
+/* Bulk edit pages (vod/batch, art/batch, website/batch): kit sections + one field grid (brief F43, F44, V15). */
+/* V9 palette -> kit tokens (admin-content builder) */
+html body.admin-dark .admin-vod-batch-workspace { --vod-batch-surface: var(--ax-surface); --vod-batch-border: var(--ax-line); }
+body.admin-dark .admin-vod-batch-workspace { --vod-batch-surface: var(--ax-surface); --vod-batch-border: var(--ax-line); min-width: 0; }
+.ax-batch .ax-form { max-width: 960px; }
+.ax-batch-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px 16px; }
+.ax-batch-grid .ax-field { margin: 0; }
+.ax-batch-grid :is(select, input) { width: 100%; box-sizing: border-box; }
+.ax-batch-count { margin: 16px 0 0; color: var(--ax-muted); font-size: 13px; min-height: 1.4em; }
+.ax-batch-rows { display: grid; gap: 12px; }
+.ax-batch-row { display: grid; grid-template-columns: minmax(160px, 220px) minmax(0, 1fr); align-items: center; gap: 8px 16px; }
+body.admin-studio .ax-batch-row > label { color: var(--ax-text); font: 600 13px/1.3 var(--ax-font); }
+.ax-check { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; }
+.ax-check input { width: 18px; height: 18px; margin: 0; accent-color: var(--ax-accent); }
+.ax-batch-row__val { display: flex; flex-wrap: wrap; gap: 8px; min-width: 0; }
+.ax-batch-row__val :is(select, input) { width: 200px; max-width: 100%; min-height: var(--ax-h); box-sizing: border-box; }
+body.admin-studio :is(.ax-batch-row__val, .ax-batch-danger-row) :is(select, input:not([type="checkbox"]):not([type="radio"])) {
+    padding: 8px 12px; border: 1px solid var(--ax-field); border-radius: var(--ax-r-sm); background: var(--ax-surface); color: var(--ax-text); font: inherit;
+}
+.ax-batch-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+.ax-radio-list { display: grid; gap: 10px; margin: 0 0 16px; padding: 0; border: 0; }
+.ax-radio-list label { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; color: var(--ax-text); }
+.ax-radio-list input { width: 18px; height: 18px; margin: 0; accent-color: var(--ax-danger); }
+.ax-batch-danger-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.ax-batch-danger-row select { width: 220px; max-width: 100%; min-height: var(--ax-h); }
+@media (max-width: 640px) {
+    .ax-batch-row { grid-template-columns: 1fr; }
+    .ax-batch-row__val :is(select, input) { flex: 1 1 140px; width: auto; }
+    .ax-batch-actions .ax-btn, .ax-section--danger .ax-btn { width: 100%; justify-content: center; }
+}
+.ax-batch-more { margin-top: 12px; }
+.ax-batch-more > summary { width: max-content; padding: 4px 0; color: var(--ax-muted); font-size: 13px; cursor: pointer; }
+.ax-batch-more > summary:hover { color: var(--ax-text); }
+.ax-batch-more[open] > summary { margin-bottom: 12px; }

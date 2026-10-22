@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- Neon Nocturne (Modern) mark: a neon-tube screen with a violet play triangle, a stand and a mint on-air light. Original artwork, JavCMS Community License 1.0. -->
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="10" y="12" width="44" height="32" rx="8" stroke="#ff4d94" stroke-width="8" opacity=".18"/>
+    <rect x="10" y="12" width="44" height="32" rx="8" stroke="#ff4d94" stroke-width="3"/>
+    <rect x="10" y="12" width="44" height="32" rx="8" stroke="#ffd6e6" stroke-width="1" opacity=".85"/>
+    <path d="M27.5 21 39.5 28 27.5 35Z" stroke="#a283ff" stroke-width="7" opacity=".22"/>
+    <path d="M27.5 21 39.5 28 27.5 35Z" stroke="#a283ff" stroke-width="2.6"/>
+    <path d="M27.5 21 39.5 28 27.5 35Z" stroke="#e9e1ff" stroke-width=".9" opacity=".8"/>
+    <path d="M32 44v7M22 52h20" stroke="#ff4d94" stroke-width="3"/>
+  </g>
+  <circle cx="47.5" cy="18.5" r="4.6" fill="#5df2c6" opacity=".22"/>
+  <circle cx="47.5" cy="18.5" r="2.2" fill="#5df2c6"/>
+</svg>

@@ -1,0 +1,105 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Based on MacCMS 10 (Apache-2.0) by magicblack, changed by JavCMS.
+JavCMS changes: Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors,
+JavCMS Community License 1.0. The MacCMS parts stay under the Apache License 2.0.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}
+/* close-polish R4-4: Members > Referral rewards on the kit (page head, filter bar, stat cards, card table, empty state). */
+$cpUid = intval($param['uid']);
+$cpName = $cpUid > 0 ? (string) \think\Db::name('User')->where('user_id', $cpUid)->value('user_name') : '';
+$title = lang('admin/ux/system/referral_rewards') . ($cpName !== '' ? ' · ' . $cpName : ''); /* stored names are HTML-encoded: head.html and page_head decode once and escape once */
+$ax_head = ['title' => $title];
+$cpFiltered = (isset($param['level']) && (string) $param['level'] !== '') || (isset($param['wd']) && (string) $param['wd'] !== '');
+$cpWd = isset($param['wd']) ? htmlspecialchars(html_entity_decode((string) $param['wd'], ENT_QUOTES, 'UTF-8'), ENT_QUOTES, 'UTF-8') : '';
+{/php}
+{include file="../../../application/admin/view/public/head" /}
+<div class="page-container p10 cp-reward">
+    {include file="../../../application/admin/view/public/page_head" icon="ai-users-round" title="admin/ux/system/referral_rewards" help="admin/ux/polish/reward_help" /}
+
+    <form class="ax-filters" method="get" action="{:url('reward')}" role="search">
+        <input type="hidden" name="uid" value="{$cpUid}">
+        <input type="search" autocomplete="off" placeholder="{:lang('wd')}" aria-label="{:lang('wd')}" class="layui-input" name="wd" value="{$cpWd}">
+        <select name="level" aria-label="{:lang('admin/user/reward/distribution_level')}">
+            <option value="">{:lang('admin/user/reward/select_level')}</option>
+            <option value="1" {if condition="$param['level'] eq '1'"}selected {/if}>{:lang('admin/user/reward/one_distribution')}</option>
+            <option value="2" {if condition="$param['level'] eq '2'"}selected {/if}>{:lang('admin/user/reward/two_distribution')}</option>
+            <option value="3" {if condition="$param['level'] eq '3'"}selected {/if}>{:lang('admin/user/reward/three_distribution')}</option>
+        </select>
+        <button type="submit" class="ax-btn"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-search"/></svg>{:lang('btn_search')}</button>
+    </form>
+
+    <div class="ax-stats">
+        <div class="ax-stat"><p class="ax-stat__label">{:lang('admin/user/reward/one_distribution')}</p><p class="ax-stat__value">{$data.level_cc_1}</p><p class="ax-stat__sub">{:lang('admin/user/reward/total_commission_points')}: {$data.points_cc_1}</p></div>
+        <div class="ax-stat"><p class="ax-stat__label">{:lang('admin/user/reward/two_distribution')}</p><p class="ax-stat__value">{$data.level_cc_2}</p><p class="ax-stat__sub">{:lang('admin/user/reward/total_commission_points')}: {$data.points_cc_2}</p></div>
+        <div class="ax-stat"><p class="ax-stat__label">{:lang('admin/user/reward/three_distribution')}</p><p class="ax-stat__value">{$data.level_cc_3}</p><p class="ax-stat__sub">{:lang('admin/user/reward/total_commission_points')}: {$data.points_cc_3}</p></div>
+    </div>
+
+    {if condition="empty($list)"}
+    {if condition="$cpFiltered"}
+    {include file="../../../application/admin/view/public/empty_state" icon="ai-search" text="admin/ux/polish/reward_empty_filter" /}
+    {else /}
+    {include file="../../../application/admin/view/public/empty_state" icon="ai-users-round" text="admin/ux/polish/reward_empty" /}
+    {/if}
+    {else /}
+    <div class="ax-table-wrap">
+    <table class="ax-table ax-table--cards">
+        <thead>
+        <tr>
+            <th class="ax-num">{:lang('id')}</th>
+            <th>{:lang('name')}</th>
+            <th>{:lang('group')}</th>
+            <th>{:lang('status')}</th>
+            <th>{:lang('admin/user/reward/distribution_level')}</th>
+            <th>{:lang('reg_time')}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {volist name="list" id="vo"}
+        <tr>
+            <td class="ax-num" data-label="{:lang('id')}">{$vo.user_id}</td>
+            <td data-label="{:lang('name')}">{$vo.user_name|html_entity_decode=ENT_QUOTES,'UTF-8'|htmlspecialchars=ENT_QUOTES,'UTF-8'}</td>
+            <td data-label="{:lang('group')}">{$vo.group_name|html_entity_decode=ENT_QUOTES,'UTF-8'|htmlspecialchars=ENT_QUOTES,'UTF-8'}</td>
+            <td data-label="{:lang('status')}">{if condition="$vo['user_status'] eq 1"}<span class="ax-chip ax-chip--ok">{:lang('open')}</span>{else/}<span class="ax-chip ax-chip--off">{:lang('close')}</span>{/if}</td>
+            <td data-label="{:lang('admin/user/reward/distribution_level')}">{if condition="$vo['user_pid'] eq $cpUid"}{:lang('admin/user/reward/one_distribution')}{elseif condition="$vo['user_pid_2'] eq $cpUid"}{:lang('admin/user/reward/two_distribution')}{else/}{:lang('admin/user/reward/three_distribution')}{/if}</td>
+            <td class="ax-cell-time" data-label="{:lang('reg_time')}">{$vo.user_reg_time|mac_day}</td>
+        </tr>
+        {/volist}
+        </tbody>
+    </table>
+    </div>
+    <div id="pages" class="center"></div>
+    {/if}
+</div>
+
+{include file="../../../application/admin/view/public/foot" /}
+<style>
+/* R4-4: native filter fields in the kit look (the same as the content lists) */
+body.admin-studio .cp-reward .ax-filters select { box-sizing: border-box; flex: 0 1 200px; min-width: 160px; min-height: var(--ax-h); padding: 8px 12px; border: 1px solid var(--ax-field); border-radius: var(--ax-r-sm); background: var(--ax-surface); color: var(--ax-text); font: inherit; }
+@media (max-width: 640px) { body.admin-studio .cp-reward .ax-filters select { flex: 1 1 140px; min-width: 0; } }
+</style>
+
+<script type="text/javascript">
+    {php}$axUrlParam = array_filter((array)$param, function ($v, $k) { return is_string($k) && preg_match('/^[A-Za-z0-9_]{1,40}$/D', $k) && is_scalar($v); }, ARRAY_FILTER_USE_BOTH);{/php}
+    var curUrl = {:json_encode(url('user/reward',$axUrlParam),JSON_HEX_TAG|JSON_HEX_AMP|JSON_HEX_APOS|JSON_HEX_QUOT)};
+    layui.use(['laypage', 'layer'], function() {
+        var laypage = layui.laypage;
+        if (!document.getElementById('pages')) { return; }
+        laypage.render({
+            elem: 'pages'
+            ,count: {$total|default=0|intval}
+            ,limit: {$limit|default=20|intval}
+            ,curr: {$page|default=1|intval}
+            ,layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
+            ,jump: function(obj,first){
+                if(!first){
+                    location.href = curUrl.replace('%7Bpage%7D',obj.curr).replace('%7Blimit%7D',obj.limit);
+                }
+            }
+        });
+    });
+</script>
+</body>
+</html>

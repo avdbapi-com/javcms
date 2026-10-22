@@ -1,0 +1,32 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="onyx" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/topic_detail"}
+{include file="public/include"}
+</head>
+<body class="page-detail page-topic">
+{include file="public/head"}
+<main id="main-content" class="wrap">
+<article class="dt">
+  <div class="dt-cover"><img src="{$obj.topic_pic|mac_default=$tplNoPic|mac_url_img|htmlspecialchars=ENT_QUOTES}" alt="{:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)($obj['topic_name'] ?? '')), ENT_QUOTES, 'UTF-8')}" width="800" height="450"></div>
+  <div class="dt-info">
+    <h1 class="dt-title">{:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)($obj['topic_name'] ?? '')), ENT_QUOTES, 'UTF-8')}</h1>
+    <div class="stat-row"><span><svg class="ico" aria-hidden="true"><use href="{$tplIcons}#i-star"/></svg>{$obj.topic_score}</span></div>
+    {if condition="$obj.topic_blurb neq ''"}<p class="desc-body">{:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)($obj['topic_blurb'] ?? '')), ENT_QUOTES, 'UTF-8')}</p>{/if}
+  </div>
+</article>
+<section class="sec">
+  <div class="sec-head"><h2 class="sec-title">{:\\app\\common\\util\\TemplateText::get('ui.collections')}</h2></div>
+  <div class="grid" data-grid-fill>{maccms:foreach name="$obj.vod_list" id="vo"}{include file="public/vodbox"}{/maccms:foreach}</div>
+</section>
+</main>
+{include file="public/foot"}
+</body>
+</html>

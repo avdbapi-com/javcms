@@ -1,0 +1,19 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="honey-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}" data-fx="vt smooth" data-fx-lerp="0.07" data-fx-vt-style="honey">
+<head>
+{include file="seo/art_type"}
+{include file="public/include"}
+</head>
+<body class="nc-page-list nc-page-art">
+{include file="public/head"}
+<main id="main-content" class="nc-main nc-list"><div class="nc-wrap"><header class="nc-phead nc-phead-row"><div><p class="nc-phead-eye"><span class="nc-eyebrow"><svg class="nc-i" aria-hidden="true"><use href="{$ncIco}newspaper"></use></svg>{:\\app\\common\\util\\TemplateText::get('nc.the_hive')}</span></p><h1 class="nc-ptitle" data-nc-melt="load">{:\\app\\common\\util\\TemplateText::get('ui.articles')}</h1></div><form class="nc-msearch" action="{:mac_url('art/search')}" method="get" role="search"><label class="nc-sr" for="nc-art-q">{:\\app\\common\\util\\TemplateText::get('ui.search')}</label><input id="nc-art-q" class="nc-input" name="wd" type="search" required maxlength="100" placeholder="{:\\app\\common\\util\\TemplateText::get('ui.search')}"><button class="nc-btn nc-btn-honey" type="submit" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.search')}"><svg class="nc-i" aria-hidden="true"><use href="{$ncIco}search"></use></svg></button></form></header><div class="nc-agrid" data-grid-fill>{maccms:art num="20" paging="yes" type="all" order="desc" by="time"}{include file="art/card"}{/maccms:art}</div>{php}$ncEmptyKey = 'nc.nothing_here_yet'; $ncEmptyHeadKey = 'nc.empty_art';{/php}{include file="public/listend"}</div></main>
+{include file="public/foot"}
+</body>
+</html>

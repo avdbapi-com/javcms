@@ -1,0 +1,30 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="crimson-modern" data-fx="vt" data-fx-vt-style="crimson-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+<title>{:\\app\\common\\util\\TemplateText::get('ui.page_not_found_bc3023')} - {:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$maccms['site_name']), ENT_QUOTES, 'UTF-8')}</title>
+<meta name="robots" content="noindex, follow" />
+{include file="public/include"}
+</head>
+<body class="ci-404-page">
+{include file="public/head"}
+<main id="main-content" class="ci-wrap">
+<section class="ci-nf" data-fx="shader" data-fx-shader="{$ciTpl|htmlspecialchars=ENT_QUOTES}assets/js/gl-screentone.js?v={$ciV}" data-ci-focus="0.5,0.42" aria-labelledby="ci-nf-h">
+	<span class="ci-nf-num" aria-hidden="true">404</span>
+	<span class="ci-nf-what" aria-hidden="true">{:\\app\\common\\util\\TemplateText::get('ink.sfx_what')}</span>
+	<h1 id="ci-nf-h">{:\\app\\common\\util\\TemplateText::get('ink.nf_title')}</h1>
+	<p class="ci-tip">{:\\app\\common\\util\\TemplateText::get('ui.this_page_may_have_moved_browse_the_latest_videos_or_try_a_search')}</p>
+	<div class="ci-nf-search"><form class="ci-search" action="{:mac_url('vod/search')}" method="get" role="search" data-ci-suggest><input class="ci-search-in" type="search" name="wd" placeholder="{:\\app\\common\\util\\TemplateText::get('ui.search_videos_or_performers')}" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.search')}" maxlength="60" autocomplete="off" enterkeyhint="search" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-controls="ci-sg-4"><button class="ci-search-go" type="submit" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.search')}"><svg class="ci-i" aria-hidden="true"><use href="{$ciIco|htmlspecialchars=ENT_QUOTES}#search"></use></svg></button><ul class="ci-suggest ci-balloon" id="ci-sg-4" role="listbox" hidden></ul></form></div>
+	<div class="ci-row"><a class="ci-cta" href="{$maccms.path|htmlspecialchars=ENT_QUOTES}">{:\\app\\common\\util\\AutoIcon::navIcon('home')}<span>{:\\app\\common\\util\\TemplateText::get('ui.back_to_home')}</span></a><a class="ci-pill" href="{:mac_url('label/search')}">{:\\app\\common\\util\\AutoIcon::ui('search')}{:\\app\\common\\util\\TemplateText::get('ui.search')}</a><a class="ci-pill" href="{:mac_url('label/sort')}">{:\\app\\common\\util\\AutoIcon::navIcon('categories')}{:\\app\\common\\util\\TemplateText::get('ui.categories')}</a></div>
+</section>
+{php}$ciMode = ''; $ciSfxText = \app\common\util\TemplateText::raw('ink.sfx_latest'); $ciSfxId = 'ci-h-fresh';{/php}<section class="ci-chapter" aria-labelledby="ci-h-fresh"><header class="ci-chap-head"><span class="ci-narr ci-chap-n">{:\\app\\common\\util\\AutoIcon::ui('film')}{:\\app\\common\\util\\TemplateText::get('ink.meanwhile')}</span>{include file="public/sfx"}<a class="ci-more" href="{:mac_url('label/new')}"><span>{:\\app\\common\\util\\TemplateText::get('ink.more')}</span>{:\\app\\common\\util\\AutoIcon::ui('arrow-right', ['size'=>'sm'])}</a></header><div class="ci-grid" data-grid-fill>{maccms:vod num="5" type="all" order="desc" by="time" paging="no" id="vo"}{include file="public/vodbox"}{/maccms:vod}</div></section>
+</main>
+{include file="public/foot"}
+</body>
+</html>

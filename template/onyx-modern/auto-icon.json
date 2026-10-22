@@ -1,0 +1,12 @@
+{
+ "$schema": "javcms.auto-icon.v1",
+ "family": "remix-line",
+ "motion": "step",
+ "enter": "step",
+ "plate": "shard",
+ "plateMotion": "snap90",
+ "avatar": "square dither",
+ "tint": "accent",
+ "map": {},
+ "nav": {}
+}

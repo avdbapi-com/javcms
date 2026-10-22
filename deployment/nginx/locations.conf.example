@@ -1,0 +1,81 @@
+# Inside ONE server block; replace tokens using render-profile.py.
+# Remove competing panel location / and generic PHP locations. Keep TLS/logs/pool.
+index index.php;
+autoindex off;
+
+# Compression for the whole site (SEO-ADMIN-BRIEF G): pages and feeds from PHP, sitemaps, styles, scripts, JSON,
+# the web app manifest and the image/svg+xml auto-icon sprites (text/html is always included once gzip is on).
+# Responses that PHP already compressed (gzip sitemaps) carry Content-Encoding and are passed through unchanged.
+gzip on;
+gzip_vary on;
+gzip_comp_level 5;
+gzip_min_length 256;
+gzip_proxied any;
+gzip_types text/plain text/css text/xml application/xml text/javascript application/javascript application/json application/manifest+json image/svg+xml;
+
+# Must precede the PHP handler and panel static regex locations.
+location ~* ^__URL_PREFIX__/(?:application|runtime|vendor|thinkphp|extend|deployment|backup|backups)(?:/|$) { return 403; }
+# Theme page templates are rendered by PHP; their source is not a public file.
+location ~* ^__URL_PREFIX__/template/[^/]+/html(?:/|$) { return 403; }
+location ~ (^|/)\.(?!well-known(?:/|$)) { return 403; }
+location ~* ^__URL_PREFIX__/\.well-known/(?!acme-challenge/) { return 403; }
+location ~* \.(?:ini|log|sql|sqlite|bak|conf|ya?ml)(?:/|$) { return 403; }
+location ~* ^__URL_PREFIX__/(?:composer\.(?:json|lock)|package(?:-lock)?\.json|(?:README|INSTALL|UPGRADE|CHANGELOG)(?:\.(?:md|txt))?|docs/[^/]*\.md|LICENSE(?:\.[^/]+)?|NOTICE(?:\.[^/]+)?|[^/]+\.(?:zip|gz|7z|tar))(?:/|$) { return 403; }
+location ~* (?:^|/)web\.config$ { return 403; }
+location ~* ^__URL_PREFIX__/upload/.*\.(?:php[0-9]?|phtml|phar|cgi|pl|py|asp|aspx|jsp|sh)(?:[./]|$) { return 403; }
+
+location ~ ^__URL_PREFIX__/(?<javcms_script>index\.php|api\.php|javcms\.php|install\.php)(?<javcms_path_info>/.*)?$ {
+    # Exact SCRIPT_FILENAME excludes path suffixes; only real entry files run.
+    # Store named captures before try_files: its URI handling may clear captures.
+    set $javcms_saved_script $javcms_script;
+    set $javcms_saved_path $javcms_path_info;
+    try_files __URL_PREFIX__/$javcms_saved_script =404;
+    include __DEPLOYMENT_DIR__/nginx/fastcgi-params.conf;
+    fastcgi_param SCRIPT_FILENAME __APPROOT__/$javcms_saved_script;
+    fastcgi_param SCRIPT_NAME __URL_PREFIX__/$javcms_saved_script;
+    fastcgi_param PATH_INFO $javcms_saved_path;
+    # search-flood limits (optional, 1.2.0): add nginx/limits-http.conf at the http { } level first, then uncomment.
+    # limit_req zone=javcms_search burst=10 nodelay;
+    # limit_conn javcms_search_all 4;
+    # limit_req_status 429;
+    # limit_conn_status 503;
+    # error_page 429 = @javcms_limited;
+    # error_page 503 = @javcms_busy;
+    fastcgi_pass __PHP_ENDPOINT__;
+}
+# Answers of the search-flood limits above (only nginx's own 429 / 503 come here; PHP's answers pass unchanged).
+location @javcms_limited {
+    default_type text/plain;
+    add_header Retry-After 30 always;
+    add_header Cache-Control "no-store" always;
+    return 429 "Too many searches from your network. Please retry in 30 seconds.\n";
+}
+location @javcms_busy {
+    default_type text/plain;
+    add_header Retry-After 10 always;
+    add_header Cache-Control "no-store" always;
+    return 503 "The site is busy. Please retry in 10 seconds.\n";
+}
+location ~* \.(?:php[0-9]?|phtml|phar)(?:[./]|$) { return 403; }
+# robots.txt is generated per site (Sitemap line for the configured domain); a root robots.txt only adds custom rules.
+location = __URL_PREFIX__/robots.txt { rewrite ^ __URL_PREFIX__/index.php?s=/robots.txt last; }
+# Static files of the site and of the themes (static/, template/<theme>/ assets): browsers and CDNs keep them 30 days
+# (1.2.0, XVID-SCALE-BRIEF L2). static/jcx/ (ad configuration and scripts) changes with the ad settings and is left to the
+# location below. This regex location wins over the prefix location below; nginx adds these headers to 2xx/3xx answers
+# only, and an add_header here replaces the server block's add_header lines for these files (nosniff is repeated).
+location ~* ^__URL_PREFIX__/(?:static/(?!jcx/)|template/[^/]+/(?!html/)).+\.(?:css|js|mjs|png|jpe?g|gif|webp|avif|svg|ico|woff2?|ttf|otf|eot)$ {
+    add_header Cache-Control "public, max-age=2592000";
+    add_header X-Content-Type-Options "nosniff" always;
+    try_files $uri @javcms_front;
+}
+location __URL_PREFIX__/ {
+    # Static files; compression comes from the gzip block at the top (it covers the PHP locations too).
+    # Browsers must not guess another type for static files (PHP pages send this header themselves). An add_header
+    # here replaces the server block's add_header lines for static files: repeat them here if your panel sets any.
+    add_header X-Content-Type-Options "nosniff" always;
+    try_files $uri $uri/ @javcms_front;
+}
+location @javcms_front {
+    # Existing query parameters, bodies, and HTTP methods remain intact.
+    rewrite ^__URL_PREFIX__/(.*)$ __URL_PREFIX__/index.php?s=/$1 last;
+}

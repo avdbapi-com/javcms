@@ -1,0 +1,20 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="honey-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}" data-fx="vt smooth" data-fx-lerp="0.07" data-fx-vt-style="honey">
+<head>
+<title>{:\\app\\common\\util\\TemplateText::get('ui.page_not_found_bc3023')} - {:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$maccms['site_name']), ENT_QUOTES, 'UTF-8')}</title>
+<meta name="robots" content="noindex, follow" />
+{include file="public/include"}
+</head>
+<body class="nc-page-state nc-page-404">
+{include file="public/head"}
+<main id="main-content" class="nc-main"><div class="nc-wrap"><section class="nc-404"><p class="nc-404-num" aria-hidden="true">404</p>{include file="public/drip-404"}<h1 class="nc-404-title">{:\\app\\common\\util\\TemplateText::get('ui.page_not_found_bc3023')}</h1><p class="nc-404-lead">{:\\app\\common\\util\\TemplateText::get('ui.this_page_may_have_moved_browse_the_latest_videos_or_try_a_search')}</p><form class="nc-404-search" action="{:mac_url('vod/search')}" method="get" role="search"><label class="nc-sr" for="nc-404-q">{:\\app\\common\\util\\TemplateText::get('ui.search')}</label><input id="nc-404-q" type="search" name="wd" placeholder="{:\\app\\common\\util\\TemplateText::get('ui.search_videos_or_performers')}" maxlength="60" required><button class="nc-btn nc-btn-honey" type="submit"><svg class="nc-i" aria-hidden="true"><use href="{$ncIco}search"></use></svg>{:\\app\\common\\util\\TemplateText::get('ui.search')}</button></form>{include file="public/hotwords"}<div class="nc-empty-act"><a class="nc-btn nc-btn-soft" href="{$maccms.path|htmlspecialchars=ENT_QUOTES}"><svg class="nc-i" aria-hidden="true"><use href="{$ncIco}home"></use></svg>{:\\app\\common\\util\\TemplateText::get('ui.back_to_home')}</a><a class="nc-btn nc-btn-soft" href="{:mac_url('label/new')}"><svg class="nc-i" aria-hidden="true"><use href="{$ncIco}clock"></use></svg>{:\\app\\common\\util\\TemplateText::get('ui.latest_videos')}</a></div></section><section class="nc-sec" aria-labelledby="nc-sec-404" data-ai-group><div class="nc-sec-head"><span class="nc-hexbadge" aria-hidden="true">{:\\app\\common\\util\\AutoIcon::ui('clock')}</span><div class="nc-sec-titles"><h2 class="nc-sec-title" id="nc-sec-404">{:\\app\\common\\util\\TemplateText::get('ui.latest_videos')}</h2></div><a class="nc-more" href="{:mac_url('label/new')}">{:\\app\\common\\util\\TemplateText::get('nc.view_all')}<svg class="nc-i nc-flip" aria-hidden="true"><use href="{$ncIco}chevron-right"></use></svg></a></div><div class="nc-grid nc-grid-one" data-grid-fill>{maccms:vod num="5" type="all" order="desc" by="time" paging="no" id="vo"}{include file="public/vodbox"}{/maccms:vod}</div></section></div></main>
+{include file="public/foot"}
+</body>
+</html>

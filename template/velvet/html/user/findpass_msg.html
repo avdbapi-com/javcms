@@ -1,0 +1,40 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="velvet" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+<meta name="robots" content="noindex, follow" />
+<title>{:\\app\\common\\util\\TemplateText::get('retrieve_the_password')} - {:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$maccms['site_name']), ENT_QUOTES, 'UTF-8')}</title>
+{include file="public/include"}
+{include file="user/include"}
+</head>
+<body class="vv-page-auth">
+{include file="public/head"}
+<main id="main-content" class="vv-main">
+  <section class="vv-auth">
+    <div class="vv-auth-card">
+      <h1>{:\\app\\common\\util\\TemplateText::get('ui.reset_password')}</h1>
+      <p class="vv-auth-lead">{:\\app\\common\\util\\TemplateText::get('enter_recovery_contact')}</p>
+{php}$vvAc = (isset($param['ac']) && $param['ac'] === 'phone') ? 'phone' : 'email';{/php}
+      <form id="fm" class="vv-form" method="post" action="{:mac_url('user/findpass_reset')}" data-vv-form data-url="{:mac_url('user/findpass_reset')}" data-success="{:mac_url('user/login')}">
+        <input name="ac" type="hidden" value="{$vvAc}">
+        {if condition="$vvAc eq 'phone'"}<div class="vv-field"><label for="to">{:\\app\\common\\util\\TemplateText::get('ui.cell_phone_92480b')}</label><input id="to" name="to" type="tel" autocomplete="tel" data-required="ui.enter_email_or_phone" placeholder="{:\\app\\common\\util\\TemplateText::get('ui.please_enter_the_mobile_phone_number')}"></div>{else/}<div class="vv-field"><label for="to">{:\\app\\common\\util\\TemplateText::get('ui.email_address')}</label><input id="to" name="to" type="email" autocomplete="email" data-required="ui.enter_email_or_phone" placeholder="{:\\app\\common\\util\\TemplateText::get('ui.please_enter_the_mailbox')}"></div>{/if}
+        <div class="vv-field"><label for="verify">{:\\app\\common\\util\\TemplateText::get('ui.verification_code')}</label><div class="vv-inline"><input id="verify" name="verify" type="text" maxlength="4" autocomplete="off" inputmode="text" data-required="ui.please_enter_the_verification_code_0d14a4" data-vv-captcha-input placeholder="{:\\app\\common\\util\\TemplateText::get('ui.please_enter_the_verification_code')}"><span class="vv-captcha-slot" data-vv-captcha-src="{:mac_url('verify/index')}"></span></div></div>
+        <button id="btn_send" class="vv-btn vv-btn-ghost" type="button" data-vv-sendcode data-url="{:mac_url('user/findpass_msg')}">{:\\app\\common\\util\\TemplateText::get('ui.send_the_verification_code')}</button>
+        <div class="vv-field"><label for="code">{:\\app\\common\\util\\TemplateText::get('ui.verification_information')}</label><input id="code" name="code" type="text" maxlength="20" autocomplete="one-time-code" data-required="ui.please_enter_the_verification_code_0d14a4" placeholder="{:\\app\\common\\util\\TemplateText::get('ui.please_enter_the_verification_code')}"></div>
+        <div class="vv-field"><label for="user_pwd">{:\\app\\common\\util\\TemplateText::get('ui.new_password_d850ee')}</label><input id="user_pwd" name="user_pwd" type="password" maxlength="20" autocomplete="new-password" data-required="ui.please_enter_the_new_password_ec0b3e" placeholder="{:\\app\\common\\util\\TemplateText::get('ui.please_enter_the_new_password')}"></div>
+        <div class="vv-field"><label for="user_pwd2">{:\\app\\common\\util\\TemplateText::get('ui.confirm_password')}</label><input id="user_pwd2" name="user_pwd2" type="password" maxlength="20" autocomplete="new-password" data-required="ui.please_enter_the_confirmation_password" data-match="#user_pwd" placeholder="{:\\app\\common\\util\\TemplateText::get('ui.enter_the_new_password_again')}"></div>
+        <button id="btn_submit" class="vv-btn vv-btn-primary vv-btn-block" type="submit">{:\\app\\common\\util\\TemplateText::get('ui.reset_password')}</button>
+      </form>
+      <div class="vv-auth-links"><a href="{:mac_url('user/login')}">{:\\app\\common\\util\\TemplateText::get('ui.log_in_now')}</a><a href="{:mac_url('user/findpass')}">{:\\app\\common\\util\\TemplateText::get('ui.issue')}</a><a href="{:mac_url('user/findpass_msg')}?ac=email">{:\\app\\common\\util\\TemplateText::get('ui.retrieve_the_mailbox')}</a><a href="{:mac_url('user/findpass_msg')}?ac=phone">{:\\app\\common\\util\\TemplateText::get('recovery')}</a></div>
+    </div>
+  </section>
+</main>
+{include file="public/foot"}
+</body>
+</html>

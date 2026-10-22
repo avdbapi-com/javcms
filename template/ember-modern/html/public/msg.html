@@ -1,0 +1,24 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="ember-modern" data-fx="vt" data-fx-vt-style="ember-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+<meta name="robots" content="noindex, follow" />
+<meta charset="utf-8">
+<title>{:\\app\\common\\util\\TemplateText::get('ui.site_message')}</title>
+{include file="public/include"}
+</head>
+<body class="permission-page">
+<main id="main-content" class="mac_msg_jump t-hud">
+    <p class="title">{:\\app\\common\\util\\TemplateText::get('ui.site_message')}</p>
+    <h1 class="msg_jump_tit">{:\\app\\common\\util\\TemplateText::get('ui.access_required')}</h1>
+    <div class="text">{$msg}</div>
+    <div class="jump"><a class="t-btn is-molten" href="{$maccms.path|htmlspecialchars=ENT_QUOTES}">{:\\app\\common\\util\\TemplateText::get('ui.back_to_home')}</a></div>
+</main>
+</body>
+</html>

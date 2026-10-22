@@ -1,0 +1,15 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<nav class="cat-strip" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.categories')}">
+  <ul>
+    <li><a href="{$maccms.path}" {if condition="$maccms.aid eq 1"}aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::navIcon('home', '', ['i'=>0, 'size'=>'sm'])}<span>{:\\app\\common\\util\\TemplateText::get('ui.home')}</span></a></li>
+    {maccms:type ids="parent" flag="vod" order="asc" by="sort" id="tplStrip" key="tplStripKey" hide_empty="1"}<li><a href="{:mac_url_type($tplStrip)}" {if condition="$tplStrip.type_id eq $GLOBALS['type_id'] || $tplStrip.type_id eq $GLOBALS['type_pid']"}aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::icon('category', $tplStrip['type_name'], ['i'=>$tplStripKey, 'size'=>'sm'])}<span>{:\\app\\common\\util\\TemplateText::get(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)($tplStrip['type_name'] ?? '')))}</span></a></li>{/maccms:type}
+    <li><a href="{:mac_url('label/new')}" {if condition="$maccms.aid eq 9999"}aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::navIcon('latest', '', ['i'=>8, 'size'=>'sm'])}<span>{:\\app\\common\\util\\TemplateText::get('ui.latest_videos')}</span></a></li>
+    <li><a href="{:mac_url('label/hot')}" {if condition="$maccms.aid eq 9998"}aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::navIcon('hot', '', ['i'=>9, 'size'=>'sm'])}<span>{:\\app\\common\\util\\TemplateText::get('ui.popular_videos')}</span></a></li>
+  </ul>
+</nav>

@@ -1,0 +1,28 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="velvet" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+<script src="{:MAC_PATH}static/template-ui/theme.js?v=20261007-theme1"></script>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="robots" content="noindex, follow" />
+<title>{:\\app\\common\\util\\TemplateText::get('ui.website_maintenance')}</title>
+<link rel="icon" href="{:MAC_PATH}static/template-ui/favicon-javcms.svg" type="image/svg+xml" />
+<link rel="stylesheet" href="{:MAC_PATH_TEMPLATE}assets/css/velvet.css?v=20261014-qa2" />
+</head>
+<body class="vv-page-state">
+<main id="main-content" class="vv-standalone">
+  <div class="vv-state">
+    <span class="vv-state-icon" aria-hidden="true"><svg class="vv-i" viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L4 17v3h3l5.3-5.3a4 4 0 0 0 5.4-5.4l-2.4 2.4-2.6-.4-.4-2.6z"/></svg></span>
+    <h1>{:\\app\\common\\util\\TemplateText::get('ui.the_site_is_undergoing_maintenance')}</h1>
+    <div class="vv-state-msg">{$close_tip|htmlspecialchars=ENT_QUOTES}</div>
+  </div>
+</main>
+</body>
+</html>

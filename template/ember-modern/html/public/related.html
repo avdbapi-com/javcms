@@ -1,0 +1,22 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}
+$tplRelKey = isset($tplRelKey) ? (string)$tplRelKey : 'ui.more_to_watch';
+$tplRelBy = isset($tplRelBy) ? (string)$tplRelBy : 'time';
+$tplRelNot = (string)intval($obj['vod_id'] ?? 0);
+$tplRelType = (string)($obj['type']['type_name'] ?? '');
+$tplCardN = 100; $tplCardEager = 0;
+{/php}
+<section class="t-sec" aria-labelledby="t-related-title">
+  <div class="t-sec-head" data-ai-group data-ai-hot>
+    <span class="t-sec-ic">{if condition="$tplRelType neq ''"}{:\\app\\common\\util\\AutoIcon::icon('category', $tplRelType, ['size'=>'lg', 'plate'=>true])}{else/}{:\\app\\common\\util\\AutoIcon::navIcon('more', '', ['size'=>'lg', 'plate'=>true])}{/if}</span><h2 class="t-sec-t" id="t-related-title" data-t-kin><span>{:\\app\\common\\util\\TemplateText::get($tplRelKey)}</span></h2>
+    <span class="t-legend" aria-hidden="true"><i></i></span>
+    {if condition="$tplRelType neq ''"}<a class="t-more" href="{:mac_url_type($obj['type'])}">{:\\app\\common\\util\\TemplateText::get('ui.view_more')}<svg class="t-i t-flip" aria-hidden="true"><use href="{$maccms.path_tpl}assets/icons.svg#arrow-right"></use></svg></a>{/if}
+  </div>
+  <ul class="t-grid" data-grid-fill data-fx="glow stagger">{maccms:vod num="10" type="current" not="'.$tplRelNot.'" order="desc" by="'.$tplRelBy.'" paging="no" id="vo"}{include file="public/vodbox"}{/maccms:vod}</ul>
+</section>

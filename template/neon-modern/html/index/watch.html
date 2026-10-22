@@ -1,0 +1,17 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}if (!isset($nnSeen) || !is_array($nnSeen)) { $nnSeen = []; } $nnRailNot = implode(',', array_map('intval', $nnSeen));{/php}
+<section class="nn-section nn-sec nn-sec--signed" aria-labelledby="nn-h-after">
+  <div class="nn-vsign-col" aria-hidden="true"><p class="nn-vsign nn-sign nn-tube nn-tube--violet is-buzz">{:\\app\\common\\util\\AutoIcon::ui('moon', ['class'=>'nn-vs-ai', 'tint'=>'none'])}{:\\app\\common\\util\\TemplateText::get('nn.after_hours')}</p></div>
+  <div class="nn-sec-body">
+    <div class="nn-sec-head"><h2 class="nn-hsign nn-sign nn-tube nn-tube--violet" id="nn-h-after">{:\\app\\common\\util\\AutoIcon::ui('moon', ['class'=>'nn-hs-ai', 'tint'=>'none'])}<a tabindex="-1" href="{:mac_url('label/hot')}">{:\\app\\common\\util\\TemplateText::get('nn.after_hours')}</a></h2><a class="nn-more" href="{:mac_url('label/hot')}">{:\\app\\common\\util\\TemplateText::get('ui.view_more')}<svg class="nn-ico" aria-hidden="true"><use href="{$nnSvg|htmlspecialchars=ENT_QUOTES}#chev"></use></svg></a></div>
+    <div class="nn-rail" data-fx="rail" data-fx-labels="{:\\app\\common\\util\\TemplateText::get('nn.previous')}|{:\\app\\common\\util\\TemplateText::get('nn.next')}">
+      <div class="nn-rail-track" data-fx-rail-track>{maccms:vod num="10" type="all" not="'.$nnRailNot.'" order="desc" by="hits_day" paging="no" id="vo"}{include file="public/vodbox"}{/maccms:vod}</div>
+    </div>
+  </div>
+</section>

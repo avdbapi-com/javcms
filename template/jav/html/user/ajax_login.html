@@ -1,0 +1,35 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+Partly based on a third-party theme. This license covers the JavCMS changes only.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}
+<!--Log in the pop -up window start-->
+<div class="mac_login">
+<form class="mac_login_form">
+{:token()}
+<div class="login_form_group">
+<input class="mac_u_name" name="user_name" placeholder="{:\\app\\common\\util\\TemplateText::get('please_enter_the_account_number')}" type="text"/>
+</div>
+<div class="login_form_group">
+<input class="mac_u_pwd" name="user_pwd" placeholder="{:\\app\\common\\util\\TemplateText::get('login_password')}" type="password" autocomplete="current-password"/>
+</div>
+  {if condition="$GLOBALS['config']['user']['login_verify'] eq 1"}
+  <div class="login_form_group clearfix">
+<input class="mac_u_verify" name="verify" placeholder="{:\\app\\common\\util\\TemplateText::get('please_enter_the_verification_code')}" type="text"/>
+<img role="button" tabindex="0" alt="{:\\app\\common\\util\\TemplateText::get('not_to_see_change_one')}" class="mac_verify_img" onclick="this.src = this.src+'?'" src="{:url('verify/index')}"/>
+</div>
+  {/if}
+  <div class="login_form_link">
+<a href="{:url('user/reg')}">{:\\app\\common\\util\\TemplateText::get('register')}</a>
+<a href="{:url('user/findpass')}">{:\\app\\common\\util\\TemplateText::get('forget_the_password')}</a>
+</div>
+<div class="login_form_group">
+<input class="login_form_submit" type="button" value="{:\\app\\common\\util\\TemplateText::get('log_in')}"/>
+</div>
+</form>
+</div>
+<!--Log in the pop -up window-->

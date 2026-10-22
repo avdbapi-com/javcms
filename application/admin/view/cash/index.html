@@ -1,0 +1,138 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Based on MacCMS 10 (Apache-2.0) by magicblack, changed by JavCMS.
+JavCMS changes: Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors,
+JavCMS Community License 1.0. The MacCMS parts stay under the Apache License 2.0.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{include file="../../../application/admin/view/public/head" /}
+<div class="page-container p10">
+    {include file="../../../application/admin/view/public/page_head" icon="ai-banknote-arrow-up" title="admin/ux/menu/withdrawals" help="admin/ux/help/withdrawals" /}
+
+    <div class="my-toolbar-box" >
+        <div class="center mb10">
+            <form class="layui-form " method="post" action="{:url('index')}">
+                <div class="layui-input-inline w150">
+                    <select name="status">
+                        <option value="">{:lang('select_status')}</option>
+                        <option value="0" {if condition="$param['status'] eq '0'"}selected {/if}>{:lang('reviewed_not')}</option>
+                        <option value="1" {if condition="$param['status'] eq '1'"}selected {/if}>{:lang('reviewed')}</option>
+                    </select>
+                </div>
+                <div class="layui-input-inline">
+                    <input type="text" autocomplete="off" placeholder="{:lang('wd')}" class="layui-input" name="wd" value="{$param['wd']|mac_filter_xss}">
+                </div>
+                <button class="ax-btn j-search"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-search"/></svg>{:lang('btn_search')}</button>
+            </form>
+        </div>
+
+        <div class="ax-toolbar" style="margin-top:8px">
+            
+            
+            <div class="ax-menu"><button type="button" class="ax-btn" aria-haspopup="menu" aria-expanded="false">{:lang('admin/ux/kit/bulk')}<svg class="ax-ic ax-ic--chevron" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-chevron-down"/></svg></button><div class="ax-menu__list" role="menu" hidden><a href="javascript:void(0)" role="menuitem" data-href="{:url('audit')}" class="ax-menu__item j-cash-audit"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-check"/></svg>{:lang('audit')}</a><div class="ax-menu__sep" role="separator"></div><a href="javascript:void(0)" role="menuitem" data-href="{:url('del')}" class="ax-menu__item ax-menu__item--danger j-sys-del" data-ax-confirm-title="{:lang('admin/ux/system/delete_selected')}" data-ax-confirm="{:lang('admin/ux/content/confirm_delete_n')}" data-ax-msg-one="{:lang('admin/ux/content/confirm_delete_one')}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-trash-2"/></svg>{:lang('admin/ux/system/delete_selected')}</a><a href="javascript:void(0)" role="menuitem" data-href="{:url('del')}" data-ids="1" data-all="1" data-count="{:intval($total)}" class="ax-menu__item ax-menu__item--danger j-sys-del" data-ax-confirm="{:str_replace(chr(123).'n'.chr(125), intval($total), lang('admin/ux/system/confirm_clear_all'))}" data-ax-confirm-title="{:lang('clear')}" data-ax-typed="DELETE"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-trash-2"/></svg>{:lang('admin/ux/system/clear_all')}</a></div></div>
+        </div>
+    </div>
+
+     <form class="layui-form " method="post" id="pageListForm">
+        <input type="hidden" name="__token__" value="{:mac_admin_csrf_token()}">
+         <table class="layui-table ax-table--cards" lay-size="sm">
+            <thead>
+            <tr>
+                <th width="25"><input type="checkbox" lay-skin="primary" lay-filter="allChoose"></th>
+                <th width="50">{:lang('id')}</th>
+                <th width="50">{:lang('user')}</th>
+                <th width="50">{:lang('status')}</th>
+                <th width="50">{:lang('points')}</th>
+                <th width="50">{:lang('money')}</th>
+                <th width="50">{:lang('bank')}</th>
+                <th width="50">{:lang('account')}</th>
+                <th width="50">{:lang('name')}</th>
+                <th width="100">{:lang('remarks')}</th>
+                <th width="100">{:lang('time')}</th>
+                <th width="100">{:lang('audit_time')}</th>
+                <th width="50">{:lang('opt')}</th>
+            </tr>
+            </thead>
+
+            {if condition="empty($list)"}<tr><td colspan="20">{include file="../../../application/admin/view/public/empty_state" icon="ai-inbox" text="admin/ux/system/empty_records" /}</td></tr>{/if}
+            {volist name="list" id="vo"}
+            <tr>
+                <td><input type="checkbox" name="ids[]" value="{$vo.cash_id}" class="layui-checkbox checkbox-ids" lay-skin="primary"></td>
+                <td>{$vo.cash_id}</td>
+                <td>[{$vo.user_id}]{$vo.user_name|htmlspecialchars}</td>
+                <td>{if condition="$vo.cash_status eq 1"}<span class="badge bg-primary">{:lang('reviewed')}</span>{else/}<span class="badge bg-danger">{:lang('reviewed_not')}</span>{/if}</td>
+                <td>{$vo.cash_points}</td>
+                <td>{$vo.cash_money}</td>
+                <td>{$vo.cash_bank_name|htmlspecialchars}</td>
+                <td>{$vo.cash_bank_no|htmlspecialchars}</td>
+                <td>{$vo.cash_payee_name|htmlspecialchars}</td>
+                <td>{$vo.cash_remarks|htmlspecialchars}</td>
+                <td class="ax-cell-time">{$vo.cash_time|mac_day}</td>
+                <td class="ax-cell-time">{$vo.cash_time_audit|mac_day}</td>
+                <td>
+                    <a class="ax-btn ax-btn--sm ax-btn--icon ax-btn--ghost j-sys-del" data-href="{:url('del')}" data-ids="{$vo.cash_id}" data-ax-msg-one="{:lang('admin/ux/content/confirm_delete_one')}" data-ax-confirm-title="{:htmlspecialchars(lang('admin/ux/system/delete_named',[html_entity_decode((string)('#'.$vo['cash_id'].' · '.$vo['user_name'].' · '.$vo['cash_money']),ENT_QUOTES,'UTF-8')]),ENT_QUOTES,'UTF-8')}" href="javascript:;" title="{:lang('del')}" aria-label="{:lang('del')}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-trash-2"/></svg></a>
+                    {if condition="$vo.cash_status neq '1'"}
+                    <a class="ax-btn ax-btn--sm j-cash-audit" data-href="{:url('audit')}" data-ids="{$vo.cash_id}" href="javascript:;" title="{:lang('audit')}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-check"/></svg>{:lang('audit')}</a>
+                    {/if}
+                </td>
+            </tr>
+            {/volist}
+            </tbody>
+        </table>
+
+        <div id="pages" class="center"></div>
+
+    </form>
+</div>
+
+{include file="../../../application/admin/view/public/foot" /}
+{include file="../../../application/admin/view/user/list_delete" /}
+<script type="application/json" id="axCashLang">{:json_encode(['title'=>lang('audit'), 'msg'=>lang('audit_confirm'), 'ok'=>lang('audit'), 'select_first'=>lang('admin/ux/kit/select_first'), 'failed'=>lang('admin/ux/kit/request_failed')], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP)}</script>
+<script type="text/javascript">
+/* close-security (security r4 P3-1): "Review" is a POST with the admin token in the body (never in a URL). */
+layui.use(['jquery'], function () {
+    var $ = layui.jquery, L = JSON.parse(document.getElementById('axCashLang').textContent);
+    $(document).on('click', '.j-cash-audit', function (e) {
+        e.preventDefault();
+        var btn = $(this), ids = btn.attr('data-ids') || $('.checkbox-ids:checked').map(function () { return this.value; }).get().join(',');
+        if (!ids) { AxUX.toast(L.select_first, 'warn'); return false; }
+        AxUX.confirm({ title: L.title, message: L.msg, count: ids.split(',').length, danger: false, confirmLabel: L.ok }).then(function (yes) {
+            if (!yes) { return; }
+            $.ajax({ url: btn.attr('data-href'), type: 'POST', dataType: 'json', timeout: 15000,
+                data: { ids: ids, __token__: $('#pageListForm input[name="__token__"]').val() || '' } }).done(function (res) {
+                AxUX.toast(res.msg, res.code == 1 ? 'ok' : 'error');
+                if (res.code == 1) { setTimeout(function () { location.reload(); }, 900); }
+            }).fail(function (xhr) { AxUX.toast(L.failed + (xhr && xhr.status ? ' (HTTP ' + xhr.status + ')' : ''), 'error'); });
+        });
+        return false;
+    });
+});
+</script>
+
+
+<script type="text/javascript">
+    {php}$axUrlParam = array_filter((array)$param, function ($v, $k) { return is_string($k) && preg_match('/^[A-Za-z0-9_]{1,40}$/D', $k) && is_scalar($v); }, ARRAY_FILTER_USE_BOTH);{/php}
+    var curUrl = {:json_encode(url('cash/index',$axUrlParam),JSON_HEX_TAG|JSON_HEX_AMP|JSON_HEX_APOS|JSON_HEX_QUOT)};
+    layui.use(['laypage', 'layer'], function() {
+        var laypage = layui.laypage
+                , layer = layui.layer;
+
+        laypage.render({
+            elem: 'pages'
+            ,count: {$total|default=0|intval}
+            ,limit: {$limit|default=20|intval}
+            ,curr: {$page|default=1|intval}
+            ,layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
+            ,jump: function(obj,first){
+                if(!first){
+                    location.href = curUrl.replace('%7Bpage%7D',obj.curr).replace('%7Blimit%7D',obj.limit);
+                }
+            }
+        });
+    });
+</script>
+<script>(function () { document.querySelectorAll('table.ax-table--cards').forEach(function (t) { var h = [].map.call(t.querySelectorAll('thead th'), function (th) { return th.textContent.trim(); }); t.querySelectorAll('tbody tr, tr').forEach(function (tr) { if (tr.parentNode.tagName === 'THEAD') { return; } [].forEach.call(tr.children, function (td, i) { if (h[i] && !td.hasAttribute('data-label') && !td.hasAttribute('colspan')) { td.setAttribute('data-label', h[i]); } }); }); }); }());</script>
+<style>@media (max-width: 640px) { body.admin-studio table.ax-table--cards { min-width: 0 !important; width: 100% !important; } }</style>
+</body>
+</html>

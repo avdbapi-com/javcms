@@ -1,0 +1,37 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="ember-modern" data-fx="vt" data-fx-vt-style="ember-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/actor_detail"}
+{include file="public/include"}
+</head>
+<body class="t-page-detail">
+{include file="public/head"}
+<main id="main-content" class="t-main" tabindex="-1">
+  {php}$emtObjName = $emtDe($obj['actor_name'] ?? ''); $emtObjPic = trim((string)($obj['actor_pic'] ?? '')); $emtObjIni = function_exists('mb_substr') ? mb_strtoupper(mb_substr($emtObjName, 0, 1, 'UTF-8'), 'UTF-8') : strtoupper(substr($emtObjName, 0, 1)); $emtRows = array(); $emtRowIc = array('ui.gender' => 'user', 'ui.birthday' => 'calendar', 'ui.nation' => 'globe', 'ui.place_of_birth' => 'map-pin', 'ui.height' => 'maximize', 'ui.weight' => 'activity'); foreach (array('ui.gender' => 'actor_sex', 'ui.birthday' => 'actor_birthday', 'ui.nation' => 'actor_area', 'ui.place_of_birth' => 'actor_birtharea', 'ui.height' => 'actor_height', 'ui.weight' => 'actor_weight') as $emtK => $emtF) { $emtV = trim(strip_tags($emtDe($obj[$emtF] ?? ''))); if ($emtV !== '') { $emtRows[] = array('k' => \app\common\util\TemplateText::raw($emtK), 'v' => $emtV, 'ic' => $emtRowIc[$emtK]); } } $emtActorQ = $emtObjName;{/php}
+  <div class="t-wrap">
+    <nav class="t-crumb" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.main_navigation')}" style="margin-top:18px"><a href="{$maccms.path|htmlspecialchars=ENT_QUOTES}">{:\\app\\common\\util\\TemplateText::get('ui.home')}</a><svg class="t-i t-flip" aria-hidden="true"><use href="{$tplIcons}#chev-right"></use></svg><a href="{:mac_url('actor/index')}">{:\\app\\common\\util\\TemplateText::get('ui.performers')}</a></nav>
+    <div class="t-person">
+      <span class="t-av is-big">{:\\app\\common\\util\\AutoIcon::avatar((string)($obj['actor_name'] ?? ''), (string)($obj['actor_pic'] ?? ''), ['size'=>'xl', 'decorative'=>true])}</span>
+      <div class="t-person-b">
+        <h1 class="t-vh1">{$emtObjName|htmlspecialchars=ENT_QUOTES}</h1>
+        {notempty name="emtRows"}<dl class="t-readout">{volist name="emtRows" id="emtRow"}<div><dt>{:\\app\\common\\util\\AutoIcon::ui($emtRow['ic'], ['size'=>'sm'])}{$emtRow.k|htmlspecialchars=ENT_QUOTES}</dt><dd>{$emtRow.v|htmlspecialchars=ENT_QUOTES}</dd></div>{/volist}</dl>{/notempty}
+        {notempty name="obj.actor_content"}<div class="t-desc"><div class="t-desc-body is-open">{$obj.actor_content|mac_filter_html}</div></div>{/notempty}
+      </div>
+    </div>
+    <section class="t-sec" aria-labelledby="t-actor-videos">
+      <div class="t-sec-head" data-ai-group data-ai-hot><span class="t-sec-ic">{:\\app\\common\\util\\AutoIcon::ui('video', ['size'=>'lg', 'plate'=>true])}</span><h2 class="t-sec-t" id="t-actor-videos" data-t-kin><span>{:\\app\\common\\util\\TemplateText::get('videos')}</span></h2><span class="t-legend" aria-hidden="true"><i></i></span></div>
+      <div class="t-actor-cta"><svg class="t-i t-actor-cta-i" aria-hidden="true"><use href="{$tplIcons}#crosshair"></use></svg><p>{:\\app\\common\\util\\TemplateText::get('videos_featuring_this_performer')}</p><a class="t-btn is-molten" href="{:mac_url_search(['actor'=>$emtActorQ])}"><svg class="t-i" aria-hidden="true"><use href="{$tplIcons}#search"></use></svg>{:\\app\\common\\util\\TemplateText::get('ui.view_more')}</a></div>
+    </section>
+    {if condition="$GLOBALS['config']['comment']['status'] eq 1"}<section class="t-comments"><div class="mac_comment" data-id="{$obj.actor_id|intval}" data-mid="8"><h2>{:\\app\\common\\util\\TemplateText::get('ui.comments')}</h2><p>{:\\app\\common\\util\\TemplateText::get('ui.loading_comments')}</p></div></section><script>MAC.Comment.Init();MAC.Comment.Show(1);</script>{/if}
+  </div>
+</main>
+{include file="public/foot"}
+</body>
+</html>

@@ -1,0 +1,78 @@
+<?php
+
+namespace {%namespace%};
+
+use think\Controller;
+use think\Request;
+
+class {%className%} extends Controller
+{
+    /* *
+ * Display resource list
+ *
+ * @return \\think\\Response */
+    public function index()
+    {
+        //
+    }
+
+    /* *
+ * Display the creation resource form page.
+ *
+ * @return \\think\\Response */
+    public function create()
+    {
+        //
+    }
+
+    /* *
+ * Save new resources
+ *
+ * @param \\think\\Request $request
+ * @return \\think\\Response */
+    public function save(Request $request)
+    {
+        //
+    }
+
+    /* *
+ * Show specified resources
+ *
+ * @param int $id
+ * @return\\ think\\ Response */
+    public function read($id)
+    {
+        //
+    }
+
+    /* *
+ * Display editing resource form page.
+ *
+ * @param int $id
+ * @return \\think\\Response */
+    public function edit($id)
+    {
+        //
+    }
+
+    /* *
+ * Save the updated resource
+ *
+ * @param \\think\\Request $request
+ * @param int $id
+ * @return \\think\\Response */
+    public function update(Request $request, $id)
+    {
+        //
+    }
+
+    /* *
+ * Delete specified resources
+ *
+ * @param int $id
+ * @return \\think\\Response */
+    public function delete($id)
+    {
+        //
+    }
+}

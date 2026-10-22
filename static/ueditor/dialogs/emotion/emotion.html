@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="robots" content="noindex, nofollow"/>
+    <script type="text/javascript" src="../internal.js"></script>
+    <link rel="stylesheet" type="text/css" href="emotion.css">
+</head>
+<body>
+<div id="tabPanel" class="wrapper">
+    <div id="tabHeads" class="tabhead">
+        <span><var id="lang_input_choice"></var></span>
+        <span><var id="lang_input_Tuzki"></var></span>
+        <span><var id="lang_input_lvdouwa"></var></span>
+        <span><var id="lang_input_BOBO"></var></span>
+        <span><var id="lang_input_babyCat"></var></span>
+        <span><var id="lang_input_bubble"></var></span>
+        <span><var id="lang_input_youa"></var></span>
+    </div>
+    <div id="tabBodys" class="tabbody">
+        <div id="tab0"></div>
+        <div id="tab1"></div>
+        <div id="tab2"></div>
+        <div id="tab3"></div>
+        <div id="tab4"></div>
+        <div id="tab5"></div>
+        <div id="tab6"></div>
+    </div>
+</div>
+<div id="tabIconReview">
+    <img id='faceReview' class='review' src="../../themes/default/images/spacer.gif"/>
+</div>
+<script type="text/javascript" src="emotion.js"></script>
+<script type="text/javascript">
+    var emotion = {
+        tabNum:7, // Number of tabs
+        SmilmgName:{ tab0:['j_00', 84], tab1:['t_00', 40], tab2:['w_00', 52], tab3:['B_00', 63], tab4:['C_00', 20], tab5:['i_f', 50], tab6:['y_00', 40] }, // Image filename prefixes and counts
+        imageFolders:{ tab0:'jx2/', tab1:'tsj/', tab2:'ldw/', tab3:'bobo/', tab4:'babycat/', tab5:'face/', tab6:'youa/'}, // The path of the folder corresponding to the image
+        imageCss:{tab0:'jd', tab1:'tsj', tab2:'ldw', tab3:'bb', tab4:'cat', tab5:'pp', tab6:'youa'}, // Image CSS class names
+        imageCssOffset:{tab0:35, tab1:35, tab2:35, tab3:35, tab4:35, tab5:25, tab6:35}, // Picture offset
+        SmileyInfor: {
+    tab0: ['Kiss', 'Love', 'Yeah', 'Ah!', 'Back Twist', 'Top', 'Shake Chest', '88', 'Sweat', 'Sleepy', 'Rula', 'Brick Hit', 'Rub Face', 'Happy Birthday', 'Laugh', 'Waterfall Sweat~', 'Surprise', 'Vain', 'Silly Laugh', 'Wink', 'Angry', 'Soy Sauce', 'Push-Up', 'Angry', '?', 'Kiss', 'Anger', 'Victory', 'HI', 'KISS', 'Not Talking', 'Don’t Want', 'Pull Flower', 'Big Heart', 'Top', 'Big Surprise', 'Blow Kiss', 'Funny Face', 'Shy', 'Saliva', 'Cry', 'Come', 'Getting Rich', 'Eat Watermelon', 'Locked', 'Shy', 'Celebrate', 'I’m Here', 'Hit', 'Dizzy', 'Victory', 'Vain', 'Beaten', 'Greedy', 'Welcome', 'Cool', 'Smile', 'Kiss', 'Playful', 'Panic', 'Cool', 'Angry', 'Shy', 'Sweat', 'Cry', '', 'Cheer Up', 'Sleepy', 'You’re Awesome', 'Faint', 'Happy', 'Sneaky Laugh', 'Cry', 'Sweat Drop', 'Sigh', 'Great', '??', 'Blow Kiss', 'Angel', 'Flower Shower', 'Angry', 'Hit', 'Scared Stiff', 'Casual Spit'],
+    tab1: ['Kiss', 'Love', 'Yeah', 'Ah!', 'Back Twist', 'Top', 'Shake Chest', '88', 'Sweat', 'Sleepy', 'Rula', 'Brick Hit', 'Rub Face', 'Happy Birthday', 'Spread Hands', 'Sleep', 'Collapse Sitting', 'Bored', 'Twinkling Star', 'Spin', 'Not Working Either', 'Depressed', 'Music Time', 'Scratch Wall', 'Hit Wall to Death', 'Tilt Head', 'Poke Eye', 'Drift By', 'Mutual Brick Hit', 'Chop You to Death', 'Throw Table', 'Shaolin Temple', 'What?', 'Turn Head', 'I Love Milk', 'I Kick', 'Shake', 'Faint', 'In Cage', 'Vibrate'],
+    tab2: ['Laugh', 'Waterfall Sweat~', 'Surprise', 'Vain', 'Silly Laugh', 'Wink', 'Angry', 'I Was Wrong', 'Money', 'Angry', 'Tease', 'Kiss', 'Anger', 'Victory', 'Wronged', 'Injured', 'What Are You Saying?', 'Shut Up', 'No', 'Just Kidding', 'Blow Kiss', 'Dizzy', 'Magic', 'I’m Here', 'Sleeping', 'I Hit', 'Shut Up', 'Hit', 'Hit Until Dizzy', 'Brush Teeth', 'Fierce Beating', 'Bomb', 'Handstand', 'Shave', 'Evil Smile', 'Don’t Want', 'In Love', 'Zoom In and Look', 'Peeping', 'Super Happy', 'Dizzy', 'Relieved', 'I Run', 'Enjoy', 'Rest', 'Cry', 'Sweat', 'Ah~', 'Warm Welcome', 'Soy Sauce', 'Push-Up', '?'],
+    tab3: ['HI', 'KISS', 'Not Talking', 'Don’t Want', 'Pull Flower', 'Big Heart', 'Top', 'Big Surprise', 'Blow Kiss', 'Funny Face', 'Shy', 'Saliva', 'Cry', 'Come', 'Tearful Eyes', 'Cry', 'Angry', 'Stick Out Tongue', 'Like', 'Spin', 'Goodbye', 'Crazy', 'Sweat', 'Despise', 'Bow', 'Spit Blood', 'Shush', 'Hit', 'Jump', 'Change Face', 'Cheek Pull', 'Eat To', 'Eat Flower', 'Blow Bubblegum', 'Big Transformation', 'Sky Dance', 'Looking Back', 'Pitiful', 'Fierce Hit', 'Bubble', 'Apple', 'Kiss', '', 'Sexy Dance', 'Burn Incense', 'Sleep', 'Stuffed Toy', 'Poke', 'Dance Until Down', 'Tomato', 'Admire', 'Shake', 'Swing', 'Juggle', 'Wealth God', 'Beaten', 'Hit by Ball', 'Big Surprise', 'Ideal', 'Hit', 'Vomit', 'Break', 'Spit'],
+    tab4: ['Getting Rich', 'Eat Watermelon', 'Locked', 'Shy', 'Celebrate', 'I’m Here', 'Hit', 'Dizzy', 'Victory', 'Vain', 'Beaten', 'Greedy', 'Welcome', 'Cool', 'Top', 'Lucky', 'Love', 'Hide', 'Send Flowers', 'Choice'],
+    tab5: ['Smile', 'Kiss', 'Playful', 'Surprise', 'Cool', 'Angry', 'Shy', 'Sweat', 'Cry', 'Proud', 'Despise', 'Sleepy', 'Praise', 'Faint', 'Question', 'Matchmaker', 'Vomit', 'Frog', 'Worry', 'Kiss', '', 'Love', 'Heartbreak', 'Rose', 'Gift', 'Cry', 'Smirk', 'Cute', 'Proud', 'Grin', 'Sweat', 'Pitiful', 'Sleepy', 'Cry', 'Angry', 'Surprised', 'Saliva', 'Rainbow', 'Night Sky', 'Sun', 'Money', 'Light Bulb', 'Coffee', 'Cake', 'Music', 'Love', 'Victory', 'Like', 'Despise', 'OK'],
+    tab6: ['Boy Pocket', 'Girl Pocket', 'Happy', 'Well-behaved', 'Sneaky Laugh', 'Laugh', 'Sob', 'Cry', 'Helpless', 'Sweat Drop', 'Sigh', 'Dizzy', 'Wronged', 'Great', '??', 'Question', 'Blow Kiss', 'Angel', 'Flower Shower', 'Angry', 'Hit', 'Saliva', 'Cry Hard', 'Scared Stiff', 'Stick Out Tongue', 'Nod', 'Casual Spit', 'Spin', 'Sleepy Sleepy', 'Despise', 'Crazy Top', 'Basketball', 'Goodbye', 'Welcome', 'Congratulations', 'Wait a Moment', 'I’m Online', 'No Bargaining', 'In Stock', 'On The Way']
+}
+
+    };
+</script>
+</body>
+</html>

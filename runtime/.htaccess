@@ -1,0 +1,8 @@
+# Runtime cache, logs and compiled templates are private.
+<IfModule mod_authz_core.c>
+    Require all denied
+</IfModule>
+<IfModule !mod_authz_core.c>
+    Order allow,deny
+    Deny from all
+</IfModule>

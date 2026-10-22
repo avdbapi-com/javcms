@@ -1,0 +1,20 @@
+/**
+ * @license Copyright (c) 2003-2018, CKSource - Frederico Knabben. All rights reserved.
+ * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
+ */
+
+.cke_colordialog_colorcell {
+	width: 12px; /* All cells have the same width, determined by the parent (the table here). This width behaves like max-width. */
+	height: 14px;
+	padding: 1px; /* For focused cells, a border replaces the padding to prevent movement when borders are added. */
+}
+
+.cke_colordialog_colorcell.cke_colordialog_focused_light,
+.cke_colordialog_colorcell.cke_colordialog_focused_dark {
+	padding: 0; /* Reduce the cell padding to make room for the 1px focus border. */
+	border: 1px dotted #000;
+}
+
+.cke_colordialog_colorcell.cke_colordialog_focused_dark {
+	border-color: #FFF;
+}

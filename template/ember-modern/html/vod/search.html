@@ -1,0 +1,49 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="ember-modern" data-fx="vt" data-fx-vt-style="ember-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/vod_search"}
+{include file="public/include"}
+</head>
+<body class="t-page-search">
+{include file="public/head"}
+{php}$tplCardEager = 5; $tplCardN = 0; ob_start();{/php}<ul class="t-grid" data-grid-fill data-fx="glow">{maccms:vod num="20" paging="yes" type="all" pageurl="vod/search" order="desc" by="time" id="vo"}{include file="public/vodbox"}{/maccms:vod}</ul>{php}$emtGrid = ob_get_clean(); $emtFound = intval($__PAGING__['record_total'] ?? 0); $emtFoundHtml = '<b>' . htmlspecialchars(\app\common\util\AvdbLanguage::resultCount($__PAGING__, isset($__LIST__) ? $__LIST__ : null)['short'], ENT_QUOTES, 'UTF-8') . '</b>';{/php}
+<main id="main-content" class="t-main" tabindex="-1">
+  <section class="t-band t-searchhead" data-fx="shader" data-fx-shader="{$maccms.path_tpl|htmlspecialchars=ENT_QUOTES}assets/js/gl-thermal.js?v=20261010-2">
+    <div class="t-wrap">
+      <form class="t-scan" action="{:mac_url('vod/search')}" method="get" role="search" data-t-search>
+        <label class="sr-only" for="t-qs">{:\\app\\common\\util\\TemplateText::get('ui.search')}</label>
+        <div class="t-scan-ring"><svg class="t-i" aria-hidden="true"><use href="{$tplIcons}#crosshair"></use></svg><input id="t-qs" class="t-scan-in" type="search" name="wd" value="{$emtQ|htmlspecialchars=ENT_QUOTES,'UTF-8',false}" placeholder="{:\\app\\common\\util\\TemplateText::get('ui.search_videos_or_performers')}" maxlength="60" autocomplete="off" enterkeyhint="search" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="t-sugg3"><button class="t-scan-go" type="submit" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.search')}"><svg class="t-i" aria-hidden="true"><use href="{$tplIcons}#arrow-right"></use></svg></button></div>
+        <div class="t-sugg" id="t-sugg3" role="listbox" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.search')}" hidden></div>
+      </form>
+      {if condition="$param.wd neq ''"}<h1>{:\\app\\common\\util\\AutoIcon::ui('search', ['size'=>'lg', 'plate'=>true])}{:\\app\\common\\util\\TemplateText::raw('ui.search_for_query', ['query'=>$param['wd']])}</h1>
+      {elseif condition="$param.actor neq ''"/}<h1>{:\\app\\common\\util\\AutoIcon::avatar($emtDe($param['actor']), '', ['size'=>'sm', 'decorative'=>true, 'class'=>'t-h1-av'])}{:\\app\\common\\util\\TemplateText::get('emt.performers')}: {:htmlspecialchars($emtDe($param['actor']), ENT_QUOTES)}</h1>
+      {elseif condition="$param.class neq ''"/}<h1>{:\\app\\common\\util\\AutoIcon::icon('tag', $emtDe($param['class']), ['size'=>'lg', 'plate'=>true])}{:\\app\\common\\util\\TemplateText::get('genres')}: {:htmlspecialchars($emtDe($param['class']), ENT_QUOTES)}</h1>
+      {elseif condition="$param.tag neq ''"/}<h1>{:\\app\\common\\util\\AutoIcon::icon('tag', $emtDe($param['tag']), ['size'=>'lg', 'plate'=>true])}{:\\app\\common\\util\\TemplateText::get('ui.tag')} #{:htmlspecialchars($emtDe($param['tag']), ENT_QUOTES)}</h1>
+      {elseif condition="$param.director neq ''"/}<h1>{:\\app\\common\\util\\AutoIcon::ui('clapperboard', ['size'=>'lg', 'plate'=>true])}{:\\app\\common\\util\\TemplateText::get('ui.director')} {:htmlspecialchars($emtDe($param['director']), ENT_QUOTES)}</h1>
+      {elseif condition="$param.by eq 'hits'"/}<h1>{:\\app\\common\\util\\AutoIcon::navIcon('hot', '', ['size'=>'lg', 'plate'=>true])}{:\\app\\common\\util\\TemplateText::get('ui.hot_videos')}</h1>
+      {elseif condition="$param.by eq 'up'"/}<h1>{:\\app\\common\\util\\AutoIcon::navIcon('liked', '', ['size'=>'lg', 'plate'=>true])}{:\\app\\common\\util\\TemplateText::get('ui.video_with_the_most_likes')}</h1>
+      {elseif condition="$param.by eq 'score'"/}<h1>{:\\app\\common\\util\\AutoIcon::navIcon('top-rated', '', ['size'=>'lg', 'plate'=>true])}{:\\app\\common\\util\\TemplateText::get('ui.video_with_the_highest_score')}</h1>
+      {else/}<h1>{:\\app\\common\\util\\AutoIcon::navIcon('latest', '', ['size'=>'lg', 'plate'=>true])}{:\\app\\common\\util\\TemplateText::get('ui.latest_videos')}</h1>{/if}
+      <p class="t-result-line" role="status">{:\\app\\common\\util\\TemplateText::raw('emt.results_count', ['count'=>$emtFoundHtml])}</p>
+    </div>
+  </section>
+  <div class="t-wrap">
+    <div class="t-filters">{php}$tplSortMode = 'search';{/php}{include file="public/sortmenu"}</div>
+    {$emtGrid}
+    {if condition="$emtFound eq 0"}
+    {include file="public/empty"}
+    <section class="t-sec" aria-labelledby="t-hot-searches"><h2 class="t-sheet-k" id="t-hot-searches"><svg class="t-i" aria-hidden="true"><use href="{$tplIcons}#flame"></use></svg>{:\\app\\common\\util\\TemplateText::get('emt.hot_searches')}</h2>{include file="public/catrail"}</section>
+    {/if}
+    {include file="public/list_note"}{include file="public/paging"}
+  </div>
+</main>
+{include file="public/foot"}
+</body>
+</html>

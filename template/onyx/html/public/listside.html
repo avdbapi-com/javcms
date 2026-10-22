@@ -1,0 +1,35 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}$tplTagCount = []; $tplTagForm = []; if (isset($tplTagPool) && is_array($tplTagPool)) { foreach ($tplTagPool as $tplRow) { foreach (explode(',', (string)$tplRow) as $tplTagName) { $tplTagName = trim($tplTagName); $tplTagLabel = $tplTagName; for ($tplTi = 0; $tplTi < 3; $tplTi++) { $tplTd = html_entity_decode($tplTagLabel, ENT_QUOTES | ENT_HTML5, 'UTF-8'); if ($tplTd === $tplTagLabel) { break; } $tplTagLabel = $tplTd; } $tplTagLabel = trim($tplTagLabel); if ($tplTagName !== '' && $tplTagLabel !== '' && mb_strlen($tplTagLabel) <= 40 && \app\common\util\AutoIcon::keepTag($tplTagLabel)) { $tplTagCount[$tplTagLabel] = ($tplTagCount[$tplTagLabel] ?? 0) + 1; $tplTagForm[$tplTagLabel][$tplTagName] = ($tplTagForm[$tplTagLabel][$tplTagName] ?? 0) + 1; } } } } arsort($tplTagCount); $tplTags = []; foreach (array_slice(array_keys($tplTagCount), 0, 24) as $tplTagLabel) { $tplTagForms = $tplTagForm[$tplTagLabel]; arsort($tplTagForms); $tplTags[] = ['q' => html_entity_decode((string)key($tplTagForms), ENT_QUOTES | ENT_HTML5, 'UTF-8'), 'l' => (string)$tplTagLabel, 'ico' => \app\common\util\AutoIcon::icon('tag', (string)$tplTagLabel, ['size' => 'sm', 'i' => count($tplTags)])]; } if (!isset($tplSorts) || !is_array($tplSorts)) { $tplSorts = []; } $tplSortIco = ['clock', 'flame', 'star', 'thumbs-up', 'layout-dashboard']; foreach ($tplSorts as $tplSi => $tplSv) { if (!isset($tplSv['ico'])) { $tplSorts[$tplSi]['ico'] = \app\common\util\AutoIcon::ui($tplSortIco[$tplSi] ?? 'sort', ['size' => 'sm', 'i' => $tplSi]); } } $tplSortLbl = preg_replace('/[\s:：]+$/u', '', \app\common\util\TemplateText::raw('sort_by'));{/php}
+<div class="filterbar">
+  <details class="menu-pop">
+    <summary>{:\\app\\common\\util\\AutoIcon::ui('layout-dashboard')}<span>{:\\app\\common\\util\\TemplateText::get('ui.categories')}</span>{:\\app\\common\\util\\AutoIcon::ui('chevron-down', ['size'=>'sm', 'class'=>'caret', 'tint'=>'none'])}</summary>
+    <div class="menu-panel" data-ai-group>
+      <a href="{:mac_url('label/sort')}" {if condition="$maccms.aid eq 9995"}aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::navIcon('all', '', ['i'=>0])}<span>{:\\app\\common\\util\\TemplateText::get('all')}</span></a>
+      {maccms:type ids="parent" flag="vod" order="asc" by="sort" id="tplFb" key="tplFbKey" hide_empty="1"}<a href="{:mac_url_type($tplFb)}" {if condition="$tplFb.type_id eq $GLOBALS['type_id'] || $tplFb.type_id eq $GLOBALS['type_pid']"}aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::icon('category', $tplFb['type_name'], ['i'=>$tplFbKey])}<span>{:\\app\\common\\util\\TemplateText::get(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)($tplFb['type_name'] ?? '')))}</span></a>{/maccms:type}
+    </div>
+  </details>
+  {notempty name="tplTags"}<details class="menu-pop">
+    <summary>{:\\app\\common\\util\\AutoIcon::ui('tags')}<span>{:\\app\\common\\util\\TemplateText::get('onyx.tags')}</span>{:\\app\\common\\util\\AutoIcon::ui('chevron-down', ['size'=>'sm', 'class'=>'caret', 'tint'=>'none'])}</summary>
+    <div class="menu-panel tags" data-ai-group>{volist name="tplTags" id="tplTag"}<a href="{:mac_url_search(['class'=>$tplTag['q']])}">{$tplTag.ico}<span>{$tplTag.l|htmlspecialchars=ENT_QUOTES}</span></a>{/volist}</div>
+  </details>{/notempty}
+  {notempty name="tplSorts"}<details class="menu-pop fb-sort">
+    <summary>{:\\app\\common\\util\\AutoIcon::ui('sort')}<span>{$tplSortLbl|htmlspecialchars=ENT_QUOTES}</span>{:\\app\\common\\util\\AutoIcon::ui('chevron-down', ['size'=>'sm', 'class'=>'caret', 'tint'=>'none'])}</summary>
+    <div class="menu-panel" data-ai-group>{volist name="tplSorts" id="tplS"}<a href="{$tplS.url|htmlspecialchars=ENT_QUOTES}" {if condition="$tplS.on"}aria-current="page"{/if}>{$tplS.ico}<span>{$tplS.label|htmlspecialchars=ENT_QUOTES}</span></a>{/volist}</div>
+  </details>{/notempty}
+</div>
+<aside class="side" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.categories')}">
+  <h2 class="side-title">{:\\app\\common\\util\\AutoIcon::navIcon('categories')}<span>{:\\app\\common\\util\\TemplateText::get('ui.categories')}</span></h2>
+  <nav class="side-box side-cats" data-ai-group>
+    <a href="{:mac_url('label/sort')}" {if condition="$maccms.aid eq 9995"}aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::navIcon('all', '', ['i'=>0])}<span>{:\\app\\common\\util\\TemplateText::get('all')}</span></a>
+    {maccms:type ids="parent" flag="vod" order="asc" by="sort" id="tplSide" key="tplSideKey" hide_empty="1"}<a href="{:mac_url_type($tplSide)}" {if condition="$tplSide.type_id eq $GLOBALS['type_id'] || $tplSide.type_id eq $GLOBALS['type_pid']"}aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::icon('category', $tplSide['type_name'], ['i'=>$tplSideKey])}<span>{:\\app\\common\\util\\TemplateText::get(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)($tplSide['type_name'] ?? '')))}</span><small>{:number_format((float)mac_data_count($tplSide['type_id'],'all'))}</small></a>{/maccms:type}
+  </nav>
+  {notempty name="tplTags"}<h2 class="side-title">{:\\app\\common\\util\\AutoIcon::ui('tags')}<span>{:\\app\\common\\util\\TemplateText::get('onyx.popular_tags')}</span></h2>
+  <div class="side-box side-tags" data-ai-group>{volist name="tplTags" id="tplTag"}<a href="{:mac_url_search(['class'=>$tplTag['q']])}">{$tplTag.ico}<span>{$tplTag.l|htmlspecialchars=ENT_QUOTES}</span></a>{/volist}</div>{/notempty}
+  <div class="side-hot">{include file="public/hotwords"}</div><div data-jcx-at="P14" hidden></div>
+</aside>

@@ -1,0 +1,40 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}
+if (!isset($vvPlain)) { $vvPlain = function ($v) { $v = (string)$v; for ($i = 0; $i < 4; $i++) { $d = html_entity_decode($v, ENT_QUOTES | ENT_HTML5, 'UTF-8'); if ($d === $v) { break; } $v = $d; } return trim($v); }; }
+$vvSplit = function ($value) { return array_values(array_unique(array_filter(array_map('trim', explode(',', (string)$value)), 'strlen'))); };
+$vvCode = \app\common\util\AvdbLanguage::displayCode($obj); /* 2.11 rule 1: code only from vod_display_code */
+$vvCode = (string)preg_replace('/-(UNCENSORED-LEAK(?:ED)?|ENGLISH-SUBTITLES?)$/i', '', $vvCode);
+if ($vvCode === '' || stripos($vvCode, 'avdb-') === 0 || strlen($vvCode) > 32) { $vvCode = ''; }
+$vvActors = $vvSplit($obj['vod_display_actor'] ?? '');
+$vvActorLabel = count($vvActors) > 1 ? 'velvet.performers_label' : 'ui.actor';
+$vvGenres = $vvSplit($obj['vod_display_class'] ?? '');
+$vvTags = $vvSplit($obj['vod_display_tag'] ?? '');
+$vvDirectors = $vvSplit($obj['vod_display_director'] ?? '');
+$vvStudio = $vvPlain($obj['vod_display_writer'] ?? '');
+$vvDate = trim((string)($obj['vod_pubdate'] ?? ''));
+if ($vvDate === '' && !empty($obj['vod_year'])) { $vvDate = trim((string)$obj['vod_year']); }
+$vvDuration = trim((string)($obj['vod_duration'] ?? ''));
+$vvArea = $vvPlain($obj['vod_display_area'] ?? '');
+$vvTypeName = trim(\app\common\util\AvdbLanguage::decodeEntities((string)($obj['type']['type_name'] ?? '')));
+$vvTypeUrl = $vvTypeName !== '' ? mac_url_type($obj['type']) : '';
+$vvIco = $maccms['path_tpl'] . 'assets/img/icons.svg';
+$vvKeepTag = function ($n) { return \app\common\util\AutoIcon::keepTag($n); };
+{/php}
+<dl class="vv-meta" data-ai-group>
+  {if condition="$vvCode neq ''"}<div class="vv-meta-row"><dt>{:\\app\\common\\util\\AutoIcon::ui('hash', ['class'=>'vv-i'])}<span>{:\\app\\common\\util\\TemplateText::get('ui.id_code')}</span></dt><dd><span class="vv-code-val">{$vvCode|htmlspecialchars=ENT_QUOTES,'UTF-8',false}</span></dd></div>{/if}
+  {if condition="$vvStudio neq ''"}<div class="vv-meta-row"><dt>{:\\app\\common\\util\\AutoIcon::ui('building', ['class'=>'vv-i'])}<span>{:\\app\\common\\util\\TemplateText::get('ui.studio_label')}</span></dt><dd><span class="vv-metaval">{:\\app\\common\\util\\AutoIcon::icon('tag', $vvStudio, ['size'=>'sm'])}{$vvStudio|htmlspecialchars=ENT_QUOTES}</span></dd></div>{/if}
+  {if condition="$vvDate neq ''"}<div class="vv-meta-row"><dt>{:\\app\\common\\util\\AutoIcon::ui('calendar', ['class'=>'vv-i'])}<span>{:\\app\\common\\util\\TemplateText::get('ui.release_date')}</span></dt><dd><bdi dir="ltr">{$vvDate|htmlspecialchars=ENT_QUOTES,'UTF-8',false}</bdi></dd></div>{/if}
+  {if condition="$vvDuration neq ''"}<div class="vv-meta-row"><dt>{:\\app\\common\\util\\AutoIcon::ui('clock', ['class'=>'vv-i'])}<span>{:\\app\\common\\util\\TemplateText::get('ui.duration')}</span></dt><dd><bdi dir="ltr">{$vvDuration|htmlspecialchars=ENT_QUOTES}</bdi></dd></div>{/if}
+  {notempty name="vvActors"}<div class="vv-meta-row"><dt>{:\\app\\common\\util\\AutoIcon::ui('users', ['class'=>'vv-i'])}<span>{:\\app\\common\\util\\TemplateText::get($vvActorLabel)}</span></dt><dd>{volist name="vvActors" id="vvName"}<a class="vv-tagchip vv-tagchip--actor" href="{:mac_url_search(['actor'=>$vvName])}">{:\\app\\common\\util\\AutoIcon::avatar($vvName, '', ['size'=>'xs', 'decorative'=>true])}<span class="vv-tagchip-t" dir="auto">{:htmlspecialchars($vvPlain($vvName), ENT_QUOTES, 'UTF-8')}</span></a>{/volist}</dd></div>{/notempty}
+  {notempty name="vvGenres"}<div class="vv-meta-row"><dt>{:\\app\\common\\util\\AutoIcon::ui('tags', ['class'=>'vv-i'])}<span>{:\\app\\common\\util\\TemplateText::get('velvet.genres_label')}</span></dt><dd>{volist name="vvGenres" id="vvName"}<a class="vv-tagchip" href="{:mac_url_search(['class'=>$vvName])}">{if condition="$vvKeepTag($vvName)"}{:\\app\\common\\util\\AutoIcon::icon('tag', $vvName, ['size'=>'sm', 'i'=>$key])}{/if}<span class="vv-tagchip-t" dir="auto">{:htmlspecialchars($vvPlain($vvName), ENT_QUOTES, 'UTF-8')}</span></a>{/volist}</dd></div>{/notempty}
+  {php}$vvTags = \app\common\util\AvdbLanguage::tagFilter(isset($vvTags) ? $vvTags : [], 12);{/php}{notempty name="vvTags"}<div class="vv-meta-row"><dt>{:\\app\\common\\util\\AutoIcon::ui('tag', ['class'=>'vv-i'])}<span>{:\\app\\common\\util\\TemplateText::get('ui.tag')}</span></dt><dd>{volist name="vvTags" id="vvName"}<a class="vv-tagchip" href="{:mac_url_search(['tag'=>$vvName])}">{if condition="$vvKeepTag($vvName)"}{:\\app\\common\\util\\AutoIcon::icon('tag', $vvName, ['size'=>'sm', 'i'=>$key])}{else/}<span class="vv-tagchip-hash" aria-hidden="true">#</span>{/if}<span class="vv-tagchip-t" dir="auto">{:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::tagLabel($vvPlain($vvName)), ENT_QUOTES, 'UTF-8')}</span></a>{/volist}</dd></div>{/notempty}
+  {notempty name="vvDirectors"}<div class="vv-meta-row"><dt>{:\\app\\common\\util\\AutoIcon::ui('clapperboard', ['class'=>'vv-i'])}<span>{:\\app\\common\\util\\TemplateText::get('ui.director')}</span></dt><dd>{volist name="vvDirectors" id="vvName"}<a class="vv-tagchip" href="{:mac_url_search(['director'=>$vvName])}">{:\\app\\common\\util\\AutoIcon::ui('clapperboard', ['size'=>'sm'])}<span class="vv-tagchip-t" dir="auto">{:htmlspecialchars($vvPlain($vvName), ENT_QUOTES, 'UTF-8')}</span></a>{/volist}</dd></div>{/notempty}
+  {if condition="$vvTypeName neq ''"}<div class="vv-meta-row"><dt>{:\\app\\common\\util\\AutoIcon::ui('layout-dashboard', ['class'=>'vv-i'])}<span>{:\\app\\common\\util\\TemplateText::get('category')}</span></dt><dd><a class="vv-tagchip vv-tagchip--cat" href="{$vvTypeUrl|htmlspecialchars=ENT_QUOTES}">{:\\app\\common\\util\\AutoIcon::icon('category', $obj['type']['type_name'] ?? '', ['size'=>'sm'])}<span class="vv-tagchip-t">{:\\app\\common\\util\\TemplateText::get($vvTypeName)}</span></a></dd></div>{/if}
+  {if condition="$vvArea neq ''"}<div class="vv-meta-row"><dt>{:\\app\\common\\util\\AutoIcon::ui('globe', ['class'=>'vv-i'])}<span>{:\\app\\common\\util\\TemplateText::get('ui.area')}</span></dt><dd><span class="vv-metaval">{:\\app\\common\\util\\AutoIcon::ui('map-pin', ['size'=>'sm'])}{$vvArea|htmlspecialchars=ENT_QUOTES}</span></dd></div>{/if}
+</dl>

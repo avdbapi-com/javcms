@@ -1,0 +1,31 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="neon" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+<title>{:\\app\\common\\util\\TemplateText::get('ui.page_not_found_bc3023')} - {:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$maccms['site_name']), ENT_QUOTES, 'UTF-8')}</title>
+<meta name="robots" content="noindex, follow" />
+{include file="public/include"}
+</head>
+<body class="nx-page-404">
+{include file="public/head"}
+<main id="main-content" class="nx-main"><div class="nx-wrap">
+<section class="nx-state">
+<div class="nx-state-art">{:\\app\\common\\util\\AutoIcon::scene('not-found')}</div>
+<p class="nx-state-code" aria-hidden="true">404</p>
+<h1>{:\\app\\common\\util\\TemplateText::get('ui.page_not_found_bc3023')}</h1>
+<p>{:\\app\\common\\util\\TemplateText::get('ui.this_page_may_have_moved_browse_the_latest_videos_or_try_a_search')}</p>
+<form action="{:mac_url('vod/search')}" method="get" role="search" data-nx-search><input class="nx-input" type="search" name="wd" placeholder="{:\\app\\common\\util\\TemplateText::get('ui.search_videos_or_performers')}" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.search')}" maxlength="60"><button class="nx-btn nx-btn-primary" type="submit">{:\\app\\common\\util\\AutoIcon::ui('search', ['size'=>'sm', 'tint'=>'none'])}{:\\app\\common\\util\\TemplateText::get('ui.search')}</button></form>
+<div class="nx-state-actions"><a class="nx-btn" href="{$maccms.path}">{:\\app\\common\\util\\AutoIcon::navIcon('home', '', ['size'=>'sm', 'tint'=>'none'])}{:\\app\\common\\util\\TemplateText::get('ui.back_to_home')}</a><a class="nx-btn" href="{:mac_url('label/new')}">{:\\app\\common\\util\\AutoIcon::navIcon('latest', '', ['size'=>'sm', 'tint'=>'none'])}{:\\app\\common\\util\\TemplateText::get('ui.latest_videos')}</a></div>
+</section>
+<section class="nx-section" aria-labelledby="nx-h-404" data-ai-group><div class="nx-cap"><h2 class="nx-cap-title" id="nx-h-404"><span class="nx-cap-ico">{:\\app\\common\\util\\AutoIcon::navIcon('hot', '', ['size'=>'lg', 'plate'=>true])}</span><span>{:\\app\\common\\util\\TemplateText::get('ui.hot_videos')}</span></h2></div>
+<div class="nx-grid" data-grid-fill>{maccms:vod num="10" type="all" order="desc" by="hits" paging="no" id="vo"}{include file="public/vodbox"}{/maccms:vod}</div></section>
+</div></main>
+{include file="public/foot"}
+</body>
+</html>

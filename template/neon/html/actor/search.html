@@ -1,0 +1,26 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="neon" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/auto"}
+{include file="public/include"}
+</head>
+<body class="nx-page-actor">
+{include file="public/head"}
+<main id="main-content" class="nx-main"><div class="nx-wrap">
+<form class="nx-sform" action="{:mac_url('actor/search')}" method="get" role="search"><a class="nx-back" href="{:mac_url('actor/index')}" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.return')}"><svg class="nx-ico" aria-hidden="true"><use href="{$nxSvg|htmlspecialchars=ENT_QUOTES}#back"></use></svg></a><label class="nx-sbox"><span class="nx-sr">{:\\app\\common\\util\\TemplateText::get('ui.search')}</span><svg class="nx-ico" aria-hidden="true"><use href="{$nxSvg|htmlspecialchars=ENT_QUOTES}#search"></use></svg><input type="search" name="wd" value="{$nxQ|htmlspecialchars=ENT_QUOTES,'UTF-8',false}" maxlength="60" autocomplete="off"></label><button type="submit">{:\\app\\common\\util\\TemplateText::get('ui.search')}</button></form>
+<section class="nx-section" aria-labelledby="nx-h-as"><div class="nx-cap"><h1 class="nx-cap-title" id="nx-h-as"><span class="nx-cap-ico">{:\\app\\common\\util\\AutoIcon::navIcon('actors', '', ['size'=>'lg', 'plate'=>true])}</span><span>{:\\app\\common\\util\\TemplateText::get('performers')}</span></h1></div>
+<div class="nx-people" data-ai-group>{maccms:actor num="24" paging="yes" type="all" pageurl="actor/search" order="desc" by="time" id="vo"}<a class="nx-person" href="{:mac_url_actor_detail($vo)}"><span class="nx-person-av">{:\\app\\common\\util\\AutoIcon::avatar($vo['actor_name'], (string)($vo['actor_pic'] ?? ''), ['size'=>'lg', 'decorative'=>true])}</span><span>{:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)($vo['actor_name'] ?? '')), ENT_QUOTES, 'UTF-8')}</span></a>{/maccms:actor}</div>
+{if condition="$__PAGING__.record_total eq 0"}{include file="public/empty"}{/if}
+{include file="public/paging"}
+</section>
+</div></main>
+{include file="public/foot"}
+</body>
+</html>

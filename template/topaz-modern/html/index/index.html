@@ -1,0 +1,27 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="topaz-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/index"}
+{include file="public/include"}
+</head>
+<body class="tp-page-home">
+{include file="public/head"}
+{php}$tpSeen = []; if (!isset($tpPlain)) { $tpPlain = function ($v) { $v = (string)$v; for ($i = 0; $i < 6; $i++) { $d = html_entity_decode($v, ENT_QUOTES | ENT_HTML5, 'UTF-8'); if ($d === $v) { break; } $v = $d; } return trim($v); }; }{/php}
+<main id="main-content" class="tp-main tp-home">
+{include file="index/slide"}
+{php}$jvPbOpt = ['section' => 'tp-tray tp-tray--home tp-wrap', 'head' => 'tp-tray-head', 'title' => 'tp-tray-title', 'more' => 'tp-tray-more', 'grid' => 'tp-grid'];{/php}{include file="public/provider_block"}{include file="index/new"}
+{include file="index/list"}
+{include file="index/watch"}
+{include file="index/rated"}
+{include file="index/week"}
+</main>
+{include file="public/foot"}
+</body>
+</html>

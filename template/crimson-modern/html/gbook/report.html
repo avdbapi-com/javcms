@@ -1,0 +1,15 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<div class="mac_report reply_box ci-panel"><form class="gbook_form ci-form"><input type="hidden" name="gbook_rid" value="{:intval($param['id'] ?? 0)}"><p class="ci-tip">{:\\app\\common\\util\\TemplateText::get('ui.please_enter_the_error_content')}</p><textarea class="gbook_content" name="gbook_content" rows="6" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.your_message')}">{$param.name}</textarea>{if condition="$gbook.verify eq 1"}<div class="ci-field"><label for="report-verify">{:\\app\\common\\util\\TemplateText::get('ui.verification_code')}</label><input id="report-verify" type="text" name="verify" class="mac_verify ci-input" maxlength="4"></div>{/if}<p class="ci-tip">{:\\app\\common\\util\\TemplateText::get('ui.you_can_also_enter')} <span class="gbook_remaining remaining"></span></p><button type="button" class="gbook_submit ci-btn">{:\\app\\common\\util\\TemplateText::get('ui.submit_a_message')}</button></form></div>
+<script>
+    $(function(){
+        MAC.Gbook.Login = {$gbook.login};
+        MAC.Gbook.Verify = {$gbook.verify};
+        MAC.Gbook.Init();
+    });
+</script>

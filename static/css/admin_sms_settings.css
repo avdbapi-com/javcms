@@ -1,0 +1,26 @@
+/*
+ * This file is part of JavCMS - https://javcms.net
+ * Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+ * License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+ * See the LICENSE and NOTICE files that come with JavCMS.
+ * Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Telegram: https://t.me/avdb_api
+ */
+body.admin-studio .admin-sms-settings { max-width: 1050px; margin-inline: auto; }
+body.admin-studio .admin-sms-settings .studio-page-header p,
+body.admin-studio .admin-sms-settings .sms-provider-heading p,
+body.admin-studio .admin-sms-settings .sms-advanced p,
+body.admin-studio .admin-sms-settings .sms-provider-note { color: var(--studio-muted); font-size: 13px; line-height: 1.65; }
+body.admin-studio .admin-sms-settings .sms-provider-heading { margin: 0 0 22px; }
+body.admin-studio .admin-sms-settings .sms-provider-heading h2 { margin: 0 0 8px; color: var(--studio-text); font-size: 19px; line-height: 1.4; }
+body.admin-studio .admin-sms-settings .sms-advanced { padding: 16px; border: 1px solid var(--studio-line); border-radius: 8px; background: var(--studio-surface); }
+body.admin-studio .admin-sms-settings .sms-advanced summary { color: var(--studio-text); font-size: 14px; font-weight: 600; cursor: pointer; }
+body.admin-studio .admin-sms-settings .sms-advanced > p { margin: 14px 0; }
+body.admin-studio .admin-sms-settings .sms-advanced .layui-form-item { margin-top: 16px; }
+body.admin-studio .admin-sms-settings .sms-availability { padding: 12px 16px; border: 1px solid var(--studio-line); border-radius: 6px; background: var(--studio-raised); color: var(--studio-danger); font-size: 13px; line-height: 1.6; }
+body.admin-studio .admin-sms-settings .admin-sms-provider .layui-input-inline { width: min(100%,480px); max-width: 100%; }
+body.admin-studio .admin-sms-settings :is(input,summary):focus-visible { outline: 2px solid var(--studio-accent); outline-offset: 3px; }
+@media (max-width:600px) {
+ body.admin-studio .admin-sms-settings .sms-advanced { padding: 12px; }
+ body.admin-studio .admin-sms-settings .admin-sms-provider .layui-input-inline { width: 100%; }
+}

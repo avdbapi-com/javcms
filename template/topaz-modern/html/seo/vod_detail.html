@@ -1,0 +1,11 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}
+$tpSeoObj = isset($obj) && is_array($obj) ? $obj : []; foreach (['name', 'blurb', 'content', 'actor', 'class', 'director', 'writer', 'tag', 'area'] as $tpSeoF) { $tpSeoV = (string)($tpSeoObj['vod_display_' . $tpSeoF] ?? ($tpSeoObj['vod_' . $tpSeoF] ?? '')); for ($tpSeoI = 0; $tpSeoI < 6; $tpSeoI++) { $tpSeoD = html_entity_decode($tpSeoV, ENT_QUOTES | ENT_HTML5, 'UTF-8'); if ($tpSeoD === $tpSeoV) { break; } $tpSeoV = $tpSeoD; } if ($tpSeoV !== '') { $tpSeoObj['vod_display_' . $tpSeoF] = $tpSeoV; } }
+echo \app\common\util\TemplateSeo::head($maccms, $tpSeoObj, isset($param) && is_array($param) ? $param : []);
+{/php}

@@ -1,0 +1,20 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="honey-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}" data-fx="vt smooth" data-fx-lerp="0.07" data-fx-vt-style="honey">
+<head>
+<title>{:\\app\\common\\util\\TemplateText::get('ui.access_required')} - {:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$maccms['site_name']), ENT_QUOTES, 'UTF-8')}</title>
+<meta name="robots" content="noindex, follow" />
+{include file="public/include"}
+</head>
+<body class="nc-page-state">
+{include file="public/head"}
+<main id="main-content" class="nc-main"><div class="nc-wrap nc-state"><section class="nc-statecard"><span class="nc-hexicon" aria-hidden="true"><svg class="nc-i" aria-hidden="true"><use href="{$ncIco}coins"></use></svg></span><p class="nc-eyebrow nc-eyebrow-soft"><svg class="nc-i" aria-hidden="true"><use href="{$ncIco}newspaper"></use></svg>{:\\app\\common\\util\\TemplateText::get('ui.articles')}</p><h1 class="msg_jump_tit">{:\\app\\common\\util\\TemplateText::get('ui.access_required')}</h1><p class="nc-statemsg" dir="auto"><strong>{:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$obj['art_name']), ENT_QUOTES, 'UTF-8')}</strong></p><p class="nc-statemsg"><b class="nc-ltr">{$popedom.points|intval}</b> {:\\app\\common\\util\\TemplateText::get('ui.points')}</p><p class="nc-statemsg">{:\\app\\common\\util\\TemplateText::get('ui.purchase_permission_to_use_points')}</p><div class="nc-empty-act">{if condition="$user.group.group_id eq 1"}<a class="nc-btn nc-btn-honey" href="{:mac_url('user/login')}"><svg class="nc-i" aria-hidden="true"><use href="{$ncIco}log-in"></use></svg>{:\\app\\common\\util\\TemplateText::get('ui.log_in_immediately')}</a>{else/}<button class="nc-btn nc-btn-honey" type="button" onclick="MAC.User.BuyPopedom(this)" data-id="{$obj.art_id|intval}" data-mid="2" data-type="1" data-sid="{$param.page|intval}" data-nid="0">{:\\app\\common\\util\\TemplateText::get('ui.confirm_the_purchase')}</button><a class="nc-btn nc-btn-soft" href="{:mac_url('user/buy')}">{:\\app\\common\\util\\TemplateText::get('ui.immediately_recharge')}</a>{/if}<a class="nc-btn nc-btn-soft" href="{:mac_url('art/index')}">{:\\app\\common\\util\\TemplateText::get('ui.articles')}</a></div></section></div></main>
+{include file="public/foot"}
+</body>
+</html>

@@ -1,0 +1,159 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Based on MacCMS 10 (Apache-2.0) by magicblack, changed by JavCMS.
+JavCMS changes: Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors,
+JavCMS Community License 1.0. The MacCMS parts stay under the Apache License 2.0.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{include file="../../../application/admin/view/public/head" /}
+{php}$axSprite = '__STATIC__/admin/icons/admin-icons.svg?v=' . $admin_icons_v;
+$axDec = function ($v) { return htmlspecialchars(html_entity_decode((string)$v, ENT_QUOTES, 'UTF-8'), ENT_QUOTES, 'UTF-8'); };
+$cjId = (int)$param['id'];{/php}
+<style>
+.admin-cj-publish .cj-url { overflow-wrap: anywhere; word-break: break-word; }
+.admin-cj-publish .cj-title { overflow-wrap: anywhere; }
+</style>
+<!-- close-security (visual r4 R4-2): kit page. Writes are POSTs with the admin token; SEC r4 P1-2: id / status are numbers. -->
+<div class="page-container p10 ax-list admin-cj-publish">
+    {include file="../../../application/admin/view/public/page_head" icon="ai-scan-text" title="admin/cj/content_publish" /}
+
+    <nav class="ax-tabs" aria-label="{:lang('admin/cj/content_publish')}">
+        <a href="{:url('cj/publish')}?id={$cjId}" {if condition="$param.status eq ''"}aria-current="page"{/if}>{:lang('all')}</a>
+        <a href="{:url('cj/publish')}?id={$cjId}&status=1" {if condition="$param.status eq '1'"}aria-current="page"{/if}>{:lang('admin/cj/collected_not')}</a>
+        <a href="{:url('cj/publish')}?id={$cjId}&status=2" {if condition="$param.status eq '2'"}aria-current="page"{/if}>{:lang('admin/cj/collected')}</a>
+        <a href="{:url('cj/publish')}?id={$cjId}&status=3" {if condition="$param.status eq '3'"}aria-current="page"{/if}>{:lang('admin/cj/published')}</a>
+    </nav>
+
+    <div class="ax-toolbar">
+        <button type="button" class="ax-btn j-cj-into" data-all="0"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axSprite}#ai-download"/></svg>{:lang('import')}</button>
+        <button type="button" class="ax-btn j-cj-into" data-all="1" data-count="{$count_ready|intval}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axSprite}#ai-cloud-download"/></svg>{:lang('import_all')}</button>
+        <span class="ax-toolbar__spacer"></span>
+        <span class="ax-toolbar__count" id="axSelCount" aria-live="polite"></span>
+        <div class="ax-menu ax-menu--end">
+            <button type="button" class="ax-btn" aria-haspopup="menu" aria-expanded="false">{:lang('admin/ux/kit/bulk')}<svg class="ax-ic ax-ic--chevron" aria-hidden="true" focusable="false"><use href="{$axSprite}#ai-chevron-down"/></svg></button>
+            <div class="ax-menu__list" role="menu" hidden>
+                <button type="button" class="ax-menu__item ax-menu__item--danger j-cj-del" role="menuitem" data-href="{:url('content_del')}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axSprite}#ai-trash-2"/></svg>{:lang('admin/ux/system/delete_selected')}</button>
+                <div class="ax-menu__sep" role="separator"></div>
+                <button type="button" class="ax-menu__item ax-menu__item--danger j-cj-clear" role="menuitem" data-href="{:url('content_del')}" data-count="{$count_rule|intval}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axSprite}#ai-eraser"/></svg>{:lang('admin/ux/sec/clear_all_menu')}</button>
+            </div>
+        </div>
+    </div>
+
+    <form class="layui-form" method="post" id="pageListForm" aria-label="{:lang('admin/cj/content_publish')}">
+        <input type="hidden" name="__token__" id="ax-list-token" value="{:mac_admin_csrf_token()}">
+        {if condition="empty($list)"}
+        {include file="../../../application/admin/view/public/empty_state" icon="ai-scan-text" text="admin/ux/sec/cj_empty" /}
+        {else/}
+        <div class="ax-table-wrap">
+        <table class="ax-table ax-table--cards">
+            <thead>
+            <tr>
+                <th class="ax-col-check"><input type="checkbox" lay-skin="primary" lay-filter="allChoose" aria-label="{:lang('admin/ux/content/select_all')}"></th>
+                <th class="ax-num">{:lang('id')}</th>
+                <th>{:lang('status')}</th>
+                <th>{:lang('name')}</th>
+                <th>{:lang('url')}</th>
+                <th class="ax-row-actions"><span class="ax-sr-only">{:lang('opt')}</span></th>
+            </tr>
+            </thead>
+            <tbody>
+            {volist name="list" id="vo"}
+            <tr>
+                <td class="ax-col-check" data-label=""><input type="checkbox" name="ids[]" value="{$vo.id|intval}" class="layui-checkbox checkbox-ids" lay-skin="primary" aria-label="#{$vo.id|intval}"></td>
+                <td class="ax-num" data-label="{:lang('id')}">{$vo.id|intval}</td>
+                <td data-label="{:lang('status')}">{if condition="$vo.status eq '1'"}<span class="ax-chip ax-chip--off">{:lang('admin/cj/collected_not')}</span>{elseif condition="$vo.status eq '2'"/}<span class="ax-chip">{:lang('admin/cj/collected')}</span>{else/}<span class="ax-chip ax-chip--ok">{:lang('admin/cj/published')}</span>{/if}</td>
+                <td class="cj-title" data-label="{:lang('name')}">{:$axDec($vo['title'])}</td>
+                <td class="cj-url ax-faint" data-label="{:lang('url')}">{:$axDec($vo['url'])}</td>
+                <td class="ax-row-actions">
+                    <a class="ax-btn ax-btn--sm j-iframe" data-href="{:url('show')}?id={$vo.id|intval}" data-title="{:lang('view')}" href="javascript:;"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axSprite}#ai-eye"/></svg>{:lang('view')}</a>
+                </td>
+            </tr>
+            {/volist}
+            </tbody>
+        </table>
+        </div>
+        <div id="pages" class="ax-pages"></div>
+        {/if}
+    </form>
+
+    <form id="cjIntoForm" method="post" action="{:url('content_into')}" hidden>
+        <input type="hidden" name="__token__" value="{:mac_admin_csrf_token()}">
+        <input type="hidden" name="id" value="{$cjId}">
+        <input type="hidden" name="all" value="">
+        <input type="hidden" name="ids" value="">
+    </form>
+</div>
+
+{include file="../../../application/admin/view/public/foot" /}
+<script type="application/json" id="axCjLang">{:json_encode([
+    'rule'=>(string)$rule_name, 'id'=>$cjId,
+    'selected'=>lang('admin/ux/kit/selected'), 'select_first'=>lang('admin/ux/kit/select_first'), 'failed'=>lang('admin/ux/kit/request_failed'),
+    'del'=>lang('del'), 'del_title'=>lang('admin/ux/system/delete_selected'), 'del_one'=>lang('admin/ux/content/confirm_delete_one'), 'del_n'=>lang('admin/ux/sec/cj_del_n'),
+    'clear_title'=>lang('admin/ux/sec/cj_clear_title'), 'clear_msg'=>lang('admin/ux/sec/cj_clear_msg'), 'nothing_del'=>lang('admin/ux/sec/nothing_to_delete'),
+    'import'=>lang('import'), 'import_all'=>lang('import_all'),
+    'into_title'=>lang('admin/ux/sec/import_selected_title'), 'into_msg'=>lang('admin/ux/sec/import_selected_msg'), 'into_one'=>lang('admin/ux/sec/import_one_msg'),
+    'into_all_title'=>lang('admin/ux/sec/import_all_title'), 'into_all_msg'=>lang('admin/ux/sec/import_all_msg'), 'nothing_into'=>lang('admin/ux/sec/nothing_to_import')
+], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP)}</script>
+<script type="text/javascript">
+    {php}$axUrlParam = array_filter((array)$param, function ($v, $k) { return is_string($k) && preg_match('/^[A-Za-z0-9_]{1,40}$/D', $k) && is_scalar($v); }, ARRAY_FILTER_USE_BOTH);{/php}
+    var curUrl = {:json_encode(url('cj/publish',$axUrlParam),JSON_HEX_TAG|JSON_HEX_AMP|JSON_HEX_APOS|JSON_HEX_QUOT)};
+    layui.use(['laypage', 'layer', 'form'], function () {
+        var laypage = layui.laypage, form = layui.form, $ = layui.jquery;
+        var L = JSON.parse(document.getElementById('axCjLang').textContent);
+        var named = function (text) { return String(text).replace('%s', function () { return L.rule || ('#' + L.id); }); };
+        if (document.getElementById('pages')) {
+            laypage.render({
+                elem: 'pages', count: {$total|default=0|intval}, limit: {$limit|default=20|intval}, limits: [10, 20, 50, 100, 200, 500, 1000], curr: {$page|default=1|intval},
+                layout: ['count', 'prev', 'page', 'next', 'limit', 'skip'],
+                jump: function (obj, first) { if (!first) { location.href = curUrl.replace('%7Bpage%7D', obj.curr).replace('%7Blimit%7D', obj.limit); } }
+            });
+        }
+        function selIds() { return $('#pageListForm .checkbox-ids:checked').map(function () { return this.value; }).get(); }
+        function syncCount() { var n = selIds().length; $('#axSelCount').text(n ? AxUX.format(L.selected, { n: n }) : ''); }
+        form.on('checkbox', function () { setTimeout(syncCount, 0); });
+        $(document).on('change', '#pageListForm input[type="checkbox"]', syncCount);
+        function post(url, data) {
+            data.__token__ = $('#ax-list-token').val();
+            return $.ajax({ url: url, type: 'POST', dataType: 'json', data: data });
+        }
+        function done(res) {
+            var ok = res && res.code == 1;
+            AxUX.toast(res && res.msg ? res.msg : L.failed, ok ? 'ok' : 'error');
+            if (ok) { setTimeout(function () { location.reload(); }, 600); }
+        }
+        function fail() { AxUX.toast(L.failed, 'error'); }
+        // Delete the ticked rows: the confirm says how many.
+        $(document).on('click', '.j-cj-del', function () {
+            var btn = $(this), ids = selIds();
+            if (!ids.length) { AxUX.toast(L.select_first, 'warn'); return; }
+            AxUX.confirm({ title: L.del_title, message: ids.length === 1 ? L.del_one : L.del_n, count: ids.length, confirmLabel: L.del }).then(function (yes) {
+                if (yes) { post(btn.attr('data-href'), { ids: ids.join(',') }).done(done).fail(fail); }
+            });
+        });
+        // Clear all: only this rule's items; names the rule and the count, typed DELETE.
+        $(document).on('click', '.j-cj-clear', function () {
+            var btn = $(this), n = parseInt(btn.attr('data-count'), 10) || 0;
+            if (!n) { AxUX.toast(L.nothing_del, 'info'); return; }
+            AxUX.confirm({ title: L.clear_title, message: named(L.clear_msg), messageOne: L.del_one, count: n, typed: 'DELETE', confirmLabel: L.del }).then(function (yes) {
+                if (yes) { post(btn.attr('data-href'), { all: 1, id: L.id }).done(done).fail(fail); }
+            });
+        });
+        // Import / Import all: a POST form (the admin token goes in the body); the import steps then run on this page.
+        $(document).on('click', '.j-cj-into', function () {
+            var btn = $(this), all = btn.attr('data-all') === '1', ids = all ? [] : selIds();
+            var n = all ? (parseInt(btn.attr('data-count'), 10) || 0) : ids.length;
+            if (!all && !n) { AxUX.toast(L.select_first, 'warn'); return; }
+            if (all && !n) { AxUX.toast(L.nothing_into, 'info'); return; }
+            AxUX.confirm({ title: all ? L.into_all_title : L.into_title, message: all ? named(L.into_all_msg) : (n === 1 ? L.into_one : L.into_msg), count: n, danger: false, confirmLabel: all ? L.import_all : L.import }).then(function (yes) {
+                if (!yes) { return; }
+                var f = document.getElementById('cjIntoForm');
+                f.elements.all.value = all ? '1' : '';
+                f.elements.ids.value = ids.join(',');
+                f.submit();
+            });
+        });
+    });
+</script>
+</body>
+</html>

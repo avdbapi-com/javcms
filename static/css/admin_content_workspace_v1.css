@@ -1,0 +1,156 @@
+/*
+ * This file is part of JavCMS - https://javcms.net
+ * Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+ * License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+ * See the LICENSE and NOTICE files that come with JavCMS.
+ * Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Telegram: https://t.me/avdb_api
+ */
+/* Candidate-only additive overlay for Art index/info.
+ * The production patch adds the same link and the marker class to the existing
+ * page-container. It intentionally does not rename fields, routes, or hooks.
+ */
+/* V9 palette -> kit tokens (admin-content builder) */
+html .admin-content-workspace-v1 { --acw-canvas: var(--ax-bg); --acw-surface: var(--ax-surface); --acw-raised: var(--ax-raised); --acw-line: var(--ax-line); --acw-line-soft: var(--ax-line); --acw-ink: var(--ax-text); --acw-muted: var(--ax-muted); --acw-quiet: var(--ax-faint); --acw-cyan: var(--ax-accent); --acw-danger: var(--ax-danger); }
+.admin-content-workspace-v1 {
+  --acw-canvas: #0b1120;
+  --acw-surface: #101828;
+  --acw-raised: #141f32;
+  --acw-line: #263146;
+  --acw-line-soft: #1e293d;
+  --acw-ink: #e8edf6;
+  --acw-muted: #8c98ac;
+  --acw-quiet: #647087;
+  --acw-cyan: #57d5e8;
+  --acw-danger: #f27d94;
+  min-height: calc(100vh - 24px);
+  color: var(--acw-ink);
+}
+.admin-content-workspace-v1 .my-toolbar-box {
+  margin-bottom: 16px;
+  border: 1px solid var(--acw-line);
+  border-radius: 10px;
+  background: var(--acw-surface);
+  padding: 13px;
+}
+.admin-content-workspace-v1 .my-toolbar-box > .center { text-align: left; }
+.admin-content-workspace-v1 .my-toolbar-box form { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.admin-content-workspace-v1 .layui-input-inline { margin: 0 0 0 0; }
+.admin-content-workspace-v1 .layui-input,
+.admin-content-workspace-v1 select,
+.admin-content-workspace-v1 .layui-textarea {
+  border: 1px solid var(--acw-line);
+  border-radius: 7px;
+  background: #0d1627;
+  color: var(--acw-ink);
+}
+.admin-content-workspace-v1 .layui-input:focus,
+.admin-content-workspace-v1 select:focus,
+.admin-content-workspace-v1 .layui-textarea:focus {
+  border-color: var(--acw-cyan);
+  box-shadow: 0 0 0 2px rgba(87,213,232,.14);
+}
+.admin-content-workspace-v1 .btn,
+.admin-content-workspace-v1 .layui-btn { border-radius: 7px; font-weight: 650; }
+.admin-content-workspace-v1 .btn-primary,
+.admin-content-workspace-v1 .layui-btn-normal { border-color: transparent; background: var(--acw-cyan); color: #071421; }
+.admin-content-workspace-v1 .btn-primary:hover,
+.admin-content-workspace-v1 .layui-btn-normal:hover { background: #76e2f0; }
+.admin-content-workspace-v1 .btn-primary-group { display: flex; flex-wrap: wrap; gap: 7px; }
+.admin-content-workspace-v1 .layui-table {
+  overflow: hidden;
+  border: 1px solid var(--acw-line);
+  border-radius: 10px;
+  background: var(--acw-surface);
+  color: var(--acw-ink);
+}
+.admin-content-workspace-v1 .layui-table thead tr { background: #121d30; }
+.admin-content-workspace-v1 .layui-table th {
+  border-color: var(--acw-line);
+  color: var(--acw-quiet);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.admin-content-workspace-v1 .layui-table td { border-color: var(--acw-line-soft); color: var(--acw-muted); }
+.admin-content-workspace-v1 .layui-table tbody tr:hover { background: rgba(87,213,232,.035); }
+.admin-content-workspace-v1 .layui-table .layui-input { min-height: 30px; padding: 0 8px; }
+.admin-content-workspace-v1 .badge-dim,
+.admin-content-workspace-v1 .badge { border-radius: 100px; }
+.admin-content-workspace-v1 .layui-tab { overflow: hidden; border: 1px solid var(--acw-line); border-radius: 10px; background: var(--acw-surface); }
+.admin-content-workspace-v1 .layui-tab-title { border-bottom-color: var(--acw-line); background: #121d30; }
+.admin-content-workspace-v1 .layui-tab-title li { color: var(--acw-muted); }
+.admin-content-workspace-v1 .layui-tab-title .layui-this { color: var(--acw-ink); }
+.admin-content-workspace-v1 .layui-tab-title .layui-this:after { border-color: var(--acw-cyan); }
+.admin-content-workspace-v1 .layui-tab-content { color: var(--acw-muted); }
+.admin-content-workspace-v1 .layui-form-label { color: var(--acw-muted); font-weight: 600; }
+.admin-content-workspace-v1 .layui-elem-field { border-color: var(--acw-line); }
+.admin-content-workspace-v1 .layui-elem-field legend { color: var(--acw-quiet); font-size: 11px; }
+.admin-content-workspace-v1 .layui-elem-quote { border-left-color: var(--acw-cyan); background: rgba(87,213,232,.07); color: var(--acw-muted); }
+.admin-content-workspace-v1 .layui-upload-img { border-color: var(--acw-line); border-radius: 7px; }
+.admin-content-workspace-v1 .j-editor-clear,
+.admin-content-workspace-v1 .j-editor-remove,
+.admin-content-workspace-v1 .j-editor-up,
+.admin-content-workspace-v1 .j-editor-down { border: 1px solid var(--acw-line); background: transparent; color: var(--acw-muted); }
+@media (max-width: 720px) {
+  .admin-content-workspace-v1 .my-toolbar-box form { align-items: stretch; }
+  .admin-content-workspace-v1 .my-toolbar-box form > .layui-input-inline,
+  .admin-content-workspace-v1 .my-toolbar-box form > .layui-btn,
+  .admin-content-workspace-v1 .my-toolbar-box form > .btn { flex: 1 1 150px; }
+  .admin-content-workspace-v1 .layui-table { display: block; overflow-x: auto; white-space: nowrap; }
+}
+
+.admin-content-workspace-v1 #pageListForm{overflow-x:auto;max-width:100%;border:1px solid var(--acw-line);border-radius:10px;}
+.admin-content-workspace-v1 #pageListForm .layui-table{min-width:980px;margin:0;}
+.admin-content-workspace-v1 .my-toolbar-box > .center form{width:100%;}
+
+/* ---- Content lists in the kit look (brief F10, V3, V13, V15; admin-content builder) ---- */
+.ax-list .ax-table-wrap { margin-bottom: 4px; }
+.ax-list .ax-table td { white-space: nowrap; }
+.ax-list .ax-table td.ax-cell-title, .ax-list .ax-table td.ax-cell-wrap { white-space: normal; min-width: 220px; }
+.ax-col-check { width: 44px; }
+.ax-cell-title { line-height: 1.4; }
+.ax-cell-title > * { display: block; }
+.ax-cell-title__meta { color: var(--ax-faint); font-size: 12px; }
+body.admin-studio .ax-cell-title a { color: var(--ax-text); text-decoration: none; overflow-wrap: anywhere; }
+body.admin-studio .ax-cell-title a:hover { color: var(--ax-accent); text-decoration: underline; }
+.ax-cell-title__tags { display: flex !important; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
+.ax-cell-title__tags:empty { display: none !important; }
+.ax-cell-sub { margin-top: 4px; color: var(--ax-muted); font-size: 12.5px; white-space: normal; overflow-wrap: anywhere; }
+.ax-tag { display: inline-flex; align-items: center; min-height: 20px; padding: 0 6px; border-radius: var(--ax-r-sm); background: var(--ax-raised); color: var(--ax-muted); font-size: 11.5px; }
+.ax-cell-clip span { display: inline-block; max-width: 140px; overflow: hidden; text-overflow: ellipsis; vertical-align: middle; }
+.ax-cell-time { color: var(--ax-muted); font-variant-numeric: tabular-nums; }
+.ax-pages { margin: 16px 0 8px; }
+.ax-list .ax-row-actions .ax-menu { display: inline-block; vertical-align: middle; }
+body.admin-studio .ax-btn.ax-danger-text { color: var(--ax-danger); }
+.ax-inline-input { width: 100%; min-width: 80px; min-height: 32px; padding: 4px 8px; box-sizing: border-box; border: 1px solid var(--ax-field); border-radius: var(--ax-r-sm); background: var(--ax-surface); color: var(--ax-text); font: inherit; }
+.ax-inline-input--num { width: 72px; min-width: 0; text-align: right; }
+.ax-inline-input.is-changed { border-color: var(--ax-accent); box-shadow: 0 0 0 1px var(--ax-accent); }
+@media (max-width: 1365px) { .ax-hide-md { display: none !important; } }
+@media (max-width: 640px) {
+    .ax-list .ax-table--cards td, .ax-list .ax-table--cards td.ax-cell-title { white-space: normal; min-width: 0; }
+    .ax-list .ax-table--cards td.ax-cell-title { display: block; text-align: left; }
+    .ax-list .ax-table--cards td.ax-cell-title::before { display: block; margin-bottom: 2px; }
+    .ax-list .ax-table--cards td.ax-col-check { justify-content: flex-start; }
+    .ax-list .ax-toolbar .ax-toolbar__spacer { display: none; }
+}
+/* Filter bar: the kit grid (.ax-filters) has an invalid track list (auto-fit + 1fr/auto), so browsers drop it and
+   stack every control; lists of this builder lay it out with flex instead (hand-over HO-content-1 fixes the kit). */
+.ax-list .ax-filters { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.ax-list .ax-filters > :is(input[type="search"], input[type="text"]) { flex: 1 1 260px; min-width: 0; }
+.ax-list .ax-filters > select { flex: 0 1 200px; min-width: 160px; }
+.ax-list .ax-filters > :is(button, .ax-btn) { flex: 0 0 auto; }
+.ax-list .ax-filters > details { flex: 1 0 100%; }
+body.admin-studio .ax-list .ax-filters :is(select, input[type="search"], input[type="text"]) {
+    box-sizing: border-box; min-height: var(--ax-h); padding: 8px 12px; border: 1px solid var(--ax-field); border-radius: var(--ax-r-sm);
+    background: var(--ax-surface); color: var(--ax-text); font: inherit;
+}
+.ax-list .ax-filters__more > select { width: 100%; }
+@media (max-width: 640px) {
+    .ax-list .ax-filters > select { flex: 1 1 140px; min-width: 0; }
+    .ax-list .ax-filters > :is(button, .ax-btn) { flex: 1 1 100%; justify-content: center; }
+}
+.ax-cell-sub { display: block; }
+body.admin-studio .ax-list .ax-table th { white-space: normal; vertical-align: bottom; }
+@media (max-width: 1365px) { body.admin-studio .ax-list .ax-table :is(th, td) { padding-left: 8px; padding-right: 8px; } body.admin-studio .ax-list .ax-table td.ax-cell-time { white-space: normal; min-width: 84px; } }

@@ -1,0 +1,47 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="ember" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+<meta name="robots" content="noindex, follow">
+<title>{:\\app\\common\\util\\TemplateText::get('ui.verification_code')}</title>
+{include file="public/include"}
+</head>
+<body>
+{include file="public/head"}
+<main id="main-content" class="e-main container">
+  <div class="e-state">
+    <h1>{:\\app\\common\\util\\TemplateText::get('ui.verification_code')}</h1>
+    <form id="native-verification-form" class="e-form" style="text-align:start;margin-top:14px" action="{:mac_url('ajax/verify_check')}" method="post">{:token()}<input type="hidden" name="type" value="{$type|htmlspecialchars=ENT_QUOTES}">
+      <label for="native-verification-code">{:\\app\\common\\util\\TemplateText::get('ui.verification_code')}</label>
+      <div class="verification-field">
+        <input id="native-verification-code" name="verify" autocomplete="off" required maxlength="4" inputmode="text">
+        <img id="native-verification-image" src="{:mac_url('verify/index')}" alt="{:\\app\\common\\util\\TemplateText::get('ui.verification_code')}" width="110" height="40">
+      </div>
+      <button class="e-btn is-ghost" type="button" id="native-verification-refresh">{:\\app\\common\\util\\TemplateText::get('not_to_see_change_one')}</button>
+      <button type="submit">{:\\app\\common\\util\\TemplateText::get('ui.confirm')}</button>
+      <p id="native-verification-status" role="status" aria-live="polite"></p>
+    </form>
+  </div>
+</main>
+{include file="public/foot"}
+<script>
+(function () {
+  var form = document.getElementById("native-verification-form"), image = document.getElementById("native-verification-image");
+  document.getElementById("native-verification-refresh").addEventListener("click", function () { var url = new URL(image.src, location.href); url.searchParams.set("r", Date.now()); image.src = url.href; });
+  form.addEventListener("submit", function (event) {
+    event.preventDefault(); var button = form.querySelector("button[type=submit]"); button.disabled = true;
+    fetch(form.action, { method: "POST", credentials: "same-origin", headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" }, body: new URLSearchParams(new FormData(form)).toString() }).then(function (response) { return response.json(); }).then(function (reply) {
+      if (reply.code === 1) { location.reload(); return; }
+      document.getElementById("native-verification-status").textContent = String(reply.msg || ""); document.getElementById("native-verification-refresh").click();
+    }).catch(function () { document.getElementById("native-verification-status").textContent = window.TemplateMessages["ui.connection_failed_try_again"]; }).finally(function () { button.disabled = false; });
+  });
+})();
+</script>
+</body>
+</html>

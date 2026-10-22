@@ -1,0 +1,287 @@
+﻿/*
+ * This file is part of JavCMS - https://javcms.net
+ * Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+ * License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+ * See the LICENSE and NOTICE files that come with JavCMS.
+ * Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Telegram: https://t.me/avdb_api
+ */
+/* V9: private palette mapped to the kit tokens (admin_ux.css). */
+body.admin-studio.admin-dark .admin-database-workspace-v1, body.admin-studio.admin-dark .admin-database-form-workspace-v1 { --db-cyan: var(--ax-accent); --db-cyan-soft: var(--ax-accent-soft); --db-ink: var(--ax-text); --db-muted: var(--ax-muted); --db-quiet: var(--ax-faint); --db-surface: var(--ax-surface); --db-surface-2: var(--ax-bg); --db-panel: var(--ax-raised); --db-line: var(--ax-line); --db-line-soft: var(--ax-line); }
+/* admin-database-workspace-v1: local, responsive dark database operations workspace. */
+body.admin-dark .admin-database-workspace-v1,
+body.admin-dark .admin-database-form-workspace-v1 {
+  --db-cyan: #63d8ea;
+  --db-cyan-soft: rgba(99,216,234,.12);
+  --db-ink: #f2f7ff;
+  --db-muted: #9eafc7;
+  --db-quiet: #71839d;
+  --db-surface: #101c2f;
+  --db-surface-2: #0c1728;
+  --db-panel: #15263f;
+  --db-line: rgba(161,183,212,.18);
+  --db-line-soft: rgba(161,183,212,.1);
+  color: var(--db-muted);
+}
+body.admin-dark .admin-database-workspace-v1 {
+  min-height: calc(100vh - 14px);
+  padding-bottom: 18px;
+}
+body.admin-dark .admin-database-workspace-v1 .db-toolbar {
+  display: grid;
+  gap: 14px;
+  margin: 0 0 14px;
+  padding: 16px;
+  border: 1px solid var(--db-line);
+  border-radius: 14px;
+  background: linear-gradient(145deg, rgba(22,39,65,.97), rgba(12,24,43,.97));
+  box-shadow: 0 14px 32px rgba(0,0,0,.18);
+}
+body.admin-dark .admin-database-workspace-v1 .layui-tab-title {
+  border-bottom-color: var(--db-line);
+}
+body.admin-dark .admin-database-workspace-v1 .layui-tab-title li {
+  color: var(--db-muted);
+  font-weight: 700;
+}
+body.admin-dark .admin-database-workspace-v1 .layui-tab-title .layui-this {
+  color: var(--db-cyan);
+}
+body.admin-dark .admin-database-workspace-v1 .layui-tab-title .layui-this:after {
+  border-color: var(--db-cyan);
+}
+body.admin-dark .admin-database-workspace-v1 .db-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+body.admin-dark .admin-database-workspace-v1 .db-actions .btn {
+  min-height: 36px;
+  margin: 0 !important;
+  border: 0;
+  border-radius: 8px;
+  background: var(--db-cyan);
+  color: #071521;
+  font-weight: 800;
+}
+body.admin-dark .admin-database-workspace-v1 .db-actions .btn:hover { background: #a0edf4; }
+body.admin-dark .admin-database-workspace-v1 .db-list-form {
+  margin: 0;
+  overflow-x: auto;
+  max-width: 100%;
+  border: 1px solid var(--db-line);
+  border-radius: 14px;
+  background: var(--db-surface);
+  box-shadow: 0 14px 32px rgba(0,0,0,.14);
+}
+body.admin-dark .admin-database-workspace-v1 .db-table-shell {
+  min-width: 900px;
+  overflow-x: auto;
+}
+body.admin-dark .admin-database-workspace-v1 .db-table {
+  min-width: 900px;
+  margin: 0;
+  background: transparent;
+}
+body.admin-dark .admin-database-workspace-v1 .db-table thead tr { background: var(--db-panel); }
+body.admin-dark .admin-database-workspace-v1 .db-table th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  border-color: var(--db-line);
+  color: var(--db-ink);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .055em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+body.admin-dark .admin-database-workspace-v1 .db-table td {
+  border-color: var(--db-line-soft);
+  color: var(--db-muted);
+  vertical-align: middle;
+}
+body.admin-dark .admin-database-workspace-v1 .db-table tbody tr { transition: background .16s ease; }
+body.admin-dark .admin-database-workspace-v1 .db-table tbody tr:hover { background: rgba(99,216,234,.05); }
+body.admin-dark .admin-database-workspace-v1 .db-table td:first-child,
+body.admin-dark .admin-database-workspace-v1 .db-table td:nth-child(2) { color: var(--db-ink); font-weight: 700; }
+body.admin-dark .admin-database-workspace-v1 .db-table td:last-child { white-space: nowrap; }
+body.admin-dark .admin-database-workspace-v1 .db-table a { color: var(--db-cyan); }
+body.admin-dark .admin-database-workspace-v1 .db-table a:hover { color: #b8f5f8; }
+body.admin-dark .admin-database-workspace-v1 .badge,
+body.admin-dark .admin-database-workspace-v1 .layui-badge-rim { border-radius: 999px; }
+body.admin-dark .admin-database-workspace-v1 .badge.bg-primary,
+body.admin-dark .admin-database-workspace-v1 .layui-badge-rim { border-color: rgba(99,216,234,.28); background: var(--db-cyan-soft); }
+body.admin-dark .admin-database-workspace-v1 .badge.bg-warning { border-color: rgba(255,190,95,.28); background: rgba(255,190,95,.12); color: #ffd79c; }
+body.admin-dark .admin-database-workspace-v1 .j-ajax,
+body.admin-dark .admin-database-workspace-v1 .j-tr-del { white-space: nowrap; }
+body.admin-dark .admin-database-workspace-v1 .layui-form-checkbox[lay-skin=primary] i {
+  border-color: var(--db-line);
+  background: var(--db-surface-2);
+}
+body.admin-dark .admin-database-workspace-v1 .layui-form-checkbox[lay-skin=primary].layui-form-checked i {
+  border-color: var(--db-cyan);
+  background: var(--db-cyan);
+  color: #071521;
+}
+body.admin-dark .admin-database-form-workspace-v1 {
+  min-height: calc(100vh - 14px);
+  padding: 16px !important;
+  box-sizing: border-box;
+}
+body.admin-dark .admin-database-form-workspace-v1 .db-form-card {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 18px 20px 12px;
+  border: 1px solid var(--db-line);
+  border-radius: 14px;
+  background: linear-gradient(145deg, rgba(22,39,65,.97), rgba(12,24,43,.97));
+  box-shadow: 0 16px 34px rgba(0,0,0,.18);
+}
+body.admin-dark .admin-database-form-workspace-v1 .db-sql-form .layui-input-block { margin-left: 0 !important; }
+body.admin-dark .admin-database-form-workspace-v1 .db-sql-form .layui-textarea { width: 100%; box-sizing: border-box; }
+body.admin-dark .admin-database-form-workspace-v1 .db-tab > .layui-tab-title {
+  border-bottom-color: var(--db-line);
+}
+body.admin-dark .admin-database-form-workspace-v1 .db-tab > .layui-tab-title li {
+  color: var(--db-ink);
+  font-size: 16px;
+  font-weight: 800;
+}
+body.admin-dark .admin-database-form-workspace-v1 .db-tab > .layui-tab-title .layui-this { color: var(--db-cyan); }
+body.admin-dark .admin-database-form-workspace-v1 .layui-elem-quote {
+  margin: 0 0 16px;
+  border-left: 4px solid var(--db-cyan);
+  border-radius: 8px;
+  background: var(--db-cyan-soft);
+  color: var(--db-muted);
+}
+body.admin-dark .admin-database-form-workspace-v1 .layui-form-item { margin-bottom: 16px; }
+body.admin-dark .admin-database-form-workspace-v1 .layui-form-label {
+  border-color: var(--db-line);
+  border-radius: 8px 0 0 8px;
+  background: rgba(12,24,43,.85);
+  color: var(--db-ink);
+  font-weight: 700;
+}
+body.admin-dark .admin-database-form-workspace-v1 .layui-input,
+body.admin-dark .admin-database-form-workspace-v1 .layui-textarea,
+body.admin-dark .admin-database-form-workspace-v1 select,
+body.admin-dark .admin-database-form-workspace-v1 .layui-form-select {
+  border-color: var(--db-line);
+  border-radius: 8px;
+  background: var(--db-surface-2);
+  color: var(--db-ink);
+}
+body.admin-dark .admin-database-form-workspace-v1 .layui-input:focus,
+body.admin-dark .admin-database-form-workspace-v1 .layui-textarea:focus,
+body.admin-dark .admin-database-form-workspace-v1 select:focus {
+  border-color: var(--db-cyan);
+  box-shadow: 0 0 0 3px rgba(99,216,234,.13);
+}
+body.admin-dark .admin-database-form-workspace-v1 .db-code-input {
+  min-height: 170px;
+  resize: vertical;
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  line-height: 1.55;
+}
+body.admin-dark .admin-database-form-workspace-v1 .db-replace-panel .layui-input-block { margin-left: 130px; }
+body.admin-dark .admin-database-form-workspace-v1 .db-field-chips {
+  min-height: 38px;
+  padding: 8px;
+  box-sizing: border-box;
+  border: 1px dashed var(--db-line);
+  border-radius: 8px;
+  background: rgba(12,24,43,.52);
+}
+body.admin-dark .admin-database-form-workspace-v1 .db-field-chips a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  margin: 3px 4px 3px 0 !important;
+  padding: 0 9px;
+  border: 1px solid rgba(99,216,234,.28);
+  border-radius: 999px;
+  background: var(--db-cyan-soft);
+  color: var(--db-cyan);
+}
+body.admin-dark .admin-database-form-workspace-v1 .db-field-chips a:hover { background: rgba(99,216,234,.24); }
+body.admin-dark .admin-database-form-workspace-v1 .btn {
+  min-height: 36px;
+  border: 0;
+  border-radius: 8px;
+  font-weight: 800;
+}
+body.admin-dark .admin-database-form-workspace-v1 .btn-primary { background: var(--db-cyan); color: #071521; }
+body.admin-dark .admin-database-form-workspace-v1 .btn-primary:hover { background: #a0edf4; }
+body.admin-dark .admin-database-form-workspace-v1 .btn-warning {
+  border: 1px solid rgba(255,190,95,.28);
+  background: rgba(255,190,95,.14);
+  color: #ffd79c;
+}
+body.admin-dark .admin-database-form-workspace-v1 :focus-visible { outline: 3px solid rgba(99,216,234,.32); outline-offset: 2px; }
+@media (max-width: 760px) {
+  body.admin-dark .admin-database-workspace-v1 { padding: 8px !important; }
+  body.admin-dark .admin-database-workspace-v1 .db-toolbar { padding: 11px; }
+  body.admin-dark .admin-database-workspace-v1 .db-actions .btn { flex: 1 1 145px; }
+  body.admin-dark .admin-database-workspace-v1 .db-table-shell,
+  body.admin-dark .admin-database-workspace-v1 .db-table { min-width: 900px; }
+  body.admin-dark .admin-database-form-workspace-v1 { padding: 10px !important; }
+  body.admin-dark .admin-database-form-workspace-v1 .db-form-card { padding: 14px 10px 8px; }
+  body.admin-dark .admin-database-form-workspace-v1 .layui-form-label { width: 88px; padding: 9px 6px; }
+  body.admin-dark .admin-database-form-workspace-v1 .layui-input-block,
+  body.admin-dark .admin-database-form-workspace-v1 .db-replace-panel .layui-input-block,
+  body.admin-dark .admin-database-form-workspace-v1 .layui-form-item.center .layui-input-block { margin-left: 94px; }
+  body.admin-dark .admin-database-form-workspace-v1 .layui-input-inline { max-width: calc(100% - 94px); margin-left: 0; }
+  body.admin-dark .admin-database-form-workspace-v1 .w400 { width: auto !important; }
+  body.admin-dark .admin-database-form-workspace-v1 .layui-input,
+  body.admin-dark .admin-database-form-workspace-v1 .layui-textarea,
+  body.admin-dark .admin-database-form-workspace-v1 select { max-width: 100%; box-sizing: border-box; }
+}
+body.admin-dark .admin-database-workspace-v1 .db-hero,
+body.admin-dark .admin-database-form-workspace-v1 .db-hero {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  max-width: 900px;
+  margin: 0 auto 12px;
+  padding: 0 2px;
+}
+body.admin-dark .admin-database-workspace-v1 .db-hero strong,
+body.admin-dark .admin-database-form-workspace-v1 .db-hero strong {
+  color: var(--db-ink);
+  font-size: 19px;
+  font-weight: 800;
+  letter-spacing: -.015em;
+}
+body.admin-dark .admin-database-workspace-v1 .db-eyebrow,
+body.admin-dark .admin-database-form-workspace-v1 .db-eyebrow {
+  color: var(--db-cyan);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+/* Kit pages (brief 7.e): header, sections, tables, notices come from admin_ux.css. */
+body.admin-dark .db-kit { min-height: 0; padding: var(--ax-pad, 24px); color: var(--ax-text); }
+body.admin-dark .db-kit .ax-tabs { margin: 0 0 16px; }
+body.admin-dark .db-kit .ax-notice { margin: 0 0 16px; }
+body.admin-dark .db-kit .db-actions-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+body.admin-dark .db-kit .db-sql-tip { margin-top: 8px; line-height: 1.7; }
+body.admin-dark .db-kit .db-code-input { min-height: 96px; font-family: var(--ax-mono); font-size: 13px; }
+body.admin-dark .db-kit .db-label { display: block; margin-bottom: 6px; color: var(--ax-text); font-weight: 600; }
+body.admin-dark .db-kit .db-field-chips { display: flex; flex-wrap: wrap; gap: 6px; padding: 0; border: 0; background: none; min-height: 0; }
+body.admin-dark .db-kit .db-col-chip { cursor: pointer; font-family: var(--ax-mono); font-size: 12.5px; }
+body.admin-dark .db-kit .db-col-chip[aria-pressed="true"] { border-color: var(--ax-accent); color: var(--ax-accent); }
+body.admin-dark .db-kit .db-rep-result:empty { display: none; }
+body.admin-dark .db-kit .db-rep-result, body.admin-dark .db-kit .db-backup-done { margin: 16px 0 0; padding: 12px 16px; border-radius: var(--ax-r, 8px); background: var(--ax-ok-soft, rgba(76,207,143,.12)); color: var(--ax-text); }
+body.admin-dark .db-kit .is-error.db-rep-result, body.admin-dark .db-kit .db-backup-done.is-error, body.admin-dark .db-kit .db-sql-result.is-error h2 { background: var(--ax-danger-bg); color: var(--ax-danger); }
+body.admin-dark .db-kit .db-sql-result.is-error h2 { background: none; }
+body.admin-dark .db-kit .db-backup-files { margin: 8px 0 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+body.admin-dark .db-kit .db-backup-files li { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+body.admin-dark .db-kit .db-backup-done__title { margin: 0; font-weight: 600; }
+body.admin-dark .db-kit .db-check { width: 44px; }
+body.admin-dark .db-kit .db-sql-table td { white-space: pre-wrap; overflow-wrap: anywhere; max-width: 420px; font-family: var(--ax-mono); font-size: 12.5px; }
+body.admin-dark .db-kit .ax-row-actions { white-space: nowrap; }
+body.admin-dark .ax-dialog .db-backup-now { margin-top: 8px; }

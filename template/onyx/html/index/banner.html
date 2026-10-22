@@ -1,0 +1,23 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}$tplBannerFallback = 0;{/php}
+<section class="banner" data-banner aria-roledescription="carousel" aria-label="{:\\app\\common\\util\\TemplateText::get('onyx.featured')}" data-slide-label="{:\\app\\common\\util\\TemplateText::get('onyx.slide')}">
+  <div class="banner-track">
+    {php}$tplBanRows = [];{/php}{maccms:vod num="6" type="all" level="9" order="desc" by="time" paging="no" id="vo"}{php}$tplBanRows[] = $vo;{/php}{/maccms:vod}
+    {empty name="__LIST__"}{php}$tplBannerFallback = 1;{/php}{maccms:vod num="6" type="all" order="desc" by="hits" paging="no" id="vo"}{php}$tplBanRows[] = $vo;{/php}{/maccms:vod}{/empty}
+    {php}$tplBanRows = \app\common\util\AvdbLanguage::heroOrder($tplBanRows);{/php}{volist name="tplBanRows" id="vo" key="key"}{include file="index/slide"}{/volist}
+  </div>
+  <button class="banner-nav banner-prev" type="button" aria-label="{:\\app\\common\\util\\TemplateText::get('onyx.previous')}"><svg class="ico" aria-hidden="true"><use href="{$tplIcons}#i-prev"/></svg></button>
+  <button class="banner-nav banner-next" type="button" aria-label="{:\\app\\common\\util\\TemplateText::get('onyx.next')}"><svg class="ico" aria-hidden="true"><use href="{$tplIcons}#i-next"/></svg></button>
+  <div class="banner-dots"></div>
+</section>
+<div class="notice" role="region" aria-label="{:\\app\\common\\util\\TemplateText::get('onyx.just_added')}">
+  <svg class="ico" aria-hidden="true"><use href="{$tplIcons}#i-notice"/></svg>
+  <span class="notice-label">{:\\app\\common\\util\\TemplateText::get('onyx.just_added')}</span>
+  <div class="notice-roll"><ul class="notice-list">{maccms:vod num="5" type="all" order="desc" by="time" paging="no" id="tplTick"}<li><a href="{:mac_url_vod_play($tplTick)}">{$tplTick.vod_display_name|mac_default=$tplTick.vod_name|htmlspecialchars=ENT_QUOTES}</a></li>{/maccms:vod}</ul></div>
+</div>

@@ -1,0 +1,71 @@
+/*
+ * This file is part of JavCMS - https://javcms.net
+ * Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+ * License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+ * See the LICENSE and NOTICE files that come with JavCMS.
+ * Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Telegram: https://t.me/avdb_api
+ */
+/* admin-make-workspace-v1: responsive static-generation controls and dark labels. */
+body.admin-dark .admin-make-workspace {
+    min-width: 0;
+    max-width: 100%;
+    padding: clamp(10px, 2vw, 24px) !important;
+    color: var(--admin-dark-ink);
+}
+body.admin-dark .admin-make-workspace .row,
+body.admin-dark .admin-make-workspace .col-2,
+body.admin-dark .admin-make-workspace .col-10,
+body.admin-dark .admin-make-workspace .col-8,
+body.admin-dark .admin-make-workspace .col-md-2 {
+    min-width: 0;
+}
+body.admin-dark .admin-make-workspace .row {
+    row-gap: 14px;
+    margin-right: 0;
+    margin-left: 0;
+}
+body.admin-dark .admin-make-workspace .form-label {
+    display: block;
+    color: var(--admin-dark-ink) !important;
+    font-weight: 700;
+}
+body.admin-dark .admin-make-workspace .form-select,
+body.admin-dark .admin-make-workspace .form-control {
+    max-width: 100%;
+    color: var(--admin-dark-ink);
+    background: var(--admin-dark-control);
+    border-color: var(--admin-dark-border-strong);
+}
+body.admin-dark .admin-make-workspace .btn-group {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 6px;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+}
+body.admin-dark .admin-make-workspace .btn-group .btn {
+    flex: 0 1 auto;
+    max-width: 100%;
+    margin: 0 !important;
+    white-space: normal;
+    border-radius: 8px;
+}
+body.admin-dark .admin-make-workspace hr { border-color: var(--admin-dark-border); opacity: .8; }
+@media (max-width: 800px) {
+    body.admin-dark .admin-make-workspace > form > .row > [class*="col-"] {
+        flex: 0 0 100%;
+        width: 100%;
+        max-width: 100%;
+    }
+    body.admin-dark .admin-make-workspace > form > .row > .col-10,
+    body.admin-dark .admin-make-workspace > form > .row > .col-8 {
+        align-items: flex-start !important;
+    }
+    body.admin-dark .admin-make-workspace .btn-group .btn {
+        flex: 1 1 auto;
+        min-height: 38px;
+    }
+}

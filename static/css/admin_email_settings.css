@@ -1,0 +1,75 @@
+/*
+ * This file is part of JavCMS - https://javcms.net
+ * Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+ * License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+ * See the LICENSE and NOTICE files that come with JavCMS.
+ * Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Telegram: https://t.me/avdb_api
+ */
+/* Only email settings and its original provider panels. */
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .page-container.admin-email-settings {
+    max-width: 1200px; margin-inline: auto;
+}
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .admin-email-settings .studio-page-header {
+    align-items: flex-start; flex-wrap: wrap;
+}
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .admin-email-settings .studio-page-header p {
+    flex-basis: 100%; margin: 0;
+}
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .admin-email-settings .admin-email-smtp.layui-show {
+    display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 28px;
+}
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .admin-email-settings .admin-email-smtp > .layui-form-item {
+    min-width: 0; margin: 0; padding: 0;
+}
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .admin-email-settings .admin-email-smtp > .layui-form-item > .layui-form-label {
+    float: none; display: block; width: auto; padding: 0 0 8px; text-align: left;
+}
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .admin-email-settings .admin-email-smtp > .layui-form-item > .layui-input-inline {
+    float: none; width: 100%; margin: 0;
+}
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .admin-email-settings .admin-email-smtp > .layui-form-item > .layui-word-aux {
+    float: none; padding: 8px 0 0; line-height: 1.5;
+}
+body.admin-studio .admin-email-settings .studio-page-header p,
+body.admin-studio .admin-email-settings .admin-email-section-heading p,
+body.admin-studio .admin-email-settings .admin-email-advanced > p,
+body.admin-studio .admin-email-settings .admin-email-test-help {
+    color: var(--studio-muted, #606d80); font-size: 13px; line-height: 1.65;
+}
+body.admin-studio .admin-email-settings .admin-email-section-heading {
+    grid-column: 1 / -1; padding: 0 0 12px;
+}
+body.admin-studio .admin-email-settings .admin-email-section-heading h2 {
+    margin: 0 0 8px; font-size: 19px; color: var(--studio-text, #263247);
+}
+body.admin-studio .admin-email-settings .admin-email-section-heading p { margin: 0; }
+body.admin-studio .admin-email-settings .admin-email-advanced {
+    grid-column: 1 / -1; margin-top: 10px; padding: 16px;
+    border: 1px solid var(--studio-line, #ccd4df); border-radius: 8px;
+    background: var(--studio-surface, #fff);
+}
+body.admin-studio .admin-email-settings .admin-email-advanced > summary {
+    cursor: pointer; color: var(--studio-text, #263247); font-size: 14px; font-weight: 600;
+}
+body.admin-studio .admin-email-settings .admin-email-advanced > p { margin: 14px 0; }
+body.admin-studio .admin-email-settings .admin-email-advanced > .layui-form-item { margin-top: 16px; }
+body.admin-studio .admin-email-settings .admin-email-test-help,
+body.admin-studio .admin-email-settings .admin-email-test-status { grid-column: 1 / -1; margin: 0; }
+body.admin-studio .admin-email-settings .admin-email-test-status {
+    min-height: 1.5em; color: var(--studio-text, #263247); font-size: 13px; line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+body.admin-studio .admin-email-settings #admin-email-test { min-height: 38px; white-space: normal; }
+body.admin-studio .admin-email-settings button:disabled { opacity: .55; cursor: wait; }
+body.admin-studio .admin-email-settings .admin-email-smtp .layui-word-aux { overflow-wrap: anywhere; }
+body.admin-studio .admin-email-settings :is(input, button, summary):focus-visible {
+    outline: 2px solid var(--studio-accent, #2563ad); outline-offset: 3px;
+}
+@media (max-width: 600px) {
+    body.admin-studio:is(.admin-dark,:not(.admin-dark)) .admin-email-settings .admin-email-smtp.layui-show {
+        grid-template-columns: minmax(0, 1fr);
+    }
+    body.admin-studio .admin-email-settings .admin-email-advanced { padding: 12px; }
+    body.admin-studio .admin-email-settings #admin-email-test { width: 100%; margin: 8px 0 0 !important; }
+}

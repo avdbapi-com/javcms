@@ -1,0 +1,37 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="ember-modern" data-fx="vt" data-fx-vt-style="ember-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/topic_detail"}
+{include file="public/include"}
+</head>
+<body class="t-page-detail">
+{include file="public/head"}
+<main id="main-content" class="t-main" tabindex="-1">
+  {php}$emtObjName = $emtDe($obj['topic_name'] ?? ''); $emtObjPic = mac_url_img(mac_default($obj['topic_pic'] ?? '', $maccms['path_tpl'] . 'assets/brand/ph-dark.svg')); $emtObjBlurb = trim(strip_tags($emtDe($obj['topic_blurb'] ?? '')));{/php}
+  <div class="t-wrap">
+    <nav class="t-crumb" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.main_navigation')}" style="margin-top:18px"><a href="{$maccms.path|htmlspecialchars=ENT_QUOTES}">{:\\app\\common\\util\\TemplateText::get('ui.home')}</a><svg class="t-i t-flip" aria-hidden="true"><use href="{$tplIcons}#chev-right"></use></svg><a href="{:mac_url('topic/index')}">{:\\app\\common\\util\\TemplateText::get('ui.collections')}</a></nav>
+    <div class="t-detail">
+      <div class="t-detail-media"><div class="t-hud"><span class="t-screen"><img class="t-true" src="{$emtObjPic|htmlspecialchars=ENT_QUOTES}" alt="" width="800" height="450" decoding="async"></span></div></div>
+      <div class="t-detail-side">
+        <h1 class="t-vh1">{$emtObjName|htmlspecialchars=ENT_QUOTES}</h1>
+        <dl class="t-readout"><div><dt>{:\\app\\common\\util\\TemplateText::get('emt.score')}</dt><dd class="t-num">{$obj.topic_score|floatval} / 10</dd></div><div><dt>{:\\app\\common\\util\\TemplateText::get('emt.views')}</dt><dd class="t-num">{$obj.topic_hits|intval}</dd></div></dl>
+        {if condition="$emtObjBlurb neq ''"}<p class="t-lead">{$emtObjBlurb|htmlspecialchars=ENT_QUOTES}</p>{/if}
+      </div>
+    </div>
+    <section class="t-sec" aria-labelledby="t-topic-videos">
+      <div class="t-sec-head"><h2 class="t-sec-t" id="t-topic-videos" data-t-kin><span>{:\\app\\common\\util\\TemplateText::get('ui.the_film_contained_in_this_topic')}</span></h2><span class="t-legend" aria-hidden="true"><i></i></span></div>
+      <ul class="t-grid" data-grid-fill data-fx="glow stagger">{maccms:foreach name="$obj.vod_list" id="vo"}{include file="public/vodbox"}{/maccms:foreach}</ul>
+    </section>
+    {if condition="$GLOBALS['config']['comment']['status'] eq 1"}<section class="t-comments"><div class="mac_comment" data-id="{$obj.topic_id|intval}" data-mid="3"><h2>{:\\app\\common\\util\\TemplateText::get('ui.comments')}</h2><p>{:\\app\\common\\util\\TemplateText::get('ui.loading_comments')}</p></div></section><script>MAC.Comment.Init();MAC.Comment.Show(1);</script>{/if}
+  </div>
+</main>
+{include file="public/foot"}
+</body>
+</html>

@@ -1,0 +1,172 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}
+/* xvid-scale lane E (brief 3.8 step 1): the page is "Import videos" for every provider (menu label admin/ux/scale/menu_import). */
+$title = lang('admin/ux/scale/menu_import');
+$ax_head = ['title' => $title, 'help' => lang('admin/ux/scale/help_import')];
+$xvLang = [];
+foreach ((array) \think\Lang::get() as $xvK => $xvV) { if (is_string($xvK) && is_string($xvV) && strpos($xvK, 'admin/ux/scale/') === 0) { $xvLang[substr($xvK, 15)] = $xvV; } }
+/* xv-nolimit-E (A3): can PHP answer first and keep working? Without it page views cannot continue an import. */
+$xvBackground = function_exists('fastcgi_finish_request') || function_exists('litespeed_finish_request') ? '1' : '0';
+$xvLangJs = json_encode((object) $xvLang, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
+{/php}
+{include file="../../../application/admin/view/public/head" /}
+<link rel="stylesheet" href="__STATIC__/css/avdb_import.css?v={:filemtime(ROOT_PATH . 'static/css/avdb_import.css')}">
+<main id="avdb-workspace" class="page-container avdb-workspace" data-i18n="{$avdb_ui|htmlspecialchars}"
+ data-schedule-status="{:url('avdbimport/scheduleStatus')}" data-schedule-save="{:url('avdbimport/scheduleSave')}" data-schedule-off="{:url('avdbimport/scheduleOff')}" data-schedule-pause="{:url('avdbimport/schedulePause')}" data-schedule-resume="{:url('avdbimport/scheduleResume')}"
+ data-capabilities="{:url('avdbimport/capabilities')}" data-preview="{:url('avdbimport/preview')}"
+ data-start="{:url('avdbimport/start')}" data-status="{:url('avdbimport/status')}" data-step="{:url('avdbimport/step')}"
+ data-pause="{:url('avdbimport/pause')}" data-cancel="{:url('avdbimport/cancel')}" data-resume="{:url('avdbimport/resume')}" data-retry="{:url('avdbimport/retry')}"
+ data-rollback="{:url('avdbimport/rollback')}" data-jobs="{:url('avdbimport/jobs')}" data-items="{:url('avdbimport/items')}" data-suggestions="{:url('avdbimport/suggestions')}"
+ data-providers="{:url('avdbimport/providers')}" data-estimate="{:url('avdbimport/estimate')}" data-dblimit="{:url('avdbimport/dblimit')}" data-takedowns="{:url('avdbimport/takedowns')}"
+ data-takedown-delete="{:url('avdbimport/takedownDelete')}" data-undo="{:url('avdbimport/undo')}" data-remove-all="{:url('avdbimport/removeAll')}" data-scale-page="{:url('scale/index')}" data-background="{$xvBackground}">
+ <input type="hidden" name="__token__" value="{$__token__|htmlspecialchars}">
+ {include file="../../../application/admin/view/public/page_head" icon="ai-download" title="admin/ux/scale/menu_import" help="admin/ux/scale/help_import" /}
+ <p class="avdb-doc-link"><a href="https://avdbapi.com/index.php/label/help.html" target="_blank" rel="noopener noreferrer"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-external-link"/></svg>{:lang('admin/ux/tools/avdb_doc_link')}</a></p>
+ <div id="xv-sources" class="xv-sources" role="tablist" aria-label="{:lang('admin/ux/scale/tabs_aria')}" hidden></div>
+ <section id="xv-status" class="xv-status" aria-labelledby="xv-status-title" hidden>
+  <h2 id="xv-status-title" class="xv-status__title">{:lang('admin/ux/scale/st_title')}</h2>
+  <ul id="xv-status-lines" class="xv-status__lines" role="status" aria-live="polite"></ul>
+  <button type="button" class="ax-btn ax-btn--sm" id="xv-dblimit-open">{:lang('admin/ux/scale/dbl_change')}</button>
+ </section>
+ <section id="xv-dblimit" class="xv-dblimit" aria-labelledby="xv-dblimit-title" hidden>
+  <h2 id="xv-dblimit-title">{:lang('admin/ux/scale/dbl_title')}</h2>
+  <p class="avdb-hint">{:lang('admin/ux/scale/dbl_text')}</p>
+  <form id="xv-dblimit-form" class="xv-inline-form" novalidate>
+   <label for="xv-dblimit-gb">{:lang('admin/ux/scale/dbl_label')}<input id="xv-dblimit-gb" name="gb" type="number" min="0.1" max="9999" step="0.1" inputmode="decimal"></label>
+   <button type="submit" class="ax-btn">{:lang('admin/ux/scale/dbl_save')}</button>
+   <button type="button" class="ax-btn" data-dblimit-choice="auto">{:lang('admin/ux/scale/dbl_unknown')}</button>
+   <button type="button" class="ax-btn" data-dblimit-choice="none">{:lang('admin/ux/scale/dbl_none')}</button>
+  </form>
+  <p id="xv-dblimit-msg" class="avdb-hint" role="status"></p>
+ </section>
+ <div class="avdb-connection" data-mode-only="filter"><span id="avdb-connection-text" role="status">{:lang('admin/ux/tools/avdb_connecting')}</span><button type="button" class="ax-btn" id="avdb-connect">{:lang('admin/ux/tools/avdb_reconnect')}</button></div>
+ <nav class="avdb-steps" aria-label="{:lang('admin/ux/tools/avdb_steps_aria')}"><button type="button" data-panel="scope" data-mode-only="scope" hidden>{:lang('admin/ux/scale/sc_step')}</button><button type="button" data-panel="find" data-mode-only="filter" aria-current="step">{:lang('admin/ux/tools/avdb_step1')}</button><button type="button" data-panel="review" data-mode-only="filter">{:lang('admin/ux/tools/avdb_step2')}</button><button type="button" data-panel="run">{:lang('admin/ux/tools/avdb_step3')}</button></nav>
+ <details class="avdb-help" data-mode-only="filter"{if condition="empty($avdb_has_history)"} open{/if}><summary>{:lang('admin/ux/tools/avdb_help_summary')}</summary><ol><li>{:lang('admin/ux/tools/avdb_help_1')}</li><li>{:lang('admin/ux/tools/avdb_help_2')}</li><li>{:lang('admin/ux/tools/avdb_help_3')}</li><li>{:lang('admin/ux/tools/avdb_help_4')}</li></ol><p>{:lang('admin/ux/tools/avdb_help_p')}</p></details>
+ <div id="avdb-message" class="avdb-message" role="status" aria-live="polite" hidden></div>
+ <section id="avdb-find" aria-labelledby="avdb-find-title">
+  <h2 id="avdb-find-title">{:lang('admin/ux/tools/avdb_find_title')}</h2>
+  <p class="xv-large-link" id="xv-large-link" hidden><button type="button" class="avdb-browse" data-panel="scope">{:lang('admin/ux/scale/sc_large_link')}</button></p>
+  <div class="avdb-preset-row"><label for="avdb-preset">{:lang('admin/ux/tools/avdb_quick_start')}</label><select id="avdb-preset"><option value="">{:lang('admin/ux/tools/avdb_choose_preset')}</option><option value="today">{:lang('admin/ux/tools/avdb_preset_today')}</option><option value="week">{:lang('admin/ux/tools/avdb_preset_week')}</option></select><button type="button" id="avdb-save-preset" class="ax-btn">{:lang('admin/ux/tools/avdb_save_filters')}</button></div>
+  <div id="avdb-find-filter-host"><form id="avdb-filter-form">
+   <div class="avdb-grid">
+    <label>{:lang('admin/ux/tools/avdb_l_search')}<input name="wd" type="search" placeholder="{:lang('admin/ux/tools/avdb_ph_search')}" maxlength="2048"></label>
+    <label>{:lang('admin/ux/tools/avdb_l_code')}<input name="code" placeholder="{:lang('admin/ux/tools/avdb_ph_code')}" maxlength="100"></label>
+    <label>{:lang('admin/ux/tools/avdb_f_category')}<select name="t" id="avdb-category"><option value="">{:lang('admin/ux/tools/avdb_all_categories')}</option></select></label>
+   </div>
+   <details class="avdb-more" open><summary>{:lang('admin/ux/tools/avdb_more_filters')}</summary><div class="avdb-grid">
+    <label>{:lang('admin/avdb/tag')}<input name="tag" data-suggest="tag" data-suggest-label="{:lang('admin/ux/tools/avdb_sl_tags')}" maxlength="2048"></label>
+    <label>{:lang('admin/ux/tools/avdb_f_actor')}<input name="actor" data-suggest="actor" data-suggest-label="{:lang('admin/ux/tools/avdb_sl_actors')}" placeholder="{:lang('admin/ux/tools/avdb_ph_actor')}" maxlength="2048"></label><label>{:lang('admin/ux/tools/avdb_f_director')}<input name="director" data-suggest="director" data-suggest-label="{:lang('admin/ux/tools/avdb_sl_directors')}" placeholder="{:lang('admin/ux/tools/avdb_ph_director')}" maxlength="2048"></label><label>{:lang('admin/ux/tools/avdb_f_studio')}<input name="writer" data-suggest="writer" data-suggest-label="{:lang('admin/ux/tools/avdb_sl_studios')}" placeholder="{:lang('admin/ux/tools/avdb_ph_studio')}" maxlength="2048"></label>
+    <label>{:lang('admin/ux/tools/avdb_f_genre')}<input name="category" data-suggest="category" data-suggest-label="{:lang('admin/ux/tools/avdb_sl_genres')}" placeholder="{:lang('admin/ux/tools/avdb_ph_genre')}" maxlength="2048"></label><label>{:lang('admin/ux/tools/avdb_l_year')}<input name="year" data-suggest="year" data-suggest-label="{:lang('admin/ux/tools/avdb_sl_years')}" placeholder="{:lang('admin/ux/tools/avdb_ph_year')}" maxlength="100"></label>
+    <label>{:lang('admin/ux/tools/avdb_l_hours')}<input name="h" type="number" min="1" max="876000" placeholder="24"></label>
+    <label>{:lang('admin/ux/tools/avdb_f_completion')}<select name="isend"><option value="">{:lang('admin/ux/tools/avdb_any')}</option><option value="1">{:lang('admin/ux/tools/avdb_completed')}</option><option value="0">{:lang('admin/ux/tools/avdb_ongoing')}</option></select></label>
+    <label>{:lang('admin/ux/tools/avdb_f_source')}<input name="from" data-suggest="from" data-suggest-label="{:lang('admin/ux/tools/avdb_sl_sources')}" placeholder="{:lang('admin/ux/tools/avdb_ph_source')}" maxlength="2048"></label>
+   </div><p class="avdb-hint">{:lang('admin/ux/tools/avdb_hint_suggest')} {:lang('admin/avdb/tag_hint')} {:lang('admin/ux/tools/avdb_hint_filters')}</p></details>
+   <div class="avdb-filter-actions"><label>{:lang('admin/ux/tools/avdb_f_order')}<select name="sort_direction"><option value="desc">{:lang('admin/ux/tools/avdb_order_desc')}</option><option value="asc">{:lang('admin/ux/tools/avdb_order_asc')}</option></select></label><label>{:lang('admin/ux/tools/avdb_f_pagesize')}<select name="pagesize"><option>10</option><option>20</option><option selected>50</option><option>100</option><option value="1000">{:lang('admin/avdb/native_preview')}</option></select></label><button type="submit" class="ax-btn ax-btn--primary" id="avdb-search">{:lang('admin/ux/tools/avdb_preview_videos')}</button><button type="button" class="ax-btn" id="avdb-reset">{:lang('admin/ux/tools/avdb_reset_filters')}</button></div>
+  </form></div>
+  <div class="avdb-result-toolbar"><p id="avdb-result-count" role="status">{:lang('admin/ux/tools/avdb_preview_safe')}</p><div><span id="avdb-selected-count">{:lang('admin/ux/tools/avdb_none_selected')}</span><button type="button" id="avdb-clear-selection" class="ax-btn">{:lang('admin/ux/tools/avdb_clear_selection')}</button><button type="button" data-panel="review" class="ax-btn">{:lang('admin/ux/tools/avdb_review_import')}</button></div></div>
+  <div class="avdb-table-scroll"><table class="avdb-table"><caption class="avdb-sr-only">{:lang('admin/ux/tools/avdb_results_caption')}</caption><thead><tr><th><input type="checkbox" id="avdb-select-page" aria-label="{:lang('admin/ux/tools/avdb_select_page')}"></th><th>{:lang('admin/ux/tools/avdb_th_video')}</th><th>{:lang('admin/ux/tools/avdb_th_cat_year')}</th><th>{:lang('admin/ux/tools/avdb_th_on_site')}</th><th>{:lang('admin/ux/tools/avdb_details')}</th></tr></thead><tbody id="avdb-results" data-failed="{:lang('admin/ux/polish/avdb_load_failed')}"><tr><td colspan="5">{:lang('admin/ux/tools/avdb_loading_first')}</td></tr></tbody></table></div>
+  <div class="avdb-pagination"><button type="button" id="avdb-prev" class="ax-btn" disabled>{:lang('admin/ux/tools/avdb_prev_page')}</button><span id="avdb-page-number">{:lang('admin/ux/tools/avdb_page_first')}</span><button type="button" id="avdb-next" class="ax-btn" disabled>{:lang('admin/ux/tools/avdb_next_page')}</button><label>{:lang('admin/ux/tools/avdb_go_to_page')}<input id="avdb-page-input" type="number" min="1" value="1"></label><button type="button" id="avdb-go-page" class="ax-btn">{:lang('admin/ux/tools/avdb_go')}</button></div>
+ </section>
+ <section id="avdb-review" aria-labelledby="avdb-review-title" hidden>
+  <h2 id="avdb-review-title">{:lang('admin/ux/tools/avdb_review_title')}</h2>
+  <h2>{:lang('admin/avdb/review_filters')}</h2><div id="avdb-review-filter-host"></div><p id="avdb-review-preview-count" class="avdb-hint" role="status"></p>
+  <form id="avdb-options-form">
+   <fieldset><legend>{:lang('admin/ux/tools/avdb_what_to_import')}</legend><label class="avdb-choice"><input type="radio" name="mode" value="all" checked>{:lang('admin/avdb/all_matching')}</label><label class="avdb-choice"><input type="radio" name="mode" value="selected">{:lang('admin/ux/tools/avdb_only_selected')} <span id="avdb-review-selection">(0)</span></label><label class="avdb-choice"><input type="radio" name="mode" value="pages">{:lang('admin/ux/tools/avdb_page_range')}</label><p id="avdb-range-filter-note" class="avdb-hint" role="status"></p><div class="avdb-grid avdb-range" hidden><label>{:lang('admin/ux/tools/avdb_first_page')}<input name="start_page" type="number" min="1" value="1"></label><label>{:lang('admin/ux/tools/avdb_last_page')}<input name="end_page" type="number" min="1" value="1"></label></div><label class="avdb-choice" id="avdb-unlimited-option"><input type="checkbox" id="avdb-unlimited">{:lang('admin/avdb/unlimited')}</label><label class="avdb-limit">{:lang('admin/ux/tools/avdb_stop_after')}<input name="max_items" type="number" min="1" step="1" value="1000">{:lang('admin/ux/tools/avdb_videos')}</label><label class="avdb-limit">{:lang('admin/ux/tools/avdb_quick_limit')}<select id="avdb-limit-preset" aria-label="{:lang('admin/ux/tools/avdb_quick_limit')}"><option value="">{:lang('admin/ux/tools/avdb_choose_limit')}</option><option>10</option><option>50</option><option>100</option><option>200</option><option>500</option><option>1000</option></select></label><p class="avdb-hint">{:lang('admin/avdb/limit_hint')}</p></fieldset>
+   <fieldset id="avdb-languages-set"><legend>{:lang('admin/ux/tools/avdb_meta_langs')}</legend><label class="avdb-choice"><input type="radio" name="language_mode" value="en">{:lang('admin/ux/tools/avdb_english_only')}</label><label class="avdb-choice"><input type="radio" name="language_mode" value="multi" checked>{:lang('admin/avdb/languages_default')}</label><div id="avdb-languages"><p>{:lang('admin/avdb/missing_language_hint')}</p><button type="button" id="avdb-all-languages" class="ax-btn">{:lang('admin/ux/tools/avdb_select_all_langs')}</button><button type="button" id="avdb-no-languages" class="ax-btn">{:lang('admin/ux/tools/avdb_clear_langs')}</button><div id="avdb-language-options" class="avdb-language-grid"></div></div></fieldset>
+   <fieldset><legend>{:lang('admin/ux/tools/avdb_connect_cats')}</legend><label class="avdb-choice"><input type="checkbox" name="create_categories" value="1" id="avdb-create-categories" checked>{:lang('admin/ux/tools/avdb_auto_create')}</label><p class="avdb-hint">{:lang('admin/ux/tools/avdb_cats_hint')}</p><div id="avdb-category-maps" class="avdb-mapping-grid"></div></fieldset>
+   <fieldset><legend>{:lang('admin/ux/tools/avdb_covers')}</legend><label class="avdb-choice"><input type="checkbox" name="download_images" value="1" id="avdb-download-images">{:lang('admin/ux/tools/avdb_download_covers')}</label><p class="avdb-hint">{:lang('admin/ux/tools/avdb_covers_hint')}</p></fieldset>
+   <fieldset><legend>{:lang('admin/ux/tools/avdb_players')}</legend><label>{:lang('admin/avdb/default_player')}<select name="default_player" id="avdb-default-player"><option value="">{:lang('admin/ux/tools/avdb_choose_enabled_player')}</option></select></label><p class="avdb-hint">{:lang('admin/avdb/player_hint')}</p><p class="avdb-hint">{:lang('admin/ux/tools/avdb_players_hint')}</p><div id="avdb-player-maps" class="avdb-mapping-grid"><p>{:lang('admin/ux/tools/avdb_preview_for_sources')}</p></div></fieldset>
+   <fieldset><legend>{:lang('admin/ux/tools/avdb_existing_pub')}</legend><div class="avdb-grid"><label>{:lang('admin/ux/tools/avdb_when_imported')}<select name="existing"><option value="smart" selected>{:lang('admin/avdb/smart')}</option><option value="skip">{:lang('admin/avdb/skip')}</option><option value="update">{:lang('admin/avdb/update')}</option></select></label><label>{:lang('admin/ux/tools/avdb_new_videos')}<select name="publish"><option value="1">{:lang('admin/ux/tools/avdb_publish_site')}</option><option value="0">{:lang('admin/ux/tools/avdb_save_drafts')}</option></select></label></div><p id="avdb-smart-help" class="avdb-hint">{:lang('admin/avdb/smart_help')}</p><div id="avdb-update-fields" hidden><p>{:lang('admin/ux/tools/avdb_locked_note')}</p><div class="avdb-language-grid"><label><input type="checkbox" name="update_fields" value="text" checked>{:lang('admin/ux/tools/avdb_uf_text')}</label><label><input type="checkbox" name="update_fields" value="metadata" checked>{:lang('admin/ux/tools/avdb_uf_meta')}</label><label><input type="checkbox" name="update_fields" value="images" checked>{:lang('admin/ux/tools/avdb_covers')}</label><label><input type="checkbox" name="update_fields" value="playback" checked>{:lang('admin/ux/tools/avdb_f_sources')}</label><label><input type="checkbox" name="update_fields" value="translations" checked>{:lang('admin/ux/tools/avdb_uf_trans')}</label></div></div><p class="avdb-hint">{:lang('admin/ux/tools/avdb_backup_note')}</p></fieldset>
+   <div id="avdb-import-summary" class="avdb-summary" role="status"></div>
+   <div class="avdb-actions"><button type="button" data-panel="find" class="ax-btn">{:lang('admin/ux/tools/avdb_back_results')}</button><button type="submit" id="avdb-start" class="ax-btn ax-btn--primary">{:lang('admin/ux/tools/avdb_start_import')}</button></div>
+  </form>
+  <section class="avdb-schedule" aria-labelledby="avdb-schedule-title">
+   <h2 id="avdb-schedule-title">{:lang('admin/avdb/schedule_title')}</h2>
+   <p class="avdb-hint">{:lang('admin/avdb/schedule_help')}</p>
+   <form id="avdb-schedule-form">
+    <label class="avdb-choice"><input type="checkbox" id="avdb-schedule-enabled" aria-describedby="avdb-schedule-review-note">{:lang('admin/avdb/schedule_enable')}</label>
+    <div class="avdb-filter-actions"><label for="avdb-schedule-interval">{:lang('admin/avdb/schedule_interval')}<select id="avdb-schedule-interval"><option value="15">{:lang('admin/avdb/schedule_15m')}</option><option value="60">{:lang('admin/avdb/schedule_1h')}</option><option value="360">{:lang('admin/avdb/schedule_6h')}</option><option value="720">{:lang('admin/avdb/schedule_12h')}</option><option value="1440" selected>{:lang('admin/avdb/schedule_daily')}</option></select></label><button type="submit" id="avdb-schedule-save" class="ax-btn" disabled>{:lang('admin/avdb/schedule_save')}</button><button type="button" id="avdb-schedule-refresh" class="ax-btn">{:lang('admin/avdb/schedule_refresh')}</button><button type="button" id="avdb-schedule-pause" class="ax-btn" hidden>{:lang('admin/avdb/schedule_pause')}</button><button type="button" id="avdb-schedule-resume" class="ax-btn" hidden>{:lang('admin/avdb/schedule_resume')}</button></div>
+    <p id="avdb-schedule-review-note" class="avdb-hint">{:lang('admin/ux/tools/avdb_schedule_note')}</p>
+   </form>
+   <div id="avdb-schedule-status" class="avdb-summary" role="status" aria-live="polite">{:lang('admin/avdb/schedule_off')}</div>
+   <p id="avdb-schedule-saved" class="avdb-hint"></p><p id="avdb-schedule-error" role="status" hidden></p>
+  </section>
+ </section>
+ <section id="xv-scope" aria-labelledby="xv-scope-title" hidden>
+  <h2 id="xv-scope-title">{:lang('admin/ux/scale/sc_title')}</h2>
+  <p id="xv-lang-note" class="xv-note" hidden></p>
+  <form id="xv-scope-form" novalidate>
+   <fieldset><legend>{:lang('admin/ux/scale/sc_legend')}</legend>
+    <div id="xv-scope-options" class="xv-scope-grid" role="radiogroup" aria-label="{:lang('admin/ux/scale/sc_legend')}"></div>
+    <div class="avdb-grid xv-scope-extra">
+     <label id="xv-recent-n" hidden>{:lang('admin/ux/scale/sc_recent_n')}<input name="limit" type="number" min="1" max="10000000" step="1" value="60000" inputmode="numeric"></label>
+     <label id="xv-category-pick" hidden>{:lang('admin/ux/scale/sc_category_pick')}<select name="type"></select></label>
+    </div>
+   </fieldset>
+   <fieldset id="xv-filters"><legend>{:lang('admin/ux/scale/fl_title')}</legend>
+    <label class="avdb-choice"><input type="checkbox" name="skip_short" value="1">{:lang('admin/ux/scale/fl_skip_short')}</label>
+    <label class="avdb-choice"><input type="checkbox" name="skip_unknown" value="1">{:lang('admin/ux/scale/fl_skip_unknown')}</label>
+    <label class="avdb-choice"><input type="checkbox" name="skip_sd" value="1">{:lang('admin/ux/scale/fl_skip_sd')}</label>
+    <p class="avdb-hint">{:lang('admin/ux/scale/fl_never_cats')}</p>
+    <div id="xv-langs" hidden><p class="xv-sub">{:lang('admin/ux/scale/fl_langs')}</p><div id="xv-lang-options" class="avdb-language-grid"></div></div>
+   </fieldset>
+   <fieldset id="xv-presets" hidden><legend>{:lang('admin/ux/scale/pr_title')}</legend>
+    <p id="xv-parent-note" class="avdb-hint"></p>
+    <label class="avdb-choice"><input type="radio" name="preset" value="grouped" checked>{:lang('admin/ux/scale/pr_grouped')}</label>
+    <label class="avdb-choice"><input type="radio" name="preset" value="mirror">{:lang('admin/ux/scale/pr_mirror')}</label>
+    <div class="avdb-filter-actions"><button type="button" class="ax-btn ax-btn--sm" id="xv-cats-all">{:lang('admin/ux/scale/pr_all')}</button><button type="button" class="ax-btn ax-btn--sm" id="xv-cats-none">{:lang('admin/ux/scale/pr_none')}</button><span id="xv-cats-count" role="status"></span></div>
+    <div id="xv-cat-options" class="xv-cat-grid"></div>
+    <p class="avdb-hint">{:lang('admin/ux/scale/pr_off_note')}</p>
+   </fieldset>
+   <fieldset id="xv-images-set"><legend>{:lang('admin/ux/tools/avdb_covers')}</legend><label class="avdb-choice"><input type="checkbox" name="images" value="1" id="xv-images"><span id="xv-images-label">{:lang('admin/ux/scale/im_label_plain')}</span></label><p class="avdb-hint">{:lang('admin/ux/scale/im_hint')}</p></fieldset>
+   <section id="xv-estimate" class="xv-estimate" aria-labelledby="xv-estimate-title">
+    <h3 id="xv-estimate-title">{:lang('admin/ux/scale/es_title')}</h3>
+    <p id="xv-estimate-state" role="status" aria-live="polite">{:lang('admin/ux/scale/es_loading')}</p>
+    <dl id="xv-estimate-list" class="xv-dl"></dl>
+    <div id="xv-verdict" class="ax-notice" role="status" hidden></div>
+    <div id="xv-warnings"></div>
+    <div id="xv-cli" class="xv-cli" hidden>
+     <h4 id="xv-cli-title">{:lang('admin/ux/scale/es_cli_title')}</h4>
+     <p id="xv-cli-text"></p>
+     <div class="xv-copy-row"><pre id="xv-cron-line" class="ax-code xv-code"></pre><button type="button" class="ax-btn ax-btn--sm" data-copy="#xv-cron-line">{:lang('admin/ux/scale/es_copy')}</button></div>
+     <p id="xv-cli-bins" class="avdb-hint"></p>
+     <p id="xv-cli-seen"></p>
+    </div>
+    <p id="xv-web-note" class="xv-note" hidden></p>
+    <div id="xv-background" class="ax-notice ax-notice--warn xv-background" role="note" hidden></div>
+    <div id="xv-confirm" class="xv-confirm" hidden><label class="avdb-choice" for="xv-confirm-input"><input type="checkbox" id="xv-confirm-input" value="1"><span id="xv-confirm-text"></span></label><p class="avdb-hint" id="xv-confirm-help"></p></div>
+   </section>
+   <div class="avdb-actions"><button type="submit" id="xv-start" class="ax-btn ax-btn--primary" disabled>{:lang('admin/ux/scale/es_start')}</button></div>
+  </form>
+ </section>
+ <section id="avdb-run" aria-labelledby="avdb-run-title" hidden><h2 id="avdb-run-title">{:lang('admin/ux/tools/avdb_run_title')}</h2><p class="avdb-hint">{:lang('admin/ux/tools/avdb_run_hint')}</p><div class="avdb-preset-row"><label for="avdb-job-history">{:lang('admin/ux/tools/avdb_recent')}</label><select id="avdb-job-history"><option value="">{:lang('admin/ux/tools/avdb_choose_import')}</option></select><button type="button" id="avdb-refresh-jobs" class="ax-btn">{:lang('admin/ux/tools/avdb_refresh_history')}</button></div><div id="avdb-job" hidden><p id="avdb-job-status" role="status" aria-live="polite"></p><p id="xv-job-runner" class="avdb-hint"></p><progress id="avdb-progress" max="100" value="0" aria-label="{:lang('admin/ux/tools/avdb_run_title')}"></progress><p id="avdb-job-counts"></p><p id="avdb-live-note" class="avdb-hint" role="status"></p><p id="xv-keep-open" class="xv-note" hidden></p><div class="avdb-actions"><button type="button" data-job-action="pause" class="ax-btn">{:lang('admin/ux/tools/avdb_pause')}</button><button type="button" data-job-action="resume" class="ax-btn ax-btn--primary">{:lang('admin/ux/tools/avdb_resume')}</button><button type="button" data-job-action="retry" class="ax-btn">{:lang('admin/ux/tools/avdb_retry_failed')}</button><button type="button" id="avdb-undo" class="ax-btn">{:lang('admin/ux/tools/avdb_undo')}</button></div><div class="avdb-filter-actions"><label>{:lang('admin/ux/tools/avdb_show_results')}<select id="avdb-result-state"><option value="">{:lang('admin/ux/tools/avdb_all_results')}</option><option value="pending">{:lang('admin/ux/tools/avdb_st_pending')}</option><option value="created">{:lang('admin/ux/tools/avdb_st_created')}</option><option value="updated">{:lang('admin/ux/tools/avdb_st_updated')}</option><option value="skipped">{:lang('admin/ux/tools/avdb_st_skipped')}</option><option value="failed">{:lang('admin/ux/tools/avdb_st_failed')}</option><option value="rolled_back">{:lang('admin/ux/tools/avdb_st_rolled_back')}</option><option value="rollback_conflict">{:lang('admin/ux/tools/avdb_st_rollback_conflict')}</option></select></label><button type="button" id="avdb-refresh-results" class="ax-btn">{:lang('admin/ux/tools/avdb_refresh_results')}</button><span id="avdb-items-total" role="status"></span></div><div class="avdb-table-scroll"><table class="avdb-table"><caption>{:lang('admin/ux/tools/avdb_all_item_results')}</caption><thead><tr><th>{:lang('admin/ux/scale/th_remote_id')}</th><th>{:lang('admin/ux/tools/avdb_th_local_id')}</th><th>{:lang('admin/ux/tools/avdb_th_result')}</th><th>{:lang('admin/ux/tools/avdb_th_message')}</th><th>{:lang('admin/avdb/available_languages')}</th></tr></thead><tbody id="avdb-job-results"></tbody></table></div><div class="avdb-pagination"><button type="button" id="avdb-items-prev" class="ax-btn" disabled>{:lang('admin/ux/tools/avdb_prev_results')}</button><span id="avdb-items-page">{:lang('admin/ux/tools/avdb_page_first')}</span><button type="button" id="avdb-items-next" class="ax-btn" disabled>{:lang('admin/ux/tools/avdb_next_results')}</button></div></div><p id="avdb-no-job">{:lang('admin/ux/tools/avdb_no_job')}</p></section>
+ <section id="xv-manage" class="xv-manage" aria-labelledby="xv-manage-title" hidden>
+  <h2 id="xv-manage-title"></h2>
+  <div class="xv-manage-grid">
+   <article class="xv-card" id="xv-takedowns" aria-labelledby="xv-takedowns-title">
+    <h3 id="xv-takedowns-title">{:lang('admin/ux/scale/mg_takedown_title')}</h3>
+    <p id="xv-takedown-summary"></p>
+    <p id="xv-sweep" class="avdb-hint"></p>
+    <div class="avdb-table-scroll" id="xv-takedown-table" hidden><table class="avdb-table"><caption class="avdb-sr-only">{:lang('admin/ux/scale/mg_takedown_title')}</caption><thead><tr><th>{:lang('admin/ux/tools/avdb_th_video')}</th><th>{:lang('admin/ux/scale/th_remote_id')}</th><th>{:lang('admin/ux/scale/mg_th_hidden')}</th></tr></thead><tbody id="xv-takedown-rows"></tbody></table></div>
+    <button type="button" class="ax-btn ax-btn--danger" id="xv-takedown-delete" hidden></button>
+   </article>
+   <article class="xv-card" id="xv-remove" aria-labelledby="xv-remove-title">
+    <h3 id="xv-remove-title"></h3>
+    <p id="xv-remove-text"></p>
+    <button type="button" class="ax-btn ax-btn--danger" id="xv-remove-btn" hidden></button>
+   </article>
+  </div>
+ </section>
+ <dialog id="avdb-detail-dialog" class="avdb-dialog" aria-labelledby="avdb-detail-title"><h2 id="avdb-detail-title">{:lang('admin/ux/tools/avdb_detail_title')}</h2><div id="avdb-detail-body"></div><form method="dialog"><button class="ax-btn">{:lang('admin/ux/tools/avdb_close')}</button></form></dialog>
+ <dialog id="avdb-preset-dialog" class="avdb-dialog" aria-labelledby="avdb-preset-title"><h2 id="avdb-preset-title">{:lang('admin/ux/tools/avdb_save_filters')}</h2><form id="avdb-preset-form"><label>{:lang('admin/ux/tools/avdb_preset_name')}<input name="preset_name" required maxlength="60" placeholder="{:lang('admin/ux/tools/avdb_ph_preset')}"></label><p>{:lang('admin/ux/tools/avdb_preset_note')}</p><div class="avdb-actions"><button type="button" id="avdb-cancel-preset" class="ax-btn">{:lang('admin/ux/kit/cancel')}</button><button class="ax-btn ax-btn--primary">{:lang('admin/ux/tools/avdb_save_preset')}</button></div></form></dialog>
+ <dialog id="avdb-undo-dialog" class="avdb-dialog" aria-labelledby="avdb-undo-title"><h2 id="avdb-undo-title">{:lang('admin/ux/tools/avdb_undo_title')}</h2><p id="xv-undo-text">{:lang('admin/ux/tools/avdb_undo_text')}</p><div class="avdb-actions"><button type="button" id="avdb-cancel-undo" class="ax-btn">{:lang('admin/ux/tools/avdb_keep_changes')}</button><button type="button" id="avdb-confirm-undo" class="ax-btn ax-btn--danger-solid">{:lang('admin/ux/tools/avdb_undo')}</button></div></dialog>
+</main>
+<script>window.AX_AVDB_LANG = {$avdb_lang_js}; window.AX_SCALE_LANG = {$xvLangJs};</script>
+<script src="__STATIC__/js/avdb_import.js?v={:filemtime(ROOT_PATH . 'static/js/avdb_import.js')}"></script>
+{include file="../../../application/admin/view/public/foot" /}

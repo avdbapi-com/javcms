@@ -1,0 +1,25 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="neon" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/auto"}
+{include file="public/include"}
+</head>
+<body class="nx-page-map">
+{include file="public/head"}
+<main id="main-content" class="nx-main"><div class="nx-wrap">
+<div class="nx-titlebar"><a class="nx-back" href="{$maccms.path}" data-nx-back aria-label="{:\\app\\common\\util\\TemplateText::get('ui.return')}"><svg class="nx-ico" aria-hidden="true"><use href="{$nxSvg|htmlspecialchars=ENT_QUOTES}#back"></use></svg></a><span class="nx-tb-ico">{:\\app\\common\\util\\AutoIcon::navIcon('categories', '', ['size'=>'lg', 'plate'=>true])}</span><h1>{:\\app\\common\\util\\TemplateText::get('ui.categories')}</h1><a class="nx-tsearch" href="{:mac_url('vod/search')}" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.search')}"><svg class="nx-ico" aria-hidden="true"><use href="{$nxSvg|htmlspecialchars=ENT_QUOTES}#search"></use></svg></a></div>
+{include file="index/icons"}
+<section class="nx-section" aria-labelledby="nx-h-map"><div class="nx-cap"><h2 class="nx-cap-title" id="nx-h-map"><span class="nx-cap-ico">{:\\app\\common\\util\\AutoIcon::navIcon('latest-100', '', ['size'=>'lg', 'plate'=>true])}</span><span>{:\\app\\common\\util\\TemplateText::get('ui.latest_100_updates')}</span></h2></div>
+<div class="nx-panel"><ul class="nx-maplist">{maccms:vod num="100" type="all" order="desc" by="time" paging="no" id="vo"}{php}$nxDir = preg_match('/[\x{0590}-\x{08FF}\x{FB1D}-\x{FDFF}\x{FE70}-\x{FEFF}]/u', (string)($vo['vod_display_name'] ?? '')) ? 'rtl' : 'ltr';{/php}<li><a href="{:mac_url_vod_play($vo)}"><time datetime="{$vo.vod_time|date='Y-m-d',###}">{$vo.vod_time|date='m-d',###}</time><span dir="{$nxDir}">{$vo.vod_display_name|mac_default=$vo.vod_name|htmlspecialchars=ENT_QUOTES}</span></a></li>{/maccms:vod}</ul></div>
+</section>
+</div></main>
+{include file="public/foot"}
+</body>
+</html>

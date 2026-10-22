@@ -1,0 +1,42 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="neon-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head><meta name="robots" content="noindex, follow"><title>{:\\app\\common\\util\\TemplateText::get('ui.verification_code')} - {:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$maccms['site_name']), ENT_QUOTES, 'UTF-8')}</title>{include file="public/include"}</head>
+<body class="nn-page-verify">
+{include file="public/head"}
+<main id="main-content" class="nn-main"><div class="nn-wrap">
+<section class="nn-state">
+<svg class="nn-state-ico" aria-hidden="true"><use href="{$nnSvg|htmlspecialchars=ENT_QUOTES}#lock"></use></svg>
+<h1>{:\\app\\common\\util\\TemplateText::get('ui.verification_code')}</h1>
+<form id="native-verification-form" class="nn-form" action="{:mac_url('ajax/verify_check')}" method="post" style="width:100%;max-width:360px">{:token()}<input type="hidden" name="type" value="{$type|htmlspecialchars=ENT_QUOTES}">
+<label class="nn-field"><span class="nn-field-label">{:\\app\\common\\util\\TemplateText::get('ui.verification_code')}</span><span class="nn-verify"><input class="nn-input" id="native-verification-code" name="verify" autocomplete="off" required maxlength="4" inputmode="text"><img id="native-verification-image" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="{:mac_url('verify/index')}" alt="{:\\app\\common\\util\\TemplateText::get('ui.verification_code')}" width="100" height="40"></span></label>
+<button class="nn-btn" type="button" id="native-verification-refresh">{:\\app\\common\\util\\TemplateText::get('not_to_see_change_one')}</button>
+<button class="nn-submit" type="submit">{:\\app\\common\\util\\TemplateText::get('ui.confirm')}</button>
+<p id="native-verification-status" class="nn-form-note" role="status" aria-live="polite"></p>
+</form>
+</section>
+</div></main>
+{include file="public/foot"}
+<script>
+(function(){
+var form=document.getElementById("native-verification-form"),image=document.getElementById("native-verification-image");
+var load=function(){var url=new URL(image.getAttribute("data-src")||image.src,location.href);image.removeAttribute("data-src");url.searchParams.set("r",Date.now());image.src=url.href;};
+var wake=function(){if(image.hasAttribute("data-src")){ load(); }};form.addEventListener("focusin",wake);form.addEventListener("pointerdown",wake);
+document.getElementById("native-verification-refresh").addEventListener("click",load);
+form.addEventListener("submit",function(event){
+event.preventDefault();var button=form.querySelector("button[type=submit]");button.disabled=true;
+fetch(form.action,{method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/x-www-form-urlencoded;charset=UTF-8"},body:new URLSearchParams(new FormData(form)).toString()}).then(function(response){return response.json();}).then(function(reply){
+if(reply.code===1){location.reload();return;}
+document.getElementById("native-verification-status").textContent=String(reply.msg||"");document.getElementById("native-verification-refresh").click();
+}).catch(function(){document.getElementById("native-verification-status").textContent=window.TemplateMessages["ui.connection_failed_try_again"];}).finally(function(){button.disabled=false;});
+});
+})();
+</script>
+</body>
+</html>

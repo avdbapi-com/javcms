@@ -1,0 +1,9 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<section class="nx-section" aria-labelledby="nx-h-hotgrid" data-ai-group><div class="nx-cap"><h2 class="nx-cap-title" id="nx-h-hotgrid"><span class="nx-cap-ico">{:\\app\\common\\util\\AutoIcon::navIcon('hot', '', ['size'=>'lg', 'plate'=>true])}</span><span>{:\\app\\common\\util\\TemplateText::get('ui.hot_videos')}</span></h2><div class="nx-cap-links"><a class="nx-more" href="{:mac_url('label/hot')}">{:\\app\\common\\util\\TemplateText::get('ui.view_more')}{:\\app\\common\\util\\AutoIcon::ui('chevron-right', ['size'=>'sm', 'tint'=>'none', 'class'=>'nx-more-ico'])}</a></div></div>
+<div class="nx-grid" data-grid-fill>{maccms:vod num="10" type="all" order="desc" by="hits" paging="no" id="vo"}{include file="public/vodbox"}{/maccms:vod}</div></section>

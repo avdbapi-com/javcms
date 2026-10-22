@@ -1,0 +1,20 @@
+{
+ "$schema": "javcms.auto-icon.v1",
+ "family": "lucide",
+ "stroke": 1.8,
+ "motion": "glow",
+ "enter": "rise",
+ "plate": "square",
+ "plateMotion": "none",
+ "avatar": "square mono",
+ "tint": "accent",
+ "tokens": {
+  "--ai-c1": "var(--e-icon,#ff9c1d)",
+  "--ai-c2": "var(--e-accent-2,#ff9900)",
+  "--ai-c3": "var(--e-link,#ff9c1d)",
+  "--ai-c4": "var(--e-accent-text,#ff9c1d)",
+  "--ai-bg": "var(--e-bg,#000)"
+ },
+ "map": {},
+ "nav": {}
+}

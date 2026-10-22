@@ -1,0 +1,477 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Based on MacCMS 10 (Apache-2.0) by magicblack, changed by JavCMS.
+JavCMS changes: Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors,
+JavCMS Community License 1.0. The MacCMS parts stay under the Apache License 2.0.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{include file="../../../application/admin/view/public/head" /}
+<link rel="stylesheet" href="__STATIC__/css/admin_url_settings.css?v=20261007-url1">
+<script defer src="__STATIC__/js/admin_url_settings.js?v=20261007-url1"></script>
+
+<div class="page-container">
+    {include file="../../../application/admin/view/public/page_head" icon="ai-link-2" title="admin/ux/menu/page_urls" help="admin/ux/help/page_urls" /}
+    <form data-ax-dirty class="layui-form layui-form-pane" action="">
+        <input type="hidden" name="__token__" value="{$Request.token}" />
+
+        {if condition="$seo_url_warn"}<div class="ax-notice ax-notice--warn" role="note" data-seo-url-warn><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-triangle-alert"/></svg><div><p>{:lang('admin/ux/seo/url_change_warn')}</p></div></div>{/if}
+        <section class="admin-url-setup" aria-labelledby="admin-url-setup-title" data-root="__ROOT__" data-suffix="{php}echo htmlspecialchars(explode('|', config('url_html_suffix'))[0], ENT_QUOTES, 'UTF-8');{/php}">
+            <div class="admin-url-setup__header"><div><h2 id="admin-url-setup-title">{:lang('admin/urlsetup/title')}</h2><p>{:lang('admin/urlsetup/intro')}</p></div><span class="admin-url-setup__badge">{:lang('admin/urlsetup/current')}</span></div>
+            <div class="admin-url-setup__body">
+                <div class="admin-url-setup__controls">
+                    <label class="admin-url-setup__label" for="admin-url-preset">{:lang('admin/urlsetup/preset')}</label>
+                    <select class="admin-url-setup__select" id="admin-url-preset" data-url-preset lay-ignore>
+                        <option value="keep" selected>{:lang('admin/urlsetup/keep')}</option><option value="videos">{:lang('admin/urlsetup/videos')}</option><option value="library">{:lang('admin/urlsetup/library')}</option><option value="classic">{:lang('admin/urlsetup/classic')}</option>
+                    </select>
+                    <p class="admin-url-setup__description" data-url-description>{:lang('admin/urlsetup/keep_description')}</p>
+                    <div class="admin-url-setup__prefixes" data-url-prefixes hidden><div class="admin-url-setup__field"><label class="admin-url-setup__label" for="admin-url-prefix-detail">{:lang('admin/urlsetup/detail')}</label><input type="text" class="admin-url-setup__input" id="admin-url-prefix-detail" data-url-prefix="detail" value="" maxlength="80" spellcheck="false" autocomplete="off"></div><div class="admin-url-setup__field"><label class="admin-url-setup__label" for="admin-url-prefix-play">{:lang('admin/urlsetup/play')}</label><input type="text" class="admin-url-setup__input" id="admin-url-prefix-play" data-url-prefix="play" value="" maxlength="80" spellcheck="false" autocomplete="off"></div><div class="admin-url-setup__field"><label class="admin-url-setup__label" for="admin-url-prefix-download">{:lang('admin/urlsetup/download')}</label><input type="text" class="admin-url-setup__input" id="admin-url-prefix-download" data-url-prefix="download" value="" maxlength="80" spellcheck="false" autocomplete="off"></div><div class="admin-url-setup__field"><label class="admin-url-setup__label" for="admin-url-prefix-category">{:lang('admin/urlsetup/category')}</label><input type="text" class="admin-url-setup__input" id="admin-url-prefix-category" data-url-prefix="category" value="" maxlength="80" spellcheck="false" autocomplete="off"></div><div class="admin-url-setup__field"><label class="admin-url-setup__label" for="admin-url-prefix-actor">{:lang('admin/urlsetup/actor')}</label><input type="text" class="admin-url-setup__input" id="admin-url-prefix-actor" data-url-prefix="actor" value="" maxlength="80" spellcheck="false" autocomplete="off"></div><p class="admin-url-setup__hint">{:lang('admin/urlsetup/prefix_hint')}</p></div>
+                    <label class="admin-url-setup__toggle"><input type="checkbox" data-url-rewrite lay-ignore {if condition="$config['rewrite']['status'] eq 1"}checked{/if}> <span>{:lang('admin/urlsetup/rewrite_toggle')}</span></label><p class="admin-url-setup__hint">{:lang('admin/urlsetup/rewrite_help')}</p>
+                    {php}$canonicalScheme = $config['rewrite']['canonical_scheme'] ?? 'auto';{/php}
+                    <label class="admin-url-setup__label" for="admin-url-canonical-scheme">{:lang('admin/urlsetup/canonical_scheme')}</label>
+                    <select class="admin-url-setup__select" id="admin-url-canonical-scheme" name="rewrite[canonical_scheme]" lay-ignore aria-describedby="admin-url-canonical-scheme-help">
+                        <option value="auto" {if condition="$canonicalScheme eq 'auto'"}selected{/if}>{:lang('admin/urlsetup/canonical_scheme_auto')}</option>
+                        <option value="https" {if condition="$canonicalScheme eq 'https'"}selected{/if}>{:lang('admin/urlsetup/canonical_scheme_https')}</option>
+                        <option value="http" {if condition="$canonicalScheme eq 'http'"}selected{/if}>{:lang('admin/urlsetup/canonical_scheme_http')}</option>
+                    </select>
+                    <p class="admin-url-setup__hint" id="admin-url-canonical-scheme-help">{:lang('admin/urlsetup/canonical_scheme_help')}</p>
+                    <div class="admin-url-setup__actions"><button type="button" data-url-apply disabled>{:lang('admin/urlsetup/apply')}</button><button type="button" data-url-discard disabled>{:lang('admin/urlsetup/discard')}</button></div>
+                    <p class="admin-url-setup__status" data-url-status role="status" aria-live="polite" tabindex="-1">{:lang('admin/urlsetup/ready')}</p>
+                    <noscript><p>{:lang('admin/urlsetup/noscript')}</p></noscript>
+                </div>
+                <div class="admin-url-setup__preview"><h3>{:lang('admin/urlsetup/examples')}</h3><ul class="admin-url-setup__examples"><li><span>{:lang('admin/urlsetup/detail')}</span><code data-url-example="detail">{:lang('admin/urlsetup/example_unavailable')}</code></li><li><span>{:lang('admin/urlsetup/play')}</span><code data-url-example="play">{:lang('admin/urlsetup/example_unavailable')}</code></li><li><span>{:lang('admin/urlsetup/download')}</span><code data-url-example="download">{:lang('admin/urlsetup/example_unavailable')}</code></li><li><span>{:lang('admin/urlsetup/category')}</span><code data-url-example="category">{:lang('admin/urlsetup/example_unavailable')}</code></li><li><span>{:lang('admin/urlsetup/actor')}</span><code data-url-example="actor">{:lang('admin/urlsetup/example_unavailable')}</code></li></ul><p class="admin-url-setup__changes" data-url-changes>{:lang('admin/urlsetup/current_preview')}</p></div>
+            </div>
+            <p class="admin-url-setup__note">{:lang('admin/urlsetup/seo')} <a href="{:url('system/configseo')}">{:lang('admin/urlsetup/seo_settings')}</a> · <a href="https://developers.google.com/search/docs/crawling-indexing/url-structure" target="_blank" rel="noopener noreferrer">{:lang('admin/urlsetup/seo_docs')}</a></p>
+        </section>
+        <script type="application/json" id="admin-url-setup-strings">{php}
+        echo json_encode(['title' => lang('admin/urlsetup/title'), 'intro' => lang('admin/urlsetup/intro'), 'current' => lang('admin/urlsetup/current'), 'preset' => lang('admin/urlsetup/preset'), 'keep' => lang('admin/urlsetup/keep'), 'videos' => lang('admin/urlsetup/videos'), 'library' => lang('admin/urlsetup/library'), 'classic' => lang('admin/urlsetup/classic'), 'detail' => lang('admin/urlsetup/detail'), 'play' => lang('admin/urlsetup/play'), 'download' => lang('admin/urlsetup/download'), 'category' => lang('admin/urlsetup/category'), 'actor' => lang('admin/urlsetup/actor'), 'prefix_hint' => lang('admin/urlsetup/prefix_hint'), 'apply' => lang('admin/urlsetup/apply'), 'discard' => lang('admin/urlsetup/discard'), 'examples' => lang('admin/urlsetup/examples'), 'preview_only' => lang('admin/urlsetup/preview_only'), 'ready' => lang('admin/urlsetup/ready'), 'applied' => lang('admin/urlsetup/applied'), 'discarded' => lang('admin/urlsetup/discarded'), 'reset_done' => lang('admin/urlsetup/reset_done'), 'keep_description' => lang('admin/urlsetup/keep_description'), 'preset_description' => lang('admin/urlsetup/preset_description'), 'changes_summary' => lang('admin/urlsetup/changes_summary'), 'current_preview' => lang('admin/urlsetup/current_preview'), 'example_unavailable' => lang('admin/urlsetup/example_unavailable'), 'seo' => lang('admin/urlsetup/seo'), 'seo_settings' => lang('admin/urlsetup/seo_settings'), 'seo_docs' => lang('admin/urlsetup/seo_docs'), 'noscript' => lang('admin/urlsetup/noscript'), 'movie_code' => lang('admin/urlsetup/movie_code'), 'prefix_invalid' => lang('admin/urlsetup/prefix_invalid'), 'prefix_duplicate' => lang('admin/urlsetup/prefix_duplicate'), 'route_invalid' => lang('admin/urlsetup/route_invalid'), 'route_duplicate' => lang('admin/urlsetup/route_duplicate'), 'route_reserved' => lang('admin/urlsetup/route_reserved'), 'invalid_form' => lang('admin/urlsetup/invalid_form'), 'backup_failed' => lang('admin/urlsetup/backup_failed'), 'rollback_failed' => lang('admin/urlsetup/rollback_failed'), 'rewrite_toggle' => lang('admin/urlsetup/rewrite_toggle'), 'rewrite_help' => lang('admin/urlsetup/rewrite_help'), 'actor_browsing' => lang('admin/urlsetup/actor_browsing')], JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
+        {/php}</script>
+        <style>details.ax-advanced{margin:8px 0 0}details.ax-advanced>summary{cursor:pointer;padding:10px 0;color:var(--ax-text);font:650 14px/1.3 var(--ax-font)}</style>
+        <details class="ax-section ax-advanced">
+            <summary>{:lang('admin/ux/system/advanced_block')}</summary>
+        <div class="layui-tab maccms-inner-tab-vertical" lay-filter="tb1">
+            <ul class="layui-tab-title">
+                <li class="layui-this" lay-id="configurl_1">{:lang('admin/system/configurl/view')}</li>
+                <li class="" lay-id="configurl_2">{:lang('admin/system/configurl/html')}</li>
+                <li class="" lay-id="configurl_3">{:lang('admin/system/configurl/route')}</li>
+            </ul>
+            <div class="layui-tab-content">
+
+                <div class="layui-tab-item layui-show studio-form-panel">
+                    {php}$urlActorMode = isset($config['view']['actor_detail']) ? (string)$config['view']['actor_detail'] : '0';{/php}
+                    <div class="layui-form-item studio-field-row"><label class="layui-form-label">{:lang('admin/urlsetup/actor_browsing')}</label><div class="layui-input-block"><select name="view[actor_detail]"><option value="0" {if condition="$urlActorMode neq '2'"}selected{/if}>{:lang('admin/system/configurl/dynamic')}</option><option value="2" {if condition="$urlActorMode eq '2'"}selected{/if}>{:lang('admin/system/configurl/static')}</option></select></div></div>
+
+
+                    <div class="layui-form-item studio-field-paired studio-field-wide" style="--studio-field-count:3">
+                    <label class="layui-form-label" style="grid-column:1;grid-row:1">{:lang('admin/system/configurl/index')}</label>
+                    <div class="layui-input-inline w200" style="grid-column:1;grid-row:2">
+                        <select name="view[index]" >
+                            <option value="0" {if condition="$config['view']['index'] eq 0"}selected{/if}>{:lang('admin/system/configurl/dynamic')}</option>
+                            <option value="2" {if condition="$config['view']['index'] eq 2"}selected{/if}>{:lang('admin/system/configurl/static')}</option>
+                        </select>
+                    </div>
+                    <label class="layui-form-label" style="grid-column:2;grid-row:1">{:lang('admin/system/configurl/map')}</label>
+                    <div class="layui-input-inline w200" style="grid-column:2;grid-row:2">
+                        <select name="view[map]" >
+                            <option value="0" {if condition="$config['view']['map'] eq 0"}selected{/if}>{:lang('admin/system/configurl/dynamic')}</option>
+                            <option value="2" {if condition="$config['view']['map'] eq 2"}selected{/if}>{:lang('admin/system/configurl/static')}</option>
+                        </select>
+                    </div>
+                    <label class="layui-form-label" style="grid-column:3;grid-row:1">{:lang('admin/system/configurl/search')}</label>
+                    <div class="layui-input-inline w200" style="grid-column:3;grid-row:2">
+                        <select name="view[search]" >
+                            <option value="0" {if condition="$config['view']['search'] eq 0"}selected{/if}>{:lang('admin/system/configurl/dynamic')}</option>
+                        </select>
+                    </div>
+                </div>
+                    <div class="layui-form-item studio-field-paired studio-field-wide" style="--studio-field-count:2">
+                        <label class="layui-form-label" style="grid-column:1;grid-row:1">RSS:</label>
+                        <div class="layui-input-inline w200" style="grid-column:1;grid-row:2">
+                            <select name="view[rss]" >
+                                <option value="0" {if condition="$config['view']['rss'] eq 0"}selected{/if}>{:lang('admin/system/configurl/dynamic')}</option>
+                                <option value="2" {if condition="$config['view']['rss'] eq 2"}selected{/if}>{:lang('admin/system/configurl/static')}</option>
+                            </select>
+                        </div>
+                        <label class="layui-form-label" style="grid-column:2;grid-row:1">{:lang('admin/system/configurl/label')}</label>
+                        <div class="layui-input-inline w200" style="grid-column:2;grid-row:2">
+                            <select name="view[label]" >
+                                <option value="0" {if condition="$config['view']['label'] eq 0"}selected{/if}>{:lang('admin/system/configurl/dynamic')}</option>
+                                <option value="2" {if condition="$config['view']['label'] eq 2"}selected{/if}>{:lang('admin/system/configurl/static')}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-form-item studio-field-paired studio-field-wide" style="--studio-field-count:2">
+                        <label class="layui-form-label" style="grid-column:1;grid-row:1">{:lang('admin/system/configurl/vod_type')}</label>
+                        <div class="layui-input-inline w200" style="grid-column:1;grid-row:2">
+                            <select name="view[vod_type]">
+                                <option value="0" {if condition="$config['view']['vod_type'] eq 0"}selected{/if}>{:lang('admin/system/configurl/dynamic')}</option>
+                                <option value="2" {if condition="$config['view']['vod_type'] eq 2"}selected{/if}>{:lang('admin/system/configurl/static')}</option>
+                            </select>
+                        </div>
+                        <label class="layui-form-label" style="grid-column:2;grid-row:1">{:lang('admin/system/configurl/vod_show')}</label>
+                        <div class="layui-input-inline w200" style="grid-column:2;grid-row:2">
+                            <select name="view[vod_show]" >
+                                <option value="0" {if condition="$config['view']['vod_show'] eq 0"}selected{/if}>{:lang('admin/system/configurl/dynamic')}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-form-item studio-field-paired studio-field-wide" style="--studio-field-count:2">
+                        <label class="layui-form-label" style="grid-column:1;grid-row:1">{:lang('admin/system/configurl/art_type')}</label>
+                        <div class="layui-input-inline w200" style="grid-column:1;grid-row:2">
+                            <select name="view[art_type]">
+                                <option value="0" {if condition="$config['view']['art_type'] eq 0"}selected{/if}>{:lang('admin/system/configurl/dynamic')}</option>
+                                <option value="2" {if condition="$config['view']['art_type'] eq 2"}selected{/if}>{:lang('admin/system/configurl/static')}</option>
+                            </select>
+                        </div>
+                        <label class="layui-form-label" style="grid-column:2;grid-row:1">{:lang('admin/system/configurl/art_show')}</label>
+                        <div class="layui-input-inline w200" style="grid-column:2;grid-row:2">
+                            <select name="view[art_show]" >
+                                <option value="0" {if condition="$config['view']['art_show'] eq 0"}selected{/if}>{:lang('admin/system/configurl/dynamic')}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-form-item studio-field-paired studio-field-wide" style="--studio-field-count:2">
+                        <label class="layui-form-label" style="grid-column:1;grid-row:1">{:lang('admin/system/configurl/topic_index')}</label>
+                        <div class="layui-input-inline w200" style="grid-column:1;grid-row:2">
+                            <select name="view[topic_index]" >
+                                <option value="0" {if condition="$config['view']['topic_index'] eq 0"}selected{/if}>{:lang('admin/system/configurl/dynamic')}</option>
+                                <option value="2" {if condition="$config['view']['topic_index'] eq 2"}selected{/if}>{:lang('admin/system/configurl/static')}</option>
+                            </select>
+                        </div>
+                        <label class="layui-form-label" style="grid-column:2;grid-row:1">{:lang('admin/system/configurl/topic_detail')}</label>
+                        <div class="layui-input-inline w200" style="grid-column:2;grid-row:2">
+                            <select name="view[topic_detail]" >
+                                <option value="0" {if condition="$config['view']['topic_detail'] eq 0"}selected{/if}>{:lang('admin/system/configurl/dynamic')}</option>
+                                <option value="2" {if condition="$config['view']['topic_detail'] eq 2"}selected{/if}>{:lang('admin/system/configurl/static')}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-form-item studio-field-paired studio-field-wide" style="--studio-field-count:3">
+                        <label class="layui-form-label" style="grid-column:1;grid-row:1">{:lang('admin/system/configurl/vod_detail')}</label>
+                        <div class="layui-input-inline w200" style="grid-column:1;grid-row:2">
+                            <select name="view[vod_detail]" >
+                                <option value="0" {if condition="$config['view']['vod_detail'] eq 0"}selected{/if}>{:lang('admin/system/configurl/dynamic')}</option>
+                                <option value="2" {if condition="$config['view']['vod_detail'] eq 2"}selected{/if}>{:lang('admin/system/configurl/static')}</option>
+                            </select>
+                        </div>
+                        <label class="layui-form-label" style="grid-column:2;grid-row:1">{:lang('admin/system/configurl/vod_play')}</label>
+                        <div class="layui-input-inline w200" style="grid-column:2;grid-row:2">
+                            <select name="view[vod_play]" >
+                                <option value="0" {if condition="$config['view']['vod_play'] eq 0"}selected{/if}>{:lang('admin/system/configurl/dynamic')}</option>
+                                <option value="3" {if condition="$config['view']['vod_play'] eq 3"}selected{/if}>{:lang('admin/system/configurl/static_one')}</option>
+                            </select>
+                        </div>
+                        <label class="layui-form-label" style="grid-column:3;grid-row:1">{:lang('admin/system/configurl/vod_down')}</label>
+                        <div class="layui-input-inline w200" style="grid-column:3;grid-row:2">
+                            <select name="view[vod_down]" >
+                                <option value="0" {if condition="$config['view']['vod_down'] eq 0"}selected{/if}>{:lang('admin/system/configurl/dynamic')}</option>
+                                <option value="3" {if condition="$config['view']['vod_down'] eq 3"}selected{/if}>{:lang('admin/system/configurl/static_one')}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-form-item studio-field-row">
+                        <label class="layui-form-label">{:lang('admin/system/configurl/art_detail')}</label>
+                        <div class="layui-input-inline w200">
+                            <select name="view[art_detail]" >
+                                <option value="0" {if condition="$config['view']['art_detail'] eq 0"}selected{/if}>{:lang('admin/system/configurl/dynamic')}</option>
+                                <option value="2" {if condition="$config['view']['art_detail'] eq 2"}selected{/if}>{:lang('admin/system/configurl/static')}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="layui-tab-item studio-form-panel">
+
+
+                    <div class="layui-form-item studio-field-row">
+                        <label class="layui-form-label">{:lang('admin/system/configurl/topic_index')}</label>
+                        <div class="layui-input-inline w400">
+                            <input type="text" name="path[topic_index]" placeholder="" value="{$config['path']['topic_index']|htmlspecialchars}" class="layui-input ">
+                        </div>
+                        <div class="layui-input-inline">
+                            <select lay-filter="select_path" onChange="sethtmldir('path[topic_index]',this.value);"><option>{:lang('admin/system/configurl/structure')}</option><option value="topic/index">1.topic/index</option></select>
+                        </div>
+                    </div>
+                    <div class="layui-form-item studio-field-row">
+                        <label class="layui-form-label">{:lang('admin/system/configurl/topic_detail')}</label>
+                        <div class="layui-input-inline w400">
+                            <input type="text" name="path[topic_detail]" placeholder="" value="{$config['path']['topic_detail']|htmlspecialchars}" class="layui-input ">
+                        </div>
+                        <div class="layui-input-inline">
+                            <select lay-filter="select_path" onChange="sethtmldir('path[topic_detail]',this.value);"><option>{:lang('admin/system/configurl/structure')}</option><option value="topic/{id}/index">1.topic/id/</option><option value="topic/{md5}/index">2.topic/MD5 value/</option><option value="topic/{en}/index">3.topic/en/</option><option value="topic/{id}">4.topic/id.html</option><option value="topic/{md5}">5.topic/md5.html</option><option value="topic/{en}">6.topic/en.html</option></select>
+                        </div>
+                        <div class="layui-input-inline">
+                            {:lang('admin/system/configurl/variable')}:{id} {en} {md5}
+                        </div>
+                    </div>
+
+
+                    <div class="layui-form-item studio-field-row">
+                        <label class="layui-form-label">{:lang('admin/system/configurl/vod_type')}</label>
+                        <div class="layui-input-inline w400">
+                            <input type="text" name="path[vod_type]" placeholder="" value="{$config['path']['vod_type']|htmlspecialchars}" class="layui-input ">
+                        </div>
+                        <div class="layui-input-inline">
+                            <select lay-filter="select_path" onChange="sethtmldir('path[vod_type]',this.value);"><option>{:lang('admin/system/configurl/structure')}</option><option value="vodtypehtml/{id}/index">1.vodtypehtml/id/</option><option value="vodtypehtml/{md5}/index">2.vodtypehtml/MD5 value/</option><option value="vodtypehtml/{en}/index">3.vodtypehtml/en/</option><option value="vodtypehtml/{id}">4.vodtypehtml/id.html</option><option value="vodtypehtml/{md5}">5.vodtypehtml/md5.html</option><option value="vodtypehtml/{en}">6.vodtypehtml/en.html</option></select>
+                        </div>
+                        <div class="layui-input-inline w500">
+                            {:lang('admin/system/configurl/variable')}:{id} {en} {type_pid} {type_pen} {md5}
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item studio-field-row">
+                        <label class="layui-form-label">{:lang('admin/system/configurl/vod_detail')}</label>
+                        <div class="layui-input-inline w400">
+                            <input type="text" name="path[vod_detail]" placeholder="" value="{$config['path']['vod_detail']|htmlspecialchars}" class="layui-input ">
+                        </div>
+                        <div class="layui-input-inline">
+                            <select lay-filter="select_path" onChange="sethtmldir('path[vod_detail]',this.value);"><option>{:lang('admin/system/configurl/structure')}</option><option value="vodhtml/{id}/index">1.vodhtml/id/</option><option value="vodhtml/{md5}/index">2.vodhtml/MD5 value/</option><option value="vodhtml/{en}/index">3.vodhtml/en/</option><option value="vodhtml/{id}">4.vodhtml/id.html</option><option value="vodhtml/{md5}">5.vodhtml/md5.html</option><option value="vodhtml/{en}">6.vodhtml/en.html</option></select>
+                        </div>
+                        <div class="layui-input-inline w600">
+                            {:lang('admin/system/configurl/variable')}:{id} {en} {type_id} {type_en} {type_pid} {type_pen} {year} {month} {day} {md5}
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item studio-field-row">
+                        <label class="layui-form-label">{:lang('admin/system/configurl/vod_play')}</label>
+                        <div class="layui-input-inline w400">
+                            <input type="text" name="path[vod_play]" placeholder="" value="{$config['path']['vod_play']|htmlspecialchars}" class="layui-input ">
+                        </div>
+                        <div class="layui-input-inline">
+                            <select lay-filter="select_path" onChange="sethtmldir('path[vod_play]',this.value);"><option>{:lang('admin/system/configurl/structure')}</option><option value="vodplayhtml/{id}/index">1.vodplayhtml/id/</option><option value="vodplayhtml/{md5}/index">2.vodplayhtml/MD5 value/</option><option value="vodplayhtml/{en}/index">3.vodplayhtml/en/</option><option value="vodplayhtml/{id}">4.vodplayhtml/id.html</option><option value="vodplayhtml/{md5}">5.vodplayhtml/md5.html</option><option value="vodplayhtml/{en}">6.vodplayhtml/en.html</option></select>
+                        </div>
+                        <div class="layui-input-inline w600">
+                            {:lang('admin/system/configurl/variable')}:{id} {en} {type_id} {type_en} {type_pid} {type_pen} {year} {month} {day} {md5}
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item studio-field-row">
+                        <label class="layui-form-label">{:lang('admin/system/configurl/vod_down')}</label>
+                        <div class="layui-input-inline w400">
+                            <input type="text" name="path[vod_down]" placeholder="" value="{$config['path']['vod_down']|htmlspecialchars}" class="layui-input ">
+                        </div>
+                        <div class="layui-input-inline">
+                            <select lay-filter="select_path" onChange="sethtmldir('path[vod_down]',this.value);"><option>{:lang('admin/system/configurl/structure')}</option><option value="voddownhtml/{id}/index">1.voddownhtml/id/</option><option value="voddownhtml/{md5}/index">2.voddownhtml/MD5 value/</option><option value="voddownhtml/{en}/index">3.voddownhtml/en/</option><option value="voddownhtml/{id}">4.voddownhtml/id.html</option><option value="voddownhtml/{md5}">5.voddownhtml/md5.html</option><option value="voddownhtml/{en}">6.voddownhtml/en.html</option></select>
+                        </div>
+                        <div class="layui-input-inline w600">
+                            {:lang('admin/system/configurl/variable')}:{id} {en} {type_id} {type_en} {type_pid} {type_pen} {year} {month} {day} {md5}
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item studio-field-row">
+                        <label class="layui-form-label">{:lang('admin/system/configurl/art_type')}</label>
+                        <div class="layui-input-inline w400">
+                            <input type="text" name="path[art_type]" placeholder="" value="{$config['path']['art_type']|htmlspecialchars}" class="layui-input ">
+                        </div>
+                        <div class="layui-input-inline">
+                            <select lay-filter="select_path" onChange="sethtmldir('path[art_type]',this.value);"><option>{:lang('admin/system/configurl/structure')}</option><option value="arttypehtml/{id}/index">1.arttypehtml/id/</option><option value="arttypehtml/{md5}/index">2.arttypehtml/MD5 value/</option><option value="arttypehtml/{en}/index">3.arttypehtml/en/</option><option value="arttypehtml/{id}">4.arttypehtml/id.html</option><option value="arttypehtml/{md5}">5.arttypehtml/md5.html</option><option value="arttypehtml/{en}">6.arttypehtml/en.html</option></select>
+                        </div>
+                        <div class="layui-input-inline w600">
+                            {:lang('admin/system/configurl/variable')}:{id} {en} {type_pid} {type_pen} {md5}
+                        </div>
+                    </div>
+
+
+                    <div class="layui-form-item studio-field-row">
+                        <label class="layui-form-label">{:lang('admin/system/configurl/art_detail')}</label>
+                        <div class="layui-input-inline w400">
+                            <input type="text" name="path[art_detail]" placeholder="" value="{$config['path']['art_detail']|htmlspecialchars}" class="layui-input ">
+                        </div>
+                        <div class="layui-input-inline">
+                            <select lay-filter="select_path" onChange="sethtmldir('path[art_detail]',this.value);"><option>{:lang('admin/system/configurl/structure')}</option><option value="arthtml/{id}/index">1.arthtml/id/</option><option value="arthtml/{md5}/index">2.arthtml/MD5 value/</option><option value="arthtml/{en}/index">3.arthtml/en/</option><option value="arthtml/{id}">4.arthtml/id.html</option><option value="arthtml/{md5}">5.arthtml/md5.html</option><option value="arthtml/{en}">6.arthtml/en.html</option></select>
+                        </div>
+                        <div class="layui-input-inline w600">
+                            {:lang('admin/system/configurl/variable')}:{id} {en} {type_id} {type_en} {type_pid} {type_pen} {year} {month} {day} {md5}
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item studio-field-row">
+                        <label class="layui-form-label">{:lang('admin/system/configurl/multipage_connector')}</label>
+                        <div class="layui-input-inline w400">
+                            <input type="text" name="path[page_sp]" placeholder="" value="{$config['path']['page_sp']|htmlspecialchars}" class="layui-input ">
+                        </div>
+                        <div class="layui-input-inline ">
+                            <select lay-filter="select_path" onChange="sethtmldir('path[page_sp]',this.value);"><option>{:lang('admin/system/configurl/common_connector')}</option><option value="-">1.-</option><option value="_">2._</option></select>
+                        </div>
+                        <div class="layui-input-inline w600">
+                            {:lang('admin/system/configurl/multipage_connector_tip')}
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item studio-field-row">
+                        <label class="layui-form-label">{:lang('admin/system/configurl/file_ext')}</label>
+                        <div class="layui-input-inline w400">
+                            <input type="text" name="path[suffix]" placeholder="" value="{$config['path']['suffix']|htmlspecialchars}" class="layui-input ">
+                        </div>
+                        <div class="layui-input-inline ">
+                            <select lay-filter="select_path" onChange="sethtmldir('path[suffix]',this.value);"><option>{:lang('admin/system/configurl/common_ext')}</option><option value="html">1.html</option><option value="htm">2.htm</option><option value="shtml">3.shtml</option></select>
+                        </div>
+                        <div class="layui-input-inline w600">
+                            {:lang('admin/system/configurl/file_ext_tip')}
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="layui-tab-item studio-form-panel">
+                    <blockquote class="layui-elem-quote layui-quote-nm studio-field-wide">
+                        {:lang('admin/system/configurl/route_tip')}
+                    </blockquote>
+
+                    <div class="layui-form-item studio-field-row">
+                        <label class="layui-form-label">{:lang('admin/system/configurl/suffix_hide')}</label>
+                        <div class="layui-input-block">
+                            <input type="radio" name="rewrite[suffix_hide]" value="0" title="{:lang('admin/ux/system/off')}" {if condition="$config['rewrite']['suffix_hide'] neq 1"}checked {/if}>
+                            <input type="radio" name="rewrite[suffix_hide]" value="1" title="{:lang('admin/ux/system/on')}" {if condition="$config['rewrite']['suffix_hide'] eq 1"}checked {/if}>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item studio-field-row">
+                        <label class="layui-form-label">{:lang('admin/system/configurl/route_status')}</label>
+                        <div class="layui-input-block">
+                            <input type="radio" name="rewrite[route_status]" value="0" title="{:lang('admin/ux/system/off')}" {if condition="$config['rewrite']['route_status'] neq 1"}checked {/if}>
+                            <input type="radio" name="rewrite[route_status]" value="1" title="{:lang('admin/ux/system/on')}" {if condition="$config['rewrite']['route_status'] eq 1"}checked {/if}>
+                        </div>
+                    </div>
+                    <div class="layui-form-item studio-field-row">
+                        <label class="layui-form-label">{:lang('admin/system/configurl/rewrite_status')}</label>
+                        <div class="layui-input-block">
+                            <input type="radio" name="rewrite[status]" value="0" title="{:lang('admin/ux/system/off')}" {if condition="$config['rewrite']['status'] neq 1"}checked {/if}>
+                            <input type="radio" name="rewrite[status]" value="1" title="{:lang('admin/ux/system/on')}" {if condition="$config['rewrite']['status'] eq 1"}checked {/if}>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item studio-field-paired studio-field-wide" style="--studio-field-count:2">
+                        <label class="layui-form-label" style="grid-column:1;grid-row:1">{:lang('admin/system/configurl/encode_key')}</label>
+                        <div class="layui-input-inline" style="grid-column:1;grid-row:2">
+                            <input type="text" name="rewrite[encode_key]" placeholder="" value="{$config['rewrite']['encode_key']|htmlspecialchars}" class="layui-input ">
+                        </div>
+                        <label class="layui-form-label" style="grid-column:2;grid-row:1">{:lang('admin/system/configurl/encode_len')}</label>
+                        <div class="layui-input-inline" style="grid-column:2;grid-row:2">
+                            <input type="text" name="rewrite[encode_len]" placeholder="" value="{$config['rewrite']['encode_len']|htmlspecialchars}" class="layui-input ">
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">{:lang('admin/system/configurl/encode_tip')}</div>
+                    </div>
+
+                    <div class="layui-form-item studio-field-paired studio-field-wide" style="--studio-field-count:7">
+                        <label class="layui-form-label" style="grid-column:1;grid-row:1">{:lang('vod_id')}</label>
+                        <div class="layui-input-inline w100" style="grid-column:1;grid-row:2">
+                            <select name="rewrite[vod_id]" >
+                                <option value="0" {if condition="$config['rewrite']['vod_id'] eq 0"}selected{/if}>{:lang('num_id')}</option>
+                                <option value="1" {if condition="$config['rewrite']['vod_id'] eq 1"}selected{/if}>{:lang('admin/urlsetup/movie_code')}</option>
+                                <option value="2" {if condition="$config['rewrite']['vod_id'] eq 2"}selected{/if}>{:lang('encode_id')}</option>
+                            </select>
+                        </div>
+                        <label class="layui-form-label" style="grid-column:2;grid-row:1">{:lang('art_id')}</label>
+                        <div class="layui-input-inline w100" style="grid-column:2;grid-row:2">
+                            <select name="rewrite[art_id]" >
+                                <option value="0" {if condition="$config['rewrite']['art_id'] eq 0"}selected{/if}>{:lang('num_id')}</option>
+                                <option value="1" {if condition="$config['rewrite']['art_id'] eq 1"}selected{/if}>{:lang('en')}</option>
+                                <option value="2" {if condition="$config['rewrite']['art_id'] eq 2"}selected{/if}>{:lang('encode_id')}</option>
+                            </select>
+                        </div>
+                        <label class="layui-form-label" style="grid-column:3;grid-row:1">{:lang('type_id')}</label>
+                        <div class="layui-input-inline w100" style="grid-column:3;grid-row:2">
+                            <select name="rewrite[type_id]" >
+                                <option value="0" {if condition="$config['rewrite']['type_id'] eq 0"}selected{/if}>{:lang('num_id')}</option>
+                                <option value="1" {if condition="$config['rewrite']['type_id'] eq 1"}selected{/if}>{:lang('en')}</option>
+                                <option value="2" {if condition="$config['rewrite']['type_id'] eq 2"}selected{/if}>{:lang('encode_id')}</option>
+                            </select>
+                        </div>
+                        <label class="layui-form-label" style="grid-column:4;grid-row:1">{:lang('topic_id')}</label>
+                        <div class="layui-input-inline w100" style="grid-column:4;grid-row:2">
+                            <select name="rewrite[topic_id]" >
+                                <option value="0" {if condition="$config['rewrite']['topic_id'] eq 0"}selected{/if}>{:lang('num_id')}</option>
+                                <option value="1" {if condition="$config['rewrite']['topic_id'] eq 1"}selected{/if}>{:lang('en')}</option>
+                                <option value="2" {if condition="$config['rewrite']['topic_id'] eq 2"}selected{/if}>{:lang('encode_id')}</option>
+                            </select>
+                        </div>
+                        <label class="layui-form-label" style="grid-column:5;grid-row:1">{:lang('actor_id')}</label>
+                        <div class="layui-input-inline w100" style="grid-column:5;grid-row:2">
+                            <select name="rewrite[actor_id]" >
+                                <option value="0" {if condition="$config['rewrite']['actor_id'] eq 0"}selected{/if}>{:lang('num_id')}</option>
+                                <option value="1" {if condition="$config['rewrite']['actor_id'] eq 1"}selected{/if}>{:lang('en')}</option>
+                                <option value="2" {if condition="$config['rewrite']['actor_id'] eq 2"}selected{/if}>{:lang('encode_id')}</option>
+                            </select>
+                        </div>
+                        <label class="layui-form-label" style="grid-column:6;grid-row:1">{:lang('role_id')}</label>
+                        <div class="layui-input-inline w100" style="grid-column:6;grid-row:2">
+                            <select name="rewrite[role_id]" >
+                                <option value="0" {if condition="$config['rewrite']['role_id'] eq 0"}selected{/if}>{:lang('num_id')}</option>
+                                <option value="1" {if condition="$config['rewrite']['role_id'] eq 1"}selected{/if}>{:lang('en')}</option>
+                                <option value="2" {if condition="$config['rewrite']['role_id'] eq 2"}selected{/if}>{:lang('encode_id')}</option>
+                            </select>
+                        </div>
+                        <label class="layui-form-label" style="grid-column:7;grid-row:1">{:lang('website_id')}</label>
+                        <div class="layui-input-inline w100" style="grid-column:7;grid-row:2">
+                            <select name="rewrite[website_id]" >
+                                <option value="0" {if condition="$config['rewrite']['website_id'] eq 0"}selected{/if}>{:lang('num_id')}</option>
+                                <option value="1" {if condition="$config['rewrite']['website_id'] eq 1"}selected{/if}>{:lang('en')}</option>
+                                <option value="2" {if condition="$config['rewrite']['website_id'] eq 2"}selected{/if}>{:lang('encode_id')}</option>
+                            </select>
+                        </div>
+
+                    </div>
+
+                    <div class="layui-form-item studio-field-row studio-field-wide">
+                        <label class="layui-form-label">{:lang('admin/system/configurl/route_rule')}</label>
+                        <div class="layui-input-block">
+                            <textarea name="rewrite[route]" class="layui-textarea" rows="30" placeholder="">{$config['rewrite']['route']|htmlspecialchars}</textarea>
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+
+
+            </div>
+        </div>
+        </details>
+        <div class="ax-savebar">
+            <span class="ax-savebar__status" role="status"></span>
+            <div class="ax-savebar__end">
+                <button class="ax-btn" type="reset"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-rotate-ccw"/></svg>{:lang('admin/ux/system/undo_changes')}</button>
+                <button type="submit" class="ax-btn ax-btn--primary" lay-submit="" lay-filter="formSubmit"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-save"/></svg>{:lang('admin/ux/kit/save')}</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+{include file="../../../application/admin/view/public/foot" /}
+<script type="application/json" id="seo-strings">{$seo_js}</script>
+<script defer src="__STATIC__/js/admin_seo.js?v={:filemtime(ROOT_PATH . 'static/js/admin_seo.js')}"></script>
+
+<script type="text/javascript" src="__STATIC__/js/jquery.cookie.js"></script>
+<script type="text/javascript">
+    layui.use(['element', 'form', 'layer'], function() {
+        var element = layui.element
+            ,form = layui.form
+            , layer = layui.layer;
+
+        form.on('select(select_path)', function(data){
+            $(this).parent().parent().parent().parent().find('input').val(data.value);
+        });
+
+        element.on('tab(tb1)', function(){
+            $.cookie('configurl_tab', this.getAttribute('lay-id'));
+        });
+
+        if( $.cookie('configurl_tab') !=null ) {
+            element.tabChange('tb1', $.cookie('configurl_tab'));
+        }
+
+    });
+
+    function sethtmldir(id,value){
+        if(value){
+            $("input[name='"+id+"']").val(value);
+        }
+    }
+
+</script>
+
+</body>
+</html>

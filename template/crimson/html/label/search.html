@@ -1,0 +1,26 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="crimson" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/auto"}
+{include file="public/include"}
+</head>
+<body class="ct-searchcenter">
+{include file="public/head"}
+<main id="main-content" class="ct-wrap">
+<div class="ct-phead"><div class="ct-phead-main"><h1 class="ct-h1">{:\\app\\common\\util\\TemplateText::get('ui.search')}</h1></div></div>
+{php}$ctHot = []; foreach (explode(',', (string)($maccms['search_hot'] ?? '')) as $ctHotWord) { $ctHotWord = trim($ctHotWord); if (mb_strlen($ctHotWord) >= 2 && !preg_match('/[\x{3040}-\x{30FF}\x{3400}-\x{9FFF}]/u', $ctHotWord)) { $ctHot[] = $ctHotWord; } } $ctRank = 0; $ctGroup = 0;{/php}
+<form class="ct-searchbig" action="{:mac_url('vod/search')}" method="get" role="search">{:\\app\\common\\util\\AutoIcon::ui('search', ['class'=>'ct-ico'])}<input type="search" name="wd" value="{$param.wd|htmlspecialchars=ENT_QUOTES,'UTF-8',false}" placeholder="{:\\app\\common\\util\\TemplateText::get('ui.search_videos_or_performers')}" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.search')}" maxlength="60" autocomplete="off" enterkeyhint="search"><button class="ct-btn" type="submit">{:\\app\\common\\util\\TemplateText::get('ui.search')}</button></form>
+<section class="ct-sec" aria-labelledby="ct-h-history"><div class="ct-sec-head"><h2 class="ct-h2" id="ct-h-history">{:\\app\\common\\util\\AutoIcon::ui('history', ['class'=>'ct-h2-ico'])}{:\\app\\common\\util\\TemplateText::get('crimson.search_history')}</h2><button class="ct-more ct-linkbtn" type="button" id="ct-history-clear">{:\\app\\common\\util\\AutoIcon::ui('trash', ['class'=>'ct-ico'])}{:\\app\\common\\util\\TemplateText::get('clear')}</button></div><div class="ct-history" id="ct-history" data-search="{:mac_url('vod/search')}" data-empty="{:\\app\\common\\util\\TemplateText::get('crimson.no_history')}"></div><template id="ct-history-ico">{:\\app\\common\\util\\AutoIcon::ui('history', ['size'=>'sm'])}</template></section>
+{notempty name="ctHot"}<section class="ct-sec" aria-labelledby="ct-h-hot"><div class="ct-sec-head"><h2 class="ct-h2" id="ct-h-hot">{:\\app\\common\\util\\AutoIcon::navIcon('hot', '', ['class'=>'ct-h2-ico'])}{:\\app\\common\\util\\TemplateText::get('crimson.hot_searches')}</h2></div><div class="ct-chips" data-ai-group>{volist name="ctHot" id="ctHotItem"}<a class="ct-chip" href="{:mac_url_search(['wd'=>$ctHotItem])}">{:\\app\\common\\util\\AutoIcon::keepTag($ctHotItem) ? \\app\\common\\util\\AutoIcon::icon('tag', $ctHotItem, ['size'=>'sm']) : \\app\\common\\util\\AutoIcon::ui('search', ['size'=>'sm'])}{$ctHotItem|htmlspecialchars=ENT_QUOTES}</a>{/volist}</div></section>{/notempty}
+<section class="ct-sec" aria-labelledby="ct-h-trend"><div class="ct-sec-head"><h2 class="ct-h2" id="ct-h-trend">{:\\app\\common\\util\\AutoIcon::ui('trending-up', ['class'=>'ct-h2-ico'])}{:\\app\\common\\util\\TemplateText::get('crimson.trending')}</h2><a class="ct-more" href="{:mac_url('label/hot')}">{:\\app\\common\\util\\TemplateText::get('ui.view_more')}{:\\app\\common\\util\\AutoIcon::ui('chevron-right', ['class'=>'ct-ico'])}</a></div><ol class="ct-maplist ct-trend">{maccms:vod num="10" type="all" order="desc" by="hits" paging="no" id="vo"}{php}$ctRank++; $ctMTitle = trim((string)($vo['vod_display_name'] ?? '')); if ($ctMTitle === '') { $ctMTitle = trim(strip_tags((string)($vo['vod_name'] ?? ''))); } for ($ctMI = 0; $ctMI < 4 && strpos($ctMTitle, '&') !== false; $ctMI++) { $ctMD = html_entity_decode($ctMTitle, ENT_QUOTES | ENT_HTML5, 'UTF-8'); if ($ctMD === $ctMTitle) { break; } $ctMTitle = $ctMD; } $ctMDir = preg_match('/[\x{0590}-\x{08FF}\x{FB1D}-\x{FDFF}\x{FE70}-\x{FEFF}]/u', $ctMTitle) ? 'rtl' : 'auto';{/php}<li><span class="ct-rank">{$ctRank}</span><a href="{:mac_url_vod_play($vo)}" dir="{$ctMDir}">{$ctMTitle|htmlspecialchars=ENT_QUOTES}</a><span class="ct-count" dir="ltr">{$vo.vod_hits|number_format}</span></li>{/maccms:vod}</ol></section>
+</main>
+{include file="public/foot"}
+</body>
+</html>

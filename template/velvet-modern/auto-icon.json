@@ -1,0 +1,19 @@
+{
+ "$schema": "javcms.auto-icon.v1",
+ "family": "phosphor-duotone",
+ "motion": "shimmer float",
+ "enter": "blur",
+ "plate": "rosette",
+ "plateMotion": "turn",
+ "avatar": "circle spectral",
+ "tint": "slot",
+ "hue": [300, 90],
+ "tokens": {
+  "--ai-c1": "var(--fx-accent,#f4b6a0)",
+  "--ai-c2": "var(--fx-accent-2,#ff9db5)",
+  "--ai-c3": "var(--fx-accent-3,#d9a86a)",
+  "--ai-c4": "var(--fx-ink,#fbeff1)"
+ },
+ "map": {},
+ "nav": {}
+}

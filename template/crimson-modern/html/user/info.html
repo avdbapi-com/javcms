@@ -1,0 +1,71 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="crimson-modern" data-fx="vt" data-fx-vt-style="crimson-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+<title>{:\\app\\common\\util\\TemplateText::get('edit_profile')} - {:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$maccms['site_name']), ENT_QUOTES, 'UTF-8')}</title>
+<meta name="robots" content="noindex, follow" />
+{include file="public/include"}
+{include file="user/include"}
+</head>
+<body class="ci-user-page ci-uprofile">
+{include file="public/head"}
+<main id="main-content" class="ci-wrap"><div class="ci-ulayout">{include file="user/menu"}<section class="ci-ucontent"><div class="ci-phead"><div class="ci-phead-main"><h1 class="ci-h1">{:\\app\\common\\util\\TemplateText::get('edit_profile')}</h1></div></div>
+{if condition="$GLOBALS['config']['user']['portrait_status'] eq 1"}{php}$ciFace = trim((string)($obj['user_portrait'] ?? '')); $ciFace = $ciFace === '' ? $maccms['path_tpl'] . 'assets/brand/avatar.svg' : mac_url_img($ciFace) . '?v=' . time();{/php}<section class="ci-panel ci-avatarbox"><img class="ci-umini-face ci-umini-face--lg" src="{$ciFace|htmlspecialchars=ENT_QUOTES}" width="84" height="84" alt=""><form class="ci-avatar-form ci-form" method="post" enctype="multipart/form-data" action="{:url('user/portrait')}">{:token()}<div class="ci-field"><label for="ci-avatar-file">{:\\app\\common\\util\\TemplateText::get('choose_avatar')}</label><input class="ci-input ci-file" id="ci-avatar-file" name="file" type="file" accept="image/jpeg,image/png,image/gif,image/webp" required></div><div class="ci-row"><button class="ci-btn" type="submit"><svg class="ci-i" aria-hidden="true"><use href="{$maccms.path_tpl|htmlspecialchars=ENT_QUOTES}assets/icons.svg#edit"></use></svg>{:\\app\\common\\util\\TemplateText::get('upload_avatar')}</button><p class="ci-tip ci-avatar-status" role="status" aria-live="polite"></p></div></form></section>{/if}
+<form class="ci-panel ci-form" id="fm" name="fm" method="post" action="" novalidate>
+<div class="ci-field"><span class="ci-label">{:\\app\\common\\util\\TemplateText::get('ui.username')}</span><strong dir="auto">{$obj.user_name|htmlspecialchars=ENT_QUOTES}</strong></div>
+<div class="ci-field"><label for="ci-pwd0">{:\\app\\common\\util\\TemplateText::get('ui.original_password')}</label><input class="ci-input" id="ci-pwd0" name="user_pwd" type="password" maxlength="20" autocomplete="current-password"></div>
+<div class="ci-field"><label for="ci-pwd1">{:\\app\\common\\util\\TemplateText::get('ui.new_password')}</label><input class="ci-input" id="ci-pwd1" name="user_pwd1" type="password" maxlength="20" autocomplete="new-password"></div>
+<div class="ci-field"><label for="ci-pwd2">{:\\app\\common\\util\\TemplateText::get('ui.confirm_password')}</label><input class="ci-input" id="ci-pwd2" name="user_pwd2" type="password" maxlength="20" autocomplete="new-password"></div>
+<div class="ci-field"><label for="ci-email">{:\\app\\common\\util\\TemplateText::get('ui.email')}</label><div class="ci-captcha"><input class="ci-input" id="ci-email" name="user_email" type="email" value="{$obj.user_email|htmlspecialchars=ENT_QUOTES}">{if condition="$obj.user_email eq ''"}<a class="ci-pill ci-pill--sm" href="{:mac_url('user/bind')}?ac=email">{:\\app\\common\\util\\TemplateText::get('ui.bind')}</a>{else/}<button class="ci-pill ci-pill--sm btn_unbind" type="button" data-ac="email">{:\\app\\common\\util\\TemplateText::get('ui.unbind')}</button>{/if}</div></div>
+<div class="ci-field"><label for="ci-phone">{:\\app\\common\\util\\TemplateText::get('ui.phone')}</label><div class="ci-captcha"><input class="ci-input" id="ci-phone" name="user_phone" type="tel" value="{$obj.user_phone|htmlspecialchars=ENT_QUOTES}">{if condition="$obj.user_phone eq ''"}<a class="ci-pill ci-pill--sm" href="{:mac_url('user/bind')}?ac=phone">{:\\app\\common\\util\\TemplateText::get('ui.bind')}</a>{else/}<button class="ci-pill ci-pill--sm btn_unbind" type="button" data-ac="phone">{:\\app\\common\\util\\TemplateText::get('ui.unbind')}</button>{/if}</div></div>
+<div class="ci-field"><label for="ci-q">{:\\app\\common\\util\\TemplateText::get('ui.security_question')}</label><input class="ci-input" id="ci-q" name="user_question" type="text" value="{$obj.user_question|htmlspecialchars=ENT_QUOTES}"></div>
+<div class="ci-field"><label for="ci-a">{:\\app\\common\\util\\TemplateText::get('ui.security_answer')}</label><input class="ci-input" id="ci-a" name="user_answer" type="text" value="{$obj.user_answer|htmlspecialchars=ENT_QUOTES}"></div>
+<button class="ci-btn" id="btn_submit" type="button">{:\\app\\common\\util\\TemplateText::get('ui.save')}</button>
+</form>
+</section></div></main>
+{include file="public/foot"}
+<script>
+$(function () {
+  var label = $('#btn_submit').text();
+  $('.btn_unbind').on('click', async function () {
+    var ac = $(this).attr('data-ac');
+    if (ac !== 'email' && ac !== 'phone') { TemplateUI.message(window.TemplateMessages['ui.parameter_error']); return; }
+    if (await TemplateUI.confirm(window.TemplateMessages['ui.confirm_the_lifting_binding_this_operation_cannot_be_restored'])) {
+      $.ajax({ url: "{:url('user/unbind')}", type: 'post', dataType: 'json', data: { ac: ac }, success: function (r) { TemplateUI.message(r.msg); if (r.code == 1) { location.href = "{:url('user/info')}"; } } });
+    }
+  });
+  $('#btn_submit').on('click', function () {
+    $.ajax({
+      url: "{:url('user/info')}", type: 'post', dataType: 'json', data: $('#fm').serialize(),
+      beforeSend: function () { $('#btn_submit').prop('disabled', true).text(window.TemplateMessages['ui.loading']); },
+      success: function (r) { TemplateUI.message(r.msg, { kind: r.code == 1 ? 'success' : 'error' }); if (r.code == 1) { setTimeout(function () { location.href = "{:url('user/info')}"; }, 900); } },
+      error: function () { TemplateUI.message(window.TemplateMessages['ui.connection_failed_try_again'], { kind: 'error' }); },
+      complete: function () { $('#btn_submit').prop('disabled', false).text(label); }
+    });
+  });
+  $('.ci-avatar-form').on('submit', async function (e) {
+    e.preventDefault();
+    var form = this, input = form.querySelector('input[type="file"]'), button = form.querySelector('button[type="submit"]'), status = form.querySelector('.ci-avatar-status');
+    function report(text, kind) { status.textContent = text || ''; if (text) TemplateUI.message(text, { kind: kind || 'info' }); }
+    if (!input.files.length) { report(window.TemplateMessages['select_avatar_file'], 'error'); input.focus(); return; }
+    if (!/^image\/(jpeg|png|gif|webp)$/.test(input.files[0].type)) { report(window.TemplateMessages['avatar_upload_failed'], 'error'); return; }
+    button.disabled = true; status.textContent = window.TemplateMessages['template_ui_working'];
+    try {
+      var response = await fetch(form.action, { method: 'POST', body: new FormData(form), credentials: 'same-origin', headers: { 'X-Requested-With': 'XMLHttpRequest' } });
+      var result = await response.json();
+      if (result && typeof result.__token__ === 'string') { document.querySelectorAll('input[name="__token__"]').forEach(function (t) { t.value = result.__token__; }); }
+      if (Number(result.code) !== 1) { report(typeof result.msg === 'string' ? result.msg : window.TemplateMessages['avatar_upload_failed'], 'error'); return; }
+      report(window.TemplateMessages['avatar_updated'], 'success'); setTimeout(function () { location.reload(); }, 600);
+    } catch (err) { report(window.TemplateMessages['ui.connection_failed_try_again'], 'error'); }
+    finally { button.disabled = false; }
+  });
+});
+</script>
+</body>
+</html>

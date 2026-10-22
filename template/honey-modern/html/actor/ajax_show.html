@@ -1,0 +1,8 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}if (!isset($ncIco)) { $ncIco = $maccms['path_tpl'] . 'assets/icons.svg?v=20261012c#'; }{/php}<div class="nc-pgrid" data-grid-fill data-ai-group>{maccms:actor num="20" paging="yes" type="current" pageurl="actor/show" order="desc" by="time"}<a class="nc-pcard" href="{:mac_url_actor_detail($vo)}"><span class="nc-pcard-hex">{:\\app\\common\\util\\AutoIcon::avatar($vo['actor_name'], $vo['actor_pic'], ['size'=>'lg', 'decorative'=>true])}</span><span class="nc-pcard-name" dir="auto">{:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$vo['actor_name']), ENT_QUOTES, 'UTF-8')}</span><span class="nc-pcard-meta"><span><svg class="nc-i" aria-hidden="true"><use href="{$ncIco}eye"></use></svg><span class="nc-ltr">{$vo.actor_hits|intval}</span></span><span><svg class="nc-i" aria-hidden="true"><use href="{$ncIco}heart"></use></svg><span class="nc-ltr">{$vo.actor_up|intval}</span></span></span></a>{/maccms:actor}</div>{if condition="$__PAGING__.record_total eq 0"}{include file="public/empty"}{/if}{include file="public/paging"}

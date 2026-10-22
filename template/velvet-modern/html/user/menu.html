@@ -1,0 +1,28 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}$vpAct = strtolower((string)request()->action()); $vpFace = trim((string)($obj['user_portrait'] ?? ''));{/php}
+<div class="vp-ucard">
+  <span class="vp-cameo">{if condition="$vpFace neq ''"}<img src="{:mac_safe_url(mac_url_img($vpFace))}" onerror="vpImg(this)" alt="" width="96" height="120">{else/}{:\\app\\common\\util\\AutoIcon::avatar($obj['user_name'] ?? '', '', ['size'=>'lg', 'decorative'=>true])}{/if}</span>
+  <p class="vp-uname">{$obj.user_name|htmlspecialchars=ENT_QUOTES}</p>
+  <div class="vp-ustats"><div><strong>{$obj.user_points|intval}</strong><span>{:\\app\\common\\util\\TemplateText::get('ui.points')}</span></div><div><strong>{$obj.group.group_name|htmlspecialchars=ENT_QUOTES}</strong><span>{:\\app\\common\\util\\TemplateText::get('ui.membership')}</span></div></div>
+  <a class="vp-btn vp-btn-ghost vp-btn-block" href="{:mac_url('user/upgrade')}">{:\\app\\common\\util\\AutoIcon::ui('crown', ['class'=>'vp-i'])}{:\\app\\common\\util\\TemplateText::get('ui.upgrade_member')}</a>
+</div>
+<ul class="vp-umenu">
+  <li><a href="{:mac_url('user/index')}"{if condition="$vpAct eq 'index'"} aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::ui('user', ['class'=>'vp-i'])}<span>{:\\app\\common\\util\\TemplateText::get('ui.my_information')}</span></a></li>
+  <li><a href="{:mac_url('user/info')}"{if condition="$vpAct eq 'info'"} aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::ui('edit', ['class'=>'vp-i'])}<span>{:\\app\\common\\util\\TemplateText::get('ui.modify_the_information')}</span></a></li>
+  <li><a href="{:mac_url('user/favs')}"{if condition="$vpAct eq 'favs'"} aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::ui('heart', ['class'=>'vp-i'])}<span>{:\\app\\common\\util\\TemplateText::get('ui.my_collection')}</span></a></li>
+  <li><a href="{:mac_url('user/plays')}"{if condition="$vpAct eq 'plays'"} aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::ui('history', ['class'=>'vp-i'])}<span>{:\\app\\common\\util\\TemplateText::get('ui.play_record')}</span></a></li>
+  <li><a href="{:mac_url('user/ulog')}"{if condition="$vpAct eq 'ulog'"} aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::ui('list', ['class'=>'vp-i'])}<span>{:\\app\\common\\util\\TemplateText::get('history')}</span></a></li>
+  <li><a href="{:mac_url('user/plog')}"{if condition="$vpAct eq 'plog'"} aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::ui('coins', ['class'=>'vp-i'])}<span>{:\\app\\common\\util\\TemplateText::get('ui.points_record')}</span></a></li>
+  <li><a href="{:mac_url('user/upgrade')}"{if condition="$vpAct eq 'upgrade'"} aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::ui('crown', ['class'=>'vp-i'])}<span>{:\\app\\common\\util\\TemplateText::get('ui.upgrade_member')}</span></a></li>
+  <li><a href="{:mac_url('user/buy')}"{if condition="$vpAct eq 'buy'"} aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::ui('sparkles', ['class'=>'vp-i'])}<span>{:\\app\\common\\util\\TemplateText::get('ui.recharge_center')}</span></a></li>
+  <li><a href="{:mac_url('user/orders')}"{if condition="$vpAct eq 'orders'"} aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::ui('id-card', ['class'=>'vp-i'])}<span>{:\\app\\common\\util\\TemplateText::get('ui.recharge_record')}</span></a></li>
+  <li><a href="{:mac_url('user/comment')}"{if condition="$vpAct eq 'comment'"} aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::ui('message', ['class'=>'vp-i'])}<span>{:\\app\\common\\util\\TemplateText::get('ui.comments')}</span></a></li>
+  <li><a href="{:mac_url('user/gbook')}"{if condition="$vpAct eq 'gbook'"} aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::ui('mail', ['class'=>'vp-i'])}<span>{:\\app\\common\\util\\TemplateText::get('ui.recent_messages')}</span></a></li>
+  <li><a href="{:mac_url('user/logout')}">{:\\app\\common\\util\\AutoIcon::ui('log-out', ['class'=>'vp-i'])}<span>{:\\app\\common\\util\\TemplateText::get('log_out')}</span></a></li>
+</ul>

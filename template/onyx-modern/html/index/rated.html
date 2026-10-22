@@ -1,0 +1,19 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}$oxBandWord = \app\common\util\TemplateText::raw('top_rated'); $oxSecNum = '03'; $oxSecId = 'sec-rated'; $oxSecTitle = \app\common\util\TemplateText::raw('top_rated'); $oxSecSub = \app\common\util\TemplateText::raw('ox.sort_score'); $oxSecUrl = mac_url('label/score'); $tplIdxBase = 0;{/php}
+{include file="public/band"}
+<section class="ox-sec" aria-labelledby="sec-rated">
+  {include file="index/sechead"}
+  <div class="ox-grid" data-grid-fill data-ox-stagger>{maccms:vod num="10" type="all" order="desc" by="score" paging="no" id="vo"}{php}$tplHomeSeen[] = (int)$vo['vod_id'];{/php}{include file="public/vodbox"}{/maccms:vod}</div>
+</section>
+{php}$oxBandWord = \app\common\util\TemplateText::raw('most_liked'); $oxSecNum = '04'; $oxSecId = 'sec-liked'; $oxSecTitle = \app\common\util\TemplateText::raw('most_liked'); $oxSecSub = \app\common\util\TemplateText::raw('ox.sort_likes'); $oxSecUrl = mac_url('label/up'); $tplIdxBase = 0;{/php}
+{include file="public/band"}
+<section class="ox-sec" aria-labelledby="sec-liked">
+  {include file="index/sechead"}
+  {php}$oxLikedNot = (isset($tplHomeSeen) && is_array($tplHomeSeen)) ? implode(',', array_unique(array_filter(array_map('intval', $tplHomeSeen)))) : '';{/php}<div class="ox-grid" data-grid-fill data-ox-stagger>{maccms:vod num="10" type="all" order="desc" by="up" not="'.$oxLikedNot.'" paging="no" id="vo"}{php}$tplHomeSeen[] = (int)$vo['vod_id'];{/php}{include file="public/vodbox"}{/maccms:vod}</div>
+</section>

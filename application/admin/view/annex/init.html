@@ -1,0 +1,32 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Based on MacCMS 10 (Apache-2.0) by magicblack, changed by JavCMS.
+JavCMS changes: Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors,
+JavCMS Community License 1.0. The MacCMS parts stay under the Apache License 2.0.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{include file="../../../application/admin/view/public/head" /}
+
+<div class="page-container p10 admin-annex-init-v1">
+    <div class="ax-editor-head">
+        <a href="{:url('data')}" class="ax-btn ax-btn--ghost"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-arrow-left"/></svg>{:lang('admin/ux/kit/back')}</a>
+        <h1>{:lang('admin/annex/init_data')}</h1>
+    </div>
+    <!-- close-security (security r4 P3-8): the rebuild writes rows, so it starts with a POST that carries the admin token. -->
+    <form class="ax-form" method="post" action="{:url('annex/init')}">
+        <input name="ck" value="1" type="hidden">
+        <input type="hidden" name="__token__" value="{:mac_admin_csrf_token()}">
+        <section class="ax-section">
+            <p class="ax-help">{:lang('admin/annex/init_tip')}</p>
+        </section>
+        <div class="ax-toolbar">
+            <button type="submit" class="ax-btn ax-btn--primary"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-database-zap"/></svg>{:lang('admin/database/exec')}</button>
+        </div>
+    </form>
+</div>
+
+{include file="../../../application/admin/view/public/foot" /}
+
+</body>
+</html>

@@ -1,0 +1,82 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="crimson-modern" data-fx="vt" data-fx-vt-style="crimson-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/index"}
+{include file="public/include"}
+</head>
+<body class="ci-home">
+{include file="public/head"}
+<main id="main-content">
+{php}$ciFeat = []; $ciSeen = [];{/php}{maccms:vod num="5" type="all" level="9" order="desc" by="time" paging="no" id="vo"}{php}$ciFeat[] = $vo;{/php}{/maccms:vod}{if condition="count($ciFeat) lt 1"}{maccms:vod num="5" type="all" order="desc" by="hits_week" paging="no" id="vo"}{php}$ciFeat[] = $vo;{/php}{/maccms:vod}{/if}{php}
+$ciFeat = \app\common\util\AvdbLanguage::heroOrder($ciFeat);
+$ciF = [];
+foreach ($ciFeat as $ciFv) {
+ $ciFt = $ciDec($ciFv['vod_display_name'] ?? ''); if ($ciFt === '') { $ciFt = $ciDec(strip_tags((string)($ciFv['vod_name'] ?? ''))); }
+ $ciFp = trim((string)($ciFv['vod_pic'] ?? '')); $ciFp = $ciFp === '' ? '' : (string)mac_url_img($ciFp);
+ $ciFm = []; $ciFc = \app\common\util\AvdbLanguage::displayCode($ciFv);
+ if ($ciFc !== '' && stripos($ciFc, 'avdb-') !== 0 && strlen($ciFc) <= 40 && stripos($ciFt, $ciFc) !== 0) { $ciFm[] = $ciFc; }
+ if (trim((string)($ciFv['vod_duration'] ?? '')) !== '') { $ciFm[] = trim((string)$ciFv['vod_duration']); }
+ if (!empty($ciFv['vod_time'])) { $ciFm[] = date('Y-m-d', (int)$ciFv['vod_time']); }
+ $ciF[] = ['t' => $ciFt, 'u' => mac_url_vod_play($ciFv), 'p' => $ciFp, 'm' => implode(' / ', $ciFm), 'a' => \app\common\util\TemplateText::get('ink.show_in_panel', ['title' => $ciFt])];
+ $ciSeen[] = intval($ciFv['vod_id']);
+}
+$ciF0 = $ciF ? $ciF[0] : null; $ciFMinis = array_slice($ciF, 1, 4);
+$ciH1Len = max(8, min(60, mb_strlen($ciSiteName)));
+{/php}
+<section class="ci-spread{if condition="!$ciF0"} is-bare{/if}" aria-label="{:\\app\\common\\util\\TemplateText::get('ink.featured')}"{if condition="$ciF0"} data-fx="shader" data-fx-shader="{$ciTpl|htmlspecialchars=ENT_QUOTES}assets/js/gl-screentone.js?v={$ciV}" data-ci-focus="{if condition="$ciRtl"}0.67{else/}0.33{/if},0.5"{/if}>
+	<div class="ci-spread-in ci-wrap">
+		<div class="ci-narr ci-narr--h1"><h1 class="ci-type" dir="auto" style="--n:{$ciH1Len}">{$ciSiteName|htmlspecialchars=ENT_QUOTES}</h1></div>
+		{if condition="$ciF0"}<div class="ci-sp">
+			<div class="ci-sp-bigw" data-slam="hero">
+				<a class="ci-sp-big" href="{$ciF0.u|htmlspecialchars=ENT_QUOTES}" data-ci-fu>
+					<span class="ci-cut ci-cut--big"><span class="ci-cut-in ci-thumb" data-fx="skeleton" data-ci-fimg>{if condition="$ciF0.p neq ''"}<img data-lowres src="{$ciF0.p|htmlspecialchars=ENT_QUOTES}" alt="{$ciF0.t|htmlspecialchars=ENT_QUOTES}" width="800" height="450" fetchpriority="high" decoding="async">{/if}<span class="ci-tone-edge" aria-hidden="true"></span></span></span>
+					<span class="ci-bal ci-bal--hot ci-bal--xl" aria-hidden="true">{:\\app\\common\\util\\TemplateText::get('ink.badge_hot')}</span>
+				</a>
+			</div>
+			<div class="ci-sp-cap" data-slam="hero">
+				<div class="ci-cut ci-cut--cap"><div class="ci-cut-in">
+					<span class="ci-narr">{:\\app\\common\\util\\TemplateText::get('ink.featured')}</span>
+					<h2 class="ci-sp-title" dir="auto" data-ci-ft>{$ciF0.t|htmlspecialchars=ENT_QUOTES}</h2>
+					<p class="ci-sp-meta" dir="ltr" data-ci-fm>{$ciF0.m|htmlspecialchars=ENT_QUOTES}</p>
+				</div></div>
+				<a class="ci-cta" href="{$ciF0.u|htmlspecialchars=ENT_QUOTES}" data-ci-fu><svg class="ci-i" aria-hidden="true"><use href="{$ciIco|htmlspecialchars=ENT_QUOTES}#play"></use></svg><span>{:\\app\\common\\util\\TemplateText::get('ink.watch_now')}</span></a>
+			</div>
+			{notempty name="ciFMinis"}<div class="ci-sp-minis" role="group" aria-label="{:\\app\\common\\util\\TemplateText::get('ink.more_featured')}">{volist name="ciFMinis" id="ciM" key="ciMk"}<button class="ci-mini{if condition="$ciMk gt 2"} is-extra{/if}" type="button" data-ci-swap data-t="{$ciM.t|htmlspecialchars=ENT_QUOTES}" data-u="{$ciM.u|htmlspecialchars=ENT_QUOTES}" data-p="{$ciM.p|htmlspecialchars=ENT_QUOTES}" data-m="{$ciM.m|htmlspecialchars=ENT_QUOTES}" aria-label="{$ciM.a}"><span class="ci-cut ci-cut--mini"><span class="ci-cut-in ci-thumb" data-fx="skeleton">{if condition="$ciM.p neq ''"}<img src="{$ciM.p|htmlspecialchars=ENT_QUOTES}" alt="" width="320" height="180" loading="lazy" decoding="async">{/if}</span></span><span class="ci-mini-t" dir="auto"><span>{$ciM.t|htmlspecialchars=ENT_QUOTES}</span></span></button>{/volist}</div>{/notempty}
+		</div>{/if}
+	</div>
+</section>
+<div class="ci-wrap ci-chapters">
+{php}$ciSeenNot = implode(',', $ciSeen ? $ciSeen : [0]); $ciN = 0; $ciSfxText = \app\common\util\TemplateText::raw('ink.sfx_latest'); $ciSfxId = 'ci-h-new';{/php}
+<section class="ci-chapter" aria-labelledby="ci-h-new"><header class="ci-chap-head"><span class="ci-narr ci-chap-n">{:\\app\\common\\util\\AutoIcon::navIcon('latest')}{:\\app\\common\\util\\TemplateText::get('ink.chapter_n', ['n' => 1])}</span>{include file="public/sfx"}<a class="ci-more" href="{:mac_url('label/new')}"><span>{:\\app\\common\\util\\TemplateText::get('ink.more')}</span>{:\\app\\common\\util\\AutoIcon::ui('arrow-right', ['size'=>'sm'])}</a></header>
+<div class="ci-grid">{maccms:vod num="10" type="all" order="desc" by="time" not="'.$ciSeenNot.'" paging="no" id="vo"}{php}$ciN++; $ciSeen[] = intval($vo['vod_id']);{/php}{include file="public/vodbox"}{/maccms:vod}</div>{if condition="$ciN eq 0"}{include file="public/empty"}{/if}</section>
+{php}$ciSeenNot = implode(',', $ciSeen ? $ciSeen : [0]); $ciN = 0; $ciMode = 'hot'; $ciSfxText = \app\common\util\TemplateText::raw('ink.sfx_hot'); $ciSfxId = 'ci-h-hot';{/php}
+<section class="ci-chapter" aria-labelledby="ci-h-hot"><header class="ci-chap-head"><span class="ci-narr ci-chap-n">{:\\app\\common\\util\\AutoIcon::navIcon('hot')}{:\\app\\common\\util\\TemplateText::get('ink.chapter_n', ['n' => 2])}</span>{include file="public/sfx"}<a class="ci-more" href="{:mac_url('label/hot')}"><span>{:\\app\\common\\util\\TemplateText::get('ink.more')}</span>{:\\app\\common\\util\\AutoIcon::ui('arrow-right', ['size'=>'sm'])}</a></header>
+<div class="ci-grid">{maccms:vod num="10" type="all" order="desc" by="hits_week" not="'.$ciSeenNot.'" paging="no" id="vo"}{php}$ciN++; $ciSeen[] = intval($vo['vod_id']);{/php}{include file="public/vodbox"}{/maccms:vod}</div>{if condition="$ciN eq 0"}{include file="public/empty"}{/if}</section>
+{php}$ciSeenNot = implode(',', $ciSeen ? $ciSeen : [0]); $ciN = 0; $ciMode = 'score'; $ciSfxText = \app\common\util\TemplateText::raw('ink.sfx_top'); $ciSfxId = 'ci-h-top';{/php}
+<section class="ci-chapter" aria-labelledby="ci-h-top"><header class="ci-chap-head"><span class="ci-narr ci-chap-n">{:\\app\\common\\util\\AutoIcon::navIcon('top')}{:\\app\\common\\util\\TemplateText::get('ink.chapter_n', ['n' => 3])}</span>{include file="public/sfx"}<a class="ci-more" href="{:mac_url('label/score')}"><span>{:\\app\\common\\util\\TemplateText::get('ink.more')}</span>{:\\app\\common\\util\\AutoIcon::ui('arrow-right', ['size'=>'sm'])}</a></header>
+<div class="ci-grid">{maccms:vod num="10" type="all" order="desc" by="score" not="'.$ciSeenNot.'" paging="no" id="vo"}{php}$ciN++; $ciSeen[] = intval($vo['vod_id']);{/php}{include file="public/vodbox"}{/maccms:vod}</div>{if condition="$ciN eq 0"}{include file="public/empty"}{/if}</section>
+{php}$ciSeenNot = implode(',', $ciSeen ? $ciSeen : [0]); $ciN = 0; $ciMode = 'up'; $ciSfxText = \app\common\util\TemplateText::raw('ink.sfx_liked'); $ciSfxId = 'ci-h-liked';{/php}
+<section class="ci-chapter" aria-labelledby="ci-h-liked"><header class="ci-chap-head"><span class="ci-narr ci-chap-n">{:\\app\\common\\util\\AutoIcon::navIcon('liked')}{:\\app\\common\\util\\TemplateText::get('ink.chapter_n', ['n' => 4])}</span>{include file="public/sfx"}<a class="ci-more" href="{:mac_url('label/up')}"><span>{:\\app\\common\\util\\TemplateText::get('ink.more')}</span>{:\\app\\common\\util\\AutoIcon::ui('arrow-right', ['size'=>'sm'])}</a></header>
+<div class="ci-grid">{maccms:vod num="10" type="all" order="desc" by="up" not="'.$ciSeenNot.'" paging="no" id="vo"}{php}$ciN++; $ciSeen[] = intval($vo['vod_id']);{/php}{include file="public/vodbox"}{/maccms:vod}</div>{if condition="$ciN eq 0"}{include file="public/empty"}{/if}</section>
+{php}$ciMode = ''; $ciChars = []; $ciCatTop = []; $ciCharMax = 1;{/php}{maccms:type ids="parent" flag="vod" order="asc" by="sort" id="ciCat" hide_empty="1"}{php}$ciCc = intval(mac_data_count($ciCat['type_id'], 'all')); $ciCharMax = max($ciCharMax, $ciCc); $ciChars[] = ['url' => mac_url_type($ciCat, [], 'type'), 'name' => \app\common\util\TemplateText::raw(htmlspecialchars_decode((string)$ciCat['type_name'], ENT_QUOTES)), 'raw' => (string)$ciCat['type_name'], 'count' => $ciCc, 'id' => intval($ciCat['type_id'])]; if (count($ciCatTop) < (\app\common\model\Type::singleParentActive() ? 4 : 2)) { $ciCatTop[] = $ciCat; }{/php}{/maccms:type}{php}
+foreach ($ciChars as $ciCk => $ciCh) { $ciChars[$ciCk]['d'] = number_format(0.35 + 0.65 * (log10(max(1, $ciCh['count'])) / max(1, log10($ciCharMax))), 2, '.', ''); $ciChars[$ciCk]['words'] = preg_split('/\s+/u', trim($ciCh['name'])); $ciChars[$ciCk]['n'] = max(1, max(array_map('mb_strlen', $ciChars[$ciCk]['words']))); }
+$ciSfxText = \app\common\util\TemplateText::raw('ink.sfx_genres'); $ciSfxId = 'ci-h-chars';
+{/php}
+{notempty name="ciChars"}<section class="ci-chapter ci-chars" aria-labelledby="ci-h-chars" data-ai-group><header class="ci-chap-head"><span class="ci-narr ci-chap-n">{:\\app\\common\\util\\AutoIcon::navIcon('categories')}{:\\app\\common\\util\\TemplateText::get('ink.chapter_n', ['n' => 5])}</span>{include file="public/sfx"}<a class="ci-more" href="{:mac_url('label/sort')}"><span>{:\\app\\common\\util\\TemplateText::get('ink.more')}</span>{:\\app\\common\\util\\AutoIcon::ui('arrow-right', ['size'=>'sm'])}</a></header>
+<div class="ci-rail" data-ci-rail><div class="ci-rail-vp"><ul class="ci-rail-track">{volist name="ciChars" id="ciCh"}<li class="ci-char" style="--d:{$ciCh.d};--n:{$ciCh.n}"><a class="ci-char-a" href="{$ciCh.url|htmlspecialchars=ENT_QUOTES}"><span class="ci-char-in" data-ci-par><span class="ci-char-name" dir="auto">{volist name="ciCh.words" id="ciW"}<span>{$ciW|htmlspecialchars=ENT_QUOTES}</span>{/volist}</span><span class="ci-char-ft"><span class="ci-char-n" dir="ltr"><span aria-hidden="true">&times;</span>{$ciCh.count|number_format}</span>{:\\app\\common\\util\\AutoIcon::icon('category', $ciCh['raw'], ['size'=>'lg', 'plate'=>true, 'i'=>$key, 'class'=>'ci-char-ai'])}</span></span></a></li>{/volist}</ul></div><button class="ci-rail-btn ci-rail-prev" type="button" data-ci-prev aria-label="{:\\app\\common\\util\\TemplateText::get('ui.previous_page')}" hidden><svg class="ci-i ci-flip" aria-hidden="true"><use href="{$ciIco|htmlspecialchars=ENT_QUOTES}#chev-l"></use></svg></button><button class="ci-rail-btn ci-rail-next" type="button" data-ci-next aria-label="{:\\app\\common\\util\\TemplateText::get('ui.next_page')}" hidden><svg class="ci-i ci-flip" aria-hidden="true"><use href="{$ciIco|htmlspecialchars=ENT_QUOTES}#chev-r"></use></svg></button></div></section>{/notempty}
+{volist name="ciCatTop" id="ciCat" key="ciCatK"}{php}$ciSeenNot = implode(',', $ciSeen ? $ciSeen : [0]); $ciN = 0; $ciCatId = intval($ciCat['type_id']); $ciSfxText = \app\common\util\TemplateText::raw(htmlspecialchars_decode((string)$ciCat['type_name'], ENT_QUOTES)) . '!'; $ciSfxId = 'ci-h-c' . $ciCatId; $ciChapN = 5 + intval($ciCatK);{/php}
+<section class="ci-chapter" aria-labelledby="ci-h-c{$ciCatId}"><header class="ci-chap-head"><span class="ci-narr ci-chap-n">{:\\app\\common\\util\\AutoIcon::icon('category', $ciCat['type_name'])}{:\\app\\common\\util\\TemplateText::get('ink.chapter_n', ['n' => $ciChapN])}</span>{include file="public/sfx"}<a class="ci-more" href="{:mac_url_type($ciCat,[],'type')}"><span>{:\\app\\common\\util\\TemplateText::get('ink.more')}</span>{:\\app\\common\\util\\AutoIcon::ui('arrow-right', ['size'=>'sm'])}</a></header>
+<div class="ci-grid">{maccms:vod num="10" type="'.$ciCatId.'" order="desc" by="time" not="'.$ciSeenNot.'" paging="no" id="vo"}{php}$ciN++; $ciSeen[] = intval($vo['vod_id']);{/php}{include file="public/vodbox"}{/maccms:vod}</div>{if condition="$ciN eq 0"}{include file="public/empty"}{/if}</section>
+{/volist}
+</div>
+</main>
+{include file="public/foot"}
+</body>
+</html>

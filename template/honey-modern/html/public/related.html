@@ -1,0 +1,35 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}
+$ncRelSelf = intval($obj['vod_id'] ?? 0);
+$ncRelIds = [$ncRelSelf];
+if (isset($ncSideIds) && is_array($ncSideIds)) { foreach ($ncSideIds as $ncRelSid) { $ncRelIds[] = (int)$ncRelSid; } }
+$ncRelShown = 0;
+$ncRelTid = intval($obj['type_id'] ?? 0);
+/* "More to watch" = the lead performer's newest videos, then the lead genre's most viewed among the newest videos of
+   the category, then the newest of the category. verify r4 G7 (slim index set, no B-tree vod_actor): the performer ids
+   come from the ac_ token through the search planner (AvdbLanguage::relatedActorIds: term map or one bounded MATCH;
+   placeholder names skipped), the genre ids from the newest rows of the category read once through the list layer
+   (AvdbLanguage::relatedGenreIds, idx_type_list); both are cached per lead / per category and genre, empty answers and
+   failures included. No table scan, no 3,000-row window. */
+$ncRelLead = trim((string)strtok((string)\app\common\util\AvdbLanguage::dropPlaceholders($obj['vod_actor'] ?? ''), ','));
+$ncRelGenre = trim((string)strtok((string)($obj['vod_class'] ?? ''), ','));
+$ncRelPick = [];
+$ncRelPick2 = [];
+foreach (\app\common\util\AvdbLanguage::relatedActorIds($ncRelLead, 20) as $ncRelId) {
+  if (count($ncRelPick) < 10 && !in_array($ncRelId, $ncRelIds, true)) { $ncRelPick[] = $ncRelId; }
+}
+if (count($ncRelPick) < 10 && $ncRelTid > 0 && $ncRelGenre !== '') {
+  foreach (\app\common\util\AvdbLanguage::relatedGenreIds($ncRelTid, $ncRelGenre, 30, 'hits') as $ncRelId) {
+    if (count($ncRelPick) + count($ncRelPick2) < 10 && !in_array($ncRelId, $ncRelIds, true) && !in_array($ncRelId, $ncRelPick, true)) { $ncRelPick2[] = $ncRelId; }
+  }
+}
+$ncRelActorIds = implode(',', $ncRelPick);
+$ncRelGenreIds = implode(',', $ncRelPick2);
+{/php}<section class="nc-sec nc-related" aria-labelledby="nc-related-title" data-ai-group><div class="nc-sec-head"><span class="nc-hexbadge" aria-hidden="true">{:\\app\\common\\util\\AutoIcon::ui('sparkles')}</span><div class="nc-sec-titles"><h2 class="nc-sec-title" id="nc-related-title" data-nc-melt="view">{:\\app\\common\\util\\TemplateText::get('ui.more_to_watch')}</h2><p class="nc-sec-cap">{:\\app\\common\\util\\TemplateText::get('nc.cap_related')}</p></div><a class="nc-more" href="{:mac_url_type($obj['type'])}">{:\\app\\common\\util\\TemplateText::get('nc.view_all')}<svg class="nc-i nc-flip" aria-hidden="true"><use href="{$ncIco}chevron-right"></use></svg></a></div>
+<div class="nc-grid" data-grid-fill data-fx="stagger" data-fx-style="drop">{if condition="$ncRelActorIds neq ''"}{maccms:vod num="10" ids="'.$ncRelActorIds.'" order="desc" by="id" paging="no" id="vo"}{php}$ncRelIds[] = intval($vo['vod_id']); $ncRelShown++;{/php}{include file="public/vodbox"}{/maccms:vod}{/if}{if condition="$ncRelGenreIds neq '' && $ncRelShown lt 10"}{maccms:vod num="10" ids="'.$ncRelGenreIds.'" order="desc" by="hits" paging="no" id="vo"}{if condition="$ncRelShown lt 10"}{php}$ncRelIds[] = intval($vo['vod_id']); $ncRelShown++;{/php}{include file="public/vodbox"}{/if}{/maccms:vod}{/if}{if condition="$ncRelShown lt 10"}{php}$ncRelNeed = 10 - $ncRelShown; $ncRelNot = implode(',', $ncRelIds);{/php}{maccms:vod num="'.$ncRelNeed.'" not="'.$ncRelNot.'" type="current" order="desc" by="time" paging="no" id="vo"}{php}$ncRelShown++;{/php}{include file="public/vodbox"}{/maccms:vod}{/if}</div></section>

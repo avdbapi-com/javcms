@@ -1,0 +1,133 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Based on MacCMS 10 (Apache-2.0) by magicblack, changed by JavCMS.
+JavCMS changes: Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors,
+JavCMS Community License 1.0. The MacCMS parts stay under the Apache License 2.0.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{include file="../../../application/admin/view/public/head" /}
+<link rel="stylesheet" href="__STATIC__/css/admin_database_workspace_v1.css?{$MAC_VERSION}&rev=3">
+
+<div class="page-container admin-database-form-workspace-v1 db-kit">
+    {include file="../../../application/admin/view/public/page_head" icon="ai-terminal" title="admin/database/sql" /}
+
+    <div class="ax-notice ax-notice--warn" role="note">
+        <svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-triangle-alert"/></svg>
+        <div><p>{:lang('admin/ux/tools/sql_notice')} <a href="{:url('database/index')}">{:lang('admin/ux/tools/sql_backup_first')}</a></p></div>
+    </div>
+
+    <form class="ax-form db-sql-form" id="db-sql-form" action="{:url('database/sql')}" method="post">
+        <input type="hidden" name="__token__" value="{$Request.token}" />
+        <section class="ax-section">
+            <div class="ax-field">
+                <label for="db-sql-text">{:lang('admin/database/sql')}</label>
+                <textarea id="db-sql-text" name="sql" class="layui-textarea db-code-input" rows="8" spellcheck="false" autocomplete="off" aria-describedby="db-sql-tip"></textarea>
+                <div class="ax-help db-sql-tip" id="db-sql-tip">{:lang('admin/database/sql_tip')}</div>
+            </div>
+            <div class="db-actions-row">
+                <button type="submit" class="ax-btn ax-btn--primary" id="db-sql-run"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-play"/></svg>{:lang('admin/ux/tools/sql_run')}</button>
+                <button type="reset" class="ax-btn"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-rotate-ccw"/></svg>{:lang('admin/ux/tools/sql_clear')}</button>
+            </div>
+        </section>
+    </form>
+
+    <section class="ax-section db-sql-result" id="db-sql-result" aria-live="polite" hidden>
+        <h2 id="db-sql-result-title"></h2>
+        <p class="ax-help" id="db-sql-result-note"></p>
+        <div id="db-sql-result-body"></div>
+    </section>
+</div>
+
+{include file="../../../application/admin/view/public/foot" /}
+<script type="text/javascript">
+(function () {
+    var form = document.getElementById('db-sql-form');
+    if (!form) { return; }
+    var T = {$sql_js};
+    var text = document.getElementById('db-sql-text');
+    var box = document.getElementById('db-sql-result');
+    var title = document.getElementById('db-sql-result-title');
+    var note = document.getElementById('db-sql-result-note');
+    var body = document.getElementById('db-sql-result-body');
+    var runBtn = document.getElementById('db-sql-run');
+    var token = form.querySelector('input[name="__token__"]');
+    function show(kind, heading, help) {
+        box.hidden = false;
+        box.classList.toggle('is-error', kind === 'error');
+        title.textContent = heading;
+        note.textContent = help || '';
+        body.innerHTML = '';
+    }
+    function table(cols, rows) {
+        var wrap = document.createElement('div');
+        wrap.className = 'ax-table-wrap';
+        var t = document.createElement('table');
+        t.className = 'ax-table ax-table--cards db-sql-table';
+        var head = t.createTHead().insertRow();
+        cols.forEach(function (c) { var th = document.createElement('th'); th.textContent = c; head.appendChild(th); });
+        var tb = t.createTBody();
+        rows.forEach(function (r) {
+            var tr = tb.insertRow();
+            r.forEach(function (v, i) {
+                var td = tr.insertCell();
+                td.setAttribute('data-label', cols[i]);
+                if (v === null) { td.className = 'ax-faint'; td.textContent = 'NULL'; } else { td.textContent = v; }
+            });
+        });
+        wrap.appendChild(t);
+        return wrap;
+    }
+    function send(confirmed) {
+        var data = { sql: text.value, __token__: token.value };
+        if (confirmed) { data.confirm = 1; }
+        runBtn.disabled = true;
+        runBtn.setAttribute('aria-busy', 'true');
+        return $.ajax({ type: 'POST', url: form.getAttribute('action'), data: data, dataType: 'json', timeout: 120000 }).then(function (res) {
+            if (res && res.data && res.data.__token__) { token.value = res.data.__token__; }
+            if (res && res.code != 1 && res.data && res.data.need_confirm && !confirmed) { return 'confirm'; }
+            if (!res || res.code != 1) { show('error', T.error_title, (res && res.msg) || T.failed); return; }
+            if (res.data.kind === 'read') {
+                show('ok', T.rows_title.replace('{n}', res.data.count), res.data.more ? T.first_rows : '');
+                if (res.data.columns.length) { body.appendChild(table(res.data.columns, res.data.rows)); }
+                else { var p = document.createElement('p'); p.className = 'ax-faint'; p.textContent = T.no_rows; body.appendChild(p); }
+            } else {
+                show('ok', res.msg, '');
+                AxUX.toast(res.msg, 'ok');
+            }
+        }, function (xhr) {
+            show('error', T.error_title, T.failed + ' (HTTP ' + (xhr && xhr.status || 0) + ')');
+        }).always(function () { runBtn.disabled = false; runBtn.removeAttribute('aria-busy'); });
+    }
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var sql = text.value.trim();
+        if (!sql) { AxUX.toast(T.empty, 'warn'); text.focus(); return; }
+        // A write is first checked by the server (syntax, nothing runs); only then the typed RUN confirm opens.
+        send(false).then(function (state) { if (state === 'confirm') { askWrite(); } });
+    });
+    function askWrite() {
+        var p = AxUX.confirm({ title: T.write_title, message: T.write_confirm, typed: 'RUN', confirmLabel: T.run, danger: true });
+        // "Back up now" inside the dialog: closes it and opens the backup page.
+        setTimeout(function () {
+            var msg = document.querySelector('.ax-dialog .ax-dialog__msg');
+            if (!msg || msg.querySelector('.db-backup-now')) { return; }
+            var b = document.createElement('button');
+            b.type = 'button';
+            b.className = 'ax-btn ax-btn--sm db-backup-now';
+            b.textContent = T.backup_now;
+            b.addEventListener('click', function () {
+                var cancel = document.querySelector('.ax-dialog .ax-dialog__actions .ax-btn:not(.ax-btn--danger-solid)');
+                if (cancel) { cancel.click(); }
+                location.href = T.backup_url;
+            });
+            msg.appendChild(document.createElement('br'));
+            msg.appendChild(b);
+        }, 0);
+        p.then(function (yes) { if (yes) { send(true); } });
+    }
+})();
+</script>
+
+</body>
+</html>

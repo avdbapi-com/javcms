@@ -1,0 +1,51 @@
+/*
+ * This file is part of JavCMS - https://javcms.net
+ * Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+ * License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+ * See the LICENSE and NOTICE files that come with JavCMS.
+ * Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Telegram: https://t.me/avdb_api
+ */
+/* Original project UI assets. No external styles, fonts or runtime dependencies. */
+:root{--tui-accent:#6265db;--tui-accent-hover:#5154bd;--tui-surface:#fff;--tui-text:#17212f;--tui-muted:#566274;--tui-border:#ccd2dd;--tui-focus:#484bd2;--tui-danger:#b42336;--tui-radius:1rem;--tui-ease:cubic-bezier(.22,.7,.24,1)}
+[data-template-theme="javcms"]{--tui-accent:#c24140;--tui-accent-hover:#a43131;--tui-focus:#b93635}
+.tui-overlay{position:fixed;inset:0;z-index:2147483000;display:grid;place-items:center;padding:1rem;background:rgb(12 20 32 / .55);overflow:auto;overscroll-behavior:contain}
+.tui-dialog{box-sizing:border-box;position:relative;margin:auto;padding:0;width:min(100%,32rem);max-height:calc(100dvh - 2rem);overflow:auto;border:1px solid var(--tui-border);border-radius:var(--tui-radius);background:var(--tui-surface);color:var(--tui-text);font:inherit;box-shadow:0 20px 70px rgb(0 0 0 / .2);animation:tui-enter .18s var(--tui-ease) both}
+dialog.tui-dialog:not([open]){display:none}
+dialog.tui-dialog::backdrop{background:rgb(12 20 32 / .55)}
+.tui-heading{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1.25rem 1.25rem .5rem}
+.tui-title{margin:0;font-size:1.125rem;line-height:1.5;font-weight:700;overflow-wrap:anywhere}
+.tui-body{padding:.5rem 1.25rem 1.25rem;line-height:1.65;white-space:pre-wrap;overflow-wrap:anywhere}
+.tui-actions{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:.75rem;padding:0 1.25rem 1.25rem}
+.tui-button,.tui-dismiss{box-sizing:border-box;min-height:44px;min-width:44px;border:1px solid var(--tui-border);border-radius:.625rem;background:var(--tui-surface);color:var(--tui-text);font:inherit;font-weight:600;cursor:pointer;padding:.625rem 1rem;transition:background .16s var(--tui-ease),transform .16s var(--tui-ease)}
+.tui-button-primary{background:var(--tui-accent);border-color:var(--tui-accent);color:#fff}
+@media (hover:hover){.tui-button-primary:hover{background:var(--tui-accent-hover)}}
+.tui-button-danger{background:var(--tui-danger);border-color:var(--tui-danger);color:#fff}
+.tui-dismiss{flex:none;display:grid;place-items:center;padding:.5rem;border-color:transparent;font-size:1.3rem;line-height:1}
+.tui-button:focus-visible,.tui-dismiss:focus-visible,.tui-dialog:focus-visible{outline:3px solid var(--tui-focus);outline-offset:3px}
+.tui-notices{box-sizing:border-box;position:fixed;z-index:2147483100;inset-block-end:1rem;inset-inline-end:1rem;display:flex;flex-direction:column;gap:.625rem;width:min(26rem,calc(100vw - 2rem));pointer-events:none}
+.tui-notice{display:flex;align-items:center;gap:.75rem;padding:.75rem .75rem .75rem 1rem;border:1px solid var(--tui-border);border-inline-start:4px solid var(--tui-accent);border-radius:.75rem;background:var(--tui-surface);color:var(--tui-text);box-shadow:0 6px 24px rgb(0 0 0 / .15);pointer-events:auto;animation:tui-enter .18s var(--tui-ease) both}
+.tui-notice-error{border-inline-start-color:var(--tui-danger)}
+.tui-notice-text{flex:1;min-width:0;font-size:.9375rem;line-height:1.5;overflow-wrap:anywhere;white-space:pre-wrap}
+.tui-spinner{box-sizing:border-box;flex:none;width:1.125rem;height:1.125rem;border:2px solid var(--tui-border);border-block-start-color:var(--tui-accent);border-radius:50%;animation:tui-spin .9s linear infinite}
+.tui-icon{display:inline-block;width:1.25rem;height:1.25rem;vertical-align:-.2em;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+.tui-menu-icon{width:1.25rem;height:1.25rem;position:relative;display:inline-block}
+.tui-menu-icon span{position:absolute;inset-inline-start:0;width:100%;height:2px;background:currentColor;border-radius:2px;transition:transform .18s var(--tui-ease),opacity .18s var(--tui-ease)}
+.tui-menu-icon span:nth-child(1){top:3px}.tui-menu-icon span:nth-child(2){top:9px}.tui-menu-icon span:nth-child(3){top:15px}
+[aria-expanded="true"]>.tui-menu-icon span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+[aria-expanded="true"]>.tui-menu-icon span:nth-child(2){opacity:0}
+[aria-expanded="true"]>.tui-menu-icon span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+@keyframes tui-enter{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+@keyframes tui-spin{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){.tui-dialog,.tui-notice,.tui-spinner{animation:none}.tui-button,.tui-dismiss,.tui-menu-icon span{transition:none}}
+@media(forced-colors:active){.tui-dialog,.tui-notice,.tui-button,.tui-dismiss{border:1px solid CanvasText}.tui-button-primary,.tui-button-danger{background:ButtonFace;color:ButtonText}.tui-spinner{border-color:GrayText;border-block-start-color:CanvasText}}
+@media(max-width:480px){.tui-actions>.tui-button{flex:1}.tui-dialog{max-height:calc(100dvh - 1rem)}.tui-heading{padding:1rem 1rem .5rem}.tui-body{padding:.5rem 1rem 1rem}.tui-actions{padding:0 1rem 1rem}}
+
+[data-color-mode="dark"]{--tui-surface:#1b232f;--tui-text:#eef2fa;--tui-muted:#b3bfd1;--tui-border:#435269;--tui-focus:#b6c5ff}
+[data-template-theme="javcms"][data-color-mode="dark"]{--tui-focus:#ffb4a8}
+.tui-color-toggle{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;min-width:44px;min-height:44px;padding:.5rem .75rem;border:1px solid var(--tui-border);border-radius:8px;background:var(--tui-surface);color:var(--tui-text);font:inherit;font-weight:600;line-height:1.4;white-space:nowrap;cursor:pointer;flex-shrink:0}
+@media (hover:hover){.tui-color-toggle:hover{background:var(--tui-surface);color:var(--tui-text);border-color:var(--tui-focus)}}
+.tui-color-toggle:focus-visible{outline:2px solid var(--tui-focus);outline-offset:3px}
+.tui-color-toggle svg{width:20px;height:20px;flex-shrink:0}.tui-color-moon{display:none}
+[data-color-mode="light"] .tui-color-sun{display:none}[data-color-mode="light"] .tui-color-moon{display:block}
+@media(max-width:520px){.tui-color-toggle{padding:.5rem}.tui-color-toggle [data-color-label]{display:none}}

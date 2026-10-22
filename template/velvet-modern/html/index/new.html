@@ -1,0 +1,56 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}if (!isset($vpPlain)) { $vpPlain = function ($v) { $v = (string)$v; for ($i = 0; $i < 4; $i++) { $d = html_entity_decode($v, ENT_QUOTES | ENT_HTML5, 'UTF-8'); if ($d === $v) { break; } $v = $d; } return trim($v); }; }{/php}
+<section class="vp-act" aria-labelledby="vp-act-1">
+  <header class="vp-act-head" data-ai-group>
+    {:\\app\\common\\util\\AutoIcon::navIcon('latest', '', ['size'=>'lg', 'plate'=>true, 'class'=>'vp-act-ico'])}
+    <p class="vp-eyebrow" aria-hidden="true">{:\\app\\common\\util\\TemplateText::get('vp.act_n', ['n'=>'I'])}</p>
+    <h2 class="vp-act-title" id="vp-act-1" data-fx="split" data-fx-style="blur" data-fx-by="words">{:\\app\\common\\util\\TemplateText::get('vp.now_showing')}</h2>
+    <span class="vp-orn" data-fx="reveal" data-fx-style="fade" aria-hidden="true"></span>
+    <a class="vp-viewall" href="{:mac_url('label/new')}">{:\\app\\common\\util\\TemplateText::get('view_all')}<svg class="vp-i vp-flip" aria-hidden="true"><use href="{$maccms.path_tpl}assets/icons.svg?v=20261010-r1#arrow-right"></use></svg></a>
+  </header>
+  {php}$vpNot = implode(',', array_unique(array_filter($vpSeen ?? [])));{/php}<div class="vp-grid" data-grid-fill data-fx="stagger">{maccms:vod num="10" type="all" not="'.$vpNot.'" order="desc" by="time" paging="no" id="vo"}{include file="public/vodbox"}{/maccms:vod}</div>
+  {empty name="__LIST__"}{include file="public/empty"}{/empty}
+</section>
+
+<section class="vp-act vp-act--programme" aria-labelledby="vp-act-pr">
+  <header class="vp-act-head" data-ai-group>
+    {:\\app\\common\\util\\AutoIcon::navIcon('trending', '', ['size'=>'lg', 'plate'=>true, 'class'=>'vp-act-ico'])}
+    <p class="vp-eyebrow" aria-hidden="true">{:\\app\\common\\util\\TemplateText::get('vp.this_week')}</p>
+    <h2 class="vp-act-title" id="vp-act-pr" data-fx="split" data-fx-style="blur" data-fx-by="words">{:\\app\\common\\util\\TemplateText::get('vp.programme')}</h2>
+    <span class="vp-orn" data-fx="reveal" data-fx-style="fade" aria-hidden="true"></span>
+    <a class="vp-viewall" href="{:mac_url('label/hot')}">{:\\app\\common\\util\\TemplateText::get('view_all')}<svg class="vp-i vp-flip" aria-hidden="true"><use href="{$maccms.path_tpl}assets/icons.svg?v=20261010-r1#arrow-right"></use></svg></a>
+  </header>
+  <div class="vp-programme-sheet">
+    {php}$vpNot = implode(',', array_unique(array_filter($vpSeen ?? [])));{/php}<ol class="vp-programme" data-fx="stagger" data-vp-programme>{maccms:vod num="10" type="all" not="'.$vpNot.'" order="desc" by="hits_week" paging="no" id="vo" key="vpPrK"}{php}$vpSeen[] = intval($vo['vod_id'] ?? 0); $vpN = $vpRoman[$vpPrK - 1] ?? (string)$vpPrK; $vpPrTitle = $vpPlain(($vo['vod_display_name'] ?? '') !== '' ? $vo['vod_display_name'] : ($vo['vod_name'] ?? ''));{/php}<li><a class="vp-pr" href="{:mac_url_vod_play($vo)}" data-vp-thumb="{$vo.vod_pic|mac_default=$tplNoPic|mac_url_img|htmlspecialchars=ENT_QUOTES}"><span class="vp-num" aria-hidden="true">{$vpN}</span><span class="vp-pr-thumb" aria-hidden="true"><img src="{$vo.vod_pic|mac_default=$tplNoPic|mac_url_img|htmlspecialchars=ENT_QUOTES}" onerror="vpImg(this)" alt="" width="64" height="36" loading="lazy" decoding="async"></span>{notempty name="vo.type.type_name"}{:\\app\\common\\util\\AutoIcon::icon('category', $vo['type']['type_name'], ['size'=>'lg', 'plate'=>true, 'i'=>$vpPrK, 'class'=>'vp-pr-ico'])}{/notempty}<span class="vp-pr-title">{$vpPrTitle|htmlspecialchars=ENT_QUOTES}</span><span class="vp-dots" aria-hidden="true"></span>{notempty name="vo.vod_duration"}<span class="vp-pr-dur">{$vo.vod_duration|htmlspecialchars=ENT_QUOTES}</span>{/notempty}</a></li>{/maccms:vod}</ol>
+  </div>
+</section>
+
+<section class="vp-act" aria-labelledby="vp-act-2">
+  <header class="vp-act-head" data-ai-group>
+    {:\\app\\common\\util\\AutoIcon::navIcon('hot', '', ['size'=>'lg', 'plate'=>true, 'class'=>'vp-act-ico'])}
+    <p class="vp-eyebrow" aria-hidden="true">{:\\app\\common\\util\\TemplateText::get('vp.act_n', ['n'=>'II'])}</p>
+    <h2 class="vp-act-title" id="vp-act-2" data-fx="split" data-fx-style="blur" data-fx-by="words">{:\\app\\common\\util\\TemplateText::get('ui.popular')}</h2>
+    <span class="vp-orn" data-fx="reveal" data-fx-style="fade" aria-hidden="true"></span>
+    <a class="vp-viewall" href="{:mac_url('label/hot')}">{:\\app\\common\\util\\TemplateText::get('view_all')}<svg class="vp-i vp-flip" aria-hidden="true"><use href="{$maccms.path_tpl}assets/icons.svg?v=20261010-r1#arrow-right"></use></svg></a>
+  </header>
+  {php}$vpNot = implode(',', array_unique(array_filter($vpSeen ?? [])));{/php}<div class="vp-grid" data-grid-fill data-fx="stagger">{maccms:vod num="10" type="all" not="'.$vpNot.'" order="desc" by="hits_day" paging="no" id="vo"}{include file="public/vodbox"}{/maccms:vod}</div>
+  {empty name="__LIST__"}{include file="public/empty"}{/empty}
+</section>
+
+<section class="vp-act" aria-labelledby="vp-act-3">
+  <header class="vp-act-head" data-ai-group>
+    {:\\app\\common\\util\\AutoIcon::navIcon('top', '', ['size'=>'lg', 'plate'=>true, 'class'=>'vp-act-ico'])}
+    <p class="vp-eyebrow" aria-hidden="true">{:\\app\\common\\util\\TemplateText::get('vp.act_n', ['n'=>'III'])}</p>
+    <h2 class="vp-act-title" id="vp-act-3" data-fx="split" data-fx-style="blur" data-fx-by="words">{:\\app\\common\\util\\TemplateText::get('top_rated')}</h2>
+    <span class="vp-orn" data-fx="reveal" data-fx-style="fade" aria-hidden="true"></span>
+    <a class="vp-viewall" href="{:mac_url('label/score')}">{:\\app\\common\\util\\TemplateText::get('view_all')}<svg class="vp-i vp-flip" aria-hidden="true"><use href="{$maccms.path_tpl}assets/icons.svg?v=20261010-r1#arrow-right"></use></svg></a>
+  </header>
+  {php}$vpNot = implode(',', array_unique(array_filter($vpSeen ?? [])));{/php}<div class="vp-grid" data-grid-fill data-fx="stagger">{maccms:vod num="10" type="all" not="'.$vpNot.'" order="desc" by="score" paging="no" id="vo"}{include file="public/vodbox"}{/maccms:vod}</div>
+  {empty name="__LIST__"}{include file="public/empty"}{/empty}
+</section>

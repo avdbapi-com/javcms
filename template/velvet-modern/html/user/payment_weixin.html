@@ -1,0 +1,37 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="velvet-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}" data-fx="vt smooth" data-fx-lerp="0.09" data-fx-vt-style="velvet-modern">
+<head>
+<meta name="robots" content="noindex, follow" />
+<title>{:\\app\\common\\util\\TemplateText::get('ui.recharge_center')} - {:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$maccms['site_name']), ENT_QUOTES, 'UTF-8')}</title>
+{include file="public/include"}
+{include file="user/include"}
+</head>
+<body class="vp-page-user">
+{include file="public/head"}
+<main id="main-content" class="vp-main">
+  <div class="vp-wrap">
+    <header class="vp-bill vp-bill--user"><p class="vp-eyebrow">{:\\app\\common\\util\\TemplateText::get('vp.your_box')}</p></header>
+    <div class="vp-ulayout">
+    <aside class="vp-uside">{include file="user/menu"}</aside>
+    <section class="vp-upanel">
+      <div class="vp-upanel-head"><h1>{:\\app\\common\\util\\TemplateText::get('ui.recharge_center')}</h1><a class="vp-chip" href="{:mac_url('user/index')}"><svg class="vp-i vp-flip" style="width:14px;height:14px" aria-hidden="true"><use href="{$maccms.path_tpl}assets/icons.svg?v=20261010-r1#arrow-left"></use></svg>{:\\app\\common\\util\\TemplateText::get('ui.return')}</a></div>
+      <nav class="vp-tabs vp-utabs" aria-label="{:\\app\\common\\util\\TemplateText::get('vp.your_box')}"><a class="vp-tab" href="{:mac_url('user/favs')}"{if condition="$vpAct eq 'favs'"} aria-current="page"{/if}>{:\\app\\common\\util\\TemplateText::get('favorites')}</a><a class="vp-tab" href="{:mac_url('user/plays')}"{if condition="$vpAct eq 'plays'"} aria-current="page"{/if}>{:\\app\\common\\util\\TemplateText::get('ui.play_record')}</a><a class="vp-tab" href="{:mac_url('user/info')}"{if condition="$vpAct eq 'info'"} aria-current="page"{/if}>{:\\app\\common\\util\\TemplateText::get('ui.modify_the_information')}</a></nav>
+      <dl class="vp-kv">
+        <div><dt><span>{:\\app\\common\\util\\TemplateText::get('ui.order_number')}</span><span class="vp-dots" aria-hidden="true"></span></dt><dd>{$order.order_code|htmlspecialchars=ENT_QUOTES}</dd></div>
+        <div><dt><span>{:\\app\\common\\util\\TemplateText::get('ui.order_amount')}</span><span class="vp-dots" aria-hidden="true"></span></dt><dd>{$order.order_price|htmlspecialchars=ENT_QUOTES}</dd></div>
+      </dl>
+      <div class="vp-state" data-vp-order-poll="{:url('user/order_info')}?order_id={$order.order_id|intval}" data-success="{:url('user/index')}"><img class="vp-qr" src="{:url('user/qrcode')}?data={$payment.code_url|urlencode}" width="180" height="180" alt="{:\\app\\common\\util\\TemplateText::get('ui.pay')}"><p>{:\\app\\common\\util\\TemplateText::get('ui.pay_complete_it')}</p></div>
+    </section>
+    </div>
+  </div>
+</main>
+{include file="public/foot"}
+</body>
+</html>

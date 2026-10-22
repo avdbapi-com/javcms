@@ -1,0 +1,190 @@
+/*
+ * This file is part of JavCMS - https://javcms.net
+ * Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+ * License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+ * See the LICENSE and NOTICE files that come with JavCMS.
+ * Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Telegram: https://t.me/avdb_api
+ */
+/* Candidate-only Guestbook workspace overlay.
+ * Inspired by the pinned maccms10 view_new surfaces; selectors are scoped
+ * so the legacy iframe, form and action hooks remain unchanged.
+ */
+/* V9 palette -> kit tokens (admin-content builder) */
+html .admin-gbook-workspace-v1 { --agw-canvas: var(--ax-bg); --agw-surface: var(--ax-surface); --agw-raised: var(--ax-raised); --agw-line: var(--ax-line); --agw-line-soft: var(--ax-line); --agw-ink: var(--ax-text); --agw-muted: var(--ax-muted); --agw-quiet: var(--ax-faint); --agw-cyan: var(--ax-accent); --agw-danger: var(--ax-danger); }
+.admin-gbook-workspace-v1 {
+  --agw-canvas: #0b1120;
+  --agw-surface: #101a2c;
+  --agw-raised: #14223a;
+  --agw-line: #293850;
+  --agw-line-soft: #1e2b42;
+  --agw-ink: #e9eff8;
+  --agw-muted: #9aa8bc;
+  --agw-quiet: #718099;
+  --agw-cyan: #58d6e9;
+  --agw-danger: #f38ba3;
+  min-height: calc(100vh - 24px);
+  color: var(--agw-ink);
+}
+.admin-gbook-workspace-v1 .admin-gbook-heading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 13px;
+  color: var(--agw-ink);
+}
+.admin-gbook-workspace-v1 .admin-gbook-heading__kicker {
+  color: var(--agw-cyan);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.admin-gbook-workspace-v1 .admin-gbook-heading__title {
+  color: var(--agw-muted);
+  font-size: 15px;
+  font-weight: 700;
+}
+.admin-gbook-workspace-v1 .my-toolbar-box {
+  display: grid;
+  gap: 13px;
+  margin-bottom: 16px;
+  padding: 14px;
+  border: 1px solid var(--agw-line);
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(20,34,58,.96), rgba(16,26,44,.98));
+  box-shadow: 0 10px 28px rgba(0,0,0,.16);
+}
+.admin-gbook-workspace-v1 .my-toolbar-box > .center { text-align: left; }
+.admin-gbook-workspace-v1 .my-toolbar-box form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+.admin-gbook-workspace-v1 .layui-input-inline { margin: 0; }
+.admin-gbook-workspace-v1 .my-toolbar-box form > .layui-input-inline.w100 {
+  width: 132px !important;
+}
+.admin-gbook-workspace-v1 .my-toolbar-box form > .layui-input-inline.w100 .layui-form-select {
+  width: 132px;
+}
+.admin-gbook-workspace-v1 .my-toolbar-box form > .layui-input-inline.w100:nth-child(2) {
+  width: 200px !important;
+}
+.admin-gbook-workspace-v1 .my-toolbar-box form > .layui-input-inline.w100:nth-child(2) .layui-form-select {
+  width: 200px;
+}
+.admin-gbook-workspace-v1 .layui-input,
+.admin-gbook-workspace-v1 select {
+  min-height: 34px;
+  border: 1px solid var(--agw-line);
+  border-radius: 8px;
+  background: #0d1729;
+  color: var(--agw-ink);
+  transition: border-color .16s ease, box-shadow .16s ease;
+}
+.admin-gbook-workspace-v1 .layui-input:focus,
+.admin-gbook-workspace-v1 select:focus {
+  border-color: var(--agw-cyan);
+  box-shadow: 0 0 0 3px rgba(88,214,233,.14);
+}
+.admin-gbook-workspace-v1 .btn {
+  min-height: 34px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  font-weight: 700;
+  letter-spacing: .01em;
+}
+.admin-gbook-workspace-v1 .btn-primary {
+  background: var(--agw-cyan);
+  color: #071521;
+}
+.admin-gbook-workspace-v1 .btn-primary:hover { background: #78e2f0; }
+.admin-gbook-workspace-v1 .btn-primary-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  padding-top: 2px;
+}
+.admin-gbook-workspace-v1 .btn-primary-group .btn { margin: 0 !important; }
+.admin-gbook-workspace-v1 #pageListForm {
+  overflow-x: auto;
+  max-width: 100%;
+  border: 1px solid var(--agw-line);
+  border-radius: 12px;
+  background: var(--agw-surface);
+  box-shadow: 0 12px 30px rgba(0,0,0,.13);
+}
+.admin-gbook-workspace-v1 #pageListForm .layui-table {
+  min-width: 900px;
+  margin: 0;
+}
+.admin-gbook-workspace-v1 .layui-table {
+  border: 0;
+  background: transparent;
+  color: var(--agw-ink);
+}
+.admin-gbook-workspace-v1 .layui-table thead tr { background: var(--agw-raised); }
+.admin-gbook-workspace-v1 .layui-table th {
+  border-color: var(--agw-line);
+  color: var(--agw-quiet);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.admin-gbook-workspace-v1 .layui-table td {
+  border-color: var(--agw-line-soft);
+  color: var(--agw-muted);
+  vertical-align: middle;
+}
+.admin-gbook-workspace-v1 .layui-table tbody tr { transition: background .16s ease; }
+.admin-gbook-workspace-v1 .layui-table tbody tr:hover { background: rgba(88,214,233,.045); }
+.admin-gbook-workspace-v1 .badge,
+.admin-gbook-workspace-v1 .badge-dim { border-radius: 999px; }
+.admin-gbook-workspace-v1 .badge-dim.bg-primary {
+  background: rgba(88,214,233,.13) !important;
+  color: var(--agw-cyan) !important;
+  border: 1px solid rgba(88,214,233,.28);
+}
+.admin-gbook-workspace-v1 .bg-danger {
+  background: rgba(243,139,163,.13) !important;
+  color: var(--agw-danger) !important;
+  border: 1px solid rgba(243,139,163,.28);
+}
+.admin-gbook-workspace-v1 .c-999,
+.admin-gbook-workspace-v1 .layui-table .c-999 { color: var(--agw-muted) !important; }
+.admin-gbook-workspace-v1 .layui-table a { color: var(--agw-cyan); }
+.admin-gbook-workspace-v1 .layui-table a:hover { color: #a5f0f7; }
+.admin-gbook-workspace-v1 .layui-form-checkbox[lay-skin=primary] i {
+  border-color: var(--agw-line);
+  background: #0d1729;
+}
+.admin-gbook-workspace-v1 #pages { padding: 13px 0; }
+.admin-gbook-workspace-v1 .layui-laypage a,
+.admin-gbook-workspace-v1 .layui-laypage span {
+  border-color: var(--agw-line);
+  background: #0d1729;
+  color: var(--agw-muted);
+}
+.admin-gbook-workspace-v1 .layui-laypage .layui-laypage-curr .layui-laypage-em { background: var(--agw-cyan); }
+.admin-gbook-workspace-v1 .j-iframe,
+.admin-gbook-workspace-v1 .j-tr-del,
+.admin-gbook-workspace-v1 .j-select { white-space: nowrap; }
+@media (max-width: 720px) {
+  .admin-gbook-workspace-v1 { min-height: calc(100vh - 12px); }
+  .admin-gbook-workspace-v1 .admin-gbook-heading { align-items: flex-start; flex-direction: column; gap: 3px; }
+  .admin-gbook-workspace-v1 .my-toolbar-box { padding: 11px; }
+  .admin-gbook-workspace-v1 .my-toolbar-box form { align-items: stretch; }
+  .admin-gbook-workspace-v1 .my-toolbar-box form > .layui-input-inline,
+  .admin-gbook-workspace-v1 .my-toolbar-box form > .btn { flex: 1 1 145px; }
+  .admin-gbook-workspace-v1 .my-toolbar-box form > .layui-input-inline.w100:nth-child(2) { width: auto !important; min-width: 0; }
+  .admin-gbook-workspace-v1 .my-toolbar-box form > .layui-input-inline.w100:nth-child(2) .layui-form-select { width: 100% !important; }
+  .admin-gbook-workspace-v1 .my-toolbar-box form > .layui-input-inline.w100 .layui-form-select { width: 100%; }
+  .admin-gbook-workspace-v1 .btn-primary-group { align-items: stretch; }
+  .admin-gbook-workspace-v1 .btn-primary-group .btn { flex: 1 1 130px; }
+  .admin-gbook-workspace-v1 #pageListForm .layui-table { min-width: 840px; }
+}

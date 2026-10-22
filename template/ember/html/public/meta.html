@@ -1,0 +1,19 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<dl class="e-box e-meta-box">
+  {if condition="$tplCode neq ''"}<div class="e-row"><dt>{:\\app\\common\\util\\AutoIcon::ui('hash', ['class'=>'e-ico'])}{:$tplLbl('ui.id_code')}</dt><dd class="e-strong">{$tplCode|htmlspecialchars=ENT_QUOTES}</dd></div>{/if}
+  {if condition="$tplStudio neq ''"}<div class="e-row"><dt>{:\\app\\common\\util\\AutoIcon::icon('tag', $tplStudio, ['class'=>'e-ico'])}{:$tplLbl('ui.studio_label')}</dt><dd>{$tplStudio|htmlspecialchars=ENT_QUOTES}</dd></div>{/if}
+  {if condition="$tplDate neq ''"}<div class="e-row"><dt>{:\\app\\common\\util\\AutoIcon::ui('calendar', ['class'=>'e-ico'])}{:$tplLbl('ui.release_date')}</dt><dd>{$tplDate|htmlspecialchars=ENT_QUOTES}</dd></div>{/if}
+  {if condition="$tplDuration neq ''"}<div class="e-row"><dt>{:\\app\\common\\util\\AutoIcon::ui('clock', ['class'=>'e-ico'])}{:$tplLbl('ui.duration')}</dt><dd>{$tplDuration|htmlspecialchars=ENT_QUOTES}</dd></div>{/if}
+  {if condition="$tplTypeName neq ''"}<div class="e-row"><dt>{:\\app\\common\\util\\AutoIcon::ui('grid', ['class'=>'e-ico'])}{:$tplLbl('category')}</dt><dd><a class="e-meta-cat" href="{:mac_url_type($obj['type'])}">{:\\app\\common\\util\\AutoIcon::icon('category', $obj['type']['type_name'] ?? '', ['size'=>'sm'])}{$tplTypeName|htmlspecialchars=ENT_QUOTES}</a></dd></div>{/if}
+  {if condition="$tplDirector neq ''"}<div class="e-row"><dt>{:\\app\\common\\util\\AutoIcon::ui('clapperboard', ['class'=>'e-ico'])}{:$tplLbl('ui.director')}</dt><dd><a href="{:mac_url_search(['director'=>$tplDirector])}">{$tplDirector|htmlspecialchars=ENT_QUOTES}</a></dd></div>{/if}
+  {if condition="$tplArea neq ''"}<div class="e-row"><dt>{:\\app\\common\\util\\AutoIcon::ui('globe', ['class'=>'e-ico'])}{:$tplLbl('ui.area')}</dt><dd>{$tplArea|htmlspecialchars=ENT_QUOTES}</dd></div>{/if}
+  {if condition="$tplScore neq ''"}<div class="e-row"><dt>{:\\app\\common\\util\\AutoIcon::ui('star', ['class'=>'e-ico'])}{:$tplLbl('ui.score')}</dt><dd><span class="e-score">{$tplScore|htmlspecialchars=ENT_QUOTES} / 10</span>{if condition="$obj.vod_score_num gt 0"} <small class="e-sub">({$obj.vod_score_num|intval})</small>{/if}</dd></div>{/if}
+  <div class="e-row"><dt>{:\\app\\common\\util\\AutoIcon::ui('eye', ['class'=>'e-ico'])}{:$tplLbl('views')}</dt><dd>{if condition="$tplLiveHits eq 1"}<span class="mac_hits" data-mid="1" data-id="{$obj.vod_id|intval}" data-type="hits">{$obj.vod_hits|intval}</span>{else/}{$obj.vod_hits|intval}{/if}</dd></div>
+  {notempty name="tplActors"}<div class="e-row is-wide"><dt>{:\\app\\common\\util\\AutoIcon::ui('users', ['class'=>'e-ico'])}{:$tplLbl('ember.performers')}</dt><dd><div class="e-chips e-cast" data-ai-group>{volist name="tplActors" id="tplName" key="tplCastKey"}<a href="{:mac_url_search(['actor'=>$tplName])}">{:\\app\\common\\util\\AutoIcon::avatar($tplName, '', ['size'=>'sm', 'decorative'=>true])}<span>{$tplName|htmlspecialchars=ENT_QUOTES}</span></a>{/volist}</div></dd></div>{/notempty}
+</dl>

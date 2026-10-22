@@ -1,0 +1,27 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="neon" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/vod_type"}
+{include file="public/include"}
+</head>
+<body class="nx-page-list">
+{include file="public/head"}
+<main id="main-content" class="nx-main"><div class="nx-wrap">
+<div class="nx-titlebar"><a class="nx-back" href="{$maccms.path}" data-nx-back aria-label="{:\\app\\common\\util\\TemplateText::get('ui.return')}"><svg class="nx-ico" aria-hidden="true"><use href="{$nxSvg|htmlspecialchars=ENT_QUOTES}#back"></use></svg></a><span class="nx-tb-ico">{:\\app\\common\\util\\AutoIcon::icon('category', $obj['type_name'], ['size'=>'lg', 'plate'=>true])}</span><h1>{:\\app\\common\\util\\TemplateText::get(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)($obj['type_name'] ?? '')))}</h1><small class="nx-tcount nx-ltr">{:number_format(intval(mac_data_count($obj['type_id'],'all')))}</small><a class="nx-tsearch" href="{:mac_url('vod/search')}" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.search')}"><svg class="nx-ico" aria-hidden="true"><use href="{$nxSvg|htmlspecialchars=ENT_QUOTES}#search"></use></svg></a></div>
+{include file="public/filter"}
+<section class="nx-section" aria-label="{:\\app\\common\\util\\TemplateText::get(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)($obj['type_name'] ?? '')))}">
+{include file="public/subcats"}<div class="nx-grid" data-grid-fill data-nx-list>{maccms:vod num="20" paging="yes" type="current" order="desc" by="time" pageurl="vod/type" id="vo"}{include file="public/vodbox"}{/maccms:vod}</div>
+{if condition="$__PAGING__.record_total eq 0"}{include file="public/empty"}{/if}
+{include file="public/list_note"}{include file="public/paging"}
+</section>
+</div></main>
+{include file="public/foot"}
+</body>
+</html>

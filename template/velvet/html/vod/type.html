@@ -1,0 +1,39 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="velvet" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/vod_type"}
+{include file="public/include"}
+</head>
+<body class="vv-page-list">
+{include file="public/head"}
+<main id="main-content" class="vv-main">
+  <div class="vv-wrap">
+    <div class="vv-list-head">
+      <div class="vv-list-title">{:\\app\\common\\util\\AutoIcon::icon('category', $obj['type_name'] ?? '', ['size'=>'xl', 'plate'=>true, 'class'=>'vv-h1-ai'])}<h1>{:\\app\\common\\util\\TemplateText::get(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)($obj['type_name'] ?? '')))}</h1><span class="vv-count">{:number_format((float)mac_data_count($obj['type_id'],'all'))} {:\\app\\common\\util\\TemplateText::get('ui.videos')}</span></div>
+      <nav class="vv-chips vv-sortchips" data-ai-group aria-label="{:\\app\\common\\util\\TemplateText::get('sort_by')}">
+        <a class="vv-chip is-active" href="{:mac_url_type($obj)}" aria-current="page">{:\\app\\common\\util\\AutoIcon::ui('clock', ['class'=>'vv-i', 'size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ui.latest')}</a>
+        <a class="vv-chip" href="{:mac_url_type($obj,['by'=>'hits'],'show')}">{:\\app\\common\\util\\AutoIcon::ui('flame', ['class'=>'vv-i', 'size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ui.popular')}</a>
+        <a class="vv-chip" href="{:mac_url_type($obj,['by'=>'score'],'show')}">{:\\app\\common\\util\\AutoIcon::ui('star', ['class'=>'vv-i', 'size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('highest_rated')}</a>
+        <a class="vv-chip" href="{:mac_url_type($obj,['by'=>'up'],'show')}">{:\\app\\common\\util\\AutoIcon::ui('thumbs-up', ['class'=>'vv-i', 'size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('most_liked')}</a>
+      </nav>
+    </div>
+    {include file="public/catrail"}
+    {php}$vvSubParent = intval($obj['type_pid'] ?? 0) > 0 ? intval($obj['type_pid']) : intval($obj['type_id'] ?? 0);{/php}
+    <div class="vv-chips vv-subcats" data-ai-group>{maccms:type parent="'.$vvSubParent.'" order="asc" by="sort" id="vvSub" key="vvSubKey" hide_empty="1"}<a class="vv-chip{if condition="$vvSub.type_id eq $obj.type_id"} is-active{/if}" href="{:mac_url_type($vvSub)}">{:\\app\\common\\util\\AutoIcon::icon('category', $vvSub['type_name'] ?? '', ['size'=>'sm', 'i'=>$vvSubKey])}{:\\app\\common\\util\\TemplateText::get(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)($vvSub['type_name'] ?? '')))}</a>{/maccms:type}</div>
+    <div class="vv-grid" data-grid-fill>
+      {maccms:vod num="20" paging="yes" type="current" order="desc" by="time" pageurl="vod/type"}{include file="public/vodbox"}{/maccms:vod}
+    </div>
+    {if condition="$__PAGING__.record_total eq 0"}{include file="public/empty"}{/if}
+    {include file="public/list_note"}{include file="public/paging"}
+  </div>
+</main>
+{include file="public/foot"}
+</body>
+</html>

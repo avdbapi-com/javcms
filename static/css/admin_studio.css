@@ -1,0 +1,585 @@
+/*
+ * This file is part of JavCMS - https://javcms.net
+ * Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+ * License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+ * See the LICENSE and NOTICE files that come with JavCMS.
+ * Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Telegram: https://t.me/avdb_api
+ */
+/* Shared administration layout. Existing routes, controls and form semantics stay native. */
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) {
+  --studio-bg:#15171b; --studio-surface:#1d2026; --studio-raised:#262a32;
+  --studio-text:#edf0f5; --studio-muted:#a4acb9; --studio-accent:#82b1ff;
+  --studio-line:#343944; --studio-danger:#ff9aab;
+  --admin-dark-bg:var(--studio-bg); --admin-dark-surface:var(--studio-surface);
+  --admin-dark-surface-alt:var(--studio-raised); --admin-dark-ink:var(--studio-text);
+  --admin-dark-muted:var(--studio-muted); --admin-dark-border:var(--studio-line);
+  --admin-dark-accent:var(--studio-accent); --admin-dark-accent-strong:var(--studio-accent);
+  --admin-dark-control:var(--studio-surface); --admin-dark-control-hover:var(--studio-raised);
+  --admin-dark-subtle:var(--studio-raised); --admin-dark-border-strong:#626d7e;
+  margin:0; background:var(--studio-bg); color:var(--studio-text);
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif!important;
+  font-size:14px; line-height:1.5; color-scheme:dark;
+}
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) :focus-visible { outline:2px solid var(--studio-accent); outline-offset:3px; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .page-container {
+  box-sizing:border-box; width:100%; max-width:none; margin:0;
+  padding:24px!important; background:var(--studio-bg)!important; border:0!important;
+  border-radius:0!important; box-shadow:none!important;
+}
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .page-container > form,
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .my-toolbar-box,
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) #pageListForm,
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .page-container .layui-tab-content,
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .page-container .layui-form-item {
+  border:0!important; border-radius:0!important; box-shadow:none!important;
+  background:transparent!important; background-image:none!important;
+}
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .page-container > form { padding:0!important; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .my-toolbar-box { padding:0!important; margin:0 0 20px!important; overflow:visible!important; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) #pageListForm { padding:0!important; margin:0!important; overflow-x:auto; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-page-header { display:flex; align-items:center; justify-content:space-between; gap:16px; margin:0 0 24px; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-page-header h1 { margin:0; color:var(--studio-text); font-size:25px; line-height:1.25; font-weight:650; letter-spacing:-.6px; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-page-header p { margin:5px 0 0; color:var(--studio-muted); font-size:13px; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .layui-input,
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .layui-textarea,
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .layui-select,
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .layui-form-select .layui-input {
+  box-sizing:border-box; border:1px solid var(--studio-line)!important;
+  border-radius:6px!important; background:var(--studio-surface)!important;
+  color:var(--studio-text)!important; font:inherit; box-shadow:none!important;
+}
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .layui-input { height:40px; padding:0 12px; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .layui-textarea { min-height:100px; padding:10px 12px; line-height:1.6; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .layui-input:focus,
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .layui-textarea:focus { border-color:var(--studio-accent)!important; outline:2px solid #82b1ff30; outline-offset:0; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .layui-input::placeholder,
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .layui-textarea::placeholder { color:#929ba9; opacity:1; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .layui-form-select dl { background:var(--studio-raised)!important; border:1px solid var(--studio-line)!important; border-radius:6px; box-shadow:0 12px 30px #0005; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .layui-form-select dl dd:hover,
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .layui-form-select dl dd.layui-this { background:#344258!important; color:#fff!important; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .layui-form-pane .layui-form-label,
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .layui-form-label { background:transparent!important; border:0!important; box-shadow:none!important; border-radius:0!important; color:var(--studio-muted)!important; font-size:13px; line-height:1.5; font-weight:500; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .layui-word-aux { color:var(--studio-muted)!important; font-size:12px; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .btn,
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .layui-btn { min-height:36px; padding:7px 13px; line-height:20px; border-radius:6px!important; box-shadow:none!important; transform:none!important; font:500 13px/20px system-ui,-apple-system,"Segoe UI",sans-serif; text-transform:none; letter-spacing:normal; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .btn-primary,
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .layui-btn-normal { background:var(--studio-accent)!important; border:1px solid transparent!important; color:#101927!important; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .btn-default,
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .layui-btn-primary { background:var(--studio-raised)!important; border-color:var(--studio-line)!important; color:var(--studio-text)!important; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .btn-danger,
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .layui-btn-danger { background:#452631!important; border-color:transparent!important; color:#ffb4c0!important; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .btn:hover,
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .layui-btn:hover { filter:brightness(1.1); }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .page-container .layui-tab { border:0!important; box-shadow:none!important; background:transparent!important; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .page-container .layui-tab-title { display:flex; gap:4px; height:auto; min-height:44px; overflow-x:auto; border:0!important; border-bottom:1px solid var(--studio-line)!important; border-radius:0!important; padding:0 0 4px!important; background:transparent!important; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .page-container .layui-tab-title li { flex:0 0 auto; min-height:38px; height:auto; padding:0 16px; border:0!important; border-radius:5px; background:transparent!important; color:var(--studio-muted)!important; font-size:14px; line-height:38px; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .page-container .layui-tab-title li.layui-this { color:var(--studio-text)!important; background:var(--studio-raised)!important; box-shadow:none!important; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .page-container .layui-tab-title li:after { border:0!important; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .page-container .layui-tab-content { padding:20px 0!important; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-form-panel.layui-show,
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) form.studio-form-panel { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px 28px; align-items:start; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-form-panel > .studio-field-wide { grid-column:1/-1; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-form-panel > .layui-form-item { min-width:0; width:auto; margin:0!important; padding:0!important; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-field-row > .layui-form-label { display:block; float:none; width:auto!important; height:auto!important; padding:0 0 7px!important; text-align:left; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-field-row > .layui-input-block { min-height:0; margin:0!important; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-field-row > .layui-input-inline { max-width:100%; margin:0 8px 6px 0; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .page-container .layui-form-item.studio-field-row > .layui-input-inline {
+  box-sizing:border-box; margin-left:0!important; max-width:100%;
+}
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .page-container .layui-form-item.studio-field-row > .layui-input-inline:first-of-type {
+  width:100%!important; max-width:100%;
+}
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .page-container .layui-form-item.studio-field-row > .layui-input-inline > .layui-input {
+  width:100%!important; max-width:100%;
+}
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-field-row > .layui-input-block > .layui-input,
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-field-row > .layui-input-inline:first-of-type { width:100%!important; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-field-paired { display:grid; grid-template-columns:repeat(var(--studio-field-count,2),minmax(0,1fr)); gap:7px 16px; align-items:start; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-field-paired > .layui-form-label { width:auto!important; height:auto!important; padding:0!important; text-align:left; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-field-paired > .layui-input-inline,
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-field-paired > .layui-input-block { float:none; width:100%!important; min-width:0; margin:0!important; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-field-paired .layui-input { width:100%!important; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-field-row > .layui-form-mid { float:none; clear:both; height:auto; line-height:1.5; margin:5px 0 0; padding:0!important; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .page-container .layui-form-item.studio-form-actions { position:sticky; bottom:0; z-index:12; grid-column:1/-1; display:flex; justify-content:flex-end; align-items:center; gap:8px; padding:12px 0!important; background:var(--studio-bg)!important; border-top:1px solid var(--studio-line)!important; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-form-actions .layui-input-block { margin:0!important; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-search-form { display:flex!important; align-items:center; flex-wrap:wrap; gap:10px!important; width:100%; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-search-form > .layui-input-inline { flex:0 1 170px; width:auto!important; margin:0!important; min-width:0; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-search-form > .studio-search-text { flex:1 1 240px; order:-1; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-search-form .j-search { margin:0!important; min-height:40px; box-shadow:none!important; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-filter-panel { flex:1 0 100%; width:100%; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-filter-panel > summary { width:max-content; padding:5px 0; color:var(--studio-muted); cursor:pointer; font-size:13px; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-filter-panel > summary:hover { color:var(--studio-text); }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-filter-fields { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:10px; margin-top:12px; padding:16px; background:var(--studio-surface); border-radius:8px; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-filter-fields > .layui-input-inline { float:none; width:100%!important; min-width:0; margin:0!important; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-filter-fields label { display:block; color:var(--studio-muted); font-size:12px; margin:0 0 5px; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-bulk-tools { display:flex!important; align-items:center; flex-wrap:wrap; gap:8px!important; margin:16px 0 0!important; padding:0!important; border:0!important; background:transparent!important; overflow:visible!important; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-bulk-tools > .btn:not(:first-child):not(.btn-danger):not(.layui-btn-danger),
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-bulk-menu > summary { margin:0!important; color:var(--studio-text)!important; background:var(--studio-raised)!important; border:0!important; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-selection-count { margin-left:auto; color:var(--studio-muted); font-size:12px; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-bulk-menu { position:relative; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-bulk-menu > summary { cursor:pointer; padding:8px 13px; border-radius:6px; font-size:13px; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-bulk-menu > div { position:absolute; z-index:50; top:calc(100% + 5px); left:0; width:240px; max-height:360px; overflow:auto; padding:6px; background:var(--studio-raised); border:1px solid var(--studio-line); border-radius:8px; box-shadow:0 12px 32px #0005; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-bulk-menu > div > .btn { display:block; width:100%; margin:0!important; padding:9px 10px; text-align:left; border:0!important; color:var(--studio-text)!important; background:transparent!important; white-space:normal; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-bulk-menu > div > .btn:hover { background:#343944!important; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .layui-table { color:var(--studio-text); background:transparent!important; border:0!important; border-collapse:collapse; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .layui-table th,
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .layui-table td { padding:12px 10px!important; border:0!important; border-bottom:1px solid #ffffff0d!important; background:transparent!important; font-size:13px; line-height:1.5; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .layui-table th { color:var(--studio-muted)!important; font-size:12px!important; font-weight:500; text-transform:none!important; letter-spacing:normal!important; background:var(--studio-bg)!important; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .layui-table tbody tr { background:transparent!important; box-shadow:none!important; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .layui-table tbody tr:hover { background:#ffffff04!important; box-shadow:none!important; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .layui-table td .btn { padding:4px 7px; min-height:28px; border:0!important; background:transparent!important; color:var(--studio-accent)!important; font-size:12px; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .layui-table td .btn-danger { color:var(--studio-danger)!important; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .page-container .layui-elem-quote { border:0!important; border-radius:6px; background:var(--studio-surface)!important; color:var(--studio-muted); padding:12px 16px; box-shadow:none!important; }
+/* Flatten toolbar containers, preserving Return controls and identity descendants. */
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .page-container :is(
+  .admin-remaining-editor-toolbar,.admin-actor-editor-toolbar,
+  .admin-comment-editor-toolbar,.admin-config-editor-return-toolbar,
+  .admin-vod-editor-toolbar) { border:0!important; box-shadow:none!important; background:var(--studio-bg)!important; border-radius:0!important; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .layui-layer { max-width:calc(100vw - 24px); background:var(--studio-bg)!important; color:var(--studio-text); border:1px solid var(--studio-line); border-radius:10px; box-shadow:0 20px 70px #0007!important; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .layui-layer-title { background:var(--studio-surface)!important; color:var(--studio-text)!important; border:0!important; padding-left:20px; font-size:14px; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .layui-layer-content,
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .layui-layer-btn { background:var(--studio-bg)!important; color:var(--studio-text)!important; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .layui-laypage a,
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .layui-laypage span { border:0!important; background:transparent; color:var(--studio-muted); border-radius:5px; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .layui-laypage .layui-laypage-curr .layui-laypage-em { border-radius:5px; background:#344258; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) ::-webkit-scrollbar-track { background:var(--studio-bg); }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) ::-webkit-scrollbar-thumb { background:#454b56; border-color:var(--studio-bg); }
+@media(max-width:800px) {
+  body.admin-studio:is(.admin-dark,:not(.admin-dark)) .page-container { padding:16px!important; }
+  body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-form-panel.layui-show,
+  body.admin-studio:is(.admin-dark,:not(.admin-dark)) form.studio-form-panel { grid-template-columns:minmax(0,1fr); gap:18px; }
+  body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-page-header { margin-bottom:20px; }
+  body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-page-header h1 { font-size:22px; }
+  body.admin-studio:is(.admin-dark,:not(.admin-dark)) .layui-input { min-height:44px; }
+  body.admin-studio:is(.admin-dark,:not(.admin-dark)) .btn,
+  body.admin-studio:is(.admin-dark,:not(.admin-dark)) .layui-btn { min-height:40px; }
+  body.admin-studio:is(.admin-dark,:not(.admin-dark)) .layui-layer-iframe { max-width:100vw; border-radius:0; }
+}
+@media(max-width:480px) {
+  body.admin-studio:is(.admin-dark,:not(.admin-dark)) .page-container { padding:12px!important; }
+  body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-search-form > .layui-input-inline { flex:1 1 130px; }
+  body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-search-form > .studio-search-text { flex-basis:100%; }
+  body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-filter-fields { grid-template-columns:minmax(0,1fr); padding:12px; }
+  body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-field-paired { grid-template-columns:minmax(0,1fr); }
+  body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-field-paired > * { grid-column:auto!important; grid-row:auto!important; }
+  body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-bulk-menu { flex:1 0 100%; min-width:0; }
+  body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-bulk-menu > div { position:static; width:100%; max-width:100%; box-sizing:border-box; margin-top:8px; box-shadow:none; }
+  body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-selection-count { width:100%; margin:4px 0 0; }
+  body.admin-studio:is(.admin-dark,:not(.admin-dark)) .layui-table td .btn { min-height:36px; }
+}
+@media(prefers-reduced-motion:reduce) {
+  body.admin-studio:is(.admin-dark,:not(.admin-dark)) *,body.admin-studio:is(.admin-dark,:not(.admin-dark)) *:before,body.admin-studio:is(.admin-dark,:not(.admin-dark)) *:after { animation-duration:.01ms!important; transition-duration:.01ms!important; scroll-behavior:auto!important; }
+}
+
+/* Keep popovers above table cells and contain catalog titles in their own column. */
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .my-toolbar-box {
+  position:relative;
+  z-index:5;
+}
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-bulk-tools {
+  filter:none!important;
+  cursor:default;
+  text-align:left;
+}
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-bulk-menu[open] { z-index:2; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-bulk-menu > div {
+  box-sizing:border-box;
+  background:var(--studio-raised)!important;
+}
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .page-container.admin-vod-index:has(> #pageListForm) > #pageListForm > .layui-table {
+  min-width:1365px;
+}
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .page-container.admin-vod-index:has(> #pageListForm) > #pageListForm > .layui-table td:nth-child(3) {
+  white-space:normal;
+  overflow-wrap:anywhere;
+}
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .page-container.admin-vod-index:has(> #pageListForm) > #pageListForm > .layui-table td:nth-child(3) > a.badge {
+  display:block;
+  max-width:100%;
+  min-height:0;
+  margin:4px 0;
+  padding:0;
+  border:0!important;
+  background:transparent!important;
+  color:var(--studio-accent)!important;
+  font-size:13px;
+  font-weight:500;
+  text-align:left!important;
+  line-height:1.5;
+  white-space:normal!important;
+  overflow-wrap:anywhere;
+  transform:none!important;
+}
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .page-container.admin-vod-index:has(> #pageListForm) > #pageListForm > .layui-table td:nth-child(3) > .layui-badge {
+  display:inline-block;
+  height:auto;
+  max-width:100%;
+  white-space:normal;
+  overflow-wrap:anywhere;
+  vertical-align:middle;
+}
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .admin-vod-scroll-hint { display:none!important; }
+@media(max-width:760px) {
+  body.admin-studio:is(.admin-dark,:not(.admin-dark)) .admin-vod-scroll-hint { display:block!important; }
+}
+
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-bulk-menu > div > .btn { text-align:left!important; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-search-form .j-search { text-align:center; }
+/* An unchecked native value must not be drawn with a selected check mark. */
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .layui-form-checkbox[lay-skin=primary]:not(.layui-form-checked) > i.layui-icon-ok:before {
+  visibility:hidden;
+}
+
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-bulk-menu > div > .btn { font-weight:500!important; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-bulk-menu > div > .btn > .layui-icon { margin-right:6px; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-search-form .j-search { justify-content:center; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .page-container.admin-vod-index > #pageListForm > .layui-table td:nth-child(10) {
+  white-space:normal;
+  overflow-wrap:anywhere;
+}
+
+/* Consistent list and editor presentation across legacy workspace styles. */
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) {
+  --admin-dark-muted-strong:var(--studio-muted);
+}
+
+/* Lists: remove inherited extra filter-row dividers and table spacing. */
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .my-toolbar-box > .center.mb10,
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .my-toolbar-box > .mb-2 {
+  margin:0!important; padding:0!important; border:0!important; text-align:left;
+}
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) #pageListForm > .layui-table {
+  width:100%; margin:0!important; border-spacing:0; border-radius:0!important;
+}
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) #pageListForm > .layui-table th {
+  font-weight:500!important; vertical-align:middle;
+  color:var(--studio-muted)!important;
+}
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) #pageListForm > .layui-table td {
+  vertical-align:middle;
+}
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) #pageListForm > .layui-table tbody tr:hover {
+  background:var(--studio-surface)!important;
+}
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) #pageListForm > .layui-table .layui-input {
+  height:36px!important; min-height:36px!important; padding:0 8px;
+}
+
+/* Controls: page styles must not restore bold 700/800 button text. */
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .page-container .btn,
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .page-container .layui-btn {
+  font-weight:500!important; letter-spacing:normal!important;
+}
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-search-form .j-search {
+  height:40px; min-height:40px; padding:0 16px; white-space:nowrap;
+}
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-filter-fields {
+  border:1px solid var(--studio-line); border-radius:6px;
+}
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-filter-panel > summary {
+  min-height:32px; line-height:22px;
+}
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-bulk-menu > summary {
+  display:list-item; min-height:36px; box-sizing:border-box;
+  line-height:20px; font-weight:500;
+}
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-bulk-menu > div > .btn {
+  min-height:36px; border-radius:4px!important;
+}
+
+/* Editor identity: use the same readable hierarchy on remaining editors. */
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .page-container :is(
+  .admin-remaining-editor-toolbar,.admin-actor-editor-toolbar,
+  .admin-comment-editor-toolbar,.admin-config-editor-return-toolbar) {
+  padding:0 0 16px!important; margin-bottom:24px;
+  border-bottom:1px solid var(--studio-line)!important;
+}
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .page-container :is(
+  .admin-remaining-editor-return,.admin-actor-editor-back,
+  .admin-comment-editor-back,.admin-config-editor-return) {
+  min-height:36px; padding:7px 12px; border-radius:6px;
+  color:var(--studio-text)!important; background:var(--studio-raised)!important;
+  font:500 13px/20px system-ui,-apple-system,"Segoe UI",sans-serif; transform:none!important;
+}
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .page-container :is(
+  .admin-remaining-editor-kicker,.admin-actor-editor-kicker,
+  .admin-comment-editor-kicker,.admin-config-editor-return__kicker) {
+  color:var(--studio-muted); font-size:12px; font-weight:400;
+  line-height:1.5; letter-spacing:normal; text-transform:none;
+}
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .page-container :is(
+  .admin-remaining-editor-title,.admin-actor-editor-title,
+  .admin-comment-editor-title,.admin-config-editor-return__title) {
+  color:var(--studio-text); font-size:22px; font-weight:600; line-height:1.3;
+  white-space:normal; overflow-wrap:anywhere;
+}
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-field-row > .layui-form-label,
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-field-paired > .layui-form-label {
+  color:var(--studio-text)!important; font-weight:500!important;
+}
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-field-row .layui-word-aux {
+  line-height:1.5; overflow-wrap:anywhere;
+}
+
+/* Overview uses the same type family and page-title scale as the editors. */
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-dashboard {
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-dashboard h1 { font-size:25px; }
+@media(max-width:800px) {
+  body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-search-form .j-search {
+    height:44px; min-height:44px;
+  }
+  body.admin-studio:is(.admin-dark,:not(.admin-dark)) .page-container :is(
+    .admin-remaining-editor-title,.admin-actor-editor-title,
+    .admin-comment-editor-title,.admin-config-editor-return__title) { font-size:20px; }
+  body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-bulk-menu > summary { min-height:40px; }
+}
+
+/* Neutral return colors must retain a visible keyboard focus state even where
+   the older remaining-editor stylesheet explicitly removes the outline. */
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .page-container :is(
+  .admin-remaining-editor-return,.admin-actor-editor-back,
+  .admin-comment-editor-back,.admin-config-editor-return):focus-visible {
+  outline:2px solid var(--studio-accent)!important;
+  outline-offset:3px;
+}
+
+/* Preserve the existing narrow-screen editable-control target height. */
+@media(max-width:800px) {
+  body.admin-studio:is(.admin-dark,:not(.admin-dark)) #pageListForm > .layui-table .layui-input {
+    height:44px!important;
+    min-height:44px!important;
+  }
+}
+
+
+/* Bulk panel dismissal remains visible without scrolling through its actions. */
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-bulk-heading {
+  position:sticky; top:-6px; z-index:1; display:flex; align-items:center;
+  justify-content:space-between; gap:12px; padding:6px 4px 10px;
+  margin-bottom:4px; border-bottom:1px solid var(--studio-line);
+  color:var(--studio-muted); background:var(--studio-raised);
+  font:500 12px/20px system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-bulk-close {
+  display:inline-flex; align-items:center; justify-content:center;
+  min-width:60px; min-height:36px; padding:6px 10px;
+  border:1px solid var(--studio-line); border-radius:5px;
+  color:var(--studio-text); background:var(--studio-surface);
+  font:500 13px/20px system-ui,-apple-system,"Segoe UI",sans-serif; cursor:pointer;
+}
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-bulk-close:hover { border-color:var(--studio-accent); }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-bulk-close:focus-visible,
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-bulk-menu > summary:focus-visible {
+  outline:2px solid var(--studio-accent)!important; outline-offset:3px;
+}
+@media(max-width:800px) {
+  body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-bulk-close { min-height:44px; }
+}
+
+/* Preserve readable editor and dashboard geometry while lists stay full width. */
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .page-container:is(
+  .admin-remaining-editor-v1,.admin-actor-editor-page,
+  .admin-config-editor-return-v1) {
+  max-width:1240px; margin-inline:auto;
+}
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .page-container.studio-dashboard {
+  max-width:1280px; margin-inline:auto;
+}
+
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .page-container:is(.admin-comment-editor-page,.admin-gbook-editor-page) { max-width:1120px; margin-inline:auto; }
+
+/* Keep native header-dialog close handlers while making their X visible. */
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .layui-layer-setwin:has(.layui-layer-close1) {
+  top:8px; right:10px; display:flex; align-items:center;
+}
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .layui-layer-setwin .layui-layer-close1 {
+  position:relative; display:inline-flex; width:32px; height:32px;
+  min-width:32px; min-height:32px; margin-left:10px; padding:0;
+  color:#f2f5fa!important; background:none!important; border-radius:5px;
+  font-size:0!important; line-height:1; opacity:1!important;
+}
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .layui-layer-setwin .layui-layer-close1::before,
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .layui-layer-setwin .layui-layer-close1::after {
+  content:''; position:absolute; top:50%; left:50%; width:16px; height:2px;
+  margin:0; border:0; background:currentColor; pointer-events:none;
+}
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .layui-layer-setwin .layui-layer-close1::before { transform:translate(-50%,-50%) rotate(45deg); }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .layui-layer-setwin .layui-layer-close1::after { transform:translate(-50%,-50%) rotate(-45deg); }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .layui-layer-setwin .layui-layer-close1:hover { background:#343944!important; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .layui-layer-setwin .layui-layer-close1:focus-visible { outline:2px solid var(--studio-accent)!important; outline-offset:2px; }
+@media(max-width:800px) {
+  body.admin-studio:is(.admin-dark,:not(.admin-dark)) .layui-layer:has(.layui-layer-close1) > .layui-layer-title { min-height:48px; padding-right:112px; }
+  body.admin-studio:is(.admin-dark,:not(.admin-dark)) .layui-layer-setwin:has(.layui-layer-close1) { top:2px; right:6px; }
+  body.admin-studio:is(.admin-dark,:not(.admin-dark)) .layui-layer-setwin .layui-layer-close1 { width:44px; height:44px; min-width:44px; min-height:44px; }
+}
+
+/* Native fullscreen iframe dimensions must stay inside the resized viewport. */
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .layui-layer-iframe:is([style*="width: 100%"],[style*="width:100%"]):is([style*="height: 100%"],[style*="height:100%"] ) { top:0!important; display:flex!important; flex-direction:column; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .layui-layer-iframe:is([style*="width: 100%"],[style*="width:100%"]):is([style*="height: 100%"],[style*="height:100%"] ) > .layui-layer-title,
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .layui-layer-iframe:is([style*="width: 100%"],[style*="width:100%"]):is([style*="height: 100%"],[style*="height:100%"] ) > .layui-layer-btn { flex:0 0 auto; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .layui-layer-iframe:is([style*="width: 100%"],[style*="width:100%"]):is([style*="height: 100%"],[style*="height:100%"] ) > .layui-layer-content { flex:1 1 0; min-height:0; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .layui-layer-iframe:is([style*="width: 100%"],[style*="width:100%"]):is([style*="height: 100%"],[style*="height:100%"] ) > .layui-layer-content > iframe { display:block; height:100%!important; }
+
+
+/* Native toolbar geometry is styled before progressive enhancement runs. */
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .my-toolbar-box > .btn-primary-group {
+  display:flex!important; flex-wrap:wrap; align-items:center; gap:8px!important;
+  width:auto; min-height:0; margin:16px 0 0!important; padding:0!important;
+  border:0!important; border-radius:0!important; background:transparent!important;
+  background-image:none!important; box-shadow:none!important; text-align:left;
+  cursor:default; white-space:normal; font-weight:400!important;
+}
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .my-toolbar-box > .btn-primary-group > .btn {
+  margin:0!important; flex:0 1 auto; white-space:normal;
+}
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .my-toolbar-box > .btn-primary-group > .btn-primary {
+  background:var(--studio-raised)!important; border:1px solid var(--studio-line)!important;
+  color:var(--studio-text)!important;
+}
+/* V2 (kit): destructive toolbar buttons keep their red tint; only primaries are flattened above. */
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .my-toolbar-box > .btn-primary-group > :is(.btn-danger,.layui-btn-danger),
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-bulk-tools > :is(.btn-danger,.layui-btn-danger) {
+  margin:0!important; background:var(--ax-danger-bg,#3a1f27)!important; border:1px solid transparent!important;
+  color:var(--ax-danger,#ff8a9b)!important;
+}
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .my-toolbar-box form:not(.studio-search-form) {
+  display:flex!important; flex-wrap:wrap; align-items:center; gap:10px; text-align:left;
+}
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .my-toolbar-box form:not(.studio-search-form) > .layui-input-inline {
+  float:none; flex:0 1 170px; min-width:0; margin:0!important;
+}
+/* Original controls remain usable when Layui or the enhancement script fails. */
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .my-toolbar-box select,
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .studio-field-row > :is(.layui-input-inline,.layui-input-block) > select {
+  box-sizing:border-box; width:100%; min-height:40px; padding:7px 10px;
+  border:1px solid var(--studio-line); border-radius:6px;
+  color:var(--studio-text); background:var(--studio-surface); font:inherit;
+}
+/* Only page-owned pagination: leave datepickers, editor widgets and nested spans alone. */
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .page-container #pages { margin-top:18px; text-align:left; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .page-container #pages > .layui-laypage {
+  display:flex; flex-wrap:wrap; align-items:center; gap:5px 6px; margin:0; font-size:13px;
+}
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .page-container #pages > .layui-laypage > :is(a,span) {
+  box-sizing:border-box; display:inline-flex; align-items:center; justify-content:center;
+  min-height:36px; height:auto; margin:0; padding:0 11px;
+  border:1px solid var(--studio-line)!important; border-radius:6px;
+  color:var(--studio-text); background:var(--studio-surface); line-height:34px;
+}
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .page-container #pages > .layui-laypage > a:hover { border-color:var(--studio-accent)!important; color:var(--studio-accent); }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .page-container #pages .layui-laypage-curr { border-color:var(--studio-accent)!important; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .page-container #pages .layui-laypage-curr .layui-laypage-em { background:var(--studio-raised); border-radius:5px; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .page-container #pages .layui-laypage-curr em:last-child { color:var(--studio-accent); }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .page-container #pages > .layui-laypage > :is(.layui-laypage-count,.layui-laypage-limits,.layui-laypage-skip) {
+  padding:0; border:0!important; background:transparent; color:var(--studio-muted); gap:6px;
+}
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .page-container #pages :is(select,input,button) {
+  box-sizing:border-box; height:36px; margin:0; padding:0 9px;
+  border:1px solid var(--studio-line); border-radius:6px;
+  color:var(--studio-text); background:var(--studio-surface); font:inherit;
+}
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .page-container #pages input { width:48px; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .page-container #pages button { cursor:pointer; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .page-container #pages .layui-disabled { opacity:.5; }
+body.admin-studio:not(.admin-dark) {
+  --studio-bg:#f5f7fa; --studio-surface:#fff; --studio-raised:#edf1f6;
+  --studio-text:#263247; --studio-muted:#606d80; --studio-accent:#2563ad;
+  --studio-line:#ccd4df; --studio-danger:#a52641;
+  margin:0; background:var(--studio-bg); color:var(--studio-text);
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif!important;
+  font-size:14px; line-height:1.5; color-scheme:light;
+}
+body.admin-studio:not(.admin-dark) .page-container .layui-table :is(th,td) { border-bottom-color:var(--studio-line)!important; }
+body.admin-studio:not(.admin-dark) .btn-danger,
+body.admin-studio:not(.admin-dark) .layui-btn-danger { background:#fbeaf0!important; color:var(--studio-danger)!important; }
+body.admin-studio:not(.admin-dark) .layui-form-select dl dd:is(:hover,.layui-this),
+body.admin-studio:not(.admin-dark) .studio-bulk-menu > div > .btn:hover { background:var(--studio-raised)!important; color:var(--studio-text)!important; }
+@media(max-width:800px) {
+  body.admin-studio:is(.admin-dark,:not(.admin-dark)) .my-toolbar-box select { min-height:44px; }
+  body.admin-studio:is(.admin-dark,:not(.admin-dark)) .page-container #pages > .layui-laypage > :is(a,.layui-laypage-curr),
+  body.admin-studio:is(.admin-dark,:not(.admin-dark)) .page-container #pages :is(select,input,button) { min-height:44px; }
+}
+
+body.admin-studio:not(.admin-dark) .btn-primary,
+body.admin-studio:not(.admin-dark) .layui-btn-normal { color:#fff!important; }
+body.admin-studio:not(.admin-dark) .my-toolbar-box > .btn-primary-group > .btn-primary { color:var(--studio-text)!important; }
+body.admin-studio:not(.admin-dark) .layui-layer-setwin .layui-layer-close1 { color:var(--studio-text)!important; }
+body.admin-studio:not(.admin-dark) .layui-layer-setwin .layui-layer-close1:hover { background:var(--studio-raised)!important; }
+
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .page-container :is(.btn,.layui-btn) { box-sizing:border-box; }
+
+/* VOD server-rendered field pairs keep each label with its own control. */
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .admin-vod-info .studio-field-paired > .studio-field-pair {
+  min-width:0; display:flex; flex-direction:column; gap:7px;
+}
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .admin-vod-info .studio-field-paired > .studio-field-pair > .layui-form-label {
+  float:none; width:auto!important; height:auto!important; padding:0!important;
+  color:var(--studio-text)!important; font-weight:500!important; text-align:left;
+}
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .admin-vod-info .studio-field-paired > .studio-field-pair > :is(.layui-input-inline,.layui-input-block) {
+  float:none; width:100%!important; min-width:0; margin:0!important;
+}
+@media(max-width:760px) {
+  body.admin-studio:is(.admin-dark,:not(.admin-dark)) .admin-vod-info .studio-field-paired { grid-template-columns:minmax(0,1fr); }
+}
+
+/* Native form footers use the same save/reset colors as the editor toolbar. */
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .page-container :is(.studio-form-actions,.admin-vod-info > form > .layui-form-item.center) .btn-success {
+  background:var(--studio-accent)!important; border-color:var(--studio-accent)!important; color:#101927!important;
+}
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .page-container :is(.studio-form-actions,.admin-vod-info > form > .layui-form-item.center) :is(.btn-warning,.layui-btn-warm) {
+  background:var(--studio-raised)!important; border:1px solid var(--studio-line)!important; color:var(--studio-text)!important;
+}
+body.admin-studio:not(.admin-dark) .studio-vod-editor .admin-vod-editor-toolbar__actions .admin-vod-editor-save,
+body.admin-studio:not(.admin-dark) .page-container :is(.studio-form-actions,.admin-vod-info > form > .layui-form-item.center) .btn-success { color:#fff!important; }
+
+/* Native fieldset legends keep their inset within the settings form width. */
+body.admin-studio .page-container > form.layui-form-pane .layui-elem-field > legend {
+  box-sizing:border-box; width:auto!important; max-width:calc(100% - 40px); white-space:normal;
+}
+
+/* File-manager toolbars are containers, not buttons. Keep native geometry stable before JS. */
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .page-container > .my-btn-box {
+  box-sizing:border-box; display:flex; flex-wrap:wrap; align-items:center;
+  justify-content:space-between; gap:12px; height:auto!important; min-height:0;
+  margin:0 0 16px!important; padding:0!important; border:0!important;
+  border-radius:0!important; background:transparent!important; line-height:1.5;
+}
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .page-container > .my-btn-box::before,
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .page-container > .my-btn-box::after { display:none; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .page-container > .my-btn-box > .btn-primary-group {
+  display:flex; flex-wrap:wrap; align-items:center; gap:8px; float:none!important;
+  min-width:0; max-width:100%; width:auto; height:auto; min-height:0;
+  margin:0!important; padding:0!important; border:0!important; border-radius:0!important;
+  background:transparent!important; box-shadow:none!important; cursor:default; filter:none;
+}
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .page-container > .my-btn-box > .btn-primary-group > .btn {
+  display:inline-flex; align-items:center; justify-content:center; gap:5px;
+  height:auto; margin:0!important; white-space:normal;
+}
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .page-container > .my-btn-box > .page-filter {
+  float:none!important; min-width:0; max-width:100%; margin:0;
+}
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .page-container > .my-btn-box > .page-filter:empty { display:none; }
+
+/* Style native action links, leaving status badges and catalog links untouched. */
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .page-container .layui-table a.badge:is(.j-iframe,.j-tr-del,.j-ajax,.j-clipboard) {
+  box-sizing:border-box; display:inline-flex; align-items:center; justify-content:center;
+  min-height:36px!important; padding:6px 10px!important; margin:2px 4px 2px 0!important;
+  border:1px solid var(--studio-line)!important; border-radius:6px;
+  background:var(--studio-raised)!important; color:var(--studio-text)!important;
+  font:500 12px/20px system-ui,-apple-system,"Segoe UI",sans-serif;
+  white-space:normal; text-align:center; text-decoration:none; box-shadow:none;
+  transform:none!important;
+}
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .page-container .layui-table a.badge.j-tr-del { color:var(--studio-danger)!important; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .page-container .layui-table a.badge:is(.j-iframe,.j-tr-del,.j-ajax,.j-clipboard):hover {
+  border-color:var(--studio-accent)!important; background:var(--studio-surface)!important;
+}
+@media(max-width:700px) {
+  body.admin-studio:is(.admin-dark,:not(.admin-dark)) .page-container > .my-btn-box > .btn-primary-group > .btn,
+  body.admin-studio:is(.admin-dark,:not(.admin-dark)) .page-container .layui-table a.badge:is(.j-iframe,.j-tr-del,.j-ajax,.j-clipboard) { min-height:44px!important; }
+}

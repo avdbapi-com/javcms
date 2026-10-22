@@ -1,0 +1,31 @@
+/*
+ * This file is part of JavCMS - https://javcms.net
+ * Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+ * License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+ * See the LICENSE and NOTICE files that come with JavCMS.
+ * Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Telegram: https://t.me/avdb_api
+ */
+/* Ember: iframe player page (vod/player.html, vod/player_pwd.html) - black stage, #141414 card, orange actions */
+*{box-sizing:border-box}
+html,body{width:100%;height:100%;margin:0;background:#000;color:#fafafa;font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans",sans-serif}
+body{overflow:auto}
+#native-player{width:100%;height:100%;min-width:0}
+.MacPlayer{width:100%!important;height:100%!important;min-width:0}
+#native-player iframe,#native-player video,#native-player object,#native-player embed{max-width:100%;border:0}
+.player_showtry[hidden]{display:none!important}
+.native-preview-ended{display:grid!important;place-items:center;padding:clamp(16px,4vw,36px);overflow:auto;background:#000}
+.player_showtry{width:min(100%,580px);margin:auto}
+.native-preview-card{border:1px solid #262626;border-top:3px solid #ff9c1d;background:#141414;padding:clamp(22px,5vw,40px);overflow-wrap:anywhere;text-align:start}
+.native-preview-kicker{margin:0 0 18px;color:#ff9c1d;font-weight:700;font-size:.75rem;letter-spacing:.13em;text-transform:uppercase}
+.native-preview-card h1{font-size:clamp(1.35rem,4vw,1.9rem);line-height:1.2;margin:0 0 20px;font-weight:400}
+.native-preview-card p{line-height:1.65;color:#ccc}
+.native-preview-note{font-size:.85rem;color:#a3a3a3}
+.native-preview-actions{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin-top:24px}
+.native-preview-actions a{display:inline-flex;align-items:center;min-height:44px;color:#ff9c1d;text-underline-offset:4px}
+.native-preview-primary,.native-preview-actions a.native-preview-primary{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:12px 22px;border-radius:30px;border:0;background:#ff9c1d;color:#000;font:inherit;font-weight:700;text-decoration:none;cursor:pointer}
+@media (hover:hover){.native-preview-primary:hover{background:#ffcc00}}
+.native-preview-card :focus-visible{outline:3px solid #ff9c1d;outline-offset:4px}
+#player-status:empty{display:none}
+@media(max-width:480px){.native-preview-actions{align-items:stretch;flex-direction:column}.native-preview-primary{width:100%}.native-preview-card{padding:24px 20px}}
+/* quality sweep 2026-10-09: hover fill only where hover exists */

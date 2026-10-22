@@ -1,0 +1,94 @@
+Website templates (themes)
+
+Choose a theme in Admin > Site & theme > Themes ("Use this theme"), or in
+Site & theme > Site identity (Themes card) and save. The list shows each theme's
+display name from its info.ini, for example "Velvet (velvet)". New installs
+start with JAVCMS Modern (javcms-modern). More help: docs/THEMES.md.
+
+Bundled themes, 17 in total (folder: display name - style)
+
+javcms-modern   JAVCMS Modern - coral gallery design (the default)
+jav             JAV Classic - warm black gradient, yellow highlights, cinema-seat
+                watch page
+jav-modern      JAV Modern - indigo gallery variant of JAV: navy panels, rounded
+                cards, aurora hero
+ember           Ember - the original black and orange tube design
+onyx            Onyx - near-black and orange layout with coverflow banner,
+                underlined navigation and sidebar lists
+velvet          Velvet - navy and rose-red night design, three-tier header,
+                app-style phone layout with bottom tab bar
+honey           Honey - amber header, rounded video cards, navy and gold accents
+neon            Neon - dark hot-pink app design: gradient header, pill search,
+                icon grid, bottom tab bar on phones, 4/5-column desktop layout
+crimson         Crimson - red-bar video app design: scrolling tab strip, outline
+                pills, overlay cards, five-icon bottom bar on phones
+topaz           Topaz - midnight-navy glass panels with gold accents,
+                cinematic hero slider, slide-in drawer and paged collections
+
+Modern versions (same pages, with animated effects; they respect the visitor's
+"reduce motion" setting):
+
+crimson-modern  Crimson Ink (Modern) - two-colour manga print, screentone
+                speed-line shader, ink panels, page-turn transitions
+ember-modern    Ember Thermal (Modern) - thermal-camera catalogue with a living
+                heat shader and heat-coded cards
+honey-modern    Honey Nectar (Modern) - liquid-gold shader, fanned card stack,
+                honey-filled hexagons
+neon-modern     Neon Nocturne (Modern) - rain on neon glass, tube-lit signs
+                that tilt in 3D, split-flap departures board
+onyx-modern     Onyx Grid (Modern) - neo-brutalist ruled index with a 1-bit
+                dither shader and hard-cut motion
+topaz-modern    Topaz Prism (Modern) - jewellery-salon interface with a caustic
+                light shader, crystal vitrines and a command palette
+velvet-modern   Velvet Premiere (Modern) - premiere-night picture palace with
+                velvet curtains and a following spotlight
+
+All themes:
+- are responsive (one html template directory for desktop, tablet and phone);
+- start in dark mode; the light/dark switch saves each visitor's choice;
+- are translated into 17 languages (en, vi, th, id, ko, zh, ja, fr, de, es, pt,
+  ru, ar, tr, hi, ms, tl). Theme texts live in template/<name>/lang/<code>.json.
+
+When is a theme selectable?
+
+A folder template/<name>/ appears in the list when:
+1. it contains info.ini and html/index/index.html;
+2. info.ini does not say status = draft (themes still being built use draft);
+3. the automatic safety scan finds no server-side files (.php, .phtml, .phar,
+   .cgi, .sh, .exe, .htaccess, .user.ini, web.config, double extensions such as
+   logo.php.jpg, images that contain <?php, or symlinks) and no dangerous PHP in
+   its templates ({php} blocks, <?php blocks and template tags). The scan blocks:
+   - eval, assert, create_function and the system/exec/shell_exec/passthru/
+     popen/proc_open family;
+   - file and directory writes (file_put_contents, fopen/fwrite, unlink, rmdir,
+     copy, rename, mkdir, move_uploaded_file, symlink, chmod) and the CMS's own
+     file/network helpers (mac_write_file, mac_arr2file, mac_mkdirss, mac_rmdirs,
+     mac_read_file, mac_curl_get/post);
+   - include/require of a file, {include} of a non-template path, and backticks;
+   - a value read from $_GET/$_POST/... used as a function name, and any call
+     through a variable the theme never binds to a closure (so $f='sys'.'tem';
+     $f(...) is caught), new $var, and forward_static_call/iterator_apply;
+   - a callback function (array_map, array_filter, usort, preg_replace_callback,
+     ...) whose callback is a built-up string or names a blocked function, and
+     the {$x|array_map=...} filter form;
+   - reflection (Reflection*, Closure::fromCallable), raw SQL (Db::execute/query,
+     ->execute/->query), reads of the database config (config('database...'),
+     $Think.config.database, getenv), a decoder feeding a dynamic call, and
+     preg_replace with the /e modifier.
+The scan result is cached in runtime/theme-gate/ and is refreshed when a file
+of the theme changes. Themes that are not selectable are listed under the
+selector with the reason.
+
+Names listed in deployment/reviewed-themes.json are always selectable
+(operator allow-list). Add a theme there only after reviewing it yourself.
+
+Install a new theme: copy its folder into template/, check that it appears in
+Admin > Site & theme > Themes, select it and save. Saving a different
+template applies through the current configuration/cache revision system; API
+routes and saved import settings are unaffected.
+
+Preview a theme for your browser only (other visitors keep the active theme):
+click "Preview" next to the theme in Admin > Site & theme > Themes ("Stop
+preview" ends it). Without the admin, run
+"php tools/theme-preview-cookie.php <folder>" on the server and set the
+printed value as the cookie jv_theme_preview for your site.

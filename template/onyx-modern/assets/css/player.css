@@ -1,0 +1,46 @@
+/*
+ * This file is part of JavCMS - https://javcms.net
+ * Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+ * License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+ * See the LICENSE and NOTICE files that come with JavCMS.
+ * Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Telegram: https://t.me/avdb_api
+ */
+/* Onyx Grid (Modern): standalone iframe player page and access / password pages. Zero radius, ruled, mono labels, volt state. */
+*{box-sizing:border-box}
+#native-player{width:100%;height:100%;min-width:0}
+html:has(#native-player),html:has(#native-player) body{width:100%;height:100%;margin:0;background:#000;color:#f0f0ea;font-family:'Space Grotesk',system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+#native-player .MacPlayer{width:100%!important;height:100%!important;min-width:0}
+#native-player iframe,#native-player video,#native-player object,#native-player embed{max-width:100%;border:0}
+.player_showtry[hidden]{display:none!important}
+.native-preview-ended{display:grid!important;place-items:center;padding:clamp(16px,4vw,36px);overflow:auto;background:#0a0a0a}
+.player_showtry{width:min(100%,560px);margin:auto}
+.native-preview-card{border:1px solid #f0f0ea;background:#0a0a0a;padding:clamp(22px,5vw,36px);overflow-wrap:anywhere;text-align:start}
+.native-preview-kicker{margin:0 0 14px;color:#a6a6a0;font:500 11px/1.4 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.08em;text-transform:uppercase}
+.native-preview-card h1{font-size:clamp(1.3rem,4vw,1.9rem);line-height:1.1;margin:0 0 16px;color:#f0f0ea;text-transform:uppercase;letter-spacing:-.02em}
+.native-preview-card p{line-height:1.6;color:#d6d6d0}
+.native-preview-note{font-size:.85rem;color:#a6a6a0}
+.native-preview-actions{display:flex;flex-wrap:wrap;align-items:center;gap:0;margin-top:20px}
+.native-preview-actions a{display:inline-flex;align-items:center;min-height:44px;padding:0 14px;border:1px solid #f0f0ea;color:#f0f0ea;text-decoration:none;font:500 12px/1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;text-transform:uppercase;letter-spacing:.06em}
+.native-preview-primary,.native-preview-actions a.native-preview-primary{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 18px;border:1px solid #f0f0ea;background:#f0f0ea;color:#0a0a0a;font:600 12px/1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;text-transform:uppercase;letter-spacing:.06em;cursor:pointer}
+#player-status:empty{display:none}
+:focus-visible{outline:3px solid #d4ff3a;outline-offset:-3px}
+/* access / password pages (these also load onyx-modern.css, so the theme tokens apply) */
+.article-access-page{min-height:100vh;display:grid;place-items:center;margin:0;background:var(--bg,#0a0a0a);padding:clamp(16px,4vw,60px);color:var(--text,#f0f0ea)}
+.article-access-card{width:min(100%,600px);background:var(--bg,#0a0a0a);border:1px solid var(--rule-em,#f0f0ea);padding:clamp(22px,5vw,40px)}
+.article-access-kicker{color:var(--muted,#a6a6a0);text-transform:uppercase;letter-spacing:.08em;font:500 11px/1.4 var(--f-mono,ui-monospace,monospace);margin:0 0 18px}
+.article-access-kicker::before{content:"> "}
+.article-access-card h1{font:700 clamp(1.6rem,4vw,2.4rem)/1 var(--f-display,system-ui,sans-serif);letter-spacing:-.03em;text-transform:uppercase;margin:0 0 12px;color:var(--text,#f0f0ea)}
+.article-access-card h2{font:500 1rem/1.5 var(--f-display,system-ui,sans-serif);color:var(--muted,#a6a6a0);margin:0 0 20px;overflow-wrap:anywhere}
+.article-access-price{display:flex;align-items:baseline;gap:10px;margin:18px 0;color:var(--text,#f0f0ea);font-family:var(--f-mono,ui-monospace,monospace)}
+.article-access-price strong{font-size:2.2rem;line-height:1}
+.article-access-actions{display:flex;align-items:stretch;flex-wrap:wrap;gap:0;margin-top:22px;border-top:1px solid var(--rule,#3a3a3a);border-inline-start:1px solid var(--rule,#3a3a3a)}
+.article-access-card a{color:var(--text,#f0f0ea);min-height:46px;display:inline-flex;align-items:center;padding:0 14px;border-inline-end:1px solid var(--rule,#3a3a3a);border-bottom:1px solid var(--rule,#3a3a3a);text-decoration:none;font:500 12px/1 var(--f-mono,ui-monospace,monospace);text-transform:uppercase;letter-spacing:.06em}
+.article-access-primary,.article-access-card a.article-access-primary{display:inline-flex;justify-content:center;align-items:center;min-height:48px;padding:0 20px;background:var(--inv-bg,#f0f0ea);border:1px solid var(--inv-bg,#f0f0ea);color:var(--inv-text,#0a0a0a)!important;font:600 12px/1 var(--f-mono,ui-monospace,monospace);text-transform:uppercase;letter-spacing:.06em;cursor:pointer}
+.article-access-form{display:grid;gap:10px}
+.article-access-form label{font:500 11px/1.4 var(--f-mono,ui-monospace,monospace);text-transform:uppercase;letter-spacing:.06em;color:var(--muted,#a6a6a0)}
+.article-access-form input{min-width:0;width:100%;min-height:50px;padding:10px 12px;background:var(--surface,#121212);color:var(--text,#f0f0ea);border:2px solid var(--field,#76766f);border-radius:0}
+.article-access-form button{justify-self:start}
+.article-access-card>p{line-height:1.7;color:var(--text,#f0f0ea)}
+@media (hover:hover) and (pointer:fine){.article-access-card a:hover{background:var(--inv-bg,#f0f0ea);color:var(--inv-text,#0a0a0a)}.article-access-primary:hover,.native-preview-primary:hover{background:#d4ff3a!important;color:#0a0a0a!important;border-color:#d4ff3a!important}.native-preview-actions a:hover{background:#f0f0ea;color:#0a0a0a}}
+@media(max-width:480px){.native-preview-actions,.article-access-actions{align-items:stretch;flex-direction:column}.native-preview-primary,.article-access-primary,.article-access-form button{width:100%}}

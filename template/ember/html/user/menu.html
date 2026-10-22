@@ -1,0 +1,131 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+Partly based on a third-party theme. This license covers the JavCMS changes only.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}
+<div class="fed-part-layout fed-back-whits fed-margin-right fed-hide-xs fed-hide-sm fed-show-md-block">
+<ul class="fed-user-brief fed-part-rows fed-back-whits">
+<li class="fed-padding-x fed-text-center fed-col-xs4">
+<span class="fed-visible fed-text-gules">
+    {$obj.user_points}
+   </span>
+<span class="fed-visible">
+    {:\\app\\common\\util\\TemplateText::get('ui.my_points')}
+   </span>
+</li>
+<li class="fed-padding-x fed-text-center fed-line-left fed-col-xs4">
+<span class="fed-visible fed-text-gules">
+    {$obj.group.group_name|htmlspecialchars=ENT_QUOTES}
+   </span>
+<span class="fed-visible">
+    {:\\app\\common\\util\\TemplateText::get('ui.my_level')}
+   </span>
+</li>
+<li class="fed-padding-x fed-text-center fed-line-left fed-col-xs4">
+<span class="fed-visible fed-text-gules">
+    {$obj.user_login_num}
+   </span>
+<span class="fed-visible">
+    {:\\app\\common\\util\\TemplateText::get('ui.number_of_login')}
+   </span>
+</li>
+</ul>
+</div>
+<div class="fed-part-layout fed-back-whits fed-margin-right">
+<ul class="fed-user-list fed-part-rows fed-back-whits">
+<li class="fed-padding-x fed-part-rows fed-line-bottom fed-hide-md">
+<a class="fed-tabs-title fed-visible fed-font-xvi fed-part-rows" href="{:mac_url('user/ajax_info')}" {if condition="request()->action() eq 'ajax_info'"}aria-current="page"{/if}>
+<span class="fed-col-xs4 fed-part-eone">
+     {:\\app\\common\\util\\TemplateText::get('ui.my_information')}
+    </span>
+
+</a>
+</li>
+<li class="fed-padding-x fed-part-rows fed-line-bottom fed-hide fed-show-md-block">
+<a class="fed-tabs-title fed-visible fed-font-xvi fed-part-rows" href="{:mac_url('user/index')}" {if condition="request()->action() eq 'index'"}aria-current="page"{/if}>
+<span class="fed-col-xs4 fed-part-eone">
+     {:\\app\\common\\util\\TemplateText::get('ui.my_information')}
+    </span>
+
+</a>
+</li>
+<li class="fed-padding-x fed-part-rows fed-line-bottom">
+<a class="fed-tabs-title fed-visible fed-font-xvi fed-part-rows" href="{:mac_url('user/info')}" {if condition="request()->action() eq 'info'"}aria-current="page"{/if}>
+<span class="fed-col-xs4 fed-part-eone">
+     {:\\app\\common\\util\\TemplateText::get('ui.modify_the_information')}
+    </span>
+
+</a>
+</li>
+<li class="fed-padding-x fed-part-rows fed-line-bottom">
+<a class="fed-tabs-title fed-visible fed-font-xvi fed-part-rows" href="{:mac_url('user/favs')}" {if condition="request()->action() eq 'favs'"}aria-current="page"{/if}>
+<span class="fed-col-xs4 fed-part-eone">
+     {:\\app\\common\\util\\TemplateText::get('ui.my_collection')}
+    </span>
+
+</a>
+</li>
+<li class="fed-padding-x fed-part-rows fed-line-bottom">
+<a class="fed-tabs-title fed-visible fed-font-xvi fed-part-rows" href="{:mac_url('user/plays')}" {if condition="request()->action() eq 'plays'"}aria-current="page"{/if}>
+<span class="fed-col-xs4 fed-part-eone">
+     {:\\app\\common\\util\\TemplateText::get('ui.play_record')}
+    </span>
+
+</a>
+</li>
+<li class="fed-padding-x fed-part-rows fed-line-bottom">
+<a class="fed-tabs-title fed-visible fed-font-xvi fed-part-rows" href="{:mac_url('user/popedom')}" {if condition="request()->action() eq 'popedom'"}aria-current="page"{/if}>
+<span class="fed-col-xs4 fed-part-eone">
+     {:\\app\\common\\util\\TemplateText::get('ui.my_authority')}
+    </span>
+
+</a>
+</li>
+<li class="fed-padding-x fed-part-rows fed-line-bottom">
+<a class="fed-tabs-title fed-visible fed-font-xvi fed-part-rows" href="{:mac_url('user/buy')}" {if condition="request()->action() eq 'buy'"}aria-current="page"{/if}>
+<span class="fed-col-xs4 fed-part-eone">
+     {:\\app\\common\\util\\TemplateText::get('ui.recharge_center')}
+    </span>
+
+</a>
+</li>
+<li class="fed-padding-x fed-part-rows fed-line-bottom">
+<a class="fed-tabs-title fed-visible fed-font-xvi fed-part-rows" href="{:mac_url('user/orders')}" {if condition="request()->action() eq 'orders'"}aria-current="page"{/if}>
+<span class="fed-col-xs4 fed-part-eone">
+     {:\\app\\common\\util\\TemplateText::get('ui.recharge_record')}
+    </span>
+
+</a>
+</li>
+<li class="fed-padding-x fed-part-rows fed-line-bottom">
+<a class="fed-tabs-title fed-visible fed-font-xvi fed-part-rows" href="{:mac_url('user/plog')}" {if condition="request()->action() eq 'plog'"}aria-current="page"{/if}>
+<span class="fed-col-xs4 fed-part-eone">
+     {:\\app\\common\\util\\TemplateText::get('ui.points_record')}
+    </span>
+
+</a>
+</li>
+
+<li class="fed-padding-x fed-part-rows fed-line-bottom">
+<a class="fed-tabs-title fed-visible fed-font-xvi fed-part-rows" href="{:mac_url('user/upgrade')}" {if condition="request()->action() eq 'upgrade'"}aria-current="page"{/if}>
+<span class="fed-col-xs4 fed-part-eone">
+     {:\\app\\common\\util\\TemplateText::get('ui.upgrade_member')}
+    </span>
+
+</a>
+</li>
+<li class="fed-padding-x fed-part-rows fed-line-bottom"><a class="fed-tabs-title fed-visible fed-font-xvi fed-part-rows" href="{:mac_url('user/ulog')}" {if condition="request()->action() eq 'ulog'"}aria-current="page"{/if}><span>{:\\app\\common\\util\\TemplateText::get('history')}</span></a></li>
+<li class="fed-padding-x fed-part-rows fed-line-bottom"><a class="fed-tabs-title fed-visible fed-font-xvi fed-part-rows" href="{:mac_url('user/comment')}" {if condition="request()->action() eq 'comment'"}aria-current="page"{/if}><span>{:\\app\\common\\util\\TemplateText::get('ui.comments')}</span></a></li>
+<li class="fed-padding-x fed-part-rows fed-line-bottom"><a class="fed-tabs-title fed-visible fed-font-xvi fed-part-rows" href="{:mac_url('user/gbook')}" {if condition="request()->action() eq 'gbook'"}aria-current="page"{/if}><span>{:\\app\\common\\util\\TemplateText::get('ui.recent_messages')}</span></a></li>
+
+<li class="fed-padding-x fed-part-rows">
+<a class="fed-rims-info fed-btns-info fed-btns-green fed-col-xs12" href="{:mac_url('user/logout')}">
+    {:\\app\\common\\util\\TemplateText::get('ui.quit')}
+   </a>
+</li>
+</ul>
+</div>

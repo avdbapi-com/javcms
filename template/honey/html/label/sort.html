@@ -1,0 +1,26 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="honey" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/sort"}
+{include file="public/include"}
+</head>
+{assign name="$maccms.aid" value="9995" /}
+<body class="hn-page-list hn-page-sort">
+{include file="public/head"}
+<main id="main-content" class="hn-main"><div class="hn-wrap">
+{php}$hnSortMode = 'label'; $hnSortActive = 'time';{/php}
+<div class="hn-page-head" data-ai-group><div><h1 class="hn-page-title hn-split" data-ai-hot>{:\\app\\common\\util\\AutoIcon::navIcon('all', '', ['size'=>'lg', 'plate'=>true, 'class'=>'hn-cell'])}<span>{:\\app\\common\\util\\TemplateText::get('ui.all_videos_59a0c0')}</span></h1></div>{include file="public/sortmenu"}</div>
+<div class="hn-grid" data-grid-fill>{maccms:vod num="20" paging="yes" type="all" order="desc" by="time" pageurl="label/sort"}{include file="public/vodbox"}{/maccms:vod}</div>
+{include file="public/listend"}
+</div></main>
+{include file="public/foot"}
+</body>
+</html>
+

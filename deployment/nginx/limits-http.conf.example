@@ -1,0 +1,26 @@
+# Optional search-flood limits before PHP (JavCMS 1.2.0, XVID-SCALE-BRIEF G11). Goes at the http { } level (for example
+# /etc/nginx/conf.d/javcms-limits.conf), NOT inside server { }. Then uncomment the four "limit_" lines and the two
+# "error_page" lines in the PHP location of locations.conf (they are marked "search-flood limits").
+#
+# Only search requests (/search, /vod/search, wd=) have a key: every other page is never limited here, and PHP keeps its
+# own per-visitor budgets and render slots (RequestGate) whether or not these zones are used.
+#   javcms_search       per address: 30 searches a minute, short bursts of 10 answered at once; more -> 429 + Retry-After
+#   javcms_search_all   the whole site: at most 4 searches being answered at the same time (2 renders + 2 waiters in PHP on a
+#                       2-core VPS); more -> 503 + Retry-After from nginx in well under a millisecond, so a flood from many
+#                       addresses cannot fill the PHP-FPM pool in front of normal pages
+# Behind Cloudflare or another proxy, set the visitor address first (ngx_http_realip_module), for example:
+#   set_real_ip_from 173.245.48.0/20;  ... (every range of https://www.cloudflare.com/ips-v4 and ips-v6)
+#   real_ip_header CF-Connecting-IP;
+# otherwise every visitor shares the proxy's address and the per-address zone limits all of them together.
+map $request_uri $javcms_search_addr {
+    default "";
+    "~*(?:/|%2f)search(?:[/?.&%]|$)" $binary_remote_addr;
+    "~*[?&]wd=" $binary_remote_addr;
+}
+map $request_uri $javcms_search_site {
+    default "";
+    "~*(?:/|%2f)search(?:[/?.&%]|$)" "search";
+    "~*[?&]wd=" "search";
+}
+limit_req_zone $javcms_search_addr zone=javcms_search:10m rate=30r/m;
+limit_conn_zone $javcms_search_site zone=javcms_search_all:1m;

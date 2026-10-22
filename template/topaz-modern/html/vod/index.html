@@ -1,0 +1,27 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="topaz-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/auto"}
+{include file="public/include"}
+</head>
+<body class="tp-page-list">
+{include file="public/head"}
+{include file="public/labelsorts"}
+{php}$tpH1 = \app\common\util\TemplateText::raw('ui.all_videos'); $tpSub = \app\common\util\TemplateText::raw('tp.sub_all'); $tpCount = (int)($tpDc['vod_all'] ?? 0);{/php}
+<main id="main-content" class="tp-main tp-wrap tp-list">
+  {include file="public/listhead"}
+  <div class="tp-filters">{include file="public/sortmenu"}{include file="public/chipbar"}</div>
+  <div class="tp-tray-body"><div class="tp-grid" data-grid-fill data-tp-stagger>{maccms:vod num="20" paging="no" type="all" order="desc" by="time" id="vo"}{include file="public/vodbox"}{/maccms:vod}</div>
+  {empty name="__LIST__"}{include file="public/empty"}{/empty}</div>
+  <p class="tp-more"><a class="tp-btn tp-btn--ghost" href="{:mac_url('label/sort')}"><span>{:\\app\\common\\util\\TemplateText::get('ui.browse_all_videos')}</span><svg class="tp-i tp-dir" aria-hidden="true"><use href="{$tplIcons}#arrow-right"/></svg></a></p>
+</main>
+{include file="public/foot"}
+</body>
+</html>

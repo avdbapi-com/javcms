@@ -1,0 +1,218 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Based on MacCMS 10 (Apache-2.0) by magicblack, changed by JavCMS.
+JavCMS changes: Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors,
+JavCMS Community License 1.0. The MacCMS parts stay under the Apache License 2.0.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{include file="../../../application/admin/view/public/head" /}
+<link rel="stylesheet" href="__STATIC__/css/admin_seo.css?v={:filemtime(ROOT_PATH . 'static/css/admin_seo.css')}">
+
+<div class="page-container">
+    {include file="../../../application/admin/view/public/page_head" icon="ai-heading" title="admin/ux/seo/seo_title" help="admin/ux/seo/seo_page_help" /}
+
+    <div class="ax-notice ax-notice--warn" role="alert" data-seo-hidden-notice {if condition="$seo.hide_site neq 1"}hidden{/if}><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-eye-off"/></svg><div><p>{:lang('admin/ux/seo/hidden_notice')} <a href="#index" data-ax-tab-link>{:lang('admin/ux/seo/fix')}</a></p></div></div>
+
+    <section class="ax-section" aria-labelledby="seo-check-title">
+        <h2 id="seo-check-title">{:lang('admin/ux/seo/check_title')}</h2>
+        <p class="ax-help" data-seo-check-progress>{:lang('admin/ux/seo/check_progress', [$seo_check_done, count($seo_check)])}</p>
+        <ul class="seo-checks">
+            {volist name="seo_check" id="c"}
+            <li data-seo-check="{$c.id}"{if condition="$c.ok === true"} data-ok="1"{elseif condition="$c.ok === false"/} data-ok="0"{/if}{if condition="$c.id eq 'sitemap'"} data-url="{$seo_sitemap_url|htmlspecialchars}"{/if}{if condition="$c.id eq 'gzip'"} data-url="__ROOT__/"{/if}{if condition="isset($c['ok_text'])"} data-ok-text="{$c.ok_text|htmlspecialchars}" data-warn-text="{$c.warn_text|htmlspecialchars}"{/if}>
+                {if condition="$c.ok === true"}<span class="ax-chip ax-chip--ok">{:lang('admin/ux/seo/chip_ok')}</span>{elseif condition="$c.ok === false"/}<span class="ax-chip ax-chip--warn">{:lang('admin/ux/seo/chip_warn')}</span>{else /}<span class="ax-chip ax-chip--off">…</span>{/if}
+                <span data-seo-check-text>{$c.text|htmlspecialchars}</span>
+                {if condition="$c.url neq ''"}<a class="ax-btn ax-btn--sm" href="{$c.url|htmlspecialchars}"{if condition="$c.tab neq ''"} data-tab="{$c.tab}"{/if} data-seo-check-fix{if condition="$c.ok !== false"} hidden{/if}>{$c.fix|htmlspecialchars}</a>{/if}
+            </li>
+            {/volist}
+        </ul>
+    </section>
+
+    <form class="ax-form layui-form" action="" data-ax-dirty>
+        <input type="hidden" name="__token__" value="{$Request.token}" />
+        <input type="hidden" name="hide_confirm" value="">
+        <input type="hidden" name="custom_present" value="1">
+
+        <nav class="ax-tabs" data-ax-tabs aria-label="{:lang('admin/ux/seo/seo_title')}">
+            <a href="#titles" data-ax-tab="titles" aria-selected="true">{:lang('admin/ux/seo/tab_titles')}</a>
+            <a href="#index" data-ax-tab="index" aria-selected="false">{:lang('admin/ux/seo/tab_index')}</a>
+            <a href="#verify" data-ax-tab="verify" aria-selected="false">{:lang('admin/ux/seo/tab_verify')}</a>
+        </nav>
+
+        <div data-ax-tabpanel="titles" data-seo-preview-url="{:url('system/configseo')}">
+            <section class="ax-section" aria-labelledby="seo-home-card-title">
+                <h2 id="seo-home-card-title">{:lang('admin/ux/seo/home_card')}</h2>
+                <p class="ax-help">{:lang('admin/ux/seo/home_card_help')}</p>
+                <div class="ax-serp" data-seo-prev-home>
+                    <div class="ax-serp__box">
+                        <div class="ax-serp__site"><span><span>{$seo_domain|htmlspecialchars}</span></span></div>
+                        <div class="ax-serp__title">{$seo_home_preview.title|htmlspecialchars}</div>
+                        <div class="ax-serp__desc">{$seo_home_preview.description|htmlspecialchars}</div>
+                    </div>
+                </div>
+                {if condition="$seo_home_url neq ''"}<p><a class="ax-btn" href="{$seo_home_url|htmlspecialchars}" data-tab="n21"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-pencil"/></svg>{:lang('admin/ux/seo/home_card_btn')}</a></p>{/if}
+            </section>
+            <section class="ax-section" aria-labelledby="seo-style-title">
+                <h2 id="seo-style-title">{:lang('admin/ux/seo/title_style')}</h2>
+                <p class="ax-help">{:lang('admin/ux/seo/title_style_help')}</p>
+                <div class="ax-field" role="radiogroup" aria-labelledby="seo-brand-l">
+                    <label id="seo-brand-l">{:lang('admin/ux/seo/title_brand')}</label>
+                    <div>
+                        <input type="radio" name="seo[title_brand]" value="end" lay-filter="seoPv" data-seo-pv="title_brand" title="{:lang('admin/ux/seo/title_brand_end')}" {if condition="$seo.title_brand eq 'end'"}checked {/if}>
+                        <input type="radio" name="seo[title_brand]" value="none" lay-filter="seoPv" data-seo-pv="title_brand" title="{:lang('admin/ux/seo/title_brand_none')}" {if condition="$seo.title_brand eq 'none'"}checked {/if}>
+                    </div>
+                    <p class="ax-help">{:lang('admin/ux/seo/title_brand_help')}</p>
+                </div>
+                <div class="ax-field ax-field--sm">
+                    <label for="seo-sep">{:lang('admin/ux/seo/title_sep')}</label>
+                    <select id="seo-sep" name="seo[title_sep]" lay-filter="seoPv" data-seo-pv="title_sep">
+                        {volist name="seo_seps" id="sp"}
+                        <option value="{$sp.value|htmlspecialchars}" {if condition="$seo.title_sep eq $sp['value']"}selected{/if}>{$sp.label|htmlspecialchars}</option>
+                        {/volist}
+                    </select>
+                    <p class="ax-help">{:lang('admin/ux/seo/title_sep_help')}</p>
+                </div>
+                {volist name="seo_previews" id="pv"}
+                <div class="ax-serp" data-seo-prev="{$key}">
+                    <p class="ax-help">{:lang('admin/ux/seo/preview_' . $key)}</p>
+                    <div class="ax-serp__box">
+                        <div class="ax-serp__site"><span><span>{$seo_domain|htmlspecialchars}</span></span></div>
+                        <div class="ax-serp__title">{$pv.title|htmlspecialchars}</div>
+                        <div class="ax-serp__desc">{$pv.description|htmlspecialchars}</div>
+                    </div>
+                </div>
+                {/volist}
+            </section>
+
+            <details class="ax-section ax-advanced">
+                <summary>{:lang('admin/ux/seo/patterns')}</summary>
+                <p class="ax-help">{:lang('admin/ux/seo/pattern_help')}</p>
+                {volist name="seo_tokens" id="tks"}
+                <div class="ax-field ax-field--md">
+                    <label for="seo-{$key}">{if condition="$key eq 'dtpl_video'"}{:lang('admin/ux/seo/pattern_desc_video')}{else /}{:lang('admin/ux/seo/pattern_' . substr($key, 4))}{/if}</label>
+                    <input id="seo-{$key}" type="text" name="seo[{$key}]" value="{$seo[$key]|htmlspecialchars=ENT_QUOTES,'UTF-8'}" class="layui-input ax-mono" maxlength="{if condition="$key eq 'dtpl_video'"}300{else /}120{/if}" data-seo-pv="{$key}">
+                    <div class="seo-tokens"><span class="ax-help">{:lang('admin/ux/seo/pattern_tokens')}</span>{foreach name="tks" item="tk" key="tki"}<button type="button" class="ax-btn ax-btn--sm ax-btn--ghost" data-seo-insert="{$tk.tk|htmlspecialchars}" data-for="seo-{$key}" title="{$tk.tip|htmlspecialchars}">{$tk.tk|htmlspecialchars}</button>{/foreach}</div>
+                    {if condition="$key eq 'dtpl_video'"}<p class="ax-help">{:lang('admin/ux/seo/pattern_desc_help')}</p>{/if}
+                </div>
+                {/volist}
+            </details>
+
+            <section class="ax-section" aria-labelledby="seo-custom-title">
+                <h2 id="seo-custom-title">{:lang('admin/ux/seo/custom_titles')}</h2>
+                <p class="ax-help">{:lang('admin/ux/seo/custom_help')}</p>
+                <div class="ax-table-wrap">
+                    <table class="ax-table ax-table--cards seo-table">
+                        <thead><tr><th>{:lang('admin/ux/seo/custom_kind')}</th><th>{:lang('admin/ux/seo/custom_name')}</th><th>{:lang('admin/ux/seo/custom_title')}</th><th>{:lang('admin/ux/seo/custom_desc')}</th><th class="ax-row-actions"><span class="ax-sr-only">{:lang('admin/ux/seo/custom_remove')}</span></th></tr></thead>
+                        <tbody data-seo-custom-rows>
+                            {volist name="seo_custom" id="cr"}
+                            <tr>
+                                <td data-label="{:lang('admin/ux/seo/custom_kind')}"><select name="custom[{$i}][kind]" aria-label="{:lang('admin/ux/seo/custom_kind')}"><option value="tag" {if condition="$cr.kind eq 'tag'"}selected{/if}>{:lang('admin/ux/seo/custom_kind_tag')}</option><option value="actor" {if condition="$cr.kind eq 'actor'"}selected{/if}>{:lang('admin/ux/seo/custom_kind_actor')}</option></select></td>
+                                <td data-label="{:lang('admin/ux/seo/custom_name')}"><input type="text" class="layui-input" name="custom[{$i}][name]" maxlength="80" value="{$cr.name|htmlspecialchars=ENT_QUOTES,'UTF-8'}" aria-label="{:lang('admin/ux/seo/custom_name')}"></td>
+                                <td data-label="{:lang('admin/ux/seo/custom_title')}"><input type="text" class="layui-input" name="custom[{$i}][title]" maxlength="70" value="{$cr.title|htmlspecialchars=ENT_QUOTES,'UTF-8'}" aria-label="{:lang('admin/ux/seo/custom_title')}"></td>
+                                <td data-label="{:lang('admin/ux/seo/custom_desc')}"><input type="text" class="layui-input" name="custom[{$i}][desc]" maxlength="300" value="{$cr.desc|htmlspecialchars=ENT_QUOTES,'UTF-8'}" aria-label="{:lang('admin/ux/seo/custom_desc')}"></td>
+                                <td class="ax-row-actions"><button type="button" class="ax-btn ax-btn--sm ax-btn--icon ax-btn--ghost" data-seo-custom-remove aria-label="{:lang('admin/ux/seo/custom_remove')}" title="{:lang('admin/ux/seo/custom_remove')}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-trash-2"/></svg></button></td>
+                            </tr>
+                            {/volist}
+                        </tbody>
+                    </table>
+                </div>
+                <p class="ax-help" data-seo-custom-empty {if condition="!empty($seo_custom)"}hidden{/if}>{:lang('admin/ux/seo/custom_empty')}</p>
+                <p><button type="button" class="ax-btn" data-seo-custom-add><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-plus"/></svg>{:lang('admin/ux/seo/custom_add')}</button></p>
+                <template id="seo-custom-row"><tr>
+                    <td data-label="{:lang('admin/ux/seo/custom_kind')}"><select name="custom[__i__][kind]" aria-label="{:lang('admin/ux/seo/custom_kind')}"><option value="tag">{:lang('admin/ux/seo/custom_kind_tag')}</option><option value="actor">{:lang('admin/ux/seo/custom_kind_actor')}</option></select></td>
+                    <td data-label="{:lang('admin/ux/seo/custom_name')}"><input type="text" class="layui-input" name="custom[__i__][name]" maxlength="80" aria-label="{:lang('admin/ux/seo/custom_name')}"></td>
+                    <td data-label="{:lang('admin/ux/seo/custom_title')}"><input type="text" class="layui-input" name="custom[__i__][title]" maxlength="70" aria-label="{:lang('admin/ux/seo/custom_title')}"></td>
+                    <td data-label="{:lang('admin/ux/seo/custom_desc')}"><input type="text" class="layui-input" name="custom[__i__][desc]" maxlength="300" aria-label="{:lang('admin/ux/seo/custom_desc')}"></td>
+                    <td class="ax-row-actions"><button type="button" class="ax-btn ax-btn--sm ax-btn--icon ax-btn--ghost" data-seo-custom-remove aria-label="{:lang('admin/ux/seo/custom_remove')}" title="{:lang('admin/ux/seo/custom_remove')}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-trash-2"/></svg></button></td>
+                </tr></template>
+                <p class="ax-help">{:lang('admin/ux/seo/category_titles_link')}{if condition="$seo_can_type"} <a href="{:url('type/index')}" data-tab="n31">{:lang('admin/ux/seo/category_titles_open')}</a>{/if}</p>
+            </section>
+        </div>
+
+        <div data-ax-tabpanel="index" hidden>
+            <section class="ax-section" aria-labelledby="seo-langidx-title">
+                <h2 id="seo-langidx-title">{:lang('admin/ux/seo/lang_indexed')}</h2>
+                <p class="ax-help">{:lang('admin/ux/seo/lang_indexed_line', [$seo_lang_n, $seo_lang_m])}{if condition="$seo_can_lang"} <a href="{:url('system/configlang')}" data-tab="n216">{:lang('admin/ux/seo/lang_change')}</a>{/if}</p>
+            </section>
+            <section class="ax-section ax-section--danger" aria-labelledby="seo-hide-title">
+                <h2 id="seo-hide-title">{:lang('admin/ux/seo/hide_site')}</h2>
+                <div class="ax-field">
+                    <div><input type="hidden" name="seo[hide_site]" value="0"><input type="checkbox" name="seo[hide_site]" value="1" lay-skin="switch" lay-filter="seoHide" lay-text="{:lang('admin/ux/system/on')}|{:lang('admin/ux/system/off')}" data-was="{$seo.hide_site}" aria-label="{:lang('admin/ux/seo/hide_site')}" {if condition="$seo.hide_site eq 1"}checked {/if}></div>
+                    <p class="ax-help">{:lang('admin/ux/seo/hide_site_help')}</p>
+                </div>
+            </section>
+            <section class="ax-section" aria-labelledby="seo-land-title">
+                <h2 id="seo-land-title">{:lang('admin/ux/seo/landing')}</h2>
+                <div class="ax-field">
+                    <div><input type="hidden" name="seo[landing]" value="0"><input type="checkbox" name="seo[landing]" value="1" lay-skin="switch" lay-text="{:lang('admin/ux/system/on')}|{:lang('admin/ux/system/off')}" aria-label="{:lang('admin/ux/seo/landing')}" {if condition="$seo.landing eq 1"}checked {/if}></div>
+                    <p class="ax-help">{:lang('admin/ux/seo/landing_help')}</p>
+                </div>
+                <div class="ax-field ax-field--sm">
+                    <label for="seo-landing-min">{:lang('admin/ux/seo/landing_min')}</label>
+                    <input id="seo-landing-min" type="number" min="3" max="100" name="seo[landing_min]" value="{$seo.landing_min}" class="layui-input" aria-describedby="seo-landing-min-help">
+                    <p class="ax-help" id="seo-landing-min-help">{:lang('admin/ux/seo/landing_min_help')}</p>
+                </div>
+                <details class="ax-advanced">
+                    <summary>{:lang('admin/ux/seo/more_options')}</summary>
+                    <div class="ax-field ax-field--sm">
+                        <label for="seo-noindex-after">{:lang('admin/ux/seo/noindex_after')}</label>
+                        <input id="seo-noindex-after" type="number" min="0" max="500" name="seo[noindex_after]" value="{$seo.noindex_after}" class="layui-input" aria-describedby="seo-noindex-after-help">
+                        <p class="ax-help" id="seo-noindex-after-help">{:lang('admin/ux/seo/noindex_after_help')}</p>
+                    </div>
+                </details>
+            </section>
+            <section class="ax-section" aria-labelledby="seo-robots-ai-title">
+                <h2 id="seo-robots-ai-title">{:lang('admin/ux/seo/robots_ai')}</h2>
+                <div class="ax-field">
+                    <div><input type="hidden" name="seo[robots_ai]" value="0"><input type="checkbox" name="seo[robots_ai]" value="1" lay-skin="switch" lay-text="{:lang('admin/ux/system/on')}|{:lang('admin/ux/system/off')}" aria-label="{:lang('admin/ux/seo/robots_ai')}" aria-describedby="seo-robots-ai-help" {if condition="$seo.robots_ai neq '0'"}checked {/if}></div>
+                    <p class="ax-help" id="seo-robots-ai-help">{:lang('admin/ux/seo/robots_ai_help')}</p>
+                </div>
+            </section>
+            <section class="ax-section" aria-labelledby="seo-always-title">
+                <h2 id="seo-always-title">{:lang('admin/ux/seo/always_hidden')}</h2>
+                <p class="ax-help">{:lang('admin/ux/seo/always_hidden_help')}</p>
+                <div class="ax-table-wrap"><table class="ax-table"><tbody>
+                    {for start="1" end="7"}<tr><td><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-eye-off"/></svg> {:lang('admin/ux/seo/always_row_' . $i)}</td></tr>{/for}
+                </tbody></table></div>
+            </section>
+        </div>
+
+        <div data-ax-tabpanel="verify" hidden>
+            <section class="ax-section" aria-labelledby="seo-verify-title">
+                <h2 id="seo-verify-title">{:lang('admin/ux/seo/tab_verify')}</h2>
+                <p class="ax-help">{:lang('admin/ux/seo/verify_intro')}</p>
+                {volist name="seo_verify" id="se"}
+                <div class="ax-field ax-field--md">
+                    <label for="seo-verify-{$se.id}">{:lang('admin/ux/seo/verify_' . $se['id'])}</label>
+                    <input id="seo-verify-{$se.id}" type="text" name="seo[verify_{$se.id}]" value="{$se.value|htmlspecialchars}" class="layui-input ax-mono" maxlength="400" autocomplete="off" spellcheck="false" aria-describedby="seo-verify-{$se.id}-help">
+                    <p class="ax-help" id="seo-verify-{$se.id}-help">{:lang('admin/ux/seo/verify_' . $se['id'] . '_help')}</p>
+                </div>
+                {/volist}
+            </section>
+            <section class="ax-section" aria-labelledby="seo-send-title">
+                <h2 id="seo-send-title">{:lang('admin/ux/seo/send_sitemap')}</h2>
+                <div class="ax-field ax-field--md">
+                    <label for="seo-sitemap-url">{:lang('admin/ux/seo/sitemap_address')}</label>
+                    <div class="seo-actions"><input id="seo-sitemap-url" type="text" class="layui-input ax-mono" value="{$seo_sitemap_url|htmlspecialchars}" readonly><button type="button" class="ax-btn" data-seo-copy="seo-sitemap-url"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-copy"/></svg>{:lang('admin/ux/seo/copy')}</button></div>
+                </div>
+                <h3>{:lang('admin/ux/seo/send_google')}</h3>
+                <ol><li>{:lang('admin/ux/seo/send_google_1')}</li><li>{:lang('admin/ux/seo/send_google_2')}</li><li>{:lang('admin/ux/seo/send_google_3')}</li></ol>
+                <h3>{:lang('admin/ux/seo/send_bing')}</h3>
+                <ol><li>{:lang('admin/ux/seo/send_bing_1')}</li><li>{:lang('admin/ux/seo/send_bing_2')}</li></ol>
+            </section>
+        </div>
+
+        <div class="ax-savebar">
+            <span class="ax-savebar__status" role="status"></span>
+            <div class="ax-savebar__end">
+                <button type="submit" class="ax-btn ax-btn--primary" lay-submit="" lay-filter="formSubmit"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-save"/></svg>{:lang('admin/ux/kit/save')}</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+{include file="../../../application/admin/view/public/foot" /}
+<script type="application/json" id="seo-strings">{$seo_js}</script>
+<script defer src="__STATIC__/js/admin_seo.js?v={:filemtime(ROOT_PATH . 'static/js/admin_seo.js')}"></script>
+</body>
+</html>

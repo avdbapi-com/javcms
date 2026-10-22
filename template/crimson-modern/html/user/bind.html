@@ -1,0 +1,62 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="crimson-modern" data-fx="vt" data-fx-vt-style="crimson-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+<title>{:\\app\\common\\util\\TemplateText::get('ui.bind')} - {:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$maccms['site_name']), ENT_QUOTES, 'UTF-8')}</title>
+<meta name="robots" content="noindex, follow" />
+{include file="public/include"}
+{include file="user/include"}
+</head>
+<body class="ci-user-page ci-ubind">
+{include file="public/head"}
+<main id="main-content" class="ci-wrap"><div class="ci-ulayout">{include file="user/menu"}<section class="ci-ucontent"><div class="ci-phead"><div class="ci-phead-main"><h1 class="ci-h1">{if condition="isset($ac) && $ac eq 'phone'"}{:\\app\\common\\util\\TemplateText::get('ink.bind_phone')}{else/}{:\\app\\common\\util\\TemplateText::get('ink.bind_email')}{/if}</h1></div></div>
+{php}$ciBindAc = (isset($ac) && $ac === 'phone') ? 'phone' : 'email';{/php}<form class="ci-panel ci-form" id="fm" name="fm" method="post" action="" novalidate><input name="ac" type="hidden" value="{$ciBindAc}">
+<div class="ci-field"><label for="to">{:\\app\\common\\util\\AutoIcon::ui('at-sign', ['size'=>'sm'])}{if condition="$ciBindAc eq 'phone'"}{:\\app\\common\\util\\TemplateText::get('ui.phone')}{else/}{:\\app\\common\\util\\TemplateText::get('ui.email')}{/if}</label><div class="ci-captcha"><input class="ci-input" id="to" name="to" type="{if condition="$ciBindAc eq 'phone'"}tel{else/}email{/if}"><button class="ci-pill ci-pill--sm" id="btn_bind_send" type="button">{:\\app\\common\\util\\TemplateText::get('ui.get_the_verification_code')}</button></div></div>
+<div class="ci-field"><label for="code">{:\\app\\common\\util\\AutoIcon::ui('key', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ui.verification_code')}</label><input class="ci-input" id="code" name="code" type="text" autocomplete="one-time-code"></div>
+<button class="ci-btn" id="btn_submit" type="button">{:\\app\\common\\util\\TemplateText::get('ui.confirm_the_binding')}</button></form>
+</section></div></main>
+{include file="public/foot"}
+<script>
+$(function () {
+  var label = $('#btn_submit').text(), sendLabel = $('#btn_bind_send').text();
+  function ciCheckTo(ac, to) {
+    if (ac === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(to)) { TemplateUI.message(window.TemplateMessages['ui.email_format_is_incorrect']); return false; }
+    if (ac === 'phone' && !/^\+?[0-9][0-9 \-]{5,18}$/.test(to)) { TemplateUI.message(window.TemplateMessages['ui.incorrect_mobile_phone_number_format']); return false; }
+    if (ac !== 'email' && ac !== 'phone') { TemplateUI.message(window.TemplateMessages['ui.parameter_error']); return false; }
+    return true;
+  }
+  function ciCountdown(btn, label) {
+    var left = 60; btn.prop('disabled', true);
+    var timer = setInterval(function () {
+      left -= 1;
+      if (left <= 0) { clearInterval(timer); btn.prop('disabled', false).text(label); return; }
+      btn.text(window.galleryMessage('ui.resend_verification_countdown', { seconds: left }));
+    }, 1000);
+  }
+  $('#btn_bind_send').on('click', function () {
+    var ac = $('input[name="ac"]').val(), to = $.trim($('#to').val());
+    if (!ciCheckTo(ac, to)) return;
+    ciCountdown($(this), sendLabel);
+    $.ajax({ url: "{:url('user/bindmsg')}", type: 'post', dataType: 'json', data: { ac: ac, to: to }, success: function (r) { TemplateUI.message(r.msg); } });
+  });
+  $('#btn_submit').on('click', function () {
+    var ac = $('input[name="ac"]').val(), to = $.trim($('#to').val()), code = $.trim($('#code').val());
+    if (!ciCheckTo(ac, to)) return;
+    if (code === '') { TemplateUI.message(window.TemplateMessages['ui.please_enter_the_verification_code_0d14a4']); $('#code').focus(); return; }
+    $.ajax({
+      url: "{:url('user/bind')}", type: 'post', dataType: 'json', data: { ac: ac, to: to, code: code },
+      beforeSend: function () { $('#btn_submit').prop('disabled', true).text(window.TemplateMessages['ui.loading']); },
+      success: function (r) { TemplateUI.message(r.msg); if (r.code == 1) { location.href = "{:url('user/info')}"; } },
+      complete: function () { $('#btn_submit').prop('disabled', false).text(label); }
+    });
+  });
+});
+</script>
+</body>
+</html>

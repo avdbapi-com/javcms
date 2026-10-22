@@ -1,0 +1,32 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="javcms" data-template-variant="modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/vod_type"}
+{include file="public/include"}
+</head>
+<body class="jc-list jc-type">
+<div class="shadow"></div>
+{include file="public/head"}
+<div class="wrapped">
+	<main id="main-content">
+		{include file="public/nav"}
+		<div class="content"><section class="section jc-page"><div class="wrap jc-wrap">
+<div class="jc-head"><h1 class="jc-h1 jc-reveal jc-h1-cat" data-ai-hot>{:\\app\\common\\util\\AutoIcon::icon('category', $obj['type_name'], ['size'=>'xl', 'plate'=>true])}<span>{:\\app\\common\\util\\TemplateText::get(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)($obj['type_name'] ?? '')))}</span></h1><div class="jc-head-tools">{php}$jcCatParent = intval($obj['type_pid'] ?? 0) > 0 ? intval($obj['type_pid']) : intval($obj['type_id'] ?? 0); $jcCatHasKids = false; $jcSortMode = 'type'; $jcSortActive = isset($param['by']) ? (string)$param['by'] : 'time';{/php}
+<details class="jc-drop jc-cats"><summary>{:\\app\\common\\util\\AutoIcon::navIcon('categories', '', ['size'=>'sm'])}<span>{:\\app\\common\\util\\TemplateText::get('ui.categories')}</span><svg class="jc-ico jc-ico-chevron" aria-hidden="true"><use href="{$maccms.path_tpl|htmlspecialchars=ENT_QUOTES}ksassets/image/jc-icons.svg#chevron"></use></svg></summary><ul class="jc-drop-menu">{maccms:type parent="'.$jcCatParent.'" order="asc" by="sort" id="jcCat" hide_empty="1"}{php}$jcCatHasKids = true;{/php}<li><a href="{:mac_url_type($jcCat)}"{if condition="$jcCat.type_id eq $obj.type_id"} aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::icon('category', $jcCat['type_name'], ['size'=>'sm'])}<span>{:\\app\\common\\util\\TemplateText::get(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)($jcCat['type_name'] ?? '')))}</span></a></li>{/maccms:type}{if condition="!$jcCatHasKids"}{maccms:type ids="parent" order="asc" by="sort" id="jcCat" hide_empty="1"}<li><a href="{:mac_url_type($jcCat)}"{if condition="$jcCat.type_id eq $obj.type_id"} aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::icon('category', $jcCat['type_name'], ['size'=>'sm'])}<span>{:\\app\\common\\util\\TemplateText::get(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)($jcCat['type_name'] ?? '')))}</span><span class="jc-num">{:mac_data_count($jcCat.type_id,'all')}</span></a></li>{/maccms:type}{/if}</ul></details>
+{include file="public/sortmenu"}</div></div>
+<div class="jc-grid" data-grid-fill>{maccms:vod num="20" paging="yes" type="current" order="desc" by="time" pageurl="vod/type"}{include file="public/vodbox"}{/maccms:vod}</div>
+{php}$jcListCount = (is_array($__LIST__) && !isset($__LIST__['list'])) ? count($__LIST__) : ((isset($__LIST__['list']) && is_array($__LIST__['list'])) ? count($__LIST__['list']) : 0);{/php}{if condition="$jcListCount eq 0"}{include file="public/empty"}{/if}
+{include file="public/list_note"}{include file="public/paging"}
+		</div></section></div>
+	</main>
+	{include file="public/foot"}
+</div>
+</body>
+</html>

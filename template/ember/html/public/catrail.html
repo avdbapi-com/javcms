@@ -1,0 +1,13 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}$tplRailHot = array(); foreach (preg_split('/[,，]/u', (string)($maccms['search_hot'] ?? '')) as $tplRailWord) { $tplRailWord = trim(\app\common\util\AutoIcon::text($tplRailWord)); if (mb_strlen($tplRailWord) >= 2 && mb_strlen($tplRailWord) <= 30 && \app\common\util\AutoIcon::keepTag($tplRailWord) && !in_array($tplRailWord, $tplRailHot, true)) { $tplRailHot[] = $tplRailWord; } if (count($tplRailHot) >= 10) { break; } }{/php}
+<nav class="e-catrail" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.browse_categories')}" data-ai-group>
+  <span class="e-catrail-lbl">{:\\app\\common\\util\\AutoIcon::navIcon('categories', '', ['size'=>'sm'])}<span class="sr-only">{:\\app\\common\\util\\TemplateText::get('ui.categories')}</span></span>
+  {maccms:type ids="parent" flag="vod" order="asc" by="sort" id="tplRail" key="tplRailKey" hide_empty="1"}<a href="{:mac_url_type($tplRail)}">{:\\app\\common\\util\\AutoIcon::icon('category', $tplRail['type_name'], ['size'=>'sm', 'i'=>$tplRailKey])}{:\\app\\common\\util\\TemplateText::get(htmlspecialchars_decode((string)$tplRail['type_name'], ENT_QUOTES))}</a>{/maccms:type}
+  {volist name="tplRailHot" id="tplRailWord" key="tplRailHotKey"}<a class="is-hot" href="{:mac_url_search(['wd'=>$tplRailWord], 'vod')}">{:\\app\\common\\util\\AutoIcon::icon('tag', $tplRailWord, ['size'=>'sm', 'i'=>$tplRailHotKey])}{$tplRailWord|htmlspecialchars=ENT_QUOTES}</a>{/volist}
+</nav>

@@ -1,0 +1,329 @@
+/*
+ * This file is part of JavCMS - https://javcms.net
+ * Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+ * License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+ * See the LICENSE and NOTICE files that come with JavCMS.
+ * Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Telegram: https://t.me/avdb_api
+ */
+/* V9: private palette mapped to the kit tokens (admin_ux.css). */
+body.admin-studio.admin-dark { --addon-bg: var(--ax-bg); --addon-surface: var(--ax-surface); --addon-surface-2: var(--ax-raised); --addon-border: var(--ax-line); --addon-text: var(--ax-text); --addon-muted: var(--ax-muted); --addon-accent: var(--ax-accent); --addon-accent-strong: var(--ax-accent); --addon-danger: var(--ax-danger); }
+/* Addon workspace candidate - scoped to the legacy addon views. */
+body.admin-dark {
+    --addon-bg: #090f1c;
+    --addon-surface: #111b2d;
+    --addon-surface-2: #16243a;
+    --addon-border: #2a3b57;
+    --addon-text: #edf4ff;
+    --addon-muted: #9aabc2;
+    --addon-accent: #70e1bd;
+    --addon-accent-strong: #39c697;
+    --addon-danger: #ff8e9f;
+    background: var(--addon-bg);
+    color: var(--addon-text);
+}
+
+body.admin-dark .addon-workspace {
+    max-width: 1480px;
+    margin: 0 auto;
+    padding: clamp(16px, 2.4vw, 34px);
+}
+
+.addon-workspace .addon-hero {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 24px;
+}
+
+.addon-workspace .addon-eyebrow {
+    margin: 0 0 6px;
+    color: var(--addon-accent);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+}
+
+.addon-workspace .addon-title {
+    margin: 0;
+    color: var(--addon-text);
+    font-size: clamp(24px, 3vw, 36px);
+    font-weight: 700;
+    line-height: 1.15;
+}
+
+.addon-workspace .addon-subtitle {
+    max-width: 64ch;
+    margin: 8px 0 0;
+    color: var(--addon-muted);
+    line-height: 1.55;
+}
+
+.addon-workspace .addon-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border: 1px solid rgba(112, 225, 189, .35);
+    border-radius: 999px;
+    background: rgba(57, 198, 151, .10);
+    color: var(--addon-accent);
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.addon-workspace .addon-status::before {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: currentColor;
+    content: "";
+    box-shadow: 0 0 0 4px rgba(112, 225, 189, .12);
+}
+
+.addon-workspace .addon-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 20px;
+    padding: 14px;
+    border: 1px solid var(--addon-border);
+    border-radius: 12px;
+    background: rgba(17, 27, 45, .86);
+}
+
+.addon-workspace .addon-search {
+    display: flex;
+    flex: 1 1 520px;
+    gap: 10px;
+    margin: 0;
+}
+
+.addon-workspace .addon-search .layui-input-inline {
+    width: min(100%, 460px);
+}
+
+.addon-workspace .addon-search .layui-input {
+    height: 42px;
+    border-radius: 8px;
+}
+
+.addon-workspace .addon-tabs {
+    display: inline-flex;
+    gap: 4px;
+    margin: 0 0 20px;
+    padding: 4px;
+    border: 1px solid var(--addon-border);
+    border-radius: 10px;
+    background: var(--addon-surface);
+}
+
+.addon-workspace .addon-tabs li {
+    border: 0;
+    border-radius: 7px;
+    color: var(--addon-muted);
+    line-height: 34px;
+}
+
+.addon-workspace .addon-tabs li.layui-this {
+    background: var(--addon-surface-2);
+    color: var(--addon-accent);
+}
+
+.addon-workspace .addon-tabs li.layui-this:after { display: none; }
+
+.addon-workspace .addon-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+    gap: 16px;
+}
+
+.addon-workspace .addon-card,
+.addon-workspace .addon {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+    border: 1px solid var(--addon-border);
+    border-radius: 12px;
+    background: var(--addon-surface);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, .18);
+    transition: border-color .18s ease, transform .18s ease, box-shadow .18s ease;
+}
+
+.addon-workspace .addon:hover,
+.addon-workspace .addon:focus-within {
+    border-color: rgba(112, 225, 189, .6);
+    box-shadow: 0 16px 34px rgba(0, 0, 0, .28);
+    transform: translateY(-2px);
+}
+
+.addon-workspace .addon-media {
+    display: grid;
+    min-height: 132px;
+    place-items: center;
+    padding: 18px;
+    background: linear-gradient(135deg, #14253d, #102031);
+}
+
+.addon-workspace .add-logo {
+    width: 96px;
+    height: 96px;
+    border-radius: 18px;
+    object-fit: cover;
+    background: #0d1727;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, .22);
+}
+
+.addon-workspace .addon-caption {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding: 16px;
+    color: var(--addon-text);
+}
+
+.addon-workspace .addon-heading {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+    margin: 0 0 10px;
+}
+
+.addon-workspace .addon-heading h3,
+.addon-workspace .addon-heading h4 {
+    margin: 0;
+    color: var(--addon-text);
+    font-size: 17px;
+    line-height: 1.35;
+}
+
+.addon-workspace .addon-meta {
+    display: grid;
+    gap: 6px;
+    margin: 0;
+    color: var(--addon-muted);
+    font-size: 13px;
+    line-height: 1.45;
+}
+
+.addon-workspace .addon-meta strong { color: var(--addon-text); font-weight: 600; }
+
+.addon-workspace .addon-description {
+    display: -webkit-box;
+    flex: 1;
+    margin: 12px 0 16px;
+    overflow: hidden;
+    color: var(--addon-muted);
+    line-height: 1.5;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+}
+
+.addon-workspace .operate {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: auto;
+    padding-top: 14px;
+    border-top: 1px solid rgba(42, 59, 87, .75);
+}
+
+.addon-workspace .btn-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.addon-workspace .btn,
+.addon-workspace .layui-btn {
+    min-height: 34px;
+    border-radius: 7px;
+    font-weight: 600;
+}
+
+.addon-workspace .addon-detail {
+    color: var(--addon-muted);
+    font-size: 18px;
+}
+
+.addon-workspace .addon-detail:hover,
+.addon-workspace .addon-detail:focus-visible { color: var(--addon-accent); }
+
+.addon-workspace .addon-empty,
+.addon-workspace .addon-loading,
+.addon-workspace .addon-error {
+    grid-column: 1 / -1;
+    padding: 42px 24px;
+    border: 1px dashed var(--addon-border);
+    border-radius: 12px;
+    background: rgba(17, 27, 45, .65);
+    color: var(--addon-muted);
+    text-align: center;
+}
+
+.addon-workspace .addon-error { border-color: rgba(255, 142, 159, .45); color: var(--addon-danger); }
+
+.addon-workspace .addon-form-shell {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: clamp(18px, 3vw, 32px);
+    border: 1px solid var(--addon-border);
+    border-radius: 14px;
+    background: var(--addon-surface);
+}
+
+.addon-workspace .addon-form-shell .layui-form-item { margin-bottom: 18px; }
+.addon-workspace .addon-form-shell .layui-form-label { width: 180px; border-radius: 7px 0 0 7px; }
+.addon-workspace .addon-form-shell .layui-input-inline { max-width: calc(100% - 200px); }
+.addon-workspace .addon-form-shell .layui-form-mid { color: var(--addon-muted); }
+
+body.admin-dark .layui-tab-content { padding: 0; }
+body.admin-dark .layui-row { margin-left: 0; margin-right: 0; }
+body.admin-dark .layui-col-md3 { width: auto; padding: 0; }
+
+@media (max-width: 760px) {
+    .addon-workspace .addon-hero,
+    .addon-workspace .addon-toolbar { align-items: stretch; flex-direction: column; }
+    .addon-workspace .addon-status { align-self: flex-start; }
+    body.admin-dark .addon-workspace .addon-search { flex: 0 0 auto; flex-direction: column; }
+    body.admin-dark .addon-workspace .addon-search .layui-input-inline {
+        flex: 0 0 auto !important;
+        width: 100%;
+    }
+    body.admin-dark .addon-workspace .addon-search .layui-btn {
+        flex: 0 0 auto !important;
+        width: 100%;
+        height: 42px;
+        margin-left: 0 !important;
+    }
+    .addon-workspace .addon-form-shell { padding: 16px 12px; }
+    .addon-workspace .addon-form-shell .layui-form-label { width: 100%; border-radius: 7px 7px 0 0; text-align: left; }
+    .addon-workspace .addon-form-shell .layui-input-inline { width: 100%; max-width: none; margin-left: 0; }
+    .addon-workspace .addon-form-shell .layui-input-block { margin-left: 0; }
+    .addon-workspace .addon-form-shell .layui-input,
+    .addon-workspace .addon-form-shell .layui-textarea,
+    .addon-workspace .addon-form-shell .layui-input.w500,
+    .addon-workspace .addon-form-shell .layui-input.w600,
+    .addon-workspace .addon-form-shell .layui-input.w700,
+    .addon-workspace .addon-form-shell .w500,
+    .addon-workspace .addon-form-shell .w600,
+    .addon-workspace .addon-form-shell .w700 { width: 100%; max-width: 100%; box-sizing: border-box; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .addon-workspace .addon { transition: none; }
+}
+
+/* Kit page (brief 7.e F40). */
+body.admin-dark .addon-workspace.addon-workspace--kit { max-width: none; margin: 0; padding: var(--ax-pad, 24px); }
+.addon-workspace--kit .ax-notice { margin: 0 0 16px; }

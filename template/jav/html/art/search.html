@@ -1,0 +1,8 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html><html data-template-theme="jav" lang="{$maccms.ui_lang|htmlspecialchars=ENT_QUOTES}"{if condition="$maccms.ui_lang eq 'ar'"} dir="rtl"{/if}><head>{include file="seo/auto"}{include file="block/include"}</head><body>{include file="block/head"}<main id="main-content" class="container"><section class="stui-pannel"><h1>{:\\app\\common\\util\\TemplateText::get('search_results')} {$param.wd|htmlspecialchars=ENT_QUOTES}</h1>{include file="art/head"}<ul class="stui-vodlist__media">{maccms:art num="20" paging="yes" pageurl="art/search" order="desc" by="time"}<li><div class="thumb"><a class="stui-vodlist__thumb lazyload" href="{:mac_url_art_detail($vo)}" title="{:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)($vo['art_name'] ?? '')), ENT_QUOTES, 'UTF-8')}" data-original="{:mac_url_img($vo.art_pic)}"></a></div><div class="detail"><h2 class="title"><a href="{:mac_url_art_detail($vo)}">{:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)($vo['art_name'] ?? '')), ENT_QUOTES, 'UTF-8')}</a></h2><p>{$vo.art_content|mac_filter_html|mac_substring=100|htmlspecialchars=ENT_QUOTES}</p><time>{$vo.art_time|date='Y-m-d',###}</time></div></li>{/maccms:art}</ul>{include file="block/page"}</section></main>{include file="block/copy"}{include file="block/foot"}</body></html>

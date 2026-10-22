@@ -1,0 +1,55 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}$vpFootMap = ''; try { $vpFootMap = \app\common\util\Sitemap::indexUrl(); } catch (\Throwable $vpFootError) { $vpFootMap = ''; }{/php}
+<footer class="vp-footer">
+  <div class="vp-wrap">
+    {include file="public/brand"}
+    <p class="vp-footer-tag">{:\\app\\common\\util\\TemplateText::get('vp.footer_tag')}</p>
+    <span class="vp-orn" aria-hidden="true"></span>
+    <nav class="vp-footer-cats" data-ai-group aria-label="{:\\app\\common\\util\\TemplateText::get('ui.categories')}"><p class="vp-footer-h">{:\\app\\common\\util\\AutoIcon::navIcon('categories', '', ['size'=>'sm'])}<span>{:\\app\\common\\util\\TemplateText::get('ui.categories')}</span></p><ul>{maccms:type ids="parent" flag="vod" order="asc" by="sort" id="vpFtCat" key="vpFtK" hide_empty="1"}<li><a href="{:mac_url_type($vpFtCat)}">{:\\app\\common\\util\\AutoIcon::icon('category', $vpFtCat['type_name'] ?? '', ['size'=>'lg', 'plate'=>true, 'i'=>$vpFtK])}<span>{:\\app\\common\\util\\TemplateText::get(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)($vpFtCat['type_name'] ?? '')))}</span></a></li>{/maccms:type}</ul></nav>
+    <nav class="vp-footer-cols" data-ai-group aria-label="{:\\app\\common\\util\\TemplateText::get('ui.footer_navigation')}">
+      <div>
+        <p class="vp-footer-h">{:\\app\\common\\util\\AutoIcon::navIcon('trending', '', ['size'=>'sm'])}<span>{:\\app\\common\\util\\TemplateText::get('vp.programme')}</span></p>
+        <ul>
+          <li><a href="{:mac_url('label/new')}">{:\\app\\common\\util\\AutoIcon::navIcon('latest', '')}{:\\app\\common\\util\\TemplateText::get('ui.latest_videos')}</a></li>
+          <li><a href="{:mac_url('label/hot')}">{:\\app\\common\\util\\AutoIcon::navIcon('hot', '')}{:\\app\\common\\util\\TemplateText::get('ui.popular_videos')}</a></li>
+          <li><a href="{:mac_url('label/score')}">{:\\app\\common\\util\\AutoIcon::navIcon('top', '')}{:\\app\\common\\util\\TemplateText::get('top_rated')}</a></li>
+          <li><a href="{:mac_url('label/sort')}">{:\\app\\common\\util\\AutoIcon::navIcon('all', '')}{:\\app\\common\\util\\TemplateText::get('ui.all_videos_59a0c0')}</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="vp-footer-h">{:\\app\\common\\util\\AutoIcon::ui('ticket', ['size'=>'sm'])}<span>{:\\app\\common\\util\\TemplateText::get('vp.box_office')}</span></p>
+        <ul>
+          <li><a href="{:mac_url('user/login')}" data-vp-user data-center="{:mac_url('user/index')}">{:\\app\\common\\util\\AutoIcon::navIcon('account', '')}<span data-vp-user-label>{:\\app\\common\\util\\TemplateText::get('ui.member_center')}</span></a></li>
+          <li><a href="{:mac_url('user/reg')}">{:\\app\\common\\util\\AutoIcon::navIcon('register', '')}{:\\app\\common\\util\\TemplateText::get('ui.create_account')}</a></li>
+          <li><a href="{:mac_url('user/favs')}">{:\\app\\common\\util\\AutoIcon::navIcon('favourites', '')}{:\\app\\common\\util\\TemplateText::get('favorites')}</a></li>
+          <li><a href="{:mac_url('user/plays')}">{:\\app\\common\\util\\AutoIcon::navIcon('history', '')}{:\\app\\common\\util\\TemplateText::get('ui.play_record')}</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="vp-footer-h">{:\\app\\common\\util\\AutoIcon::ui('sparkles', ['size'=>'sm'])}<span>{:\\app\\common\\util\\TemplateText::get('vp.front_of_house')}</span></p>
+        <ul>
+          <li><a href="{:mac_url('gbook/index')}">{:\\app\\common\\util\\AutoIcon::navIcon('contact', '')}{:\\app\\common\\util\\TemplateText::get('ui.contact_b37456')}</a></li>
+          <li><a href="{:mac_url('map/index')}">{:\\app\\common\\util\\AutoIcon::navIcon('latest-100', '')}{:\\app\\common\\util\\TemplateText::get('ui.latest_updates')}</a></li>
+          <li><a href="{:mac_url('rss/index')}">{:\\app\\common\\util\\AutoIcon::navIcon('rss', '')}{:\\app\\common\\util\\TemplateText::get('rss')}</a></li>
+          {if condition="$vpFootMap neq ''"}<li><a href="{$vpFootMap|htmlspecialchars=ENT_QUOTES}">{:\\app\\common\\util\\AutoIcon::navIcon('sitemap', '')}{:\\app\\common\\util\\TemplateText::get('ui.sitemap')}</a></li>{/if}
+        </ul>
+      </div>
+    </nav>
+    <a class="vp-totop" href="#main-content" data-vp-totop>{:\\app\\common\\util\\AutoIcon::ui('arrow-up', ['size'=>'lg', 'plate'=>true])}<span>{:\\app\\common\\util\\TemplateText::get('vp.back_to_top')}</span></a>
+    <div class="vp-footer-legal">
+      <span class="vp-age" aria-hidden="true">18+</span>
+      <p>{:\\app\\common\\util\\TemplateText::get('ui.for_adults_only_contact_the_site_for_content_or_copyright_concerns')}</p>
+      <p>&copy; {:date('Y')} {:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$maccms['site_name']), ENT_QUOTES, 'UTF-8')}</p>
+      {php}$tplSiteEmail = trim(\app\common\util\AvdbLanguage::decodeEntities((string)($maccms['site_email'] ?? '')));{/php}{if condition="filter_var($tplSiteEmail, FILTER_VALIDATE_EMAIL)"}<p><a href="mailto:{$tplSiteEmail|rawurlencode}">{$tplSiteEmail|htmlspecialchars=ENT_QUOTES}</a></p>{/if}
+    </div>
+  </div>
+</footer>
+<nav class="vp-dock" aria-label="{:\\app\\common\\util\\TemplateText::get('vp.quick_bar')}" data-ai-group><a href="{$maccms.path|htmlspecialchars=ENT_QUOTES}"{if condition="$maccms.aid eq 1"} aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::navIcon('home', '', ['i'=>0])}<span>{:\\app\\common\\util\\TemplateText::get('ui.home')}</span></a><a href="{:mac_url('label/new')}"{if condition="$maccms.aid eq 9999"} aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::navIcon('latest', '', ['i'=>1])}<span>{:\\app\\common\\util\\TemplateText::get('ui.latest')}</span></a><button class="vp-dock-main" type="button" aria-controls="vp-drawer" aria-expanded="false" data-vp-drawer-open data-vp-drawer-to="vp-drawer-cats">{:\\app\\common\\util\\AutoIcon::navIcon('categories', '', ['size'=>'lg', 'plate'=>true, 'i'=>2])}<span>{:\\app\\common\\util\\TemplateText::get('ui.categories')}</span></button><a href="{:mac_url('label/hot')}"{if condition="$maccms.aid eq 9998"} aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::navIcon('hot', '', ['i'=>3])}<span>{:\\app\\common\\util\\TemplateText::get('ui.popular')}</span></a><a href="{:mac_url('user/login')}" data-vp-user data-center="{:mac_url('user/index')}">{:\\app\\common\\util\\AutoIcon::ui('user-circle', ['i'=>4])}<span>{:\\app\\common\\util\\TemplateText::get('ui.account')}</span></a></nav>
+{include file="public/style"}
+{$maccms.site_tj}

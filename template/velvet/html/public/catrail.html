@@ -1,0 +1,12 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}$vvRailHot = array(); foreach (preg_split('/[,，]/u', (string)($maccms['search_hot'] ?? '')) as $vvRailWord) { $vvRailWord = trim(\app\common\util\AutoIcon::text($vvRailWord)); if (mb_strlen($vvRailWord) >= 2 && mb_strlen($vvRailWord) <= 30 && \app\common\util\AutoIcon::keepTag($vvRailWord) && !in_array($vvRailWord, $vvRailHot, true)) { $vvRailHot[] = $vvRailWord; } if (count($vvRailHot) >= 10) { break; } }{/php}
+<nav class="vv-catrail" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.browse_categories')}" data-ai-group>
+  {maccms:type ids="parent" flag="vod" order="asc" by="sort" id="vvRail" key="vvRailKey" hide_empty="1"}<a class="vv-cattile{if condition="$vvRail.type_id eq $GLOBALS['type_id'] || $vvRail.type_id eq $GLOBALS['type_pid']"} is-active{/if}" href="{:mac_url_type($vvRail)}"{if condition="$vvRail.type_id eq $GLOBALS['type_id'] || $vvRail.type_id eq $GLOBALS['type_pid']"} aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::icon('category', $vvRail['type_name'] ?? '', ['size'=>'lg', 'plate'=>true, 'i'=>$vvRailKey, 'class'=>'vv-cattile-ai'])}<span class="vv-cattile-b"><span class="vv-cattile-t">{:\\app\\common\\util\\TemplateText::get(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)($vvRail['type_name'] ?? '')))}</span><small dir="ltr">{:number_format((float)mac_data_count($vvRail['type_id'],'all'))}</small></span></a>{/maccms:type}
+</nav>
+{notempty name="vvRailHot"}<nav class="vv-chips vv-hotwords" aria-label="{:\\app\\common\\util\\TemplateText::get('velvet.popular_tags')}" data-ai-group>{volist name="vvRailHot" id="vvRailWord" key="vvRailHotKey"}<a class="vv-chip vv-chip--hot" href="{:mac_url_search(['wd'=>$vvRailWord], 'vod')}" dir="auto">{:\\app\\common\\util\\AutoIcon::icon('tag', $vvRailWord, ['size'=>'sm', 'i'=>$vvRailHotKey])}{$vvRailWord|htmlspecialchars=ENT_QUOTES}</a>{/volist}</nav>{/notempty}

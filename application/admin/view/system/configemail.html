@@ -1,0 +1,118 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Based on MacCMS 10 (Apache-2.0) by magicblack, changed by JavCMS.
+JavCMS changes: Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors,
+JavCMS Community License 1.0. The MacCMS parts stay under the Apache License 2.0.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{include file="../../../application/admin/view/public/head" /}
+
+<link rel="stylesheet" href="__STATIC__/css/admin_email_settings.css?v={:filemtime(ROOT_PATH . 'static/css/admin_email_settings.css')}">
+
+<div class="page-container admin-email-settings">
+    {include file="../../../application/admin/view/public/page_head" icon="ai-mail" title="admin/ux/menu/email" help="admin/ux/help/email" /}
+    <form class="ax-form layui-form" action="" id="admin-email-form" data-ax-dirty>
+        <input type="hidden" name="__token__" value="{$Request.token}" />
+
+        <section class="ax-section">
+            <h2>{:lang('admin/ux/system/email_server')}</h2>
+            <p class="ax-help">{:lang('admin/ux/system/email_help')}</p>
+            {if condition="count($extends['ext_list']) eq 1"}
+            <div class="ax-field" role="radiogroup" aria-labelledby="email-type-l">
+                <label id="email-type-l">{:lang('admin/ux/system/email_send')}</label>
+                <div>
+                    {volist name="$extends['ext_list']" id="vo"}
+                    <input type="radio" name="email[type]" value="{$key|htmlspecialchars}" title="{:lang('admin/ux/system/on')}" {if condition="strtolower($config['email']['type']) eq strtolower($key)"}checked {/if}>
+                    {/volist}
+                    <input type="radio" name="email[type]" value="" title="{:lang('admin/ux/system/off')}" {if condition="$config['email']['type'] eq ''"}checked {/if}>
+                </div>
+            </div>
+            {else /}
+            <div class="ax-field ax-field--sm">
+                <label for="ac">{:lang('admin/ux/system/email_send')}</label>
+                <select id="ac" name="email[type]" lay-filter="ac">
+                    <option value="">{:lang('admin/emailsetup/disabled')}</option>
+                    {volist name="$extends['ext_list']" id="vo"}
+                    <option value="{$key|htmlspecialchars}" {if condition="$config['email']['type'] eq $key"}selected {/if}>{$vo|htmlspecialchars}</option>
+                    {/volist}
+                </select>
+            </div>
+            {/if}
+            <div class="ax-field ax-field--md">
+                <label for="nick">{:lang('admin/system/configemail/nick')}</label>
+                <input type="text" id="nick" name="email[nick]" value="{$config['email']['nick']|htmlspecialchars}" class="layui-input">
+            </div>
+        </section>
+
+        {$extends['ext_html']}
+
+        <section class="ax-section">
+            <h2>{:lang('admin/ux/system/email_test_title')}</h2>
+            <p class="ax-help">{:lang('admin/emailsetup/test_help')}</p>
+            <div class="ax-field ax-field--md">
+                <label for="test">{:lang('admin/system/configemail/test')}</label>
+                <input type="email" id="test" name="email[test]" value="{$config['email']['test']|htmlspecialchars}" class="layui-input" autocomplete="email">
+            </div>
+            <div>
+                <button type="button" class="ax-btn" id="admin-email-test" data-url="{:url('system/test_email')}" data-loading="{:lang('admin/emailsetup/testing')}" data-error="{:lang('admin/emailsetup/request_failed')}" data-invalid="{:lang('admin/emailsetup/recipient_required')}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-send"/></svg>{:lang('admin/emailsetup/test_current')}</button>
+            </div>
+            <p id="admin-email-test-status" class="admin-email-test-status" role="status" aria-live="polite" aria-atomic="true"></p>
+        </section>
+
+        <details class="ax-section admin-email-advanced">
+            <summary>{:lang('admin/emailsetup/advanced')}</summary>
+            <p class="ax-help">{:lang('admin/emailsetup/template_help')}</p>
+            <div class="ax-field ax-field--sm">
+                <label for="email-time">{:lang('admin/system/configemail/time')}</label>
+                <input type="text" id="email-time" name="email[time]" value="{$config['email']['time']|htmlspecialchars}" class="layui-input">
+                <p class="ax-help">{:lang('admin/system/configemail/time_tip')}</p>
+            </div>
+            <div class="ax-field">
+                <label for="email-test_title">{:lang('admin/system/configemail/test_title')}</label>
+                <input type="text" id="email-test_title" name="email[tpl][test_title]" value="{$config['email']['tpl']['test_title']|htmlspecialchars}" class="layui-input">
+            </div>
+            <div class="ax-field">
+                <label for="email-test_body">{:lang('admin/system/configemail/test_body')}</label>
+                <textarea id="email-test_body" name="email[tpl][test_body]" class="layui-textarea">{$config['email']['tpl']['test_body']|htmlspecialchars}</textarea>
+            </div>
+            <div class="ax-field">
+                <label for="email-user_reg_title">{:lang('admin/system/configemail/user_reg_title')}</label>
+                <input type="text" id="email-user_reg_title" name="email[tpl][user_reg_title]" value="{$config['email']['tpl']['user_reg_title']|htmlspecialchars}" class="layui-input">
+            </div>
+            <div class="ax-field">
+                <label for="email-user_reg_body">{:lang('admin/system/configemail/user_reg_body')}</label>
+                <textarea id="email-user_reg_body" name="email[tpl][user_reg_body]" class="layui-textarea">{$config['email']['tpl']['user_reg_body']|htmlspecialchars}</textarea>
+            </div>
+            <div class="ax-field">
+                <label for="email-user_bind_title">{:lang('admin/system/configemail/user_bind_title')}</label>
+                <input type="text" id="email-user_bind_title" name="email[tpl][user_bind_title]" value="{$config['email']['tpl']['user_bind_title']|htmlspecialchars}" class="layui-input">
+            </div>
+            <div class="ax-field">
+                <label for="email-user_bind_body">{:lang('admin/system/configemail/user_bind_body')}</label>
+                <textarea id="email-user_bind_body" name="email[tpl][user_bind_body]" class="layui-textarea">{$config['email']['tpl']['user_bind_body']|htmlspecialchars}</textarea>
+            </div>
+            <div class="ax-field">
+                <label for="email-user_findpass_title">{:lang('admin/system/configemail/user_findpass_title')}</label>
+                <input type="text" id="email-user_findpass_title" name="email[tpl][user_findpass_title]" value="{$config['email']['tpl']['user_findpass_title']|htmlspecialchars}" class="layui-input">
+            </div>
+            <div class="ax-field">
+                <label for="email-user_findpass_body">{:lang('admin/system/configemail/user_findpass_body')}</label>
+                <textarea id="email-user_findpass_body" name="email[tpl][user_findpass_body]" class="layui-textarea">{$config['email']['tpl']['user_findpass_body']|htmlspecialchars}</textarea>
+            </div>
+        </details>
+
+        <div class="ax-savebar">
+            <span class="ax-savebar__status" role="status"></span>
+            <div class="ax-savebar__end">
+                <button class="ax-btn" type="reset"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-rotate-ccw"/></svg>{:lang('admin/ux/system/undo_changes')}</button>
+                <button type="submit" class="ax-btn ax-btn--primary" lay-submit="" lay-filter="formSubmit"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-save"/></svg>{:lang('admin/ux/kit/save')}</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+{include file="../../../application/admin/view/public/foot" /}
+<script defer src="__STATIC__/js/admin_email_settings.js?v={:filemtime(ROOT_PATH . 'static/js/admin_email_settings.js')}"></script>
+</body>
+</html>

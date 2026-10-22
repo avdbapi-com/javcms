@@ -1,0 +1,24 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}if (!isset($ciCardInit)) { $ciCardInit = 1; $ciNow = time(); $ciTxtHot = \app\common\util\TemplateText::get('ink.badge_hot'); $ciTxtNew = \app\common\util\TemplateText::get('ink.badge_new'); $ciTxtViews = \app\common\util\TemplateText::get('ui.views');
+ $ciShort = function ($n) { $n = (int)$n; if ($n >= 1000000) { return rtrim(rtrim(number_format($n / 1000000, 1, '.', ''), '0'), '.') . 'M'; } if ($n >= 10000) { return rtrim(rtrim(number_format($n / 1000, 1, '.', ''), '0'), '.') . 'K'; } return number_format($n); }; }
+$ciMode = isset($ciMode) ? (string)$ciMode : '';
+$ciCT = $ciDec($vo['vod_display_name'] ?? ''); if ($ciCT === '') { $ciCT = $ciDec(strip_tags((string)($vo['vod_name'] ?? ''))); }
+$ciCP = trim((string)($vo['vod_pic'] ?? '')); $ciCP = $ciCP === '' ? '' : (string)mac_url_img($ciCP);
+$ciCD = trim((string)($vo['vod_duration'] ?? '')); if (strlen($ciCD) > 12) { $ciCD = ''; }
+$ciCTime = (int)($vo['vod_time'] ?? 0); $ciCDay = $ciCTime > 0 ? date('Y-m-d', $ciCTime) : '';
+$ciCHits = (int)($vo['vod_hits'] ?? 0);
+$ciCBadge = ''; if ($ciMode === 'hot' || $ciCHits >= 100) { $ciCBadge = 'hot'; } elseif ($ciMode === 'new' || ($ciCTime > 0 && $ciNow - $ciCTime < 259200)) { $ciCBadge = 'new'; }
+$ciRank = isset($ciRank) ? $ciRank + 1 : 1;
+$ciCA = trim((string)\app\common\util\AvdbLanguage::displayList($vo, 'actor'));
+$ciCA = $ciCA === '' ? '' : trim((string)explode(',', $ciCA)[0]); $ciCAName = $ciDec($ciCA);
+$ciCALat = trim(preg_replace('/\s{2,}/u', ' ', preg_replace('/[\x{3000}-\x{30FF}\x{3400}-\x{9FFF}\x{F900}-\x{FAFF}\x{FF01}-\x{FF9F}]+/u', ' ', $ciCAName)), " \t-/,()");
+if ($ciCALat !== '') { $ciCAName = $ciCALat; } if (mb_strlen($ciCAName) > 40) { $ciCAName = ''; }
+$ciCAHtml = $ciCAName === '' ? '' : \app\common\util\AutoIcon::avatar($ciCA, '', ['size' => 'xs', 'decorative' => true]);
+$ciCScore = (float)($vo['vod_score'] ?? 0); $ciCUp = (int)($vo['vod_up'] ?? 0); $ciCHitsS = $ciShort($ciCHits); $ciCUpS = $ciShort($ciCUp);
+{/php}<article class="ci-card" data-slam><a class="ci-card-a" href="{:mac_url_vod_play($vo)}"><span class="ci-thumb" data-fx="skeleton">{if condition="$ciCP neq ''"}<img src="{$ciCP|htmlspecialchars=ENT_QUOTES}" alt="{$ciCT|htmlspecialchars=ENT_QUOTES}" width="320" height="180" loading="lazy" decoding="async">{/if}<span class="ci-sweep" aria-hidden="true"></span>{if condition="$ciCD neq ''"}<span class="ci-dur" dir="ltr">{$ciCD|htmlspecialchars=ENT_QUOTES}</span>{/if}</span><span class="ci-cap"><h3{php}echo \app\common\util\AvdbLanguage::langAttr(isset($vo) && is_array($vo) ? $vo : []);{/php} class="ci-title" dir="auto">{$ciCT|htmlspecialchars=ENT_QUOTES}</h3>{if condition="$ciCAName neq ''"}<span class="ci-cast">{$ciCAHtml}<span dir="auto">{$ciCAName|htmlspecialchars=ENT_QUOTES}</span></span>{/if}<span class="ci-meta"><span class="ci-views" title="{$ciTxtViews}"><svg class="ci-i" aria-hidden="true"><use href="{$ciIco|htmlspecialchars=ENT_QUOTES}#eye"></use></svg><span dir="ltr">{$ciCHitsS}</span></span>{if condition="$ciCDay neq ''"}<time datetime="{$ciCDay}" dir="ltr">{$ciCDay}</time>{/if}</span></span></a>{if condition="$ciMode eq 'rank'"}<span class="ci-seal" aria-hidden="true">{$ciRank}</span>{elseif condition="$ciMode eq 'score' && $ciCScore gt 0"/}<span class="ci-burst" aria-hidden="true"><b dir="ltr">{$ciCScore|number_format=1}</b></span>{elseif condition="$ciMode eq 'up' && $ciCUp gt 0"/}<span class="ci-heart" aria-hidden="true"><svg class="ci-i"><use href="{$ciIco|htmlspecialchars=ENT_QUOTES}#heart"></use></svg><b dir="ltr">{$ciCUpS}</b></span>{elseif condition="$ciCBadge eq 'hot'"/}<span class="ci-bal ci-bal--hot" aria-hidden="true">{$ciTxtHot}</span>{elseif condition="$ciCBadge eq 'new'"/}<span class="ci-bal ci-bal--new" aria-hidden="true">{$ciTxtNew}</span>{/if}</article>

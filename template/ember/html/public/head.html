@@ -1,0 +1,39 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}$tplNoPic = $maccms['path_tpl'] . 'assets/img/poster.svg'; $tplIcons = $maccms['path_tpl'] . 'assets/img/icons.svg';{/php}
+<a class="skip-link" href="#main-content">{:\\app\\common\\util\\TemplateText::get('ui.skip_to_content')}</a>
+<div class="e-top">
+  <div class="container">
+    <button class="e-burger" type="button" data-e-drawer aria-controls="e-drawer" aria-expanded="false" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.menu')}"><span></span></button>
+    <div class="e-top-left">
+      <span class="e-top-item" data-ai-hot>{:\\app\\common\\util\\AutoIcon::navIcon('account', '', ['class'=>'e-ai-top'])}<a class="mac_user" href="{:mac_url('user/login')}">{:\\app\\common\\util\\TemplateText::get('ui.member_center')}</a></span>
+    </div>
+    <div class="e-top-logo"><a href="{$maccms.path}">{if condition="$maccms.site_waplogo neq ''"}<img src="{:mac_safe_url(mac_url_img($maccms['site_waplogo']))}" alt="{:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$maccms['site_name']), ENT_QUOTES, 'UTF-8')}" width="152" height="48">{elseif condition="$maccms.site_logo neq ''"/}<img src="{:mac_safe_url(mac_url_img($maccms['site_logo']))}" alt="{:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$maccms['site_name']), ENT_QUOTES, 'UTF-8')}" width="152" height="48">{else/}<span class="e-wordmark">{:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$maccms['site_name']), ENT_QUOTES, 'UTF-8')}</span>{/if}</a></div>
+    <div class="e-top-right">
+      <a class="e-top-item e-top-desk" href="{:mac_url('label/new')}" {if condition="$maccms.aid eq 9999"}aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::navIcon('latest', '', ['class'=>'e-ai-top'])}{:\\app\\common\\util\\TemplateText::get('ui.latest_videos')}</a>
+      <a class="e-top-item e-top-desk" href="{:mac_url('label/hot')}" {if condition="$maccms.aid eq 9998"}aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::navIcon('hot', '', ['class'=>'e-ai-top'])}{:\\app\\common\\util\\TemplateText::get('ui.popular_videos')}</a>
+      {include file="public/languages"}
+      <button class="tui-color-toggle e-top-btn" type="button" data-color-toggle data-light-label="{:\\app\\common\\util\\TemplateText::get('ui.light_mode')}" data-dark-label="{:\\app\\common\\util\\TemplateText::get('ui.dark_mode')}" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.light_mode')}" title="{:\\app\\common\\util\\TemplateText::get('ui.light_mode')}"><svg class="tui-color-sun" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.4 1.4m11.2 11.2L19 19M5 19l1.4-1.4M17.6 6.4L19 5"/></svg><svg class="tui-color-moon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 13a9 9 0 0 1-9.8-9.8A9 9 0 1 0 20.8 13Z"/></svg><span data-color-label>{:\\app\\common\\util\\TemplateText::get('ui.light_mode')}</span></button>
+      <a class="e-top-search" href="{:mac_url('vod/search')}" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.search')}">{:\\app\\common\\util\\AutoIcon::ui('search', ['class'=>'e-ai-search'])}</a>
+    </div>
+  </div>
+  {include file="public/nav"}
+</div>
+<header class="e-header">
+  <div class="container">
+    <a class="e-logo" href="{$maccms.path}">{if condition="$maccms.site_logo neq ''"}<img src="{:mac_safe_url(mac_url_img($maccms['site_logo']))}" alt="{:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$maccms['site_name']), ENT_QUOTES, 'UTF-8')}" width="191" height="60">{else/}<span class="e-wordmark">{:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$maccms['site_name']), ENT_QUOTES, 'UTF-8')}</span>{/if}</a>
+    <nav class="e-menu" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.main_navigation')}">
+      <ul>
+        <li data-e-pin><a href="{$maccms.path}" {if condition="$maccms.aid eq 1"}aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::navIcon('home', '', ['i'=>0])}<span>{:\\app\\common\\util\\TemplateText::get('ui.home')}</span></a></li>
+        {maccms:type ids="parent" flag="vod" order="asc" by="sort" id="tplNav" key="tplNavKey" hide_empty="1"}<li><a href="{:mac_url_type($tplNav)}" {if condition="$tplNav.type_id eq $GLOBALS['type_id'] || $tplNav.type_id eq $GLOBALS['type_pid']"}aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::icon('category', $tplNav['type_name'], ['i'=>$tplNavKey])}<span>{:\\app\\common\\util\\TemplateText::get(htmlspecialchars_decode((string)$tplNav['type_name'], ENT_QUOTES))}</span></a></li>{/maccms:type}
+        <li class="e-menu-more" hidden><details class="e-more-menu"><summary>{:\\app\\common\\util\\AutoIcon::navIcon('more')}<span>{:\\app\\common\\util\\TemplateText::get('ember.more')}</span>{:\\app\\common\\util\\AutoIcon::ui('chevron-down', ['class'=>'e-chev', 'tint'=>'none'])}</summary><ul class="e-more-list"></ul></details></li>
+        <li class="e-menu-search" data-e-pin><a href="{:mac_url('vod/search')}" {if condition="$maccms.aid eq 13"}aria-current="page"{/if} title="{:\\app\\common\\util\\TemplateText::get('ui.search')}">{:\\app\\common\\util\\AutoIcon::ui('search')}<span>{:\\app\\common\\util\\TemplateText::get('ui.search')}</span></a></li>
+      </ul>
+    </nav>
+  </div>
+</header>

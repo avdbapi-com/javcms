@@ -1,0 +1,36 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}$tuiFooterSitemap = ''; try { $tuiFooterSitemap = \app\common\util\Sitemap::indexUrl(); } catch (\Throwable $tuiFooterError) {} $tplFootActor = mac_data_count(0, 'all', 'actor') > 0; $tplFootTopic = mac_data_count(0, 'all', 'topic') > 0; $tplFootArt = mac_data_count(0, 'all', 'art') > 0;{/php}
+<footer class="stui-foot jav-footer" data-template-footer>
+  <div class="container">
+    <a class="jav-footer__brand" href="{$maccms.path|htmlspecialchars=ENT_QUOTES}"><img src="{$maccms.path_tpl|htmlspecialchars=ENT_QUOTES}statics/img/favicon.svg?v=20261013-ai1" alt="" width="28" height="28" loading="lazy" decoding="async"><span>{:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$maccms['site_name']), ENT_QUOTES, 'UTF-8')}</span></a>
+    <p class="jav-footer__stats">{:\\app\\common\\util\\AutoIcon::ui('film', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('total_videos')} <strong>{:mac_data_count(0,'all','vod')}</strong> <span class="sep" aria-hidden="true">&ndash;</span> {:\\app\\common\\util\\AutoIcon::ui('sparkles', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('updated_today')} <strong>{:mac_data_count(0,'today','vod')}</strong></p>
+    <nav class="jav-footer__cats" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.categories')}">
+      <ul>
+        {maccms:type ids="parent" order="asc" by="sort" flag="vod" id="tplFootCat" key="tplFootK" hide_empty="1"}<li><a href="{:mac_url_type($tplFootCat)}">{:\\app\\common\\util\\AutoIcon::icon('category', $tplFootCat['type_name'], ['size'=>'sm', 'i'=>$tplFootK])}<span>{:\\app\\common\\util\\TemplateText::get(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$tplFootCat['type_name']))}</span></a></li>{/maccms:type}
+      </ul>
+    </nav>
+    <nav class="jav-footer__nav" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.footer_navigation')}">
+      <ul>
+        <li><a href="{$maccms.path|htmlspecialchars=ENT_QUOTES}">{:\\app\\common\\util\\AutoIcon::navIcon('home', '', ['size'=>'sm', 'i'=>0])}<span>{:\\app\\common\\util\\TemplateText::get('ui.home')}</span></a></li>
+        <li><a href="{:mac_url('label/new')}">{:\\app\\common\\util\\AutoIcon::navIcon('latest', '', ['size'=>'sm', 'i'=>1])}<span>{:\\app\\common\\util\\TemplateText::get('ui.latest_videos')}</span></a></li>
+        <li><a href="{:mac_url('map/index')}">{:\\app\\common\\util\\AutoIcon::navIcon('latest-100', '', ['size'=>'sm', 'i'=>2])}<span>{:\\app\\common\\util\\TemplateText::get('ui.latest_updates')}</span></a></li>
+        {if condition="$tplFootActor"}<li><a href="{:mac_url('actor/index')}">{:\\app\\common\\util\\AutoIcon::navIcon('actors', '', ['size'=>'sm', 'i'=>3])}<span>{:\\app\\common\\util\\TemplateText::get('ui.performers')}</span></a></li>{/if}
+        {if condition="$tplFootTopic"}<li><a href="{:mac_url('topic/index')}">{:\\app\\common\\util\\AutoIcon::navIcon('topics', '', ['size'=>'sm', 'i'=>4])}<span>{:\\app\\common\\util\\TemplateText::get('ui.collections')}</span></a></li>{/if}
+        {if condition="$tplFootArt"}<li><a href="{:mac_url('art/index')}">{:\\app\\common\\util\\AutoIcon::navIcon('articles', '', ['size'=>'sm', 'i'=>5])}<span>{:\\app\\common\\util\\TemplateText::get('ui.articles')}</span></a></li>{/if}
+        <li><a href="{:mac_url('rss/index')}">{:\\app\\common\\util\\AutoIcon::navIcon('rss', '', ['size'=>'sm', 'i'=>6])}<span>{:\\app\\common\\util\\TemplateText::get('rss')}</span></a></li>
+        {if condition="$tuiFooterSitemap neq ''"}<li><a href="{$tuiFooterSitemap|htmlspecialchars=ENT_QUOTES}">{:\\app\\common\\util\\AutoIcon::navIcon('sitemap', '', ['size'=>'sm', 'i'=>7])}<span>{:\\app\\common\\util\\TemplateText::get('ui.sitemap')}</span></a></li>{/if}
+        <li><a href="{:mac_url('gbook/index')}">{:\\app\\common\\util\\AutoIcon::navIcon('contact', '', ['size'=>'sm', 'i'=>8])}<span>{:\\app\\common\\util\\TemplateText::get('ui.contact_b37456')}</span></a></li>
+      </ul>
+    </nav>
+    <p class="jav-footer__notice"><span class="age-badge" aria-hidden="true">18+</span> {:\\app\\common\\util\\TemplateText::get('ui.for_adults_only_contact_the_site_for_content_or_copyright_concerns')}</p>
+    {if condition="filter_var((string)$maccms['site_email'], FILTER_VALIDATE_EMAIL)"}<p class="jav-footer__mail"><a href="mailto:{:rawurlencode(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$maccms['site_email']))}">{:\\app\\common\\util\\AutoIcon::ui('mail', ['size'=>'sm'])}{:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$maccms['site_email']), ENT_QUOTES, 'UTF-8')}</a></p>{/if}
+    <p class="jav-footer__copy">&copy; {:date('Y')} {:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$maccms['site_name']), ENT_QUOTES, 'UTF-8')}</p>
+  </div>
+</footer>
+<a class="to-top" href="#main-content" aria-label="{:\\app\\common\\util\\TemplateText::get('jav.back_to_top')}" title="{:\\app\\common\\util\\TemplateText::get('jav.back_to_top')}" data-to-top hidden>{:\\app\\common\\util\\AutoIcon::ui('arrow-up', ['class'=>'to-top__ico'])}</a>

@@ -1,0 +1,120 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{include file="../../../application/admin/view/public/head" /}
+<div class="page-container p10 jx-page" data-jx-page="info">
+    {php}$jxE0 = function ($v) { return htmlspecialchars((string)$v, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'); };{/php}
+    <div class="ax-editor-head">
+        <a class="ax-btn ax-btn--ghost" href="{:url('jcx/lists')}" data-jx-act="leave"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-arrow-left"/></svg>{:$jxE0(lang('admin/ux/kit/back'))}</a>
+        <h1>{if condition="$item"}{:$jxE0(lang('admin/ux/jcx/edit_title'))}: {:$jxE0($item['item_name'])}{else /}{:$jxE0(lang('admin/ux/jcx/add'))}{/if}</h1>
+        <div class="ax-editor-head__end"><span class="ax-chip" data-jx-steplbl>{:$jxE0(sprintf(lang('admin/ux/jcx/step'), 1))}</span></div>
+    </div>
+    {include file="../../../application/admin/view/jcx/_tabs" /}
+    {if condition="$is_example"}
+    <div class="ax-notice" role="note"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-info"/></svg><div><p>{:$jxE(lang('admin/ux/jcx/example_edit_note'))}</p></div></div>
+    {/if}
+    {if condition="$gone"}
+    <div class="ax-notice ax-notice--warn" role="note"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-triangle-alert"/></svg><div><p>{:$jxE(lang('admin/ux/jcx/v_gone_note'))}</p></div></div>
+    {/if}
+
+    <form id="jxEd" class="ax-form jx-ed" data-ax-dirty novalidate onsubmit="return false">
+        {include file="../../../application/admin/view/jcx/_steps" /}
+        {include file="../../../application/admin/view/jcx/_picker" /}
+
+        <section class="ax-section jx-stepsec" data-step="3" aria-labelledby="jxS3T" hidden>
+            <h2 id="jxS3T">{:$jxE(lang('admin/ux/jcx/step_check'))}</h2>
+            <p class="ax-help">{:$jxE(lang('admin/ux/jcx/frames_note'))} <button type="button" class="ax-btn ax-btn--sm ax-btn--ghost" data-jx-act="frames"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-refresh-cw"/></svg>{:$jxE(lang('admin/ux/jcx/frames_reload'))}</button></p>
+            <div class="ax-notice jx-noview" data-jx-noview role="note" hidden><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-info"/></svg><div><p>{:$jxE(lang('admin/ux/jcx/preview_noview'))}</p></div></div>
+            <div class="jx-frames">
+                <figure class="jx-frame jx-frame--phone"><figcaption>{:$jxE(lang('admin/ux/jcx/phones'))} · 390 × 844</figcaption><div class="jx-frame__box" data-w="390" data-h="844"><iframe data-jx-frame="phone" title="{:$jxE(lang('admin/ux/jcx/phones'))}" tabindex="-1"></iframe></div></figure>
+                <figure class="jx-frame jx-frame--desk"><figcaption>{:$jxE(lang('admin/ux/jcx/computers'))} · 1280 × 800</figcaption><div class="jx-frame__box" data-w="1280" data-h="800"><iframe data-jx-frame="desk" title="{:$jxE(lang('admin/ux/jcx/computers'))}" tabindex="-1"></iframe></div></figure>
+            </div>
+            <p class="jx-summary" data-jx-summary role="status"></p>
+            <div class="ax-notice ax-notice--warn" data-jx-risknote role="note" hidden><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-shield-alert"/></svg><div><p><strong>{:$jxE(lang('admin/ux/jcx/chrome_risk'))}.</strong> {:$jxE(lang('admin/ux/jcx/chrome_risk_confirm'))}</p></div></div>
+            <div class="ax-notice ax-notice--warn" data-jx-conflict role="alert" hidden><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-triangle-alert"/></svg><div data-jx-conflict-body></div></div>
+            <div class="ax-notice ax-notice--warn" data-jx-warns role="note" hidden><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-info"/></svg><div data-jx-warns-body></div></div>
+
+            <div class="ax-field" role="radiogroup" aria-labelledby="jxDevL"><label id="jxDevL">{:$jxE(lang('admin/ux/jcx/devices'))}</label>
+                <div class="jx-radios">
+                    <label class="jx-check"><input type="radio" name="jxDev" value="3" data-f="item_dev" lay-ignore checked> {:$jxE(lang('admin/ux/jcx/both'))}</label>
+                    <label class="jx-check"><input type="radio" name="jxDev" value="2" data-f="item_dev" lay-ignore> {:$jxE(lang('admin/ux/jcx/phones'))}</label>
+                    <label class="jx-check"><input type="radio" name="jxDev" value="1" data-f="item_dev" lay-ignore> {:$jxE(lang('admin/ux/jcx/computers'))}</label>
+                </div><p class="ax-help">{:$jxE(lang('admin/ux/jcx/help_devices'))}</p><p class="ax-help ax-danger-text jx-err" data-err="item_dev" hidden></p></div>
+
+            <div class="ax-field" role="radiogroup" aria-labelledby="jxPgL"><label id="jxPgL">{:$jxE(lang('admin/ux/jcx/pages'))}</label>
+                <div class="jx-radios"><label class="jx-check"><input type="radio" name="jxPgMode" value="all" lay-ignore checked> {:$jxE(lang('admin/ux/jcx/pages_all'))}</label>
+                <label class="jx-check"><input type="radio" name="jxPgMode" value="pick" lay-ignore> {:$jxE(lang('admin/ux/jcx/pages_pick'))}</label></div>
+                <div class="jx-checks-inline" data-jx-pages hidden>
+                    {foreach name="pg_list" item="pg"}<label class="jx-check" data-pg="{$pg}"><input type="checkbox" value="{$pg}" lay-ignore> {:$jxE(lang('admin/ux/jcx/pt_' . $pg))}</label>{/foreach}
+                </div><p class="ax-help">{:$jxE(lang('admin/ux/jcx/help_pages'))}</p></div>
+
+            <div class="jx-row">
+                <div class="ax-field ax-field--sm"><label for="jxFrom">{:$jxE(lang('admin/ux/jcx/from'))}</label><input id="jxFrom" type="datetime-local" class="layui-input" data-jx-date="item_start" aria-describedby="jxSchedH"></div>
+                <div class="ax-field ax-field--sm"><label for="jxUntil">{:$jxE(lang('admin/ux/jcx/until_f'))}</label><input id="jxUntil" type="datetime-local" class="layui-input" data-jx-date="item_end" aria-describedby="jxSchedH"></div>
+            </div>
+            <p class="ax-help" id="jxSchedH">{:$jxE(lang('admin/ux/jcx/help_schedule'))}</p>
+            <p class="ax-help ax-danger-text jx-err" data-err="item_end" hidden></p>
+
+            <details class="jx-more" data-jx-moreopts>
+                <summary>{:$jxE(lang('admin/ux/jcx/more_options'))}</summary>
+                <div class="ax-field"><label id="jxDaysL">{:$jxE(lang('admin/ux/jcx/weekdays'))}</label>
+                    <div class="jx-checks-inline" data-jx-days role="group" aria-labelledby="jxDaysL">
+                        {foreach name="day_list" item="dd"}<label class="jx-check"><input type="checkbox" value="{$dd}" lay-ignore checked> {:$jxE(lang('admin/ux/jcx/day_' . $dd))}</label>{/foreach}
+                    </div><p class="ax-help">{:$jxE(lang('admin/ux/jcx/help_weekdays'))}</p><p class="ax-help ax-danger-text jx-err" data-err="item_days" hidden></p></div>
+                <div class="jx-row">
+                    <div class="ax-field ax-field--sm"><label for="jxHf">{:$jxE(lang('admin/ux/jcx/hours_from'))}</label><input id="jxHf" type="number" min="0" max="23" class="layui-input" data-jx-hours="from" aria-describedby="jxHoursH"></div>
+                    <div class="ax-field ax-field--sm"><label for="jxHt">{:$jxE(lang('admin/ux/jcx/hours_to'))}</label><input id="jxHt" type="number" min="0" max="24" class="layui-input" data-jx-hours="to" aria-describedby="jxHoursH"></div>
+                </div>
+                <p class="ax-help" id="jxHoursH">{:$jxE(lang('admin/ux/jcx/help_hours'))}</p><p class="ax-help ax-danger-text jx-err" data-err="item_hours" hidden></p>
+                <div class="ax-field"><label id="jxLgL">{:$jxE(lang('admin/ux/jcx/languages'))}</label>
+                    <div class="jx-checks-inline" data-jx-csv="item_langs" role="group" aria-labelledby="jxLgL">{volist name="langs" id="lg"}<label class="jx-check"><input type="checkbox" value="{$lg}" lay-ignore> {$lg}</label>{/volist}</div>
+                    <p class="ax-help">{:$jxE(lang('admin/ux/jcx/help_languages'))}</p></div>
+                {if condition="!empty($cats)"}
+                <div class="ax-field"><label id="jxCtL">{:$jxE(lang('admin/ux/jcx/categories'))}</label>
+                    <div class="jx-checks-inline jx-scroll" data-jx-csv="item_cats" role="group" aria-labelledby="jxCtL">{volist name="cats" id="ct"}<label class="jx-check"><input type="checkbox" value="{$ct.id}" lay-ignore> {:$jxE($ct['name'])}</label>{/volist}</div>
+                    <p class="ax-help">{:$jxE(lang('admin/ux/jcx/help_categories'))}</p></div>
+                {/if}
+                <div class="ax-field ax-field--md"><label for="jxGeo">{:$jxE(lang('admin/ux/jcx/countries'))}</label>
+                    <input id="jxGeo" type="text" class="layui-input" data-f="item_geo" placeholder="US, GB" {if condition="$geo eq ''"}disabled{/if} aria-describedby="jxGeoH">
+                    <p class="ax-help" id="jxGeoH">{if condition="$geo eq ''"}{:$jxE(lang('admin/ux/jcx/countries_off'))}{else /}{:$jxE(lang('admin/ux/jcx/help_countries'))}{/if}</p></div>
+                <div class="ax-field" role="radiogroup" aria-labelledby="jxWhoL"><label id="jxWhoL">{:$jxE(lang('admin/ux/jcx/who'))}</label>
+                    <div class="jx-radios"><label class="jx-check"><input type="radio" name="jxWho" value="0" data-f="item_who" lay-ignore checked> {:$jxE(lang('admin/ux/jcx/who_all'))}</label>
+                    <label class="jx-check"><input type="radio" name="jxWho" value="1" data-f="item_who" lay-ignore> {:$jxE(lang('admin/ux/jcx/who_guests'))}</label>
+                    <label class="jx-check"><input type="radio" name="jxWho" value="2" data-f="item_who" lay-ignore> {:$jxE(lang('admin/ux/jcx/who_vip'))}</label></div>
+                    <p class="ax-help">{:$jxE(lang('admin/ux/jcx/help_who'))}</p></div>
+                <div class="ax-field ax-field--md"><label for="jxShare">{:$jxE(lang('admin/ux/jcx/share'))}</label>
+                    <input id="jxShare" type="range" min="1" max="100" value="10" data-f="item_weight" aria-describedby="jxShareO jxShareH">
+                    <output id="jxShareO" for="jxShare" data-jx-shareout></output>
+                    <p class="ax-help" id="jxShareH">{:$jxE(lang('admin/ux/jcx/help_share'))}</p></div>
+                <div class="ax-field" data-g="codemode" role="radiogroup" aria-labelledby="jxCmodeL"><label id="jxCmodeL">{:$jxE(lang('admin/ux/jcx/code_mode'))}</label>
+                    <div class="jx-radios"><label class="jx-check"><input type="radio" name="jxCmode" value="0" data-f="item_code_mode" lay-ignore checked> {:$jxE(lang('admin/ux/jcx/code_lazy'))}</label>
+                    <label class="jx-check"><input type="radio" name="jxCmode" value="1" data-f="item_code_mode" lay-ignore> {:$jxE(lang('admin/ux/jcx/code_parse'))}</label>
+                    <label class="jx-check"><input type="radio" name="jxCmode" value="2" data-f="item_code_mode" lay-ignore> {:$jxE(lang('admin/ux/jcx/code_box'))}</label></div>
+                    <p class="ax-help">{:$jxE(lang('admin/ux/jcx/help_code_mode'))}</p></div>
+                <div class="ax-field ax-field--md"><label for="jxName">{:$jxE(lang('admin/ux/jcx/name'))}</label><input id="jxName" type="text" class="layui-input" maxlength="80" data-f="item_name" aria-describedby="jxNameH"><p class="ax-help" id="jxNameH">{:$jxE(lang('admin/ux/jcx/help_name'))}</p></div>
+                <div class="ax-field ax-field--md"><label for="jxNote">{:$jxE(lang('admin/ux/jcx/note'))}</label><input id="jxNote" type="text" class="layui-input" maxlength="255" data-f="item_note" aria-describedby="jxNoteH"><p class="ax-help" id="jxNoteH">{:$jxE(lang('admin/ux/jcx/help_note'))}</p></div>
+            </details>
+        </section>
+
+        <div class="ax-savebar">
+            <button type="button" class="ax-btn ax-btn--ghost" data-jx-act="back" hidden><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-arrow-left"/></svg>{:$jxE(lang('admin/ux/kit/back'))}</button>
+            <span class="ax-savebar__status" role="status" data-jx-status></span>
+            <div class="ax-savebar__end">
+                <button type="button" class="ax-btn" data-jx-act="see" hidden><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-eye"/></svg>{:$jxE(lang('admin/ux/jcx/see_on_site'))}</button>
+                <button type="button" class="ax-btn ax-btn--ghost" data-jx-act="cancel">{:$jxE(lang('admin/ux/kit/cancel'))}</button>
+                <button type="button" class="ax-btn ax-btn--primary" data-jx-act="next">{:$jxE(lang('admin/ux/jcx/next'))}<svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-arrow-right"/></svg></button>
+                <button type="button" class="ax-btn" data-jx-act="save-off" hidden><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-save"/></svg>{:$jxE(lang('admin/ux/jcx/save_off'))}</button>
+                <button type="button" class="ax-btn ax-btn--primary" data-jx-act="save-on" hidden><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-toggle-right"/></svg>{:$jxE(lang('admin/ux/jcx/save_on'))}</button>
+            </div>
+        </div>
+    </form>
+</div>
+{include file="../../../application/admin/view/public/foot" /}
+<script type="application/json" id="jxCfg">{$jxJson}</script>
+<script src="__STATIC__/js/admin_jcx.js?v={:filemtime(ROOT_PATH . 'static/js/admin_jcx.js')}"></script>
+</body>
+</html>

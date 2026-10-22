@@ -1,0 +1,28 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}
+$oxSite = trim(\app\common\util\AvdbLanguage::decodeEntities((string)($maccms['site_name'] ?? '')));
+$oxBrand = $oxSite;
+if (mb_strlen($oxBrand, 'UTF-8') > 18) {
+    $oxHost = strtolower(trim((string)($maccms['site_url'] ?? '')));
+    $oxHost = (string)preg_replace('~^[a-z][a-z0-9+.\-]*://~', '', $oxHost);
+    $oxHost = (string)preg_replace('~[/?#].*$~', '', $oxHost);
+    $oxHost = (string)preg_replace('~:\d+$~', '', $oxHost);
+    $oxHost = (string)preg_replace('~^www\.~', '', $oxHost);
+    $oxHostParts = explode('.', $oxHost);
+    $oxLabel = trim((string)($oxHostParts[0] ?? ''));
+    if ($oxLabel !== '' && !ctype_digit($oxLabel) && $oxLabel !== 'localhost') { $oxBrand = $oxLabel; }
+}
+if ($oxBrand === '') { $oxBrand = 'JAVCMS'; }
+$oxLogoRaw = trim((string)($maccms['site_logo'] ?? ''));
+$oxLogoPath = ltrim((string)preg_replace('~^(https?:)?//[^/]+~i', '', $oxLogoRaw), '/');
+$oxLogoCustom = ($oxLogoRaw !== '' && !in_array($oxLogoPath, ['upload/site/20240730-1/20819301b2e936fcc59a7cee9f4e4d4a.png', 'upload/site/20240730-1/0643d1703707a998e41b8813a97ed2e7.png'], true)) ? mac_safe_url(mac_url_img($oxLogoRaw)) : '';
+$oxFx = !in_array((string)($maccms['ui_lang'] ?? 'en'), ['ja', 'zh', 'ko', 'th', 'ar', 'hi'], true);
+$tplNoPic = $maccms['path_tpl'] . 'assets/brand/ph-dark.svg';
+$tplIcons = $maccms['path_tpl'] . 'assets/icons.svg';
+{/php}

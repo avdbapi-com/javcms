@@ -1,0 +1,155 @@
+﻿{/*
+This file is part of JavCMS - https://javcms.net
+Based on MacCMS 10 (Apache-2.0) by magicblack, changed by JavCMS.
+JavCMS changes: Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors,
+JavCMS Community License 1.0. The MacCMS parts stay under the Apache License 2.0.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{include file="../../../application/admin/view/public/head" /}
+<link rel="stylesheet" href="__STATIC__/css/admin_addon_workspace.css?{$MAC_VERSION}&rev=2">
+
+<div class="page-container p10 addon-workspace">
+    <div class="showpic" style="display:none;"><img class="showpic_img" width="120" height="160" alt=""></div>
+
+    <header class="addon-hero">
+        <div>
+            <p class="addon-eyebrow">{:lang('admin/addon/title')}</p>
+            <h1 class="addon-title">{$info.title|mac_filter_xss}</h1>
+            <p class="addon-subtitle">{$info.name|mac_filter_xss}{if !empty($info.version)} &middot; {:lang('ver')}: {$info.version|mac_filter_xss}{/if}</p>
+        </div>
+        <span class="addon-status">{:lang('config')}</span>
+    </header>
+
+    <section class="addon-form-shell" aria-labelledby="addon-config-title">
+        <h2 id="addon-config-title" class="layui-hide">{:lang('config')}</h2>
+        {if empty($config)}
+            <div class="addon-empty" role="status">{:lang('admin/urlsend/no_data')}</div>
+        {else/}
+            <form class="layui-form layui-form-pane" method="post" action="">
+                <input id="admin_id" name="name" type="hidden" value="{$info.name|mac_filter_xss}">
+
+                {foreach $config as $item}
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="row-{$item.name|mac_filter_xss}">{$item.title|default=$item.name|mac_filter_xss}:</label>
+                    {switch $item.type}
+                    {case string}
+                        <div class="layui-input-inline w600">
+                            <input id="row-{$item.name|mac_filter_xss}" type="text" name="row[{$item.name}]" value="{$item.value|default=''}" class="layui-input" data-rule="{$item.rule|default=''}" data-tip="{$item.tip|default=''}" {$item.extend|default=''} />
+                        </div>
+                    {/case}
+                    {case text}
+                        <div class="layui-input-inline w600">
+                            <textarea id="row-{$item.name|mac_filter_xss}" name="row[{$item.name}]" class="layui-textarea" rows="5" data-rule="{$item.rule|default=''}" data-tip="{$item.tip|default=''}" {$item.extend|default=''}>{$item.value|default=''}</textarea>
+                        </div>
+                    {/case}
+                    {case array}
+                        <div class="layui-input-inline w700">
+                            <div>
+                                {foreach name="item.value" item="vo"}
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label" for="row-{$item.name|mac_filter_xss}-{$key|mac_filter_xss}">{$key|mac_filter_xss}:</label>
+                                    <div class="layui-input-block"><input id="row-{$item.name|mac_filter_xss}-{$key|mac_filter_xss}" type="text" name="row[{$item.name}][{$key}]" value="{$vo|default=''}" class="layui-input w500" /></div>
+                                </div>
+                                {/foreach}
+                            </div>
+                        </div>
+                    {/case}
+                    {case datetime}
+                        <div class="layui-input-inline w600"><input id="row-{$item.name|mac_filter_xss}" type="text" name="row[{$item.name}]" value="{$item.value|default=''}" class="layui-input datetimepicker" data-tip="{$item.tip|default=''}" data-rule="{$item.rule|default=''}" {$item.extend|default=''} /></div>
+                    {/case}
+                    {case number}
+                        <div class="layui-input-inline w600"><input id="row-{$item.name|mac_filter_xss}" type="number" name="row[{$item.name}]" value="{$item.value|default=''}" class="layui-input" data-tip="{$item.tip|default=''}" data-rule="{$item.rule|default=''}" {$item.extend|default=''} /></div>
+                    {/case}
+                    {case checkbox}
+                        <div class="layui-input-inline w600">
+                            {foreach name="item.content" item="vo"}
+                            <input id="row-{$item.name|mac_filter_xss}[]-{$key|mac_filter_xss}" name="row[{$item.name}][]" type="checkbox" value="{$key}" data-tip="{$item.tip|default=''}" title="{$vo|mac_filter_xss}" {in name="key" value="$item.value"}checked{/in} />
+                            {/foreach}
+                        </div>
+                    {/case}
+                    {case radio}
+                        <div class="layui-input-inline w700">
+                            {foreach name="item.content" item="vo"}
+                            <input id="row-{$item.name|mac_filter_xss}-{$key|mac_filter_xss}" name="row[{$item.name}]" type="radio" value="{$key}" data-tip="{$item.tip|default=''}" title="{$vo|mac_filter_xss}" {in name="key" value="$item.value"}checked{/in} />
+                            {/foreach}
+                        </div>
+                    {/case}
+                    {case value="select" break="0"}{/case}
+                    {case value="selects"}
+                        <div class="layui-input-inline w700">
+                            <select id="row-{$item.name|mac_filter_xss}" name="row[{$item.name}]{$item.type=='selects'?'[]':''}" class="layui-input selectpicker" data-tip="{$item.tip|default=''}" {$item.type=='selects'?'multiple':''}>
+                                {foreach name="item.content" item="vo"}
+                                <option value="{$key}" {in name="key" value="$item.value"}selected{/in}>{$vo|mac_filter_xss}</option>
+                                {/foreach}
+                            </select>
+                        </div>
+                    {/case}
+                    {case value="image" break="0"}{/case}
+                    {case value="images"}
+                        <div class="layui-input-inline w600"><input id="c-{$item.name|mac_filter_xss}" class="layui-input upload-input upload-img" name="row[{$item.name}]" type="text" value="{$item.value|default=''}" data-tip="{$item.tip|default=''}"></div>
+                        <div class="layui-input-inline w100"><button type="button" class="layui-btn layui-upload" lay-data="{data:{thumb:0,thumb_class:''}}">{:lang('upload')}</button></div>
+                    {/case}
+                    {case value="file" break="0"}{/case}
+                    {case value="files"}
+                        <div class="layui-input-inline w600"><input id="c-{$item.name|mac_filter_xss}" class="layui-input upload-input" name="row[{$item.name}]" type="text" value="{$item.value|default=''}" data-tip="{$item.tip|default=''}"></div>
+                        <div class="layui-input-inline w100"><button type="button" class="layui-btn layui-upload" lay-data="{data:{thumb:0,thumb_class:''}}">{:lang('upload')}</button></div>
+                    {/case}
+                    {case bool}
+                        <div class="layui-input-inline">
+                            <input id="row-{$item.name|mac_filter_xss}-yes" name="row[{$item.name}]" type="radio" value="1" {$item.value?'checked':''} data-tip="{$item.tip|default=''}" title="{:lang('yes')}" />
+                            <input id="row-{$item.name|mac_filter_xss}-no" name="row[{$item.name}]" type="radio" value="0" {$item.value?'':'checked'} data-tip="{$item.tip|default=''}" title="{:lang('not')}" />
+                        </div>
+                    {/case}
+                    {/switch}
+                    <div class="layui-form-mid layui-word-aux">{$item.tip|default=''}</div>
+                </div>
+                {/foreach}
+
+                <div class="layui-form-item center">
+                    <div class="layui-input-block">
+                        <button type="submit" class="layui-btn" lay-submit="" lay-filter="formSubmit" data-child="true">{:lang('btn_save')}</button>
+                        <button class="layui-btn layui-btn-warm" type="reset">{:lang('btn_reset')}</button>
+                    </div>
+                </div>
+            </form>
+        {/if}
+    </section>
+</div>
+
+{include file="../../../application/admin/view/public/foot" /}
+
+<script type="text/javascript">
+    layui.use(['form', 'upload', 'layer'], function () {
+        var layer = layui.layer;
+        var $ = layui.jquery;
+        var upload = layui.upload;
+        upload.render({
+            elem: '.layui-upload',
+            url: "{:url('upload/upload')}?flag=addon",
+            method: 'post',
+            before: function () { layer.msg("{:lang('upload_ing')}", {time: 3000000}); },
+            done: function (res) {
+                if (!res || res.code === 0) { layer.msg(res && res.msg ? res.msg : "{:lang('request_err')}"); return; }
+                layer.closeAll();
+                var input = $(this.item).parent().parent().find('.upload-input');
+                if ($(this.item).attr('lay-type') === 'image') { input.siblings('img').attr('src', res.data.file).show(); }
+                input.val(res.data.file);
+            },
+            error: function () { layer.msg("{:lang('request_err')}"); }
+        });
+
+        $('.upload-img').hover(function (event) {
+            var image = String($(this).val() || '').trim();
+            if (!image) { return; }
+            var left = (event.clientX || 0) + document.body.scrollLeft + 20;
+            var top = (event.clientY || 0) + document.body.scrollTop + 20;
+            $('.showpic').css({left: left, top: top, display: ''});
+            if (image.indexOf('://') < 0) { image = ROOT_PATH + '/' + image; } else { image = image.replace('mac:', 'http:'); }
+            $('.showpic_img').attr('src', image);
+        }, function () { $('.showpic').css('display', 'none'); });
+    });
+</script>
+</body>
+</html>
+

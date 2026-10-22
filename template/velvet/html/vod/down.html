@@ -1,0 +1,36 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}if (!isset($vvPlain)) { $vvPlain = function ($v) { $v = (string)$v; for ($i = 0; $i < 4; $i++) { $d = html_entity_decode($v, ENT_QUOTES | ENT_HTML5, 'UTF-8'); if ($d === $v) { break; } $v = $d; } return trim($v); }; } $vvTitle = $vvPlain(($obj['vod_display_name'] ?? '') !== '' ? $obj['vod_display_name'] : ($obj['vod_name'] ?? ''));{/php}<!DOCTYPE html>
+<html data-template-theme="velvet" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/auto"}
+{include file="public/include"}
+</head>
+<body class="vv-page-detail">
+{include file="public/head"}
+<main id="main-content" class="vv-main">
+  <div class="vv-wrap">
+    <div class="vv-list-head">
+      <div class="vv-list-title"><span class="vv-tile vv-tile--new vv-tile--sm" aria-hidden="true">{:\\app\\common\\util\\AutoIcon::ui('film', ['class'=>'vv-i'])}</span><h1>{$vvTitle|htmlspecialchars=ENT_QUOTES}</h1></div>
+      <div class="vv-chips"><a class="vv-chip" href="{:htmlspecialchars(mac_url_vod_detail($obj), ENT_QUOTES)}">{:\\app\\common\\util\\TemplateText::get('ui.details')}</a><a class="vv-chip is-active" href="{:htmlspecialchars(mac_url_vod_play($obj,['sid'=>1,'nid'=>1]), ENT_QUOTES)}">{:\\app\\common\\util\\TemplateText::get('ui.watch_online')}</a></div>
+    </div>
+    {notempty name="obj.vod_down_list"}
+    {maccms:foreach name="obj.vod_down_list" id="vvSource"}
+    <section class="vv-panel-card" style="margin-bottom:16px">
+      <h2>{:\\app\\common\\util\\AutoIcon::ui('list', ['class'=>'vv-i'])}{$vvSource.player_info.show|mac_default=$vvSource.from|htmlspecialchars=ENT_QUOTES}</h2>
+      <div class="vv-episodes">{maccms:foreach name="vvSource.urls" id="vvEpisode"}<a class="vv-ep" href="{:mac_safe_url($vvEpisode['url'])}" target="_blank" rel="nofollow noopener noreferrer">{$vvEpisode.name|htmlspecialchars=ENT_QUOTES}</a>{/maccms:foreach}</div>
+    </section>
+    {/maccms:foreach}
+    {else/}
+    <div class="vv-empty">{:\\app\\common\\util\\AutoIcon::scene('empty-library')}<p>{:\\app\\common\\util\\TemplateText::get('ui.no_download_links_are_available_for_this_video')}</p></div>
+    {/notempty}
+  </div>
+</main>
+{include file="public/foot"}
+</body>
+</html>

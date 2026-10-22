@@ -1,0 +1,649 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Based on MacCMS 10 (Apache-2.0) by magicblack, changed by JavCMS.
+JavCMS changes: Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors,
+JavCMS Community License 1.0. The MacCMS parts stay under the Apache License 2.0.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{include file="../../../application/admin/view/public/head" /}
+<style>
+    .layui-form-pane .layui-form-label { width:200px; }
+    .layui-form-pane .layui-input-block { margin-left:200px; }
+</style>
+<div class="page-container">
+    {include file="../../../application/admin/view/public/page_head" icon="ai-sliders-horizontal" title="admin/ux/menu/import_options" help="admin/ux/help/import_options" /}
+    <form data-ax-dirty class="layui-form layui-form-pane" action="" id="admin-collect-labels">
+        <input type="hidden" name="__token__" value="{$Request.token}" />
+        <div class="layui-tab maccms-inner-tab-vertical" lay-filter="tb1">
+            <ul class="layui-tab-title">
+                <li class="layui-this" lay-id="configcollect_1">{:lang('admin/system/configcollect/vod')}</li>
+                <li lay-id="configcollect_2">{:lang('admin/system/configcollect/art')}</li>
+                <li lay-id="configcollect_3">{:lang('admin/system/configcollect/actor')}</li>
+                <li lay-id="configcollect_6">{:lang('admin/system/configcollect/comment')}</li>
+                <li lay-id="configcollect_7">{:lang('admin/ux/system/collect_words')}</li>
+            </ul>
+
+            <div class="layui-tab-content">
+
+                <div class="layui-tab-item layui-show studio-form-panel">
+
+                <div class="layui-form-item studio-field-row" role="radiogroup" aria-labelledby="label-collect-vod-status-group">
+                    <label class="layui-form-label" id="label-collect-vod-status-group">{:lang('admin/system/configcollect/status')}</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="collect[vod][status]" value="0" title="{:lang('reviewed_not')}" {if condition="$config['collect']['vod']['status'] neq 1"}checked {/if} id="label-collect-vod-status-control-0" aria-label="{:lang('admin/system/configcollect/status')} {:lang('reviewed_not')}">
+                        <input type="radio" name="collect[vod][status]" value="1" title="{:lang('reviewed')}" {if condition="$config['collect']['vod']['status'] eq 1"}checked {/if} id="label-collect-vod-status-control-1" aria-label="{:lang('admin/system/configcollect/status')} {:lang('reviewed')}">
+                    </div>
+                </div>
+
+                <div class="layui-form-item studio-field-row" role="group" aria-labelledby="label-collect-vod-hits_start-group">
+                    <label class="layui-form-label" id="label-collect-vod-hits_start-group">{:lang('admin/system/configcollect/hits_rnd')}</label>
+                    <div class="layui-input-inline">
+                        <span id="label-collect-vod-hits_start-control-bound" hidden>{:lang('min_val')}</span><input type="text" name="collect[vod][hits_start]" placeholder="{:lang('min_val')}" value="{$config['collect']['vod']['hits_start']|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}" class="layui-input" id="label-collect-vod-hits_start-control" aria-labelledby="label-collect-vod-hits_start-group label-collect-vod-hits_start-control-bound">
+                    </div>
+                    <div class="layui-input-inline">
+                        <span id="label-collect-vod-hits_end-control-bound" hidden>{:lang('max_val')}</span><input type="text" name="collect[vod][hits_end]" placeholder="{:lang('max_val')}" value="{$config['collect']['vod']['hits_end']|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}" class="layui-input" id="label-collect-vod-hits_end-control" aria-labelledby="label-collect-vod-hits_start-group label-collect-vod-hits_end-control-bound">
+                    </div>
+                </div>
+
+                <div class="layui-form-item studio-field-row" role="group" aria-labelledby="label-collect-vod-updown_start-group">
+                    <label class="layui-form-label" id="label-collect-vod-updown_start-group">{:lang('admin/system/configcollect/updown_rnd')}</label>
+                    <div class="layui-input-inline">
+                        <span id="label-collect-vod-updown_start-control-bound" hidden>{:lang('min_val')}</span><input type="text" name="collect[vod][updown_start]" placeholder="{:lang('min_val')}" value="{$config['collect']['vod']['updown_start']|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}" class="layui-input" id="label-collect-vod-updown_start-control" aria-labelledby="label-collect-vod-updown_start-group label-collect-vod-updown_start-control-bound">
+                    </div>
+                    <div class="layui-input-inline">
+                        <span id="label-collect-vod-updown_end-control-bound" hidden>{:lang('max_val')}</span><input type="text" name="collect[vod][updown_end]" placeholder="{:lang('max_val')}" value="{$config['collect']['vod']['updown_end']|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}" class="layui-input" id="label-collect-vod-updown_end-control" aria-labelledby="label-collect-vod-updown_start-group label-collect-vod-updown_end-control-bound">
+                    </div>
+                </div>
+
+                <div class="layui-form-item studio-field-row" role="radiogroup" aria-labelledby="label-collect-vod-score-group">
+                    <label class="layui-form-label" id="label-collect-vod-score-group">{:lang('admin/system/configcollect/score_rnd')}</label>
+                    <div class="layui-input-inline">
+                        <input type="radio" name="collect[vod][score]" value="0" title="{:lang('admin/ux/system/off')}" {if condition="$config['collect']['vod']['score'] neq 1"}checked {/if} id="label-collect-vod-score-control-0" aria-label="{:lang('admin/system/configcollect/score_rnd')} {:lang('admin/ux/system/off')}">
+                        <input type="radio" name="collect[vod][score]" value="1" title="{:lang('admin/ux/system/on')}" {if condition="$config['collect']['vod']['score'] eq 1"}checked {/if} id="label-collect-vod-score-control-1" aria-label="{:lang('admin/system/configcollect/score_rnd')} {:lang('admin/ux/system/on')}">
+                    </div>
+                </div>
+
+
+                <div class="layui-form-item studio-field-row" role="radiogroup" aria-labelledby="label-collect-vod-pic-group">
+                    <label class="layui-form-label" id="label-collect-vod-pic-group">{:lang('admin/system/configcollect/sync_pic')}</label>
+                    <div class="layui-input-inline">
+                        <input type="radio" name="collect[vod][pic]" value="0" title="{:lang('admin/ux/system/off')}" {if condition="$config['collect']['vod']['pic'] neq 1"}checked {/if} id="label-collect-vod-pic-control-0" aria-label="{:lang('admin/system/configcollect/sync_pic')} {:lang('admin/ux/system/off')}">
+                        <input type="radio" name="collect[vod][pic]" value="1" title="{:lang('admin/ux/system/on')}" {if condition="$config['collect']['vod']['pic'] eq 1"}checked {/if} id="label-collect-vod-pic-control-1" aria-label="{:lang('admin/system/configcollect/sync_pic')} {:lang('admin/ux/system/on')}">
+                    </div>
+                </div>
+                <div class="layui-form-item studio-field-row" role="radiogroup" aria-labelledby="label-collect-vod-tag-group">
+                    <label class="layui-form-label" id="label-collect-vod-tag-group">{:lang('admin/system/configcollect/auto_tag')}</label>
+                    <div class="layui-input-inline">
+                        <input type="radio" name="collect[vod][tag]" value="0" title="{:lang('admin/ux/system/off')}" {if condition="$config['collect']['vod']['tag'] neq 1"}checked {/if} id="label-collect-vod-tag-control-0" aria-label="{:lang('admin/system/configcollect/auto_tag')} {:lang('admin/ux/system/off')}">
+                        <input type="radio" name="collect[vod][tag]" value="1" title="{:lang('admin/ux/system/on')}" {if condition="$config['collect']['vod']['tag'] eq 1"}checked {/if} id="label-collect-vod-tag-control-1" aria-label="{:lang('admin/system/configcollect/auto_tag')} {:lang('admin/ux/system/on')}">
+                    </div>
+                </div>
+                <!-- <div class="layui-form-item">
+                    <label class="layui-form-label">{:lang('admin/system/configcollect/class_filter')}</label>
+                    <div class="layui-input-inline">
+                        <input type="radio" name="collect[vod][class_filter]" value="0" title="{:lang('admin/ux/system/off')}" {if condition="$config['collect']['vod']['class_filter'] eq '0'"}checked {/if}>
+                        <input type="radio" name="collect[vod][class_filter]" value="1" title="{:lang('admin/ux/system/on')}" {if condition="$config['collect']['vod']['class_filter'] neq '0'"}checked {/if}>
+                    </div>
+                    <div class="layui-form-mid layui-word-aux">{:lang('admin/system/configcollect/class_filter_tip')}</div>
+                </div> -->
+
+                <div class="layui-form-item studio-field-row" role="radiogroup" aria-labelledby="label-collect-vod-psename-group">
+                    <label class="layui-form-label" id="label-collect-vod-psename-group">{:lang('admin/system/configcollect/psename')}</label>
+                    <div class="layui-input-inline">
+                        <input type="radio" name="collect[vod][psename]" value="0" title="{:lang('admin/ux/system/off')}" {if condition="$config['collect']['vod']['psename'] neq 1"}checked {/if} id="label-collect-vod-psename-control-0" aria-label="{:lang('admin/system/configcollect/psename')} {:lang('admin/ux/system/off')}">
+                        <input type="radio" name="collect[vod][psename]" value="1" title="{:lang('admin/ux/system/on')}" {if condition="$config['collect']['vod']['psename'] eq 1"}checked {/if} id="label-collect-vod-psename-control-1" aria-label="{:lang('admin/system/configcollect/psename')} {:lang('admin/ux/system/on')}">
+                    </div>
+                    <div class="layui-form-mid layui-word-aux">{:lang('admin/system/configcollect/psename_tip')}</div>
+                </div>
+                <div class="layui-form-item studio-field-row" role="radiogroup" aria-labelledby="label-collect-vod-psernd-group">
+                    <label class="layui-form-label" id="label-collect-vod-psernd-group">{:lang('admin/system/configcollect/psernd')}</label>
+                    <div class="layui-input-inline">
+                        <input type="radio" name="collect[vod][psernd]" value="0" title="{:lang('admin/ux/system/off')}" {if condition="$config['collect']['vod']['psernd'] neq 1"}checked {/if} id="label-collect-vod-psernd-control-0" aria-label="{:lang('admin/system/configcollect/psernd')} {:lang('admin/ux/system/off')}">
+                        <input type="radio" name="collect[vod][psernd]" value="1" title="{:lang('admin/ux/system/on')}" {if condition="$config['collect']['vod']['psernd'] eq 1"}checked {/if} id="label-collect-vod-psernd-control-1" aria-label="{:lang('admin/system/configcollect/psernd')} {:lang('admin/ux/system/on')}">
+                    </div>
+                </div>
+                <div class="layui-form-item studio-field-row" role="radiogroup" aria-labelledby="label-collect-vod-psesyn-group">
+                    <label class="layui-form-label" id="label-collect-vod-psesyn-group">{:lang('admin/system/configcollect/psesyn')}</label>
+                    <div class="layui-input-inline">
+                        <input type="radio" name="collect[vod][psesyn]" value="0" title="{:lang('admin/ux/system/off')}" {if condition="$config['collect']['vod']['psesyn'] neq 1"}checked {/if} id="label-collect-vod-psesyn-control-0" aria-label="{:lang('admin/system/configcollect/psesyn')} {:lang('admin/ux/system/off')}">
+                        <input type="radio" name="collect[vod][psesyn]" value="1" title="{:lang('admin/ux/system/on')}" {if condition="$config['collect']['vod']['psesyn'] eq 1"}checked {/if} id="label-collect-vod-psesyn-control-1" aria-label="{:lang('admin/system/configcollect/psesyn')} {:lang('admin/ux/system/on')}">
+                    </div>
+                </div>
+                <div class="layui-form-item studio-field-row" role="radiogroup" aria-labelledby="label-collect-vod-pseplayer-group">
+                    <label class="layui-form-label" id="label-collect-vod-pseplayer-group">{:lang('admin/system/configcollect/pseplayer')}</label>
+                    <div class="layui-input-inline">
+                        <input type="radio" name="collect[vod][pseplayer]" value="0" title="{:lang('admin/ux/system/off')}" {if condition="$config['collect']['vod']['pseplayer'] neq 1"}checked {/if} id="label-collect-vod-pseplayer-control-0" aria-label="{:lang('admin/system/configcollect/pseplayer')} {:lang('admin/ux/system/off')}">
+                        <input type="radio" name="collect[vod][pseplayer]" value="1" title="{:lang('admin/ux/system/on')}" {if condition="$config['collect']['vod']['pseplayer'] eq 1"}checked {/if} id="label-collect-vod-pseplayer-control-1" aria-label="{:lang('admin/system/configcollect/pseplayer')} {:lang('admin/ux/system/on')}">
+                    </div>
+                </div>
+                <div class="layui-form-item studio-field-row" role="radiogroup" aria-labelledby="label-collect-vod-psearea-group">
+                    <label class="layui-form-label" id="label-collect-vod-psearea-group">{:lang('admin/system/configcollect/psearea')}</label>
+                    <div class="layui-input-inline">
+                        <input type="radio" name="collect[vod][psearea]" value="0" title="{:lang('admin/ux/system/off')}" {if condition="$config['collect']['vod']['psearea'] neq 1"}checked {/if} id="label-collect-vod-psearea-control-0" aria-label="{:lang('admin/system/configcollect/psearea')} {:lang('admin/ux/system/off')}">
+                        <input type="radio" name="collect[vod][psearea]" value="1" title="{:lang('admin/ux/system/on')}" {if condition="$config['collect']['vod']['psearea'] eq 1"}checked {/if} id="label-collect-vod-psearea-control-1" aria-label="{:lang('admin/system/configcollect/psearea')} {:lang('admin/ux/system/on')}">
+                    </div>
+                </div>
+                <div class="layui-form-item studio-field-row" role="radiogroup" aria-labelledby="label-collect-vod-pselang-group">
+                    <label class="layui-form-label" id="label-collect-vod-pselang-group">{:lang('admin/system/configcollect/pselang')}</label>
+                    <div class="layui-input-inline">
+                        <input type="radio" name="collect[vod][pselang]" value="0" title="{:lang('admin/ux/system/off')}" {if condition="$config['collect']['vod']['pselang'] neq 1"}checked {/if} id="label-collect-vod-pselang-control-0" aria-label="{:lang('admin/system/configcollect/pselang')} {:lang('admin/ux/system/off')}">
+                        <input type="radio" name="collect[vod][pselang]" value="1" title="{:lang('admin/ux/system/on')}" {if condition="$config['collect']['vod']['pselang'] eq 1"}checked {/if} id="label-collect-vod-pselang-control-1" aria-label="{:lang('admin/system/configcollect/pselang')} {:lang('admin/ux/system/on')}">
+                    </div>
+                </div>
+
+                <div class="layui-form-item studio-field-row" role="radiogroup" aria-labelledby="label-collect-vod-urlrole-group">
+                    <label class="layui-form-label" id="label-collect-vod-urlrole-group">{:lang('admin/system/configcollect/urlrole')}</label>
+                    <div class="layui-input-inline">
+                        <input type="radio" name="collect[vod][urlrole]" value="0" title="{:lang('replace')}" {if condition="$config['collect']['vod']['urlrole'] neq 1"}checked {/if} id="label-collect-vod-urlrole-control-0" aria-label="{:lang('admin/system/configcollect/urlrole')} {:lang('replace')}">
+                        <input type="radio" name="collect[vod][urlrole]" value="1" title="{:lang('merge')}" {if condition="$config['collect']['vod']['urlrole'] eq 1"}checked {/if} id="label-collect-vod-urlrole-control-1" aria-label="{:lang('admin/system/configcollect/urlrole')} {:lang('merge')}">
+                        <!-- <input type="radio" name="collect[vod][urlrole]" value="2" title="{:lang('admin/system/configcollect/urlrole/use_more')}" {if condition="$config['collect']['vod']['urlrole'] eq 2"}checked {/if}> -->
+                    </div>
+                    <div class="layui-form-mid layui-word-aux">{:lang('admin/system/configcollect/urlrole_tip')}</div>
+                </div>
+
+                <div class="layui-form-item studio-field-row studio-field-wide" role="group" aria-labelledby="label-collect-vod-inrule-group">
+                    <label class="layui-form-label" id="label-collect-vod-inrule-group">
+                        {:lang('admin/system/configcollect/inrule')}</label>
+                    <div class="layui-input-block">
+                        <input type="checkbox" lay-skin="primary" name="collect[vod][inrule][]" value="a" title="{:lang('name')}" checked disabled id="label-collect-vod-inrule-control-a" aria-label="{:lang('admin/system/configcollect/inrule')} {:lang('name')}">
+                        <input type="checkbox" lay-skin="primary" name="collect[vod][inrule][]" value="b" title="{:lang('type')}" {if condition="strpos($config['collect']['vod']['inrule'],'b') !==false"}checked {/if} id="label-collect-vod-inrule-control-b" aria-label="{:lang('admin/system/configcollect/inrule')} {:lang('type')}">
+                        <input type="checkbox" lay-skin="primary" name="collect[vod][inrule][]" value="c" title="{:lang('years')}" {if condition="strpos($config['collect']['vod']['inrule'],'c') !==false"}checked {/if} id="label-collect-vod-inrule-control-c" aria-label="{:lang('admin/system/configcollect/inrule')} {:lang('years')}">
+                        <input type="checkbox" lay-skin="primary" name="collect[vod][inrule][]" value="d" title="{:lang('area')}" {if condition="strpos($config['collect']['vod']['inrule'],'d') !==false"}checked {/if} id="label-collect-vod-inrule-control-d" aria-label="{:lang('admin/system/configcollect/inrule')} {:lang('area')}">
+                        <input type="checkbox" lay-skin="primary" name="collect[vod][inrule][]" value="e" title="{:lang('lang')}" {if condition="strpos($config['collect']['vod']['inrule'],'e') !==false"}checked {/if} id="label-collect-vod-inrule-control-e" aria-label="{:lang('admin/system/configcollect/inrule')} {:lang('lang')}">
+                        <input type="checkbox" lay-skin="primary" name="collect[vod][inrule][]" value="f" title="{:lang('actor')}" {if condition="strpos($config['collect']['vod']['inrule'],'f') !==false"}checked {/if} id="label-collect-vod-inrule-control-f" aria-label="{:lang('admin/system/configcollect/inrule')} {:lang('actor')}">
+                        <input type="checkbox" lay-skin="primary" name="collect[vod][inrule][]" value="g" title="{:lang('director')}" {if condition="strpos($config['collect']['vod']['inrule'],'g') !==false"}checked {/if} id="label-collect-vod-inrule-control-g" aria-label="{:lang('admin/system/configcollect/inrule')} {:lang('director')}">
+                    </div>
+                </div>
+
+                <div class="layui-form-item studio-field-row studio-field-wide" role="group" aria-labelledby="label-collect-vod-uprule-group">
+                    <label class="layui-form-label" id="label-collect-vod-uprule-group">
+                        {:lang('admin/system/configcollect/uprule')}</label>
+                    <div class="layui-input-block">
+                        <input type="checkbox" lay-skin="primary" name="collect[vod][uprule][]" value="a" title="{:lang('playurl')}" {if condition="strpos($config['collect']['vod']['uprule'],'a') !==false"}checked {/if} id="label-collect-vod-uprule-control-a" aria-label="{:lang('admin/system/configcollect/uprule')} {:lang('playurl')}">
+                        <input type="checkbox" lay-skin="primary" name="collect[vod][uprule][]" value="b" title="{:lang('downurl')}" {if condition="strpos($config['collect']['vod']['uprule'],'b') !==false"}checked {/if} id="label-collect-vod-uprule-control-b" aria-label="{:lang('admin/system/configcollect/uprule')} {:lang('downurl')}">
+                        <input type="checkbox" lay-skin="primary" name="collect[vod][uprule][]" value="c" title="{:lang('serial')}" {if condition="strpos($config['collect']['vod']['uprule'],'c') !==false"}checked {/if} id="label-collect-vod-uprule-control-c" aria-label="{:lang('admin/system/configcollect/uprule')} {:lang('serial')}">
+                        <input type="checkbox" lay-skin="primary" name="collect[vod][uprule][]" value="d" title="{:lang('remarks')}" {if condition="strpos($config['collect']['vod']['uprule'],'d') !==false"}checked {/if} id="label-collect-vod-uprule-control-d" aria-label="{:lang('admin/system/configcollect/uprule')} {:lang('remarks')}">
+                        <input type="checkbox" lay-skin="primary" name="collect[vod][uprule][]" value="e" title="{:lang('director')}" {if condition="strpos($config['collect']['vod']['uprule'],'e') !==false"}checked {/if} id="label-collect-vod-uprule-control-e" aria-label="{:lang('admin/system/configcollect/uprule')} {:lang('director')}">
+                        <input type="checkbox" lay-skin="primary" name="collect[vod][uprule][]" value="f" title="{:lang('actor')}" {if condition="strpos($config['collect']['vod']['uprule'],'f') !==false"}checked {/if} id="label-collect-vod-uprule-control-f" aria-label="{:lang('admin/system/configcollect/uprule')} {:lang('actor')}">
+                        <input type="checkbox" lay-skin="primary" name="collect[vod][uprule][]" value="g" title="{:lang('years')}" {if condition="strpos($config['collect']['vod']['uprule'],'g') !==false"}checked {/if} id="label-collect-vod-uprule-control-g" aria-label="{:lang('admin/system/configcollect/uprule')} {:lang('years')}">
+                        <input type="checkbox" lay-skin="primary" name="collect[vod][uprule][]" value="h" title="{:lang('area')}" {if condition="strpos($config['collect']['vod']['uprule'],'h') !==false"}checked {/if} id="label-collect-vod-uprule-control-h" aria-label="{:lang('admin/system/configcollect/uprule')} {:lang('area')}">
+                        <input type="checkbox" lay-skin="primary" name="collect[vod][uprule][]" value="i" title="{:lang('lang')}" {if condition="strpos($config['collect']['vod']['uprule'],'i') !==false"}checked {/if} id="label-collect-vod-uprule-control-i" aria-label="{:lang('admin/system/configcollect/uprule')} {:lang('lang')}">
+                        <input type="checkbox" lay-skin="primary" name="collect[vod][uprule][]" value="j" title="{:lang('pic')}" {if condition="strpos($config['collect']['vod']['uprule'],'j') !==false"}checked {/if} id="label-collect-vod-uprule-control-j" aria-label="{:lang('admin/system/configcollect/uprule')} {:lang('pic')}">
+                        <input type="checkbox" lay-skin="primary" name="collect[vod][uprule][]" value="k" title="{:lang('content')}" {if condition="strpos($config['collect']['vod']['uprule'],'k') !==false"}checked {/if} id="label-collect-vod-uprule-control-k" aria-label="{:lang('admin/system/configcollect/uprule')} {:lang('content')}">
+                        <input type="checkbox" lay-skin="primary" name="collect[vod][uprule][]" value="l" title="{:lang('admin/editor_tags')}" {if condition="strpos($config['collect']['vod']['uprule'],'l') !==false"}checked {/if} id="label-collect-vod-uprule-control-l" aria-label="{:lang('admin/system/configcollect/uprule')} {:lang('admin/editor_tags')}">
+                        <!-- <input type="checkbox" lay-skin="primary" name="collect[vod][uprule][]" value="m" title="{:lang('sub')}" {if condition="strpos($config['collect']['vod']['uprule'],'m') !==false"}checked {/if}> -->
+                        <input type="checkbox" lay-skin="primary" name="collect[vod][uprule][]" value="n" title="{:lang('class')}" {if condition="strpos($config['collect']['vod']['uprule'],'n') !==false"}checked {/if} id="label-collect-vod-uprule-control-n" aria-label="{:lang('admin/system/configcollect/uprule')} {:lang('class')}">
+                        <input type="checkbox" lay-skin="primary" name="collect[vod][uprule][]" value="o" title="{:lang('writer')}" {if condition="strpos($config['collect']['vod']['uprule'],'o') !==false"}checked {/if} id="label-collect-vod-uprule-control-o" aria-label="{:lang('admin/system/configcollect/uprule')} {:lang('writer')}">
+                        <input type="checkbox" lay-skin="primary" name="collect[vod][uprule][]" value="p" title="{:lang('version')}" {if condition="strpos($config['collect']['vod']['uprule'],'p') !==false"}checked {/if} id="label-collect-vod-uprule-control-p" aria-label="{:lang('admin/system/configcollect/uprule')} {:lang('version')}">
+                        <input type="checkbox" lay-skin="primary" name="collect[vod][uprule][]" value="q" title="{:lang('state')}" {if condition="strpos($config['collect']['vod']['uprule'],'q') !==false"}checked {/if} id="label-collect-vod-uprule-control-q" aria-label="{:lang('admin/system/configcollect/uprule')} {:lang('state')}">
+                        <input type="checkbox" lay-skin="primary" name="collect[vod][uprule][]" value="r" title="{:lang('blurb')}" {if condition="strpos($config['collect']['vod']['uprule'],'r') !==false"}checked {/if} id="label-collect-vod-uprule-control-r" aria-label="{:lang('admin/system/configcollect/uprule')} {:lang('blurb')}">
+                        <input type="checkbox" lay-skin="primary" name="collect[vod][uprule][]" value="s" title="{:lang('tv')}" {if condition="strpos($config['collect']['vod']['uprule'],'s') !==false"}checked {/if} id="label-collect-vod-uprule-control-s" aria-label="{:lang('admin/system/configcollect/uprule')} {:lang('tv')}">
+                        <input type="checkbox" lay-skin="primary" name="collect[vod][uprule][]" value="t" title="{:lang('weekday')}" {if condition="strpos($config['collect']['vod']['uprule'],'t') !==false"}checked {/if} id="label-collect-vod-uprule-control-t" aria-label="{:lang('admin/system/configcollect/uprule')} {:lang('weekday')}">
+                        <input type="checkbox" lay-skin="primary" name="collect[vod][uprule][]" value="u" title="{:lang('total')}" {if condition="strpos($config['collect']['vod']['uprule'],'u') !==false"}checked {/if} id="label-collect-vod-uprule-control-u" aria-label="{:lang('admin/system/configcollect/uprule')} {:lang('total')}">
+                        <input type="checkbox" lay-skin="primary" name="collect[vod][uprule][]" value="v" title="{:lang('isend')}" {if condition="strpos($config['collect']['vod']['uprule'],'v') !==false"}checked {/if} id="label-collect-vod-uprule-control-v" aria-label="{:lang('admin/system/configcollect/uprule')} {:lang('isend')}">
+                        <input type="checkbox" lay-skin="primary" name="collect[vod][uprule][]" value="w" title="{:lang('plot')}" {if condition="strpos($config['collect']['vod']['uprule'],'w') !==false"}checked {/if} id="label-collect-vod-uprule-control-w" aria-label="{:lang('admin/system/configcollect/uprule')} {:lang('plot')}">
+                    </div>
+                </div>
+
+                <div class="layui-form-item studio-field-row studio-field-wide">
+                    <label class="layui-form-label" id="label-collect-vod-filter-label" for="label-collect-vod-filter-control">{:lang('admin/system/configcollect/filter')}</label>
+                    <div class="layui-input-block">
+                        <textarea name="collect[vod][filter]" class="layui-textarea" placeholder="{:lang('multi_separate_tip')}" id="label-collect-vod-filter-control" aria-labelledby="label-collect-vod-filter-label">{$config['collect']['vod']['filter']|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}</textarea>
+                    </div>
+                </div>
+            </div>
+
+                <div class="layui-tab-item studio-form-panel">
+
+                <div class="layui-form-item studio-field-row" role="radiogroup" aria-labelledby="label-collect-art-status-group">
+                    <label class="layui-form-label" id="label-collect-art-status-group">{:lang('admin/system/configcollect/status')}</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="collect[art][status]" value="0" title="{:lang('reviewed_not')}" {if condition="$config['collect']['art']['status'] neq 1"}checked {/if} id="label-collect-art-status-control-0" aria-label="{:lang('admin/system/configcollect/status')} {:lang('reviewed_not')}">
+                        <input type="radio" name="collect[art][status]" value="1" title="{:lang('reviewed')}" {if condition="$config['collect']['art']['status'] eq 1"}checked {/if} id="label-collect-art-status-control-1" aria-label="{:lang('admin/system/configcollect/status')} {:lang('reviewed')}">
+                    </div>
+                </div>
+
+                <div class="layui-form-item studio-field-row" role="group" aria-labelledby="label-collect-art-hits_start-group">
+                    <label class="layui-form-label" id="label-collect-art-hits_start-group">{:lang('admin/system/configcollect/hits_rnd')}</label>
+                    <div class="layui-input-inline">
+                        <span id="label-collect-art-hits_start-control-bound" hidden>{:lang('min_val')}</span><input type="text" name="collect[art][hits_start]" placeholder="{:lang('min_val')}" value="{$config['collect']['art']['hits_start']|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}" class="layui-input" id="label-collect-art-hits_start-control" aria-labelledby="label-collect-art-hits_start-group label-collect-art-hits_start-control-bound">
+                    </div>
+                    <div class="layui-input-inline">
+                        <span id="label-collect-art-hits_end-control-bound" hidden>{:lang('max_val')}</span><input type="text" name="collect[art][hits_end]" placeholder="{:lang('max_val')}" value="{$config['collect']['art']['hits_end']|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}" class="layui-input" id="label-collect-art-hits_end-control" aria-labelledby="label-collect-art-hits_start-group label-collect-art-hits_end-control-bound">
+                    </div>
+                </div>
+
+                <div class="layui-form-item studio-field-row" role="group" aria-labelledby="label-collect-art-updown_start-group">
+                    <label class="layui-form-label" id="label-collect-art-updown_start-group">{:lang('admin/system/configcollect/updown_rnd')}</label>
+                    <div class="layui-input-inline">
+                        <span id="label-collect-art-updown_start-control-bound" hidden>{:lang('min_val')}</span><input type="text" name="collect[art][updown_start]" placeholder="{:lang('min_val')}" value="{$config['collect']['art']['updown_start']|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}" class="layui-input" id="label-collect-art-updown_start-control" aria-labelledby="label-collect-art-updown_start-group label-collect-art-updown_start-control-bound">
+                    </div>
+                    <div class="layui-input-inline">
+                        <span id="label-collect-art-updown_end-control-bound" hidden>{:lang('max_val')}</span><input type="text" name="collect[art][updown_end]" placeholder="{:lang('max_val')}" value="{$config['collect']['art']['updown_end']|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}" class="layui-input" id="label-collect-art-updown_end-control" aria-labelledby="label-collect-art-updown_start-group label-collect-art-updown_end-control-bound">
+                    </div>
+                </div>
+
+
+                <div class="layui-form-item studio-field-row" role="radiogroup" aria-labelledby="label-collect-art-score-group">
+                    <label class="layui-form-label" id="label-collect-art-score-group">{:lang('admin/system/configcollect/score_rnd')}</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="collect[art][score]" value="0" title="{:lang('admin/ux/system/off')}" {if condition="$config['collect']['art']['score'] neq 1"}checked {/if} id="label-collect-art-score-control-0" aria-label="{:lang('admin/system/configcollect/score_rnd')} {:lang('admin/ux/system/off')}">
+                        <input type="radio" name="collect[art][score]" value="1" title="{:lang('admin/ux/system/on')}" {if condition="$config['collect']['art']['score'] eq 1"}checked {/if} id="label-collect-art-score-control-1" aria-label="{:lang('admin/system/configcollect/score_rnd')} {:lang('admin/ux/system/on')}">
+                    </div>
+                </div>
+
+                <div class="layui-form-item studio-field-row" role="radiogroup" aria-labelledby="label-collect-art-pic-group">
+                    <label class="layui-form-label" id="label-collect-art-pic-group">{:lang('admin/system/configcollect/sync_pic')}</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="collect[art][pic]" value="0" title="{:lang('admin/ux/system/off')}" {if condition="$config['collect']['art']['pic'] neq 1"}checked {/if} id="label-collect-art-pic-control-0" aria-label="{:lang('admin/system/configcollect/sync_pic')} {:lang('admin/ux/system/off')}">
+                        <input type="radio" name="collect[art][pic]" value="1" title="{:lang('admin/ux/system/on')}" {if condition="$config['collect']['art']['pic'] eq 1"}checked {/if} id="label-collect-art-pic-control-1" aria-label="{:lang('admin/system/configcollect/sync_pic')} {:lang('admin/ux/system/on')}">
+                    </div>
+                </div>
+                <div class="layui-form-item studio-field-row" role="radiogroup" aria-labelledby="label-collect-art-tag-group">
+                    <label class="layui-form-label" id="label-collect-art-tag-group">{:lang('admin/system/configcollect/auto_tag')}</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="collect[art][tag]" value="0" title="{:lang('admin/ux/system/off')}" {if condition="$config['collect']['art']['tag'] neq 1"}checked {/if} id="label-collect-art-tag-control-0" aria-label="{:lang('admin/system/configcollect/auto_tag')} {:lang('admin/ux/system/off')}">
+                        <input type="radio" name="collect[art][tag]" value="1" title="{:lang('admin/ux/system/on')}" {if condition="$config['collect']['art']['tag'] eq 1"}checked {/if} id="label-collect-art-tag-control-1" aria-label="{:lang('admin/system/configcollect/auto_tag')} {:lang('admin/ux/system/on')}">
+                    </div>
+                </div>
+                <div class="layui-form-item studio-field-row" role="radiogroup" aria-labelledby="label-collect-art-psernd-group">
+                    <label class="layui-form-label" id="label-collect-art-psernd-group">{:lang('admin/system/configcollect/psernd')}</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="collect[art][psernd]" value="0" title="{:lang('admin/ux/system/off')}" {if condition="$config['collect']['art']['psernd'] neq 1"}checked {/if} id="label-collect-art-psernd-control-0" aria-label="{:lang('admin/system/configcollect/psernd')} {:lang('admin/ux/system/off')}">
+                        <input type="radio" name="collect[art][psernd]" value="1" title="{:lang('admin/ux/system/on')}" {if condition="$config['collect']['art']['psernd'] eq 1"}checked {/if} id="label-collect-art-psernd-control-1" aria-label="{:lang('admin/system/configcollect/psernd')} {:lang('admin/ux/system/on')}">
+                    </div>
+                </div>
+                <div class="layui-form-item studio-field-row" role="radiogroup" aria-labelledby="label-collect-art-psesyn-group">
+                    <label class="layui-form-label" id="label-collect-art-psesyn-group">{:lang('admin/system/configcollect/psesyn')}</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="collect[art][psesyn]" value="0" title="{:lang('admin/ux/system/off')}" {if condition="$config['collect']['art']['psesyn'] neq 1"}checked {/if} id="label-collect-art-psesyn-control-0" aria-label="{:lang('admin/system/configcollect/psesyn')} {:lang('admin/ux/system/off')}">
+                        <input type="radio" name="collect[art][psesyn]" value="1" title="{:lang('admin/ux/system/on')}" {if condition="$config['collect']['art']['psesyn'] eq 1"}checked {/if} id="label-collect-art-psesyn-control-1" aria-label="{:lang('admin/system/configcollect/psesyn')} {:lang('admin/ux/system/on')}">
+                    </div>
+                </div>
+
+                <div class="layui-form-item studio-field-row" role="group" aria-labelledby="label-collect-art-inrule-group">
+                    <label class="layui-form-label" id="label-collect-art-inrule-group">{:lang('admin/system/configcollect/inrule')}</label>
+                    <div class="layui-input-block">
+                        <input type="checkbox" lay-skin="primary" name="collect[art][inrule][]" value="a" title="{:lang('name')}" checked disabled id="label-collect-art-inrule-control-a" aria-label="{:lang('admin/system/configcollect/inrule')} {:lang('name')}">
+                        <input type="checkbox" lay-skin="primary" name="collect[art][inrule][]" value="b" title="{:lang('type')}" {if condition="strpos($config['collect']['art']['inrule'],'b') !==false"}checked {/if} id="label-collect-art-inrule-control-b" aria-label="{:lang('admin/system/configcollect/inrule')} {:lang('type')}">
+                    </div>
+                </div>
+
+                <div class="layui-form-item studio-field-row studio-field-wide" role="group" aria-labelledby="label-collect-art-uprule-group">
+                    <label class="layui-form-label" id="label-collect-art-uprule-group">{:lang('admin/system/configcollect/uprule')}</label>
+                    <div class="layui-input-block">
+                        <input type="checkbox" lay-skin="primary" name="collect[art][uprule][]" value="a" title="{:lang('content')}" {if condition="strpos($config['collect']['art']['uprule'],'a') !==false"}checked {/if} id="label-collect-art-uprule-control-a" aria-label="{:lang('admin/system/configcollect/uprule')} {:lang('content')}">
+                        <input type="checkbox" lay-skin="primary" name="collect[art][uprule][]" value="b" title="{:lang('author')}" {if condition="strpos($config['collect']['art']['uprule'],'b') !==false"}checked {/if} id="label-collect-art-uprule-control-b" aria-label="{:lang('admin/system/configcollect/uprule')} {:lang('author')}">
+                        <input type="checkbox" lay-skin="primary" name="collect[art][uprule][]" value="c" title="{:lang('from')}" {if condition="strpos($config['collect']['art']['uprule'],'c') !==false"}checked {/if} id="label-collect-art-uprule-control-c" aria-label="{:lang('admin/system/configcollect/uprule')} {:lang('from')}">
+                        <input type="checkbox" lay-skin="primary" name="collect[art][uprule][]" value="d" title="{:lang('pic')}" {if condition="strpos($config['collect']['art']['uprule'],'d') !==false"}checked {/if} id="label-collect-art-uprule-control-d" aria-label="{:lang('admin/system/configcollect/uprule')} {:lang('pic')}">
+                        <input type="checkbox" lay-skin="primary" name="collect[art][uprule][]" value="e" title="{:lang('admin/editor_tags')}" {if condition="strpos($config['collect']['art']['uprule'],'e') !==false"}checked {/if} id="label-collect-art-uprule-control-e" aria-label="{:lang('admin/system/configcollect/uprule')} {:lang('admin/editor_tags')}">
+                        <input type="checkbox" lay-skin="primary" name="collect[art][uprule][]" value="f" title="{:lang('blurb')}" {if condition="strpos($config['collect']['art']['uprule'],'f') !==false"}checked {/if} id="label-collect-art-uprule-control-f" aria-label="{:lang('admin/system/configcollect/uprule')} {:lang('blurb')}">
+                    </div>
+                </div>
+
+                <div class="layui-form-item studio-field-row studio-field-wide">
+                    <label class="layui-form-label" id="label-collect-art-filter-label" for="label-collect-art-filter-control">{:lang('admin/system/configcollect/filter')}</label>
+                    <div class="layui-input-block">
+                        <textarea name="collect[art][filter]" class="layui-textarea" placeholder="{:lang('multi_separate_tip')}" id="label-collect-art-filter-control" aria-labelledby="label-collect-art-filter-label">{$config['collect']['art']['filter']|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}</textarea>
+                    </div>
+                </div>
+
+            </div>
+
+                <div class="layui-tab-item studio-form-panel">
+
+                    <div class="layui-form-item studio-field-row" role="radiogroup" aria-labelledby="label-collect-actor-status-group">
+                        <label class="layui-form-label" id="label-collect-actor-status-group">{:lang('admin/system/configcollect/status')}</label>
+                        <div class="layui-input-block">
+                            <input type="radio" name="collect[actor][status]" value="0" title="{:lang('reviewed_not')}" {if condition="$config['collect']['actor']['status'] neq 1"}checked {/if} id="label-collect-actor-status-control-0" aria-label="{:lang('admin/system/configcollect/status')} {:lang('reviewed_not')}">
+                            <input type="radio" name="collect[actor][status]" value="1" title="{:lang('reviewed')}" {if condition="$config['collect']['actor']['status'] eq 1"}checked {/if} id="label-collect-actor-status-control-1" aria-label="{:lang('admin/system/configcollect/status')} {:lang('reviewed')}">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item studio-field-row" role="group" aria-labelledby="label-collect-actor-hits_start-group">
+                        <label class="layui-form-label" id="label-collect-actor-hits_start-group">{:lang('admin/system/configcollect/hits_rnd')}</label>
+                        <div class="layui-input-inline">
+                            <span id="label-collect-actor-hits_start-control-bound" hidden>{:lang('min_val')}</span><input type="text" name="collect[actor][hits_start]" placeholder="{:lang('min_val')}" value="{$config['collect']['actor']['hits_start']|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}" class="layui-input" id="label-collect-actor-hits_start-control" aria-labelledby="label-collect-actor-hits_start-group label-collect-actor-hits_start-control-bound">
+                        </div>
+                        <div class="layui-input-inline">
+                            <span id="label-collect-actor-hits_end-control-bound" hidden>{:lang('max_val')}</span><input type="text" name="collect[actor][hits_end]" placeholder="{:lang('max_val')}" value="{$config['collect']['actor']['hits_end']|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}" class="layui-input" id="label-collect-actor-hits_end-control" aria-labelledby="label-collect-actor-hits_start-group label-collect-actor-hits_end-control-bound">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item studio-field-row" role="group" aria-labelledby="label-collect-actor-updown_start-group">
+                        <label class="layui-form-label" id="label-collect-actor-updown_start-group">{:lang('admin/system/configcollect/updown_rnd')}</label>
+                        <div class="layui-input-inline">
+                            <span id="label-collect-actor-updown_start-control-bound" hidden>{:lang('min_val')}</span><input type="text" name="collect[actor][updown_start]" placeholder="{:lang('min_val')}" value="{$config['collect']['actor']['updown_start']|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}" class="layui-input" id="label-collect-actor-updown_start-control" aria-labelledby="label-collect-actor-updown_start-group label-collect-actor-updown_start-control-bound">
+                        </div>
+                        <div class="layui-input-inline">
+                            <span id="label-collect-actor-updown_end-control-bound" hidden>{:lang('max_val')}</span><input type="text" name="collect[actor][updown_end]" placeholder="{:lang('max_val')}" value="{$config['collect']['actor']['updown_end']|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}" class="layui-input" id="label-collect-actor-updown_end-control" aria-labelledby="label-collect-actor-updown_start-group label-collect-actor-updown_end-control-bound">
+                        </div>
+                    </div>
+
+
+                    <div class="layui-form-item studio-field-row" role="radiogroup" aria-labelledby="label-collect-actor-score-group">
+                        <label class="layui-form-label" id="label-collect-actor-score-group">{:lang('admin/system/configcollect/score_rnd')}</label>
+                        <div class="layui-input-block">
+                            <input type="radio" name="collect[actor][score]" value="0" title="{:lang('admin/ux/system/off')}" {if condition="$config['collect']['actor']['score'] neq 1"}checked {/if} id="label-collect-actor-score-control-0" aria-label="{:lang('admin/system/configcollect/score_rnd')} {:lang('admin/ux/system/off')}">
+                            <input type="radio" name="collect[actor][score]" value="1" title="{:lang('admin/ux/system/on')}" {if condition="$config['collect']['actor']['score'] eq 1"}checked {/if} id="label-collect-actor-score-control-1" aria-label="{:lang('admin/system/configcollect/score_rnd')} {:lang('admin/ux/system/on')}">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item studio-field-row" role="radiogroup" aria-labelledby="label-collect-actor-pic-group">
+                        <label class="layui-form-label" id="label-collect-actor-pic-group">{:lang('admin/system/configcollect/sync_pic')}</label>
+                        <div class="layui-input-block">
+                            <input type="radio" name="collect[actor][pic]" value="0" title="{:lang('admin/ux/system/off')}" {if condition="$config['collect']['actor']['pic'] neq 1"}checked {/if} id="label-collect-actor-pic-control-0" aria-label="{:lang('admin/system/configcollect/sync_pic')} {:lang('admin/ux/system/off')}">
+                            <input type="radio" name="collect[actor][pic]" value="1" title="{:lang('admin/ux/system/on')}" {if condition="$config['collect']['actor']['pic'] eq 1"}checked {/if} id="label-collect-actor-pic-control-1" aria-label="{:lang('admin/system/configcollect/sync_pic')} {:lang('admin/ux/system/on')}">
+                        </div>
+                    </div>
+                    <div class="layui-form-item studio-field-row" role="radiogroup" aria-labelledby="label-collect-actor-psernd-group">
+                        <label class="layui-form-label" id="label-collect-actor-psernd-group">{:lang('admin/system/configcollect/psernd')}</label>
+                        <div class="layui-input-block">
+                            <input type="radio" name="collect[actor][psernd]" value="0" title="{:lang('admin/ux/system/off')}" {if condition="$config['collect']['actor']['psernd'] neq 1"}checked {/if} id="label-collect-actor-psernd-control-0" aria-label="{:lang('admin/system/configcollect/psernd')} {:lang('admin/ux/system/off')}">
+                            <input type="radio" name="collect[actor][psernd]" value="1" title="{:lang('admin/ux/system/on')}" {if condition="$config['collect']['actor']['psernd'] eq 1"}checked {/if} id="label-collect-actor-psernd-control-1" aria-label="{:lang('admin/system/configcollect/psernd')} {:lang('admin/ux/system/on')}">
+                        </div>
+                    </div>
+                    <div class="layui-form-item studio-field-row" role="radiogroup" aria-labelledby="label-collect-actor-psesyn-group">
+                        <label class="layui-form-label" id="label-collect-actor-psesyn-group">{:lang('admin/system/configcollect/psesyn')}</label>
+                        <div class="layui-input-block">
+                            <input type="radio" name="collect[actor][psesyn]" value="0" title="{:lang('admin/ux/system/off')}" {if condition="$config['collect']['actor']['psesyn'] neq 1"}checked {/if} id="label-collect-actor-psesyn-control-0" aria-label="{:lang('admin/system/configcollect/psesyn')} {:lang('admin/ux/system/off')}">
+                            <input type="radio" name="collect[actor][psesyn]" value="1" title="{:lang('admin/ux/system/on')}" {if condition="$config['collect']['actor']['psesyn'] eq 1"}checked {/if} id="label-collect-actor-psesyn-control-1" aria-label="{:lang('admin/system/configcollect/psesyn')} {:lang('admin/ux/system/on')}">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item studio-field-row studio-field-wide" role="group" aria-labelledby="label-collect-actor-inrule-group">
+                        <label class="layui-form-label" id="label-collect-actor-inrule-group">{:lang('admin/system/configcollect/inrule')}</label>
+                        <div class="layui-input-block">
+                            <input type="checkbox" lay-skin="primary" name="collect[actor][inrule][]" value="a" title="{:lang('actor_name')}" checked disabled id="label-collect-actor-inrule-control-a" aria-label="{:lang('admin/system/configcollect/inrule')} {:lang('actor_name')}">
+                            <input type="checkbox" lay-skin="primary" name="collect[actor][inrule][]" value="c" title="{:lang('type')}" {if condition="strpos($config['collect']['actor']['inrule'],'c') !==false"}checked {/if} id="label-collect-actor-inrule-control-c" aria-label="{:lang('admin/system/configcollect/inrule')} {:lang('type')}">
+                            <input type="checkbox" lay-skin="primary" name="collect[actor][inrule][]" value="b" title="{:lang('sex')}" {if condition="strpos($config['collect']['actor']['inrule'],'b') !==false"}checked {/if} id="label-collect-actor-inrule-control-b" aria-label="{:lang('admin/system/configcollect/inrule')} {:lang('sex')}">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item studio-field-row studio-field-wide" role="group" aria-labelledby="label-collect-actor-uprule-group">
+                        <label class="layui-form-label" id="label-collect-actor-uprule-group">{:lang('admin/system/configcollect/uprule')}</label>
+                        <div class="layui-input-block">
+                            <input type="checkbox" lay-skin="primary" name="collect[actor][uprule][]" value="a" title="{:lang('content')}" {if condition="strpos($config['collect']['actor']['uprule'],'a') !==false"}checked {/if} id="label-collect-actor-uprule-control-a" aria-label="{:lang('admin/system/configcollect/uprule')} {:lang('content')}">
+                            <input type="checkbox" lay-skin="primary" name="collect[actor][uprule][]" value="b" title="{:lang('blurb')}" {if condition="strpos($config['collect']['actor']['uprule'],'b') !==false"}checked {/if} id="label-collect-actor-uprule-control-b" aria-label="{:lang('admin/system/configcollect/uprule')} {:lang('blurb')}">
+                            <input type="checkbox" lay-skin="primary" name="collect[actor][uprule][]" value="c" title="{:lang('remarks')}" {if condition="strpos($config['collect']['actor']['uprule'],'c') !==false"}checked {/if} id="label-collect-actor-uprule-control-c" aria-label="{:lang('admin/system/configcollect/uprule')} {:lang('remarks')}">
+                            <input type="checkbox" lay-skin="primary" name="collect[actor][uprule][]" value="d" title="{:lang('works')}" {if condition="strpos($config['collect']['actor']['uprule'],'d') !==false"}checked {/if} id="label-collect-actor-uprule-control-d" aria-label="{:lang('admin/system/configcollect/uprule')} {:lang('works')}">
+                            <input type="checkbox" lay-skin="primary" name="collect[actor][uprule][]" value="e" title="{:lang('pic')}" {if condition="strpos($config['collect']['actor']['uprule'],'e') !==false"}checked {/if} id="label-collect-actor-uprule-control-e" aria-label="{:lang('admin/system/configcollect/uprule')} {:lang('pic')}">
+
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item studio-field-row studio-field-wide">
+                        <label class="layui-form-label" id="label-collect-actor-filter-label" for="label-collect-actor-filter-control">{:lang('admin/system/configcollect/filter')}</label>
+                        <div class="layui-input-block">
+                            <textarea name="collect[actor][filter]" class="layui-textarea" placeholder="{:lang('multi_separate_tip')}" id="label-collect-actor-filter-control" aria-labelledby="label-collect-actor-filter-label">{$config['collect']['actor']['filter']|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}</textarea>
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+                <div class="layui-tab-item studio-form-panel">
+
+                    <div class="layui-form-item studio-field-row" role="radiogroup" aria-labelledby="label-collect-comment-status-group">
+                        <label class="layui-form-label" id="label-collect-comment-status-group">{:lang('admin/system/configcollect/status')}</label>
+                        <div class="layui-input-block">
+                            <input type="radio" name="collect[comment][status]" value="0" title="{:lang('reviewed_not')}" {if condition="$config['collect']['comment']['status'] neq 1"}checked {/if} id="label-collect-comment-status-control-0" aria-label="{:lang('admin/system/configcollect/status')} {:lang('reviewed_not')}">
+                            <input type="radio" name="collect[comment][status]" value="1" title="{:lang('reviewed')}" {if condition="$config['collect']['comment']['status'] eq 1"}checked {/if} id="label-collect-comment-status-control-1" aria-label="{:lang('admin/system/configcollect/status')} {:lang('reviewed')}">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item studio-field-row" role="group" aria-labelledby="label-collect-comment-updown_start-group">
+                        <label class="layui-form-label" id="label-collect-comment-updown_start-group">{:lang('admin/system/configcollect/updown_rnd')}</label>
+                        <div class="layui-input-inline">
+                            <span id="label-collect-comment-updown_start-control-bound" hidden>{:lang('min_val')}</span><input type="text" name="collect[comment][updown_start]" placeholder="{:lang('min_val')}" value="{$config['collect']['comment']['updown_start']|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}" class="layui-input" id="label-collect-comment-updown_start-control" aria-labelledby="label-collect-comment-updown_start-group label-collect-comment-updown_start-control-bound">
+                        </div>
+                        <div class="layui-input-inline">
+                            <span id="label-collect-comment-updown_end-control-bound" hidden>{:lang('max_val')}</span><input type="text" name="collect[comment][updown_end]" placeholder="{:lang('max_val')}" value="{$config['collect']['comment']['updown_end']|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}" class="layui-input" id="label-collect-comment-updown_end-control" aria-labelledby="label-collect-comment-updown_start-group label-collect-comment-updown_end-control-bound">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item studio-field-row" role="radiogroup" aria-labelledby="label-collect-comment-psernd-group">
+                        <label class="layui-form-label" id="label-collect-comment-psernd-group">{:lang('admin/system/configcollect/psernd')}</label>
+                        <div class="layui-input-block">
+                            <input type="radio" name="collect[comment][psernd]" value="0" title="{:lang('admin/ux/system/off')}" {if condition="$config['collect']['comment']['psernd'] neq 1"}checked {/if} id="label-collect-comment-psernd-control-0" aria-label="{:lang('admin/system/configcollect/psernd')} {:lang('admin/ux/system/off')}">
+                            <input type="radio" name="collect[comment][psernd]" value="1" title="{:lang('admin/ux/system/on')}" {if condition="$config['collect']['comment']['psernd'] eq 1"}checked {/if} id="label-collect-comment-psernd-control-1" aria-label="{:lang('admin/system/configcollect/psernd')} {:lang('admin/ux/system/on')}">
+                        </div>
+                    </div>
+                    <div class="layui-form-item studio-field-row" role="radiogroup" aria-labelledby="label-collect-comment-psesyn-group">
+                        <label class="layui-form-label" id="label-collect-comment-psesyn-group">{:lang('admin/system/configcollect/psesyn')}</label>
+                        <div class="layui-input-block">
+                            <input type="radio" name="collect[comment][psesyn]" value="0" title="{:lang('admin/ux/system/off')}" {if condition="$config['collect']['comment']['psesyn'] neq 1"}checked {/if} id="label-collect-comment-psesyn-control-0" aria-label="{:lang('admin/system/configcollect/psesyn')} {:lang('admin/ux/system/off')}">
+                            <input type="radio" name="collect[comment][psesyn]" value="1" title="{:lang('admin/ux/system/on')}" {if condition="$config['collect']['comment']['psesyn'] eq 1"}checked {/if} id="label-collect-comment-psesyn-control-1" aria-label="{:lang('admin/system/configcollect/psesyn')} {:lang('admin/ux/system/on')}">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item studio-field-row studio-field-wide" role="group" aria-labelledby="label-collect-comment-inrule-group">
+                        <label class="layui-form-label" id="label-collect-comment-inrule-group">{:lang('admin/system/configcollect/inrule')}</label>
+                        <div class="layui-input-block">
+                            <input type="checkbox" lay-skin="primary" name="collect[comment][inrule][]" value="a" title="{:lang('rel_name')}{:lang('or')}{:lang('douban_id')}" checked disabled id="label-collect-comment-inrule-control-a" aria-label="{:lang('admin/system/configcollect/inrule')} {:lang('rel_name')}{:lang('or')}{:lang('douban_id')}">
+                            <input type="checkbox" lay-skin="primary" name="collect[comment][inrule][]" value="b" title="{:lang('comment_content')}" {if condition="strpos($config['collect']['comment']['inrule'],'b') !==false"}checked {/if} id="label-collect-comment-inrule-control-b" aria-label="{:lang('admin/system/configcollect/inrule')} {:lang('comment_content')}">
+                            <input type="checkbox" lay-skin="primary" name="collect[comment][inrule][]" value="c" title="{:lang('comment_name')}" {if condition="strpos($config['collect']['comment']['inrule'],'c') !==false"}checked {/if}  id="label-collect-comment-inrule-control-c" aria-label="{:lang('admin/system/configcollect/inrule')} {:lang('comment_name')}">
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">{:lang('admin/system/configcollect/inrule_tip_comment')}</div>
+                    </div>
+
+                    <div class="layui-form-item studio-field-row">
+                        <label class="layui-form-label">{:lang('admin/system/configcollect/uprule')}</label>
+                        <div class="layui-input-block">
+
+
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item studio-field-row studio-field-wide">
+                        <label class="layui-form-label" id="label-collect-comment-filter-label" for="label-collect-comment-filter-control">{:lang('admin/system/configcollect/filter')}</label>
+                        <div class="layui-input-block">
+                            <textarea name="collect[comment][filter]" class="layui-textarea" placeholder="{:lang('multi_separate_tip')}" id="label-collect-comment-filter-control" aria-labelledby="label-collect-comment-filter-label">{$config['collect']['comment']['filter']|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}</textarea>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="layui-tab-item studio-form-panel">
+                <blockquote class="layui-elem-quote layui-quote-nm studio-field-wide">
+                    {:lang('admin/system/configcollect/words_tip')}
+                </blockquote>
+
+                <div class="layui-form-item studio-field-row studio-field-wide">
+                    <label class="layui-form-label" id="label-collect-vod-namewords-label" for="label-collect-vod-namewords-control">{:lang('admin/system/configcollect/vod_namewords')}</label>
+                    <div class="layui-input-block">
+                        <textarea name="collect[vod][namewords]" class="layui-textarea" id="label-collect-vod-namewords-control" aria-labelledby="label-collect-vod-namewords-label">{$config['collect']['vod']['namewords']|mac_replace_text|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}</textarea>
+                    </div>
+                </div>
+
+                <div class="layui-form-item studio-field-row studio-field-wide">
+                    <label class="layui-form-label" id="label-collect-vod-thesaurus-label" for="label-collect-vod-thesaurus-control">{:lang('admin/system/configcollect/vod_thesaurus')}</label>
+                    <div class="layui-input-block">
+                        <textarea name="collect[vod][thesaurus]" class="layui-textarea" id="label-collect-vod-thesaurus-control" aria-labelledby="label-collect-vod-thesaurus-label">{$config['collect']['vod']['thesaurus']|mac_replace_text|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}</textarea>
+                    </div>
+                </div>
+
+                <div class="layui-form-item studio-field-row studio-field-wide">
+                    <label class="layui-form-label" id="label-collect-vod-playerwords-label" for="label-collect-vod-playerwords-control">{:lang('admin/system/configcollect/vod_playerwords')}</label>
+                    <div class="layui-input-block">
+                        <textarea name="collect[vod][playerwords]" class="layui-textarea" id="label-collect-vod-playerwords-control" aria-labelledby="label-collect-vod-playerwords-label">{$config['collect']['vod']['playerwords']|mac_replace_text|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}</textarea>
+                    </div>
+                </div>
+
+                <div class="layui-form-item studio-field-row studio-field-wide">
+                    <label class="layui-form-label" id="label-collect-vod-areawords-label" for="label-collect-vod-areawords-control">{:lang('admin/system/configcollect/vod_areawords')}</label>
+                    <div class="layui-input-block">
+                        <textarea name="collect[vod][areawords]" class="layui-textarea" id="label-collect-vod-areawords-control" aria-labelledby="label-collect-vod-areawords-label">{$config['collect']['vod']['areawords']|mac_replace_text|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}</textarea>
+                    </div>
+                </div>
+
+                <div class="layui-form-item studio-field-row studio-field-wide">
+                    <label class="layui-form-label" id="label-collect-vod-langwords-label" for="label-collect-vod-langwords-control">{:lang('admin/system/configcollect/vod_langwords')}</label>
+                    <div class="layui-input-block">
+                        <textarea name="collect[vod][langwords]" class="layui-textarea" id="label-collect-vod-langwords-control" aria-labelledby="label-collect-vod-langwords-label">{$config['collect']['vod']['langwords']|mac_replace_text|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}</textarea>
+                    </div>
+                </div>
+
+                <div class="layui-form-item studio-field-row studio-field-wide">
+                    <label class="layui-form-label" id="label-collect-vod-words-label" for="label-collect-vod-words-control">{:lang('admin/system/configcollect/vod_words')}</label>
+                    <div class="layui-input-block">
+                        <textarea name="collect[vod][words]" class="layui-textarea" id="label-collect-vod-words-control" aria-labelledby="label-collect-vod-words-label">{$config['collect']['vod']['words']|mac_replace_text|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}</textarea>
+                    </div>
+                </div>
+
+                <div class="layui-form-item studio-field-row studio-field-wide">
+                    <label class="layui-form-label" id="label-collect-art-thesaurus-label" for="label-collect-art-thesaurus-control">{:lang('admin/system/configcollect/art_thesaurus')}</label>
+                    <div class="layui-input-block">
+                        <textarea name="collect[art][thesaurus]" class="layui-textarea" id="label-collect-art-thesaurus-control" aria-labelledby="label-collect-art-thesaurus-label">{$config['collect']['art']['thesaurus']|mac_replace_text|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}</textarea>
+                    </div>
+                </div>
+
+                <div class="layui-form-item studio-field-row studio-field-wide">
+                    <label class="layui-form-label" id="label-collect-art-words-label" for="label-collect-art-words-control">{:lang('admin/system/configcollect/art_words')}</label>
+                    <div class="layui-input-block">
+                        <textarea name="collect[art][words]" class="layui-textarea" id="label-collect-art-words-control" aria-labelledby="label-collect-art-words-label">{$config['collect']['art']['words']|mac_replace_text|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}</textarea>
+                    </div>
+                </div>
+
+                <div class="layui-form-item studio-field-row studio-field-wide">
+                    <label class="layui-form-label" id="label-collect-actor-thesaurus-label" for="label-collect-actor-thesaurus-control">{:lang('admin/system/configcollect/actor_thesaurus')}</label>
+                    <div class="layui-input-block">
+                        <textarea name="collect[actor][thesaurus]" class="layui-textarea" id="label-collect-actor-thesaurus-control" aria-labelledby="label-collect-actor-thesaurus-label">{$config['collect']['actor']['thesaurus']|mac_replace_text|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}</textarea>
+                    </div>
+                </div>
+
+                <div class="layui-form-item studio-field-row studio-field-wide">
+                    <label class="layui-form-label" id="label-collect-actor-words-label" for="label-collect-actor-words-control">{:lang('admin/system/configcollect/actor_words')}</label>
+                    <div class="layui-input-block">
+                        <textarea name="collect[actor][words]" class="layui-textarea" id="label-collect-actor-words-control" aria-labelledby="label-collect-actor-words-label">{$config['collect']['actor']['words']|mac_replace_text|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}</textarea>
+                    </div>
+                </div>
+
+
+
+
+
+                    <div class="layui-form-item studio-field-row studio-field-wide">
+                        <label class="layui-form-label" id="label-collect-comment-thesaurus-label" for="label-collect-comment-thesaurus-control">{:lang('admin/system/configcollect/comment_thesaurus')}</label>
+                        <div class="layui-input-block">
+                            <textarea name="collect[comment][thesaurus]" class="layui-textarea" id="label-collect-comment-thesaurus-control" aria-labelledby="label-collect-comment-thesaurus-label">{$config['collect']['comment']['thesaurus']|mac_replace_text|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}</textarea>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item studio-field-row studio-field-wide">
+                        <label class="layui-form-label" id="label-collect-comment-words-label" for="label-collect-comment-words-control">{:lang('admin/system/configcollect/comment_words')}</label>
+                        <div class="layui-input-block">
+                            <textarea name="collect[comment][words]" class="layui-textarea" id="label-collect-comment-words-control" aria-labelledby="label-collect-comment-words-label">{$config['collect']['comment']['words']|mac_replace_text|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}</textarea>
+                        </div>
+                    </div>
+
+            </div>
+            </div>
+        </div>
+        <div class="ax-savebar">
+            <span class="ax-savebar__status" role="status"></span>
+            <div class="ax-savebar__end">
+                <button class="ax-btn" type="reset"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-rotate-ccw"/></svg>{:lang('admin/ux/system/undo_changes')}</button>
+                <button type="submit" class="ax-btn ax-btn--primary" lay-submit="" lay-filter="formSubmit"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-save"/></svg>{:lang('admin/ux/kit/save')}</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+{include file="../../../application/admin/view/public/foot" /}
+<script type="text/javascript" src="__STATIC__/js/jquery.cookie.js"></script>
+<script type="text/javascript">
+    layui.use(['element', 'form', 'layer'], function() {
+        var element = layui.element
+            ,form = layui.form
+            , layer = layui.layer;
+
+
+        element.on('tab(tb1)', function(){
+            $.cookie('configcollect_tab', this.getAttribute('lay-id'));
+        });
+
+        if( $.cookie('configcollect_tab') !=null ) {
+            element.tabChange('tb1', $.cookie('configcollect_tab'));
+        }
+
+    });
+</script>
+
+<script>
+(function () {
+    'use strict';
+    var roots = ['admin-collect-labels', 'admin-urlsend-settings-labels', 'form_post'].map(function (id) { return document.getElementById(id); }).filter(Boolean);
+    roots.forEach(function (root) {
+        if (root.dataset.fieldLabelsBound) return;
+        root.dataset.fieldLabelsBound = '1';
+        var pending = false;
+        var controls = new WeakMap();
+        function schedule() {
+            if (pending) return;
+            pending = true;
+            window.requestAnimationFrame(function () { pending = false; synchronize(); });
+        }
+        function synchronize() {
+            root.querySelectorAll('.layui-form-item').forEach(function (row) {
+                var label = row.querySelector('.layui-form-label');
+                if (!label) return;
+                var fields = row.querySelectorAll('input[name]:not([type="hidden"]):not([type="button"]), textarea[name], select[name]');
+                if (!fields.length) return;
+                if (!label.id) label.id = root.id + '-label-' + fields[0].name.replace(/[^a-zA-Z0-9_-]+/g, '-');
+                if (fields.length === 1 && !label.htmlFor) {
+                    if (!fields[0].id) fields[0].id = label.id + '-control';
+                    label.htmlFor = fields[0].id;
+                }
+                fields.forEach(function (field) {
+                    var widget = field.nextElementSibling;
+                    if (field.type === 'checkbox' || field.type === 'radio') {
+                        if (!widget || !widget.classList.contains('layui-form-' + (field.type === 'checkbox' ? 'checkbox' : 'radio'))) return;
+                        widget.setAttribute('role', field.type);
+                        widget.setAttribute('aria-label', field.getAttribute('aria-label') || label.textContent.trim() + ' ' + field.title);
+                        widget.setAttribute('aria-checked', String(field.checked));
+                        widget.setAttribute('aria-disabled', String(field.disabled));
+                        widget.setAttribute('tabindex', field.disabled ? '-1' : '0');
+                        controls.set(widget, field);
+                    } else if (field.tagName === 'SELECT') {
+                        if (!widget || !widget.classList.contains('layui-form-select')) return;
+                        var input = widget.querySelector('.layui-select-title input');
+                        if (input) input.setAttribute('aria-labelledby', field.getAttribute('aria-labelledby') || label.id);
+                    }
+                });
+            });
+        }
+        root.addEventListener('keydown', function (event) {
+            if (event.key !== ' ' && event.key !== 'Enter') return;
+            var widget = event.target.closest('.layui-form-radio,.layui-form-checkbox');
+            var field = widget && controls.get(widget);
+            if (!field || !root.contains(widget) || field.disabled) return;
+            event.preventDefault();
+            widget.click();
+            schedule();
+        });
+        root.addEventListener('click', function (event) {
+            var label = event.target.closest('label[for]');
+            if (label && root.contains(label)) {
+                var field = document.getElementById(label.htmlFor);
+                if (field && root.contains(field) && field.tagName === 'SELECT') {
+                    var widget = field.nextElementSibling;
+                    var input = widget && widget.classList.contains('layui-form-select') && widget.querySelector('.layui-select-title input');
+                    if (input) { event.preventDefault(); input.focus(); }
+                }
+            }
+            schedule();
+        });
+        root.addEventListener('change', schedule);
+        root.addEventListener('reset', function () { window.setTimeout(schedule, 0); });
+        // Observe widget replacement only; ARIA attributes never retrigger this observer.
+        new MutationObserver(schedule).observe(root, {childList:true, subtree:true});
+        synchronize();
+    });
+}());
+
+</script>
+</body>
+</html>

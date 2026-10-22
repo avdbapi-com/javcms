@@ -1,0 +1,8 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<div class="t-chips t-catrail" data-ai-group>{if condition="$emtHot"}{volist name="emtHot" id="emtHotItem"}<a href="{:mac_url_search(['wd'=>$emtHotItem])}" dir="auto">{:\\app\\common\\util\\AutoIcon::keepTag($emtHotItem) ? \\app\\common\\util\\AutoIcon::icon('tag', $emtHotItem, ['size'=>'sm']) : ''}{$emtHotItem|htmlspecialchars=ENT_QUOTES}</a>{/volist}{else/}{volist name="emtHeatRows" id="emtRow"}<a href="{$emtRow.url|htmlspecialchars=ENT_QUOTES}">{:\\app\\common\\util\\AutoIcon::icon('category', $emtRow['tn'], ['size'=>'sm', 'class'=>'t-hb' . $emtRow['b']])}{$emtRow.name|htmlspecialchars=ENT_QUOTES}</a>{/volist}{/if}</div>

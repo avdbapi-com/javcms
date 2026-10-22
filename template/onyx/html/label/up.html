@@ -1,0 +1,40 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="onyx" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/up"}
+{assign name="$maccms.aid" value="9996" /}
+{include file="public/include"}
+</head>
+<body class="page-list page-label">
+{include file="public/head"}
+{php}$tplAid = (int)($maccms['aid'] ?? 0); $tplSorts = [
+  ['label' => \app\common\util\TemplateText::raw('latest'), 'url' => mac_url('label/new'), 'on' => ($tplAid === 9999)],
+  ['label' => \app\common\util\TemplateText::raw('ui.popular'), 'url' => mac_url('label/hot'), 'on' => ($tplAid === 9998)],
+  ['label' => \app\common\util\TemplateText::raw('top_rated'), 'url' => mac_url('label/score'), 'on' => ($tplAid === 9997)],
+  ['label' => \app\common\util\TemplateText::raw('most_liked'), 'url' => mac_url('label/up'), 'on' => ($tplAid === 9996)],
+  ['label' => \app\common\util\TemplateText::raw('ui.all_videos'), 'url' => mac_url('label/sort'), 'on' => ($tplAid === 9995)],
+];{/php}
+<main id="main-content" class="wrap">
+  <div class="list-layout">
+    <div class="list-head">
+      <h1>{:\\app\\common\\util\\AutoIcon::navIcon('liked')}<span>{:\\app\\common\\util\\TemplateText::get('most_liked')}</span></h1>
+      {include file="public/sortbar"}
+    </div>
+    <section class="list-main">
+      <div class="grid" data-grid-fill>{maccms:vod num="20" paging="yes" type="all" order="desc" by="up" pageurl="label/up" id="vo"}{include file="public/vodbox"}{/maccms:vod}</div>
+      {if condition="$__PAGING__.record_total eq 0"}<div class="empty">{:\\app\\common\\util\\AutoIcon::scene('search-empty')}<p>{:\\app\\common\\util\\TemplateText::get('ui.no_results_found_try_another_category_or_search')}</p><a class="btn btn-fill" href="{$maccms.path}">{:\\app\\common\\util\\TemplateText::get('ui.back_to_home')}</a></div>{/if}
+      {include file="public/paging"}
+    </section>
+    {include file="public/listside"}
+  </div>
+</main>
+{include file="public/foot"}
+</body>
+</html>

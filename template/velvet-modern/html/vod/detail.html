@@ -1,0 +1,68 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="velvet-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}" data-fx="vt smooth" data-fx-lerp="0.09" data-fx-vt-style="velvet-modern">
+<head>
+{include file="seo/vod_detail"}
+{include file="public/include"}
+</head>
+<body class="vp-page-detail">
+{php}
+if (!isset($vpPlain)) { $vpPlain = function ($v) { $v = (string)$v; for ($i = 0; $i < 4; $i++) { $d = html_entity_decode($v, ENT_QUOTES | ENT_HTML5, 'UTF-8'); if ($d === $v) { break; } $v = $d; } return trim($v); }; }
+$vpTitle = $vpPlain(($obj['vod_display_name'] ?? '') !== '' ? $obj['vod_display_name'] : ($obj['vod_name'] ?? ''));
+$vpDesc = $vpPlain($obj['vod_display_content'] ?? '');
+if ($vpDesc === '') { $vpDesc = $vpPlain($obj['vod_display_blurb'] ?? ''); }
+$vpPlayUrl = ((!empty($obj['vod_play_list']) && is_array($obj['vod_play_list'])) ? mac_url_vod_play($obj, 'first') : '');
+$vpEpCount = 0;
+foreach ((array)($obj['vod_play_list'] ?? []) as $vpPlayList) { $vpEpCount += is_array($vpPlayList['urls'] ?? null) ? count($vpPlayList['urls']) : 0; }
+$vpTypeName = trim(\app\common\util\AvdbLanguage::decodeEntities((string)($obj['type']['type_name'] ?? '')));
+$vpTypeUrl = $vpTypeName !== '' ? mac_url_type($obj['type']) : '';
+$vpScore = (float)($obj['vod_score'] ?? 0);
+{/php}
+{include file="public/head"}
+<span hidden data-vp-history-entry data-name="{$vpTitle|htmlspecialchars=ENT_QUOTES}" data-link="{:mac_url_vod_detail($obj)}" data-pic="{$obj.vod_pic|mac_default=$tplNoPic|mac_url_img|htmlspecialchars=ENT_QUOTES}"></span>
+<main id="main-content" class="vp-main vp-main--film">
+  <div class="vp-spill" aria-hidden="true"><img src="{$obj.vod_pic|mac_default=$tplNoPic|mac_url_img|htmlspecialchars=ENT_QUOTES}" onerror="vpImg(this)" alt="" width="320" height="180" decoding="async" fetchpriority="low"></div>
+  <div class="vp-wrap">
+    <article class="vp-spread">
+      <div class="vp-page-cover">
+        <figure class="vp-cover">
+          <span class="vp-co vp-co--tl" aria-hidden="true"></span><span class="vp-co vp-co--tr" aria-hidden="true"></span><span class="vp-co vp-co--bl" aria-hidden="true"></span><span class="vp-co vp-co--br" aria-hidden="true"></span>
+          {if condition="$vpPlayUrl neq ''"}<a class="vp-cover-link" href="{$vpPlayUrl|htmlspecialchars=ENT_QUOTES}" data-fx="spotlight skeleton" aria-label="{:\\app\\common\\util\\TemplateText::get('vp.watch_now')}"><img data-lowres src="{$obj.vod_pic|mac_default=$tplNoPic|mac_url_img|htmlspecialchars=ENT_QUOTES}" onerror="vpImg(this)" alt="{$vpTitle|htmlspecialchars=ENT_QUOTES}" width="800" height="450" decoding="async" fetchpriority="high"><span class="vp-play" aria-hidden="true"><svg class="vp-i"><use href="{$maccms.path_tpl}assets/icons.svg?v=20261010-r1#play"></use></svg></span></a>{else/}<span class="vp-cover-link" data-fx="skeleton"><img data-lowres src="{$obj.vod_pic|mac_default=$tplNoPic|mac_url_img|htmlspecialchars=ENT_QUOTES}" onerror="vpImg(this)" alt="{$vpTitle|htmlspecialchars=ENT_QUOTES}" width="800" height="450" decoding="async"></span>{/if}
+        </figure>
+        <div class="vp-cover-actions">
+          {if condition="$vpPlayUrl neq ''"}<a class="vp-btn vp-btn-gold" href="{$vpPlayUrl|htmlspecialchars=ENT_QUOTES}"><svg class="vp-i" aria-hidden="true"><use href="{$maccms.path_tpl}assets/icons.svg?v=20261010-r1#play"></use></svg>{:\\app\\common\\util\\TemplateText::get('vp.watch_now')}</a>{/if}
+          {notempty name="obj.vod_down_list"}<a class="vp-btn vp-btn-ghost" href="{:mac_url_vod_down($obj)}">{:\\app\\common\\util\\TemplateText::get('ui.downloads')}</a>{/notempty}
+          <button class="vp-roundbtn" type="button" data-vp-fav data-mid="1" data-id="{$obj.vod_id|intval}" aria-pressed="false" aria-label="{:\\app\\common\\util\\TemplateText::get('vp.favourite')}" title="{:\\app\\common\\util\\TemplateText::get('vp.favourite')}"><svg class="vp-i" aria-hidden="true"><use href="{$maccms.path_tpl}assets/icons.svg?v=20261010-r1#heart"></use></svg></button>
+          <button class="vp-roundbtn" type="button" data-fx="copy" data-vp-copy data-fx-copied="{:\\app\\common\\util\\TemplateText::get('ui.link_copied')}" title="{:\\app\\common\\util\\TemplateText::get('share')}"><svg class="vp-i" aria-hidden="true"><use href="{$maccms.path_tpl}assets/icons.svg?v=20261010-r1#share"></use></svg><span class="vp-sr" data-fx-copy-label>{:\\app\\common\\util\\TemplateText::get('share')}</span></button>
+        </div>
+      </div>
+      <div class="vp-page-text">
+        {if condition="$vpTypeName neq ''"}<p class="vp-eyebrow"><a href="{$vpTypeUrl|htmlspecialchars=ENT_QUOTES}">{:\\app\\common\\util\\AutoIcon::icon('category', $obj['type']['type_name'] ?? '', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get($vpTypeName)}</a></p>{/if}
+        <h1{php}echo \app\common\util\AvdbLanguage::langAttr(isset($obj) && is_array($obj) ? $obj : []);{/php} class="vp-film-title">{$vpTitle|htmlspecialchars=ENT_QUOTES}</h1>
+        <p class="vp-meta-line vp-film-meta"><span>{:\\app\\common\\util\\AutoIcon::ui('eye', ['class'=>'vp-i'])}<span class="vp-sr">{:\\app\\common\\util\\TemplateText::get('views')}</span><span class="mac_hits" data-mid="1" data-id="{$obj.vod_id|intval}" data-type="hits">{:number_format(intval($obj['vod_hits']))}</span></span><i aria-hidden="true">&#10022;</i><span>{:\\app\\common\\util\\AutoIcon::ui('calendar', ['class'=>'vp-i'])}{php}$vpMetaDate = trim((string)($obj['vod_pubdate'] ?? '')); if (preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/', $vpMetaDate) !== 1) { $vpMetaDate = date('Y-m-d', intval($obj['vod_time'] ?? 0)); }{/php}<time datetime="{$vpMetaDate}">{$vpMetaDate}</time></span>{if condition="$vpScore gt 0"}<i aria-hidden="true">&#10022;</i><span>{:\\app\\common\\util\\AutoIcon::ui('star', ['class'=>'vp-i'])}<span class="vp-sr">{:\\app\\common\\util\\TemplateText::get('ui.score')}</span><bdi dir="ltr">{$obj.vod_score|htmlspecialchars=ENT_QUOTES} / 10</bdi></span>{/if}</p>
+        {if condition="$vpDesc neq ''"}<h2 class="vp-sub">{:\\app\\common\\util\\TemplateText::get('vp.synopsis')}</h2>
+        <div class="vp-synopsis" data-vp-clamp><p{php}if (preg_match('/^\p{L}/u', (string)$vpDesc)) { echo ' class="vp-dropcap"'; }{/php}>{$vpDesc|htmlspecialchars=ENT_QUOTES}</p></div>{/if}
+        <h2 class="vp-sub">{:\\app\\common\\util\\TemplateText::get('vp.credits')}</h2>
+        {include file="public/meta"}
+      </div>
+    </article>
+    {if condition="$vpEpCount gt 1"}
+    <section class="vp-panel" aria-label="{:\\app\\common\\util\\TemplateText::get('playback_sources')}">
+      {maccms:foreach name="obj.vod_play_list" id="vpSource" key="vpSid"}
+      <div class="vp-episodes"><span class="vp-episodes-label">{$vpSource.player_info.show|mac_default=$vpSource.from|htmlspecialchars=ENT_QUOTES}</span>{maccms:foreach name="vpSource.urls" id="vpEp" key="vpNid"}<a class="vp-ep" href="{:mac_url_vod_play($obj,['sid'=>$vpSource['sid'],'nid'=>$vpEp['nid']])}">{$vpEp.name|htmlspecialchars=ENT_QUOTES}</a>{/maccms:foreach}</div>
+      {/maccms:foreach}
+    </section>
+    {/if}
+    {include file="public/related"}
+    {include file="public/reviews"}
+  </div>
+</main>
+{include file="public/foot"}
+</body>
+</html>

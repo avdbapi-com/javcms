@@ -1,0 +1,14 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{if condition="$GLOBALS['config']['comment']['status'] eq 1"}
+<section class="comment-section reveal" id="comments" aria-labelledby="comments-title">
+<div class="stui-vodlist__head" data-ai-group><h2 id="comments-title">{:\\app\\common\\util\\AutoIcon::navIcon('comments', '')}{:\\app\\common\\util\\TemplateText::get('ui.comments')}</h2></div>
+<div class="mac_comment" data-id="{$obj.vod_id}" data-mid="1"><p class="comment-loading">{:\\app\\common\\util\\TemplateText::get('ui.loading_comments')}</p></div>
+</section>
+<script>$(function () { if (window.MAC && MAC.Comment) { MAC.Comment.Init(); MAC.Comment.Show(1); } });</script>
+{/if}

@@ -1,0 +1,30 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="honey-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}" data-fx="vt smooth" data-fx-lerp="0.07" data-fx-vt-style="honey">
+<head>
+{include file="seo/vod_search"}
+{include file="public/include"}
+</head>
+<body class="nc-page-list nc-page-search">
+{include file="public/head"}
+<main id="main-content" class="nc-main nc-list"><div class="nc-wrap">
+{php}$ncShowQ = function ($ncV) { return htmlspecialchars(trim(\app\common\util\AvdbLanguage::decodeEntities((string)$ncV)), ENT_QUOTES, 'UTF-8'); }; $ncSortMode = 'search'; $ncEmptyScene = 'search-empty'; $ncSortActive = isset($param['by']) ? (string)$param['by'] : 'time'; $ncSortNames = ['time' => 'ui.latest_videos', 'hits' => 'ui.popular_videos', 'score' => 'top_rated', 'up' => 'most_liked']; $ncSearchTitle = \app\common\util\TemplateText::get(isset($ncSortNames[$ncSortActive]) ? $ncSortNames[$ncSortActive] : 'ui.latest_videos'); ob_start();{/php}<div class="nc-grid" data-grid-fill data-fx="stagger" data-fx-style="settle">{maccms:vod num="20" paging="yes" type="all" order="desc" by="time" pageurl="vod/search"}{include file="public/vodbox"}{/maccms:vod}</div>{php}$ncGridHtml = ob_get_clean(); $ncTotal = intval($__PAGING__['record_total'] ?? 0); $ncListN = is_array($__LIST__) ? ((isset($__LIST__['list']) && is_array($__LIST__['list'])) ? count($__LIST__['list']) : count($__LIST__)) : 0; $ncQ = ''; $ncQIcon = 'search'; $ncQLabel = ''; if (($param['wd'] ?? '') !== '') { $ncQ = $ncShowQ($param['wd']); } elseif (($param['actor'] ?? '') !== '') { $ncQ = $ncShowQ($param['actor']); $ncQIcon = 'user'; $ncQLabel = \app\common\util\TemplateText::get('ui.performers'); } elseif (($param['class'] ?? '') !== '') { $ncQ = $ncShowQ($param['class']); $ncQIcon = 'tag'; $ncQLabel = \app\common\util\TemplateText::get('genres'); } elseif (($param['tag'] ?? '') !== '') { $ncQ = $ncShowQ($param['tag']); $ncQIcon = 'hash'; $ncQLabel = htmlspecialchars(preg_replace('/[\s:\x{FF1A}]+$/u', '', \app\common\util\TemplateText::raw('ui.tag')), ENT_QUOTES, 'UTF-8'); } elseif (($param['director'] ?? '') !== '') { $ncQ = $ncShowQ($param['director']); $ncQIcon = 'film'; $ncQLabel = htmlspecialchars(preg_replace('/[\s:\x{FF1A}]+$/u', '', \app\common\util\TemplateText::raw('ui.director')), ENT_QUOTES, 'UTF-8'); }{/php}
+<header class="nc-phead">
+{if condition="$ncQ neq '' && $ncQLabel eq ''"}<p class="nc-phead-eye"><span class="nc-eyebrow nc-eyebrow-soft"><svg class="nc-i" aria-hidden="true"><use href="{$ncIco}search"></use></svg>{:\\app\\common\\util\\TemplateText::get('ui.search')}</span></p><h1 class="nc-ptitle nc-ptitle-q" data-nc-melt="load">{:\\app\\common\\util\\TemplateText::get('nc.results_for')} <q class="nc-q" dir="auto">{$ncQ}</q></h1>
+{elseif condition="$ncQ neq ''"/}<p class="nc-phead-eye"><span class="nc-eyebrow nc-eyebrow-soft"><svg class="nc-i" aria-hidden="true"><use href="{$ncIco}{$ncQIcon}"></use></svg>{$ncQLabel}</span></p><h1 class="nc-ptitle nc-ptitle-q" data-nc-melt="load"><span dir="auto">{$ncQ}</span></h1>
+{else/}<p class="nc-phead-eye"><span class="nc-eyebrow nc-eyebrow-soft"><svg class="nc-i" aria-hidden="true"><use href="{$ncIco}grid"></use></svg>{:\\app\\common\\util\\TemplateText::get('ui.all_videos_59a0c0')}</span></p><h1 class="nc-ptitle" data-nc-melt="load">{$ncSearchTitle}</h1>{/if}
+<p class="nc-pcount">{:\\app\\common\\util\\TemplateText::get('nc.count_videos', ['count'=>\\app\\common\\util\\AvdbLanguage::resultCount($__PAGING__, isset($__LIST__) ? $__LIST__ : null)['short']])}</p></header>
+{if condition="$ncTotal gt 0"}<div class="nc-pbar">{include file="public/sortmenu"}</div>{/if}
+{$ncGridHtml}
+{include file="public/list_note"}{include file="public/listend"}
+{if condition="$ncTotal eq 0"}<section class="nc-sec" aria-labelledby="nc-sec-fresh" data-ai-group><div class="nc-sec-head"><span class="nc-hexbadge" aria-hidden="true">{:\\app\\common\\util\\AutoIcon::ui('clock')}</span><div class="nc-sec-titles"><h2 class="nc-sec-title" id="nc-sec-fresh">{:\\app\\common\\util\\TemplateText::get('ui.latest_videos')}</h2></div><a class="nc-more" href="{:mac_url('label/new')}">{:\\app\\common\\util\\TemplateText::get('nc.view_all')}<svg class="nc-i nc-flip" aria-hidden="true"><use href="{$ncIco}chevron-right"></use></svg></a></div><div class="nc-grid" data-grid-fill>{maccms:vod num="10" type="all" order="desc" by="time" paging="no" id="vo"}{include file="public/vodbox"}{/maccms:vod}</div></section>{/if}
+</div></main>
+{include file="public/foot"}
+</body>
+</html>

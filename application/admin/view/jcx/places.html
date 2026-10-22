@@ -1,0 +1,99 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{include file="../../../application/admin/view/public/head" /}
+<div class="page-container p10 jx-page" data-jx-page="places">
+    {include file="../../../application/admin/view/public/page_head" icon="ai-megaphone" title="admin/ux/jcx/title" help="admin/ux/jcx/help" /}
+    {include file="../../../application/admin/view/jcx/_tabs" /}
+
+    <section class="ax-section" aria-labelledby="jxPlT">
+        <div class="jx-head-row"><h2 id="jxPlT">{:$jxE(lang('admin/ux/jcx/places_title'))}</h2></div>
+        <p class="ax-help">{:$jxE(lang('admin/ux/jcx/places_help'))} · {:$jxE(lang('admin/ux/jcx/see_theme'))}: <strong>{:$jxE($theme)}</strong></p>
+        {if condition="$jx_cfg.can.preview"}
+        <div class="jx-pickbar">
+            <label>{:$jxE(lang('admin/ux/jcx/picker_page'))}
+                <select class="layui-input" data-jx-pick="page" lay-ignore>
+                    <option value="home">{:$jxE(lang('admin/ux/jcx/pt_home'))}</option><option value="list">{:$jxE(lang('admin/ux/jcx/pt_list'))}</option>
+                    <option value="detail">{:$jxE(lang('admin/ux/jcx/pt_detail'))}</option><option value="play">{:$jxE(lang('admin/ux/jcx/pt_play'))}</option>
+                    <option value="search">{:$jxE(lang('admin/ux/jcx/pt_search'))}</option></select></label>
+            <div class="jx-seg" role="radiogroup" aria-label="{:$jxE(lang('admin/ux/jcx/picker_view'))}">
+                <label class="jx-check"><input type="radio" name="jxPlDev" value="1" lay-ignore checked> {:$jxE(lang('admin/ux/jcx/computers'))}</label>
+                <label class="jx-check"><input type="radio" name="jxPlDev" value="2" lay-ignore> {:$jxE(lang('admin/ux/jcx/phones'))}</label>
+            </div>
+        </div>
+        <div class="jx-pickwrap" data-jx-pickwrap>
+            <p class="jx-pickmsg" data-jx-pickmsg>{:$jxE(lang('admin/ux/jcx/picker_loading'))}</p>
+            <iframe class="jx-pickframe" data-jx-pickframe title="{:$jxE(lang('admin/ux/jcx/places_title'))}"></iframe>
+        </div>
+        {/if}
+    </section>
+
+    <div class="ax-table-wrap">
+    <table class="ax-table ax-table--cards">
+        <thead><tr><th>{:$jxE(lang('admin/ux/jcx/col_where'))}</th><th>{:$jxE(lang('admin/ux/jcx/col_status'))}</th><th>{:$jxE(lang('admin/ux/jcx/place_ads'))}</th>
+            <th>{:$jxE(lang('admin/ux/jcx/place_theme'))}</th><th class="ax-num">{:$jxE(lang('admin/ux/jcx/place_miss'))}</th><th class="ax-row-actions"><span class="ax-sr-only">{:$jxE(lang('admin/ux/jcx/col_actions'))}</span></th></tr></thead>
+        <tbody>
+        {volist name="rows" id="r"}
+        <tr data-pl="{$r.code}">
+            <td data-label="{:$jxE(lang('admin/ux/jcx/col_where'))}"><strong>{:$jxE($r['name'])}</strong>
+                {if condition="$r.code eq 'P05'"}
+                <form class="jx-row" data-pl="P05" onsubmit="return false">
+                    <div class="ax-field ax-field--sm"><label for="jxP5e">{:$jxE(lang('admin/ux/jcx/place_every'))}</label><input id="jxP5e" class="layui-input" type="number" min="2" max="50" name="pl_every" value="{$r.every}" aria-describedby="jxP5h"></div>
+                    <div class="ax-field ax-field--sm"><label for="jxP5m">{:$jxE(lang('admin/ux/jcx/place_max'))}</label><input id="jxP5m" class="layui-input" type="number" min="0" max="10" name="pl_max" value="{$r.max}" aria-describedby="jxP5h"></div>
+                    <div class="ax-field ax-field--sm"><label for="jxP5he">{:$jxE(lang('admin/ux/jcx/pt_home'))}: {:$jxE(lang('admin/ux/jcx/place_every'))}</label><input id="jxP5he" class="layui-input" type="number" min="2" max="50" name="home_every" value="{$r['opts']['home_every']|default=4}"></div>
+                    <div class="ax-field ax-field--sm"><label for="jxP5hm">{:$jxE(lang('admin/ux/jcx/pt_home'))}: {:$jxE(lang('admin/ux/jcx/place_max'))}</label><input id="jxP5hm" class="layui-input" type="number" min="0" max="10" name="home_max" value="{$r['opts']['home_max']|default=1}"></div>
+                    <p class="ax-help" id="jxP5h">{:$jxE(lang('admin/ux/jcx/help_feed_every'))}</p>
+                    {if condition="$jx_cfg.can.places"}<button type="button" class="ax-btn ax-btn--sm" data-jx-act="plsave"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-save"/></svg>{:$jxE(lang('admin/ux/kit/save'))}</button>{/if}
+                </form>
+                {/if}</td>
+            <td data-label="{:$jxE(lang('admin/ux/jcx/col_status'))}">
+                {if condition="$jx_cfg.can.places"}<button type="button" class="ax-btn ax-btn--sm ax-btn--ghost" role="switch" aria-checked="{if condition="$r.on"}true{else /}false{/if}" data-jx-act="plswitch" title="{:$jxE(lang('admin/ux/jcx/place_off_all'))}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#{if condition="$r.on"}ai-toggle-right{else /}ai-toggle-left{/if}"/></svg>{if condition="$r.on"}{:$jxE(lang('admin/ux/jcx/status_on'))}{else /}{:$jxE(lang('admin/ux/jcx/status_off'))}{/if}</button>
+                {else /}{if condition="$r.on"}<span class="ax-chip ax-chip--ok">{:$jxE(lang('admin/ux/jcx/status_on'))}</span>{else /}<span class="ax-chip ax-chip--off">{:$jxE(lang('admin/ux/jcx/status_off'))}</span>{/if}{/if}</td>
+            <td data-label="{:$jxE(lang('admin/ux/jcx/place_ads'))}">{:$jxE(sprintf(lang('admin/ux/jcx/place_on_off'), $r['n_on'], $r['n_off']))}</td>
+            <td data-label="{:$jxE(lang('admin/ux/jcx/place_theme'))}">{if condition="$r.state eq 'works'"}<span class="ax-chip ax-chip--ok">{:$jxE(lang('admin/ux/jcx/place_works'))}</span>{elseif condition="$r.state eq 'nearby'"/}<span class="ax-chip ax-chip--warn">{:$jxE(sprintf(lang('admin/ux/jcx/place_nearby'), $r['near']))}</span>{else /}<span class="ax-chip ax-chip--off">{:$jxE(lang('admin/ux/jcx/place_missing'))}</span>{/if}</td>
+            <td class="ax-num" data-label="{:$jxE(lang('admin/ux/jcx/place_miss'))}">{$r.miss}</td>
+            <td class="ax-row-actions">{if condition="$jx_cfg.can.preview"}<button type="button" class="ax-btn ax-btn--sm" data-jx-act="preview" data-scope="place-{$r.code}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-eye"/></svg>{:$jxE(lang('admin/ux/jcx/see_place'))}</button>{/if}</td>
+        </tr>
+        {/volist}
+        </tbody>
+    </table>
+    </div>
+
+    {if condition="$jx_cfg.can.anchor"}
+    <details class="ax-section jx-more">
+        <summary>{:$jxE(lang('admin/ux/jcx/anchor_adv'))}</summary>
+        <p class="ax-help">{:$jxE(lang('admin/ux/jcx/anchor_help'))}</p>
+        {if condition="empty($anchors)"}<p class="ax-help">{:$jxE(lang('admin/ux/jcx/anchor_none'))}</p>{else /}
+        <ul class="jx-checks">{volist name="anchors" id="a"}<li class="is-info">{:$jxE($a['anc_theme'])} · {:$jxE(lang('admin/ux/jcx/pl_' . $a['anc_place']))} · <code>{:$jxE($a['anc_at'])}</code> · {:$jxE(lang('admin/ux/jcx/pos_' . $a['anc_pos']))}
+            <button type="button" class="ax-btn ax-btn--sm ax-btn--ghost" data-jx-act="ancdel" data-id="{$a.anc_id}">{:$jxE(lang('admin/ux/jcx/anchor_del'))}</button>
+            <button type="button" class="ax-btn ax-btn--sm ax-btn--ghost" data-jx-act="preview" data-scope="place-{$a.anc_place}">{:$jxE(lang('admin/ux/jcx/anchor_test'))}</button></li>{/volist}</ul>
+        {/if}
+        <form class="ax-form" onsubmit="return false">
+            <div class="jx-row">
+                <div class="ax-field ax-field--sm"><label for="jxAt">{:$jxE(lang('admin/ux/jcx/anc_theme'))}</label><select id="jxAt" class="layui-input" name="anc_theme" lay-ignore>{volist name="themes" id="th"}<option value="{:$jxE($th)}"{if condition="$th eq $theme"} selected{/if}>{:$jxE($th)}</option>{/volist}</select></div>
+                <div class="ax-field ax-field--sm"><label for="jxAp">{:$jxE(lang('admin/ux/jcx/anc_place'))}</label><select id="jxAp" class="layui-input" name="anc_place" lay-ignore>{volist name="slots" id="sl"}<option value="{$sl}">{:$jxE(lang('admin/ux/jcx/pl_' . $sl))}</option>{/volist}</select></div>
+            </div>
+            <div class="ax-field ax-field--md"><label for="jxAa">{:$jxE(lang('admin/ux/jcx/anc_at'))}</label><input id="jxAa" class="layui-input" name="anc_at" maxlength="200" placeholder="#main-content" aria-describedby="jxAaH"><p class="ax-help" id="jxAaH">{:$jxE(lang('admin/ux/jcx/help_anc_at'))}</p></div>
+            <div class="jx-row">
+                <div class="ax-field ax-field--sm"><label for="jxApos">{:$jxE(lang('admin/ux/jcx/anc_pos'))}</label><select id="jxApos" class="layui-input" name="anc_pos" lay-ignore>
+                    <option value="afterend">{:$jxE(lang('admin/ux/jcx/pos_afterend'))}</option><option value="beforebegin">{:$jxE(lang('admin/ux/jcx/pos_beforebegin'))}</option>
+                    <option value="afterbegin">{:$jxE(lang('admin/ux/jcx/pos_afterbegin'))}</option><option value="beforeend">{:$jxE(lang('admin/ux/jcx/pos_beforeend'))}</option></select></div>
+                <div class="ax-field ax-field--sm"><label for="jxAn">{:$jxE(lang('admin/ux/jcx/anc_nth'))}</label><input id="jxAn" class="layui-input" type="number" min="1" max="50" name="anc_nth" value="1"></div>
+                <div class="ax-field ax-field--sm"><label for="jxAe">{:$jxE(lang('admin/ux/jcx/anc_every'))}</label><input id="jxAe" class="layui-input" type="number" min="0" max="50" name="anc_every" value="0"></div>
+                <div class="ax-field ax-field--sm"><label for="jxAm">{:$jxE(lang('admin/ux/jcx/anc_max'))}</label><input id="jxAm" class="layui-input" type="number" min="0" max="50" name="anc_max" value="0"></div>
+            </div>
+            <p class="ax-help ax-danger-text jx-err" hidden></p>
+            <button type="button" class="ax-btn" data-jx-act="ancsave"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-save"/></svg>{:$jxE(lang('admin/ux/kit/save'))}</button>
+        </form>
+    </details>
+    {/if}
+</div>
+{include file="../../../application/admin/view/public/foot" /}
+<script type="application/json" id="jxCfg">{$jxJson}</script>
+<script src="__STATIC__/js/admin_jcx.js?v={:filemtime(ROOT_PATH . 'static/js/admin_jcx.js')}"></script>
+</body>
+</html>

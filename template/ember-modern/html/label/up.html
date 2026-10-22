@@ -1,0 +1,35 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="ember-modern" data-fx="vt" data-fx-vt-style="ember-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/up"}
+{include file="public/include"}
+</head>
+<body class="t-page-list t-page-label t-label-up">
+{include file="public/head"}
+{php}$tplCardEager = 5; $tplCardN = 0; $tplChipMode = 'up';{/php}
+<main id="main-content" class="t-main" tabindex="-1">
+  <section class="t-band is-static">
+    <div class="t-wrap">
+      <nav class="t-crumb" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.main_navigation')}"><a href="{$maccms.path|htmlspecialchars=ENT_QUOTES}">{:\\app\\common\\util\\TemplateText::get('ui.home')}</a><svg class="t-i t-flip" aria-hidden="true"><use href="{$tplIcons}#chev-right"></use></svg><span aria-current="page">{:\\app\\common\\util\\TemplateText::get('most_liked')}</span></nav>
+      <div class="t-band-in"><span class="t-band-ic">{:\\app\\common\\util\\AutoIcon::navIcon('liked', '', ['size'=>'xl', 'plate'=>true])}</span><h1 data-t-expand>{:\\app\\common\\util\\TemplateText::get('most_liked')}</h1></div>
+      <div class="t-ranknote"><span class="t-hscale" aria-hidden="true"></span><p>{:\\app\\common\\util\\TemplateText::get('emt.sorted_up')}</p></div>
+    </div>
+  </section>
+  <div class="t-wrap">
+    <div class="t-filters">{assign name="emtLabelOn" value="up" /}{include file="public/labeltabs"}</div>
+    <ul class="t-grid" data-grid-fill data-fx="glow">{maccms:vod num="20" paging="yes" type="all" order="desc" by="up" pageurl="label/up" id="vo"}{include file="public/vodbox"}{/maccms:vod}</ul>
+    {if condition="$__PAGING__.record_total eq 0"}{include file="public/empty"}{/if}
+    {include file="public/paging"}
+  </div>
+</main>
+{php}$tplRankOn = 0; $tplFreshOn = 0; $tplChipMode = '';{/php}
+{include file="public/foot"}
+</body>
+</html>

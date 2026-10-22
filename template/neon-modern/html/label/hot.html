@@ -1,0 +1,29 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="neon-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/hot"}
+{assign name="$maccms.aid" value="9998" /}
+{include file="public/include"}
+</head>
+<body class="nn-page-label">
+{include file="public/head"}
+{php}$nnPH = \app\common\util\TemplateText::raw('ui.popular_videos'); $nnPHIcon = 'flame'; $nnLabelMode = 'hot';{/php}
+<main id="main-content" class="nn-main"><div class="nn-wrap">
+{include file="public/pagehead"}
+{include file="public/sortmenu"}
+<section class="nn-section" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.popular_videos')}">
+<div class="nn-grid" data-grid-fill data-nn-list data-fx="stagger" data-fx-style="fade">{maccms:vod num="20" paging="yes" type="all" order="desc" by="hits" pageurl="label/hot" id="vo"}{include file="public/cardmax"}{/maccms:vod}</div>
+{if condition="$__PAGING__.record_total eq 0"}{include file="public/empty"}{/if}
+{include file="public/paging"}
+</section>
+</div></main>
+{include file="public/foot"}
+</body>
+</html>

@@ -1,0 +1,140 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Based on MacCMS 10 (Apache-2.0) by magicblack, changed by JavCMS.
+JavCMS changes: Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors,
+JavCMS Community License 1.0. The MacCMS parts stay under the Apache License 2.0.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{include file="../../../application/admin/view/public/head" /}
+<link rel="stylesheet" href="__STATIC__/css/admin_database_workspace_v1.css?{$MAC_VERSION}&rev=3">
+<div class="page-container admin-database-workspace-v1 db-kit">
+    {include file="../../../application/admin/view/public/page_head" icon="ai-database-backup" title="admin/database/title" /}
+
+    <nav class="ax-tabs" aria-label="{:lang('admin/database/title')}">
+        <a href="{:url('index')}">{:lang('admin/database/backup_db')}</a>
+        <a href="{:url('index')}?group=import" aria-current="page">{:lang('admin/database/import_db')}</a>
+    </nav>
+    <p class="ax-help">{:lang('admin/ux/tools/backup_saved_in', [$backup_folder])}</p>
+    <p class="ax-help" id="db-restore-line" role="status" hidden></p>
+
+    {if condition="empty($list)"}
+    {include file="../../../application/admin/view/public/empty_state" icon="ai-database-backup" text="admin/ux/tools/backup_none" action_url="database/index" action_label="admin/ux/tools/backup_all" action_icon="ai-database-backup" /}
+    {else /}
+    <form id="pageListForm" class="layui-form db-list-form">
+        <input type="hidden" id="db-token" value="{:mac_admin_csrf_token()}">
+        <div class="ax-table-wrap">
+        <table class="ax-table ax-table--cards">
+            <thead>
+            <tr>
+                <th>{:lang('admin/database/backup_name')}</th>
+                <th class="ax-num">{:lang('admin/database/backup_num')}</th>
+                <th>{:lang('admin/database/backup_zip')}</th>
+                <th class="ax-num">{:lang('admin/database/backup_size')}</th>
+                <th>{:lang('admin/database/backup_time')}</th>
+                <th class="ax-row-actions"><span class="ax-sr-only">{:lang('opt')}</span></th>
+            </tr>
+            </thead>
+            <tbody>
+            {volist name="list" id="vo"}
+            <tr>
+                <td data-label="{:lang('admin/database/backup_name')}">{:date('Ymd-His', $vo['time'])}</td>
+                <td class="ax-num" data-label="{:lang('admin/database/backup_num')}">{$vo['part']}</td>
+                <td data-label="{:lang('admin/database/backup_zip')}">{$vo['compress']}</td>
+                <td class="ax-num" data-label="{:lang('admin/database/backup_size')}">{$vo['size_label']}</td>
+                <td data-label="{:lang('admin/database/backup_time')}">{:date('Y-m-d H:i:s', $vo['time'])}</td>
+                <td class="ax-row-actions">
+                    {volist name="vo.files" id="bf"}
+                    <a class="ax-btn ax-btn--sm" href="{:url('index')}?download={$bf|urlencode}" title="{$bf|htmlspecialchars}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-download"/></svg>{:lang('admin/ux/tools/backup_download')}</a>
+                    {/volist}
+                    <button type="button" class="ax-btn ax-btn--sm db-restore" data-url="{:url('import')}" data-id="{$vo['time']}" data-date="{:date('Y-m-d H:i:s', $vo['time'])}" data-files="{:count($vo['files'])}" data-size="{$vo['size_label']}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-archive-restore"/></svg>{:lang('admin/database/import')}</button>
+                    <button type="button" class="ax-btn ax-btn--sm ax-btn--icon ax-btn--ghost ax-btn--danger db-delete" data-url="{:url('del')}" data-id="{$vo['time']}" data-date="{:date('Y-m-d H:i:s', $vo['time'])}" data-files="{:count($vo['files'])}" data-size="{$vo['size_label']}" aria-label="{:lang('del')} {:date('Y-m-d H:i:s', $vo['time'])}" title="{:lang('del')}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-trash-2"/></svg></button>
+                </td>
+            </tr>
+            {/volist}
+            </tbody>
+        </table>
+        </div>
+    </form>
+    {/if}
+
+</div>
+{include file="../../../application/admin/view/public/foot" /}
+<script type="text/javascript">
+(function () {
+    // Hardening (security r3 P2-3): Restore and Delete are POSTs with the admin token. The confirm names the backup
+    // (date, files, size); Restore also needs the word RESTORE typed.
+    if (!window.AxUX || !window.jQuery) { return; }
+    var token = document.getElementById('db-token');
+    var line = document.getElementById('db-restore-line');
+    var T = {
+        restoreTitle: {:json_encode(lang('admin/ux/tools/restore_title'), JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT)},
+        restoreConfirm: {:json_encode(lang('admin/ux/tools/restore_confirm'), JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT)},
+        restoreRunning: {:json_encode(lang('admin/ux/tools/restore_running'), JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT)},
+        restore: {:json_encode(lang('admin/database/import'), JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT)},
+        deleteTitle: {:json_encode(lang('admin/ux/tools/backup_delete_title'), JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT)},
+        deleteConfirm: {:json_encode(lang('admin/ux/tools/backup_delete_confirm'), JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT)},
+        del: {:json_encode(lang('del'), JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT)},
+        filesOne: {:json_encode(lang('admin/ux/tools/backup_files_one'), JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT)},
+        filesN: {:json_encode(lang('admin/ux/tools/backup_files_n'), JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT)},
+        failed: {:json_encode(lang('admin/ux/kit/request_failed'), JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT)}
+    };
+    function fill(text, vars) {
+        return String(text).replace(/\{(date|files|size)\}/g, function (m, k) { return vars[k]; });
+    }
+    function filesText(n) {
+        return n === 1 ? T.filesOne : String(T.filesN).replace('{n}', String(n));
+    }
+    function setBusy(btn, on) {
+        btn.disabled = on;
+        if (on) { btn.setAttribute('aria-busy', 'true'); } else { btn.removeAttribute('aria-busy'); }
+    }
+    function say(text) {
+        line.hidden = false;
+        line.textContent = text;
+    }
+    $(document).on('click', '.db-restore, .db-delete', function () {
+        var btn = this;
+        var restore = btn.classList.contains('db-restore');
+        var vars = {
+            date: btn.getAttribute('data-date'),
+            files: filesText(parseInt(btn.getAttribute('data-files'), 10) || 0),
+            size: btn.getAttribute('data-size')
+        };
+        AxUX.confirm({
+            title: restore ? T.restoreTitle : T.deleteTitle,
+            message: fill(restore ? T.restoreConfirm : T.deleteConfirm, vars),
+            typed: restore ? 'RESTORE' : '',
+            confirmLabel: restore ? T.restore : T.del,
+            danger: true,
+            count: 0
+        }).then(function (yes) {
+            if (!yes) { return; }
+            var data = { id: btn.getAttribute('data-id'), __token__: token.value };
+            if (restore) { data.confirm = 'RESTORE'; say(T.restoreRunning); }
+            setBusy(btn, true);
+            $.ajax({ type: 'POST', url: btn.getAttribute('data-url'), data: data, dataType: 'json', timeout: 0 }).then(function (res) {
+                var ok = res && res.code == 1;
+                var msg = (res && res.msg) || T.failed;
+                AxUX.toast(msg, ok ? 'ok' : 'error');
+                if (restore) { say(msg); }
+                setBusy(btn, false);
+                if (ok && !restore) {
+                    var row = $(btn).closest('tr');
+                    var next = row.next('tr').find('.db-restore')[0] || row.prev('tr').find('.db-restore')[0];
+                    row.remove();
+                    if (next) { next.focus(); }
+                    if (!$('.db-restore').length) { setTimeout(function () { location.reload(); }, 900); }
+                }
+            }, function (xhr) {
+                var msg = T.failed + (xhr && xhr.status ? ' (HTTP ' + xhr.status + ')' : '');
+                AxUX.toast(msg, 'error');
+                if (restore) { say(msg); }
+                setBusy(btn, false);
+            });
+        });
+    });
+})();
+</script>
+</body>
+</html>

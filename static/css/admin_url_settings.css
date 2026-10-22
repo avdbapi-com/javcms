@@ -1,0 +1,62 @@
+/*
+ * This file is part of JavCMS - https://javcms.net
+ * Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+ * License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+ * See the LICENSE and NOTICE files that come with JavCMS.
+ * Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Telegram: https://t.me/avdb_api
+ */
+/* URL setup guide. Native advanced fields and Layui/editor internals retain their own styles. */
+/* V9: private colours map to kit tokens. */
+body.admin-studio .admin-url-setup { --url-bg: var(--ax-surface); --url-soft: var(--ax-raised); --url-text: var(--ax-text); --url-muted: var(--ax-muted); --url-line: var(--ax-line); --url-accent: var(--ax-accent); }
+.admin-url-setup {
+  --url-bg:var(--studio-surface,#fff); --url-soft:var(--studio-raised,#edf1f6);
+  --url-text:var(--studio-text,#263247); --url-muted:var(--studio-muted,#606d80);
+  --url-line:var(--studio-line,#ccd4df); --url-accent:var(--studio-accent,#2563ad);
+  box-sizing:border-box; min-width:0; margin:0 0 28px; padding:22px;
+  border:1px solid var(--url-line); border-radius:8px;
+  color:var(--url-text); background:var(--url-bg);
+  font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+.admin-url-setup *, .admin-url-setup *::before, .admin-url-setup *::after { box-sizing:border-box; }
+.admin-url-setup__header { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; margin-bottom:20px; }
+.admin-url-setup__header h2 { margin:0 0 5px; color:var(--url-text); font:600 19px/1.35 system-ui,-apple-system,"Segoe UI",sans-serif; }
+.admin-url-setup__header p { margin:0; color:var(--url-muted); max-width:65ch; }
+.admin-url-setup__badge { flex:0 0 auto; padding:4px 9px; border:1px solid var(--url-line); border-radius:5px; font-size:12px; color:var(--url-muted); background:var(--url-soft); }
+.admin-url-setup__body { display:grid; grid-template-columns:minmax(240px,.85fr) minmax(0,1.15fr); gap:24px; align-items:start; }
+.admin-url-setup__controls, .admin-url-setup__preview { min-width:0; }
+.admin-url-setup__label { display:block; margin:0 0 7px; color:var(--url-text); font-weight:500; }
+.admin-url-setup__select { display:block; width:100%; min-height:42px; padding:8px 10px; border:1px solid var(--url-line); border-radius:6px; color:var(--url-text); background:var(--url-bg); font:inherit; }
+.admin-url-setup__description { margin:10px 0 0; min-height:42px; color:var(--url-muted); font-size:13px; }
+.admin-url-setup__actions { display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin:16px 0 0; }
+.admin-url-setup__actions button { min-height:38px; padding:7px 12px; border:1px solid var(--url-line); border-radius:6px; color:var(--url-text); background:var(--url-soft); font:500 13px/20px system-ui,-apple-system,"Segoe UI",sans-serif; cursor:pointer; }
+.admin-url-setup__actions [data-url-apply] { color:var(--studio-bg,#fff); background:var(--url-accent); border-color:var(--url-accent); }
+.admin-url-setup__actions button:disabled { opacity:.5; cursor:default; }
+.admin-url-setup__status { margin:12px 0 0; min-height:40px; color:var(--url-muted); font-size:13px; }
+.admin-url-setup__preview h3 { margin:0 0 10px; color:var(--url-text); font-size:13px; font-weight:600; }
+.admin-url-setup__examples { margin:0; padding:0; list-style:none; border:1px solid var(--url-line); border-radius:6px; overflow:hidden; }
+.admin-url-setup__examples li { min-width:0; padding:10px 12px; }
+.admin-url-setup__examples li + li { border-top:1px solid var(--url-line); }
+.admin-url-setup__examples span { display:block; margin-bottom:3px; color:var(--url-muted); font-size:12px; }
+.admin-url-setup__examples code { display:block; padding:0; border:0; color:var(--url-text); background:transparent; font:12px/1.6 ui-monospace,SFMono-Regular,Consolas,monospace; white-space:normal; overflow-wrap:anywhere; }
+.admin-url-setup__changes { margin:10px 0 0; color:var(--url-muted); font-size:12px; }
+.admin-url-setup__note { margin:18px 0 0; padding-top:16px; border-top:1px solid var(--url-line); color:var(--url-muted); font-size:12px; }
+.admin-url-setup :is(button,select,a):focus-visible { outline:2px solid var(--url-accent); outline-offset:3px; }
+@media(max-width:760px) {
+  .admin-url-setup { padding:16px; margin-bottom:22px; }
+  .admin-url-setup__body { grid-template-columns:minmax(0,1fr); gap:18px; }
+  .admin-url-setup__header { flex-wrap:wrap; gap:10px; }
+  .admin-url-setup__select, .admin-url-setup__actions button { min-height:44px; }
+}
+.admin-url-setup .admin-url-setup__select { display:block; }
+.admin-url-setup [hidden] { display:none!important; }
+.admin-url-setup__prefixes { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin-top:16px; }
+.admin-url-setup__field { min-width:0; }
+.admin-url-setup__input { display:block; width:100%; min-height:42px; padding:8px 10px; border:1px solid var(--url-line); border-radius:6px; color:var(--url-text); background:var(--url-bg); font:inherit; }
+.admin-url-setup__hint { grid-column:1/-1; margin:8px 0; color:var(--url-muted); font-size:12px; }
+.admin-url-setup__toggle { display:flex; align-items:flex-start; gap:8px; margin:14px 0 0; cursor:pointer; }
+.admin-url-setup .admin-url-setup__toggle input[lay-ignore] { display:inline-block; flex:0 0 auto; width:17px; height:17px; margin:3px 0 0; accent-color:var(--url-accent); }
+.admin-url-setup__note a { color:var(--url-accent); text-decoration:underline; }
+.admin-url-setup__input:focus-visible { outline:2px solid var(--url-accent); outline-offset:3px; }
+@media(max-width:760px) { .admin-url-setup__input { min-height:44px; } }
+@media(max-width:420px) { .admin-url-setup__prefixes { grid-template-columns:minmax(0,1fr); } }

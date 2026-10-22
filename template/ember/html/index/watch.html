@@ -1,0 +1,25 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<section class="e-sec container" id="e-videos" aria-labelledby="e-videos-title">
+  <div class="e-head" data-ai-group>
+    <h2 class="e-title" id="e-videos-title">{:\\app\\common\\util\\AutoIcon::ui('flame', ['class'=>'e-ico'])}{:\\app\\common\\util\\TemplateText::get('videos')}</h2>
+    <div class="e-tabs" data-ai-group role="tablist" data-e-tabs="e-videos-more" aria-labelledby="e-videos-title">
+      <a role="tab" id="e-tab-hot" href="{:mac_url('label/hot')}" aria-controls="e-panel-hot" aria-selected="true">{:\\app\\common\\util\\AutoIcon::navIcon('hot', '', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ember.hottest')}</a>
+      {maccms:type ids="parent" flag="vod" order="asc" by="sort" id="tplTab" key="tplTabKey" hide_empty="1"}<a role="tab" id="e-tab-{$tplTab.type_id}" href="{:mac_url_type($tplTab)}" aria-controls="e-panel-{$tplTab.type_id}" aria-selected="false" tabindex="-1">{:\\app\\common\\util\\AutoIcon::icon('category', $tplTab['type_name'], ['size'=>'sm', 'i'=>$tplTabKey + 1])}{:\\app\\common\\util\\TemplateText::get(htmlspecialchars_decode((string)$tplTab['type_name'], ENT_QUOTES))}</a>{/maccms:type}
+    </div>
+    <a class="e-more" id="e-videos-more" href="{:mac_url('label/hot')}"><span>{:\\app\\common\\util\\TemplateText::get('ui.view_more')}</span>{:\\app\\common\\util\\AutoIcon::ui('chevron-right', ['class'=>'e-ico'])}</a>
+  </div>
+  <div role="tabpanel" id="e-panel-hot" aria-labelledby="e-tab-hot">
+    <ul class="e-grid" data-grid-fill>{maccms:vod num="10" type="all" order="desc" by="hits" paging="no" id="vo"}{include file="public/vodbox"}{/maccms:vod}</ul>
+  </div>
+  {maccms:type ids="parent" flag="vod" order="asc" by="sort" id="tplPanel" key="tplPanelKey" hide_empty="1"}
+  <div role="tabpanel" id="e-panel-{$tplPanel.type_id}" aria-labelledby="e-tab-{$tplPanel.type_id}" hidden>
+    <ul class="e-grid" data-grid-fill>{maccms:vod num="10" type="'.$tplPanel['type_id'].'" order="desc" by="time" paging="no" id="vo" key="tplPanelVodKey"}{include file="public/vodbox"}{/maccms:vod}</ul>
+  </div>
+  {/maccms:type}
+</section>

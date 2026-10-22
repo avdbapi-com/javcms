@@ -1,0 +1,20 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}$tpCatTrays = array_slice($tpTypes, 0, 3);{/php}{foreach name="tpCatTrays" item="tpCt" key="tpCk"}{php}$tpCatId = (int)$tpCt['id'];{/php}
+<section class="tp-tray tp-tray--gem tp-wrap tp-gem-i-{$tpCt.gem}" id="tp-cat-{$tpCt.id}" aria-labelledby="tp-cat-h-{$tpCt.id}">
+  <header class="tp-tray-head" data-ai-group>
+    <h2 class="tp-tray-title" id="tp-cat-h-{$tpCt.id}">{:\\app\\common\\util\\AutoIcon::icon('category', $tpCt['tn'], ['size'=>'lg', 'plate'=>true, 'tint'=>'none'])}{$tpCt.name|htmlspecialchars=ENT_QUOTES}</h2>
+    <span class="tp-tray-line" aria-hidden="true"></span>
+    <span class="tp-tray-count">{:\\app\\common\\util\\TemplateText::get('tp.pieces', ['count' => $tpCt['count']])}</span>
+    <a class="tp-tray-more" href="{$tpCt.url|htmlspecialchars=ENT_QUOTES}"><span>{:\\app\\common\\util\\TemplateText::get('tp.view_collection')}</span><i class="tp-dia" aria-hidden="true"></i>{:\\app\\common\\util\\AutoIcon::ui('arrow-right', ['size'=>'sm', 'class'=>'tp-more-ai'])}</a>
+  </header>
+  <div class="tp-tray-body">
+    <div class="tp-grid" data-grid-fill data-tp-stagger>{maccms:vod num="10" type="'.$tpCatId.'" order="desc" by="time" paging="no" not="'.implode(',', $tpSeen).'" id="vo"}{include file="public/vodbox"}{/maccms:vod}</div>
+    {empty name="__LIST__"}{include file="public/empty"}{/empty}
+  </div>
+</section>{/foreach}

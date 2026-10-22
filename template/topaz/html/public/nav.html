@@ -1,0 +1,54 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<div class="tz-scrim" data-tz-close hidden></div>
+<aside class="tz-drawer" id="tz-drawer" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.menu')}" aria-hidden="true" inert>
+  <div class="tz-drawer-head">
+    {if condition="$maccms.site_logo neq ''"}<a class="tz-brand tz-brand--sm tz-brand--logo" href="{$maccms.path}"><img class="tz-logo" src="{:mac_safe_url(mac_url_img($maccms['site_logo']))}" alt="{:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$maccms['site_name']), ENT_QUOTES, 'UTF-8')}" width="191" height="60" loading="lazy" decoding="async"></a>{else/}<a class="tz-brand tz-brand--sm" href="{$maccms.path}"><span class="tz-tile" aria-hidden="true"><svg class="tz-i"><use href="{$tplIcons}#play"/></svg></span>{include file="public/brandword"}</a>{/if}
+    <button class="tz-ibtn tz-drawer-x" type="button" data-tz-close aria-label="{:\\app\\common\\util\\TemplateText::get('template_ui_close')}">{:\\app\\common\\util\\AutoIcon::ui('close', ['class'=>'tz-i', 'tint'=>'none'])}</button>
+  </div>
+  <div class="tz-drawer-body">
+    <div class="tz-dintro"><span class="tz-eyebrow">{:\\app\\common\\util\\TemplateText::get('topaz.discover')}</span><strong>{:\\app\\common\\util\\TemplateText::get('topaz.picked_for_you')}</strong></div>
+    <a class="tz-spot" href="{:mac_url('label/sort')}"><span class="tz-spot-ico" aria-hidden="true">{:\\app\\common\\util\\AutoIcon::ui('search', ['class'=>'tz-i', 'tint'=>'none'])}</span><span class="tz-spot-txt"><small>{:\\app\\common\\util\\TemplateText::get('topaz.explore_library')}</small><b>{:\\app\\common\\util\\TemplateText::get('ui.find_your_next_watch')}</b></span>{:\\app\\common\\util\\AutoIcon::ui('arrow-right', ['class'=>'tz-i tz-dir', 'tint'=>'none'])}</a>
+    <p class="tz-dlabel">{:\\app\\common\\util\\TemplateText::get('ui.main_navigation')}</p>
+    <nav class="tz-tiles" data-ai-group aria-label="{:\\app\\common\\util\\TemplateText::get('ui.main_navigation')}">
+      <a href="{$maccms.path}" {if condition="$tplAid eq 1"}aria-current="page"{/if}><span class="tz-tico" aria-hidden="true">{:\\app\\common\\util\\AutoIcon::ui('home', ['class'=>'tz-i', 'tint'=>'none'])}</span><span class="tz-tlbl">{:\\app\\common\\util\\TemplateText::get('ui.home')}</span></a>
+      <a href="{:mac_url('label/sort')}" {if condition="$tplAid eq 9995"}aria-current="page"{/if}><span class="tz-tico" aria-hidden="true">{:\\app\\common\\util\\AutoIcon::ui('film', ['class'=>'tz-i', 'tint'=>'none'])}</span><span class="tz-tlbl">{:\\app\\common\\util\\TemplateText::get('ui.all_videos')}</span></a>
+      {include file="public/types"}{foreach name="tzTypes" item="tzT" key="tzTk"}<a href="{$tzT.url|htmlspecialchars=ENT_QUOTES}" {if condition="$tzT.id eq $GLOBALS['type_id'] || $tzT.id eq $GLOBALS['type_pid']"}aria-current="page"{/if}><span class="tz-tico tz-tico--ai" aria-hidden="true">{:\\app\\common\\util\\AutoIcon::icon('category', $tzT['raw'], ['size'=>'lg', 'plate'=>true, 'i'=>$tzTk+2])}</span><span class="tz-tlbl">{$tzT.name|htmlspecialchars=ENT_QUOTES}</span><small class="tz-tcount">{$tzT.count}</small></a>{/foreach}
+      {if condition="$tplHasActor eq 1"}<a href="{:mac_url('actor/index')}" {if condition="$maccms.mid eq 8"}aria-current="page"{/if}><span class="tz-tico" aria-hidden="true">{:\\app\\common\\util\\AutoIcon::ui('users', ['class'=>'tz-i', 'tint'=>'none'])}</span><span class="tz-tlbl">{:\\app\\common\\util\\TemplateText::get('ui.performers')}</span></a>{/if}
+      {if condition="$tplHasTopic eq 1"}<a href="{:mac_url('topic/index')}"><span class="tz-tico" aria-hidden="true">{:\\app\\common\\util\\AutoIcon::ui('library', ['class'=>'tz-i', 'tint'=>'none'])}</span><span class="tz-tlbl">{:\\app\\common\\util\\TemplateText::get('ui.collections')}</span></a>{/if}
+      {if condition="$tplHasArt eq 1"}<a href="{:mac_url('art/index')}"><span class="tz-tico" aria-hidden="true">{:\\app\\common\\util\\AutoIcon::ui('newspaper', ['class'=>'tz-i', 'tint'=>'none'])}</span><span class="tz-tlbl">{:\\app\\common\\util\\TemplateText::get('ui.articles')}</span></a>{/if}
+    </nav>
+    <div class="tz-quick" data-ai-group>
+      <p class="tz-dlabel">{:\\app\\common\\util\\TemplateText::get('topaz.discover')}</p>
+      <a href="{:mac_url('label/new')}" {if condition="$tplAid eq 9999"}aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::navIcon('latest', '', ['class'=>'tz-i'])}<b>{:\\app\\common\\util\\TemplateText::get('ui.latest')}</b></a>
+      <a href="{:mac_url('label/hot')}" {if condition="$tplAid eq 9998"}aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::navIcon('hot', '', ['class'=>'tz-i'])}<b>{:\\app\\common\\util\\TemplateText::get('ui.popular')}</b></a>
+      <a href="{:mac_url('label/score')}" {if condition="$tplAid eq 9997"}aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::navIcon('top', '', ['class'=>'tz-i'])}<b>{:\\app\\common\\util\\TemplateText::get('top_rated')}</b></a>
+    </div>
+    <p class="tz-dlabel">{:\\app\\common\\util\\TemplateText::get('ui.account')}</p>
+    <div class="tz-tiles" data-tz-guest data-ai-group>
+      <a href="{:mac_url('user/login')}" rel="nofollow"><span class="tz-tico" aria-hidden="true">{:\\app\\common\\util\\AutoIcon::ui('log-in', ['class'=>'tz-i', 'tint'=>'none'])}</span><span class="tz-tlbl">{:\\app\\common\\util\\TemplateText::get('ui.log_in')}</span></a>
+      <a href="{:mac_url('user/reg')}" rel="nofollow"><span class="tz-tico" aria-hidden="true">{:\\app\\common\\util\\AutoIcon::ui('user-plus', ['class'=>'tz-i', 'tint'=>'none'])}</span><span class="tz-tlbl">{:\\app\\common\\util\\TemplateText::get('ui.register')}</span></a>
+    </div>
+    <div class="tz-tiles" data-tz-member data-ai-group hidden>
+      <a href="{:mac_url('user/index')}" rel="nofollow"><span class="tz-tico" aria-hidden="true">{:\\app\\common\\util\\AutoIcon::ui('user', ['class'=>'tz-i', 'tint'=>'none'])}</span><span class="tz-tlbl" data-tz-user-name>{:\\app\\common\\util\\TemplateText::get('ui.member_center')}</span></a>
+      <a href="{:mac_url('user/favs')}" rel="nofollow"><span class="tz-tico" aria-hidden="true">{:\\app\\common\\util\\AutoIcon::ui('heart', ['class'=>'tz-i', 'tint'=>'none'])}</span><span class="tz-tlbl">{:\\app\\common\\util\\TemplateText::get('ui.my_collection')}</span></a>
+      <a href="{:mac_url('user/plays')}" rel="nofollow"><span class="tz-tico" aria-hidden="true">{:\\app\\common\\util\\AutoIcon::ui('history', ['class'=>'tz-i', 'tint'=>'none'])}</span><span class="tz-tlbl">{:\\app\\common\\util\\TemplateText::get('ui.play_record')}</span></a>
+      <a href="{:mac_url('user/logout')}" rel="nofollow"><span class="tz-tico" aria-hidden="true">{:\\app\\common\\util\\AutoIcon::ui('log-out', ['class'=>'tz-i', 'tint'=>'none'])}</span><span class="tz-tlbl">{:\\app\\common\\util\\TemplateText::get('log_out')}</span></a>
+    </div>
+    <p class="tz-dlabel">{:\\app\\common\\util\\TemplateText::get('ui.language')}</p>
+    {php}$tplDrawerLangs = \app\common\util\TemplateText::languages();{/php}<div class="tz-dlangs">{volist name="tplDrawerLangs" id="tplLangName"}<a href="{:\\app\\common\\util\\TemplateText::languageUrl($key)}" lang="{$key|htmlspecialchars=ENT_QUOTES}" hreflang="{$key|htmlspecialchars=ENT_QUOTES}" {if condition="$key eq $maccms['ui_lang']"}aria-current="true"{/if}>{$tplLangName|htmlspecialchars=ENT_QUOTES}</a>{/volist}</div>
+    <button class="tz-moderow" type="button" data-color-toggle data-light-label="{:\\app\\common\\util\\TemplateText::get('ui.light_mode')}" data-dark-label="{:\\app\\common\\util\\TemplateText::get('ui.dark_mode')}"><span class="tz-tico" aria-hidden="true"><svg class="tz-sunmoon" viewBox="0 0 24 24"><circle class="tz-core" cx="12" cy="12" r="5" mask="url(#tz-moon-mask)"/><g class="tz-rays"><path d="M12 1.8v2.4M12 19.8v2.4M1.8 12h2.4M19.8 12h2.4M4.8 4.8l1.7 1.7M17.5 17.5l1.7 1.7M4.8 19.2l1.7-1.7M17.5 6.5l1.7-1.7"/></g></svg></span><span data-color-label>{:\\app\\common\\util\\TemplateText::get('ui.light_mode')}</span></button>
+    <p class="tz-dlabel">{:\\app\\common\\util\\TemplateText::get('ui.contact_b37456')}</p>
+    <div class="tz-tiles" data-ai-group>
+      <a href="{:mac_url('gbook/index')}"><span class="tz-tico" aria-hidden="true">{:\\app\\common\\util\\AutoIcon::ui('message', ['class'=>'tz-i', 'tint'=>'none'])}</span><span class="tz-tlbl">{:\\app\\common\\util\\TemplateText::get('ui.contact_the_site')}</span></a>
+      <a href="{:mac_url('map/index')}"><span class="tz-tico" aria-hidden="true">{:\\app\\common\\util\\AutoIcon::ui('list', ['class'=>'tz-i', 'tint'=>'none'])}</span><span class="tz-tlbl">{:\\app\\common\\util\\TemplateText::get('ui.latest_updates')}</span></a>
+      <a href="{:mac_url('rss/index')}"><span class="tz-tico" aria-hidden="true">{:\\app\\common\\util\\AutoIcon::ui('rss', ['class'=>'tz-i', 'tint'=>'none'])}</span><span class="tz-tlbl">{:\\app\\common\\util\\TemplateText::get('rss')}</span></a>
+    </div>
+    <p class="tz-dfoot"><span class="tz-adult-dot" aria-hidden="true"></span>18+ &middot; &copy; {:date('Y')} {:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$maccms['site_name']), ENT_QUOTES, 'UTF-8')}</p>
+  </div>
+</aside>

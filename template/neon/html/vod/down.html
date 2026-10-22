@@ -1,0 +1,29 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="neon" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>{include file="seo/auto"}
+{include file="public/include"}
+</head>
+<body class="nx-page-down">
+{include file="public/head"}
+{include file="public/metavars"}
+<main id="main-content" class="nx-main"><div class="nx-wrap">
+<div class="nx-titlebar"><a class="nx-back" href="{:mac_url_vod_detail($obj)}" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.return')}"><svg class="nx-ico" aria-hidden="true"><use href="{$nxSvg|htmlspecialchars=ENT_QUOTES}#back"></use></svg></a><span class="nx-tb-ico">{:\\app\\common\\util\\AutoIcon::ui('download', ['size'=>'lg', 'plate'=>true])}</span><h1>{$nxTitle|htmlspecialchars=ENT_QUOTES}</h1></div>
+<section class="nx-panel">
+<div class="nx-cta-row"><a class="nx-btn" href="{:mac_url_vod_detail($obj)}">{:\\app\\common\\util\\TemplateText::get('ui.details')}</a>{if condition="$nxPlayUrl neq ''"}<a class="nx-btn nx-btn-primary" href="{$nxPlayUrl|htmlspecialchars=ENT_QUOTES}">{:\\app\\common\\util\\TemplateText::get('ui.watch_online')}</a>{/if}</div>
+{notempty name="obj.vod_down_list"}
+{maccms:foreach name="obj.vod_down_list" id="nxDl"}
+<div class="nx-plhead"><h2>{$nxDl.player_info.show|mac_default=$nxDl.from|htmlspecialchars=ENT_QUOTES}</h2></div><div class="nx-eps">{maccms:foreach name="nxDl.urls" id="nxDlEp"}<a href="{:mac_safe_url($nxDlEp['url'])}" target="_blank" rel="nofollow noopener noreferrer">{$nxDlEp.name|htmlspecialchars=ENT_QUOTES}</a>{/maccms:foreach}</div>
+{/maccms:foreach}
+{else/}<p class="nx-end">{:\\app\\common\\util\\TemplateText::get('ui.no_download_links_are_available_for_this_video')}</p>{/notempty}
+</section>
+</div></main>
+{include file="public/foot"}
+</body>
+</html>

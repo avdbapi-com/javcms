@@ -1,0 +1,38 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="ember-modern" data-fx="vt" data-fx-vt-style="ember-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+<meta name="robots" content="noindex, follow" />
+<meta charset="utf-8">
+<title>{if condition="$code eq 1"}{:\\app\\common\\util\\TemplateText::get('ui.site_message')}{else/}{:\\app\\common\\util\\TemplateText::get('ui.access_required')}{/if}</title>
+{include file="public/include"}
+</head>
+<body class="permission-page">
+<svg class="t-defs" width="0" height="0" aria-hidden="true" focusable="false"><defs><linearGradient id="t-ramp-arc" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#5b1696"/><stop offset=".55" stop-color="#ee3b3b"/><stop offset="1" stop-color="#ffc531"/></linearGradient></defs></svg>
+<main id="main-content" class="mac_msg_jump t-hud">
+    <p class="title">{:\\app\\common\\util\\TemplateText::get('ui.site_message')}</p>
+    <h1 class="msg_jump_tit">{if condition="$code eq 1"}{:\\app\\common\\util\\TemplateText::get('ui.site_message')}{else/}{:\\app\\common\\util\\TemplateText::get('ui.access_required')}{/if}</h1>
+    <div class="text">{$msg}</div>
+    <svg class="t-ring" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><circle class="t-rg-bg" cx="32" cy="32" r="26"/><circle class="t-rg-v" cx="32" cy="32" r="26"/></svg>
+    <div class="jump">
+        {:\\app\\common\\util\\TemplateText::get('ui.automatic_page')} <a id="href" href="<?php $jumpSafeUrl = mac_safe_url($url); echo $jumpSafeUrl !== '' ? $jumpSafeUrl : mac_safe_url(mac_url('index/index')); ?>">{:\\app\\common\\util\\TemplateText::get('ui.jump')}</a> {:\\app\\common\\util\\TemplateText::get('ui.wait_time')} <b id="wait"><?php echo (int)$wait; ?></b>
+    </div>
+</main>
+<script>
+(function () {
+  var wait = document.getElementById('wait'), href = document.getElementById('href').href;
+  var timer = setInterval(function () {
+    var time = parseInt(wait.textContent, 10) - 1;
+    wait.textContent = String(Math.max(time, 0));
+    if (time <= 0) { clearInterval(timer); location.href = href; }
+  }, 1000);
+})();
+</script>
+</body>
+</html>

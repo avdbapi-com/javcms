@@ -1,0 +1,126 @@
+/*
+ * This file is part of JavCMS - https://javcms.net
+ * Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+ * License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+ * See the LICENSE and NOTICE files that come with JavCMS.
+ * Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Telegram: https://t.me/avdb_api
+ */
+/* JavCMS ads styles (ADS-BRIEF 5.8): theme token map, slots, cards, widgets, dock, rails, layers. Injected by jcx.js.
+   Phone layout = (max-width:767px),(pointer:coarse) and (max-height:500px): a phone in landscape gets the phone units
+   too (P2-05; the same query as jcx.js PH and the placer's critical style) */
+:root{--jcx-bg:var(--tui-surface,Canvas);--jcx-fg:var(--tui-text,CanvasText);--jcx-line:var(--tui-border,color-mix(in srgb,currentColor 18%,transparent));--jcx-accent:var(--tui-accent,currentColor);--jcx-radius:var(--tui-radius,8px)}
+html[data-template-theme=jav]{--jcx-bg:var(--surface);--jcx-fg:var(--ink);--jcx-line:var(--line);--jcx-accent:var(--accent)}html[data-template-theme=jav-modern]{--jcx-accent:var(--accent)}
+html[data-template-theme=javcms][data-template-variant=classic]{--jcx-bg:var(--surface);--jcx-fg:var(--ink);--jcx-line:var(--line);--jcx-accent:var(--accent);--jcx-radius:var(--radius)}
+html[data-template-theme=javcms][data-template-variant=modern]{--jcx-bg:var(--jc-surface);--jcx-fg:var(--jc-ink);--jcx-line:var(--jc-line);--jcx-accent:var(--jc-accent)}
+html[data-template-theme=ember]{--jcx-bg:var(--e-panel);--jcx-fg:var(--e-text);--jcx-line:var(--e-line)}
+html[data-template-theme=ember-modern],html[data-template-theme=crimson-modern],html[data-template-theme=topaz-modern],html[data-template-theme=neon-modern]{--jcx-bg:var(--surface);--jcx-fg:var(--text);--jcx-line:var(--line)}
+html[data-template-theme=onyx]{--jcx-bg:var(--panel);--jcx-fg:var(--text);--jcx-line:var(--line)}
+html[data-template-theme=onyx-modern]{--jcx-bg:var(--surface);--jcx-fg:var(--text)}
+html[data-template-theme=velvet]{--jcx-bg:var(--vv-surface);--jcx-fg:var(--vv-ink);--jcx-line:var(--vv-line)}
+html[data-template-theme=velvet-modern]{--jcx-bg:var(--vp-surface);--jcx-fg:var(--vp-text);--jcx-line:var(--vp-line);--jcx-accent:var(--vp-accent)}
+html[data-template-theme=honey]{--jcx-bg:var(--hn-surface);--jcx-fg:var(--hn-text);--jcx-line:var(--hn-line);--jcx-accent:var(--hn-accent)}
+html[data-template-theme=honey-modern]{--jcx-bg:var(--nc-surface);--jcx-fg:var(--nc-text);--jcx-line:var(--nc-line)}
+html[data-template-theme=neon]{--jcx-bg:var(--nx-surface);--jcx-fg:var(--nx-text);--jcx-line:var(--nx-line);--jcx-accent:var(--nx-accent)}
+html[data-template-theme=neon-modern]{--jcx-accent:var(--pink)}
+html[data-template-theme=crimson]{--jcx-bg:var(--ct-surface);--jcx-fg:var(--ct-ink);--jcx-line:var(--ct-line)}
+html[data-template-theme=topaz]{--jcx-bg:var(--tz-panel);--jcx-fg:var(--tz-text);--jcx-line:var(--tz-line)}
+/* card radius = the theme's own video card (R4-04, measured on the list page of each theme) */
+html:is([data-template-theme=crimson-modern],[data-template-theme=ember],[data-template-theme=jav],[data-template-theme=onyx],[data-template-theme=onyx-modern]){--jcx-radius:0px}
+html:is([data-template-theme=velvet],[data-template-theme=velvet-modern]){--jcx-radius:4px}html[data-template-theme=crimson]{--jcx-radius:6px}html[data-template-theme=javcms-modern]{--jcx-radius:8px}html[data-template-theme=jav-modern]{--jcx-radius:9px}
+html:is([data-template-theme=ember-modern],[data-template-theme=honey]){--jcx-radius:10px}html:is([data-template-theme=topaz],[data-template-theme=topaz-modern],[data-template-theme=neon-modern]){--jcx-radius:12px}
+html[data-template-theme=honey-modern]{--jcx-radius:14px}html[data-template-theme=neon]{--jcx-radius:15px}
+.jcx-s>a,.jcx-s>picture,.jcx-s>iframe,.jcx-s>.jcx-cd,.jcx-s>.jcx-e{display:block;margin-inline:auto;max-width:100%}
+/* a place that rotates creatives of different heights reserves the tallest one: a shorter creative is centred in the
+   box, so no large empty band is left under it (R4r3-09; centring moves nothing: the box keeps its height). Block
+   layout's align-content: the slot keeps display:block, so the device-only rules of the critical style still win */
+.jcx-s{align-content:center}
+.jcx-s>a img,.jcx-k img,.jcx-r img,.jcx-p img,.jcx-m img,.jcx-e img{display:block;margin-inline:auto;max-width:100%;height:auto;border-radius:calc(var(--jcx-radius) / 2)}
+.jcx-s>.jcx-cd{overflow:clip}
+/* our frames (HTML5, code boxes) have no border in slots and in the fixed units (the frameborder attribute is gone) */
+:is(.jcx-s,.jcx-k,.jcx-p,.jcx-r) iframe{border:0;max-width:100%}
+.jcx-a{display:inline-block;padding:6px 10px;color:inherit;text-decoration:underline;font-size:14px}
+/* zero specificity: a theme's own positioned card link (absolute overlay) keeps its position */
+:where(a:has(>.jcx-sp)){position:relative}a>.jcx-sp{position:absolute;z-index:2;inset-block-start:6px;inset-inline-start:6px}
+.jcx-sp{display:inline-block;margin-inline-start:6px;padding:1px 6px;border:1px solid var(--jcx-line);border-radius:var(--jcx-radius);font:600 11px/16px system-ui,sans-serif;vertical-align:middle;color:var(--jcx-fg);background:var(--jcx-bg)}
+.jcx-c>.jcx-n,.jcx-c>a{display:block}
+.jcx-n{display:block;color:inherit;text-decoration:none;text-align:start}
+.jcx-ni{display:block;aspect-ratio:16/9;overflow:hidden;border-radius:var(--jcx-radius);background:color-mix(in srgb,currentColor 8%,transparent)}
+.jcx-ni img{width:100%;height:100%;object-fit:cover;display:block}
+.jcx-nt{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-top:6px;font-size:14px;line-height:1.35}
+.jcx-nb{display:block;font-size:12px;opacity:.7;margin-top:2px}
+.jcx-w{position:relative;text-align:start}
+/* a widget never grows past the box the placer reserved for it (CLS: it arrives after the first input now); phones show
+   one title line per card so the 2 x 2 grid fits */
+/* A2 (front-end QA): a widget is centred in its slot, as wide as its creative when that is known */
+.jcx-s>.jcx-w{max-height:calc(var(--jcx-hd) - 20px);overflow:hidden;max-width:var(--jcx-wd,100%);margin-inline:auto}
+@media (max-width:767px),(pointer:coarse) and (max-height:500px){.jcx-s>.jcx-w{max-height:calc(var(--jcx-hm) - 20px)}.jcx-w .jcx-nt{-webkit-line-clamp:1}}
+.jcx-wh{display:block;font:600 13px/20px system-ui,sans-serif;opacity:.8;margin-bottom:6px}
+.jcx-wt{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.jcx-w-carousel .jcx-wt{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:thin}
+.jcx-w-carousel .jcx-n{flex:0 0 min(42%,220px);scroll-snap-align:start}
+.jcx-w-collection .jcx-wt{grid-template-columns:repeat(4,1fr)}.jcx-w-collection .jcx-n:first-child{grid-column:1/-1}
+/* carousel and collection items are square cards (9.3 X38 / X39); the collection stays a compact block */
+.jcx-w-carousel .jcx-ni,.jcx-w-collection .jcx-n+.jcx-n .jcx-ni{aspect-ratio:1}.jcx-w-collection{max-width:760px;margin-inline:auto}
+.jcx-wb{position:absolute;top:45%;width:36px;height:36px;border:1px solid var(--jcx-line);border-radius:50%;background:var(--jcx-bg);color:var(--jcx-fg);font-size:22px;line-height:1;cursor:pointer}
+.jcx-wpv{inset-inline-start:-6px}.jcx-wnx{inset-inline-end:-6px}
+[dir=rtl] .jcx-wb{transform:scaleX(-1)}
+.jcx-e{position:relative}
+.jcx-eb{display:block;margin:4px auto 0;padding:4px 12px;border:1px solid var(--jcx-line);border-radius:var(--jcx-radius);background:var(--jcx-bg);color:var(--jcx-fg);font-size:12px;cursor:pointer}
+.jcx-x{position:absolute;inset-block-start:-14px;inset-inline-end:-6px;width:32px;height:32px;border:1px solid var(--jcx-line);border-radius:50%;background:var(--jcx-bg);color:var(--jcx-fg);font:18px/1 system-ui,sans-serif;cursor:pointer;z-index:1}
+@media (pointer:coarse){.jcx-x{width:44px;height:44px;inset-block-start:-22px}}
+.jcx-k{position:fixed;z-index:2147483000;inset-inline:0;bottom:0;translate:0 calc(-1 * var(--jcx-dock-b,0px));display:flex;justify-content:center;pointer-events:none}
+.jcx-ki{position:relative;pointer-events:auto;max-width:100vw;padding:2px 4px 4px;background:var(--jcx-bg);color:var(--jcx-fg);border:1px solid var(--jcx-line);border-radius:var(--jcx-radius) var(--jcx-radius) 0 0;box-shadow:0 -2px 10px rgb(0 0 0/.25)}
+.jcx-ki img{max-height:180px;object-fit:contain}
+@media (max-width:767px),(pointer:coarse) and (max-height:500px){.jcx-ki img{max-height:60px}}
+.jcx-r{position:fixed;z-index:2147482000}.jcx-rs{inset-inline-start:var(--jcx-g)}.jcx-re{inset-inline-end:var(--jcx-g)}
+.jcx-p{position:fixed;z-index:2147483100;bottom:12px;translate:0 calc(-1 * var(--jcx-dock-b,0px));max-width:min(340px,calc(100vw - 24px));padding:6px;background:var(--jcx-bg);color:var(--jcx-fg);border:1px solid var(--jcx-line);border-radius:var(--jcx-radius);box-shadow:0 6px 24px rgb(0 0 0/.3);animation:jcx-in .25s ease-out}
+.jcx-qstart{inset-inline-start:12px}.jcx-qend{inset-inline-end:12px}
+/* the box keeps its height limit through its content (picture scaled, code box clipped), never by clipping the box
+   itself: overflow:hidden on the box cut its close button, which stands out above it, in half (phones, U09) */
+.jcx-p9{inset-inline:0;margin-inline:auto;max-width:min(640px,calc(100vw - 24px))}.jcx-p9 img{max-height:calc(25vh - 40px);object-fit:contain}
+.jcx-p7 .jcx-n{display:grid;grid-template-columns:64px 1fr;gap:4px 10px;align-items:center;max-width:320px}
+.jcx-p7 .jcx-ni{grid-row:span 2;width:64px;height:64px;aspect-ratio:1}.jcx-p7 .jcx-nt{margin:0;font-weight:600;-webkit-line-clamp:1}.jcx-p7 .jcx-nb{margin:0;opacity:.85}
+.jcx-p>.jcx-cd{max-height:calc(25vh - 40px);overflow:hidden}
+@media (max-width:767px),(pointer:coarse) and (max-height:500px){.jcx-p img{width:auto;max-height:calc(25vh - 40px);object-fit:contain}.jcx-p7 .jcx-n{max-height:78px;overflow:hidden}
+/* phones: the theme switcher sits in the other bottom corner (48 px + 16 px); a corner / slide-up / notification box
+   is narrower than the screen by that much plus its close button, so it shows beside the switcher and never waits
+   behind it (R6r3-01: a 334 px box at 360-412 px always touched it and never showed) */
+.jcx-p{max-width:calc(100vw - 96px)}}
+/* U08 / U09 lightbox: a full-screen modal <dialog> (top layer) that is its own backdrop */
+.jcx-m{position:fixed;inset:0;z-index:2147483200;display:grid;place-items:center;width:auto;height:auto;max-width:none;max-height:none;margin:0;padding:0;border:0;background:rgb(0 0 0/.72)}
+.jcx-mb{position:relative;max-width:calc(100vw - 32px);max-height:calc(100vh - 32px);padding:8px;background:var(--jcx-bg);color:var(--jcx-fg);border-radius:var(--jcx-radius);text-align:center}
+.jcx-mb video{display:block;max-width:100%;max-height:70vh}
+/* the creative always fits the phone (a 320 x 480 picture on a 320 px phone): scaled, never cut */
+.jcx-mb img{max-height:calc(100vh - 150px);object-fit:contain}.jcx-mb iframe{max-width:100%}
+/* the pre-roll gate's Play button in the theme accent (R4r3-13; honey, jav, jav-modern and neon mapped above, the
+   other themes give --tui-accent), the icon in the accent's contrast colour where the browser knows contrast-color() */
+.jcx-vg .jcx-vb{background:var(--jcx-accent);border-color:transparent;color:#fff;color:contrast-color(var(--jcx-accent));box-shadow:0 2px 14px rgb(0 0 0/.55)}.jcx-vb svg{filter:drop-shadow(0 1px 2px rgb(0 0 0/.5))}
+.jcx-go{display:block;margin:8px auto 0;padding:10px 18px;border:0;border-radius:var(--jcx-radius);background:var(--jcx-accent);color:var(--jcx-bg);font:600 15px/1.2 system-ui,sans-serif;cursor:pointer}
+/* the slot label is a chip of the theme's own surface + text colours, so it never takes its background from what is
+   behind the slot (R4r2-03: the always-black player frame in light themes); it starts where the creative starts (the
+   critical style centres a box as wide as the creative; jcx.js sets --jcx-wd / --jcx-wm to the creative shown, R4r2-09) */
+.jcx-s>.jcx-l{width:fit-content;max-width:none;margin-inline:max(0px,(100% - var(--jcx-wd,100%)) / 2) 0;padding:0 5px;border-radius:3px;background:var(--jcx-bg);color:var(--jcx-fg)}
+@media (max-width:767px),(pointer:coarse) and (max-height:500px){.jcx-s>.jcx-l{margin-inline-start:max(0px,(100% - var(--jcx-wm,100%)) / 2)}}
+/* label at full text colour (contrast >= 4.5:1 in every theme, dark and light) */
+.jcx-k .jcx-l,.jcx-p .jcx-l,.jcx-r .jcx-l,.jcx-m .jcx-l{display:block;height:16px;font:11px/16px system-ui,sans-serif;text-align:start}
+/* JCX.free() (rewarded video): the fixed units of the current page view go too. On that page the slot boxes are only
+   hidden (jcx-free1, P3-A: folding them at once shifted the page by 0.16-0.35 CLS); the next page view folds them
+   (jcx-free, set by the head snippet before the first paint) */
+:is(.jcx-free,.jcx-free1) :is(.jcx-k,.jcx-p,.jcx-r){display:none}
+.jcx-free1 :is(.jcx-s,.jcx-c){visibility:hidden}
+/* V1 (front-end QA): the fixed units step aside while a theme menu / drawer / dialog covers the page: the theme (or
+   its profile CSS) sets html.jcx-hold (no :has() rule: it made every style pass of a heavy theme dearer). The pre-roll
+   gate sets html.jcx-vgon while it runs (at most 60 s, jcx-v.js): no sticky bar, rail, corner or notification box
+   covers its Play / Skip buttons (P2-06). During the gate they are out of the layout (RV-03): the space rule of
+   jcx-l.js then measures 0 x 0, so the unit's first show (its 'rendered' count, view observer and close timer) waits
+   for the gate's end, when its ResizeObserver sees the size again. A pasted network box that marks itself
+   [data-jcx-fx] (X34 push prompt) is only hidden: it keeps its box, so the engine still counts it */
+html.jcx-hold :is(.jcx-k,.jcx-p,.jcx-r),html.jcx-vgon [data-jcx-fx]{visibility:hidden!important}
+html.jcx-vgon :is(.jcx-k,.jcx-p,.jcx-r){display:none!important}
+/* a visible focus ring on our frames, links and video buttons (front-end QA) */
+:is(.jcx-s,.jcx-c,.jcx-k,.jcx-p,.jcx-r) :is(iframe,a,button):focus-visible{outline:2px solid var(--jcx-accent);outline-offset:2px}
+html.jcx-wp body{background-position:center top;background-repeat:no-repeat;background-attachment:fixed}
+@keyframes jcx-in{from{opacity:0;transform:translateY(12px)}}
+@media (prefers-reduced-motion:reduce){.jcx-p,.jcx-w-carousel .jcx-wt{animation:none;scroll-behavior:auto}}
+html.jv-ts-reduced .jcx-p{animation:none}

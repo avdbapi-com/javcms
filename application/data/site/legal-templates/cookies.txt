@@ -1,0 +1,19 @@
+This page explains how {site_name} ({site_url}) uses cookies and similar browser storage.
+
+## What cookies are
+Cookies are small text files that a website stores in your browser. Local storage is a similar place in your browser where a website can keep small pieces of information.
+
+## Cookies we use
+- Necessary: to keep you signed in, to protect forms against abuse and to remember your answer to the age question.
+- Preferences: to remember your language, theme and cookie choice.
+- Statistics: if the site uses an analytics service, it counts visits and pages in a way that does not tell us who you are.
+- Advertising: ads on the site may come from advertising networks that set their own cookies, for example to limit how often you see an ad.
+
+## Your choices
+If the site shows a cookie notice, you can accept or reject statistics and advertising cookies there. Necessary cookies cannot be switched off because the site does not work without them. You can also delete cookies or block them in your browser settings at any time; some parts of the site may then not work.
+
+## Changes
+We may update this policy. This policy was last updated on {date}.
+
+## Contact
+Questions about cookies: {email}.

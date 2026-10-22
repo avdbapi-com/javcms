@@ -1,0 +1,8 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<section class="ct-sec" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}"><div class="ct-sec-head"><h2 class="ct-h2">{:\\app\\common\\util\\TemplateText::get('ui.latest_videos')}</h2></div>{php}$ctGroup = 0;{/php}<div class="ct-grid" data-grid-fill>{maccms:vod num="20" paging="yes" type="all" pageurl="vod/search" order="desc" by="time" id="vo"}{include file="public/vodbox"}{/maccms:vod}</div>{if condition="$__PAGING__.record_total eq 0"}{include file="public/empty"}{/if}{include file="public/paging"}</section>

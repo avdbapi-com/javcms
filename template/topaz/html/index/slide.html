@@ -1,0 +1,19 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}if (!isset($tzPlain)) { $tzPlain = function ($v) { $v = (string)$v; for ($i = 0; $i < 6; $i++) { $d = html_entity_decode($v, ENT_QUOTES | ENT_HTML5, 'UTF-8'); if ($d === $v) { break; } $v = $d; } return trim($v); }; } $tzSlides = 0;{/php}
+<section class="tz-hero" data-tz-hero aria-roledescription="carousel" aria-label="{:\\app\\common\\util\\TemplateText::get('topaz.featured')}">
+  <div class="tz-hero-track">
+  {maccms:vod num="6" type="all" level="9" order="desc" by="time" paging="no" id="vo" key="tzK"}{include file="index/heroitem"}{/maccms:vod}
+  {if condition="$tzSlides eq 0"}{maccms:vod num="6" type="all" order="desc" by="hits" paging="no" id="vo" key="tzK"}{include file="index/heroitem"}{/maccms:vod}{/if}
+  </div>
+  {if condition="$tzSlides gt 1"}
+  <button class="tz-hero-arrow tz-hero-prev" type="button" data-tz-hero-prev aria-label="{:\\app\\common\\util\\TemplateText::get('topaz.previous_slide')}">{:\\app\\common\\util\\AutoIcon::ui('chevron-left', ['class'=>'tz-i tz-dir', 'tint'=>'none'])}</button>
+  <button class="tz-hero-arrow tz-hero-next" type="button" data-tz-hero-next aria-label="{:\\app\\common\\util\\TemplateText::get('topaz.next_slide')}">{:\\app\\common\\util\\AutoIcon::ui('chevron-right', ['class'=>'tz-i tz-dir', 'tint'=>'none'])}</button>
+  <div class="tz-hero-dots" role="group" aria-label="{:\\app\\common\\util\\TemplateText::get('topaz.slides')}">{php}for ($tzD = 1; $tzD <= $tzSlides; $tzD++) { echo '<button type="button" data-tz-dot="' . $tzD . '" aria-label="' . \app\common\util\TemplateText::get('topaz.go_to_slide', ['n' => $tzD]) . '"' . ($tzD === 1 ? ' aria-current="true"' : '') . '></button>'; }{/php}</div>
+  {/if}
+</section>

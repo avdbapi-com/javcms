@@ -1,0 +1,23 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}
+// "More to watch" (round 3, review F3-P1-3): no '%performer%' or genre LIKE scan over the whole table.
+// Step 1: the newest videos of the same lead performer (verify r4 G7: AvdbLanguage::relatedActorIds = the ac_ token through
+// the search planner; the stock vod_actor index only where ScaleSchema confirmed it, so the slim index set no longer turns
+// this step into error 1176 and an empty block). The id list is cached per lead (empty answers and failures too);
+// placeholder names are skipped. The current video is dropped in PHP (the core's "not" attribute would replace "ids").
+// Step 2 fills up to 10 with the newest videos of the same category (vod_time index).
+$jcRelIds = [intval($obj['vod_id'] ?? 0)];
+$jcRelShown = 0;
+$jcRelLead = trim((string)explode(',', (string)\app\common\util\AvdbLanguage::dropPlaceholders($obj['vod_actor'] ?? ''))[0]);
+$jcRelOut = [];
+foreach (\app\common\util\AvdbLanguage::relatedActorIds($jcRelLead, 24) as $jcRelId) { if (!in_array($jcRelId, $jcRelIds, true)) { $jcRelOut[] = $jcRelId; if (count($jcRelOut) >= 10) { break; } } }
+$jcRelPick = implode(',', $jcRelOut);
+{/php}<section class="jc-section jc-related" aria-labelledby="jc-related-title"><div class="jc-head"><h2 class="jc-h2" id="jc-related-title">{:\\app\\common\\util\\AutoIcon::navIcon('watch', '', ['size'=>'lg', 'plate'=>true])}{:\\app\\common\\util\\TemplateText::get('ui.more_to_watch')}</h2></div>
+<div class="jc-grid" data-grid-fill>{if condition="$jcRelPick neq ''"}{maccms:vod num="10" ids="'.$jcRelPick.'" order="desc" by="id" paging="no" id="vo"}{php}$jcRelIds[] = intval($vo['vod_id']); $jcRelShown++;{/php}{include file="public/vodbox"}{/maccms:vod}{/if}{if condition="$jcRelShown lt 10"}{php}$jcRelNeed = 10 - $jcRelShown; $jcRelNot = implode(',', $jcRelIds);{/php}{maccms:vod num="'.$jcRelNeed.'" not="'.$jcRelNot.'" type="current" order="desc" by="time" paging="no" id="vo"}{php}$jcRelShown++;{/php}{include file="public/vodbox"}{/maccms:vod}{/if}</div>
+</section>

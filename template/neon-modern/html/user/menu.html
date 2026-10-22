@@ -1,0 +1,21 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<nav class="nn-umenu{if condition="$nnUAct neq 'index'"} is-strip{/if}" aria-label="{:\\app\\common\\util\\TemplateText::get('account_navigation')}">
+<a href="{:mac_url('user/index')}"{if condition="$nnUAct eq 'index'"} aria-current="page"{/if}><svg class="nn-ico" aria-hidden="true"><use href="{$nnSvg|htmlspecialchars=ENT_QUOTES}#user"></use></svg>{:\\app\\common\\util\\TemplateText::get('ui.my_information')}</a>
+<a href="{:mac_url('user/info')}"{if condition="$nnUAct eq 'info'"} aria-current="page"{/if}><svg class="nn-ico" aria-hidden="true"><use href="{$nnSvg|htmlspecialchars=ENT_QUOTES}#edit"></use></svg>{:\\app\\common\\util\\TemplateText::get('ui.modify_the_information')}</a>
+<a href="{:mac_url('user/favs')}"{if condition="$nnUAct eq 'favs'"} aria-current="page"{/if}><svg class="nn-ico" aria-hidden="true"><use href="{$nnSvg|htmlspecialchars=ENT_QUOTES}#heart"></use></svg>{:\\app\\common\\util\\TemplateText::get('ui.my_collection')}</a>
+<a href="{:mac_url('user/plays')}"{if condition="$nnUAct eq 'plays'"} aria-current="page"{/if}><svg class="nn-ico" aria-hidden="true"><use href="{$nnSvg|htmlspecialchars=ENT_QUOTES}#history"></use></svg>{:\\app\\common\\util\\TemplateText::get('ui.play_record')}</a>
+<a href="{:mac_url('user/upgrade')}"{if condition="$nnUAct eq 'upgrade'"} aria-current="page"{/if}><svg class="nn-ico" aria-hidden="true"><use href="{$nnSvg|htmlspecialchars=ENT_QUOTES}#crown"></use></svg>{:\\app\\common\\util\\TemplateText::get('ui.upgrade_member')}</a>
+<a href="{:mac_url('user/popedom')}"{if condition="$nnUAct eq 'popedom'"} aria-current="page"{/if}><svg class="nn-ico" aria-hidden="true"><use href="{$nnSvg|htmlspecialchars=ENT_QUOTES}#lock"></use></svg>{:\\app\\common\\util\\TemplateText::get('ui.my_authority')}</a>
+<a href="{:mac_url('user/buy')}"{if condition="$nnUAct eq 'buy'"} aria-current="page"{/if}><svg class="nn-ico" aria-hidden="true"><use href="{$nnSvg|htmlspecialchars=ENT_QUOTES}#card"></use></svg>{:\\app\\common\\util\\TemplateText::get('ui.recharge_center')}</a>
+<a href="{:mac_url('user/orders')}"{if condition="$nnUAct eq 'orders' || $nnUAct eq 'cards'"} aria-current="page"{/if}><svg class="nn-ico" aria-hidden="true"><use href="{$nnSvg|htmlspecialchars=ENT_QUOTES}#ticket"></use></svg>{:\\app\\common\\util\\TemplateText::get('ui.recharge_record')}</a>
+<a href="{:mac_url('user/plog')}"{if condition="$nnUAct eq 'plog'"} aria-current="page"{/if}><svg class="nn-ico" aria-hidden="true"><use href="{$nnSvg|htmlspecialchars=ENT_QUOTES}#coin"></use></svg>{:\\app\\common\\util\\TemplateText::get('ui.points_record')}</a>
+<a href="{:mac_url('user/comment')}"{if condition="$nnUAct eq 'comment'"} aria-current="page"{/if}><svg class="nn-ico" aria-hidden="true"><use href="{$nnSvg|htmlspecialchars=ENT_QUOTES}#comment"></use></svg>{:\\app\\common\\util\\TemplateText::get('ui.comments')}</a>
+<a href="{:mac_url('user/gbook')}"{if condition="$nnUAct eq 'gbook'"} aria-current="page"{/if}><svg class="nn-ico" aria-hidden="true"><use href="{$nnSvg|htmlspecialchars=ENT_QUOTES}#comment"></use></svg>{:\\app\\common\\util\\TemplateText::get('ui.recent_messages')}</a>
+<a href="{:mac_url('user/logout')}"><svg class="nn-ico" aria-hidden="true"><use href="{$nnSvg|htmlspecialchars=ENT_QUOTES}#logout"></use></svg>{:\\app\\common\\util\\TemplateText::get('ui.quit')}</a>
+</nav>

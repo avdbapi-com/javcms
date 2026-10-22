@@ -1,0 +1,337 @@
+/*
+ * This file is part of JavCMS - https://javcms.net
+ * Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+ * License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+ * See the LICENSE and NOTICE files that come with JavCMS.
+ * Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Telegram: https://t.me/avdb_api
+ */
+/* admin-vod-workspace-v1: candidate-only Videos list/editor workspace.
+ * Visual patterns adapted from pinned maccms10 view_new/vod templates and static_new CSS:
+ * card-like filter/list surfaces, readable action clusters, controlled overflow, responsive tabs.
+ * Scope is limited to the additive .admin-vod-index/.admin-vod-info markers.
+ */
+/* V9 palette -> kit tokens (admin-content builder) */
+html body.admin-dark .admin-vod-index, html body.admin-dark .admin-vod-info { --vod-surface-raised: var(--ax-raised); --vod-surface-soft: var(--ax-raised); --vod-ring: var(--ax-accent-soft); }
+body.admin-dark .admin-vod-index,
+body.admin-dark .admin-vod-info {
+    --vod-surface-raised: color-mix(in srgb, var(--admin-dark-surface) 86%, #1d3a4e);
+    --vod-surface-soft: color-mix(in srgb, var(--admin-dark-surface-alt) 88%, #1c3446);
+    --vod-ring: rgba(110, 231, 183, .18);
+}
+
+/* list workspace: filters, actions, and data are separate visual layers */
+body.admin-dark .admin-vod-index {
+    padding: clamp(10px, 1.8vw, 20px) !important;
+}
+body.admin-dark .admin-vod-index .my-toolbar-box {
+    margin: 0 0 14px;
+    padding: clamp(12px, 1.8vw, 18px);
+    border: 1px solid var(--admin-dark-border);
+    border-radius: 14px;
+    background: linear-gradient(145deg, var(--vod-surface-raised), var(--admin-dark-surface));
+    box-shadow: 0 12px 28px rgba(0, 0, 0, .18);
+}
+body.admin-dark .admin-vod-index .my-toolbar-box > .center.mb10 {
+    display: block;
+    margin: 0 0 14px !important;
+}
+body.admin-dark .admin-vod-index .my-toolbar-box > .center.mb10 > form {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(auto-fit, minmax(142px, 1fr));
+    gap: 8px;
+    align-items: center;
+}
+body.admin-dark .admin-vod-index .my-toolbar-box form .layui-input-inline {
+    float: none;
+    width: auto !important;
+    min-width: 0;
+    margin: 0 !important;
+}
+body.admin-dark .admin-vod-index .my-toolbar-box form .layui-input-inline .layui-input,
+body.admin-dark .admin-vod-index .my-toolbar-box form .layui-form-select {
+    width: 100%;
+}
+body.admin-dark .admin-vod-index .my-toolbar-box form > input[type="hidden"] { display: none; }
+body.admin-dark .admin-vod-index .my-toolbar-box form .j-search {
+    min-height: 38px;
+    margin: 0 !important;
+    border-radius: 8px;
+    box-shadow: 0 0 0 3px var(--vod-ring);
+}
+body.admin-dark .admin-vod-index .my-toolbar-box > .btn-primary-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin: 0;
+    padding-top: 14px;
+    border-top: 1px dashed var(--admin-dark-border);
+}
+body.admin-dark .admin-vod-index .my-toolbar-box > .btn-primary-group .btn {
+    margin: 0 !important;
+    border-radius: 8px;
+    transition: transform .16s ease, border-color .16s ease, background .16s ease;
+}
+body.admin-dark .admin-vod-index .my-toolbar-box > .btn-primary-group .btn:hover {
+    transform: translateY(-1px);
+}
+body.admin-dark .admin-vod-index > #pageListForm {
+    margin: 0;
+    padding: 8px;
+    overflow-x: auto;
+    border: 1px solid var(--admin-dark-border);
+    border-radius: 14px;
+    background: linear-gradient(145deg, var(--admin-dark-surface), var(--vod-surface-soft));
+    box-shadow: 0 12px 28px rgba(0, 0, 0, .14);
+}
+body.admin-dark .admin-vod-index > #pageListForm .layui-table {
+    min-width: 1060px;
+    margin: 0;
+    background: transparent;
+}
+body.admin-dark .admin-vod-index > #pageListForm .layui-table thead th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    color: var(--admin-dark-muted);
+    background: #152235;
+    font-size: 11px;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+}
+body.admin-dark .admin-vod-index > #pageListForm .layui-table tbody tr {
+    transition: background .16s ease, box-shadow .16s ease;
+}
+body.admin-dark .admin-vod-index > #pageListForm .layui-table tbody tr:hover {
+    box-shadow: inset 3px 0 0 var(--admin-dark-accent);
+}
+body.admin-dark .admin-vod-index > #pageListForm .layui-table td:nth-child(3) {
+    white-space: normal;
+    line-height: 1.6;
+}
+body.admin-dark .admin-vod-index > #pageListForm .layui-table td:nth-child(3) > a {
+    display: inline-block;
+    max-width: 100%;
+    white-space: normal;
+}
+body.admin-dark .admin-vod-index > #pageListForm .layui-table td.w200 {
+    white-space: normal;
+}
+body.admin-dark .admin-vod-index > #pageListForm .layui-table td.w200 .badge {
+    display: inline-flex;
+    margin: 2px 3px 2px 0;
+    align-items: center;
+    min-height: 24px;
+}
+body.admin-dark .admin-vod-index > #pageListForm #pages {
+    padding: 12px 4px 4px;
+}
+
+/* editor workspace: keep legacy fields and dynamic arrays intact while grouping them visually */
+body.admin-dark .admin-vod-info {
+    padding: clamp(10px, 1.8vw, 20px) !important;
+}
+body.admin-dark .admin-vod-info > form.layui-form-pane {
+    margin: 0;
+    padding: clamp(12px, 2vw, 22px);
+    border: 1px solid var(--admin-dark-border);
+    border-radius: 14px;
+    background: linear-gradient(145deg, var(--vod-surface-raised), var(--admin-dark-surface));
+    box-shadow: 0 12px 28px rgba(0, 0, 0, .18);
+}
+body.admin-dark .admin-vod-info > form.layui-form-pane > .layui-tab {
+    margin: 0;
+}
+body.admin-dark .admin-vod-info > form.layui-form-pane > .layui-tab > .layui-tab-title {
+    display: flex;
+    gap: 6px;
+    height: auto;
+    padding: 5px;
+    border: 1px solid var(--admin-dark-border);
+    border-radius: 10px;
+    background: var(--admin-dark-surface-alt);
+}
+body.admin-dark .admin-vod-info > form.layui-form-pane > .layui-tab > .layui-tab-title li {
+    flex: 0 1 160px;
+    height: 36px;
+    line-height: 36px;
+    border-radius: 7px;
+    text-align: center;
+    transition: color .16s ease, background .16s ease;
+}
+body.admin-dark .admin-vod-info > form.layui-form-pane > .layui-tab > .layui-tab-title li:hover,
+body.admin-dark .admin-vod-info > form.layui-form-pane > .layui-tab > .layui-tab-title li.layui-this {
+    color: var(--admin-dark-ink);
+    background: #1c394a;
+}
+body.admin-dark .admin-vod-info > form.layui-form-pane > .layui-tab > .layui-tab-title li.layui-this:after {
+    display: none;
+}
+body.admin-dark .admin-vod-info > form.layui-form-pane > .layui-tab > .layui-tab-content {
+    padding: 18px 0 0;
+}
+body.admin-dark .admin-vod-info > form.layui-form-pane .layui-tab-item > .layui-form-item {
+    margin: 0 0 10px;
+    padding: 10px 12px;
+    border: 1px solid rgba(38, 53, 77, .78);
+    border-radius: 10px;
+    background: rgba(22, 32, 51, .54);
+}
+body.admin-dark .admin-vod-info > form.layui-form-pane .layui-tab-item > .layui-form-item:hover,
+body.admin-dark .admin-vod-info > form.layui-form-pane .layui-tab-item > .layui-form-item:focus-within {
+    border-color: #356078;
+    box-shadow: 0 0 0 3px var(--vod-ring);
+}
+body.admin-dark .admin-vod-info > form.layui-form-pane .layui-tab-item > .layui-form-item > .layui-form-label {
+    border-radius: 6px;
+    background: var(--admin-dark-surface-alt) !important;
+}
+body.admin-dark .admin-vod-info > form.layui-form-pane .contents {
+    margin: 14px 0;
+    padding: 10px;
+    border: 1px solid var(--admin-dark-border);
+    border-radius: 12px;
+    background: rgba(11, 18, 32, .38);
+}
+body.admin-dark .admin-vod-info > form.layui-form-pane .contents > .layui-form-item {
+    margin: 0 0 10px;
+    padding: 10px;
+    border: 1px solid rgba(53, 96, 120, .7);
+    border-radius: 9px;
+    background: var(--admin-dark-surface);
+}
+body.admin-dark .admin-vod-info > form.layui-form-pane .contents > .layui-form-item:last-child { margin-bottom: 0; }
+body.admin-dark .admin-vod-info > form.layui-form-pane .contents .layui-input-inline {
+    max-width: 100%;
+}
+body.admin-dark .admin-vod-info > form.layui-form-pane .contents .pb-1 {
+    width: auto !important;
+    max-width: 100%;
+}
+body.admin-dark .admin-vod-info > form.layui-form-pane .contents .badge {
+    display: inline-flex;
+    margin: 2px 3px 2px 0;
+    min-height: 24px;
+    align-items: center;
+    border: 1px solid var(--admin-dark-border);
+}
+body.admin-dark .admin-vod-info > form.layui-form-pane .layui-form-item.center {
+    margin: 18px 0 0;
+    padding: 14px 0 0;
+    border-top: 1px dashed var(--admin-dark-border);
+}
+body.admin-dark .admin-vod-info > form.layui-form-pane .layui-form-item.center .layui-input-block {
+    margin-left: 0;
+    text-align: right;
+}
+body.admin-dark .admin-vod-info > form.layui-form-pane .layui-form-item.center .btn {
+    min-width: 108px;
+    border-radius: 8px;
+}
+
+body.admin-dark .admin-vod-index a:focus-visible,
+body.admin-dark .admin-vod-index button:focus-visible,
+body.admin-dark .admin-vod-index input:focus-visible,
+body.admin-dark .admin-vod-index select:focus-visible,
+body.admin-dark .admin-vod-info a:focus-visible,
+body.admin-dark .admin-vod-info button:focus-visible,
+body.admin-dark .admin-vod-info input:focus-visible,
+body.admin-dark .admin-vod-info select:focus-visible,
+body.admin-dark .admin-vod-info textarea:focus-visible {
+    outline: 2px solid var(--admin-dark-accent-strong);
+    outline-offset: 2px;
+}
+
+@media (max-width: 760px) {
+    body.admin-dark .admin-vod-index .my-toolbar-box > .center.mb10 > form {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    body.admin-dark .admin-vod-index .my-toolbar-box form .j-search {
+        grid-column: 1 / -1;
+    }
+    body.admin-dark .admin-vod-index .my-toolbar-box > .btn-primary-group .btn {
+        flex: 1 1 calc(50% - 7px);
+        text-align: center;
+    }
+    body.admin-dark .admin-vod-index > #pageListForm {
+        padding: 5px;
+    }
+    body.admin-dark .admin-vod-info > form.layui-form-pane {
+        padding: 10px;
+    }
+    body.admin-dark .admin-vod-info > form.layui-form-pane > .layui-tab > .layui-tab-title li {
+        flex-basis: 50%;
+        min-width: 0;
+        padding: 0 6px;
+    }
+    body.admin-dark .admin-vod-info > form.layui-form-pane .layui-tab-item > .layui-form-item {
+        padding: 8px;
+    }
+    body.admin-dark .admin-vod-info > form.layui-form-pane .layui-form-label {
+        float: none;
+        display: block;
+        width: auto;
+        margin: 0 0 6px;
+        text-align: left;
+    }
+    body.admin-dark .admin-vod-info > form.layui-form-pane .layui-input-inline,
+    body.admin-dark .admin-vod-info > form.layui-form-pane .layui-input-block {
+        float: none;
+        width: 100% !important;
+        max-width: none;
+        margin-left: 0 !important;
+        margin-right: 0;
+    }
+    body.admin-dark .admin-vod-info > form.layui-form-pane .contents .layui-input-inline {
+        margin-bottom: 7px;
+    }
+    body.admin-dark .admin-vod-info > form.layui-form-pane .layui-form-item.center .layui-input-block {
+        text-align: left;
+    }
+}
+
+
+/* admin-vod-mobile-actions-v2: expose the horizontal list affordance without changing table hooks. */
+.admin-vod-scroll-hint {
+    display: none;
+}
+
+@media (max-width: 760px) {
+    .admin-vod-scroll-hint {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin: 0 0 7px;
+        padding: 8px 10px;
+        border: 1px solid rgba(99, 216, 234, .28);
+        border-radius: 8px;
+        color: #b9d4e8;
+        background: rgba(40, 104, 128, .18);
+        font-size: 12px;
+        line-height: 1.35;
+    }
+
+    body.admin-dark .admin-vod-scroll-hint {
+        color: var(--admin-dark-muted);
+        background: rgba(99, 216, 234, .08);
+    }
+
+    body.admin-dark .admin-vod-index > #pageListForm {
+        scrollbar-color: var(--admin-dark-accent) var(--admin-dark-surface-alt);
+    }
+}
+
+
+/* Studio owns the list toolbar from first paint; the workspace remains structural. */
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .admin-vod-index .my-toolbar-box > .btn-primary-group {
+  background:transparent!important; background-image:none!important;
+  border:0!important; border-radius:0!important; box-shadow:none!important;
+  padding:0!important; margin-top:16px!important;
+}
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .admin-vod-index .my-toolbar-box > .btn-primary-group > .btn:hover { transform:none; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .admin-vod-index .my-toolbar-box form .j-search { box-shadow:none!important; }
+@media(max-width:760px) {
+  body.admin-studio:is(.admin-dark,:not(.admin-dark)) .admin-vod-index .my-toolbar-box > .btn-primary-group > .btn { flex:0 1 auto; text-align:left; }
+  body.admin-studio:is(.admin-dark,:not(.admin-dark)) .admin-vod-info > form.layui-form-pane > .layui-tab > .layui-tab-title li { flex-basis:auto; min-width:max-content; }
+}

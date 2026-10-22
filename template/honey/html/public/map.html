@@ -1,0 +1,23 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="honey" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/auto"}
+{include file="public/include"}
+</head>
+<body class="hn-page-list hn-page-map">
+{include file="public/head"}
+<main id="main-content" class="hn-main"><div class="hn-wrap">
+<div class="hn-page-head" data-ai-group><div><h1 class="hn-page-title hn-split" data-ai-hot>{:\\app\\common\\util\\AutoIcon::navIcon('latest-100', '', ['size'=>'lg', 'plate'=>true, 'class'=>'hn-cell'])}<span>{:\\app\\common\\util\\TemplateText::get('ui.latest_100_updates')}</span></h1><span class="hn-count">{:\\app\\common\\util\\TemplateText::get('honey.foot_updates')}</span></div><a class="hn-btn" href="{:mac_url('label/new')}">{:\\app\\common\\util\\TemplateText::get('ui.view_more')}{:\\app\\common\\util\\AutoIcon::ui('chevron-right', ['class'=>'hn-i', 'tint'=>'none'])}</a></div>
+<ol class="hn-maplist">{maccms:vod num="100" type="all" order="desc" by="time" paging="no" id="vo"}{php}$hnMTitle = (string)($vo['vod_display_name'] ?? ''); if (trim($hnMTitle) === '') { $hnMTitle = (string)($vo['vod_name'] ?? ''); } for ($hnK = 0; $hnK < 3 && strpos($hnMTitle, '&') !== false; $hnK++) { $hnKd = html_entity_decode($hnMTitle, ENT_QUOTES | ENT_HTML5, 'UTF-8'); if ($hnKd === $hnMTitle) { break; } $hnMTitle = $hnKd; }{/php}<li><span class="hn-num">{$key}</span>{notempty name="vo.type.type_name"}<a class="hn-map-cat" href="{:mac_url_type($vo['type'])}" title="{:\\app\\common\\util\\TemplateText::get(htmlspecialchars_decode((string)$vo['type']['type_name'], ENT_QUOTES))}">{:\\app\\common\\util\\AutoIcon::icon('category', $vo['type']['type_name'], ['size'=>'sm', 'label'=>\\app\\common\\util\\TemplateText::raw(htmlspecialchars_decode((string)$vo['type']['type_name'], ENT_QUOTES))])}</a>{/notempty}<a href="{:mac_url_vod_play($vo)}" dir="auto">{$hnMTitle|htmlspecialchars=ENT_QUOTES}</a><time datetime="{$vo.vod_time|date='Y-m-d',###}">{$vo.vod_time|date='Y-m-d',###}</time></li>{/maccms:vod}</ol>
+</div></main>
+{include file="public/foot"}
+</body>
+</html>
+

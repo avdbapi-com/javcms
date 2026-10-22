@@ -1,0 +1,69 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="ember" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/vod_play"}
+{include file="public/include"}
+</head>
+<body class="e-page-watch">
+{php}$tplLiveHits = 1;{/php}
+{include file="public/metavars"}
+{php}
+$tplPageUrl = '';
+try { $tplPageUrl = \app\common\util\Sitemap::absolute(mac_url_vod_play($obj, array('sid' => (int)($param['sid'] ?? 1), 'nid' => (int)($param['nid'] ?? 1)))); } catch (\Throwable $tplUrlError) { $tplPageUrl = ''; }
+$tplEpCount = 0;
+foreach ((array)($obj['vod_play_list'] ?? array()) as $tplSrc) { $tplEpCount += is_array($tplSrc['urls'] ?? null) ? count($tplSrc['urls']) : 0; }
+$tplLinkPre = (string)($obj['player_info']['link_pre'] ?? '');
+$tplLinkNext = (string)($obj['player_info']['link_next'] ?? '');
+{/php}
+{include file="public/head"}
+<span class="gallery-history-entry" hidden data-name="{$tplTitle|htmlspecialchars=ENT_QUOTES}" data-link="{:mac_url_vod_detail($obj)}" data-pic="{$tplPoster|htmlspecialchars=ENT_QUOTES}"></span>
+<main id="main-content" class="e-main container">
+  <nav class="e-crumb" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.main_navigation')}">
+    <a href="{$maccms.path}">{:\\app\\common\\util\\AutoIcon::navIcon('home', '', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ui.home')}</a>
+    {if condition="$tplTypeName neq ''"}{:\\app\\common\\util\\AutoIcon::ui('chevron-right', ['class'=>'e-ico'])}<a href="{:mac_url_type($obj['type'])}">{:\\app\\common\\util\\AutoIcon::icon('category', $obj['type']['type_name'] ?? '', ['size'=>'sm'])}{$tplTypeName|htmlspecialchars=ENT_QUOTES}</a>{/if}
+    {:\\app\\common\\util\\AutoIcon::ui('chevron-right', ['class'=>'e-ico'])}<a href="{:mac_url_vod_detail($obj)}">{if condition="$tplCode neq ''"}{$tplCode|htmlspecialchars=ENT_QUOTES}{else/}{:\\app\\common\\util\\TemplateText::get('ui.details')}{/if}</a>
+  </nav>
+  <div class="e-watch">
+    <div class="e-player" id="e-player">{$player_data}{$player_js}</div>
+    <div class="e-player-bar">
+      <a href="{:mac_url('gbook/index') . (strpos(mac_url('gbook/index'), '?') === false ? '?' : '&amp;') . 'id=' . intval($obj['vod_id'])}">{:\\app\\common\\util\\AutoIcon::ui('info', ['class'=>'e-ico'])}{:\\app\\common\\util\\TemplateText::get('ember.report_problem')}</a>
+      <span class="e-ep">
+        {if condition="$tplLinkPre neq ''"}<a href="{$tplLinkPre|htmlspecialchars=ENT_QUOTES}">{:\\app\\common\\util\\AutoIcon::ui('chevron-left', ['class'=>'e-ico'])}{:\\app\\common\\util\\TemplateText::get('previous_episode')}</a>{/if}
+        <a href="{:mac_url_vod_detail($obj)}">{:\\app\\common\\util\\AutoIcon::ui('info', ['class'=>'e-ico'])}{:\\app\\common\\util\\TemplateText::get('ui.details')}</a>
+        {if condition="$tplLinkNext neq ''"}<a href="{$tplLinkNext|htmlspecialchars=ENT_QUOTES}">{:\\app\\common\\util\\TemplateText::get('next_episode')}{:\\app\\common\\util\\AutoIcon::ui('chevron-right', ['class'=>'e-ico'])}</a>{/if}
+      </span>
+    </div>
+    <div class="e-vtitle">
+      <h1{php}echo \app\common\util\AvdbLanguage::langAttr(isset($obj) && is_array($obj) ? $obj : []);{/php}>{$tplTitle|htmlspecialchars=ENT_QUOTES}</h1>
+      <p class="e-hint">{:\\app\\common\\util\\TemplateText::get('ember.player_hint')}</p>
+    </div>
+  </div>
+  <div class="e-actions">
+    <div class="e-urlpill"><span>{:\\app\\common\\util\\AutoIcon::ui('link', ['class'=>'e-ico'])}{:\\app\\common\\util\\TemplateText::get('ember.page_url')}</span><output>{$tplPageUrl|htmlspecialchars=ENT_QUOTES}</output><button type="button" data-e-copy="{$tplPageUrl|htmlspecialchars=ENT_QUOTES}">{:\\app\\common\\util\\TemplateText::get('ui.copy')}</button></div>
+    <button class="e-pill e-magnet" type="button" data-e-fav data-id="{$obj.vod_id|intval}" data-mid="1">{:\\app\\common\\util\\AutoIcon::ui('star', ['class'=>'e-ico'])}{:\\app\\common\\util\\TemplateText::get('favorites')}</button>
+    {notempty name="obj.vod_down_list"}<a class="e-pill e-magnet" href="{:mac_url_vod_down($obj,['sid'=>1,'nid'=>1])}">{:\\app\\common\\util\\AutoIcon::ui('download', ['class'=>'e-ico'])}{:\\app\\common\\util\\TemplateText::get('downloads')}</a>{/notempty}
+  </div>
+  {include file="public/meta"}
+  {if condition="$tplEpCount gt 1"}
+  {maccms:foreach name="obj.vod_play_list" id="tplSource" key="tplSid"}
+  <section class="e-eps"><h2>{:\\app\\common\\util\\AutoIcon::ui('video', ['class'=>'e-ico'])}{$tplSource.player_info.show|htmlspecialchars=ENT_QUOTES} {:\\app\\common\\util\\TemplateText::get('ui.watch_online_ae5f0c')}</h2>
+    <div class="e-chips">{maccms:foreach name="tplSource.urls" id="tplEp" key="tplNid"}<a href="{:mac_url_vod_play($obj,['sid'=>$tplSource['sid'],'nid'=>$tplEp['nid']])}" {if condition="$param.sid eq $tplSource.sid && $param.nid eq $tplEp.nid"}aria-current="page"{/if}>{$tplEp.name|htmlspecialchars=ENT_QUOTES}</a>{/maccms:foreach}</div>
+  </section>
+  {/maccms:foreach}
+  {/if}
+  {include file="vod/embertags"}
+  {php}$tplRelKey = 'ui.more_to_watch'; $tplRelBy = 'time';{/php}
+  {include file="public/related"}
+  {if condition="$GLOBALS['config']['comment']['status'] eq 1"}<section class="e-comments"><div class="mac_comment" data-id="{$obj.vod_id|intval}" data-mid="1"><h2>{:\\app\\common\\util\\TemplateText::get('ui.comments')}</h2><p>{:\\app\\common\\util\\TemplateText::get('ui.loading_comments')}</p></div></section><script>MAC.Comment.Init();MAC.Comment.Show(1);</script>{/if}
+  <div class="e-notice"><p>{:\\app\\common\\util\\TemplateText::get('ember.adult_notice')}</p><strong>{:\\app\\common\\util\\TemplateText::get('ember.under_18')}</strong></div>
+</main>
+{include file="public/foot"}
+</body>
+</html>

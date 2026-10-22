@@ -1,0 +1,16 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<div class="ox-filters">
+  <nav class="ox-tabsrow" data-ai-group aria-label="{:\\app\\common\\util\\TemplateText::get('ui.categories')}" data-ox-strip>
+    {if condition="isset($oxSearchQ)"}<a class="ox-seg" href="{:htmlspecialchars(mac_url_search($oxSearchQ), ENT_QUOTES, 'UTF-8')}" rel="nofollow" {if condition="$oxSearchTid eq 0"}aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::navIcon('all', '', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('all')}</a>
+    {maccms:type ids="parent" flag="vod" order="asc" by="sort" id="tplFb" hide_empty="1"}<a class="ox-seg" href="{:htmlspecialchars(mac_url_search(array_merge($oxSearchQ, ['tid' => (int)$tplFb['type_id']])), ENT_QUOTES, 'UTF-8')}" rel="nofollow" {if condition="$tplFb.type_id eq $oxSearchTid"}aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::icon('category', $tplFb['type_name'] ?? '', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)($tplFb['type_name'] ?? '')))}</a>{/maccms:type}
+    {else/}<a class="ox-seg" href="{:mac_url('label/sort')}" {if condition="isset($oxAid) && $oxAid eq 9995"}aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::navIcon('all', '', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('all')}</a>
+    {maccms:type ids="parent" flag="vod" order="asc" by="sort" id="tplFb" hide_empty="1"}<a class="ox-seg" href="{:mac_url_type($tplFb)}" {if condition="$tplFb.type_id eq $GLOBALS['type_id'] || $tplFb.type_id eq $GLOBALS['type_pid']"}aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::icon('category', $tplFb['type_name'] ?? '', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)($tplFb['type_name'] ?? '')))}</a>{/maccms:type}{/if}
+  </nav>
+  {include file="public/sortbar"}
+</div>

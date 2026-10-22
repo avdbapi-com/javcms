@@ -1,0 +1,33 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="topaz" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/hot"}
+{assign name="$maccms.aid" value="9998" /}
+{include file="public/include"}
+</head>
+<body class="tz-page-list">
+{include file="public/head"}
+{include file="public/labelsorts"}
+<main id="main-content" class="tz-main tz-wrap tz-list">
+  <header class="tz-callout" data-ai-hot>
+    <nav class="tz-crumbs" aria-label="{:\\app\\common\\util\\TemplateText::get('topaz.breadcrumb')}"><a href="{$maccms.path}">{:\\app\\common\\util\\TemplateText::get('ui.home')}</a>{:\\app\\common\\util\\AutoIcon::ui('chevron-right', ['class'=>'tz-i tz-dir', 'tint'=>'none'])}<span aria-current="page">{:\\app\\common\\util\\TemplateText::get('ui.popular_videos')}</span></nav>
+    <span class="tz-eyebrow">{:\\app\\common\\util\\TemplateText::get('topaz.library')}</span>
+    <h1 class="tz-cat-h1">{:\\app\\common\\util\\AutoIcon::navIcon('hot', '', ['size'=>'xl', 'plate'=>true])}<span>{:\\app\\common\\util\\TemplateText::get('ui.popular_videos')}</span></h1>
+    <p>{:\\app\\common\\util\\TemplateText::get('topaz.library_sub')}</p>
+  </header>
+  {include file="public/chipbar"}
+  {include file="public/sortmenu"}
+  <div class="tz-grid tz-grid--rank" data-grid-fill>{maccms:vod num="20" paging="yes" type="all" order="desc" by="hits" pageurl="label/hot" id="vo" key="tzRk"}{php}$tzRankMode = 'hot'; $tzRank = (max(1, (int)($__PAGING__['page_current'] ?? 1)) - 1) * 20 + (int)$tzRk;{/php}{include file="public/vodbox"}{/maccms:vod}{php}$tzRankMode = '';{/php}</div>
+  {if condition="$__PAGING__.record_total eq 0"}{include file="public/empty"}{/if}
+  {include file="public/paging"}
+</main>
+{include file="public/foot"}
+</body>
+</html>

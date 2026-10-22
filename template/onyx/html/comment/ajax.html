@@ -1,0 +1,18 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<h2 class="sr-only">{:\\app\\common\\util\\TemplateText::get('ui.comments')}</h2>
+<form class="comment_form form-card" method="post" action="{:mac_url('comment/saveData')}" onsubmit="return false">
+  <input name="comment_pid" type="hidden" value="0">{:token()}
+  <div class="field"><label for="comment-content">{:\\app\\common\\util\\AutoIcon::ui('message', ['size'=>'sm'])}<span>{:\\app\\common\\util\\TemplateText::get('ui.your_comment')}</span></label><textarea id="comment-content" class="comment_content" name="comment_content" maxlength="200" required></textarea></div>
+  {if condition="$comment.verify eq 1"}<div class="field"><label for="comment-verify">{:\\app\\common\\util\\TemplateText::get('ui.verification_code')}</label><div class="verify-row"><input id="comment-verify" name="verify" class="input mac_verify" maxlength="4" autocomplete="off"></div></div>{/if}
+  <div class="form-actions"><button type="button" class="btn btn-fill comment_submit">{:\\app\\common\\util\\AutoIcon::ui('send', ['size'=>'sm', 'tint'=>'none'])}<span>{:\\app\\common\\util\\TemplateText::get('ui.post_comment')}</span></button><span class="form-note comment_remaining"></span></div>
+</form>
+<div class="msg-list">{maccms:comment num="10" paging="yes" pageurl="comment/ajax" rid="$param.rid" mid="$param.mid" order="desc" by="id"}<article class="msg"><div class="msg-head"><strong>{$vo.comment_name|htmlspecialchars=ENT_QUOTES}</strong><time>{$vo.comment_time|mac_day}</time></div><p>{$vo.comment_content|htmlspecialchars=ENT_QUOTES}</p>{volist name="vo.sub" id="reply"}<div class="reply-to"><div class="msg-head"><strong>{$reply.comment_name|htmlspecialchars=ENT_QUOTES}</strong><time>{$reply.comment_time|mac_day}</time></div><p>{$reply.comment_content|htmlspecialchars=ENT_QUOTES}</p></div>{/volist}<div class="msg-actions"><button type="button" class="comment_reply" data-id="{$vo.comment_id}">{:\\app\\common\\util\\TemplateText::get('ui.reply')}</button><button type="button" class="comment_report" data-id="{$vo.comment_id}">{:\\app\\common\\util\\TemplateText::get('ui.report')}</button></div></article>{/maccms:comment}</div>
+{if condition="$__PAGING__.record_total eq 0"}<p class="form-note" style="margin-top:12px">{:\\app\\common\\util\\TemplateText::get('ui.no_comments_yet_start_the_conversation')}</p>{/if}
+<div class="comment-pages">{if condition="$__PAGING__.page_current gt 1"}<button type="button" onclick="MAC.Comment.Show({$__PAGING__.page_prev|intval})">{:\\app\\common\\util\\TemplateText::get('ui.previous_page')}</button>{/if}{if condition="$__PAGING__.page_current lt $__PAGING__.page_total"}<button type="button" onclick="MAC.Comment.Show({$__PAGING__.page_next|intval})">{:\\app\\common\\util\\TemplateText::get('ui.next_page')}</button>{/if}</div>
+<script>MAC.Comment.Login={$comment.login|intval};MAC.Comment.Verify={$comment.verify|intval};MAC.Verify.Init();</script>

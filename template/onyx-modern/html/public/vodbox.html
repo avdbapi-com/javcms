@@ -1,0 +1,18 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}$tplCardCode = \app\common\util\AvdbLanguage::displayCode($vo); if ($tplCardCode !== '' && stripos($tplCardCode, 'avdb-') === 0) { $tplCardCode = ''; } $tplCardDur = trim((string)($vo['vod_duration'] ?? '')); $tplCardIdx = (int)($tplIdxBase ?? 0) + (int)($key ?? 0); $tplCardName = trim(\app\common\util\AvdbLanguage::decodeEntities((string)($vo['vod_display_name'] ?? ''))); if ($tplCardName === '') { $tplCardName = trim(\app\common\util\AvdbLanguage::decodeEntities((string)($vo['vod_name'] ?? ''))); } $tplCardTime = (int)($vo['vod_time'] ?? 0); $tplCardNew = !empty($tplNewStamp) && $tplCardTime >= strtotime('today'); $tplTagPool[] = (string)($vo['vod_display_class'] ?? '');{/php}
+<article class="ox-card">
+  <a class="ox-card-a" href="{:mac_url_vod_play($vo)}">
+    <span class="ox-thumb" data-fx="skeleton"><img src="{$vo.vod_pic|mac_default=$tplNoPic|mac_url_img|htmlspecialchars=ENT_QUOTES}" alt="" width="320" height="180" loading="lazy" decoding="async"><span class="ox-crop" aria-hidden="true"></span><span class="ox-play" aria-hidden="true"><svg class="ox-i"><use href="{$tplIcons}#i-play"/></svg>{:\\app\\common\\util\\TemplateText::get('ox.play')}</span>{if condition="!empty($tplRank)"}<span class="ox-rank"><span class="sr-only">#</span>{$tplCardIdx|sprintf='%02d',###}</span>{/if}{if condition="$tplCardNew"}<span class="ox-new">+{:\\app\\common\\util\\TemplateText::get('ox.new')}</span>{/if}</span>
+    <span class="ox-card-b">
+      <span class="ox-card-i"><span class="ox-card-n" aria-hidden="true">[{$tplCardIdx|sprintf='%03d',###}]</span>{if condition="$tplCardCode neq ''"}<span class="ox-card-code">{$tplCardCode|htmlspecialchars=ENT_QUOTES}</span>{/if}{if condition="$tplCardDur neq ''"}<span class="ox-card-dur">{$tplCardDur|htmlspecialchars=ENT_QUOTES}</span>{/if}</span>
+      <span{php}echo \app\common\util\AvdbLanguage::langAttr(isset($vo) && is_array($vo) ? $vo : []);{/php} class="ox-card-t">{$tplCardName|htmlspecialchars=ENT_QUOTES}</span>
+      <span class="ox-card-m"><span class="ox-card-v">{:\\app\\common\\util\\AutoIcon::ui('eye', ['size'=>'xs'])}<b data-fx="count" data-fx-to="{:intval($vo['vod_hits'])}" data-fx-duration="0.9">{:number_format((int)$vo['vod_hits'])}</b> {:\\app\\common\\util\\TemplateText::get(intval($vo['vod_hits']) === 1 ? 'ox.view' : 'ui.views')}</span>{if condition="$tplCardTime gt 0"}<time datetime="{$tplCardTime|date='Y-m-d',###}">{$tplCardTime|date='Y-m-d',###}</time>{/if}</span>
+    </span>
+  </a>
+</article>

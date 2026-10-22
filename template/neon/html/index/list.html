@@ -1,0 +1,12 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{maccms:type ids="parent" flag="vod" order="asc" by="sort" id="nxBlk" hide_empty="1" not="'.intval($GLOBALS['jvPbShown'] ?? 0).'"}
+<section class="nx-section" aria-labelledby="nx-h-c{$nxBlk.type_id}" data-ai-group><div class="nx-cap"><h2 class="nx-cap-title" id="nx-h-c{$nxBlk.type_id}"><span class="nx-cap-ico">{:\\app\\common\\util\\AutoIcon::icon('category', $nxBlk['type_name'], ['size'=>'lg', 'plate'=>true])}</span><a href="{:mac_url_type($nxBlk)}">{:\\app\\common\\util\\TemplateText::get(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)($nxBlk['type_name'] ?? '')))}</a></h2><div class="nx-cap-links"><button class="nx-shuffle" type="button" data-nx-shuffle data-url="{:mac_url_type($nxBlk,['page'=>'PAGELINK'])}" aria-controls="nx-g-c{$nxBlk.type_id}"><span class="nx-spin">{:\\app\\common\\util\\AutoIcon::ui('refresh', ['size'=>'sm', 'tint'=>'none'])}</span>{:\\app\\common\\util\\TemplateText::get('neon.shuffle')}</button><a class="nx-more" href="{:mac_url_type($nxBlk)}">{:\\app\\common\\util\\TemplateText::get('ui.view_more')}{:\\app\\common\\util\\AutoIcon::ui('chevron-right', ['size'=>'sm', 'tint'=>'none', 'class'=>'nx-more-ico'])}</a></div></div>
+<div class="nx-grid" id="nx-g-c{$nxBlk.type_id}" data-grid-fill aria-live="polite">{maccms:vod num="10" type="'.$nxBlk['type_id'].'" order="desc" by="time" paging="no" id="vo"}{include file="public/vodbox"}{/maccms:vod}</div>
+</section>
+{/maccms:type}

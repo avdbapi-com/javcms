@@ -1,0 +1,23 @@
+/*
+ * This file is part of JavCMS - https://javcms.net
+ * Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+ * License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+ * See the LICENSE and NOTICE files that come with JavCMS.
+ * Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Telegram: https://t.me/avdb_api
+ */
+*{box-sizing:border-box}html,body{width:100%;height:100%;margin:0;background:#000;color:#fff;font:14px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}body{overflow:auto}
+#native-player{width:100%;height:100%;min-width:0}.MacPlayer{width:100%!important;height:100%!important;min-width:0}
+#native-player iframe,#native-player video,#native-player object,#native-player embed{max-width:100%;border:0}
+.player_showtry[hidden]{display:none!important}
+.native-preview-ended{display:grid!important;place-items:center;padding:clamp(16px,4vw,36px);overflow:auto;background:#1b1e23}
+.player_showtry{width:min(100%,560px);margin:auto}
+.native-preview-card{border:1px solid #2f3236;border-radius:18px;background:#212429;padding:clamp(22px,5vw,38px);overflow-wrap:anywhere;text-align:start}
+.native-preview-kicker{margin:0 0 14px;color:#ff6b8f;font-weight:700;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase}
+.native-preview-card h1{font-size:clamp(1.3rem,4vw,1.8rem);line-height:1.25;margin:0 0 16px}
+.native-preview-card p{line-height:1.65;color:#d6d6da}.native-preview-note{font-size:.85rem;color:#a7a8ad!important}
+.native-preview-actions{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:22px}
+.native-preview-actions a{display:inline-flex;align-items:center;min-height:42px;color:#ff8aa8;text-underline-offset:4px}
+.native-preview-primary,.native-preview-actions a.native-preview-primary{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 18px;border-radius:22px;border:0;background:linear-gradient(180deg,#f4b58a,#ea4cb0);color:#1c0b13;font:inherit;font-weight:800;text-decoration:none;cursor:pointer}
+.native-preview-card :focus-visible{outline:3px solid #fff;outline-offset:4px}#player-status:empty{display:none}
+@media(max-width:480px){.native-preview-actions{align-items:stretch;flex-direction:column}.native-preview-primary{width:100%}.native-preview-card{padding:22px 18px}}

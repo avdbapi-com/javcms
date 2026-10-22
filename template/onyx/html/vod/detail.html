@@ -1,0 +1,58 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="onyx" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/vod_detail"}
+{include file="public/include"}
+</head>
+<body class="page-detail">
+{include file="public/head"}
+{include file="public/vodvars"}
+<main id="main-content" class="wrap">
+  <nav class="crumbs" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.main_navigation')}"><a href="{$maccms.path}">{:\\app\\common\\util\\AutoIcon::navIcon('home', '', ['size'=>'sm'])}<span>{:\\app\\common\\util\\TemplateText::get('ui.home')}</span></a>{if condition="$tplTypeName neq ''"}<span class="sep" aria-hidden="true">/</span><a href="{:mac_url_type($tplType)}">{:\\app\\common\\util\\AutoIcon::icon('category', (string)($tplType['type_name'] ?? ''), ['size'=>'sm'])}<span>{$tplTypeName|htmlspecialchars=ENT_QUOTES}</span></a>{/if}<span class="sep" aria-hidden="true">/</span><span>{if condition="$tplCode neq ''"}{$tplCode|htmlspecialchars=ENT_QUOTES}{else/}{:\\app\\common\\util\\TemplateText::get('ui.details')}{/if}</span></nav>
+  <article class="dt">
+    {if condition="$tplPlayUrl neq ''"}<a class="dt-cover" href="{$tplPlayUrl|htmlspecialchars=ENT_QUOTES}" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.watch_online')}">{else/}<div class="dt-cover">{/if}
+      <img data-lowres src="{$obj.vod_pic|mac_default=$tplNoPic|mac_url_img|htmlspecialchars=ENT_QUOTES}" alt="{$tplName|htmlspecialchars=ENT_QUOTES}" width="800" height="450" decoding="async">
+      {if condition="$tplPlayUrl neq ''"}<span class="big-play" aria-hidden="true"><svg class="ico"><use href="{$tplIcons}#i-play"/></svg></span>{/if}
+    {if condition="$tplPlayUrl neq ''"}</a>{else/}</div>{/if}
+    <div class="dt-info">
+      <h1{php}echo \app\common\util\AvdbLanguage::langAttr(isset($obj) && is_array($obj) ? $obj : []);{/php} class="dt-title">{$tplName|htmlspecialchars=ENT_QUOTES}</h1>
+      <div class="stat-row" data-ai-group>
+        <span>{:\\app\\common\\util\\AutoIcon::ui('eye')}<span class="mac_hits" data-mid="1" data-id="{$obj.vod_id}" data-type="hits">{$obj.vod_hits|intval}</span> {:\\app\\common\\util\\TemplateText::get('ui.views')}</span>
+        {if condition="$tplScore neq ''"}<span>{:\\app\\common\\util\\AutoIcon::ui('star')}{$tplScore|htmlspecialchars=ENT_QUOTES} / 10</span>{/if}
+        {if condition="$tplVotes gt 0"}<span>{:\\app\\common\\util\\AutoIcon::ui('thumbs-up')}{$tplLike}%</span>{/if}
+      </div>
+      {include file="public/meta"}
+      <div class="dt-actions">
+        {if condition="$tplPlayUrl neq ''"}<a class="btn btn-fill btn-lg magnet" href="{$tplPlayUrl|htmlspecialchars=ENT_QUOTES}"><svg class="ico" aria-hidden="true"><use href="{$tplIcons}#i-play"/></svg>{:\\app\\common\\util\\TemplateText::get('ui.watch_online')}</a>{/if}
+        {include file="public/votes"}
+      </div>
+    </div>
+  </article>
+  {if condition="$tplDesc neq ''"}<section class="desc" data-clamp>
+    <h2>{:\\app\\common\\util\\AutoIcon::ui('file-text', ['size'=>'sm'])}<span>{:\\app\\common\\util\\TemplateText::get('description')}</span></h2>
+    <div class="desc-body">{$tplDesc|htmlspecialchars=ENT_QUOTES}</div>
+    <button class="desc-toggle" type="button" hidden aria-expanded="false" data-more="{:\\app\\common\\util\\TemplateText::get('onyx.show_more')}" data-less="{:\\app\\common\\util\\TemplateText::get('onyx.show_less')}">{:\\app\\common\\util\\TemplateText::get('onyx.show_more')}</button>
+  </section>{/if}
+  {include file="public/episodes"}
+  <div class="big-tabs" role="tablist" aria-label="{:\\app\\common\\util\\TemplateText::get('related_videos')}">
+    <button type="button" role="tab" id="tab-related" aria-controls="pane-related" aria-selected="true">{:\\app\\common\\util\\TemplateText::get('related_videos')}</button>
+    {if condition="$GLOBALS['config']['comment']['status'] eq 1"}<button type="button" role="tab" id="tab-comments" aria-controls="pane-comments" aria-selected="false" tabindex="-1" data-comments>{:\\app\\common\\util\\TemplateText::get('ui.comments')}</button>{/if}
+  </div>
+  <section id="pane-related" role="tabpanel" aria-labelledby="tab-related" class="tab-pane">
+    {include file="public/related"}
+  </section>
+  {if condition="$GLOBALS['config']['comment']['status'] eq 1"}<section id="pane-comments" role="tabpanel" aria-labelledby="tab-comments" class="tab-pane" hidden><div data-jcx-at="P16"></div>
+    <div class="mac_comment comments" data-id="{$obj.vod_id}" data-mid="1"><p>{:\\app\\common\\util\\TemplateText::get('ui.loading_comments')}</p></div>
+  </section>{/if}
+</main>
+{include file="public/foot"}
+{if condition="$GLOBALS['config']['comment']['status'] eq 1"}<script>MAC.Comment.Init();</script>{/if}
+</body>
+</html>

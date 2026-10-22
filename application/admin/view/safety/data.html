@@ -1,0 +1,117 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Based on MacCMS 10 (Apache-2.0) by magicblack, changed by JavCMS.
+JavCMS changes: Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors,
+JavCMS Community License 1.0. The MacCMS parts stay under the Apache License 2.0.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{include file="../../../application/admin/view/public/head" /}
+<link rel="stylesheet" href="__STATIC__/css/admin_safety_workspace.css?{$MAC_VERSION}&rev=4">
+
+<main class="page-container safety-workspace safety-workspace--kit">
+    {include file="../../../application/admin/view/public/page_head" icon="ai-shield-alert" title="admin/ux/tools/scan_content_title" help="admin/ux/tools/scan_content_help" /}
+
+    <section class="ax-section" aria-labelledby="scan-form-title">
+        <h2 id="scan-form-title">{:lang('admin/ux/tools/scan_run')}</h2>
+        <form class="layui-form safety-scan-form" method="get" action="{:url('safety/data')}">
+            <input name="ck" value="1" type="hidden">
+            <div class="safety-scan-form__row">
+                <input type="checkbox" name="iframes" value="1" lay-skin="primary" title="{:lang('admin/ux/tools/scan_iframes')}" {if condition="$iframes eq 1"}checked{/if}>
+            </div>
+            <button type="submit" class="ax-btn {if condition="$scanned neq 1"}ax-btn--primary{/if}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-search"/></svg>{:lang('admin/ux/tools/scan_run')}</button>
+        </form>
+    </section>
+
+    {if condition="$scanned eq 1"}
+    {if condition="$scan_rows eq 0"}
+    <section class="ax-section">
+        {include file="../../../application/admin/view/public/empty_state" icon="ai-circle-check" text="admin/ux/tools/scan_none" /}
+    </section>
+    {else /}
+    <section class="ax-section" aria-labelledby="scan-result-title">
+        <h2 id="scan-result-title" role="status">{$t_found}</h2>
+        {if condition="$hit_total gt $scan_show"}<p class="ax-help">{$t_first}</p>{/if}
+        <div class="ax-table-wrap">
+            <table class="ax-table ax-table--cards safety-scan-table">
+                <thead><tr>
+                    <th>{:lang('admin/database/table')}</th>
+                    <th>{:lang('admin/ux/tools/scan_col')}</th>
+                    <th class="ax-num">ID</th>
+                    <th>{:lang('admin/ux/tools/scan_now')}</th>
+                    <th>{:lang('admin/ux/tools/scan_after')}</th>
+                </tr></thead>
+                <tbody>
+                {volist name="hits" id="h"}
+                <tr>
+                    <td data-label="{:lang('admin/database/table')}">{$h.table|htmlspecialchars}</td>
+                    <td data-label="{:lang('admin/ux/tools/scan_col')}">{$h.column|htmlspecialchars}</td>
+                    <td class="ax-num" data-label="ID">{$h.id}{if condition="$h.name neq ''"}<div class="ax-faint">{$h.name|htmlspecialchars}</div>{/if}</td>
+                    <td data-label="{:lang('admin/ux/tools/scan_now')}"><code class="safety-snippet">{$h.before|htmlspecialchars}</code></td>
+                    <td data-label="{:lang('admin/ux/tools/scan_after')}"><code class="safety-snippet">{$h.after|htmlspecialchars}</code></td>
+                </tr>
+                {/volist}
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="ax-section ax-section--danger" aria-labelledby="scan-danger-title">
+        <h2 id="scan-danger-title">{:lang('admin/ux/kit/danger_zone')}</h2>
+        <p class="ax-help">{$t_confirm}</p>
+        <p class="ax-help" id="scan-backup-line" role="status" hidden></p>
+        <input type="hidden" id="scan-token" value="{$Request.token}">
+        <button type="button" class="ax-btn ax-btn--danger" id="scan-clean" data-count="{$scan_rows}" data-iframes="{$iframes}" data-url="{:url('safety/data')}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-eraser"/></svg>{$t_clean}</button>
+    </section>
+    {/if}
+    {/if}
+</main>
+
+{include file="../../../application/admin/view/public/foot" /}
+<script type="text/javascript">
+(function () {
+    var btn = document.getElementById('scan-clean');
+    if (!btn || !window.AxUX) { return; }
+    var tokenInput = document.getElementById('scan-token');
+    var line = document.getElementById('scan-backup-line');
+    var T = {
+        title: {:json_encode(lang('admin/ux/tools/scan_clean_title'), JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT)},
+        confirm: {:json_encode(lang('admin/ux/tools/scan_confirm'), JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT)},
+        ok: {:json_encode(lang('admin/ux/tools/scan_clean_ok'), JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT)},
+        backingUp: {:json_encode(lang('admin/ux/tools/backup_running'), JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT)},
+        failed: {:json_encode(lang('admin/ux/kit/request_failed'), JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT)}
+    };
+    var count = parseInt(btn.getAttribute('data-count'), 10) || 0;
+    function post(data) {
+        data.__token__ = tokenInput.value;
+        return $.ajax({ type: 'POST', url: btn.getAttribute('data-url'), data: data, dataType: 'json', timeout: 600000 }).then(function (res) {
+            if (res && res.data && res.data.__token__) { tokenInput.value = res.data.__token__; }
+            return res;
+        });
+    }
+    function done() { btn.disabled = false; btn.removeAttribute('aria-busy'); }
+    btn.addEventListener('click', function () {
+        var iframes = btn.getAttribute('data-iframes') === '1' ? 1 : 0;
+        btn.disabled = true;
+        btn.setAttribute('aria-busy', 'true');
+        line.hidden = false;
+        line.textContent = T.backingUp;
+        post({ make_backup: 1, iframes: iframes }).then(function (res) {
+            if (!res || res.code != 1) { line.textContent = (res && res.msg) || T.failed; AxUX.toast(line.textContent, 'error'); done(); return; }
+            var backup = res.data.backup;
+            line.textContent = res.msg;
+            return AxUX.confirm({ title: T.title, message: T.confirm, count: count, typed: 'CLEAN', confirmLabel: T.ok, danger: true }).then(function (yes) {
+                if (!yes) { done(); return; }
+                return post({ clean: 1, confirm: 1, iframes: iframes, expect: count, backup: backup }).then(function (r) {
+                    if (!r || r.code != 1) { AxUX.toast((r && r.msg) || T.failed, 'error'); done(); return; }
+                    AxUX.toast(r.msg, 'ok');
+                    line.textContent = r.msg + ' ' + res.msg;
+                    setTimeout(function () { location.href = btn.getAttribute('data-url') + (btn.getAttribute('data-url').indexOf('?') < 0 ? '?' : '&') + 'ck=1' + (iframes ? '&iframes=1' : ''); }, 1800);
+                });
+            });
+        }, function () { line.textContent = T.failed; AxUX.toast(T.failed, 'error'); done(); });
+    });
+})();
+</script>
+</body>
+</html>

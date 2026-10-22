@@ -1,0 +1,20 @@
+{
+ "$schema": "javcms.auto-icon.v1",
+ "family": "tabler-outline",
+ "stroke": 1.75,
+ "motion": "draw glow",
+ "enter": "rise",
+ "plate": "wave",
+ "plateMotion": "drift",
+ "avatar": "circle heat",
+ "tint": "slot",
+ "tokens": {
+  "--ai-c1": "var(--t-ai1,#ff6a13)",
+  "--ai-c2": "var(--hot,#ffc531)",
+  "--ai-c3": "var(--cold,#8f6bff)",
+  "--ai-c4": "var(--t-ai4,#ff8a3d)",
+  "--ai-bg": "var(--bg,#0b0710)"
+ },
+ "map": {},
+ "nav": {}
+}

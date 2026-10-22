@@ -1,0 +1,41 @@
+# OpenLiteSpeed rewrite-only file: copy to the application root as .htaccess.
+# Enable Rewrite and Auto Load from .htaccess; restart OLS after changes.
+RewriteEngine On
+RewriteRule ^(?:application|runtime|vendor|thinkphp|extend|deployment|backup|backups)(?:/|$) - [F,L,NC]
+# Theme page templates are rendered by PHP; their source (template/<theme>/html/) is not a public file.
+RewriteRule ^template/[^/]+/html(?:/|$) - [F,L,NC]
+RewriteRule (^|/)\.(?!well-known(?:/|$)) - [F,L,NC]
+RewriteRule ^\.well-known/(?!acme-challenge/)[\s\S]*$ - [F,L,NC]
+RewriteRule \.(?:ini|log|sql|sqlite|bak|conf|ya?ml)(?:/|$) - [F,L,NC]
+RewriteRule ^(?:composer\.(?:json|lock)|package(?:-lock)?\.json|(?:README|INSTALL|UPGRADE|CHANGELOG)(?:\.(?:md|txt))?|docs/[^/]*\.md|LICENSE(?:\.[^/]+)?|NOTICE(?:\.[^/]+)?|[^/]+\.(?:zip|gz|7z|tar))(?:/|$) - [F,L,NC]
+RewriteRule (?:^|/)web\.config$ - [F,L,NC]
+RewriteRule ^upload/.*\.(?:php[0-9]?|phtml|phar|cgi|pl|py|asp|aspx|jsp|sh)(?:[./]|$) - [F,L,NC]
+RewriteRule ^(index|api|javcms|install)\.php/(.*)$ $1.php?s=/$2 [B,QSA,L]
+RewriteRule ^(?:index|api|javcms|install)\.php$ - [L]
+RewriteRule \.(?:php[0-9]?|phtml|phar)(?:[./]|$) - [F,L,NC]
+RewriteRule ^robots\.txt$ index.php?s=/robots.txt [QSA,L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?s=/$1 [B,QSA,L]
+
+# Static files: browsers must not guess another content type. OpenLiteSpeed reads only the rewrite rules of this
+# file: add "set X-Content-Type-Options nosniff" under Header Operations of the static context in WebAdmin.
+# LiteSpeed Enterprise reads the block below. PHP pages send this header themselves.
+<IfModule mod_headers.c>
+<FilesMatch "(?i)\.(?:js|mjs|css|json|map|txt|xml|svg|ico|png|jpe?g|gif|webp|avif|bmp|woff2?|ttf|otf|eot|mp4|webm|m3u8|m4s|ts|vtt|mp3|pdf|webmanifest)$">
+    Header set X-Content-Type-Options "nosniff"
+</FilesMatch>
+</IfModule>
+
+# Static files of the site and of the themes: 30 days in browsers and CDNs (1.2.0, XVID-SCALE-BRIEF L2). OpenLiteSpeed
+# ignores the block below: in WebAdmin add contexts /static/ and /template/ (type Static) with "Enable Expires" = Yes,
+# "Expires By Type" = text/css=A2592000, application/javascript=A2592000, image/*=A2592000, font/*=A2592000, and a context
+# /static/jcx/ with "Enable Expires" = No (ad configuration changes with the ad settings). LiteSpeed Enterprise reads it.
+# Static files of the site and of the themes (static/, template/<theme>/ assets): browsers and CDNs keep them 30 days
+# (1.2.0, XVID-SCALE-BRIEF L2). static/jcx/ (ad configuration and scripts) changes with the ad settings and keeps the
+# server default. Only real files answered 200 get the header (PHP 404 pages for missing assets do not).
+<IfModule mod_headers.c>
+<If "%{REQUEST_URI} =~ m#(?i)/(?:static|template)/[^?]*\.(?:css|js|mjs|png|jpe?g|gif|webp|avif|svg|ico|woff2?|ttf|otf|eot)$# && %{REQUEST_URI} !~ m#(?i)/static/jcx/#">
+    Header set Cache-Control "public, max-age=2592000" "expr=%{REQUEST_STATUS} == 200"
+</If>
+</IfModule>

@@ -1,0 +1,407 @@
+/*
+ * This file is part of JavCMS - https://javcms.net
+ * Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+ * License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+ * See the LICENSE and NOTICE files that come with JavCMS.
+ * Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Telegram: https://t.me/avdb_api
+ */
+/*
+ * admin-vod-editor-workspace-v1
+ * Candidate-only editor chrome. The legacy VOD fields, routes and JavaScript
+ * hooks remain in the template; these rules only add a usable editor frame.
+ */
+/* V9 palette -> kit tokens (admin-content builder) */
+html body.admin-dark .admin-vod-info { --vod-editor-bg: var(--ax-bg); --vod-editor-panel: var(--ax-surface); --vod-editor-panel-soft: var(--ax-raised); --vod-editor-border: var(--ax-line); --vod-editor-border-strong: var(--ax-text); --vod-editor-text: var(--ax-text); --vod-editor-muted: var(--ax-muted); --vod-editor-accent: var(--ax-accent); --vod-editor-accent-strong: var(--ax-accent); --vod-editor-warning: var(--ax-warn); }
+body.admin-dark .admin-vod-info {
+    --vod-editor-bg: #0f1a2b;
+    --vod-editor-panel: #142238;
+    --vod-editor-panel-soft: #18273e;
+    --vod-editor-border: #29415e;
+    --vod-editor-border-strong: #3b607f;
+    --vod-editor-text: #e8f1fb;
+    --vod-editor-muted: #8ea6bf;
+    --vod-editor-accent: #4fd1a5;
+    --vod-editor-accent-strong: #20b887;
+    --vod-editor-warning: #f3bf4c;
+    --vod-editor-shadow: 0 14px 34px rgba(3, 9, 20, .28);
+}
+
+body.admin-dark .admin-vod-info > form.layui-form-pane {
+    overflow: visible;
+}
+
+body.admin-dark .admin-vod-info .admin-vod-editor-toolbar {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    min-width: 0;
+    margin: 0 0 16px;
+    padding: 12px 14px;
+    border: 1px solid var(--vod-editor-border-strong);
+    border-radius: 12px;
+    background: rgba(15, 26, 43, .96);
+    box-shadow: var(--vod-editor-shadow);
+    backdrop-filter: blur(12px);
+}
+
+body.admin-dark .admin-vod-info .admin-vod-editor-toolbar__identity,
+body.admin-dark .admin-vod-info .admin-vod-editor-toolbar__actions,
+body.admin-dark .admin-vod-info .admin-vod-editor-titleline,
+body.admin-dark .admin-vod-info .admin-vod-editor-meta {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+}
+
+body.admin-dark .admin-vod-info .admin-vod-editor-toolbar__identity {
+    flex: 1 1 auto;
+    gap: 13px;
+}
+
+body.admin-dark .admin-vod-info .admin-vod-editor-toolbar__actions {
+    flex: 0 0 auto;
+    gap: 8px;
+}
+
+body.admin-dark .admin-vod-info .admin-vod-editor-back {
+    display: inline-flex;
+    align-items: center;
+    flex: 0 0 auto;
+    gap: 7px;
+    min-height: 36px;
+    padding: 0 12px;
+    border: 1px solid var(--vod-editor-border-strong);
+    border-radius: 8px;
+    color: var(--vod-editor-text);
+    background: var(--vod-editor-panel);
+    font-weight: 700;
+    text-decoration: none;
+    transition: border-color .16s ease, background .16s ease, transform .16s ease;
+}
+
+body.admin-dark .admin-vod-info .admin-vod-editor-back:hover,
+body.admin-dark .admin-vod-info .admin-vod-editor-back:focus-visible {
+    border-color: var(--vod-editor-accent);
+    background: #1b3c4b;
+    transform: translateY(-1px);
+}
+
+body.admin-dark .admin-vod-info .admin-vod-editor-back__icon {
+    color: var(--vod-editor-accent);
+    font-size: 18px;
+    line-height: 1;
+}
+
+body.admin-dark .admin-vod-info .admin-vod-editor-titleline {
+    gap: 9px;
+    max-width: 100%;
+}
+
+body.admin-dark .admin-vod-info .admin-vod-editor-kicker {
+    flex: 0 0 auto;
+    color: var(--vod-editor-accent);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+}
+
+body.admin-dark .admin-vod-info .admin-vod-editor-title {
+    min-width: 0;
+    overflow: hidden;
+    color: var(--vod-editor-text);
+    font-size: 16px;
+    font-weight: 800;
+    line-height: 1.3;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+body.admin-dark .admin-vod-info .admin-vod-editor-meta {
+    flex: 0 0 auto;
+    gap: 6px;
+    color: var(--vod-editor-muted);
+    font-size: 11px;
+}
+
+body.admin-dark .admin-vod-info .admin-vod-editor-meta__id {
+    padding: 3px 7px;
+    border: 1px solid var(--vod-editor-border);
+    border-radius: 999px;
+    background: var(--vod-editor-panel-soft);
+    white-space: nowrap;
+}
+
+body.admin-dark .admin-vod-info .admin-vod-editor-toolbar__actions .btn {
+    min-height: 36px;
+    margin: 0 !important;
+    border-radius: 8px;
+    font-weight: 700;
+    transition: filter .16s ease, transform .16s ease;
+}
+
+body.admin-dark .admin-vod-info .admin-vod-editor-toolbar__actions .btn:hover,
+body.admin-dark .admin-vod-info .admin-vod-editor-toolbar__actions .btn:focus-visible {
+    filter: brightness(1.08);
+    transform: translateY(-1px);
+}
+
+body.admin-dark .admin-vod-info .admin-vod-editor-toolbar__actions .admin-vod-editor-reset {
+    border: 1px solid var(--ax-field);
+    color: var(--ax-text);
+    background: var(--ax-raised);
+}
+
+body.admin-dark .admin-vod-info .admin-vod-editor-toolbar__actions .admin-vod-editor-save {
+    border: 1px solid var(--vod-editor-accent-strong);
+    color: #061b16;
+    background: var(--vod-editor-accent);
+}
+
+body.admin-dark .admin-vod-info .admin-vod-editor-hint {
+    margin: -7px 0 14px;
+    padding-left: 3px;
+    color: var(--vod-editor-muted);
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+body.admin-dark .admin-vod-info .admin-vod-editor-hint strong {
+    color: var(--vod-editor-text);
+    font-weight: 700;
+}
+
+/* Keep the legacy UEditor readable when the form is opened in a Layer iframe. */
+body.admin-dark .admin-vod-info .edui-container,
+body.admin-dark .admin-vod-info .edui-toolbar,
+body.admin-dark .admin-vod-info .edui-editor-body,
+body.admin-dark .admin-vod-info .edui-editor,
+body.admin-dark .admin-vod-info .edui-editor-iframeholder {
+    color: var(--vod-editor-text);
+    border-color: var(--vod-editor-border) !important;
+    background: var(--vod-editor-panel) !important;
+    box-shadow: none !important;
+}
+
+body.admin-dark .admin-vod-info .edui-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px;
+    padding: 6px;
+}
+
+body.admin-dark .admin-vod-info .edui-button,
+body.admin-dark .admin-vod-info .edui-combox,
+body.admin-dark .admin-vod-info .edui-btn,
+body.admin-dark .admin-vod-info .edui-combobox,
+body.admin-dark .admin-vod-info .edui-splitbutton,
+body.admin-dark .admin-vod-info .edui-btn-toolbar {
+    color: var(--vod-editor-text);
+    border-color: transparent !important;
+    background: transparent !important;
+}
+
+body.admin-dark .admin-vod-info .edui-button:hover,
+body.admin-dark .admin-vod-info .edui-combox:hover,
+body.admin-dark .admin-vod-info .edui-btn:hover,
+body.admin-dark .admin-vod-info .edui-combobox:hover,
+body.admin-dark .admin-vod-info .edui-splitbutton:hover,
+body.admin-dark .admin-vod-info .edui-button.edui-state-hover,
+body.admin-dark .admin-vod-info .edui-combox.edui-state-hover,
+body.admin-dark .admin-vod-info .edui-btn.edui-state-hover,
+body.admin-dark .admin-vod-info .edui-combobox.edui-state-hover,
+body.admin-dark .admin-vod-info .edui-splitbutton.edui-state-hover {
+    color: #071a14;
+    border-color: var(--vod-editor-accent) !important;
+    background: var(--vod-editor-accent) !important;
+}
+
+body.admin-dark .admin-vod-info .edui-btn:focus,
+body.admin-dark .admin-vod-info .edui-combobox:focus,
+body.admin-dark .admin-vod-info .edui-splitbutton:focus,
+body.admin-dark .admin-vod-info .edui-btn.edui-state-checked,
+body.admin-dark .admin-vod-info .edui-combobox.edui-state-checked,
+body.admin-dark .admin-vod-info .edui-splitbutton.edui-state-checked {
+    color: #071a14;
+    border-color: var(--vod-editor-accent) !important;
+    background: var(--vod-editor-accent) !important;
+    outline: 2px solid rgba(79, 209, 165, .38);
+    outline-offset: -2px;
+}
+
+body.admin-dark .admin-vod-info .edui-button .edui-icon,
+body.admin-dark .admin-vod-info .edui-combox .edui-arrow,
+body.admin-dark .admin-vod-info .edui-btn .edui-icon,
+body.admin-dark .admin-vod-info .edui-combobox .edui-arrow,
+body.admin-dark .admin-vod-info .edui-splitbutton .edui-icon {
+    opacity: .9;
+    filter: brightness(1.8) saturate(.7);
+}
+
+body.admin-dark .admin-vod-info .edui-editor-body {
+    color: var(--vod-editor-text);
+    background: #0c1727 !important;
+}
+
+body.admin-dark .admin-vod-info > form.layui-form-pane > .layui-form-item.center {
+    position: sticky;
+    bottom: 0;
+    z-index: 25;
+    margin: 16px -12px -12px;
+    padding: 12px 14px;
+    border-top: 1px solid var(--vod-editor-border-strong);
+    border-radius: 10px 10px 0 0;
+    background: rgba(15, 26, 43, .97);
+    box-shadow: 0 -12px 28px rgba(3, 9, 20, .22);
+    backdrop-filter: blur(12px);
+}
+
+body.admin-dark .admin-vod-info > form.layui-form-pane > .layui-form-item.center .layui-input-block {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-left: 0;
+}
+
+body.admin-dark .admin-vod-info > form.layui-form-pane > .layui-form-item.center .btn {
+    min-width: 108px;
+    min-height: 38px;
+    margin: 0 !important;
+    border-radius: 8px;
+    font-weight: 700;
+}
+
+body.admin-dark .admin-vod-info .admin-vod-editor-toolbar a:focus-visible,
+body.admin-dark .admin-vod-info .admin-vod-editor-toolbar button:focus-visible {
+    outline: 2px solid var(--vod-editor-accent);
+    outline-offset: 2px;
+}
+
+@media (max-width: 760px) {
+    body.admin-dark .admin-vod-info .admin-vod-editor-toolbar {
+        align-items: stretch;
+        flex-direction: column;
+        gap: 10px;
+        padding: 10px;
+    }
+
+    body.admin-dark .admin-vod-info .admin-vod-editor-toolbar__identity {
+        width: 100%;
+    }
+
+    body.admin-dark .admin-vod-info .admin-vod-editor-titleline {
+        display: block;
+    }
+
+    body.admin-dark .admin-vod-info .admin-vod-editor-kicker {
+        display: block;
+        margin-bottom: 2px;
+    }
+
+    body.admin-dark .admin-vod-info .admin-vod-editor-title {
+        display: block;
+        max-width: 100%;
+    }
+
+    body.admin-dark .admin-vod-info .admin-vod-editor-toolbar__actions {
+        width: 100%;
+    }
+
+    body.admin-dark .admin-vod-info .admin-vod-editor-toolbar__actions .btn {
+        flex: 1 1 0;
+    }
+
+    body.admin-dark .admin-vod-info .admin-vod-editor-hint {
+        margin-bottom: 10px;
+    }
+
+    body.admin-dark .admin-vod-info > form.layui-form-pane > .layui-form-item.center {
+        margin-right: -2px;
+        margin-left: -2px;
+        padding-right: 8px;
+        padding-left: 8px;
+    }
+
+    body.admin-dark .admin-vod-info > form.layui-form-pane > .layui-form-item.center .layui-input-block {
+        justify-content: stretch;
+    }
+
+    body.admin-dark .admin-vod-info > form.layui-form-pane > .layui-form-item.center .btn {
+        flex: 1 1 0;
+        min-width: 0;
+    }
+}
+
+@media (max-width: 360px) {
+    body.admin-dark .admin-vod-info .admin-vod-editor-back {
+        padding-right: 9px;
+        padding-left: 9px;
+    }
+
+    body.admin-dark .admin-vod-info .admin-vod-editor-kicker {
+        display: none;
+    }
+}
+
+/* Keep the bundled UMEditor controls consistent with the dark editor frame. */
+body.admin-dark .admin-vod-info .edui-container {
+    border: 1px solid var(--vod-editor-border-strong) !important;
+    border-radius: 8px;
+    background: var(--vod-editor-panel) !important;
+    overflow: hidden;
+}
+body.admin-dark .admin-vod-info .edui-toolbar {
+    border-bottom: 1px solid var(--vod-editor-border) !important;
+    background: var(--vod-editor-panel-soft) !important;
+}
+body.admin-dark .admin-vod-info .edui-btn-toolbar .edui-btn,
+body.admin-dark .admin-vod-info .edui-btn-toolbar .edui-splitbutton,
+body.admin-dark .admin-vod-info .edui-btn-toolbar .edui-combobox {
+    border-color: transparent !important;
+    background: transparent !important;
+    color: var(--vod-editor-muted) !important;
+}
+body.admin-dark .admin-vod-info .edui-btn-toolbar .edui-btn:hover,
+body.admin-dark .admin-vod-info .edui-btn-toolbar .edui-splitbutton:hover,
+body.admin-dark .admin-vod-info .edui-btn-toolbar .edui-combobox:hover,
+body.admin-dark .admin-vod-info .edui-btn-toolbar .edui-btn.edui-active {
+    border-color: var(--vod-editor-border-strong) !important;
+    background: #20344b !important;
+    color: var(--vod-editor-text) !important;
+}
+body.admin-dark .admin-vod-info .edui-editor-body {
+    border-color: var(--vod-editor-border-strong) !important;
+    background: #0d1829 !important;
+}
+body.admin-dark .admin-vod-info .edui-container,
+body.admin-dark .admin-vod-info .edui-toolbar,
+body.admin-dark .admin-vod-info .edui-editor-body {
+    box-shadow: 0 8px 20px rgba(3, 9, 20, .24) !important;
+}
+
+/* admin-vod-editor-polish-v1: keep the action footer from covering fields. */
+body.admin-dark .admin-vod-info > form.layui-form-pane > .layui-form-item.center {
+    position: static;
+}
+
+/* VIS r2 R2-8: same order as every other save bar: Undo changes, then Save. */
+body.admin-dark .admin-vod-info .admin-vod-editor-toolbar__actions .admin-vod-editor-save {
+    order: 2;
+}
+
+body.admin-dark .admin-vod-info .admin-vod-editor-toolbar__actions .admin-vod-editor-reset {
+    order: 1;
+}
+
+/* close-polish R2-8: toolbar labels stay on one line ("Font family" no longer wraps under its box), and the editor
+   body uses the admin theme tokens (dark: --ax-surface, light: white) instead of its own navy. */
+body.admin-studio .admin-vod-info .edui-container .edui-combobox { width: auto !important; min-width: 80px; }
+body.admin-studio .admin-vod-info .edui-container .edui-combobox .edui-button-label { width: auto !important; min-width: 60px; white-space: nowrap; }
+body.admin-studio .admin-vod-info .edui-container .edui-editor-body,
+body.admin-studio .admin-vod-info .edui-container .edui-body-container { background: var(--ax-surface) !important; color: var(--ax-text) !important; }
+body.admin-studio .admin-vod-info .edui-container { background: var(--ax-surface) !important; border-color: var(--ax-field) !important; }

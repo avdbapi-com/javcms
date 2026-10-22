@@ -1,0 +1,36 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="ember" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+<meta name="robots" content="noindex, follow" />
+<meta charset="utf-8">
+<title>{if condition="$code eq 1"}{:\\app\\common\\util\\TemplateText::get('ui.site_message')}{else/}{:\\app\\common\\util\\TemplateText::get('ui.access_required')}{/if}</title>
+{include file="public/include"}
+</head>
+<body class="permission-page">
+<main id="main-content" class="mac_msg_jump">
+    <p class="title">{:\\app\\common\\util\\TemplateText::get('ui.site_message')}</p>
+    <h1 class="msg_jump_tit">{if condition="$code eq 1"}{:\\app\\common\\util\\TemplateText::get('ui.site_message')}{else/}{:\\app\\common\\util\\TemplateText::get('ui.access_required')}{/if}</h1>
+    <div class="text">{$msg}</div>
+    <div class="jump">
+        {:\\app\\common\\util\\TemplateText::get('ui.automatic_page')} <a id="href" href="<?php $jumpSafeUrl = mac_safe_url($url); echo $jumpSafeUrl !== '' ? $jumpSafeUrl : mac_safe_url(mac_url('index/index')); ?>">{:\\app\\common\\util\\TemplateText::get('ui.jump')}</a> {:\\app\\common\\util\\TemplateText::get('ui.wait_time')} <b id="wait"><?php echo (int)$wait; ?></b>
+    </div>
+</main>
+<script>
+(function () {
+  var wait = document.getElementById('wait'), href = document.getElementById('href').href;
+  var timer = setInterval(function () {
+    var time = parseInt(wait.textContent, 10) - 1;
+    wait.textContent = String(Math.max(time, 0));
+    if (time <= 0) { clearInterval(timer); location.href = href; }
+  }, 1000);
+})();
+</script>
+</body>
+</html>

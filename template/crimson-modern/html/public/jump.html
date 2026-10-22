@@ -1,0 +1,40 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="crimson-modern" data-fx="vt" data-fx-vt-style="crimson-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+<title>{:\\app\\common\\util\\TemplateText::get('ui.site_message')}</title>
+<meta name="robots" content="noindex, follow" />
+{include file="public/include"}
+</head>
+<body class="ci-solo ci-jump-page">
+<header class="ci-hdr"><div class="ci-hdr-in ci-wrap">{include file="public/brand"}</div></header>
+<main id="main-content" class="ci-wrap">
+{php}$ciWaitN = max(0, intval($wait)); $ciWaitTpl = \app\common\util\TemplateText::raw('ink.redirect_in', ['seconds' => '__S__']); $ciJumpTitle = \app\common\util\TemplateText::raw($code == 1 ? 'ink.done' : 'ui.site_message'); $ciJumpN = max(4, min(60, mb_strlen($ciJumpTitle)));{/php}
+<section class="ci-msgbox ci-jump" style="--wait:{$ciWaitN}s">
+	<p class="ci-wait" aria-hidden="true">{:\\app\\common\\util\\TemplateText::get('ink.sfx_wait')}</p>
+	<h1 class="ci-narr ci-jump-h"><span class="ci-type" dir="auto" style="--n:{$ciJumpN}">{$ciJumpTitle|htmlspecialchars=ENT_QUOTES}</span></h1>
+	<p class="ci-msg-text">{$msg}</p>
+	<div class="ci-progress" aria-hidden="true"><i></i></div>
+	<p class="ci-tip" id="ci-wait-text" data-template="{$ciWaitTpl|htmlspecialchars=ENT_QUOTES}" aria-live="polite">{:\\app\\common\\util\\TemplateText::get('ink.redirect_in', ['seconds' => $ciWaitN])}</p><b id="wait" hidden><?php echo intval($wait); ?></b>
+	<div class="ci-row ci-row--center"><a class="ci-btn" id="href" href="<?php $jumpSafeUrl = mac_safe_url($url); echo $jumpSafeUrl !== '' ? $jumpSafeUrl : mac_safe_url(mac_url('index/index')); ?>">{:\\app\\common\\util\\TemplateText::get('ui.jump')}</a><a class="ci-pill" href="{:mac_url('index/index')}">{:\\app\\common\\util\\TemplateText::get('ui.back_to_home')}</a></div>
+</section>
+<script>
+(function () {
+  var wait = document.getElementById('wait'), text = document.getElementById('ci-wait-text'), link = document.getElementById('href');
+  var left = parseInt(wait.textContent, 10) || 0, tpl = text.getAttribute('data-template') || '';
+  var timer = setInterval(function () {
+    left -= 1;
+    if (tpl) text.textContent = tpl.replace('__S__', String(Math.max(left, 0)));
+    if (left <= 0) { clearInterval(timer); location.href = link.href; }
+  }, 1000);
+})();
+</script>
+</main>
+</body>
+</html>

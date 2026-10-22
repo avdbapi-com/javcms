@@ -1,0 +1,66 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<script src="{$maccms.path|htmlspecialchars=ENT_QUOTES}static/template-ui/theme.js?v=20261007-theme1"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+{if condition="in_array(strtolower($maccms['controller_action']), ['index/index','vod/index','vod/type','vod/show','vod/search','vod/detail','vod/play','vod/down','map/index','label/new','label/hot','label/sort','label/up','label/score'])"}<meta name="rating" content="adult">{/if}
+<meta name="theme-color" content="#29262d" media="(prefers-color-scheme: dark)"><meta name="theme-color" content="#f6f5fb" media="(prefers-color-scheme: light)">
+<meta name="format-detection" content="telephone=no">
+<link rel="icon" href="{$maccms.path_tpl|htmlspecialchars=ENT_QUOTES}statics/img/favicon.svg?v=20261013-ai1" type="image/svg+xml"><link rel="alternate icon" href="{$maccms.path}static/template-ui/favicon-javcms.ico"><link rel="apple-touch-icon" href="{$maccms.path}static/template-ui/favicon-javcms-180.png">
+<link rel="stylesheet" href="{$maccms.path}static/template-ui/ui.css?v=20261009-hover1">
+<link rel="stylesheet" href="{$maccms.path_tpl|htmlspecialchars=ENT_QUOTES}statics/css/layout.css?v=20261013-vs3">
+<link rel="stylesheet" href="{$maccms.path_tpl|htmlspecialchars=ENT_QUOTES}statics/css/classic.css?v=20261009-r2">
+<link rel="stylesheet" href="{$maccms.path_tpl|htmlspecialchars=ENT_QUOTES}statics/css/community-surface.css?v=20261009-s5">
+<link rel="stylesheet" href="{$maccms.path_tpl|htmlspecialchars=ENT_QUOTES}statics/css/jav.css?v=20261015-x1">
+<script src="{$maccms.path|htmlspecialchars=ENT_QUOTES}static/vendor/jquery/jquery-3.7.1.min.js"></script>
+<script src="{$maccms.path_tpl|htmlspecialchars=ENT_QUOTES}statics/js/jquery.cookie.min.js"></script>
+<script>{php}
+$tplNoPic = $maccms['path_tpl'] . 'statics/img/poster-placeholder.svg';
+echo 'var maccms=' . json_encode([
+    'path'=>rtrim((string)($maccms['path'] ?? MAC_PATH), '/'),
+    'mid'=>(string)($maccms['mid'] ?? ''),
+    'url'=>(string)($maccms['site_url'] ?? ''),
+    'wapurl'=>(string)($maccms['site_wapurl'] ?? ''),
+    'mob_status'=>(string)($maccms['mob_status'] ?? ''),
+    'templatePath'=>(string)($maccms['path_tpl'] ?? ''),
+    'noPic'=>$tplNoPic,
+    'template_urls'=>[
+        'user_login'=>mac_url('user/login'),
+        'user_index'=>mac_url('user/index'),
+        'user_token'=>mac_url('user/token'),
+        'user_info'=>mac_url('user/info'),
+        'user_bind'=>mac_url('user/bind'),
+        'user_bindmsg'=>mac_url('user/bindmsg'),
+        'user_buy'=>mac_url('user/buy'),
+        'user_upgrade'=>mac_url('user/upgrade'),
+        'user_cash'=>mac_url('user/cash'),
+        'user_unbind'=>mac_url('user/unbind'),
+        'user_ulog_del'=>mac_url('user/ulog_del'),
+        'user_plog_del'=>mac_url('user/plog_del'),
+        'user_cash_del'=>mac_url('user/cash_del'),
+        'user_ajax_buy_popedom'=>mac_url('user/ajax_buy_popedom'),
+        'user_ajax_ulog'=>mac_url('user/ajax_ulog'),
+        'gbook_index'=>mac_url('gbook/index'),
+        'gbook_token'=>mac_url('gbook/token'),
+        'gbook_save'=>mac_url('gbook/saveData'),
+        'comment_token'=>mac_url('comment/token'),
+        'comment_save'=>mac_url('comment/saveData'),
+        'comment_ajax'=>mac_url('comment/ajax'),
+        'comment_report'=>mac_url('comment/report'),
+    ],
+], JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) . ';';
+{/php}</script>
+<script src="{$maccms.path|htmlspecialchars=ENT_QUOTES}static/template-ui/secure-forms.js"></script>
+<script src="{$maccms.path|htmlspecialchars=ENT_QUOTES}static/template-ui/ui.js"></script><script>if(window.TemplateUI&&TemplateUI.installLayerAdapter)TemplateUI.installLayerAdapter();</script>
+<script>window.TemplateMessages={:\\app\\common\\util\\TemplateText::json(['copy_manually','homepage_browser_settings','bookmark_browser_menu','ui.link_copied','template_ui_confirm_title','template_ui_confirm','template_ui_cancel','template_ui_close','template_ui_dismiss','template_ui_notifications','template_ui_working','ui.confirm_the_purchase','ui.connection_failed_try_again','ui.reply','ui.cancel_reply','ui.enter_comment','ui.enter_message','request_failed','parameter_error','not_to_see_change'])};window.galleryText={:\\app\\common\\util\\TemplateText::json(['no_results','request_failed','no_history','show_menu','close_menu','jav.show_more','jav.show_less'])};</script>
+<script src="{$maccms.path_tpl|htmlspecialchars=ENT_QUOTES}statics/js/home.js?v=20261009-r2"></script>
+<script defer src="{$maccms.path|htmlspecialchars=ENT_QUOTES}static/template-ui/grid-fill.js?v=20261008-1"></script>
+<script defer src="{$maccms.path_tpl|htmlspecialchars=ENT_QUOTES}statics/js/jav.js?v=20261015-x1"></script>
+<script defer src="{$maccms.path_tpl|htmlspecialchars=ENT_QUOTES}statics/js/fx.js?v=20261013-ai1"></script>
+{:\\app\\common\\util\\AutoIcon::head()}
+<link rel="stylesheet" href="{$maccms.path|htmlspecialchars=ENT_QUOTES}static/template-ui/lowres.css?v={:\\app\\common\\util\\AvdbLanguage::assetVersion('lowres.css')}" /><script src="{$maccms.path|htmlspecialchars=ENT_QUOTES}static/template-ui/lowres.js?v={:\\app\\common\\util\\AvdbLanguage::assetVersion('lowres.js')}" defer></script>

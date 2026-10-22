@@ -1,0 +1,123 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{include file="../../../application/admin/view/public/head" /}
+{php}$axS = '__STATIC__/admin/icons/admin-icons.svg?v=' . $admin_icons_v;{/php}
+<main class="page-container acc">
+    {include file="../../../application/admin/view/public/page_head" icon="ai-key-round" title="admin/ux/myaccount/title" help="admin/ux/myaccount/help" /}
+    <form class="ax-form" id="accForm" method="post" action="{:url('index/account')}" autocomplete="off" data-ax-dirty novalidate>
+        <input type="hidden" name="__ux_token__" id="accToken" value="{$ux_token}">
+        <section class="ax-section">
+            <h2>{:lang('admin/ux/account/my')}</h2>
+            {if condition="$acc_last neq ''"}<p class="ax-help">{$acc_last}</p>{/if}
+            <div class="ax-field ax-field--md">
+                <label for="accName">{:lang('admin/ux/myaccount/login_name')}</label>
+                <input id="accName" type="text" class="layui-input" value="{$acc_name}" readonly aria-readonly="true" autocomplete="username">
+            </div>
+            <div class="ax-field ax-field--md">
+                <label for="accCurrent">{:lang('admin/ux/myaccount/current_pwd')}</label>
+                <input id="accCurrent" name="current_pwd" type="password" class="layui-input" autocomplete="current-password" maxlength="72" required>
+            </div>
+            <div class="ax-field ax-field--md">
+                <label for="accNew">{:lang('admin/ux/myaccount/new_pwd')}</label>
+                <input id="accNew" name="new_pwd" type="password" class="layui-input" autocomplete="new-password" minlength="8" maxlength="72" aria-describedby="accNewHelp" required>
+                <p class="ax-help" id="accNewHelp">{:lang('admin/ux/myaccount/new_pwd_help')}</p>
+            </div>
+            <div class="ax-field ax-field--md">
+                <label for="accRepeat">{:lang('admin/ux/myaccount/repeat_pwd')}</label>
+                <input id="accRepeat" name="repeat_pwd" type="password" class="layui-input" autocomplete="new-password" maxlength="72" required>
+            </div>
+            <p class="acc-error ax-danger-text" id="accError" role="alert"></p>
+        </section>
+        {if condition="$acc_lang_menu"}
+        <section class="ax-section">
+            <h2>{:lang('admin/ux/account/language')}</h2>
+            <div class="ax-field ax-field--md">
+                <label for="accLang">{:lang('admin/ux/account/language')}</label>
+                <select id="accLang" class="acc-lang" aria-describedby="accLangHelp" lay-ignore>
+                    {volist name="acc_langs" id="lg"}<option value="{$lg.code}" lang="{$lg.code}"{if condition="$lg.current"} selected{/if}>{$lg.name}</option>{/volist}
+                </select>
+                <p class="ax-help" id="accLangHelp">{:lang('admin/ux/myaccount/language_help')}</p>
+            </div>
+        </section>
+        {/if}
+        <div class="ax-notice{if condition="$acc_entry_default"} ax-notice--warn{/if}" role="note"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axS}#{if condition="$acc_entry_default"}ai-triangle-alert{else /}ai-info{/if}"/></svg><div><p>{:lang('admin/ux/myaccount/url_tip')}</p>{if condition="$acc_entry_default"}<p id="accUrlSteps">{:lang('admin/ux/myaccount/url_steps')}</p>{/if}</div></div>
+        <div class="ax-savebar">
+            <span class="ax-savebar__status" role="status" id="accStatus"></span>
+            <div class="ax-savebar__end">
+                <button type="reset" class="ax-btn" data-undone="{:lang('admin/ux/polish/undone')}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axS}#ai-rotate-ccw"/></svg>{:lang('admin/ux/system/undo_changes')}</button>
+                <button type="submit" class="ax-btn ax-btn--primary"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axS}#ai-save"/></svg>{:lang('admin/ux/myaccount/save')}</button>
+            </div>
+        </div>
+    </form>
+</main>
+<script type="text/javascript" src="__STATIC__/js/admin_common.js?v={:filemtime(ROOT_PATH . 'static/js/admin_common.js')}"></script>{/* public/foot.html loads this file with a fixed ?v=; the shell pages use the file time until hand-over HO-shell-1 is applied */}
+<script>window.AX_ACC_LANG = {$acc_lang_json};</script>
+<script>
+(function () {
+    'use strict';
+    var form = document.getElementById('accForm');
+    var err = document.getElementById('accError');
+    var token = document.getElementById('accToken');
+    function send(retried) {
+        var body = new URLSearchParams(new FormData(form));
+        return fetch(form.getAttribute('action'), { method: 'POST', body: body, credentials: 'same-origin',
+            headers: { 'X-Requested-With': 'XMLHttpRequest', 'Accept': 'application/json' } })
+            .then(function (r) { return r.json(); })
+            .then(function (res) {
+                if (res && res.locked) { try { window.parent.postMessage({ ax: 'locked' }, location.origin); } catch (e) { /* alone */ } return res; }
+                if (res && res.data && res.data.__ux_token__) token.value = res.data.__ux_token__;
+                if (res && Number(res.code) !== 1 && res.data && res.data.retry && !retried) return send(true);
+                return res;
+            });
+    }
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        err.textContent = '';
+        var btn = form.querySelector('button[type="submit"]');
+        btn.disabled = true;
+        send(false).then(function (res) {
+            btn.disabled = false;
+            if (res && Number(res.code) === 1) {
+                ['accCurrent', 'accNew', 'accRepeat'].forEach(function (id) { document.getElementById(id).value = ''; });
+                if (window.AxUX) { window.AxUX.markClean(); window.AxUX.toast(res.msg, 'ok'); }
+                var d = new Date();
+                document.getElementById('accStatus').textContent = window.AxUX ? window.AxUX.t('saved_at', ('0' + d.getHours()).slice(-2) + ':' + ('0' + d.getMinutes()).slice(-2)) : res.msg;
+            } else if (!res || !res.locked) {
+                err.textContent = (res && res.msg) || (window.AxUX ? window.AxUX.t('request_failed') : '');
+                var focus = document.getElementById(/current/i.test(err.textContent) ? 'accCurrent' : 'accNew');
+                if (focus) focus.focus();
+            }
+        }).catch(function () { btn.disabled = false; err.textContent = window.AxUX ? window.AxUX.t('request_failed') : ''; });
+    });
+    // R2-13: Undo changes empties the password fields again and clears the error line.
+    form.addEventListener('reset', function () {
+        err.textContent = '';
+        setTimeout(function () {
+            var b = form.querySelector('.ax-savebar button[type="reset"]');
+            document.getElementById('accStatus').textContent = b ? (b.getAttribute('data-undone') || '') : '';
+        }, 0);
+    });
+    var sel = document.getElementById('accLang');
+    if (sel) {
+        var initial = sel.value;
+        sel.addEventListener('change', function () {
+            var opt = sel.options[sel.selectedIndex];
+            var msg = (window.AX_ACC_LANG.language_reload || '%s').replace('%s', opt.text);
+            var ask = window.AxUX ? window.AxUX.confirm({ title: window.AX_ACC_LANG.language || msg, message: msg, confirmLabel: opt.text, danger: false, count: 0 }) : Promise.resolve(window.confirm(msg));
+            ask.then(function (yes) {
+                if (!yes) { sel.value = initial; return; }
+                document.cookie = 'javcms_admin_lang=' + encodeURIComponent(sel.value) + '; expires=' + new Date(Date.now() + 365 * 864e5).toUTCString() + '; path=/; SameSite=Lax';
+                if (window.AxUX) window.AxUX.markClean();
+                try { (window.top || window).location.reload(); } catch (e) { window.location.reload(); }
+            });
+        });
+    }
+}());
+</script>
+</body>
+</html>

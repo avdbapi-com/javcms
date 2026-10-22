@@ -1,0 +1,55 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="neon" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/vod_search"}
+{include file="public/include"}
+</head>
+<body class="nx-page-search">
+{include file="public/head"}
+{php}
+$nxSP = (isset($param) && is_array($param)) ? $param : [];
+$nxSBy = (string)($nxSP['by'] ?? '');
+$nxSortHtml = '';
+$nxSIco = ['time' => 'clock', 'hits' => 'flame', 'score' => 'star', 'up' => 'thumbs-up']; $nxSI = 0;
+foreach (['time' => 'latest', 'hits' => 'popular', 'score' => 'top_rated', 'up' => 'most_liked'] as $nxSKey => $nxSLabel) {
+  $nxSQ = ['by' => $nxSKey];
+  foreach (['wd', 'tag', 'class', 'actor', 'director', 'area', 'lang', 'year'] as $nxSF) { if (isset($nxSP[$nxSF]) && $nxSP[$nxSF] !== '') { $nxSQ[$nxSF] = htmlspecialchars_decode((string)$nxSP[$nxSF], ENT_QUOTES); } }
+  $nxSOn = ($nxSBy === $nxSKey || ($nxSBy === '' && $nxSKey === 'time'));
+  $nxSortHtml .= '<a href="' . htmlspecialchars(mac_url_search($nxSQ, 'vod'), ENT_QUOTES, 'UTF-8') . '"' . ($nxSOn ? ' class="is-on" aria-current="page"' : '') . '>' . \app\common\util\AutoIcon::ui($nxSIco[$nxSKey], ['size' => 'sm', 'i' => $nxSI++]) . '<span>' . \app\common\util\TemplateText::get($nxSLabel) . '</span></a>';
+}
+$nxSLg = ['size' => 'lg', 'plate' => true];
+if ((string)($nxSP['wd'] ?? '') !== '') { $nxSHIco = \app\common\util\AutoIcon::ui('search', $nxSLg); }
+elseif ((string)($nxSP['actor'] ?? '') !== '') { $nxSHIco = \app\common\util\AutoIcon::avatar((string)$nxSP['actor'], '', ['size' => 'sm', 'decorative' => true]); }
+elseif ((string)($nxSP['class'] ?? '') !== '') { $nxSHIco = \app\common\util\AutoIcon::icon('tag', (string)$nxSP['class'], $nxSLg); }
+elseif ((string)($nxSP['tag'] ?? '') !== '') { $nxSHIco = \app\common\util\AutoIcon::icon('tag', (string)$nxSP['tag'], $nxSLg); }
+elseif ((string)($nxSP['director'] ?? '') !== '') { $nxSHIco = \app\common\util\AutoIcon::ui('clapperboard', $nxSLg); }
+else { $nxSHIco = \app\common\util\AutoIcon::ui('search', $nxSLg); }
+$nxEmptyScene = 'search-empty'; $nxSSortIco = \app\common\util\AutoIcon::ui('sort', ['size' => 'sm', 'tint' => 'none']);
+$nxHot = []; foreach (explode(',', (string)($maccms['search_hot'] ?? '')) as $nxHotWord) { $nxHotWord = trim($nxHotWord); if (mb_strlen($nxHotWord) >= 2 && !in_array($nxHotWord, $nxHot, true)) { $nxHot[] = $nxHotWord; } } $nxHot = array_slice($nxHot, 0, 20);
+{/php}
+<main id="main-content" class="nx-main"><div class="nx-wrap">
+{include file="public/sform"}
+{include file="public/shot"}
+<section class="nx-section" aria-labelledby="nx-h-search">
+<div class="nx-cap">{if condition="$param.wd neq ''"}<h1 class="nx-cap-title" id="nx-h-search"><span class="nx-cap-ico">{$nxSHIco}</span><span>{:\\app\\common\\util\\TemplateText::raw('ui.search_for_query', ['query'=>$param['wd']])}</span></h1>
+{elseif condition="$param.actor neq ''"/}<h1 class="nx-cap-title" id="nx-h-search"><span class="nx-cap-ico">{$nxSHIco}</span><span>{:\\app\\common\\util\\TemplateText::get('ui.actor')} {$param.actor|html_entity_decode=ENT_QUOTES,'UTF-8'|html_entity_decode=ENT_QUOTES,'UTF-8'|htmlspecialchars=ENT_QUOTES}</span></h1>
+{elseif condition="$param.class neq ''"/}<h1 class="nx-cap-title" id="nx-h-search"><span class="nx-cap-ico">{$nxSHIco}</span><span>{:\\app\\common\\util\\TemplateText::get('neon.genres_label')} {$param.class|html_entity_decode=ENT_QUOTES,'UTF-8'|html_entity_decode=ENT_QUOTES,'UTF-8'|htmlspecialchars=ENT_QUOTES}</span></h1>
+{elseif condition="$param.tag neq ''"/}<h1 class="nx-cap-title" id="nx-h-search"><span class="nx-cap-ico">{$nxSHIco}</span><span>{:\\app\\common\\util\\TemplateText::get('ui.tag')} {$param.tag|html_entity_decode=ENT_QUOTES,'UTF-8'|html_entity_decode=ENT_QUOTES,'UTF-8'|htmlspecialchars=ENT_QUOTES}</span></h1>
+{elseif condition="$param.director neq ''"/}<h1 class="nx-cap-title" id="nx-h-search"><span class="nx-cap-ico">{$nxSHIco}</span><span>{:\\app\\common\\util\\TemplateText::get('director')} {$param.director|html_entity_decode=ENT_QUOTES,'UTF-8'|html_entity_decode=ENT_QUOTES,'UTF-8'|htmlspecialchars=ENT_QUOTES}</span></h1>
+{else/}<h1 class="nx-cap-title" id="nx-h-search"><span class="nx-cap-ico">{$nxSHIco}</span><span>{:\\app\\common\\util\\TemplateText::get('search_results')}</span></h1>{/if}</div>
+<div class="nx-filter" style="margin-top:0"><div class="nx-frow" data-ai-group><span class="nx-frow-label">{$nxSSortIco}<span>{:\\app\\common\\util\\TemplateText::get('sort_by')}</span></span>{$nxSortHtml}</div></div>
+<div class="nx-grid" data-grid-fill data-nx-list style="margin-top:14px">{maccms:vod num="20" paging="yes" type="all" pageurl="vod/search" order="desc" by="time" id="vo"}{include file="public/vodbox"}{/maccms:vod}</div>
+{if condition="$__PAGING__.record_total eq 0"}{include file="public/empty"}{else/}<p class="nx-end nx-ltr">{:\\app\\common\\util\\AvdbLanguage::resultCount($__PAGING__, isset($__LIST__) ? $__LIST__ : null)['short']} {:\\app\\common\\util\\TemplateText::get('ui.videos')}</p>{/if}
+{include file="public/list_note"}{include file="public/paging"}
+</section>
+</div></main>
+{include file="public/foot"}
+</body>
+</html>

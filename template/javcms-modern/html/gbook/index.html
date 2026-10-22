@@ -1,0 +1,40 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+Partly based on a third-party theme. This license covers the JavCMS changes only.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-variant="modern" data-template-theme="javcms" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+<title>{:\\app\\common\\util\\TemplateText::get('ui.contact_b37456')} - {:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$maccms['site_name']), ENT_QUOTES, 'UTF-8')}</title>
+<meta name="description" content="{:\\app\\common\\util\\TemplateText::get('ui.send_a_message_about_content_access_or_a_site_issue')}" />
+<meta name="robots" content="noindex, follow" />
+{include file="public/include"}
+</head>
+<body class="jc-gbook">
+<div class="shadow"></div>
+{include file="public/head"}
+<div class="wrapped">
+	<main id="main-content">
+		{include file="public/nav"}
+		<div class="content"><div class="section jc-page"><div class="wrap jc-wrap">
+			<div class="jc-head"><h1 class="jc-h1 jc-reveal jc-h1-ico" data-ai-hot>{:\\app\\common\\util\\AutoIcon::navIcon('contact', '', ['size'=>'lg', 'plate'=>true])}<span>{:\\app\\common\\util\\TemplateText::get('ui.contact_the_site')}</span></h1></div>
+			<p class="jc-lead">{:\\app\\common\\util\\TemplateText::get('ui.send_a_message_about_content_access_or_a_site_issue')}</p>
+			<form class="gbook_form jc-form" method="post" action="{:mac_url('gbook/index')}">
+				<input type="hidden" name="gbook_rid" value="{:intval($param['id'] ?? 0)}">{:token()}
+				<label for="gbook-content">{:\\app\\common\\util\\AutoIcon::ui('message', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ui.your_message')}</label>
+				<textarea id="gbook-content" class="gbook_content" name="gbook_content" maxlength="1000" rows="5" required>{$param.name|default=''}</textarea>
+				{if condition="$gbook.verify eq 1"}<div class="verification-field"><label for="gbook-verify">{:\\app\\common\\util\\AutoIcon::ui('key', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ui.verification_code')}</label><div class="jc-verify-row"><input id="gbook-verify" name="verify" class="mac_verify" maxlength="4" autocomplete="off" inputmode="text"></div></div>{/if}
+				<button class="gbook_submit jc-btn jc-btn-primary" type="button">{:\\app\\common\\util\\AutoIcon::ui('send', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ui.send_message')}</button>
+			</form>
+			<section class="jc-section jc-messages"><div class="jc-head"><h2 class="jc-h2">{:\\app\\common\\util\\AutoIcon::ui('messages', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ui.recent_messages')}</h2></div>{include file="gbook/ajax"}</section>
+		</div></div></div>
+	</main>
+	{include file="public/foot"}
+</div>
+<script>MAC.Gbook.Login={$gbook.login};MAC.Gbook.Verify={$gbook.verify};MAC.Gbook.Init();</script>
+</body>
+</html>

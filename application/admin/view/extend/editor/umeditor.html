@@ -1,0 +1,38 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Based on MacCMS 10 (Apache-2.0) by magicblack, changed by JavCMS.
+JavCMS changes: Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors,
+JavCMS Community License 1.0. The MacCMS parts stay under the Apache License 2.0.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<link rel="stylesheet" href="__STATIC__/editor/umeditor/themes/default/css/umeditor.css" type="text/css" rel="stylesheet">
+<script type="text/javascript" src="__STATIC__/editor/umeditor/umeditor.config.js?v=20261018-1"></script>
+<script type="text/javascript" src="__STATIC__/editor/umeditor/umeditor.min.js?v=20261005-en1"></script>
+<script type="text/javascript" src="__STATIC__/editor/umeditor/lang/en/en.js?v=20261005-en1"></script>
+<style>
+    /* Keep the light video dialog readable within dark administration pages. */
+    .edui-dialog-video .edui-video-tabhead { color: #333; }
+    .edui-dialog-video .edui-video-panel { color: #333; color-scheme: light; font-size: 12px; }
+    .edui-dialog-video .edui-video-wrapper fieldset legend { font-size: 12px; }
+</style>
+<script type="text/javascript">
+    window.UMEDITOR_CONFIG.imageUrl = "{:url('upload/upload')}?from=umeditor&flag={$cl|strtolower}_editor&input=upfile";
+    window.UMEDITOR_CONFIG.lang = "en";
+    var EDITOR = UM;
+</script>
+<script>
+    var editor = "{$editor}";
+    function editor_getEditor(obj)
+    {
+        return EDITOR.getEditor(obj);
+    }
+    function editor_setContent(obj,html)
+    {
+        return obj.setContent(html);
+    }
+    function editor_getContent(obj)
+    {
+        return obj.getContent();
+    }
+</script>

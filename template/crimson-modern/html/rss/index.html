@@ -1,0 +1,27 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Based on MacCMS 10 (Apache-2.0) by magicblack, changed by JavCMS.
+JavCMS changes: Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors,
+JavCMS Community License 1.0. The MacCMS parts stay under the Apache License 2.0.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+<title>{:\\app\\common\\util\\Sitemap::xmlEscape(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$maccms['site_name']))}</title>
+<link>{:\\app\\common\\util\\Sitemap::xmlEscape(\\app\\common\\util\\Sitemap::absolute($maccms['path']))}</link>
+<atom:link href="{:\\app\\common\\util\\Sitemap::xmlEscape(\\app\\common\\util\\Sitemap::absolute(mac_url('rss/index')))}" rel="self" type="application/rss+xml" />
+<description>{:\\app\\common\\util\\Sitemap::xmlEscape(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$maccms['site_description']))}</description>
+<language>{:\\app\\common\\util\\TemplateText::locale()}</language>
+{maccms:vod num="50" paging="no" type="all" order="desc" by="time" id="vo"}
+<item>
+{php}$ciRssT = trim((string)($vo['vod_display_name'] ?? '')); $ciRssD = trim(strip_tags((string)($vo['vod_display_blurb'] ?? ''))); for ($ciRTI = 0; $ciRTI < 4 && strpos($ciRssT, '&') !== false; $ciRTI++) { $ciRTD = html_entity_decode($ciRssT, ENT_QUOTES | ENT_HTML5, 'UTF-8'); if ($ciRTD === $ciRssT) { break; } $ciRssT = $ciRTD; } for ($ciRDI = 0; $ciRDI < 4 && strpos($ciRssD, '&') !== false; $ciRDI++) { $ciRDD = html_entity_decode($ciRssD, ENT_QUOTES | ENT_HTML5, 'UTF-8'); if ($ciRDD === $ciRssD) { break; } $ciRssD = $ciRDD; }{/php}<title>{:\\app\\common\\util\\Sitemap::xmlEscape($ciRssT)}</title>
+<link>{:\\app\\common\\util\\Sitemap::xmlEscape(\\app\\common\\util\\Sitemap::absolute(mac_url_vod_detail($vo)))}</link>
+<guid isPermaLink="true">{:\\app\\common\\util\\Sitemap::xmlEscape(\\app\\common\\util\\Sitemap::absolute(mac_url_vod_detail($vo)))}</guid>
+<pubDate>{:gmdate(DATE_RSS, (int)$vo['vod_time'])}</pubDate>
+<description>{:\\app\\common\\util\\Sitemap::xmlEscape(mac_substring($ciRssD, 300))}</description>
+</item>
+{/maccms:vod}
+</channel>
+</rss>

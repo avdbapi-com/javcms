@@ -1,0 +1,18 @@
+{
+ "$schema": "javcms.auto-icon.v1",
+ "family": "phosphor-light",
+ "motion": "prism",
+ "enter": "blur",
+ "plate": "gem",
+ "plateMotion": "turn",
+ "avatar": "gem spectral",
+ "tint": "slot",
+ "tokens": {
+  "--ai-c1": "var(--fx-accent,#72d7ff)",
+  "--ai-c2": "var(--fx-accent-3,#ff6b9a)",
+  "--ai-c3": "var(--fx-accent-2,#b18cff)",
+  "--ai-c4": "var(--tp-gold,#ffd36b)"
+ },
+ "map": {},
+ "nav": {}
+}

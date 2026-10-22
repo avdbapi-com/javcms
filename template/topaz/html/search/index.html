@@ -1,0 +1,37 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="topaz" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/auto"}
+{include file="public/include"}
+</head>
+<body class="tz-page-list">
+{include file="public/head"}
+<main id="main-content" class="tz-main tz-wrap tz-list">
+  <header class="tz-callout" data-ai-hot>
+    <span class="tz-eyebrow">{:\\app\\common\\util\\TemplateText::get('topaz.library')}</span>
+    <h1 class="tz-cat-h1">{:\\app\\common\\util\\AutoIcon::navIcon('search', '', ['size'=>'xl', 'plate'=>true])}<span>{:\\app\\common\\util\\TemplateText::get('ui.search')}</span></h1>
+    <p>{:\\app\\common\\util\\TemplateText::get('ui.find_your_next_watch')}</p>
+  </header>
+  <form class="tz-bigsearch" action="{:mac_url('vod/search')}" method="get" role="search">
+    <label class="tz-sr" for="tz-bigq">{:\\app\\common\\util\\TemplateText::get('ui.search')}</label>
+    {:\\app\\common\\util\\AutoIcon::ui('search', ['class'=>'tz-i', 'tint'=>'none'])}
+    <input id="tz-bigq" class="tz-input" type="search" name="wd" maxlength="60" autocomplete="off" placeholder="{:\\app\\common\\util\\TemplateText::get('ui.search_videos_or_performers')}">
+    <button class="tz-btn tz-btn--gold" type="submit">{:\\app\\common\\util\\TemplateText::get('ui.search')}</button>
+  </form>
+  {include file="public/hotwords"}
+  {include file="public/chipbar"}
+  <section class="tz-coll" aria-labelledby="tz-s-new">
+    <header class="tz-coll-head" data-ai-group data-ai-hot><div class="tz-coll-title"><span class="tz-coll-ico" aria-hidden="true">{:\\app\\common\\util\\AutoIcon::ui('zap', ['class'=>'tz-i', 'tint'=>'none'])}</span><div><h2 id="tz-s-new">{:\\app\\common\\util\\TemplateText::get('ui.latest_videos')}</h2></div></div></header>
+    <div class="tz-grid" data-grid-fill>{maccms:vod num="10" type="all" order="desc" by="time" paging="no" id="vo"}{include file="public/vodbox"}{/maccms:vod}</div>
+  </section>
+</main>
+{include file="public/foot"}
+</body>
+</html>

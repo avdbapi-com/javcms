@@ -1,0 +1,22 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="onyx" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/auto"}
+{include file="public/include"}
+</head>
+<body class="page-map">
+{include file="public/head"}
+<main id="main-content" class="wrap">
+<h1 class="page-title">{:\\app\\common\\util\\AutoIcon::navIcon('latest-100')}<span>{:\\app\\common\\util\\TemplateText::get('ui.latest_100_updates')}</span></h1>
+<ol class="map-list">{maccms:vod num="100" type="all" order="desc" by="time" paging="no" id="vo"}<li><a href="{:mac_url_vod_detail($vo)}">{if condition="!empty($vo['type']['type_name'])"}{:\\app\\common\\util\\AutoIcon::icon('category', $vo['type']['type_name'], ['size'=>'sm'])}{/if}{$vo.vod_display_name|mac_default=$vo.vod_name|htmlspecialchars=ENT_QUOTES}</a><time datetime="{$vo.vod_time|date='Y-m-d',###}">{$vo.vod_time|date='Y-m-d',###}</time></li>{/maccms:vod}</ol>
+</main>
+{include file="public/foot"}
+</body>
+</html>

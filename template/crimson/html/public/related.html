@@ -1,0 +1,12 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}
+$ctGroup = 0;
+{/php}<section class="ct-sec ct-related ct-span" aria-labelledby="ct-related-h"><div class="ct-sec-head"><h2 class="ct-h2" id="ct-related-h">{:\\app\\common\\util\\TemplateText::get('ui.more_to_watch')}</h2>{if condition="$ctTypeName neq ''"}<a class="ct-more" href="{:mac_url_type($obj['type'])}">{:\\app\\common\\util\\TemplateText::get('ui.view_more')}{:\\app\\common\\util\\AutoIcon::ui('chevron-right', ['class'=>'ct-ico'])}</a>{/if}</div>
+<div class="ct-grid" data-grid-fill>{maccms:vod num="10" type="current" not="'.$obj['vod_id'].'" order="desc" by="time" paging="no" id="vo"}{include file="public/vodbox"}{/maccms:vod}</div>
+</section>

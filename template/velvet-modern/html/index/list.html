@@ -1,0 +1,28 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<section class="vp-act vp-act--boxes" aria-labelledby="vp-act-boxes">
+  <header class="vp-act-head" data-ai-group>
+    {:\\app\\common\\util\\AutoIcon::navIcon('categories', '', ['size'=>'lg', 'plate'=>true, 'class'=>'vp-act-ico'])}
+    <p class="vp-eyebrow" aria-hidden="true">{:\\app\\common\\util\\TemplateText::get('vp.the_house')}</p>
+    <h2 class="vp-act-title" id="vp-act-boxes" data-fx="split" data-fx-style="blur" data-fx-by="words">{:\\app\\common\\util\\TemplateText::get('vp.the_boxes')}</h2>
+    <span class="vp-orn" data-fx="reveal" data-fx-style="fade" aria-hidden="true"></span>
+  </header>
+  <ul class="vp-boxes" data-fx="stagger">{maccms:type ids="parent" flag="vod" order="asc" by="sort" id="vpBox" key="vpBoxK" hide_empty="1" not="'.intval($GLOBALS['jvPbShown'] ?? 0).'"}{php}$vpN = $vpRoman[$vpBoxK - 1] ?? (string)$vpBoxK;{/php}<li><a class="vp-box" href="{:mac_url_type($vpBox)}"><span class="vp-num" aria-hidden="true">{$vpN}</span>{:\\app\\common\\util\\AutoIcon::icon('category', $vpBox['type_name'] ?? '', ['size'=>'xl', 'plate'=>true, 'i'=>$vpBoxK, 'class'=>'vp-box-ico'])}<span class="vp-box-name">{:\\app\\common\\util\\TemplateText::get(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)($vpBox['type_name'] ?? '')))}</span><span class="vp-box-count">{:\\app\\common\\util\\TemplateText::get('vp.titles_count', ['count'=>number_format((float)mac_data_count($vpBox['type_id'],'all'))])}</span></a></li>{/maccms:type}</ul>
+</section>
+{maccms:type ids="parent" flag="vod" order="asc" by="sort" num="3" id="vpCat" key="vpCatKey" hide_empty="1" not="'.intval($GLOBALS['jvPbShown'] ?? 0).'"}{php}$vpActN = $vpRoman[$vpCatKey + 2] ?? (string)($vpCatKey + 3);{/php}
+<section class="vp-act" aria-labelledby="vp-act-c{$vpCatKey|intval}">
+  <header class="vp-act-head" data-ai-group>
+    {:\\app\\common\\util\\AutoIcon::icon('category', $vpCat['type_name'] ?? '', ['size'=>'lg', 'plate'=>true, 'class'=>'vp-act-ico'])}
+    <p class="vp-eyebrow" aria-hidden="true">{:\\app\\common\\util\\TemplateText::get('vp.act_n', ['n'=>$vpActN])}</p>
+    <h2 class="vp-act-title" id="vp-act-c{$vpCatKey|intval}" data-fx="split" data-fx-style="blur" data-fx-by="words">{:\\app\\common\\util\\TemplateText::get(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)($vpCat['type_name'] ?? '')))}</h2>
+    <span class="vp-orn" data-fx="reveal" data-fx-style="fade" aria-hidden="true"></span>
+    <a class="vp-viewall" href="{:mac_url_type($vpCat)}">{:\\app\\common\\util\\TemplateText::get('view_all')}<svg class="vp-i vp-flip" aria-hidden="true"><use href="{$maccms.path_tpl}assets/icons.svg?v=20261010-r1#arrow-right"></use></svg></a>
+  </header>
+  {php}$vpNot = implode(',', array_unique(array_filter($vpSeen ?? [])));{/php}<div class="vp-grid" data-grid-fill data-fx="stagger">{maccms:vod num="10" type="'.$vpCat['type_id'].'" not="'.$vpNot.'" order="desc" by="time" paging="no" id="vo"}{include file="public/vodbox"}{/maccms:vod}</div>
+</section>
+{/maccms:type}

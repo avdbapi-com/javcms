@@ -1,0 +1,8 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{notempty name="ncHot"}<div class="nc-hotband" data-ai-group><p class="nc-hotband-h">{:\\app\\common\\util\\AutoIcon::ui('trending-up', ['size'=>'sm'])}<span>{:\\app\\common\\util\\TemplateText::get('nc.hot_searches')}</span></p><div class="nc-hotwords">{volist name="ncHot" id="ncHw"}<a href="{$ncHw.url|htmlspecialchars=ENT_QUOTES}">{$ncHw.ico}<span dir="auto">{$ncHw.q|htmlspecialchars=ENT_QUOTES}</span></a>{/volist}</div></div>{/notempty}

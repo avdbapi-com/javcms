@@ -1,0 +1,19 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}$ctIco = isset($ctIco) ? $ctIco : $maccms['path_tpl'] . 'assets/img/ct-icons.svg';
+if (!isset($ctPlain)) { $ctPlain = function ($v) { $v = trim((string)$v); for ($pI = 0; $pI < 4 && strpos($v, '&') !== false; $pI++) { $pD = html_entity_decode($v, ENT_QUOTES | ENT_HTML5, 'UTF-8'); if ($pD === $v) { break; } $v = $pD; } return trim($v); }; }
+$ctCardTitle = $ctPlain($vo['vod_display_name'] ?? ''); if ($ctCardTitle === '') { $ctCardTitle = $ctPlain(strip_tags((string)($vo['vod_name'] ?? ''))); }
+$ctCardPic = trim((string)($vo['vod_pic'] ?? '')); $ctCardPic = $ctCardPic === '' ? $maccms['path_tpl'] . 'assets/img/poster.svg' : mac_url_img($ctCardPic);
+$ctCardDur = trim((string)($vo['vod_duration'] ?? '')); $ctCardDay = !empty($vo['vod_time']) ? date('Y-m-d', (int)$vo['vod_time']) : '';
+$ctCardCjk = '/[\x{3040}-\x{30FF}\x{3400}-\x{9FFF}\x{F900}-\x{FAFF}\x{FF66}-\x{FF9F}]+/u';
+$ctCardSubs = []; foreach (explode(',', (string)($vo['vod_display_actor'] ?? '')) as $ctCardName) { $ctCardLatin = trim(preg_replace($ctCardCjk, '', $ctPlain($ctCardName))); if ($ctCardLatin !== '') { $ctCardSubs[] = $ctCardLatin; } if (count($ctCardSubs) >= 2) { break; } }
+$ctCardSub = implode(', ', $ctCardSubs);
+if ($ctCardSub === '') { $ctCardSub = $ctPlain($vo['vod_display_writer'] ?? ''); if (preg_match($ctCardCjk, $ctCardSub)) { $ctCardSub = ''; } }
+if ($ctCardSub === '' && isset($vo['type']['type_name'])) { $ctCardSub = \app\common\util\TemplateText::raw(htmlspecialchars_decode(trim((string)$vo['type']['type_name']), ENT_QUOTES)); }
+$ctCardGroup = !empty($ctGroup) ? intval($ctGroup) : 0;
+$ctCardDir = preg_match('/[\x{0590}-\x{08FF}\x{FB1D}-\x{FDFF}\x{FE70}-\x{FEFF}]/u', $ctCardTitle) ? 'rtl' : 'auto';{/php}<article class="ct-card"{if condition="$ctCardGroup gt 0"} data-ct-group="{$ctCardGroup}"{/if}><a class="ct-card-link" href="{:mac_url_vod_play($vo)}" title="{$ctCardTitle|htmlspecialchars=ENT_QUOTES}"><span class="ct-thumb"><img src="{$ctCardPic|htmlspecialchars=ENT_QUOTES}" alt="{$ctCardTitle|htmlspecialchars=ENT_QUOTES}" width="320" height="180" loading="lazy" decoding="async"><span class="ct-shade">{if condition="$ctCardDay neq ''"}<time class="ct-date" datetime="{$ctCardDay}" dir="ltr">{$ctCardDay}</time>{/if}{if condition="$ctCardDur neq ''"}<span class="ct-dur" dir="ltr">{$ctCardDur|htmlspecialchars=ENT_QUOTES}</span>{/if}</span>{if condition="$vo.vod_level eq 6"}<span class="ct-vip">{:\\app\\common\\util\\TemplateText::get('crimson.vip')}</span>{/if}<span class="ct-play" aria-hidden="true"><svg class="ct-ico"><use href="{$ctIco|htmlspecialchars=ENT_QUOTES}#play"></use></svg></span></span><h3{php}echo \app\common\util\AvdbLanguage::langAttr(isset($vo) && is_array($vo) ? $vo : []);{/php} class="ct-card-title" dir="{$ctCardDir}">{$ctCardTitle|htmlspecialchars=ENT_QUOTES}</h3></a>{if condition="$ctCardSub neq ''"}<p class="ct-card-sub" dir="auto">{$ctCardSub|htmlspecialchars=ENT_QUOTES}</p>{/if}<button class="ct-fav" type="button" data-ct-fav data-mid="1" data-id="{$vo.vod_id}" aria-label="{:\\app\\common\\util\\TemplateText::get('crimson.add_fav')}" title="{:\\app\\common\\util\\TemplateText::get('crimson.add_fav')}"><svg class="ct-ico ct-fav-off" aria-hidden="true"><use href="{$ctIco|htmlspecialchars=ENT_QUOTES}#plus"></use></svg><svg class="ct-ico ct-fav-on" aria-hidden="true"><use href="{$ctIco|htmlspecialchars=ENT_QUOTES}#check"></use></svg></button></article>

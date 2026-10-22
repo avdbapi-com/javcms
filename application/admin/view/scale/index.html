@@ -1,0 +1,231 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{include file="../../../application/admin/view/public/head" /}
+<style>
+/* "Speed & protection" (XVID-SCALE-BRIEF 3.8 step 2, lane E; deep pages line + T3 web search build: XVID-NOLIMIT-BRIEF E3). Kit tokens only. */
+.sp-page{max-width:1200px;margin:0 auto;color:var(--ax-text)}
+.sp-page [hidden]{display:none!important}
+.sp-page h2{font-size:18px;margin:24px 0 12px;color:var(--ax-text)}
+.sp-page .ax-notice{margin:0 0 12px}
+.sp-lines{list-style:none;margin:0;padding:0;border:1px solid var(--ax-line);border-radius:var(--ax-r,8px);overflow:hidden}
+.sp-line{display:grid;grid-template-columns:120px minmax(260px,1fr) minmax(0,auto);gap:12px 20px;align-items:center;padding:14px 16px;border-top:1px solid var(--ax-line);background:var(--ax-surface)}
+.sp-line:first-child{border-top:0}
+.sp-line__title{font-weight:650;margin:0 0 4px}
+.sp-line__text{margin:0;color:var(--ax-muted);overflow-wrap:anywhere}
+.sp-line__action{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:flex-end;min-width:0;max-width:680px}
+.sp-line__action .sp-copy{margin:0;width:100%}
+.sp-line__action .sp-code{max-width:100%}
+.sp-code{font-family:var(--ax-mono,monospace);font-size:12.5px;white-space:pre-wrap;word-break:break-all;overflow-wrap:anywhere;margin:0;padding:10px 12px;background:var(--ax-raised);border:1px solid var(--ax-line);border-radius:var(--ax-r-sm,6px);color:var(--ax-text);flex:1 1 260px;min-width:0}
+.sp-copy{display:flex;gap:8px;align-items:flex-start;flex-wrap:wrap;margin:8px 0 14px}
+.sp-inline{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:flex-end}
+.sp-inline input[type=number]{width:110px;min-height:var(--ax-h,40px);padding:6px 10px;background:var(--ax-surface);color:var(--ax-text);border:1px solid var(--ax-field);border-radius:var(--ax-r-sm,6px)}
+.sp-switch{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--ax-text)}
+.sp-switch input{width:18px;height:18px;accent-color:var(--ax-accent)}
+.sp-progress{width:100%;max-width:320px;height:14px;accent-color:var(--ax-accent)}
+.sp-details{margin:20px 0;border:1px solid var(--ax-line);border-radius:var(--ax-r,8px);padding:12px 16px;background:var(--ax-surface)}
+.sp-details>summary{cursor:pointer;font-weight:650;font-size:16px}
+.sp-dl{display:grid;grid-template-columns:minmax(200px,max-content) minmax(0,1fr);gap:8px 24px;margin:16px 0}
+.sp-dl dt{color:var(--ax-muted)}.sp-dl dd{margin:0;overflow-wrap:anywhere}
+.sp-sub{font-weight:600;margin:16px 0 4px}
+.sp-hint{color:var(--ax-faint);font-size:12.5px;margin:4px 0 12px}
+.sp-msg{margin:0 0 12px}
+.sp-hint--wide{flex:1 1 100%;text-align:right;margin:0;overflow-wrap:anywhere}
+/* xv-owner-E: section "Protection" (owner decision 2026-10-17 08:40) */
+.sp-prot-intro{color:var(--ax-muted);margin:0 0 12px;max-width:900px}
+.sp-sublist{margin:8px 0 0;padding-left:18px;color:var(--ax-muted)}
+.sp-sublist li{margin:2px 0;overflow-wrap:anywhere}
+.sp-form{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px 20px;margin:12px 0}
+.sp-form label{display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--ax-text)}
+.sp-form input[type=number]{min-height:var(--ax-h,40px);padding:6px 10px;background:var(--ax-surface);color:var(--ax-text);border:1px solid var(--ax-field);border-radius:var(--ax-r-sm,6px);max-width:200px}
+.sp-form-actions{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 8px}
+@media(max-width:900px){.sp-line{grid-template-columns:1fr}.sp-line__action,.sp-inline{justify-content:flex-start}.sp-hint--wide{text-align:left}}
+@media(max-width:600px){.sp-dl{grid-template-columns:1fr}.sp-dl dd{margin-bottom:8px}}
+</style>
+<main id="sp-page" class="page-container sp-page" data-url-index="{:url('scale/index')}" data-url-search="{:url('scale/search')}" data-url-upgrade="{:url('scale/upgrade')}" data-url-proxy="{:url('scale/proxy')}" data-url-dblimit="{:url('avdbimport/dblimit')}" data-url-protect="{:url('scale/protect')}">
+ <input type="hidden" name="__token__" value="{$__token__|htmlspecialchars}">
+ {include file="../../../application/admin/view/public/page_head" icon="ai-activity" title="admin/ux/scale/menu_scale" help="admin/ux/scale/help_scale" /}
+ <div id="sp-msg" class="sp-msg" role="status" aria-live="polite"></div>
+ {volist name="sp_notices" id="n"}
+ <div class="ax-notice {if condition="$n[0] eq 'danger'"}ax-notice--danger{else /}ax-notice--warn{/if}" role="note"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-triangle-alert"/></svg><div><p>{$n[1]|htmlspecialchars}</p></div></div>
+ {/volist}
+ <h2 id="sp-status-title">{:lang('admin/ux/scale/sp_status_title')}</h2>
+ <ul class="sp-lines" aria-labelledby="sp-status-title">
+  {volist name="sp_lines" id="l"}
+  <li class="sp-line" data-area="{$l.area|htmlspecialchars}">
+   <span><span class="ax-chip {if condition="$l['state'] eq 'ok'"}ax-chip--ok{elseif condition="$l['state'] eq 'warn'"/}ax-chip--warn{elseif condition="$l['state'] eq 'danger'"/}ax-chip--danger{else /}ax-chip--off{/if}">{$l.state_label|htmlspecialchars}</span></span>
+   <div><p class="sp-line__title">{$l.title|htmlspecialchars}</p><p class="sp-line__text">{$l.text|htmlspecialchars}</p></div>
+   <div class="sp-line__action">
+    {if condition="$l['action'] eq 'search'"}
+     <button type="button" class="ax-btn" data-sp="search">{$l.label|htmlspecialchars}</button>
+     <progress class="sp-progress" id="sp-search-progress" max="100" value="0" hidden aria-label="{$l.label|htmlspecialchars}"></progress>
+     {if condition="$l['hint'] neq ''"}<span class="sp-hint sp-hint--wide">{$l.hint|htmlspecialchars}</span>{/if}
+    {elseif condition="$l['action'] eq 'upgrade'"/}
+     <button type="button" class="ax-btn" data-sp="upgrade">{$l.label|htmlspecialchars}</button>
+    {elseif condition="$l['action'] eq 'clear'"/}
+     <button type="button" class="ax-btn" data-sp="clear">{$l.label|htmlspecialchars}</button>
+     {volist name="l.proxy_headers" id="h"}<button type="button" class="ax-btn" data-sp="trust" data-header="{$h|htmlspecialchars}">{:lang('admin/ux/scale/sp_proxy_trust')} ({$h|htmlspecialchars})</button>{/volist}
+     <label class="sp-switch"><input type="checkbox" data-sp="tunnel"{if condition="$sp['protection']['tunnel']"} checked{/if}>{:lang('admin/ux/scale/sp_tunnel')}</label>
+    {elseif condition="$l['action'] eq 'dblimit'"/}
+     <form class="sp-inline" data-sp="dblimit" novalidate><label class="ax-sr-only" for="sp-dblimit-gb">{:lang('admin/ux/scale/dbl_label')}</label><input id="sp-dblimit-gb" type="number" min="0.1" max="9999" step="0.1" inputmode="decimal" placeholder="GB"><button type="submit" class="ax-btn">{$l.label|htmlspecialchars}</button><button type="button" class="ax-btn ax-btn--sm" data-sp-gb="auto">{:lang('admin/ux/scale/dbl_unknown')}</button><button type="button" class="ax-btn ax-btn--sm" data-sp-gb="none">{:lang('admin/ux/scale/dbl_none')}</button></form>
+    {elseif condition="$l['action'] eq 'cmd'"/}
+     <div class="sp-copy"><pre class="sp-code" id="sp-cmd-{$l.area|htmlspecialchars}" aria-label="{$l.label|htmlspecialchars}">{$l.cmd|htmlspecialchars}</pre><button type="button" class="ax-btn ax-btn--sm" data-copy="#sp-cmd-{$l.area|htmlspecialchars}">{:lang('admin/ux/scale/es_copy')}</button></div>
+    {elseif condition="$l['action'] eq 'note'"/}
+     <span class="sp-hint">{$l.label|htmlspecialchars}</span>
+    {/if}
+   </div>
+  </li>
+  {/volist}
+ </ul>
+ <p class="sp-hint">{:lang('admin/ux/scale/sp_tunnel_help')}</p>
+ <h2 id="sp-prot-title">{:lang('admin/ux/scale/pr_title')}</h2>
+ <p class="sp-prot-intro">{:lang('admin/ux/scale/pr_intro')}</p>
+ <ul class="sp-lines" id="sp-prot" aria-labelledby="sp-prot-title">
+  {volist name="sp_guard_rows" id="r"}
+  <li class="sp-line" data-prot="{$r.id|htmlspecialchars}">
+   <span><span class="ax-chip {if condition="$r['state'] eq 'ok'"}ax-chip--ok{elseif condition="$r['state'] eq 'warn'"/}ax-chip--warn{else /}ax-chip--off{/if}">{$r.chip|htmlspecialchars}</span></span>
+   <div><p class="sp-line__title">{$r.title|htmlspecialchars}</p><p class="sp-line__text">{$r.text|htmlspecialchars}</p>
+    {if condition="count($r['sub']) gt 0"}<ul class="sp-sublist">{volist name="r.sub" id="x"}<li>{$x|htmlspecialchars}</li>{/volist}</ul>{/if}
+   </div>
+   <div class="sp-line__action">
+    {if condition="$r['id'] eq 'attack' && $sp_guard['attack_supported']"}
+     <button type="button" class="ax-btn{if condition="!$sp_guard['attack_on']"} ax-btn--danger{/if}" data-sp="attack" data-on="{if condition="$sp_guard['attack_on']"}0{else /}1{/if}">{if condition="$sp_guard['attack_on']"}{:lang('admin/ux/scale/pr_attack_btn_off')}{else /}{:lang('admin/ux/scale/pr_attack_btn_on')}{/if}</button>
+    {/if}
+   </div>
+  </li>
+  {/volist}
+ </ul>
+ <details class="sp-details" id="sp-prot-change">
+  <summary>{:lang('admin/ux/scale/pr_change')}</summary>
+  <p class="sp-hint">{:lang('admin/ux/scale/pr_change_help')}</p>
+  <form id="sp-prot-form" novalidate>
+   <div class="sp-form">
+    <label for="sp-pr-heavy">{:lang('admin/ux/scale/pr_f_heavy')}<input id="sp-pr-heavy" name="heavy" type="number" min="10" max="100000" step="1" inputmode="numeric" value="{$sp_guard.form.heavy|htmlspecialchars}" placeholder="{$sp_guard.default.heavy|htmlspecialchars}"></label>
+    <label for="sp-pr-light">{:lang('admin/ux/scale/pr_f_light')}<input id="sp-pr-light" name="light" type="number" min="10" max="100000" step="1" inputmode="numeric" value="{$sp_guard.form.light|htmlspecialchars}" placeholder="{$sp_guard.default.light|htmlspecialchars}"></label>
+    <label for="sp-pr-stmt">{:lang('admin/ux/scale/pr_f_stmt')}<input id="sp-pr-stmt" name="stmt" type="number" min="1" max="600" step="1" inputmode="numeric" value="{$sp_guard.form.stmt|htmlspecialchars}" placeholder="{$sp_guard.stmt_placeholder|htmlspecialchars}"></label>
+    {if condition="$sp_guard['attack_supported']"}
+    <label for="sp-pr-aheavy">{:lang('admin/ux/scale/pr_f_attack_heavy')}<input id="sp-pr-aheavy" name="attack_heavy" type="number" min="1" max="100000" step="1" inputmode="numeric" value="{$sp_guard.form.attack_heavy|htmlspecialchars}" placeholder="{$sp_guard.attack_default.heavy|htmlspecialchars}"></label>
+    <label for="sp-pr-alight">{:lang('admin/ux/scale/pr_f_attack_light')}<input id="sp-pr-alight" name="attack_light" type="number" min="1" max="100000" step="1" inputmode="numeric" value="{$sp_guard.form.attack_light|htmlspecialchars}" placeholder="{$sp_guard.attack_default.light|htmlspecialchars}"></label>
+    {/if}
+   </div>
+   <p class="sp-hint">{:lang('admin/ux/scale/pr_f_empty')}</p>
+   <div class="sp-form-actions"><button type="submit" class="ax-btn ax-btn--primary">{:lang('admin/ux/scale/pr_save')}</button><button type="button" class="ax-btn" data-sp="prot-defaults">{:lang('admin/ux/scale/pr_reset')}</button></div>
+  </form>
+ </details>
+ <details class="sp-details" id="sp-details">
+  <summary>{:lang('admin/ux/scale/sp_details')}</summary>
+  <dl class="sp-dl">
+   {volist name="sp_details" id="d"}<dt>{$d[0]|htmlspecialchars}</dt><dd>{$d[1]|htmlspecialchars}</dd>{/volist}
+  </dl>
+  <h2>{:lang('admin/ux/scale/sp_cf_title')}</h2>
+  <p class="sp-hint">{:lang('admin/ux/scale/sp_cf_intro')}</p>
+  <p class="sp-sub">{:lang('admin/ux/scale/sp_cf_cache')}</p>
+  <div class="sp-copy"><pre class="sp-code" id="sp-cf-cache">{$sp_cf.cache|htmlspecialchars}</pre><button type="button" class="ax-btn ax-btn--sm" data-copy="#sp-cf-cache">{:lang('admin/ux/scale/es_copy')}</button></div>
+  <p class="sp-sub">{:lang('admin/ux/scale/sp_cf_rate')}</p>
+  <div class="sp-copy"><pre class="sp-code" id="sp-cf-rate">{$sp_cf.rate|htmlspecialchars}</pre><button type="button" class="ax-btn ax-btn--sm" data-copy="#sp-cf-rate">{:lang('admin/ux/scale/es_copy')}</button></div>
+  <p class="sp-sub">{:lang('admin/ux/scale/sp_cf_skip')}</p>
+  <div class="sp-copy"><pre class="sp-code" id="sp-cf-skip">{$sp_cf.skip|htmlspecialchars}</pre><button type="button" class="ax-btn ax-btn--sm" data-copy="#sp-cf-skip">{:lang('admin/ux/scale/es_copy')}</button></div>
+  <p class="sp-hint">{:lang('admin/ux/scale/sp_cf_attack')} {:lang('admin/ux/scale/sp_cf_purge')}</p>
+  <h2>{:lang('admin/ux/scale/sp_lock_title')}</h2>
+  <p class="sp-hint">{:lang('admin/ux/scale/sp_lock_intro')}</p>
+  <p class="sp-sub">{:lang('admin/ux/scale/sp_lock_ufw')}</p>
+  <div class="sp-copy"><pre class="sp-code" id="sp-lock-ufw">{$sp_lock.ufw|htmlspecialchars}</pre><button type="button" class="ax-btn ax-btn--sm" data-copy="#sp-lock-ufw">{:lang('admin/ux/scale/es_copy')}</button></div>
+  <p class="sp-sub">{:lang('admin/ux/scale/sp_lock_apache')}</p>
+  <div class="sp-copy"><pre class="sp-code" id="sp-lock-apache">{$sp_lock.apache|htmlspecialchars}</pre><button type="button" class="ax-btn ax-btn--sm" data-copy="#sp-lock-apache">{:lang('admin/ux/scale/es_copy')}</button></div>
+  <p class="sp-sub">{:lang('admin/ux/scale/sp_lock_nginx')}</p>
+  <div class="sp-copy"><pre class="sp-code" id="sp-lock-nginx">{$sp_lock.nginx|htmlspecialchars}</pre><button type="button" class="ax-btn ax-btn--sm" data-copy="#sp-lock-nginx">{:lang('admin/ux/scale/es_copy')}</button></div>
+  <h2>{:lang('admin/ux/scale/sp_hosting_title')}</h2>
+  <dl class="sp-dl">
+   <dt>{:lang('admin/ux/scale/hr_range')}</dt><dd>{$sp_hosting.range|htmlspecialchars}</dd>
+   <dt>{:lang('admin/ux/scale/hr_db')}</dt><dd>{$sp_hosting.db|htmlspecialchars}</dd>
+   <dt>{:lang('admin/ux/scale/hr_host')}</dt><dd>{$sp_hosting.host|htmlspecialchars}</dd>
+   <dt>{:lang('admin/ux/scale/hr_mem')}</dt><dd>{$sp_hosting.mem|htmlspecialchars}</dd>
+   <dt>{:lang('admin/ux/scale/hr_method')}</dt><dd>{$sp_hosting.method|htmlspecialchars}</dd>
+   <dt>{:lang('admin/ux/scale/hr_notes')}</dt><dd>{$sp_hosting.notes|htmlspecialchars}</dd>
+  </dl>
+ </details>
+</main>
+<script>window.AX_SP = {$sp_js}; window.AX_SP_LANG = {$sp_lang_js};</script>
+{literal}
+<script>
+(function () {
+ 'use strict';
+ var root = document.getElementById('sp-page'); if (!root || !window.jQuery) return;
+ var $ = window.jQuery, L = window.AX_SP_LANG || {};
+ function say(text, bad) { var box = document.getElementById('sp-msg'); box.textContent = text || ''; box.className = 'sp-msg' + (text ? (bad ? ' ax-notice ax-notice--danger' : ' ax-notice') : ''); if (text && window.AxUX && AxUX.toast) AxUX.toast(text, bad ? 'error' : 'ok'); }
+ function token() { return $(root).find('input[name="__token__"]').val(); }
+ function post(url, data, ms) {
+  return $.ajax({url: url, method: 'POST', dataType: 'json', timeout: ms || 120000, data: Object.assign({__token__: token()}, data || {})}).then(function (r) {
+   if (r && r.data && r.data.__token__) $(root).find('input[name="__token__"]').val(r.data.__token__);
+   if (!r || Number(r.code) !== 1) { var e = new Error(r && r.msg ? r.msg : L.failed); e.data = r && r.data; throw e; }
+   return r;
+  }, function (x) { throw new Error(L.failed + (x && x.status ? ' (' + x.status + ')' : '')); });
+ }
+ function busy(btn, on) { if (!btn) return; btn.disabled = !!on; if (on) { btn.dataset.label = btn.textContent; btn.textContent = L.working; } else if (btn.dataset.label) { btn.textContent = btn.dataset.label; } }
+ function reloadSoon(ms) { setTimeout(function () { window.location.reload(); }, ms || 1200); }
+ $(root).on('click', '[data-sp="clear"]', function () {
+  var btn = this; busy(btn, true);
+  post(root.dataset.urlIndex, {op: 'clear'}).then(function (r) { say(r.msg); }, function (e) { say(e.message, true); }).always(function () { busy(btn, false); });
+ });
+ $(root).on('click', '[data-sp="upgrade"]', function () {
+  var btn = this; busy(btn, true);
+  // the sitemap step after the indexes (HO-H-R3-4) takes up to 50 s more, the search engines' IP lists (HO-H-R3-1) up to
+  // 60 s on a host whose outgoing connections hang (5 lists x 5 s connect + 5 s read); the result line stays readable for 5 s
+  post(root.dataset.urlUpgrade, {}, 320000).then(function (r) { say(r.msg); reloadSoon(5000); }, function (e) { say(e.message, true); busy(btn, false); });
+ });
+ $(root).on('click', '[data-sp="search"]', function () {
+  var btn = this, bar = document.getElementById('sp-search-progress'); busy(btn, true); if (bar) bar.hidden = false;
+  (function step() {
+   post(root.dataset.urlSearch, {}).then(function (r) {
+    var d = r.data || {}; if (bar && d.total > 0) { bar.max = d.total; bar.value = d.done; }
+    say(r.msg);
+    if (d.finished) { busy(btn, false); reloadSoon(); } else { setTimeout(step, 200); }
+   }, function (e) { say(e.message, true); busy(btn, false); });
+  })();
+ });
+ $(root).on('click', '[data-sp="trust"]', function () {
+  var btn = this; busy(btn, true);
+  post(root.dataset.urlProxy, {op: 'trust', header: btn.getAttribute('data-header')}).then(function (r) { say(r.msg); reloadSoon(); }, function (e) { say(e.message, true); busy(btn, false); });
+ });
+ $(root).on('change', '[data-sp="tunnel"]', function () {
+  var box = this, on = box.checked ? '1' : '0'; box.disabled = true;
+  post(root.dataset.urlProxy, {op: 'tunnel', on: on}).then(function (r) { say(r.msg); }, function (e) { box.checked = !box.checked; say(e.message, true); }).always(function () { box.disabled = false; });
+ });
+ function saveLimit(value, form) {
+  if (value !== 'auto' && value !== 'none' && !(/^\d{1,4}(?:\.\d{1,2})?$/.test(value) && Number(value) > 0)) { say(L.invalid, true); return; }
+  var buttons = $(form).find('button').prop('disabled', true);
+  post(root.dataset.urlDblimit, {gb: value}).then(function (r) { say(r.msg); reloadSoon(); }, function (e) { say(e.message, true); }).always(function () { buttons.prop('disabled', false); });
+ }
+ $(root).on('submit', 'form[data-sp="dblimit"]', function (event) { event.preventDefault(); saveLimit(String($('#sp-dblimit-gb').val() || '').trim(), this); });
+ $(root).on('click', '[data-sp-gb]', function () { saveLimit(this.getAttribute('data-sp-gb'), this.form); });
+ $(root).on('click', '[data-sp="attack"]', function () {
+  var btn = this, on = btn.getAttribute('data-on');
+  if (on === '1' && L.attack_confirm && !window.confirm(L.attack_confirm)) return;
+  busy(btn, true);
+  post(root.dataset.urlProtect, {op: 'attack', on: on}).then(function (r) { say(r.msg); reloadSoon(); }, function (e) { say(e.message, true); busy(btn, false); });
+ });
+ $(root).on('submit', '#sp-prot-form', function (event) {
+  event.preventDefault();
+  var form = this, data = {op: 'save'}, buttons = $(form).find('button').prop('disabled', true);
+  $(form).find('input[name]').each(function () { data[this.name] = String(this.value || '').trim(); });
+  post(root.dataset.urlProtect, data).then(function (r) { say(r.msg); reloadSoon(); }, function (e) { say(e.message, true); }).always(function () { buttons.prop('disabled', false); });
+ });
+ $(root).on('click', '[data-sp="prot-defaults"]', function () {
+  var btn = this; busy(btn, true);
+  post(root.dataset.urlProtect, {op: 'defaults'}).then(function (r) { say(r.msg); reloadSoon(); }, function (e) { say(e.message, true); busy(btn, false); });
+ });
+ $(root).on('click', '[data-copy]', function () {
+  var btn = this, el = document.querySelector(btn.getAttribute('data-copy')); if (!el) return;
+  var text = el.textContent, done = function () { var old = btn.textContent; btn.textContent = L.copied; setTimeout(function () { btn.textContent = old; }, 1500); };
+  if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(text).then(done, function () {}); return; }
+  var range = document.createRange(); range.selectNodeContents(el); var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(range);
+  try { document.execCommand('copy'); done(); } catch (e) { /* the text stays selected for a manual copy */ }
+ });
+})();
+</script>
+{/literal}
+{include file="../../../application/admin/view/public/foot" /}

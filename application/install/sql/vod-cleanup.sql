@@ -1,0 +1,23 @@
+CREATE TABLE IF NOT EXISTS `javcms_vod_cleanup_job` (
+ `job_id` char(32) NOT NULL,
+ `admin_id` int unsigned NOT NULL,
+ `ticket_nonce` char(32) NOT NULL,
+ `active_slot` tinyint unsigned DEFAULT NULL,
+ `state` varchar(20) NOT NULL,
+ `phase` varchar(20) NOT NULL,
+ `upper_id` int unsigned NOT NULL DEFAULT 0,
+ `item_upper` bigint unsigned NOT NULL DEFAULT 0,
+ `cursor` bigint unsigned NOT NULL DEFAULT 0,
+ `version` int unsigned NOT NULL DEFAULT 1,
+ `total_videos` bigint unsigned NOT NULL DEFAULT 0,
+ `deleted_videos` bigint unsigned NOT NULL DEFAULT 0,
+ `deleted_relations` bigint unsigned NOT NULL DEFAULT 0,
+ `options` longtext NOT NULL,
+ `error` varchar(255) NOT NULL DEFAULT '',
+ `created_at` int unsigned NOT NULL,
+ `updated_at` int unsigned NOT NULL,
+ PRIMARY KEY (`job_id`),
+ UNIQUE KEY `used_ticket` (`ticket_nonce`),
+ UNIQUE KEY `one_active_cleanup` (`active_slot`),
+ KEY `owner_jobs` (`admin_id`,`created_at`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;

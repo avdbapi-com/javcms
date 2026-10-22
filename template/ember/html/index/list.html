@@ -1,0 +1,14 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<section class="e-sec container e-catstrip" aria-labelledby="e-cats-title" data-ai-group>
+  <h2 class="e-title" id="e-cats-title">{:\\app\\common\\util\\AutoIcon::navIcon('categories', '', ['class'=>'e-ai-title'])}{:\\app\\common\\util\\TemplateText::get('ui.categories')}</h2>
+  <div class="e-cat-tiles">
+  {maccms:type ids="parent" flag="vod" order="asc" by="sort" id="tplStrip" key="tplStripKey" hide_empty="1" not="'.intval($GLOBALS['jvPbShown'] ?? 0).'"}<a class="e-cat" href="{:mac_url_type($tplStrip)}">{:\\app\\common\\util\\AutoIcon::icon('category', $tplStrip['type_name'], ['size'=>'lg', 'plate'=>true, 'i'=>$tplStripKey])}<span class="e-cat-name">{:\\app\\common\\util\\TemplateText::get(htmlspecialchars_decode((string)$tplStrip['type_name'], ENT_QUOTES))}</span><small>{:mac_data_count($tplStrip['type_id'],'all')}</small></a>{/maccms:type}
+  <a class="e-cat" href="{:mac_url('label/sort')}">{:\\app\\common\\util\\AutoIcon::navIcon('all', '', ['size'=>'lg', 'plate'=>true, 'i'=>9])}<span class="e-cat-name">{:\\app\\common\\util\\TemplateText::get('ui.all_videos')}</span></a>
+  </div>
+</section>

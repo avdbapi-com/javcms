@@ -1,0 +1,28 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="neon-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head><meta name="robots" content="noindex, follow"><title>{:\\app\\common\\util\\TemplateText::get('ui.search')} - {:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$maccms['site_name']), ENT_QUOTES, 'UTF-8')}</title>{include file="public/include"}</head>
+<body class="nn-page-search">
+{include file="public/head"}
+{php}$nnHot = []; foreach (explode(',', (string)($maccms['search_hot'] ?? '')) as $nnHotWord) { $nnHotWord = trim($nnHotWord); if (mb_strlen($nnHotWord) >= 2 && !in_array($nnHotWord, $nnHot, true)) { $nnHot[] = $nnHotWord; } } $nnHot = array_slice($nnHot, 0, 20); $nnPH = \app\common\util\TemplateText::raw('ui.search'); $nnPHIcon = 'search';{/php}
+<main id="main-content" class="nn-main"><div class="nn-wrap">
+{include file="public/pagehead"}
+{include file="public/sform"}
+{include file="public/shot"}
+<section class="nn-section nn-sec nn-sec--signed" aria-labelledby="nn-h-picks">
+  <div class="nn-vsign-col" aria-hidden="true"><p class="nn-vsign nn-sign nn-tube nn-tube--violet is-buzz">{:\\app\\common\\util\\AutoIcon::navIcon('hot', '', ['class'=>'nn-vs-ai', 'tint'=>'none'])}{:\\app\\common\\util\\TemplateText::get('nn.hot_picks')}</p></div>
+  <div class="nn-sec-body">
+    <div class="nn-sec-head"><h2 class="nn-hsign nn-sign nn-tube nn-tube--violet" id="nn-h-picks">{:\\app\\common\\util\\AutoIcon::navIcon('hot', '', ['class'=>'nn-hs-ai', 'tint'=>'none'])}<a tabindex="-1" href="{:mac_url('label/hot')}">{:\\app\\common\\util\\TemplateText::get('nn.hot_picks')}</a></h2><a class="nn-more" href="{:mac_url('label/hot')}">{:\\app\\common\\util\\TemplateText::get('ui.view_more')}<svg class="nn-ico" aria-hidden="true"><use href="{$nnSvg|htmlspecialchars=ENT_QUOTES}#chev"></use></svg></a></div>
+    <div class="nn-grid" data-grid-fill>{maccms:vod num="10" type="all" order="desc" by="hits" paging="no" id="vo"}{include file="public/vodbox"}{/maccms:vod}</div>
+  </div>
+</section>
+</div></main>
+{include file="public/foot"}
+</body>
+</html>

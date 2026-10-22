@@ -1,0 +1,14 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}
+$nnRelIds = array_merge([intval($obj['vod_id'] ?? 0)], isset($nnRecIds) && is_array($nnRecIds) ? $nnRecIds : []);
+$nnRelShown = 0;
+$nnRelPick = $nnPickIds('vod_score desc', 10, $nnRelIds);
+{/php}<section class="nn-section" aria-labelledby="nn-h-more"><div class="nn-cap"><h2 class="nn-cap-title" id="nn-h-more">{:\\app\\common\\util\\AutoIcon::ui('film', ['class'=>'nn-cap-ai'])}<span>{:\\app\\common\\util\\TemplateText::get('ui.more_to_watch')}</span></h2>{if condition="$nnTypeName neq ''"}<div class="nn-cap-links"><a class="nn-more" href="{:mac_url_type($obj['type'])}">{:\\app\\common\\util\\TemplateText::get('ui.view_more')}<svg class="nn-ico" aria-hidden="true"><use href="{$nnSvg|htmlspecialchars=ENT_QUOTES}#chev"></use></svg></a></div>{/if}</div>
+<div class="nn-grid" data-grid-fill>{if condition="$nnRelPick neq ''"}{maccms:vod num="10" ids="'.$nnRelPick.'" order="desc" by="score" paging="no" id="vo"}{php}$nnRelIds[] = intval($vo['vod_id']); $nnRelShown++;{/php}{include file="public/vodbox"}{/maccms:vod}{/if}{if condition="$nnRelShown lt 10"}{php}$nnRelNeed = 10 - $nnRelShown; $nnRelNot = implode(',', $nnRelIds);{/php}{maccms:vod num="'.$nnRelNeed.'" not="'.$nnRelNot.'" type="current" order="desc" by="time" paging="no" id="vo"}{php}$nnRelIds[] = intval($vo['vod_id']); $nnRelShown++;{/php}{include file="public/vodbox"}{/maccms:vod}{/if}</div>
+</section>

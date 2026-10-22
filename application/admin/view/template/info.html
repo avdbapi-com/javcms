@@ -1,0 +1,21 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Based on MacCMS 10 (Apache-2.0) by magicblack, changed by JavCMS.
+JavCMS changes: Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors,
+JavCMS Community License 1.0. The MacCMS parts stay under the Apache License 2.0.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{include file="../../../application/admin/view/public/head" /}
+<div class="page-container">
+    <div class="ax-editor-head">
+        <a class="ax-btn ax-btn--ghost" href="{:url('index')}?path={$fpath|str_replace='/','@',###|rawurlencode}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-arrow-left"/></svg>{:lang('admin/ux/kit/back')}</a>
+        <h1>{$fname|htmlspecialchars}</h1>
+    </div>
+    <div class="ax-notice" role="note"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-lock"/></svg><div><p>{:lang('admin/ux/system/template_readonly')}</p></div></div>
+    <p class="ax-faint ax-mono">{$fpath|htmlspecialchars}/{$fname|htmlspecialchars}</p>
+    <pre class="ax-code" tabindex="0" aria-label="{$fname|htmlspecialchars}">{volist name="lines" id="l"}<span class="ax-code__line">{$l}</span>{/volist}</pre>
+</div>
+{include file="../../../application/admin/view/public/foot" /}
+</body>
+</html>

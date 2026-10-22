@@ -1,0 +1,15 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<?php
+header('Content-Type: application/rss+xml; charset=UTF-8');
+$templateRssTitle=\app\common\util\AvdbLanguage::decodeEntities((string)($obj['art_name'] ?? ''));
+$templateRssDescription=(!empty($obj['art_pwd']) && session('2-1-'.(int)$obj['art_id']) !== '1') ? \app\common\util\TemplateText::raw('ui.access_required') : strip_tags(\app\common\util\AvdbLanguage::decodeEntities((string)($obj['art_blurb'] ?? '')));
+$templateRssUrl=\app\common\util\Sitemap::absolute(mac_url_art_detail($obj));
+$templateRssEscape=function($value){return htmlspecialchars(preg_replace('/[\x00-\x08\x0b\x0c\x0e-\x1f]/','',(string)$value),ENT_XML1|ENT_QUOTES|ENT_SUBSTITUTE,'UTF-8');};
+echo chr(60) . '?xml version="1.0" encoding="UTF-8"?' . chr(62);
+?><rss version="2.0"><channel><title><?php echo $templateRssEscape($templateRssTitle); ?></title><link><?php echo $templateRssEscape($templateRssUrl); ?></link><description><?php echo $templateRssEscape($templateRssDescription); ?></description><item><title><?php echo $templateRssEscape($templateRssTitle); ?></title><link><?php echo $templateRssEscape($templateRssUrl); ?></link><guid isPermaLink="true"><?php echo $templateRssEscape($templateRssUrl); ?></guid><description><?php echo $templateRssEscape($templateRssDescription); ?></description></item></channel></rss>

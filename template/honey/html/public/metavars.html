@@ -1,0 +1,46 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}
+$hnPlain = function ($hnV) { $hnV = (string)$hnV; for ($hnK = 0; $hnK < 3 && strpos($hnV, '&') !== false; $hnK++) { $hnKd = html_entity_decode($hnV, ENT_QUOTES | ENT_HTML5, 'UTF-8'); if ($hnKd === $hnV) { break; } $hnV = $hnKd; } return $hnV; };
+$hnShow = function ($hnV) use ($hnPlain) { return htmlspecialchars(trim($hnPlain($hnV)), ENT_QUOTES, 'UTF-8'); };
+$hnSplit = function ($value) { $out = []; foreach (explode(',', (string)$value) as $hnPart) { $hnPart = trim($hnPart); if ($hnPart !== '' && !in_array($hnPart, $out, true)) { $out[] = $hnPart; } } return $out; };
+$hnField = function ($display, $raw) use ($obj) { $hnVal = trim((string)($obj[$display] ?? '')); if ($hnVal === '' && !isset($obj[$display])) { $hnVal = trim(html_entity_decode(strip_tags((string)($obj[$raw] ?? '')), ENT_QUOTES, 'UTF-8')); } return $hnVal; };
+$hnSearchUrl = function ($field, $value) { $value = (string)$value; if (strpos($value, '/') !== false || strpos($value, '%') !== false) { $hnSb = mac_url('vod/search'); $hnSu = $hnSb . (strpos($hnSb, '?') === false ? '?' : '&') . rawurlencode($field) . '=' . rawurlencode($value); } else { $hnSu = mac_url_search([$field => $value]); } return htmlspecialchars($hnSu, ENT_QUOTES, 'UTF-8'); };
+$hnLbl = function ($key) { return htmlspecialchars(preg_replace('/[\s:\x{FF1A}]+$/u', '', \app\common\util\TemplateText::raw($key)), ENT_QUOTES, 'UTF-8'); };
+$hnCode = \app\common\util\AvdbLanguage::displayCode($obj); /* 2.11 rule 1: code only from vod_display_code */
+if ($hnCode === '' || stripos($hnCode, 'avdb-') === 0 || strlen($hnCode) > 40) { $hnCode = ''; }
+$hnActors = $hnSplit($hnField('vod_display_actor', 'vod_actor'));
+$hnGenres = $hnSplit($hnField('vod_display_class', 'vod_class'));
+$hnTagSkip = array_map('mb_strtolower', array_merge($hnActors, $hnGenres)); foreach ($hnActors as $hnTagA) { foreach (preg_split('/\s+/u', $hnTagA) as $hnTagW) { if (mb_strlen($hnTagW) > 1) { $hnTagSkip[] = mb_strtolower($hnTagW); } } } $hnTagCode = strtolower(preg_replace('/[^a-z0-9]/i', '', (string)($obj['vod_remarks'] ?? ''))); $hnTags = [];
+foreach ($hnSplit($hnField('vod_display_tag', 'vod_tag')) as $hnTag) { $hnTagKey = strtolower(preg_replace('/[^a-z0-9]/i', '', $hnTag)); $hnTagLen = mb_strlen($hnTag);
+ if ($hnTagLen < 2 || $hnTagLen > 40 || preg_match('/^[0-9]+$/', $hnTag) || in_array(mb_strtolower($hnTag), $hnTagSkip, true) || strpos($hnTag, '/') !== false || preg_match('/\p{Ll}\p{Lu}/u', $hnTag)) { continue; }
+ if ($hnTagLen === 2 && !preg_match('/^(?=.*[A-Z0-9])[A-Z0-9]{2}$/', $hnTag)) { continue; }
+ if ($hnTagCode !== '' && $hnTagKey !== '' && (strpos($hnTagKey, $hnTagCode) !== false || strpos($hnTagCode, $hnTagKey) !== false)) { continue; }
+ $hnTags[] = $hnTag; if (count($hnTags) >= 24) { break; } }
+$hnDirectors = $hnSplit($hnField('vod_display_director', 'vod_director'));
+$hnStudio = $hnField('vod_display_writer', 'vod_writer');
+$hnRelease = trim((string)($obj['vod_pubdate'] ?? ''));
+if ($hnRelease === '' && !empty($obj['vod_year'])) { $hnRelease = (string)$obj['vod_year']; }
+$hnDuration = trim((string)($obj['vod_duration'] ?? ''));
+$hnTypeName = trim(htmlspecialchars_decode((string)($obj['type']['type_name'] ?? ''), ENT_QUOTES));
+$hnDesc = $hnField('vod_display_content', 'vod_content');
+if ($hnDesc === '') { $hnDesc = $hnField('vod_display_blurb', 'vod_blurb'); }
+$hnDesc = trim($hnPlain($hnDesc));
+$hnScore = (float)($obj['vod_score'] ?? 0);
+$hnScoreTxt = $hnScore > 0 ? number_format($hnScore, 1) : '';
+$hnStarPct = max(0, min(100, (int)round($hnScore * 10)));
+$hnName = trim((string)($obj['vod_display_name'] ?? ''));
+if ($hnName === '') { $hnName = trim(html_entity_decode((string)($obj['vod_name'] ?? ''), ENT_QUOTES, 'UTF-8')); }
+$hnName = trim($hnPlain($hnName));
+$hnPicCover = trim((string)($obj['vod_pic'] ?? ''));
+$hnPicCover = $hnPicCover === '' ? $maccms['path_tpl'] . 'assets/img/placeholder.svg' : mac_url_img($hnPicCover);
+$hnHitsNum = number_format((int)($obj['vod_hits'] ?? 0));
+$hnSourceTotal = 0; $hnEpisodeTotal = 0;
+if (!empty($obj['vod_play_list']) && is_array($obj['vod_play_list'])) { foreach ($obj['vod_play_list'] as $hnSrcItem) { $hnSourceTotal++; $hnEpisodeTotal += (isset($hnSrcItem['urls']) && is_array($hnSrcItem['urls'])) ? count($hnSrcItem['urls']) : 0; } }
+$hnShowEpisodes = ($hnSourceTotal > 1 || $hnEpisodeTotal > 1) ? 1 : 0;
+{/php}

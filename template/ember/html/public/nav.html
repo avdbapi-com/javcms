@@ -1,0 +1,44 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<div id="e-drawer" class="e-drawer" hidden>
+  <div class="container">
+    <div class="e-drawer-row">
+      <span class="e-drawer-label">{:\\app\\common\\util\\AutoIcon::navIcon('categories', '', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ui.categories')}</span>
+      <div class="e-chips" data-ai-group>
+        <a href="{$maccms.path}" {if condition="$maccms.aid eq 1"}aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::navIcon('home', '', ['size'=>'sm', 'i'=>0])}{:\\app\\common\\util\\TemplateText::get('ui.home')}</a>
+        {maccms:type ids="parent" flag="vod" order="asc" by="sort" id="tplDrawer" key="tplDrawerKey" hide_empty="1"}<a href="{:mac_url_type($tplDrawer)}" {if condition="$tplDrawer.type_id eq $GLOBALS['type_id'] || $tplDrawer.type_id eq $GLOBALS['type_pid']"}aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::icon('category', $tplDrawer['type_name'], ['size'=>'sm', 'i'=>$tplDrawerKey])}{:\\app\\common\\util\\TemplateText::get(htmlspecialchars_decode((string)$tplDrawer['type_name'], ENT_QUOTES))}</a>{/maccms:type}
+      </div>
+    </div>
+    <div class="e-drawer-row">
+      <span class="e-drawer-label">{:\\app\\common\\util\\AutoIcon::ui('film', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('videos')}</span>
+      <div class="e-chips" data-ai-group>
+        <a href="{:mac_url('label/new')}" {if condition="$maccms.aid eq 9999"}aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::navIcon('latest', '', ['size'=>'sm', 'i'=>0])}{:\\app\\common\\util\\TemplateText::get('ui.latest_videos')}</a>
+        <a href="{:mac_url('label/hot')}" {if condition="$maccms.aid eq 9998"}aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::navIcon('hot', '', ['size'=>'sm', 'i'=>1])}{:\\app\\common\\util\\TemplateText::get('ui.popular_videos')}</a>
+        <a href="{:mac_url('label/score')}">{:\\app\\common\\util\\AutoIcon::navIcon('top', '', ['size'=>'sm', 'i'=>2])}{:\\app\\common\\util\\TemplateText::get('top_rated')}</a>
+        <a href="{:mac_url('label/sort')}" {if condition="$maccms.aid eq 9995"}aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::navIcon('all', '', ['size'=>'sm', 'i'=>3])}{:\\app\\common\\util\\TemplateText::get('ui.all_videos')}</a>
+        {maccms:actor num="1" order="desc" by="time" id="tplHasActor"}<a href="{:mac_url('actor/index')}">{:\\app\\common\\util\\AutoIcon::navIcon('actors', '', ['size'=>'sm', 'i'=>4])}{:\\app\\common\\util\\TemplateText::get('ui.performers')}</a>{/maccms:actor}
+        {maccms:topic num="1" order="desc" by="time" id="tplHasTopic"}<a href="{:mac_url('topic/index')}">{:\\app\\common\\util\\AutoIcon::navIcon('topics', '', ['size'=>'sm', 'i'=>5])}{:\\app\\common\\util\\TemplateText::get('ui.collections')}</a>{/maccms:topic}
+        {maccms:art num="1" order="desc" by="time" id="tplHasArt"}<a href="{:mac_url('art/index')}">{:\\app\\common\\util\\AutoIcon::navIcon('articles', '', ['size'=>'sm', 'i'=>6])}{:\\app\\common\\util\\TemplateText::get('ui.articles')}</a>{/maccms:art}
+        <a href="{:mac_safe_url(mac_url('map/index'))}">{:\\app\\common\\util\\AutoIcon::navIcon('latest-100', '', ['size'=>'sm', 'i'=>7])}{:\\app\\common\\util\\TemplateText::get('ui.latest_updates')}</a>
+      </div>
+    </div>
+    <div class="e-drawer-row">
+      <span class="e-drawer-label">{:\\app\\common\\util\\AutoIcon::navIcon('account', '', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ui.account')}</span>
+      <div class="e-drawer-tools">
+        <a class="e-btn" href="{:mac_url('user/login')}">{:\\app\\common\\util\\AutoIcon::navIcon('login', '', ['size'=>'sm', 'tint'=>'none'])}{:\\app\\common\\util\\TemplateText::get('ui.member_center')}</a>
+        <a class="e-btn is-ghost" href="{:mac_url('user/reg')}">{:\\app\\common\\util\\AutoIcon::navIcon('register', '', ['size'=>'sm', 'tint'=>'none'])}{:\\app\\common\\util\\TemplateText::get('ui.register')}</a>
+        <button class="tui-color-toggle" type="button" data-color-toggle data-light-label="{:\\app\\common\\util\\TemplateText::get('ui.light_mode')}" data-dark-label="{:\\app\\common\\util\\TemplateText::get('ui.dark_mode')}" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.light_mode')}"><svg class="tui-color-sun" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.4 1.4m11.2 11.2L19 19M5 19l1.4-1.4M17.6 6.4L19 5"/></svg><svg class="tui-color-moon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 13a9 9 0 0 1-9.8-9.8A9 9 0 1 0 20.8 13Z"/></svg><span data-color-label>{:\\app\\common\\util\\TemplateText::get('ui.light_mode')}</span></button>
+      </div>
+    </div>
+    <div class="e-drawer-row">
+      <span class="e-drawer-label">{:\\app\\common\\util\\AutoIcon::ui('languages', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ui.language')}</span>
+      {php}$tplDrawerLanguages = \app\common\util\TemplateText::languages();{/php}
+      <div class="e-chips e-lang-grid">{volist name="tplDrawerLanguages" id="tplDrawerLanguage"}<a href="{:\\app\\common\\util\\TemplateText::languageUrl($key)}" lang="{$key|htmlspecialchars=ENT_QUOTES}" hreflang="{$key|htmlspecialchars=ENT_QUOTES}" {if condition="$key eq $maccms.ui_lang"}aria-current="true"{/if}>{$tplDrawerLanguage|htmlspecialchars=ENT_QUOTES}</a>{/volist}</div>
+    </div>
+  </div>
+</div>

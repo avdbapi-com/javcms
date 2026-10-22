@@ -1,0 +1,105 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{include file="../../../application/admin/view/public/head" /}
+<div class="page-container p10 jx-page" data-jx-page="video">
+    {include file="../../../application/admin/view/public/page_head" icon="ai-megaphone" title="admin/ux/jcx/title" help="admin/ux/jcx/help" /}
+    {include file="../../../application/admin/view/jcx/_tabs" /}
+    {php}
+    $jxVfile = function ($card, $label) use ($jxE, $jxS) {
+        return '<div class="ax-field ax-field--md" data-v="file"><label for="jxV' . $card . 'src">' . $jxE(lang('admin/ux/jcx/' . $label)) . '</label>'
+            . '<input id="jxV' . $card . 'src" class="layui-input" name="src" placeholder="https://… .mp4" aria-describedby="jxV' . $card . 'srcH">'
+            . '<div class="jx-up__row"><input type="file" accept="video/mp4,video/webm" hidden aria-label="' . $jxE(lang('admin/ux/jcx/upload_video')) . '" lay-ignore>'
+            . '<button type="button" class="ax-btn ax-btn--sm" data-jx-act="vchoose" data-target="src">' . $jxE(lang('admin/ux/jcx/choose_file')) . '</button></div>'
+            . '<p class="ax-help" id="jxV' . $card . 'srcH">' . $jxE(lang('admin/ux/jcx/help_video')) . '</p></div>'
+            . '<div class="ax-field ax-field--md" data-v="vast" hidden><label for="jxV' . $card . 'vast">' . $jxE(lang('admin/ux/jcx/v_vast_urls')) . '</label>'
+            . '<textarea id="jxV' . $card . 'vast" class="layui-textarea" rows="3" name="vast" placeholder="https://" aria-describedby="jxV' . $card . 'vastH"></textarea>'
+            . '<p class="ax-help" id="jxV' . $card . 'vastH">' . $jxE(lang('admin/ux/jcx/help_v_vast')) . '</p></div>';
+    };
+    $jxVwhat = function ($card) use ($jxE) {
+        return '<div class="ax-field" role="radiogroup" aria-label="' . $jxE(lang('admin/ux/jcx/v_what')) . '"><label>' . $jxE(lang('admin/ux/jcx/v_what')) . '</label><div class="jx-radios">'
+            . '<label class="jx-check"><input type="radio" name="what_' . $card . '" value="file" checked lay-ignore> ' . $jxE(lang('admin/ux/jcx/v_file')) . '</label>'
+            . '<label class="jx-check"><input type="radio" name="what_' . $card . '" value="vast" lay-ignore> ' . $jxE(lang('admin/ux/jcx/v_vast')) . '</label></div></div>';
+    };
+    $jxVhead = function ($card, $title) use ($jxE) {
+        return '<div class="jx-head-row"><h2 id="jxVh' . $card . '">' . $jxE(lang('admin/ux/jcx/' . $title)) . '</h2>'
+            . '<label class="jx-check"><input type="checkbox" name="on" value="1" lay-ignore aria-describedby="jxVh' . $card . '"> ' . $jxE(lang('admin/ux/jcx/status_on')) . '</label></div>'
+            . '<p class="jx-aka">' . $jxE(lang('admin/ux/jcx/v_aka_' . $card)) . '</p>'
+            . '<input type="hidden" name="item_id" value="">';
+    };
+    $jxVlink = function ($card) use ($jxE) {
+        return '<div class="ax-field ax-field--md"><label for="jxV' . $card . 'url">' . $jxE(lang('admin/ux/jcx/link')) . '</label><input id="jxV' . $card . 'url" class="layui-input" name="url" type="url" placeholder="https://" aria-describedby="jxV' . $card . 'urlH"><p class="ax-help" id="jxV' . $card . 'urlH">' . $jxE(lang('admin/ux/jcx/help_link')) . '</p></div>';
+    };
+    $jxVsave = function () use ($jxE, $jxS) {
+        return '<p class="ax-help ax-danger-text jx-err" hidden></p><button type="button" class="ax-btn" data-jx-act="vsave"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="' . $jxS . '#ai-save"/></svg>' . $jxE(lang('admin/ux/kit/save')) . '</button>';
+    };
+    {/php}
+    <p class="ax-help">{:$jxE(lang('admin/ux/jcx/v_help'))}</p>
+    <div class="ax-notice" role="note" data-jx-vnote><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-info"/></svg><div><p>{:$jxE(lang('admin/ux/jcx/v_iframe_note'))}</p></div></div>
+    {if condition="$old_any"}
+    <div class="ax-notice ax-notice--warn" role="note"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-triangle-alert"/></svg><div><p>{:$jxE(lang('admin/ux/jcx/v_old_field'))}</p>
+        {if condition="$old_url neq ''"}<p><code>{:$jxE($old_url)}</code> <button type="button" class="ax-btn ax-btn--sm" data-jx-act="old-use">{:$jxE(lang('admin/ux/jcx/v_old_use'))}</button></p>{/if}</div></div>
+    {/if}
+    <div class="ax-toolbar">
+        {if condition="$jx_cfg.can.examples"}<button type="button" class="ax-btn" data-jx-act="examples" data-op="video"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-download"/></svg>{:$jxE(lang('admin/ux/jcx/install_video_examples'))}</button>{/if}
+        {if condition="$jx_cfg.can.preview"}<button type="button" class="ax-btn" data-jx-act="preview" data-scope="ex" data-page="play"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-monitor-play"/></svg>{:$jxE(lang('admin/ux/jcx/preview_watch'))}</button>{/if}
+    </div>
+    <ul class="jx-checks">
+        <li class="is-info">{:$jxE(lang('admin/ux/jcx/v_hint1'))}</li><li class="is-info">{:$jxE(lang('admin/ux/jcx/v_hint2'))}</li>
+        <li class="is-info">{:$jxE(lang('admin/ux/jcx/v_hint3'))}</li><li class="is-info">{:$jxE(lang('admin/ux/jcx/v_hint4'))}</li>
+        <li class="is-info">{:$jxE(lang('admin/ux/jcx/v_hint_webm'))}</li>
+    </ul>
+
+    <div class="jx-vcards">
+        <form class="ax-section" data-vcard="pre" aria-labelledby="jxVhpre" onsubmit="return false">
+            {:$jxVhead('pre', 'v_before')}
+            {:$jxVwhat('pre')}{:$jxVfile('pre', 'v_file')}{:$jxVlink('pre')}
+            <div class="ax-field" role="radiogroup" aria-labelledby="jxVpreSk"><label id="jxVpreSk">{:$jxE(lang('admin/ux/jcx/v_skip'))}</label><div class="jx-radios">
+                <label class="jx-check"><input type="radio" name="skip" value="0" lay-ignore> {:$jxE(lang('admin/ux/jcx/v_noskip'))}</label>
+                <label class="jx-check"><input type="radio" name="skip" value="5" checked lay-ignore> {:$jxE(lang('admin/ux/jcx/v_skip5'))}</label>
+                <label class="jx-check"><input type="radio" name="skip" value="10" lay-ignore> {:$jxE(lang('admin/ux/jcx/v_skip10'))}</label></div><p class="ax-help">{:$jxE(lang('admin/ux/jcx/help_v_skip'))}</p></div>
+            <div class="ax-field" role="radiogroup" aria-labelledby="jxVpreSt"><label id="jxVpreSt">{:$jxE(lang('admin/ux/jcx/v_start'))}</label><div class="jx-radios">
+                <label class="jx-check"><input type="radio" name="start" value="click" checked lay-ignore> {:$jxE(lang('admin/ux/jcx/v_start_click'))}</label>
+                <label class="jx-check"><input type="radio" name="start" value="muted" lay-ignore> {:$jxE(lang('admin/ux/jcx/v_start_muted'))}</label></div><p class="ax-help">{:$jxE(lang('admin/ux/jcx/help_v_start'))}</p></div>
+            <div class="ax-field ax-field--sm"><label for="jxVpreOf">{:$jxE(lang('admin/ux/jcx/often'))}</label><select id="jxVpreOf" class="layui-input" name="often" lay-ignore aria-describedby="jxVpreOfH">
+                <option value="every" selected>{:$jxE(lang('admin/ux/jcx/v_often_every'))}</option><option value="30m">{:$jxE(lang('admin/ux/jcx/v_often_30m'))}</option>
+                <option value="1h">{:$jxE(lang('admin/ux/jcx/v_often_1h'))}</option><option value="day">{:$jxE(lang('admin/ux/jcx/v_often_day'))}</option></select><p class="ax-help" id="jxVpreOfH">{:$jxE(lang('admin/ux/jcx/help_v_often'))}</p></div>
+            <label class="jx-check"><input type="checkbox" name="pod" value="1" lay-ignore aria-describedby="jxVpodH"> {:$jxE(lang('admin/ux/jcx/v_pod'))}</label><p class="ax-help" id="jxVpodH">{:$jxE(lang('admin/ux/jcx/help_v_pod'))}</p>
+            <div class="ax-field ax-field--md" data-v="pod" hidden><label for="jxVpodS">{:$jxE(lang('admin/ux/jcx/v_pod_file'))}</label><input id="jxVpodS" class="layui-input" name="pod_src" placeholder="https://… .mp4">
+                <div class="jx-up__row"><input type="file" accept="video/mp4,video/webm" hidden aria-label="{:$jxE(lang('admin/ux/jcx/v_pod_file'))}" lay-ignore><button type="button" class="ax-btn ax-btn--sm" data-jx-act="vchoose" data-target="pod_src">{:$jxE(lang('admin/ux/jcx/choose_file'))}</button></div></div>
+            <label class="jx-check"><input type="checkbox" name="bumper" value="1" lay-ignore aria-describedby="jxVbuH"> {:$jxE(lang('admin/ux/jcx/v_bumper'))}</label><p class="ax-help" id="jxVbuH">{:$jxE(lang('admin/ux/jcx/help_v_bumper'))}</p>
+            {:$jxVsave()}
+        </form>
+
+        <form class="ax-section" data-vcard="reward" aria-labelledby="jxVhreward" onsubmit="return false">
+            {:$jxVhead('reward', 'v_reward')}
+            {:$jxVfile('reward', 'v_file')}
+            <div class="ax-field ax-field--sm"><label for="jxVrh">{:$jxE(lang('admin/ux/jcx/v_reward_hours'))}</label><input id="jxVrh" class="layui-input" type="number" min="1" max="24" name="reward_h" value="1" aria-describedby="jxVrhH"><p class="ax-help" id="jxVrhH">{:$jxE(lang('admin/ux/jcx/help_v_reward_hours'))}</p></div>
+            <div class="ax-field ax-field--md"><label for="jxVrt">{:$jxE(lang('admin/ux/jcx/v_reward_text'))}</label><input id="jxVrt" class="layui-input" name="reward_text" maxlength="120" placeholder="{:$jxE(lang('admin/ux/jcx/v_reward_default'))}" aria-describedby="jxVrtH"><p class="ax-help" id="jxVrtH">{:$jxE(lang('admin/ux/jcx/help_v_reward_text'))}</p></div>
+            {:$jxVsave()}
+        </form>
+    </div>
+
+    <section class="ax-section" aria-labelledby="jxVrT">
+        <h2 id="jxVrT">{:$jxE(lang('admin/ux/jcx/v_report'))}</h2>
+        {if condition="empty($report)"}<p class="ax-help">{:$jxE(lang('admin/ux/jcx/v_none'))}</p>{else /}
+        <div class="ax-table-wrap"><table class="ax-table ax-table--cards">
+            <thead><tr><th>{:$jxE(lang('admin/ux/jcx/col_name'))}</th><th>{:$jxE(lang('admin/ux/jcx/col_status'))}</th><th class="ax-num">{:$jxE(lang('admin/ux/jcx/stats_starts'))}</th><th class="ax-num">{:$jxE(lang('admin/ux/jcx/stats_complete'))}</th><th class="ax-num">{:$jxE(lang('admin/ux/jcx/stats_skips'))}</th><th class="ax-num">{:$jxE(lang('admin/ux/jcx/stats_errors'))}</th></tr></thead>
+            <tbody>{volist name="report" id="r"}<tr>
+                <td data-label="{:$jxE(lang('admin/ux/jcx/col_name'))}"><a href="{:url('jcx/info', ['id' => $r['id']])}">{:$jxE($r['name'])}</a>{if condition="$r.ex"} <span class="ax-chip">{:$jxE(lang('admin/ux/jcx/example_chip'))}</span>{/if}{if condition="$r.gone"} <span class="ax-chip ax-chip--warn" title="{:$jxE(lang('admin/ux/jcx/v_gone_note'))}">{:$jxE(lang('admin/ux/jcx/v_gone'))}</span><span class="ax-help">{:$jxE(lang('admin/ux/jcx/v_gone_note'))}</span>{/if}</td>
+                <td data-label="{:$jxE(lang('admin/ux/jcx/col_status'))}">{if condition="$r.on"}<span class="ax-chip ax-chip--ok">{:$jxE(lang('admin/ux/jcx/status_on'))}</span>{else /}<span class="ax-chip ax-chip--off">{:$jxE(lang('admin/ux/jcx/status_off'))}</span>{/if}</td>
+                <td class="ax-num" data-label="{:$jxE(lang('admin/ux/jcx/stats_starts'))}">{$r.starts}</td><td class="ax-num" data-label="{:$jxE(lang('admin/ux/jcx/stats_complete'))}">{$r.complete}</td>
+                <td class="ax-num" data-label="{:$jxE(lang('admin/ux/jcx/stats_skips'))}">{$r.skip}</td><td class="ax-num" data-label="{:$jxE(lang('admin/ux/jcx/stats_errors'))}">{$r.errors}</td></tr>{/volist}</tbody>
+        </table></div>
+        {/if}
+    </section>
+</div>
+{include file="../../../application/admin/view/public/foot" /}
+<script type="application/json" id="jxCfg">{$jxJson}</script>
+<script src="__STATIC__/js/admin_jcx.js?v={:filemtime(ROOT_PATH . 'static/js/admin_jcx.js')}"></script>
+</body>
+</html>

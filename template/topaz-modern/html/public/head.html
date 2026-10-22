@@ -1,0 +1,49 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{include file="public/brand"}{include file="public/types"}{php}$tpDc = isset($tpDc) && is_array($tpDc) ? $tpDc : []; $tplHasActor = empty($tpDc['actor_all']) ? 0 : 1; $tplHasTopic = empty($tpDc['topic_all']) ? 0 : 1; $tplHasArt = empty($tpDc['art_all']) ? 0 : 1; $tpOnCat = $tpTypeNow > 0;{/php}
+<a class="tp-skip" href="#main-content">{:\\app\\common\\util\\TemplateText::get('ui.skip_to_content')}</a>
+<header class="tp-hd" id="tp-hd" data-tp-header>
+  <div class="tp-hd-in">
+    <div class="tp-t1">
+      <div class="tp-hd-tools">
+        {include file="public/languages"}
+        <button class="tp-ibtn tp-mode" type="button" data-color-toggle data-fx="morph theme-reveal" data-fx-morph-map="dark:sun light:moon" data-light-label="{:\\app\\common\\util\\TemplateText::get('ui.light_mode')}" data-dark-label="{:\\app\\common\\util\\TemplateText::get('ui.dark_mode')}" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.light_mode')}" title="{:\\app\\common\\util\\TemplateText::get('ui.light_mode')}"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" style="--fx-icon-stroke:1.25"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg></button>
+      </div>
+      {:$tpLogoHtml('d', true)}
+      <div class="tp-hd-end">
+        <button class="tp-pill" type="button" data-tp-pal-open aria-haspopup="dialog" aria-controls="tp-pal" aria-expanded="false">{:\\app\\common\\util\\AutoIcon::ui('search')}<span>{:\\app\\common\\util\\TemplateText::get('tp.search_or_jump')}</span><kbd aria-hidden="true">Ctrl K</kbd></button>
+        <a class="tp-acct" href="{:mac_url('user/login')}" rel="nofollow" data-tp-acct>{:\\app\\common\\util\\AutoIcon::ui('user-circle')}<span data-tp-user-name>{:\\app\\common\\util\\TemplateText::get('ui.account')}</span></a>
+      </div>
+    </div>
+    <nav class="tp-t2 tp-nav" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.main_navigation')}">
+      <a href="{$maccms.path}" {if condition="$tplAid eq 1"}aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::navIcon('home', '', ['i'=>0])}<span>{:\\app\\common\\util\\TemplateText::get('ui.home')}</span></a>
+      <i class="tp-nav-dia" aria-hidden="true"></i>
+      <a href="{:mac_url('label/new')}" {if condition="$tplAid eq 9999"}aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::navIcon('latest', '', ['i'=>1])}<span>{:\\app\\common\\util\\TemplateText::get('latest')}</span></a>
+      <i class="tp-nav-dia" aria-hidden="true"></i>
+      <a href="{:mac_url('label/hot')}" {if condition="$tplAid eq 9998"}aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::navIcon('hot', '', ['i'=>2])}<span>{:\\app\\common\\util\\TemplateText::get('ui.popular')}</span></a>
+      <i class="tp-nav-dia" aria-hidden="true"></i>
+      <a href="{:mac_url('label/score')}" {if condition="$tplAid eq 9997"}aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::navIcon('top', '', ['i'=>3])}<span>{:\\app\\common\\util\\TemplateText::get('top_rated')}</span></a>
+      <i class="tp-nav-dia" aria-hidden="true"></i>
+      <details class="tp-pop tp-cats" data-tp-pop>
+        <summary class="{if condition="$tpOnCat"}is-on{/if}" aria-haspopup="true">{:\\app\\common\\util\\AutoIcon::navIcon('categories', '', ['i'=>4])}<span>{:\\app\\common\\util\\TemplateText::get('ui.categories')}</span><svg class="tp-i tp-caret" aria-hidden="true"><use href="{$tplIcons}#r-chev-down"/></svg></summary>
+        <div class="tp-pop-panel tp-pop-panel--center tp-catgrid" role="group" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.categories')}">
+          {foreach name="tpTypes" item="tpT" key="tpTk"}<a class="tp-gem-i-{$tpT.gem}" href="{$tpT.url|htmlspecialchars=ENT_QUOTES}" style="--tp-i:{$tpTk}" {if condition="$tpT.id eq $tpTypeNow || $tpT.id eq $tpTypePid"}aria-current="page"{/if}>{:$tpCutIco($tpT, $tpTk)}<span><b>{$tpT.name|htmlspecialchars=ENT_QUOTES}</b><small>{$tpT.count}</small></span></a>{/foreach}
+          <a class="tp-cat-all" href="{:mac_url('label/sort')}" {if condition="$tplAid eq 9995"}aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::navIcon('all-videos')}<span><b>{:\\app\\common\\util\\TemplateText::get('ui.all_videos')}</b><small>{:number_format((float)($tpDc['vod_all'] ?? 0))}</small></span></a>
+          {if condition="$tplHasActor eq 1"}<a class="tp-cat-all" href="{:mac_url('actor/index')}">{:\\app\\common\\util\\AutoIcon::navIcon('actors')}<span><b>{:\\app\\common\\util\\TemplateText::get('ui.performers')}</b></span></a>{/if}{if condition="$tplHasTopic eq 1"}<a class="tp-cat-all" href="{:mac_url('topic/index')}">{:\\app\\common\\util\\AutoIcon::navIcon('topics')}<span><b>{:\\app\\common\\util\\TemplateText::get('ui.collections')}</b></span></a>{/if}{if condition="$tplHasArt eq 1"}<a class="tp-cat-all" href="{:mac_url('art/index')}">{:\\app\\common\\util\\AutoIcon::navIcon('articles')}<span><b>{:\\app\\common\\util\\TemplateText::get('ui.articles')}</b></span></a>{/if}
+        </div>
+      </details>
+    </nav>
+    <div class="tp-hd-m">
+      <button class="tp-ibtn tp-mode" type="button" data-color-toggle data-fx="morph theme-reveal" data-fx-morph-map="dark:sun light:moon" data-light-label="{:\\app\\common\\util\\TemplateText::get('ui.light_mode')}" data-dark-label="{:\\app\\common\\util\\TemplateText::get('ui.dark_mode')}" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.light_mode')}" title="{:\\app\\common\\util\\TemplateText::get('ui.light_mode')}"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" style="--fx-icon-stroke:1.25"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg></button>
+      {:$tpLogoHtml('m', false)}
+      <button class="tp-ibtn tp-ibtn--gem tp-gem-btn" type="button" data-tp-pal-open aria-haspopup="dialog" aria-controls="tp-pal" aria-expanded="false" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.menu')}" title="{:\\app\\common\\util\\TemplateText::get('ui.menu')}"><svg class="tp-i" aria-hidden="true"><use href="{$tplIcons}#diamond"/></svg></button>
+    </div>
+  </div>
+</header>
+<div class="tp-hd-space" aria-hidden="true"></div>
+{include file="public/nav"}

@@ -1,0 +1,136 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Based on MacCMS 10 (Apache-2.0) by magicblack, changed by JavCMS.
+JavCMS changes: Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors,
+JavCMS Community License 1.0. The MacCMS parts stay under the Apache License 2.0.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{include file="../../../application/admin/view/public/head" /}
+<div class="page-container p10">
+    {include file="../../../application/admin/view/public/page_head" icon="ai-credit-card" title="admin/ux/menu/points_cards" help="admin/ux/help/points_cards" /}
+
+    <div class="my-toolbar-box" >
+        <div class="center mb10">
+            <form class="layui-form studio-search-form " method="post"  id="searchForm" action="{:url('index')}">
+                <div class="layui-input-inline w150">
+                    <select lay-ignore name="sale_status">
+                        <option value="">{:lang('select_sale_status')}</option>
+                        <option value="0" {if condition="$param['sale_status'] eq '0'"}selected {/if}>{:lang('not_sale')}</option>
+                        <option value="1" {if condition="$param['sale_status'] eq '1'"}selected {/if}>{:lang('sold')}</option>
+                    </select>
+                </div>
+                <div class="layui-input-inline w150">
+                    <select lay-ignore name="use_status">
+                        <option value="">{:lang('select_use_status')}</option>
+                        <option value="0" {if condition="$param['use_status'] eq '0'"}selected {/if}>{:lang('not_used')}</option>
+                        <option value="1" {if condition="$param['use_status'] eq '1'"}selected {/if}>{:lang('used')}</option>
+                    </select>
+                </div>
+                
+                <div class="layui-input-inline studio-search-text">
+                    <input type="text" autocomplete="off" placeholder="{:lang('wd')}" class="layui-input" name="wd" value="{$param['wd']|mac_filter_xss}">
+                </div>
+                <button class="ax-btn j-search"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-search"/></svg>{:lang('btn_search')}</button>
+                <button class="ax-btn" type="button" id="btnExport"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-download"/></svg>{:lang('export')}</button>
+            {php}$studioFilterCount=0; foreach (["time"] as $studioFilterName) { if (isset($param[$studioFilterName]) && (string)$param[$studioFilterName] !== '') { $studioFilterCount++; } }{/php}
+<details class="studio-filter-panel" {if condition="$studioFilterCount gt 0"}open{/if}><summary>{if condition="$studioFilterCount gt 0"}{:str_replace(chr(123).'count'.chr(125),(string)$studioFilterCount,lang('admin/studio/active_filters'))}{else/}{:lang('admin/studio/more_filters')}{/if}</summary><div class="studio-filter-fields"><div class="layui-input-inline w150">
+<label for="studio-filter-time">{:lang('select_time')}</label>
+                    <select lay-ignore id="studio-filter-time" name="time">
+                        <option value="">{:lang('select_time')}</option>
+                        <option value="1" {if condition="$param['time'] eq '1'"}selected {/if}>{:lang('the_last_time')}</option>
+                        <option value="0" {if condition="$param['time'] eq '0'"}selected {/if}>{:lang('that_day')}</option>
+                        <option value="7" {if condition="$param['time'] eq '7'"}selected {/if}>{:lang('in_a_week')}</option>
+                        <option value="30" {if condition="$param['time'] eq '30'"}selected {/if}>{:lang('in_a_month')}</option>
+                    </select>
+                </div></div></details>
+</form>
+        </div>
+
+        <div class="btn-primary-group studio-bulk-tools">
+            <a data-href="{:url('info')}" class="ax-btn ax-btn--primary j-iframe" data-title="{:lang('add')}" data-width="min(600px, 92vw)" data-height="min(600px, 88vh)"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-plus"/></svg>{:lang('add')}</a>
+            <div class="ax-menu"><button type="button" class="ax-btn" aria-haspopup="menu" aria-expanded="false">{:lang('admin/ux/kit/bulk')}<svg class="ax-ic ax-ic--chevron" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-chevron-down"/></svg></button><div class="ax-menu__list" role="menu" hidden><a href="javascript:void(0)" role="menuitem" data-href="{:url('del')}" class="ax-menu__item ax-menu__item--danger j-sys-del" data-ax-confirm-title="{:lang('admin/ux/system/delete_selected')}" data-ax-confirm="{:lang('admin/ux/content/confirm_delete_n')}" data-ax-msg-one="{:lang('admin/ux/content/confirm_delete_one')}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-trash-2"/></svg>{:lang('admin/ux/system/delete_selected')}</a><a href="javascript:void(0)" role="menuitem" data-href="{:url('del')}" data-ids="1" data-all="1" data-count="{:intval($total)}" class="ax-menu__item ax-menu__item--danger j-sys-del" data-ax-confirm="{:str_replace(chr(123).'n'.chr(125), intval($total), lang('admin/ux/system/confirm_clear_all'))}" data-ax-confirm-title="{:lang('clear')}" data-ax-typed="DELETE"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-trash-2"/></svg>{:lang('admin/ux/system/clear_all')}</a></div></div>
+            
+
+        </div>
+    </div>
+
+     <form class="layui-form " method="post" id="pageListForm">
+        <input type="hidden" name="__token__" value="{:mac_admin_csrf_token()}">
+         <table class="layui-table ax-table--cards" lay-size="sm">
+            <thead>
+            <tr>
+                <th width="25"><input type="checkbox" lay-skin="primary" lay-filter="allChoose"></th>
+                <th width="80">{:lang('id')}</th>
+                <th width="150">{:lang('card_no')}</th>
+                <th width="100">{:lang('pass')}</th>
+                <th width="100">{:lang('money')}</th>
+                <th width="100">{:lang('points')}</th>
+                <th width="100">{:lang('add_time')}</th>
+                <th width="100">{:lang('user')}</th>
+                <th width="150">{:lang('use_time')}</th>
+                <th width="50">{:lang('opt')}</th>
+            </tr>
+            </thead>
+
+            {if condition="empty($list)"}<tr><td colspan="20">{include file="../../../application/admin/view/public/empty_state" icon="ai-inbox" text="admin/ux/system/empty_cards" action_url="card/info" action_label="admin/ux/system/add_cards" action_icon="ai-plus" action_class="j-iframe" /}</td></tr>{/if}
+            {volist name="list" id="vo"}
+            <tr>
+                <td><input type="checkbox" name="ids[]" value="{$vo.card_id}" class="layui-checkbox checkbox-ids" lay-skin="primary"></td>
+                <td>{$vo.card_id}</td>
+                <td>{$vo.card_no|htmlspecialchars}</td>
+                <td>{$vo.card_pwd|htmlspecialchars}</td>
+                <td>{$vo.card_money}</td>
+                <td>{$vo.card_points}</td>
+                <td class="ax-cell-time">{$vo.card_add_time|mac_day}</td>
+                <td>{$vo.user_id}、{$vo.user.user_name|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}</td>
+                <td class="ax-cell-time">{if condition="$vo.card_use_time eq 0"} {else}{$vo.card_use_time|mac_day}{/if}</td>
+                <td>
+                    <a class="ax-btn ax-btn--sm ax-btn--icon ax-btn--ghost j-sys-del" data-href="{:url('del')}" data-ids="{$vo.card_id}" data-ax-msg-one="{:lang('admin/ux/content/confirm_delete_one')}" data-ax-confirm-title="{:htmlspecialchars(lang('admin/ux/system/delete_named',[html_entity_decode((string)($vo['card_no']),ENT_QUOTES,'UTF-8')]),ENT_QUOTES,'UTF-8')}" href="javascript:;" title="{:lang('del')}" aria-label="{:lang('del')}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-trash-2"/></svg></a>
+                </td>
+            </tr>
+            {/volist}
+            </tbody>
+        </table>
+
+        <div id="pages" class="center"></div>
+
+    </form>
+    <iframe id="if" width="0" height="0" hidden tabindex="-1" aria-hidden="true" title=""></iframe>
+</div>
+
+{include file="../../../application/admin/view/public/foot" /}
+{include file="../../../application/admin/view/user/list_delete" /}
+
+
+<script type="text/javascript">
+    {php}$axUrlParam = array_filter((array)$param, function ($v, $k) { return is_string($k) && preg_match('/^[A-Za-z0-9_]{1,40}$/D', $k) && is_scalar($v); }, ARRAY_FILTER_USE_BOTH);{/php}
+    var curUrl = {:json_encode(url('card/index',$axUrlParam),JSON_HEX_TAG|JSON_HEX_AMP|JSON_HEX_APOS|JSON_HEX_QUOT)};
+    layui.use(['laypage', 'layer'], function() {
+        var laypage = layui.laypage
+                , layer = layui.layer;
+
+        laypage.render({
+            elem: 'pages'
+            ,count: {$total|default=0|intval}
+            ,limit: {$limit|default=20|intval}
+            ,curr: {$page|default=1|intval}
+            ,layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
+            ,jump: function(obj,first){
+                if(!first){
+                    location.href = curUrl.replace('%7Bpage%7D',obj.curr).replace('%7Blimit%7D',obj.limit);
+                }
+            }
+        });
+
+        $('#btnExport').click(function(){
+            var par = $('#searchForm').serialize() + '&export=1';
+
+            $('#if').attr('src',"{:url('card/index')}?" + par);
+        });
+    });
+</script>
+<script>(function () { document.querySelectorAll('table.ax-table--cards').forEach(function (t) { var h = [].map.call(t.querySelectorAll('thead th'), function (th) { return th.textContent.trim(); }); t.querySelectorAll('tbody tr, tr').forEach(function (tr) { if (tr.parentNode.tagName === 'THEAD') { return; } [].forEach.call(tr.children, function (td, i) { if (h[i] && !td.hasAttribute('data-label') && !td.hasAttribute('colspan')) { td.setAttribute('data-label', h[i]); } }); }); }); }());</script>
+<style>@media (max-width: 640px) { body.admin-studio table.ax-table--cards { min-width: 0 !important; width: 100% !important; } }</style>
+</body>
+</html>

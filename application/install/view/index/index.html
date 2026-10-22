@@ -1,0 +1,36 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Based on MacCMS 10 (Apache-2.0) by magicblack, changed by JavCMS.
+JavCMS changes: Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors,
+JavCMS Community License 1.0. The MacCMS parts stay under the Apache License 2.0.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{include file="../../../application/install/view/index/head" /}
+<div class="install-box">
+
+
+    <fieldset class="layui-elem-field site-demo-button">
+        <legend>{:lang('install/user_agreement_title')}</legend>
+        <div class="protocol">
+            <p>
+                {:lang('install/user_agreement')}
+            </p>
+        </div>
+    </fieldset>
+    <div class="step-btns">
+        <a href="?step=2" class="layui-btn layui-btn-big layui-btn-normal">{:lang('install/user_agreement_agree')}</a>
+    </div>
+</div>
+{include file="../../../application/install/view/index/foot" /}
+<script type="text/javascript">
+    var test=0;
+    layui.define(['element', 'form'], function(exports) {
+        var $ = layui.jquery, layer = layui.layer, form = layui.form;
+        form.on('select(lang)',function(data){
+            if(data.value !='') {
+                location.href = "{:url('index')}?lang=" + (data.value);
+            }
+        });
+    });
+</script>

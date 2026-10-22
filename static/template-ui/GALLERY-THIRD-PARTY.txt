@@ -1,0 +1,22 @@
+Gallery enhancements
+
+Morphicons 1.7.1, MIT, Guillermo
+https://github.com/guillermolg00/morphicons/tree/v1.7.1
+Source commit 38d2a7221633a453eeafebd872ee3649b9274b22
+Full notice: LICENSE-morphicons.txt
+
+Three.js 0.186.1 / r186, MIT, three.js authors
+https://github.com/mrdoob/three.js/tree/r186
+Source commit 9b4a2ac29c63ccb43fd51c5661f2f873ac2c39b8
+Full notice: LICENSE-three.txt
+
+The shared icon driver and lazy depth module are bundled locally. No framework,
+package installation, CDN, remote texture or continuous background loop is
+required on an installed site. Reduced-motion and touch users keep native
+static content and controls.
+
+React Bits animations/components were reviewed as design references:
+https://reactbits.dev/animations
+https://github.com/DavidHDev/react-bits/blob/main/LICENSE.md
+The image spotlight is an original project implementation. No React Bits source
+or component bundle is copied or distributed.

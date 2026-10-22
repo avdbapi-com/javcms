@@ -1,0 +1,44 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="velvet-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}" data-fx="vt smooth" data-fx-lerp="0.09" data-fx-vt-style="velvet-modern">
+<head>
+<meta name="robots" content="noindex, follow" />
+<title>{if condition="$code eq 1"}{:\\app\\common\\util\\TemplateText::get('ui.site_message')}{else/}{:\\app\\common\\util\\TemplateText::get('ui.access_required')}{/if}</title>
+{include file="public/include"}
+</head>
+<body class="vp-page-state">
+{php}$vpJump = mac_safe_url($url); if ($vpJump === '') { $vpJump = mac_safe_url(mac_url('index/index')); } $vpWait = max(1, intval($wait ?? 3));{/php}
+{include file="public/head"}
+<main id="main-content" class="vp-main">
+  <div class="vp-wrap vp-center">
+    <div class="vp-intermission vp-state" style="--vp-wait:{$vpWait}s">
+      <span class="vp-state-icon" aria-hidden="true"><svg class="vp-i"><use href="{$maccms.path_tpl}assets/icons.svg?v=20261010-r1#{if condition="$code eq 1"}check-circle{else/}lock{/if}"></use></svg></span>
+      <p class="vp-eyebrow">{:\\app\\common\\util\\TemplateText::get('vp.intermission')}</p>
+      <h1>{if condition="$code eq 1"}{:\\app\\common\\util\\TemplateText::get('ui.site_message')}{else/}{:\\app\\common\\util\\TemplateText::get('ui.access_required')}{/if}</h1>
+      <div class="vp-state-msg">{$msg}</div>
+      <div class="vp-intermission-line" aria-hidden="true"></div>
+      <p>{:\\app\\common\\util\\TemplateText::get('ui.automatic_page')} <a id="href" href="{$vpJump}">{:\\app\\common\\util\\TemplateText::get('ui.jump')}</a> &middot; {:\\app\\common\\util\\TemplateText::get('ui.wait_time')} <b id="wait">{$vpWait}</b></p>
+      <div class="vp-state-actions"><a class="vp-btn vp-btn-gold" href="{$vpJump}">{:\\app\\common\\util\\TemplateText::get('ui.jump')}</a><a class="vp-btn vp-btn-ghost" href="{$maccms.path|htmlspecialchars=ENT_QUOTES}">{:\\app\\common\\util\\TemplateText::get('vp.back_to_foyer')}</a></div>
+    </div>
+  </div>
+</main>
+{include file="public/foot"}
+<script>
+(function () {
+  var wait = document.getElementById('wait'), link = document.getElementById('href');
+  if (!wait || !link) return;
+  var timer = window.setInterval(function () {
+    var left = parseInt(wait.textContent, 10) - 1;
+    wait.textContent = String(Math.max(0, left));
+    if (left <= 0) { window.clearInterval(timer); window.location.href = link.href; }
+  }, 1000);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}
+if (!isset($vpBrand)) {
+    $vpSiteName = trim(\app\common\util\AvdbLanguage::decodeEntities((string)($maccms['site_name'] ?? '')));
+    $vpLen = function_exists('mb_strlen') ? mb_strlen($vpSiteName, 'UTF-8') : strlen($vpSiteName);
+    $vpBrand = $vpSiteName;
+    if ($vpLen > 18) {
+        $vpHost = strtolower(trim((string)($maccms['site_url'] ?? '')));
+        $vpHost = (string)preg_replace('~^[a-z][a-z0-9+.\-]*://~', '', $vpHost);
+        $vpHost = (string)preg_replace('~[/?#].*~', '', $vpHost);
+        $vpHost = (string)preg_replace('~:[0-9]+$~', '', $vpHost);
+        $vpHost = (string)preg_replace('~^www\.~', '', $vpHost);
+        $vpParts = explode('.', $vpHost);
+        $vpLabel = trim((string)($vpParts[0] ?? ''));
+        if ($vpLabel !== '' && !ctype_digit($vpLabel) && $vpLabel !== 'localhost') { $vpBrand = $vpLabel; }
+    }
+    if ($vpBrand === '') { $vpBrand = 'javcms'; }
+    $vpLogoRaw = trim((string)($maccms['site_logo'] ?? ''));
+    $vpLogoPath = (string)parse_url($vpLogoRaw, PHP_URL_PATH);
+    $vpLogoBase = strtolower(basename($vpLogoPath !== '' ? $vpLogoPath : $vpLogoRaw));
+    $vpCustomLogo = $vpLogoRaw !== '' && !in_array($vpLogoBase, ['20819301b2e936fcc59a7cee9f4e4d4a.png', '0643d1703707a998e41b8813a97ed2e7.png'], true);
+    $vpLogoSrc = $vpCustomLogo ? mac_safe_url(mac_url_img($vpLogoRaw)) : '';
+    if ($vpLogoSrc === '') { $vpCustomLogo = false; }
+}
+{/php}<a class="vp-logo" href="{$maccms.path|htmlspecialchars=ENT_QUOTES}" aria-label="{$vpSiteName|htmlspecialchars=ENT_QUOTES}" title="{$vpSiteName|htmlspecialchars=ENT_QUOTES}">{if condition="$vpCustomLogo"}<img class="vp-logo-img" src="{$vpLogoSrc}" alt="{$vpSiteName|htmlspecialchars=ENT_QUOTES}" height="40" decoding="async">{else/}<svg class="vp-mark" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><ellipse class="s" cx="32" cy="49" rx="13" ry="4.2" opacity=".42"/><path class="d" d="M14.5 27Q14.5 10 31 9.5C24.2 16 22.2 33 25.2 54H14.5Z"/><path class="d" d="M49.5 27Q49.5 10 33 9.5C39.8 16 41.8 33 38.8 54H49.5Z"/><path class="f" d="M19 15.5C18.2 26 18.6 41 19.6 54M23.4 11.8C21.6 24 21.8 40 22.6 54M45 15.5C45.8 26 45.4 41 44.4 54M40.6 11.8C42.4 24 42.2 40 41.4 54"/><path class="a" d="M12 56V27A20 20 0 0 1 52 27V56"/><circle class="s" cx="32" cy="38.5" r="3.4"/></svg><span class="vp-wordmark" data-vp-fit>{$vpBrand|htmlspecialchars=ENT_QUOTES}</span>{/if}</a>

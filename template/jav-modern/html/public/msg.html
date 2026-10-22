@@ -1,0 +1,21 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="jav-modern" data-template-variant="modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+<meta name="robots" content="noindex, follow">
+<title>{:\\app\\common\\util\\TemplateText::get('system_message')}</title>
+{include file="block/include"}
+</head>
+<body class="gallery-page page-state">
+{include file="block/head"}
+<main id="main-content" class="container state-page"><h1>{:\\app\\common\\util\\TemplateText::get('system_message')}</h1><p>{$msg|default=''}</p><a class="btn-watch" href="{$maccms.path}">{:\\app\\common\\util\\TemplateText::get('ui.back_to_home')}</a></main>
+{include file="block/copy"}
+{include file="block/foot"}
+</body>
+</html>

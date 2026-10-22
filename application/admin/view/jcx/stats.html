@@ -1,0 +1,49 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{include file="../../../application/admin/view/public/head" /}
+<div class="page-container p10 jx-page" data-jx-page="stats">
+    {include file="../../../application/admin/view/public/page_head" icon="ai-megaphone" title="admin/ux/jcx/title" help="admin/ux/jcx/help" /}
+    {include file="../../../application/admin/view/jcx/_tabs" /}
+    <nav class="ax-chips" aria-label="{:$jxE(lang('admin/ux/jcx/stats_title'))}">
+        <a class="ax-chip" href="{:url('jcx/stats', ['days' => 7])}"{if condition="$days eq 7"} aria-current="page"{/if}>{:$jxE(lang('admin/ux/jcx/days7'))}</a>
+        <a class="ax-chip" href="{:url('jcx/stats', ['days' => 30])}"{if condition="$days eq 30"} aria-current="page"{/if}>{:$jxE(lang('admin/ux/jcx/days30'))}</a>
+    </nav>
+    <div class="ax-notice" role="note"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-info"/></svg><div><p>{:$jxE(lang('admin/ux/jcx/stats_note'))}</p></div></div>
+
+    <section class="ax-section" aria-labelledby="jxStT">
+        <h2 id="jxStT">{:$jxE(lang('admin/ux/jcx/stats_by_day'))}</h2>
+        <div class="jx-bars" role="img" aria-label="{:$jxE(lang('admin/ux/jcx/stats_by_day'))}">
+            {volist name="bars" id="b"}<div class="jx-bar"><i style="height:{$b.pct}%" title="{$b.n}"></i>{if condition="$days eq 7 || $key % 5 eq 0"}<span>{:$jxE($b['day'])}</span>{/if}</div>{/volist}
+        </div>
+        {if condition="empty($rows)"}<p class="ax-help">{:$jxE(lang('admin/ux/jcx/stats_none'))}</p>{else /}
+        <div class="ax-table-wrap"><table class="ax-table ax-table--cards">
+            <thead><tr><th>{:$jxE(lang('admin/ux/jcx/col_name'))}</th><th class="ax-num">{:$jxE(lang('admin/ux/jcx/stats_views'))}</th><th class="ax-num">{:$jxE(lang('admin/ux/jcx/stats_viewable'))}</th><th class="ax-num">{:$jxE(lang('admin/ux/jcx/stats_clicks'))}</th><th class="ax-num">{:$jxE(lang('admin/ux/jcx/stats_ctr'))}</th><th class="ax-num">{:$jxE(lang('admin/ux/jcx/stats_closes'))}</th></tr></thead>
+            <tbody>{volist name="rows" id="r"}<tr>
+                <td data-label="{:$jxE(lang('admin/ux/jcx/col_name'))}"><a href="{:url('jcx/info', ['id' => $r['id']])}">{:$jxE($r['name'])}</a> {if condition="$r.on"}<span class="ax-chip ax-chip--ok">{:$jxE(lang('admin/ux/jcx/status_on'))}</span>{else /}<span class="ax-chip ax-chip--off">{:$jxE(lang('admin/ux/jcx/status_off'))}</span>{/if}</td>
+                <td class="ax-num" data-label="{:$jxE(lang('admin/ux/jcx/stats_views'))}">{:number_format($r['views'])}</td><td class="ax-num" data-label="{:$jxE(lang('admin/ux/jcx/stats_viewable'))}">{:number_format($r['seen'])}</td>
+                <td class="ax-num" data-label="{:$jxE(lang('admin/ux/jcx/stats_clicks'))}">{:number_format($r['clicks'])}</td><td class="ax-num" data-label="{:$jxE(lang('admin/ux/jcx/stats_ctr'))}">{:$jxE($r['ctr'])}</td>
+                <td class="ax-num" data-label="{:$jxE(lang('admin/ux/jcx/stats_closes'))}">{:number_format($r['closes'])}</td></tr>{/volist}</tbody>
+        </table></div>
+        {/if}
+    </section>
+    {if condition="!empty($vrows)"}
+    <section class="ax-section" aria-labelledby="jxSvT">
+        <h2 id="jxSvT">{:$jxE(lang('admin/ux/jcx/stats_video'))}</h2>
+        <div class="ax-table-wrap"><table class="ax-table ax-table--cards">
+            <thead><tr><th>{:$jxE(lang('admin/ux/jcx/col_name'))}</th><th class="ax-num">{:$jxE(lang('admin/ux/jcx/stats_starts'))}</th><th class="ax-num">{:$jxE(lang('admin/ux/jcx/stats_complete'))}</th><th class="ax-num">{:$jxE(lang('admin/ux/jcx/stats_skips'))}</th><th class="ax-num">{:$jxE(lang('admin/ux/jcx/stats_errors'))}</th></tr></thead>
+            <tbody>{volist name="vrows" id="r"}<tr><td data-label="{:$jxE(lang('admin/ux/jcx/col_name'))}">{:$jxE($r['name'])}</td><td class="ax-num" data-label="{:$jxE(lang('admin/ux/jcx/stats_starts'))}">{$r.starts}</td>
+                <td class="ax-num" data-label="{:$jxE(lang('admin/ux/jcx/stats_complete'))}">{$r.complete}</td><td class="ax-num" data-label="{:$jxE(lang('admin/ux/jcx/stats_skips'))}">{$r.skip}</td><td class="ax-num" data-label="{:$jxE(lang('admin/ux/jcx/stats_errors'))}">{$r.errors}</td></tr>{/volist}</tbody>
+        </table></div>
+    </section>
+    {/if}
+</div>
+{include file="../../../application/admin/view/public/foot" /}
+<script type="application/json" id="jxCfg">{$jxJson}</script>
+<script src="__STATIC__/js/admin_jcx.js?v={:filemtime(ROOT_PATH . 'static/js/admin_jcx.js')}"></script>
+</body>
+</html>

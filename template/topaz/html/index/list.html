@@ -1,0 +1,13 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<section class="tz-coll tz-coll--cats" id="tz-cats" data-tz-reveal aria-labelledby="tz-cats-h">
+  <header class="tz-coll-head" data-ai-group data-ai-hot>
+    <div class="tz-coll-title"><span class="tz-coll-ico" aria-hidden="true">{:\\app\\common\\util\\AutoIcon::navIcon('categories', '', ['class'=>'tz-i', 'tint'=>'none'])}</span><div><h2 id="tz-cats-h">{:\\app\\common\\util\\TemplateText::get('ui.browse_categories')}</h2><p>{:\\app\\common\\util\\TemplateText::get('ui.find_your_next_watch')}</p></div></div>
+  </header>
+  {include file="public/types"}<div class="tz-catgrid" data-ai-group>{foreach name="tzTypes" item="tzT" key="tzTk"}<a class="tz-catchip" href="{$tzT.url|htmlspecialchars=ENT_QUOTES}"><span class="tz-catchip-ico tz-catchip-ico--ai" aria-hidden="true">{:\\app\\common\\util\\AutoIcon::icon('category', $tzT['raw'], ['size'=>'lg', 'plate'=>true, 'i'=>$tzTk])}</span><span class="tz-catchip-txt"><b>{$tzT.name|htmlspecialchars=ENT_QUOTES}</b><small>{:\\app\\common\\util\\TemplateText::get('topaz.videos_count', ['count'=>$tzT['count']])}</small></span>{:\\app\\common\\util\\AutoIcon::ui('chevron-right', ['class'=>'tz-i tz-dir', 'tint'=>'none'])}</a>{/foreach}<a class="tz-catchip tz-catchip--all" href="{:mac_url('label/sort')}"><span class="tz-catchip-ico" aria-hidden="true">{:\\app\\common\\util\\AutoIcon::navIcon('all', '', ['class'=>'tz-i', 'tint'=>'none'])}</span><span class="tz-catchip-txt"><b>{:\\app\\common\\util\\TemplateText::get('ui.all_videos')}</b><small>{:\\app\\common\\util\\TemplateText::get('topaz.videos_count', ['count'=>number_format((float)($tzDc['vod_all'] ?? 0))])}</small></span>{:\\app\\common\\util\\AutoIcon::ui('chevron-right', ['class'=>'tz-i tz-dir', 'tint'=>'none'])}</a></div>
+</section>

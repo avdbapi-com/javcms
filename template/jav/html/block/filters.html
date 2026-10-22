@@ -1,0 +1,47 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}
+$tplP = function ($name) use ($param) { return isset($param[$name]) ? (string)$param[$name] : ''; };
+$tplBase = ['area' => $tplP('area'), 'lang' => $tplP('lang'), 'year' => $tplP('year'), 'level' => $tplP('level'), 'letter' => $tplP('letter'), 'state' => $tplP('state'), 'tag' => $tplP('tag'), 'class' => $tplP('class'), 'order' => $tplP('order'), 'by' => $tplP('by')];
+$tplFilterUrl = function ($over) use ($obj, $tplBase) { return htmlspecialchars(mac_url_type($obj, array_merge($tplBase, $over), 'show'), ENT_QUOTES, 'UTF-8'); };
+$tplExt = (isset($obj['type_extend']) && is_array($obj['type_extend'])) ? $obj['type_extend'] : [];
+$tplParentExt = (isset($obj['parent']['type_extend']) && is_array($obj['parent']['type_extend'])) ? $obj['parent']['type_extend'] : [];
+$tplValues = function ($name, $cap) use ($tplExt, $tplParentExt, $tplP) {
+    $raw = isset($tplExt[$name]) ? (string)$tplExt[$name] : '';
+    if (trim($raw) === '') { $raw = isset($tplParentExt[$name]) ? (string)$tplParentExt[$name] : ''; }
+    $out = []; $seen = [];
+    $current = trim($tplP($name));
+    if ($current !== '') { $out[] = $current; $seen[strtolower($current)] = 1; }
+    foreach (explode(',', $raw) as $v) {
+        $v = trim($v); $k = strtolower($v);
+        if ($v === '' || isset($seen[$k])) { continue; }
+        $seen[$k] = 1; $out[] = $v;
+        if (count($out) >= $cap) { break; }
+    }
+    return $out;
+};
+$tplRows = [];
+foreach ([['class', 'genres', 200, 'tags'], ['area', 'region', 60, 'globe'], ['year', 'year', 60, 'calendar'], ['lang', 'ui.language', 40, 'languages']] as $tplDef) {
+    $tplVals = $tplValues($tplDef[0], $tplDef[2]);
+    if (!$tplVals) { continue; }
+    $tplCur = trim($tplP($tplDef[0]));
+    $tplItems = [['label' => \app\common\util\TemplateText::get('all'), 'ico' => '', 'url' => $tplFilterUrl([$tplDef[0] => '']), 'active' => $tplCur === '', 'extra' => false]];
+    foreach ($tplVals as $tplIdx => $tplV) {
+        $tplItems[] = ['label' => htmlspecialchars($tplDef[0] === 'area' ? \app\common\util\TemplateText::raw($tplV) : $tplV, ENT_QUOTES, 'UTF-8', false), 'ico' => ($tplDef[0] === 'class' && $tplIdx < 36 && \app\common\util\AutoIcon::keepTag($tplV)) ? \app\common\util\AutoIcon::icon('tag', $tplV, ['size' => 'sm', 'i' => $tplIdx]) : '', 'url' => $tplFilterUrl([$tplDef[0] => $tplV]), 'active' => strcasecmp($tplCur, $tplV) === 0, 'extra' => $tplIdx >= 36];
+    }
+    $tplRows[] = ['label' => htmlspecialchars(preg_replace('/[\s:\x{FF1A}]+$/u', '', \app\common\util\TemplateText::raw($tplDef[1])), ENT_QUOTES, 'UTF-8'), 'ico' => \app\common\util\AutoIcon::ui($tplDef[3], ['size' => 'sm']), 'items' => $tplItems, 'more' => count($tplVals) > 36];
+}
+$tplBy = $tplP('by');
+if ($tplBy === '') { $tplBy = 'time'; }
+$tplSorts = [];
+foreach ([['time', 'latest', 'latest'], ['hits', 'popular', 'hot'], ['score', 'top_rated', 'top-rated']] as $tplDef) {
+    $tplSorts[] = ['label' => \app\common\util\TemplateText::get($tplDef[1]), 'ico' => \app\common\util\AutoIcon::navIcon($tplDef[2], '', ['size' => 'sm']), 'url' => $tplFilterUrl(['by' => $tplDef[0]]), 'active' => $tplBy === $tplDef[0]];
+}
+$tplAnyFilter = $tplP('class') !== '' || $tplP('area') !== '' || $tplP('year') !== '' || $tplP('lang') !== '' || $tplP('tag') !== '';
+$tplClearUrl = $tplFilterUrl(['class' => '', 'area' => '', 'year' => '', 'lang' => '', 'tag' => '', 'letter' => '', 'state' => '', 'level' => '']);
+{/php}

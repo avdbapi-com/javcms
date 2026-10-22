@@ -1,0 +1,22 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="crimson" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/auto"}
+{include file="public/include"}
+</head>
+<body class="ct-down-page">
+{include file="public/head"}
+<main id="main-content" class="ct-wrap">
+{include file="public/metavars"}{php}$ctTitleDir = preg_match('/[\x{0590}-\x{08FF}\x{FB1D}-\x{FDFF}\x{FE70}-\x{FEFF}]/u', (string)$ctTitle) ? 'rtl' : 'auto';{/php}<div class="ct-phead"><div class="ct-phead-main"><h1 class="ct-h1" dir="{$ctTitleDir}">{$ctTitle|htmlspecialchars=ENT_QUOTES}</h1></div><div class="ct-phead-tools"><a class="ct-pill ct-pill--sm" href="{:htmlspecialchars(mac_url_vod_detail($obj), ENT_QUOTES)}">{:\\app\\common\\util\\TemplateText::get('ui.details')}</a><a class="ct-btn" href="{:htmlspecialchars(mac_url_vod_play($obj,['sid'=>1,'nid'=>1]), ENT_QUOTES)}">{:\\app\\common\\util\\AutoIcon::ui('play', ['class'=>'ct-ico'])}{:\\app\\common\\util\\TemplateText::get('ui.watch_online')}</a></div></div>
+{notempty name="obj.vod_down_list"}{maccms:foreach name="obj.vod_down_list" id="source"}<section class="ct-panel ct-eps"><h2 class="ct-panel-h">{:\\app\\common\\util\\AutoIcon::ui('download', ['class'=>'ct-ico'])}{$source.player_info.show|mac_default=$source.from|htmlspecialchars=ENT_QUOTES}</h2><div class="ct-chips">{maccms:foreach name="source.urls" id="episode"}<a class="ct-chip" href="{:mac_safe_url($episode['url'])}" target="_blank" rel="nofollow noopener noreferrer">{$episode.name|htmlspecialchars=ENT_QUOTES}</a>{/maccms:foreach}</div></section>{/maccms:foreach}{else/}{php}$ctEmptyKey = 'ui.no_download_links_are_available_for_this_video';{/php}{include file="public/empty"}{/notempty}
+</main>
+{include file="public/foot"}
+</body>
+</html>

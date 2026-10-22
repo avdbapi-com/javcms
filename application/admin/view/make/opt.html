@@ -1,0 +1,247 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Based on MacCMS 10 (Apache-2.0) by magicblack, with changes from the MacCMS editions
+RamCMS (Apache-2.0) and/or ApiiCMS (MIT, Copyright (c) 2024 apiiphim), changed by JavCMS.
+JavCMS changes: Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors,
+JavCMS Community License 1.0. The MacCMS, RamCMS and ApiiCMS parts keep their own licenses.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{include file="../../../application/admin/view/public/head" /}
+<link rel="stylesheet" href="__STATIC__/css/admin_make_workspace_v1.css?v={:filemtime(ROOT_PATH . 'static/css/admin_make_workspace_v1.css')}">
+<link rel="stylesheet" href="__STATIC__/css/admin_sitemap.css?v={:filemtime(ROOT_PATH . 'static/css/admin_sitemap.css')}">
+<link rel="stylesheet" href="__STATIC__/css/admin_seo.css?v={:filemtime(ROOT_PATH . 'static/css/admin_seo.css')}">
+
+<div class="page-container admin-make-workspace">
+    {include file="../../../application/admin/view/public/page_head" icon="ai-map" title="admin/ux/seo/sitemap_title" help="admin/ux/seo/sitemap_page_help" /}
+
+    {php}$seoTok = \think\Request::instance()->token();{/php}
+    <nav class="ax-tabs" data-ax-tabs aria-label="{:lang('admin/ux/seo/sitemap_title')}">
+        <a href="#sitemap" data-ax-tab="sitemap" aria-selected="true">{:lang('admin/ux/seo/tab_sitemap')}</a>
+        <a href="#robots" data-ax-tab="robots" aria-selected="false">{:lang('admin/ux/seo/tab_robots')}</a>
+        <a href="#indexnow" data-ax-tab="indexnow" aria-selected="false">{:lang('admin/ux/seo/tab_indexnow')}</a>
+    </nav>
+
+    <div data-ax-tabpanel="sitemap">
+    {if condition="$seo_opt.hidden"}<div class="ax-notice ax-notice--warn" role="alert"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-eye-off"/></svg><div><p>{:lang('admin/ux/seo/sitemap_hidden')}</p></div></div>{/if}
+    <section class="ax-section admin-sitemap-card" aria-labelledby="admin-sitemap-title">
+        <h2 id="admin-sitemap-title">{:lang('admin/make/sitemap_title')}</h2>
+        <p class="ax-help" id="admin-sitemap-description">{:lang('admin/ux/system/sitemap_help')}</p>
+        <div class="ax-field">
+            <label for="admin-sitemap-url">{:lang('admin/make/sitemap_submit_url')}</label>
+            <div class="admin-sitemap-controls">
+                <input type="text" id="admin-sitemap-url" class="layui-input ax-mono" value="{$sitemap_url|htmlspecialchars}" readonly aria-describedby="admin-sitemap-description">
+                <button class="ax-btn" type="button" id="admin-sitemap-copy" data-copy-target="admin-sitemap-url" {if condition="$sitemap_url == ''"}disabled{/if} data-success="{:lang('admin/make/sitemap_copied')}" data-failure="{:lang('admin/make/sitemap_copy_failed')}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-copy"/></svg>{:lang('admin/ux/system/sitemap_copy')}</button>
+                {if condition="$sitemap_url != ''"}
+                <a class="ax-btn ax-btn--ghost" href="{$sitemap_url|htmlspecialchars}" target="_blank" rel="noopener noreferrer"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-external-link"/></svg>{:lang('admin/make/sitemap_open')}</a>
+                {/if}
+            </div>
+        </div>
+        <div class="admin-sitemap-actions">
+            <button class="ax-btn" type="button" id="admin-sitemap-rebuild" data-url="{:url('make/map')}" data-token="{:mac_admin_csrf_token()}" data-failure="{:lang('admin/ux/kit/request_failed')}" data-loading="{:lang('admin/ux/kit/loading')}" {if condition="$sitemap_url == ''"}disabled{/if}><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-refresh-cw"/></svg>{:lang('admin/ux/system/sitemap_rebuild')}</button>
+            <a class="ax-btn ax-btn--ghost" href="https://search.google.com/search-console/sitemaps" target="_blank" rel="noopener noreferrer"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-external-link"/></svg>{:lang('admin/make/sitemap_search_console')}</a>
+        </div>
+        <p class="admin-sitemap-status" id="admin-sitemap-status" role="status" aria-live="polite" aria-atomic="true">{$sitemap_error|htmlspecialchars}</p>
+    </section>
+    <form class="ax-form layui-form" action="{:url('make/opt')}" data-ax-dirty>
+        <input type="hidden" name="__token__" value="{$seoTok}" />
+        <section class="ax-section" aria-labelledby="seo-sm-settings">
+            <h2 id="seo-sm-settings">{:lang('admin/ux/seo/sitemap_settings')}</h2>
+            <p class="ax-help">{$seo_opt.count|htmlspecialchars}</p>
+            <div class="ax-field">
+                <label>{:lang('admin/ux/seo/sitemap_langs')}</label>
+                <div><input type="hidden" name="seo[sitemap_langs]" value="0"><input type="checkbox" name="seo[sitemap_langs]" value="1" lay-skin="switch" lay-text="{:lang('admin/ux/system/on')}|{:lang('admin/ux/system/off')}" aria-label="{:lang('admin/ux/seo/sitemap_langs')}" {if condition="$seo_opt.langs eq 1"}checked {/if}></div>
+                <p class="ax-help">{:lang('admin/ux/seo/sitemap_langs_help')}</p>
+            </div>
+            <div class="ax-field">
+                <label>{:lang('admin/ux/seo/sitemap_video')}</label>
+                <div><input type="hidden" name="seo[sitemap_video]" value="0"><input type="checkbox" name="seo[sitemap_video]" value="1" lay-skin="switch" lay-text="{:lang('admin/ux/system/on')}|{:lang('admin/ux/system/off')}" aria-label="{:lang('admin/ux/seo/sitemap_video')}" {if condition="$seo_opt.video eq 1"}checked {/if}></div>
+            </div>
+            <details class="ax-advanced">
+                <summary>{:lang('admin/ux/seo/more_options')}</summary>
+                <div class="ax-field ax-field--sm">
+                    <label for="seo-per-file">{:lang('admin/ux/seo/sitemap_per_file')}</label>
+                    <input id="seo-per-file" type="number" min="1000" max="50000" step="1000" name="seo[sitemap_per_file]" value="{$seo_opt.per_file}" class="layui-input" aria-describedby="seo-per-file-help">
+                    <p class="ax-help" id="seo-per-file-help">{:lang('admin/ux/seo/sitemap_per_file_help')}</p>
+                </div>
+            </details>
+        </section>
+        <div class="ax-savebar">
+            <span class="ax-savebar__status" role="status"></span>
+            <div class="ax-savebar__end"><button type="submit" class="ax-btn ax-btn--primary" lay-submit="" lay-filter="formSubmit"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-save"/></svg>{:lang('admin/ux/kit/save')}</button></div>
+        </div>
+    </form>
+    <details class="ax-section admin-static-box">
+        <summary>{:lang('admin/ux/system/static_box')}</summary>
+        {if condition="!$static_any"}
+        <div class="ax-notice" role="note"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-info"/></svg><div><p>{:lang('admin/ux/system/static_off')}</p></div></div>
+        {/if}
+        <form method="post" action="" id="form1" class="admin-static-form">
+            <input type="hidden" name="__token__" value="{:mac_admin_csrf_token()}">
+            <div class="admin-static-row">
+                <div class="ax-field">
+                    <label for="vodtype">{:lang('vod')} {:lang('type')}</label>
+                    <select name="vodtype[]" id="vodtype" multiple class="form-select">
+                        {volist name="$vod_type_list" id="vo"}
+                        <option value="{$vo.type_id}">{$vo.type_name|html_entity_decode=ENT_QUOTES,'UTF-8'|htmlspecialchars=ENT_QUOTES,'UTF-8'}</option>
+                        {/volist}
+                    </select>
+                </div>
+                <div class="admin-static-buttons">
+                    <button type="button" class="ax-btn ax-btn--sm" onclick="post('ac=type&tab=vod');">{:lang('admin/make/select_type')}</button>
+                    <button type="button" class="ax-btn ax-btn--sm" onclick="post('ac=type&tab=vod&vodtype={$vod_type_ids}');">{:lang('admin/make/all_type')}</button>
+                    <button type="button" class="ax-btn ax-btn--sm" onclick="post('ac=type&tab=vod&vodtype={$vod_type_ids_today}&ac2=day');">{:lang('admin/make/today_type')}</button>
+                    <button type="button" class="ax-btn ax-btn--sm" onclick="post('ac=info&tab=vod');">{:lang('admin/make/select_info')}</button>
+                    <button type="button" class="ax-btn ax-btn--sm" onclick="post('ac=info&tab=vod&vodtype={$vod_type_ids}');">{:lang('admin/make/all_info')}</button>
+                    <button type="button" class="ax-btn ax-btn--sm" onclick="post('ac=info&tab=vod&vodtype={$vod_type_ids_today}&ac2=day');">{:lang('admin/make/today_info')}</button>
+                    <button type="button" class="ax-btn ax-btn--sm" onclick="post('ac=info&tab=vod&ac2=nomake');">{:lang('admin/make/no_make_info')}</button>
+                    <button type="button" class="ax-btn ax-btn--sm" onclick="post('ac=info&tab=vod&vodtype={$vod_type_ids_today}&ac2=day&jump=1');">{:lang('admin/make/one_today')}</button>
+                </div>
+            </div>
+            <div class="admin-static-row">
+                <div class="ax-field">
+                    <label for="arttype">{:lang('art')} {:lang('type')}</label>
+                    <select name="arttype[]" id="arttype" multiple class="form-select">
+                        {volist name="$art_type_list" id="vo"}
+                        <option value="{$vo.type_id}">{$vo.type_name|html_entity_decode=ENT_QUOTES,'UTF-8'|htmlspecialchars=ENT_QUOTES,'UTF-8'}</option>
+                        {/volist}
+                    </select>
+                </div>
+                <div class="admin-static-buttons">
+                    <button type="button" class="ax-btn ax-btn--sm" onclick="post('ac=type&tab=art');">{:lang('admin/make/select_type')}</button>
+                    <button type="button" class="ax-btn ax-btn--sm" onclick="post('ac=type&tab=art&arttype={$art_type_ids}');">{:lang('admin/make/all_type')}</button>
+                    <button type="button" class="ax-btn ax-btn--sm" onclick="post('ac=type&tab=art&arttype={$art_type_ids_today}&ac2=day');">{:lang('admin/make/today_type')}</button>
+                    <button type="button" class="ax-btn ax-btn--sm" onclick="post('ac=info&tab=art');">{:lang('admin/make/select_info')}</button>
+                    <button type="button" class="ax-btn ax-btn--sm" onclick="post('ac=info&tab=art&arttype={$art_type_ids}');">{:lang('admin/make/all_info')}</button>
+                    <button type="button" class="ax-btn ax-btn--sm" onclick="post('ac=info&tab=art&arttype={$art_type_ids_today}&ac2=day');">{:lang('admin/make/today_info')}</button>
+                    <button type="button" class="ax-btn ax-btn--sm" onclick="post('ac=info&tab=art&ac2=nomake');">{:lang('admin/make/no_make_info')}</button>
+                    <button type="button" class="ax-btn ax-btn--sm" onclick="post('ac=info&tab=art&arttype={$art_type_ids_today}&ac2=day&jump=1');">{:lang('admin/make/one_today')}</button>
+                </div>
+            </div>
+            <div class="admin-static-row">
+                <div class="ax-field">
+                    <label for="topic">{:lang('admin/make/topic_list')}</label>
+                    <select name="topic[]" id="topic" multiple class="form-select">
+                        {volist name="$topic_list" id="vo"}
+                        <option value="{$vo.topic_id}">{$vo.topic_name|html_entity_decode=ENT_QUOTES,'UTF-8'|htmlspecialchars=ENT_QUOTES,'UTF-8'}</option>
+                        {/volist}
+                    </select>
+                </div>
+                <div class="admin-static-buttons">
+                    <button type="button" class="ax-btn ax-btn--sm" onclick="post('ac=topic_info');">{:lang('admin/make/select_topic')}</button>
+                    <button type="button" class="ax-btn ax-btn--sm" onclick="post('ac=topic_info&topic={$topic_ids}');">{:lang('admin/make/all_topic')}</button>
+                    <button type="button" class="ax-btn ax-btn--sm" onclick="post('ac=topic_index');">{:lang('admin/make/topic_index')}</button>
+                </div>
+            </div>
+            <div class="admin-static-row">
+                <div class="ax-field">
+                    <label for="label">{:lang('admin/make/label_page')}</label>
+                    <select name="label[]" id="label" multiple class="form-select">
+                        {volist name="$label_list" id="vo"}
+                        <option value="{$vo}">{$vo}</option>
+                        {/volist}
+                    </select>
+                </div>
+                <div class="admin-static-buttons">
+                    <button type="button" class="ax-btn ax-btn--sm" onclick="post('ac=label');">{:lang('make_page')}</button>
+                    <button type="button" class="ax-btn ax-btn--sm" onclick="post('ac=label&label={$label_ids}');">{:lang('make_all')}</button>
+                </div>
+            </div>
+            <div class="admin-static-row">
+                <div class="ax-field ax-field--sm">
+                    <label for="ps">{:lang('admin/make/sitemap_legacy')}: {:lang('admin/make/make_page_num')}</label>
+                    <input type="text" name="ps" id="ps" class="layui-input" value="1">
+                </div>
+                <div class="admin-static-buttons">
+                    <button type="button" class="ax-btn ax-btn--sm" onclick="post('ac=rss&ac2=index');">{:lang('admin/make/rss')}</button>
+                    <button type="button" class="ax-btn ax-btn--sm" onclick="post('ac=rss&ac2=bing');">{:lang('admin/make/bing')}</button>
+                </div>
+            </div>
+        </form>
+    </details>
+    </div>
+
+    <div data-ax-tabpanel="robots" hidden>
+    <form class="ax-form layui-form" action="{:url('make/robots')}" data-ax-dirty data-seo-robots data-preview-url="{if condition="$seo_opt.can_robots"}{:url('make/robots')}{/if}">
+        <input type="hidden" name="__token__" value="{$seoTok}" />
+        <input type="hidden" name="block_confirm" value="">
+        {if condition="$seo_opt.robots_root"}<div class="ax-notice ax-notice--warn"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-triangle-alert"/></svg><div><p>{:lang('admin/ux/seo/robots_root_file')}</p></div></div>{/if}
+        {if condition="$seo_opt.hidden"}<div class="ax-notice ax-notice--warn"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-eye-off"/></svg><div><p>{:lang('admin/ux/seo/robots_hidden')}</p></div></div>{/if}
+        {if condition="!$seo_opt.can_robots"}<div class="ax-notice"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-lock"/></svg><div><p>{:lang('admin/ux/seo/robots_right')}</p></div></div>{/if}
+        <section class="ax-section" aria-labelledby="seo-robots-title">
+            <h2 id="seo-robots-title">{:lang('admin/ux/seo/robots_rules')}</h2>
+            <div class="seo-cards" role="radiogroup" aria-labelledby="seo-robots-title">
+                <label><input type="radio" name="robots_mode" value="recommended" lay-ignore {if condition="$seo_opt.robots_mode eq 'recommended'"}checked{/if}{if condition="!$seo_opt.can_robots"} disabled{/if}> <strong>{:lang('admin/ux/seo/robots_recommended')}</strong><span class="ax-help">{:lang('admin/ux/seo/robots_recommended_help')}</span></label>
+                <label><input type="radio" name="robots_mode" value="open" lay-ignore {if condition="$seo_opt.robots_mode eq 'open'"}checked{/if}{if condition="!$seo_opt.can_robots"} disabled{/if}> <strong>{:lang('admin/ux/seo/robots_open')}</strong><span class="ax-help">{:lang('admin/ux/seo/robots_open_help')}</span></label>
+                <label><input type="radio" name="robots_mode" value="custom" lay-ignore {if condition="$seo_opt.robots_mode eq 'custom'"}checked{/if}{if condition="!$seo_opt.can_robots"} disabled{/if}> <strong>{:lang('admin/ux/seo/robots_custom')}</strong><span class="ax-help">{:lang('admin/ux/seo/robots_custom_help')}</span></label>
+            </div>
+            <div class="ax-field" data-seo-custom-box {if condition="$seo_opt.robots_mode neq 'custom'"}hidden{/if}>
+                <label for="seo-robots-custom">{:lang('admin/ux/seo/robots_custom')}</label>
+                <textarea id="seo-robots-custom" name="robots_custom" class="layui-textarea ax-mono seo-code" rows="10" spellcheck="false" {if condition="!$seo_opt.can_robots"}readonly{/if}>{$seo_opt.robots_custom|htmlspecialchars=ENT_QUOTES,'UTF-8'}</textarea>
+                <div class="ax-notice ax-notice--danger" data-seo-robots-warn hidden><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-shield-alert"/></svg><div><p>{:lang('admin/ux/seo/robots_block_warn')}</p></div></div>
+            </div>
+            <div class="ax-field">
+                <label>{:lang('admin/ux/seo/robots_preview')}</label>
+                <pre class="ax-code" data-seo-robots-preview>{$seo_opt.robots_text|htmlspecialchars=ENT_QUOTES,'UTF-8'}</pre>
+            </div>
+            {if condition="$seo_opt.can_robots"}<p><button type="button" class="ax-btn" data-seo-robots-reset><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-rotate-ccw"/></svg>{:lang('admin/ux/seo/robots_reset')}</button></p>{/if}
+        </section>
+        {if condition="$seo_opt.can_robots"}
+        <div class="ax-savebar">
+            <span class="ax-savebar__status" role="status"></span>
+            <div class="ax-savebar__end"><button type="submit" class="ax-btn ax-btn--primary" lay-submit="" lay-filter="formSubmit"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-save"/></svg>{:lang('admin/ux/kit/save')}</button></div>
+        </div>
+        {/if}
+    </form>
+    </div>
+
+    <div data-ax-tabpanel="indexnow" hidden>
+        <input type="hidden" name="__token__" value="{$seoTok}" />
+        <section class="ax-section" aria-labelledby="seo-in-title">
+            <h2 id="seo-in-title">{:lang('admin/ux/seo/indexnow')}</h2>
+            <p class="ax-help">{:lang('admin/ux/seo/indexnow_help')}</p>
+            <p><span class="ax-chip {if condition="$seo_opt.indexnow"}ax-chip--ok{else /}ax-chip--off{/if}">{if condition="$seo_opt.indexnow"}{:lang('admin/ux/seo/on')}{else /}{:lang('admin/ux/seo/off')}{/if}</span></p>
+            {if condition="$seo_opt.error neq ''"}<div class="ax-notice ax-notice--warn" role="alert"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-triangle-alert"/></svg><div><p>{$seo_opt.error|htmlspecialchars}</p></div></div>{/if}
+            {if condition="$seo_opt.can_indexnow"}
+            <div class="seo-actions">
+                {if condition="$seo_opt.indexnow"}
+                <button type="button" class="ax-btn ax-btn--primary" data-seo-indexnow="send" data-url="{:url('make/indexnow')}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-send"/></svg>{:lang('admin/ux/seo/indexnow_send')}</button>
+                <button type="button" class="ax-btn" data-seo-indexnow="newkey" data-url="{:url('make/indexnow')}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-key-round"/></svg>{:lang('admin/ux/seo/indexnow_newkey')}</button>
+                <button type="button" class="ax-btn ax-btn--ghost" data-seo-indexnow="off" data-url="{:url('make/indexnow')}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-toggle-left"/></svg>{:lang('admin/ux/seo/off')}</button>
+                {else /}
+                <button type="button" class="ax-btn ax-btn--primary" data-seo-indexnow="on" data-url="{:url('make/indexnow')}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-toggle-right"/></svg>{:lang('admin/ux/seo/indexnow_turn_on')}</button>
+                {/if}
+            </div>
+            {/if}
+            {if condition="$seo_opt.key neq ''"}
+            <div class="ax-field">
+                <label>{:lang('admin/ux/seo/indexnow_key_file')}</label>
+                <p><span class="ax-chip ax-chip--off" data-seo-keyfile data-url="{$seo_opt.key_url|htmlspecialchars}" data-key="{$seo_opt.key}">{:lang('admin/ux/seo/check_checking')}</span></p>
+                <p class="ax-help ax-mono">{$seo_opt.key_url|htmlspecialchars}</p>
+                {if condition="$seo_opt.key_state eq 'foreign'"}<p class="ax-help">{:lang('admin/ux/seo/indexnow_key_foreign')}</p>{/if}
+                {if condition="$seo_opt.key_state neq 'ok'"}<p><a class="ax-btn ax-btn--sm" download="{$seo_opt.key}.txt" href="data:text/plain;charset=utf-8,{$seo_opt.key}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-download"/></svg>{:lang('admin/ux/seo/indexnow_key_download')}</a> <span class="ax-help">{:lang('admin/ux/seo/indexnow_key_ro')}</span></p>{/if}
+            </div>
+            {/if}
+            <ul class="seo-checks">
+                <li><span>{if condition="$seo_opt.last neq ''"}{$seo_opt.last|htmlspecialchars}{else /}{:lang('admin/ux/seo/indexnow_never')}{/if}</span></li>
+                <li><span>{$seo_opt.today|htmlspecialchars}</span></li>
+                <li><span>{$seo_opt.queue|htmlspecialchars}</span></li>
+            </ul>
+        </section>
+    </div>
+</div>
+
+{include file="../../../application/admin/view/public/foot" /}
+
+<script type="application/json" id="seo-strings">{$seo_js}</script>
+<script defer src="__STATIC__/js/admin_seo.js?v={:filemtime(ROOT_PATH . 'static/js/admin_seo.js')}"></script>
+<script defer src="__STATIC__/js/admin_sitemap.js?v={:filemtime(ROOT_PATH . 'static/js/admin_sitemap.js')}"></script>
+<script type="text/javascript">
+    var curUrl = "{:url('make')}";
+    function post(p) {
+        $("#form1").attr("action", curUrl + "?" + p);
+        $("#form1").submit();
+    }
+</script>
+</body>
+</html>

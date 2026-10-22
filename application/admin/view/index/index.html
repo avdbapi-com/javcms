@@ -1,0 +1,140 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Based on MacCMS 10 (Apache-2.0) by magicblack, changed by JavCMS.
+JavCMS changes: Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors,
+JavCMS Community License 1.0. The MacCMS parts stay under the Apache License 2.0.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{include file="../../../application/admin/view/public/head" /}
+<link rel="stylesheet" href="__STATIC__/css/admin_navigation_studio.css?v={:filemtime(ROOT_PATH . 'static/css/admin_navigation_studio.css')}">
+{php}$axS = '__STATIC__/admin/icons/admin-icons.svg?v=' . $admin_icons_v;{/php}
+<div id="adminShell" class="studio-shell{if condition="$shell_compact"} is-compact{/if}{if condition="$shell_collapsed"} is-collapsed{/if}" data-admin-id="{$shell_admin_id}">
+    <a href="#switchBody" class="studio-skip">{:lang('admin/ux/shell/skip')}</a>
+    <header class="studio-header">
+        <button type="button" id="foldSwitch" class="studio-icon-btn" aria-controls="switchNav" aria-expanded="true" aria-label="{:lang('admin/ux/shell/toggle_menu')}" title="{:lang('admin/ux/shell/toggle_menu')}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axS}#ai-menu"/></svg></button>
+        <a class="studio-brand" href="{:url('index/welcome')}" data-shell-overview><span class="studio-brand__site">{$shell_site_name}</span><span class="studio-brand__admin">{:lang('admin/ux/shell/brand_admin')}</span></a>
+        <nav class="studio-location" aria-label="{:lang('admin/ux/shell/you_are_here')}"><span id="studioSection"></span><svg class="ax-ic studio-location__sep" aria-hidden="true" focusable="false"><use href="{$axS}#ai-chevron-right"/></svg><strong id="studioPage" aria-current="page">{:lang('menu/welcome')}</strong></nav>
+        <div class="studio-utilities">
+            <button type="button" id="shellSearchBtn" class="studio-tool" aria-label="{:lang('admin/ux/shell/search_label')}" title="{:lang('admin/ux/shell/search_label')}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axS}#ai-search"/></svg><span class="studio-tool__label">{:lang('btn_search')}</span><kbd aria-hidden="true">/</kbd></button>
+            {if condition="$shell_can_clear"}<button type="button" id="shellClearCache" class="studio-tool" aria-label="{:lang('admin/ux/shell/clear_cache')}" title="{:lang('admin/ux/shell/clear_cache')}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axS}#ai-eraser"/></svg><span class="studio-tool__label">{:lang('admin/ux/shell/clear_cache')}</span></button>{/if}
+            <a href="__ROOT__/" target="_blank" rel="noopener" class="studio-tool studio-tool--site" title="{:lang('admin/ux/shell/view_site')}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axS}#ai-external-link"/></svg><span class="studio-tool__label">{:lang('admin/ux/shell/view_site')}</span></a>
+            <button type="button" id="shellBell" class="studio-tool studio-tool--icon" data-count="{$shell_todo}" aria-label="{:lang('admin/ux/shell/todo')}{if condition="$shell_todo gt 0"} ({$shell_todo}){/if}" title="{if condition="$shell_todo gt 0"}{:lang('admin/ux/shell/todo')}{else /}{:lang('admin/ux/shell/todo_none')}{/if}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axS}#ai-bell"/></svg>{if condition="$shell_todo gt 0"}<span class="studio-badge" aria-hidden="true">{if condition="$shell_todo gt 99"}99+{else /}{$shell_todo}{/if}</span>{/if}</button>
+            <div class="ax-menu studio-account">
+                <button type="button" class="studio-tool studio-account__btn" aria-haspopup="menu" aria-expanded="false" aria-label="{:lang('admin/ux/account/menu')}: {$shell_admin_name}"><span class="studio-avatar" aria-hidden="true">{$shell_initial}</span><span class="studio-tool__label studio-account__name">{$shell_admin_name}</span><svg class="ax-ic ax-ic--chevron studio-tool__label" aria-hidden="true" focusable="false"><use href="{$axS}#ai-chevron-down"/></svg></button>
+                <div class="ax-menu__list studio-account__list" role="menu" hidden>
+                    <div class="studio-account__head" role="presentation"><span class="studio-avatar studio-avatar--lg" aria-hidden="true">{$shell_initial}</span><span><strong>{$shell_admin_name}</strong><span class="studio-account__access">{if condition="$shell_full"}{:lang('admin/ux/account/full')}{else /}{:lang('admin/ux/account/limited')}{/if}</span></span></div>
+                    <div class="ax-menu__sep" role="separator"></div>
+                    <button type="button" class="ax-menu__item" role="menuitem" data-shell-act="account"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axS}#ai-key-round"/></svg>{:lang('admin/ux/account/my')}</button>
+                    {if condition="$shell_lang_menu"}
+                    <div class="ax-menu__label" role="presentation"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axS}#ai-languages"/></svg>{:lang('admin/ux/account/language')}</div>
+                    {volist name="shell_langs" id="lg"}
+                    <button type="button" class="ax-menu__item studio-account__lang" role="menuitemradio" aria-checked="{if condition="$lg.current"}true{else /}false{/if}" data-shell-lang="{$lg.code}" lang="{$lg.code}"><span class="studio-check" aria-hidden="true"></span>{$lg.name}</button>
+                    {/volist}
+                    <div class="ax-menu__sep" role="separator"></div>
+                    {/if}
+                    {if condition="$nav_show_switch"}<button type="button" class="ax-menu__item" role="menuitemcheckbox" aria-checked="{if condition="$nav_adv_visible"}true{else /}false{/if}" data-shell-act="advanced"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axS}#ai-wrench"/></svg>{:lang('admin/ux/shell/advanced_switch')}<span class="studio-switch" aria-hidden="true"></span></button>{/if}
+                    <button type="button" class="ax-menu__item" role="menuitemcheckbox" aria-checked="{if condition="$shell_compact"}true{else /}false{/if}" data-shell-act="compact"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axS}#ai-list-checks"/></svg>{:lang('admin/ux/account/compact')}<span class="studio-switch" aria-hidden="true"></span></button>
+                    {if condition="$shell_can_lock"}<button type="button" class="ax-menu__item" role="menuitem" data-shell-act="lock"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axS}#ai-lock"/></svg>{:lang('admin/ux/account/lock')}</button>{/if}
+                    <a class="ax-menu__item studio-only-phone" role="menuitem" href="__ROOT__/" target="_blank" rel="noopener"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axS}#ai-external-link"/></svg>{:lang('admin/ux/shell/view_site')}</a>
+                    <a class="ax-menu__item" role="menuitem" href="https://github.com/avdbapi-com/javcms#readme" target="_blank" rel="noopener"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axS}#ai-life-buoy"/></svg>{:lang('admin/ux/account/help')}</a>
+                    <a class="ax-menu__item" role="menuitem" href="https://t.me/avdb_api" target="_blank" rel="noopener"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axS}#ai-send"/></svg>{:lang('admin/footer/support')}</a>
+                    <div class="ax-menu__sep" role="separator"></div>
+                    <a class="ax-menu__item" role="menuitem" href="{:url('index/logout')}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axS}#ai-log-out"/></svg>{:lang('admin/ux/account/logout')}</a>
+                </div>
+            </div>
+        </div>
+    </header>
+    <aside class="studio-sidebar" id="switchNav" aria-label="{:lang('admin/ux/shell/menu_label')}">
+        <div class="studio-sidebar__head">
+            <span class="studio-brand studio-brand--drawer"><span class="studio-brand__site">{$shell_site_name}</span><span class="studio-brand__admin">{:lang('admin/ux/shell/brand_admin')}</span></span>
+            <button type="button" class="studio-icon-btn studio-drawer-close" aria-label="{:lang('admin/ux/shell/close_menu')}" title="{:lang('admin/ux/shell/close_menu')}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axS}#ai-x"/></svg></button>
+        </div>
+        <div class="studio-search" role="search">
+            <label for="studioNavSearch" class="ax-sr-only">{:lang('admin/ux/shell/search_label')}</label>
+            <svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axS}#ai-search"/></svg>
+            <input id="studioNavSearch" type="search" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="studioSearchResults" placeholder="{:lang('admin/ux/shell/search_placeholder')}" autocomplete="off" spellcheck="false">
+        </div>
+        <div id="studioSearchResults" class="studio-results" role="listbox" aria-label="{:lang('admin/ux/shell/search_label')}" hidden></div>
+        <p id="studioSearchStatus" class="ax-sr-only" role="status" aria-live="polite"></p>
+        <nav class="studio-nav" id="navBar" aria-label="{:lang('admin/ux/shell/menu_label')}">
+            {if condition="$nav_overview"}
+            <a class="admin-nav-item studio-nav-pinned is-active" data-id="111" data-group="" data-title="{$nav_overview.label}" href="{$nav_overview.url}" title="{$nav_overview.help}" aria-current="page"><svg class="ax-ic ax-ic--nav" aria-hidden="true" focusable="false"><use href="{$axS}#{$nav_overview.icon}"/></svg><span class="admin-nav-item__text"><span class="admin-nav-item__label">{$nav_overview.label}</span><span class="admin-nav-item__help">{$nav_overview.help}</span></span></a>
+            {/if}
+            {if condition="!empty($nav_shortcuts)"}
+            <div class="studio-shortcuts">
+                <p class="studio-nav-section">{:lang('admin/ux/shell/shortcuts')}</p>
+                {volist name="nav_shortcuts" id="q"}
+                <a class="admin-nav-item admin-nav-item--shortcut" data-id="{$q.id}" data-group="{:lang('admin/ux/shell/shortcuts')}" data-title="{$q.name}" href="{$q.url}" title="{$q.name}"><svg class="ax-ic ax-ic--nav" aria-hidden="true" focusable="false"><use href="{$axS}#ai-list-plus"/></svg><span class="admin-nav-item__text"><span class="admin-nav-item__label">{$q.name}</span></span></a>
+                {/volist}
+            </div>
+            {/if}
+            <div class="studio-nav-divider" role="presentation"></div>
+            {volist name="nav_groups" id="g"}
+            <section class="studio-group" data-group-key="{$g.key}">
+                <button type="button" class="studio-group__head" aria-expanded="false" aria-controls="ng-{$g.key}" title="{$g.help}"><svg class="ax-ic ax-ic--nav" aria-hidden="true" focusable="false"><use href="{$axS}#{$g.icon}"/></svg><span class="studio-group__label">{$g.label}</span><svg class="ax-ic ax-ic--chevron studio-group__chev" aria-hidden="true" focusable="false"><use href="{$axS}#ai-chevron-right"/></svg></button>
+                <ul class="studio-group__body" id="ng-{$g.key}" aria-label="{$g.label}" hidden>
+                    {volist name="g['items']" id="it"}
+                    <li><a class="admin-nav-item" data-id="{$it.id}" data-group="{$g.label}" data-title="{$it.label}" href="{$it.url}" title="{$it.help}"><svg class="ax-ic ax-ic--nav" aria-hidden="true" focusable="false"><use href="{$axS}#{$it.icon}"/></svg><span class="admin-nav-item__text"><span class="admin-nav-item__label">{$it.label}</span><span class="admin-nav-item__help">{$it.help}</span></span></a></li>
+                    {/volist}
+                </ul>
+            </section>
+            {/volist}
+            {if condition="$nav_adv_count gt 0"}
+            <section class="studio-group studio-group--advanced" data-group-key="14" id="navAdvanced"{if condition="!$nav_adv_visible"} hidden{/if}>
+                <button type="button" class="studio-group__head" aria-expanded="false" aria-controls="ng-14" title="{$nav_adv.help}"><svg class="ax-ic ax-ic--nav" aria-hidden="true" focusable="false"><use href="{$axS}#{$nav_adv.icon}"/></svg><span class="studio-group__label">{$nav_adv.label}</span><svg class="ax-ic ax-ic--chevron studio-group__chev" aria-hidden="true" focusable="false"><use href="{$axS}#ai-chevron-right"/></svg></button>
+                <ul class="studio-group__body" id="ng-14" aria-label="{$nav_adv.label}" hidden>
+                    {volist name="nav_adv_sections" id="sec"}
+                    <li class="studio-group__section" role="presentation">{$sec.label}</li>
+                    {volist name="sec['items']" id="it"}
+                    <li><a class="admin-nav-item" data-id="{$it.id}" data-group="{$nav_adv.label}" data-title="{$it.label}" href="{$it.url}" title="{$it.help}"><svg class="ax-ic ax-ic--nav" aria-hidden="true" focusable="false"><use href="{$axS}#{$it.icon}"/></svg><span class="admin-nav-item__text"><span class="admin-nav-item__label">{$it.label}</span><span class="admin-nav-item__help">{$it.help}</span></span></a></li>
+                    {/volist}
+                    {/volist}
+                </ul>
+            </section>
+            {/if}
+        </nav>
+        {if condition="$nav_show_switch"}
+        <div class="studio-adv-row">
+            <button type="button" class="studio-adv-switch" role="switch" aria-checked="{if condition="$nav_adv_visible"}true{else /}false{/if}" data-off-text="{$nav_adv_off}" data-on-text="{:lang('admin/ux/shell/advanced_on')}" title="{:lang('admin/ux/shell/advanced_switch')}"><svg class="ax-ic ax-ic--nav" aria-hidden="true" focusable="false"><use href="{$axS}#ai-wrench"/></svg><span class="studio-adv-switch__text">{if condition="$nav_adv_visible"}{:lang('admin/ux/shell/advanced_on')}{else /}{$nav_adv_off}{/if}</span><span class="studio-switch" aria-hidden="true"></span></button>
+        </div>
+        {/if}
+    </aside>
+    <button type="button" class="site-mobile-shade" aria-label="{:lang('admin/ux/shell/close_menu')}" tabindex="-1"></button>
+    <main class="layui-body studio-workspace" id="switchBody" tabindex="-1">
+        <div class="layui-tab mag0" id="top_tabs_box" lay-filter="macTab" lay-allowClose="true">
+            <button type="button" class="tab-go-left" id="page-prev" aria-label="{:lang('admin/ux/shell/tab_scroll_left')}" title="{:lang('admin/ux/shell/tab_scroll_left')}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axS}#ai-chevrons-left"/></svg></button>
+            <ul class="layui-tab-title top_tab" id="B_history" role="tablist" aria-label="{:lang('admin/ux/shell/tabs')}"><li lay-id="111" class="layui-this">{:lang('menu/welcome')}</li></ul>
+            <div class="tab-right">
+                <button type="button" class="tab-go-right" id="page-next" aria-label="{:lang('admin/ux/shell/tab_scroll_right')}" title="{:lang('admin/ux/shell/tab_scroll_right')}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axS}#ai-chevrons-right"/></svg></button>
+                <div class="ax-menu studio-tab-menu">
+                    <button type="button" class="studio-tool" aria-haspopup="menu" aria-expanded="false" aria-label="{:lang('admin/ux/shell/tabs')}" title="{:lang('admin/ux/shell/tabs')}"><span>{:lang('admin/ux/shell/tabs')}</span><svg class="ax-ic ax-ic--chevron" aria-hidden="true" focusable="false"><use href="{$axS}#ai-chevron-down"/></svg></button>
+                    <div class="ax-menu__list" role="menu" hidden>
+                        <button type="button" class="ax-menu__item" role="menuitem" data-tab-act="reload"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axS}#ai-rotate-cw"/></svg>{:lang('admin/ux/shell/tab_reload')}</button>
+                        <button type="button" class="ax-menu__item" role="menuitem" data-tab-act="others"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axS}#ai-x"/></svg>{:lang('admin/ux/shell/tab_close_others')}</button>
+                        <button type="button" class="ax-menu__item" role="menuitem" data-tab-act="all"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axS}#ai-x"/></svg>{:lang('admin/ux/shell/tab_close_all')}</button>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show"><iframe title="{:lang('menu/welcome')}" lay-id="111" src="{:url('index/welcome')}" class="hs-iframe"></iframe></div>
+            </div>
+        </div>
+    </main>
+    <footer class="studio-footer"><span>{:lang('maccms_copyright')}</span><span class="studio-footer__links"><a href="https://github.com/avdbapi-com/javcms" target="_blank" rel="noopener">{:lang('admin/footer/repo')}</a><a href="https://t.me/avdb_api" target="_blank" rel="noopener">{:lang('admin/footer/support')}</a></span></footer>
+    <div id="shellLock" class="studio-lock" role="dialog" aria-modal="true" aria-labelledby="shellLockTitle" hidden>
+        <form class="studio-lock__card" autocomplete="off" novalidate>
+            <span class="studio-lock__icon" aria-hidden="true"><svg class="ax-ic ax-ic--lg" aria-hidden="true" focusable="false"><use href="{$axS}#ai-lock"/></svg></span>
+            <h2 id="shellLockTitle">{:lang('admin/ux/lock/title')}</h2>
+            <p class="studio-lock__prompt">{:lang('admin/ux/lock/prompt')}</p>
+            <div class="ax-field"><label for="shellLockPwd">{:lang('pass')}</label><input id="shellLockPwd" name="password" type="password" class="layui-input" autocomplete="current-password" maxlength="72"></div>
+            <p class="studio-lock__error ax-danger-text" role="alert"></p>
+            <div class="studio-lock__actions"><button type="submit" class="ax-btn ax-btn--primary"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axS}#ai-lock-open"/></svg>{:lang('admin/ux/lock/unlock')}</button><a class="ax-btn ax-btn--ghost" href="{:url('index/logout')}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axS}#ai-log-out"/></svg>{:lang('admin/ux/lock/signout')}</a></div>
+        </form>
+    </div>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin_common.js?v={:filemtime(ROOT_PATH . 'static/js/admin_common.js')}"></script>{/* public/foot.html loads this file with a fixed ?v=; the shell pages use the file time until hand-over HO-shell-1 is applied */}
+<script>window.AX_SHELL = {$shell_cfg_json}; window.AX_SHELL_LANG = {$shell_lang_json}; window.AX_SHELL_INDEX = {$shell_index_json};</script>
+<script src="__STATIC__/js/admin_navigation_studio.js?v={:filemtime(ROOT_PATH . 'static/js/admin_navigation_studio.js')}"></script>
+</body>
+</html>

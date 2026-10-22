@@ -1,0 +1,21 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="crimson" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+<title>{:\\app\\common\\util\\TemplateText::get('ui.downloads')}</title>
+<meta name="robots" content="noindex, follow" />
+{include file="public/include"}
+</head>
+<body class="ct-solo ct-access-page ct-inframe">
+
+<main id="main-content" class="ct-wrap ct-solo-main">
+<section class="ct-msgbox"><span class="ct-msg-icon" aria-hidden="true">{:\\app\\common\\util\\AutoIcon::ui('download', ['class'=>'ct-ico'])}</span><p class="ct-kicker">{:\\app\\common\\util\\TemplateText::get('ui.downloads')}</p><h1 class="ct-h1" dir="auto">{:htmlspecialchars(mac_default($obj['vod_display_name'] ?? '', $obj['vod_name'] ?? ''), ENT_QUOTES)}</h1><div class="ct-row ct-row--center"><a class="ct-btn" href="{:htmlspecialchars(mac_url_vod_down($obj,['sid'=>$param['sid'],'nid'=>$param['nid']]), ENT_QUOTES)}" target="_top">{:\\app\\common\\util\\TemplateText::get('ui.downloads')}</a><a class="ct-pill" href="{:htmlspecialchars(mac_url_vod_detail($obj), ENT_QUOTES)}" target="_top">{:\\app\\common\\util\\TemplateText::get('ui.details')}</a></div></section>
+</main>
+</body>
+</html>

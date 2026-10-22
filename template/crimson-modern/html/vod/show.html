@@ -1,0 +1,27 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="crimson-modern" data-fx="vt" data-fx-vt-style="crimson-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/vod_search"}
+{include file="public/include"}
+</head>
+<body class="ci-list ci-page-type">
+{include file="public/head"}
+<main id="main-content" class="ci-wrap">
+{php}ob_start(); {/php}{maccms:vod num="20" paging="yes" type="current" order="desc" by="time" pageurl="vod/show" id="vo"}{include file="public/vodbox"}{/maccms:vod}{php}$ciGridHtml = ob_get_clean(); $ciTotal = isset($__PAGING__['record_total']) ? intval($__PAGING__['record_total']) : 0; $ciMode = '';{/php}
+{php}$ciHeadTitle = \app\common\util\TemplateText::raw(htmlspecialchars_decode((string)$obj['type_name'], ENT_QUOTES)); $ciHeadCrumb = \app\common\util\TemplateText::get('ink.category'); $ciSortMode = 'type'; $ciSortActive = isset($param['by']) && $param['by'] !== '' ? (string)$param['by'] : 'time'; $ciHeadCats = 1;{/php}
+{include file="public/listhead"}
+{php}$ciLetters = array_merge(range('A', 'Z'), ['0-9']); $ciLetterOn = isset($param['letter']) ? strtoupper((string)$param['letter']) : '';{/php}<nav class="ci-chips ci-chips--scroll ci-letters" aria-label="{:\\app\\common\\util\\TemplateText::get('ink.by_letter')}"><a class="ci-chip"{if condition="$ciLetterOn eq ''"} aria-current="page"{/if} href="{:mac_url_type($obj,[],'show')}">{:\\app\\common\\util\\TemplateText::get('ink.all')}</a>{volist name="ciLetters" id="ciLetter"}<a class="ci-chip"{if condition="$ciLetterOn eq $ciLetter"} aria-current="page"{/if} href="{:mac_url_type($obj,['letter'=>$ciLetter],'show')}">{$ciLetter}</a>{/volist}</nav>
+{include file="public/subcats"}<div class="ci-grid" data-grid-fill data-ci-list>{$ciGridHtml}</div>
+{if condition="$ciTotal eq 0"}{include file="public/empty"}{/if}
+{include file="public/list_note"}{include file="public/listfoot"}
+</main>
+{include file="public/foot"}
+</body>
+</html>

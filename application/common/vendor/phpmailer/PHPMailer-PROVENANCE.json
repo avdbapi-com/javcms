@@ -1,0 +1,41 @@
+{
+  "package": "phpmailer/phpmailer",
+  "version": "7.1.1",
+  "commit": "1bc1716a507a65e039d4ac9d9adebbbd0d346e15",
+  "phpMinimum": "5.5.0",
+  "files": {
+    "src/Exception.php": {
+      "sha256": "22ab858ae438d98f58f41f38ad2191d1b0d59570aebea0463a7948cfae1021b7",
+      "bytes": 1256,
+      "url": "https://raw.githubusercontent.com/PHPMailer/PHPMailer/1bc1716a507a65e039d4ac9d9adebbbd0d346e15/src/Exception.php"
+    },
+    "src/SMTP.php": {
+      "sha256": "522bcf0d07be7e7e00114711db5c9ce2b4d59ac041c5ec36eaadd979d5fa7046",
+      "bytes": 53629,
+      "url": "https://raw.githubusercontent.com/PHPMailer/PHPMailer/1bc1716a507a65e039d4ac9d9adebbbd0d346e15/src/SMTP.php"
+    },
+    "src/PHPMailer.php": {
+      "sha256": "45599a196ae7944ee2dcd4f3d3da0ac4243513d346b2d77bbd15dbd0c37f7064",
+      "bytes": 196355,
+      "url": "https://raw.githubusercontent.com/PHPMailer/PHPMailer/1bc1716a507a65e039d4ac9d9adebbbd0d346e15/src/PHPMailer.php"
+    },
+    "LICENSE": {
+      "sha256": "a1a33180d02960ab1c5de36cf20b1a2f0fe9888d83826ad263da5db52f1b183b",
+      "bytes": 26529,
+      "url": "https://raw.githubusercontent.com/PHPMailer/PHPMailer/1bc1716a507a65e039d4ac9d9adebbbd0d346e15/LICENSE"
+    },
+    "composer.json": {
+      "sha256": "0d29d0a9c86be376433530333bee758ba563e7267347300c181299f5a1d920a4",
+      "bytes": 3016,
+      "url": "https://raw.githubusercontent.com/PHPMailer/PHPMailer/1bc1716a507a65e039d4ac9d9adebbbd0d346e15/composer.json"
+    },
+    "SECURITY.md": {
+      "sha256": "748329021e3d7307694d5c0e108dd8a31850e58ac96bc6de6cf1099568906eca",
+      "bytes": 7585,
+      "url": "https://raw.githubusercontent.com/PHPMailer/PHPMailer/1bc1716a507a65e039d4ac9d9adebbbd0d346e15/SECURITY.md"
+    }
+  },
+  "normalTls": true,
+  "scriptsExecuted": false,
+  "source": "https://github.com/PHPMailer/PHPMailer/releases/tag/v7.1.1"
+}

@@ -1,0 +1,9 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}$ncListCount = isset($ncListN) ? intval($ncListN) : ((is_array($__LIST__) && !isset($__LIST__['list'])) ? count($__LIST__) : ((isset($__LIST__['list']) && is_array($__LIST__['list'])) ? count($__LIST__['list']) : 0)); $ncLastPage = !isset($__PAGING__['page_total']) || intval($__PAGING__['page_current'] ?? 1) >= intval($__PAGING__['page_total']);{/php}{if condition="$ncListCount eq 0"}{include file="public/empty"}{elseif condition="$ncLastPage"/}<script>(function(s){var g=s&&s.previousElementSibling;while(g&&!g.hasAttribute("data-grid-fill"))g=g.previousElementSibling;if(g)for(var i=0;i<g.children.length;i++)g.children[i].setAttribute("data-grid-keep","");})(document.currentScript);</script>{/if}
+{include file="public/paging"}

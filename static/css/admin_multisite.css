@@ -1,0 +1,39 @@
+/*
+ * This file is part of JavCMS - https://javcms.net
+ * Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+ * License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+ * See the LICENSE and NOTICE files that come with JavCMS.
+ * Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Telegram: https://t.me/avdb_api
+ */
+body.admin-studio .admin-multisite { max-width: 1250px; margin-inline: auto; }
+body.admin-studio .admin-multisite [hidden] { display: none !important; }
+body.admin-studio .admin-multisite .multisite-tabs { display: flex; gap: 8px; margin: 20px 0 0; border-bottom: 1px solid var(--studio-line); padding-bottom: 8px; }
+body.admin-studio .admin-multisite .multisite-tabs button { padding: 10px 16px; border: 0; border-radius: 6px; background: transparent; color: var(--studio-muted); font: inherit; cursor: pointer; }
+body.admin-studio .admin-multisite .multisite-tabs [aria-selected="true"] { background: var(--studio-raised); color: var(--studio-text); }
+body.admin-studio .admin-multisite .multisite-status { min-height: 1.6em; margin: 12px 0; color: var(--studio-text); overflow-wrap: anywhere; }
+body.admin-studio .admin-multisite :is(.multisite-row,.multisite-transfer-card) { border: 1px solid var(--studio-line); border-radius: 9px; padding: 20px; margin-bottom: 16px; background: var(--studio-surface); color: var(--studio-text); }
+body.admin-studio .admin-multisite .multisite-row-head { display: flex; gap: 12px; align-items: center; justify-content: space-between; margin-bottom: 18px; }
+body.admin-studio .admin-multisite h2 { font-size: 17px; line-height: 1.4; font-weight: 600; color: var(--studio-text); margin: 0; overflow-wrap: anywhere; }
+body.admin-studio .admin-multisite :is(.multisite-delete,.multisite-remove) { border: 1px solid var(--studio-line); border-radius: 5px; color: var(--studio-danger); background: var(--studio-raised); padding: 6px 10px; font: inherit; cursor: pointer; }
+body.admin-studio .admin-multisite .multisite-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 16px; }
+body.admin-studio .admin-multisite .multisite-grid label { display: flex; flex-direction: column; gap: 7px; min-width: 0; color: var(--studio-text); font-size: 13px; }
+body.admin-studio .admin-multisite :is(.multisite-grid small,.multisite-transfer-card p,.multisite-transfer-guide p) { color: var(--studio-muted); font-size: 12px; line-height: 1.65; }
+body.admin-studio .admin-multisite .multisite-grid select { width: 100%; min-height: 38px; border: 1px solid var(--studio-line); border-radius: 6px; background: var(--studio-surface); color: var(--studio-text); padding: 6px 10px; font: inherit; }
+body.admin-studio .admin-multisite .multisite-advanced { margin-top: 18px; padding-top: 12px; border-top: 1px solid var(--studio-line); }
+body.admin-studio .admin-multisite .multisite-advanced summary { color: var(--studio-muted); cursor: pointer; margin-bottom: 12px; }
+body.admin-studio .admin-multisite .multisite-actions { display: flex; gap: 8px; flex-wrap: wrap; padding: 12px 0; }
+body.admin-studio .admin-multisite .multisite-transfer-card h2 { margin-bottom: 10px; }
+body.admin-studio .admin-multisite .multisite-transfer-card :is(label,input[type="file"]) { display: block; margin: 12px 0; max-width: 100%; }
+body.admin-studio .admin-multisite .multisite-transfer-guide code { display: block; overflow-wrap: anywhere; color: var(--studio-text); }
+body.admin-studio .admin-multisite button:disabled { opacity: .55; cursor: wait; }
+body.admin-studio .admin-multisite :is(input,button,select,a,summary):focus-visible { outline: 2px solid var(--studio-accent); outline-offset: 3px; }
+@media (max-width: 650px) {
+ body.admin-studio .admin-multisite .multisite-grid { grid-template-columns: minmax(0,1fr); }
+ body.admin-studio .admin-multisite :is(.multisite-row,.multisite-transfer-card) { padding: 14px; }
+ body.admin-studio .admin-multisite .multisite-tabs button { flex: 1; padding-inline: 10px; }
+}
+
+/* F48: the row the server refused (duplicate or invalid address). */
+body.admin-studio .admin-multisite .multisite-row.is-error { border-color: var(--ax-danger) !important; box-shadow: 0 0 0 1px var(--ax-danger); }
+body.admin-studio .admin-multisite .multisite-row.is-error input[aria-invalid="true"] { border-color: var(--ax-danger) !important; }

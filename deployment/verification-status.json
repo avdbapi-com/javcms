@@ -1,0 +1,122 @@
+{
+  "status": "finite Windows and Linux reference-engine tests passed; actual panel UIs unverified",
+  "verified": [
+    "community four PHP entrypoint inventory",
+    "existing ThinkPHP s compatibility variable",
+    "root/private boundary review",
+    "panel source documentation reviewed",
+    "Python renderer syntax and four invalid-input refusal fixtures",
+    "IIS configuration XML well-formed"
+  ],
+  "windows_reference_engines": {
+    "Apache": "2.4.54",
+    "Nginx": "1.23.1",
+    "php_versions": [
+      "7.4.30",
+      "8.1.9",
+      "8.3.30",
+      "8.4.20",
+      "8.5.4"
+    ],
+    "mounts": [
+      "domain root",
+      "/cms URL subdirectory"
+    ],
+    "matrix": "20 engine/version/mount runs; the initial four PHP7.4 environment failures were fixture GD DLL naming and passed corrected targeted reruns",
+    "latest_focused": "four PHP7.4 environment/neutral-redirect runs and four PHP8.3 installed admin/captcha/disabled-API runs passed; encoded route and query preservation checked on both engines",
+    "scope": "real Windows engine processes and private application fixtures; not Linux hosts or panel UI execution"
+  },
+  "iis_express_reference": {
+    "os": "Windows",
+    "version": "10.0.20001.1000",
+    "php": "8.3.30",
+    "mounts": [
+      "domain root",
+      "/cms URL subdirectory"
+    ],
+    "checks": "28 passed in each mount, 56 total",
+    "assets": "9 exact-byte HTTP200 checks: legacy/vendor layui woff2/woff/ttf, public change_log.json, two local QR scripts; default MIME mappings required no source change",
+    "browser": "anonymous login using pinned Chromium1217: no page errors, failed requests or HTTP errors; no authentication submission",
+    "provenance": "official Microsoft MSI and extracted IIS Express/Rewrite/FastCGI modules verified with valid Microsoft Authenticode signatures and private SHA256 records",
+    "cleanup": "owned IIS processes and listeners exited; orphaned private PHP-CGI children separately journaled/stopped; no private PHP-CGI remains",
+    "scope": "IIS Express reference engine; not Windows Server IIS roles, Plesk Windows, or any panel UI"
+  },
+  "experimental_php": "PHP 8.6.0RC2 passed 58 focused runtime and five syntax checks, including four genuine OPcache replacement assertions; experimental build only, no full application or future version guarantee",
+  "pending": [],
+  "not_runtime_verified": [
+    "Linux production host installations",
+    "Windows Server IIS roles",
+    "aaPanel Apache",
+    "aaPanel Nginx",
+    "aaPanel OpenLiteSpeed",
+    "CloudPanel v2",
+    "HestiaCP Nginx+Apache",
+    "CyberPanel",
+    "1Panel",
+    "Virtualmin",
+    "cPanel",
+    "Plesk Linux",
+    "Plesk Windows",
+    "XAMPP panel",
+    "Laragon panel",
+    "GitHub-hosted compatibility workflow execution",
+    "Real media decoding and remote integrations"
+  ],
+  "php_future": "No upper guard; PHP 8.6.0RC2 has finite experimental coverage only. Released PHP 8.6 and later 8.7, 8.8, 8.9 and 9.0 require new tests when available.",
+  "scope": "Finite private reference-engine tests and reviewed deployment examples. Actual panel UIs and arbitrary production installations are not certified.",
+  "php_released": "PHP 7.4 through 8.5: finite changed-source syntax/runtime checks, including four genuine OPcache replacement assertions on each available branch",
+  "windows_proxy_reference": {
+    "frontend": "Nginx 1.23.1",
+    "backend": "Apache 2.4.54",
+    "checks": 78,
+    "scope": "Routing/query/body/private/static proxy reference checks; not panel UI execution"
+  },
+  "linux_reference_engines": {
+    "native": {
+      "server": "Nginx 1.30.4",
+      "php": "PHP 8.5.11-FPM",
+      "database": "MariaDB 11.8.8",
+      "http_checks": 44,
+      "installer_checks": 6,
+      "api_json_xml_checks": 5,
+      "browser_checks": 16,
+      "mounts": [
+        "root",
+        "/cms"
+      ],
+      "status": "passed"
+    },
+    "docker": {
+      "server": "Nginx 1.30.5",
+      "php": "PHP 8.4.26-FPM",
+      "database": "MariaDB 11.4.13",
+      "neutral_checks": 39,
+      "installer_checks": 6,
+      "installed_checks_before_recreation": 37,
+      "installed_checks_after_recreation": 37,
+      "schema_and_bcrypt": "passed",
+      "configuration_lock_persistence": "three exact hashes passed after PHP/web recreation",
+      "status": "passed"
+    },
+    "openresty": {
+      "version": "1.29.2.4",
+      "php": "PHP 8.4.26-FPM",
+      "root_checks": 37,
+      "subdirectory_checks": 37,
+      "status": "passed"
+    },
+    "openlitespeed": {
+      "version": "1.8.5 Open",
+      "php": "PHP 8.5.3 LSAPI",
+      "sapi": "litespeed",
+      "effective_uid": 65534,
+      "root_installed_checks": 37,
+      "subdirectory_installed_checks": 37,
+      "root_neutral_installer_environment_redirect_checks": 7,
+      "subdirectory_neutral_installer_environment_redirect_checks": 7,
+      "configuration_test": "passed",
+      "final_php_and_server_diagnostics": "zero errors, warnings and deprecations in tested root/subdirectory fixtures",
+      "status": "passed"
+    }
+  }
+}

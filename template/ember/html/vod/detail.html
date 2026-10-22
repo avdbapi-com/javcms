@@ -1,0 +1,47 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="ember" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/vod_detail"}
+{include file="public/include"}
+</head>
+<body class="e-page-detail">
+{include file="public/metavars"}
+{include file="public/head"}
+<span class="gallery-history-entry" hidden data-name="{$tplTitle|htmlspecialchars=ENT_QUOTES}" data-link="{:mac_url_vod_detail($obj)}" data-pic="{$tplPoster|htmlspecialchars=ENT_QUOTES}"></span>
+<main id="main-content" class="e-main container">
+  <nav class="e-crumb" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.main_navigation')}">
+    <a href="{$maccms.path}">{:\\app\\common\\util\\AutoIcon::navIcon('home', '', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ui.home')}</a>
+    {if condition="$tplTypeName neq ''"}{:\\app\\common\\util\\AutoIcon::ui('chevron-right', ['class'=>'e-ico'])}<a href="{:mac_url_type($obj['type'])}">{:\\app\\common\\util\\AutoIcon::icon('category', $obj['type']['type_name'] ?? '', ['size'=>'sm'])}{$tplTypeName|htmlspecialchars=ENT_QUOTES}</a>{/if}
+    {:\\app\\common\\util\\AutoIcon::ui('chevron-right', ['class'=>'e-ico'])}<span aria-current="page">{if condition="$tplCode neq ''"}{$tplCode|htmlspecialchars=ENT_QUOTES}{else/}{$tplTitle|htmlspecialchars=ENT_QUOTES}{/if}</span>
+  </nav>
+  <div class="e-vtitle">
+    <h1{php}echo \app\common\util\AvdbLanguage::langAttr(isset($obj) && is_array($obj) ? $obj : []);{/php}>{$tplTitle|htmlspecialchars=ENT_QUOTES}</h1>
+  </div>
+  <div class="e-detail is-vod">
+    <a class="e-cover" href="{if condition="$tplPlayUrl neq ''"}{$tplPlayUrl|htmlspecialchars=ENT_QUOTES}{else/}#main-content{/if}"><img data-lowres class="e-img" src="{$tplPoster|htmlspecialchars=ENT_QUOTES}" alt="{$tplTitle|htmlspecialchars=ENT_QUOTES}" width="800" height="450" fetchpriority="high" decoding="async"><span class="e-play" aria-hidden="true"><svg class="e-ico"><use href="{$tplIcons}#play"></use></svg></span>{if condition="$tplDuration neq ''"}<span class="e-dur">{$tplDuration|htmlspecialchars=ENT_QUOTES}</span>{/if}</a>
+    <div class="e-detail-side">
+      {include file="public/meta"}
+      <div class="e-actions">
+        {if condition="$tplPlayUrl neq ''"}<a class="e-pill is-big e-magnet" href="{$tplPlayUrl|htmlspecialchars=ENT_QUOTES}">{:\\app\\common\\util\\AutoIcon::ui('play', ['class'=>'e-ico'])}{:\\app\\common\\util\\TemplateText::get('play_now')}</a>{/if}
+        <button class="e-pill e-magnet" type="button" data-e-fav data-id="{$obj.vod_id|intval}" data-mid="1">{:\\app\\common\\util\\AutoIcon::ui('star', ['class'=>'e-ico'])}{:\\app\\common\\util\\TemplateText::get('favorites')}</button>
+        <button class="e-pill e-magnet" type="button" data-e-copy>{:\\app\\common\\util\\AutoIcon::ui('link', ['class'=>'e-ico'])}{:\\app\\common\\util\\TemplateText::get('ui.copy_link')}</button>
+        {notempty name="obj.vod_down_list"}<a class="e-pill e-magnet" href="{:mac_url_vod_down($obj,['sid'=>1,'nid'=>1])}">{:\\app\\common\\util\\AutoIcon::ui('download', ['class'=>'e-ico'])}{:\\app\\common\\util\\TemplateText::get('downloads')}</a>{/notempty}
+      </div>
+    </div>
+  </div>
+  {include file="vod/embertags"}
+  {php}$tplRelKey = 'you_may_also_like'; $tplRelBy = 'hits';{/php}
+  {include file="public/related"}
+  {if condition="$GLOBALS['config']['comment']['status'] eq 1"}<section class="e-comments"><div class="mac_comment" data-id="{$obj.vod_id|intval}" data-mid="1"><h2>{:\\app\\common\\util\\TemplateText::get('ui.comments')}</h2><p>{:\\app\\common\\util\\TemplateText::get('ui.loading_comments')}</p></div></section><script>MAC.Comment.Init();MAC.Comment.Show(1);</script>{/if}
+  <div class="e-notice"><p>{:\\app\\common\\util\\TemplateText::get('ember.adult_notice')}</p><strong>{:\\app\\common\\util\\TemplateText::get('ember.under_18')}</strong></div>
+</main>
+{include file="public/foot"}
+</body>
+</html>

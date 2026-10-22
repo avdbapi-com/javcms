@@ -1,0 +1,18 @@
+# Optional search-flood limits before PHP for Apache 2.4 (JavCMS 1.2.0, XVID-SCALE-BRIEF G11): the Apache equivalent of
+# nginx/limits-http.conf. Server or VirtualHost level (these modules do not work from .htaccess); needs mod_qos
+# (package libapache2-mod-qos / mod_qos) and mod_headers. Without mod_qos nothing here is active and PHP's own budgets and
+# render slots (RequestGate) still protect the site.
+# Only search requests (/search, /vod/search, wd=) are limited; every other page is untouched.
+<IfModule mod_qos.c>
+    # the whole site: at most 8 searches answered at the same time; more -> 503 at once (no PHP worker used)
+    QS_LocRequestLimitMatch "(?i)^(?:/index\.php)?(?:/[a-z]{2}(?:-[a-z]{2})?)?/(?:vod/)?search(?:[/?.]|$)" 8
+    QS_ErrorResponseCode 503
+    # per address: 30 searches a minute (behind a proxy or Cloudflare, mod_remoteip must set the visitor address first)
+    SetEnvIfNoCase Request_URI "(?:^|/)search(?:[/?.]|$)" JavcmsSearch=1
+    SetEnvIfNoCase Query_String "(?:^|&)wd=" JavcmsSearch=1
+    QS_ClientEventLimitCount 30 60 JavcmsSearch
+</IfModule>
+<IfModule mod_headers.c>
+    # clients and crawlers wait before they try again (PHP's own 429 / 503 answers carry Retry-After already)
+    Header always setifempty Retry-After 30 "expr=%{REQUEST_STATUS} == 429 || %{REQUEST_STATUS} == 503"
+</IfModule>

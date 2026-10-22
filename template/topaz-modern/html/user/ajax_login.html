@@ -1,0 +1,16 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<div class="tp-acct tp-salon-card--modal mac_login">
+<form class="mac_login_form tp-form" onsubmit="return false">
+<div class="tp-field"><input class="tp-input mac_u_name" name="user_name" type="text" placeholder="{:\\app\\common\\util\\TemplateText::get('ui.username')}" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.username')}"></div>
+<div class="tp-field"><input class="tp-input mac_u_pwd" name="user_pwd" type="password" placeholder="{:\\app\\common\\util\\TemplateText::get('ui.password')}" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.password')}"></div>
+{if condition="$GLOBALS['config']['user']['login_verify'] eq 1"}<div class="tp-field tp-field--captcha"><input class="tp-input mac_u_verify" name="verify" type="text" placeholder="{:\\app\\common\\util\\TemplateText::get('ui.verification_code')}" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.verification_code')}" data-tp-captcha-input><span class="tp-captcha" data-tp-captcha-box><img class="mac_verify_img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="{:url('verify/index')}" hidden alt="{:\\app\\common\\util\\TemplateText::get('ui.verification_code')}" title="{:\\app\\common\\util\\TemplateText::get('not_to_see_change_one')}" role="button" tabindex="0"></span></div>{/if}
+<input class="tp-btn tp-btn--ice tp-btn--block login_form_submit" type="button" value="{:\\app\\common\\util\\TemplateText::get('ui.log_in')}">
+<p class="tp-salon-foot"><a href="{:url('user/reg')}">{:\\app\\common\\util\\TemplateText::get('ui.register')}</a><a href="{:url('user/findpass')}">{:\\app\\common\\util\\TemplateText::get('ui.forget_the_password')}</a></p>
+</form>
+</div>

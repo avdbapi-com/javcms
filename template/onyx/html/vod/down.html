@@ -1,0 +1,26 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="onyx" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/auto"}
+{include file="public/include"}
+</head>
+<body class="page-down">
+{include file="public/head"}
+<main id="main-content" class="wrap">
+{include file="public/vodvars"}
+<nav class="crumbs"><a href="{$maccms.path}">{:\\app\\common\\util\\TemplateText::get('ui.home')}</a><span class="sep" aria-hidden="true">/</span><a href="{:mac_url_vod_detail($obj)}">{$tplName|htmlspecialchars=ENT_QUOTES}</a></nav>
+<h1 class="page-title">{:\\app\\common\\util\\TemplateText::get('download_links')}</h1>
+{php}$tplDownCount = 0; if (!empty($obj['vod_down_list']) && is_array($obj['vod_down_list'])) { foreach ($obj['vod_down_list'] as $tplDl) { $tplDownCount += (isset($tplDl['urls']) && is_array($tplDl['urls'])) ? count($tplDl['urls']) : 0; } }{/php}
+{if condition="$tplDownCount gt 0"}<section class="episodes">{maccms:foreach name="obj.vod_down_list" id="tplDl"}<h2>{$tplDl.player_info.show|htmlspecialchars=ENT_QUOTES}</h2><div class="ep-list">{maccms:foreach name="tplDl.urls" id="tplDu"}<a href="{:mac_url_vod_down($obj,['sid'=>$tplDl['sid'],'nid'=>$tplDu['nid']])}" rel="nofollow">{$tplDu.name|htmlspecialchars=ENT_QUOTES}</a>{/maccms:foreach}</div>{/maccms:foreach}</section>
+{else/}<div class="empty">{:\\app\\common\\util\\AutoIcon::scene('empty-library')}<p>{:\\app\\common\\util\\TemplateText::get('ui.no_download_links_are_available_for_this_video')}</p>{if condition="$tplPlayUrl neq ''"}<a class="btn btn-fill" href="{$tplPlayUrl|htmlspecialchars=ENT_QUOTES}">{:\\app\\common\\util\\TemplateText::get('ui.watch_online')}</a>{/if}</div>{/if}
+</main>
+{include file="public/foot"}
+</body>
+</html>

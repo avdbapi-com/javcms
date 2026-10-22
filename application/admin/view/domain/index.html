@@ -1,0 +1,84 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Based on MacCMS 10 (Apache-2.0) by magicblack, changed by JavCMS.
+JavCMS changes: Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors,
+JavCMS Community License 1.0. The MacCMS parts stay under the Apache License 2.0.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{include file="../../../application/admin/view/public/head" /}
+<link rel="stylesheet" href="__STATIC__/css/admin_multisite.css?v={:filemtime(ROOT_PATH . 'static/css/admin_multisite.css')}">
+<div class="page-container admin-multisite" id="admin-multisite" data-delete-url="{:url('domain/del')}" data-confirm-delete="{:lang('admin/multisite/delete_confirm')}" data-confirm-import="{:lang('admin/multisite/import_confirm')}" data-error="{:lang('admin/multisite/request_failed')}" data-loading="{:lang('wait_submit')}">
+    {include file="../../../application/admin/view/public/page_head" icon="ai-earth" title="admin/ux/menu/domains" help="admin/ux/help/domains" /}
+    <p class="ax-help">{:lang('admin/multisite/intro')}</p>
+    <div class="multisite-tabs" role="tablist" aria-label="{:lang('admin/domain/title')}">
+        <button type="button" role="tab" id="multisite-tab-sites" aria-controls="multisite-sites" aria-selected="true">{:lang('admin/multisite/sites_tab')} ({$domain_list|count})</button>
+        <button type="button" role="tab" id="multisite-tab-transfer" aria-controls="multisite-transfer" aria-selected="false" tabindex="-1">{:lang('admin/multisite/transfer_tab')}</button>
+    </div>
+    <p class="multisite-status" id="multisite-status" role="status" aria-live="polite" aria-atomic="true"></p>
+    <section id="multisite-sites" role="tabpanel" aria-labelledby="multisite-tab-sites">
+        <form class="layui-form multisite-save-form" method="post" action="{:url('domain/index')}" id="multisite-save-form">
+            <input type="hidden" name="__token__" value="{$multisite_token|htmlspecialchars}">
+            <input type="hidden" name="domain_form" value="1">
+            <input type="hidden" name="domain_revision" value="{$domain_revision|htmlspecialchars}">
+            {if condition="empty($domain_list)"}<div class="ax-empty" id="multisite-empty"><svg class="ax-ic ax-ic--xl" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-earth"/></svg><p class="ax-empty__text">{:lang('admin/ux/system/empty_domains')}</p><div class="ax-empty__actions"><button type="button" class="ax-btn ax-btn--primary" onclick="document.getElementById('multisite-add').click(); this.closest('.ax-empty').hidden = true;"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-plus"/></svg>{:lang('admin/ux/system/add_domain')}</button></div></div>{/if}
+            <div id="domain_list" class="multisite-list">
+                {volist name="$domain_list" id="vo"}
+                <article class="multisite-row">
+                    <input type="hidden" name="domain[origin][]" value="{$key|htmlspecialchars}">
+                    <div class="multisite-row-head"><h2>{$vo.site_url|htmlspecialchars}</h2><button type="button" class="multisite-delete ax-btn ax-btn--sm ax-btn--ghost" data-domain-id="{$key|htmlspecialchars}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-trash-2"/></svg>{:lang('del')}</button></div>
+                    <div class="multisite-grid">
+                        <label><span>{:lang('domain')}</span><input type="text" name="domain[site_url][]" value="{$vo.site_url|htmlspecialchars}" class="layui-input" required autocomplete="off" spellcheck="false"><small>{:lang('admin/multisite/host_help')}</small></label>
+                        <label><span>{:lang('site_name')}</span><input type="text" name="domain[site_name][]" value="{$vo.site_name|htmlspecialchars}" class="layui-input"></label>
+                    </div>
+                    <details class="multisite-advanced"><summary>{:lang('admin/multisite/overrides')}</summary>
+                        <div class="multisite-grid">
+                            <label><span>{:lang('admin/system/config/site_keywords')}</span><input type="text" name="domain[site_keywords][]" value="{$vo.site_keywords|htmlspecialchars}" class="layui-input"></label>
+                            <label><span>{:lang('description')}</span><input type="text" name="domain[site_description][]" value="{$vo.site_description|htmlspecialchars}" class="layui-input"></label>
+                            <label><span>{:lang('select_template')}</span><select name="domain[template_dir][]" lay-ignore>
+                                <option value="no" {if condition="$vo.template_dir eq 'no'"}selected{/if}>{:lang('select_template')}</option>
+                                {if condition="$vo.template_dir neq 'no' && !in_array($vo['template_dir'], $templates)"}<option value="{$vo.template_dir|htmlspecialchars}" selected>{$vo.template_dir|htmlspecialchars}</option>{/if}
+                                {volist name="templates" id="template"}<option value="{$template|htmlspecialchars}" {if condition="$template eq $vo.template_dir"}selected{/if}>{:htmlspecialchars(($template_names[$template] ?? $template) . " (" . $template . ")")}</option>{/volist}
+                            </select></label>
+                            <label><span>{:lang('tpl_dir')}</span><input type="text" name="domain[html_dir][]" value="{$vo.html_dir|htmlspecialchars}" class="layui-input"></label>
+                            <label><span>{:lang('ads_dir')}</span><input type="text" name="domain[ads_dir][]" value="{$vo.ads_dir|htmlspecialchars}" class="layui-input"></label>
+                        </div>
+                    </details>
+                </article>
+                {/volist}
+            </div>
+            <div class="multisite-actions"><button type="button" class="ax-btn" id="multisite-add"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-plus"/></svg>{:lang('admin/multisite/add_site')}</button><button type="reset" class="ax-btn"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-rotate-ccw"/></svg>{:lang('admin/ux/system/undo_changes')}</button><button type="submit" class="ax-btn ax-btn--primary"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-save"/></svg>{:lang('admin/ux/kit/save')}</button></div>
+        </form>
+    </section>
+    <section id="multisite-transfer" role="tabpanel" aria-labelledby="multisite-tab-transfer" hidden>
+        <div class="multisite-transfer-card"><h2>{:lang('export')}</h2><p>{:lang('admin/multisite/export_help')}</p><a class="ax-btn" href="{:url('domain/export')}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-download"/></svg>{:lang('admin/multisite/download')}</a> <a class="ax-btn" href="{:url('domain/export', ['format'=>'json'])}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-download"/></svg>{:lang('admin/multisite/download_json')}</a></div>
+        <form class="multisite-transfer-card" method="post" action="{:url('domain/import')}" enctype="multipart/form-data" id="multisite-import-form">
+            <input type="hidden" name="__token__" value="{$multisite_token|htmlspecialchars}">
+            <h2>{:lang('import')}</h2><p>{:lang('admin/multisite/import_help')}</p>
+            <label for="multisite-file">{:lang('admin/multisite/file')}</label><input type="file" id="multisite-file" name="file" accept=".txt,.json" required>
+            <button type="submit" class="ax-btn"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-upload"/></svg>{:lang('admin/multisite/import_replace')}</button>
+        </form>
+        <details class="multisite-advanced multisite-transfer-guide"><summary>{:lang('admin/multisite/format_help')}</summary><p>{:lang('admin/multisite/format_description')}</p><code>site_url$site_name$site_keywords$site_description$template_dir$html_dir$ads_dir</code></details>
+    </section>
+    <template id="multisite-new-row">
+        <article class="multisite-row" data-new="1">
+            <input type="hidden" name="domain[origin][]" value="">
+            <div class="multisite-row-head"><h2>{:lang('admin/multisite/new_site')}</h2><button type="button" class="multisite-remove ax-btn ax-btn--sm ax-btn--ghost"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-trash-2"/></svg>{:lang('del')}</button></div>
+            <div class="multisite-grid">
+                <label><span>{:lang('domain')}</span><input type="text" name="domain[site_url][]" class="layui-input" required autocomplete="off" spellcheck="false"><small>{:lang('admin/multisite/host_help')}</small></label>
+                <label><span>{:lang('site_name')}</span><input type="text" name="domain[site_name][]" class="layui-input"></label>
+            </div>
+            <details class="multisite-advanced"><summary>{:lang('admin/multisite/overrides')}</summary><div class="multisite-grid">
+                <label><span>{:lang('admin/system/config/site_keywords')}</span><input type="text" name="domain[site_keywords][]" class="layui-input"></label>
+                <label><span>{:lang('description')}</span><input type="text" name="domain[site_description][]" class="layui-input"></label>
+                <label><span>{:lang('select_template')}</span><select name="domain[template_dir][]" lay-ignore><option value="no">{:lang('select_template')}</option>{volist name="templates" id="template"}<option value="{$template|htmlspecialchars}">{:htmlspecialchars(($template_names[$template] ?? $template) . " (" . $template . ")")}</option>{/volist}</select></label>
+                <label><span>{:lang('tpl_dir')}</span><input type="text" name="domain[html_dir][]" class="layui-input"></label>
+                <label><span>{:lang('ads_dir')}</span><input type="text" name="domain[ads_dir][]" class="layui-input"></label>
+            </div></details>
+        </article>
+    </template>
+</div>
+{include file="../../../application/admin/view/public/foot" /}
+<script defer src="__STATIC__/js/admin_multisite.js?v={:filemtime(ROOT_PATH . 'static/js/admin_multisite.js')}"></script>
+</body>
+</html>

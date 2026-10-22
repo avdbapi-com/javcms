@@ -1,0 +1,110 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Based on MacCMS 10 (Apache-2.0) by magicblack, changed by JavCMS.
+JavCMS changes: Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors,
+JavCMS Community License 1.0. The MacCMS parts stay under the Apache License 2.0.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{include file="../../../application/admin/view/public/head" /}
+<link rel="stylesheet" href="__STATIC__/css/admin_images_sync_modal_mobile_v1.css?rev=1">
+<div class="page-container p10 admin-images-sync-modal-mobile-v1">
+
+    <form class="layui-form admin-images-sync-form" method="post" action="{:url('sync')}" aria-labelledby="admin-images-sync-title">
+        <input type="hidden" name="tab" value="{$tab|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}">
+        <input type="hidden" name="__token__" value="{:mac_admin_csrf_token()}">
+        <div class="ax-editor-head">
+            <h1 id="admin-images-sync-title">{:lang('pic_sync')}</h1>
+        </div>
+        <fieldset class="layui-elem-field">
+            <legend>{:lang('admin/images/sync_range')}</legend>
+            <div class="layui-field-box">
+                <div class="layui-form-item">
+                        <div class="layui-input-inline" style="width: 140px;">
+                            <input type="radio" checked value="1" name="range" title="{:lang('all')}">
+                        </div>
+                        <div class="layui-input-inline" style="width: 140px;">
+                            <input type="radio" value="2" name="range" title="{:lang('admin/images/date')}">
+                        </div>
+                        <div class="layui-input-inline" style="width: 100px;">
+                            <input type="text" name="date" required  placeholder="" autocomplete="off" class="layui-input" value="{:date('Y-m-d')}">
+                        </div>
+                </div>
+            </div>
+        </fieldset>
+
+        <fieldset class="layui-elem-field">
+            <legend>{:lang('admin/images/sync_option')}</legend>
+            <div class="layui-field-box">
+                <div class="layui-form-item">
+                    <div class="layui-input-inline" style="width: auto;">
+                        <input type="radio"  value="0" name="opt" title="{:lang('all')}">
+                    </div>
+                    <div class="layui-input-inline" style="width: auto;">
+                        <input type="radio" value="1" name="opt" title="{:lang('not_pic_sync_err')}">
+                    </div>
+                    <div class="layui-input-inline" style="width: auto;">
+                        <input type="radio" checked value="2" name="opt" title="{:lang('not_pic_sync_today_err')}">
+                    </div>
+                    <div class="layui-input-inline" style="width: auto;">
+                        <input type="radio" value="3" name="opt" title="{:lang('pic_err')}">
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+
+        <fieldset class="layui-elem-field">
+            <legend>{:lang('admin/images/opt/tip1')}</legend>
+            <div class="layui-field-box">
+                <div class="layui-form-item">
+                    <div class="layui-input-inline" style="width: 140px;">
+                        <input type="radio" checked value="1" name="col" title="{:lang('admin/images/opt/pic')}">
+                    </div>
+                    <div class="layui-input-inline" style="width: 140px;">
+                        <input type="radio" value="2" name="col" title="{:lang('admin/images/pic_content')}">
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+
+        <fieldset class="layui-elem-field">
+            <legend>{:lang('admin/images/opt/tip2')}</legend>
+            <div class="layui-field-box">
+                <div class="layui-form-item">
+                    <div class="layui-input-inline" style="width: 140px;">
+                        <input type="text" name="limit" required placeholder="" autocomplete="off" class="layui-input" value="10">
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+
+        <div class="layui-form-item admin-images-sync-actions">
+            <button type="submit" class="ax-btn ax-btn--primary btn_submit">{:lang('start_exec')}</button>
+            <button type="button" class="ax-btn admin-images-sync-close" data-admin-images-sync-close hidden>{:lang('close')}</button>
+        </div>
+
+    </form>
+</div>
+{include file="../../../application/admin/view/public/foot" /}
+<script type="text/javascript">
+    layui.use(['element', 'layer'], function() {
+        try {
+            if (window.parent && window.parent !== window && window.parent.layer) {
+                var parentLayer = window.parent.layer;
+                var frameIndex = typeof parentLayer.getFrameIndex === 'function' ? parentLayer.getFrameIndex(window.name) : null;
+                if (frameIndex !== null && frameIndex !== undefined) {
+                    if (typeof parentLayer.title === 'function') {
+                        parentLayer.title("{:lang('pic_sync')}", frameIndex);
+                    }
+                    $('[data-admin-images-sync-close]').prop('hidden', false).on('click', function() {
+                        parentLayer.close(frameIndex);
+                    });
+                }
+            }
+        } catch (error) {
+            // The parent layer is an enhancement; native form submission remains available.
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}
+$ncPlain = function ($ncV) { return \app\common\util\AvdbLanguage::decodeEntities((string)$ncV); };
+$ncShow = function ($ncV) use ($ncPlain) { return htmlspecialchars(trim($ncPlain($ncV)), ENT_QUOTES, 'UTF-8'); };
+$ncSplit = function ($value) { $out = []; foreach (explode(',', (string)$value) as $ncPart) { $ncPart = trim($ncPart); if ($ncPart !== '' && !in_array($ncPart, $out, true)) { $out[] = $ncPart; } } return $out; };
+$ncField = function ($display, $raw) use ($obj) { $ncVal = trim((string)($obj[$display] ?? '')); if ($ncVal === '' && !isset($obj[$display])) { $ncVal = trim(html_entity_decode(strip_tags((string)($obj[$raw] ?? '')), ENT_QUOTES, 'UTF-8')); } return $ncVal; };
+$ncSearchUrl = function ($field, $value) { $value = (string)$value; if (strpos($value, '/') !== false || strpos($value, '%') !== false) { $ncSb = mac_url('vod/search'); $ncSu = $ncSb . (strpos($ncSb, '?') === false ? '?' : '&') . rawurlencode($field) . '=' . rawurlencode($value); } else { $ncSu = mac_url_search([$field => $value]); } return htmlspecialchars($ncSu, ENT_QUOTES, 'UTF-8'); };
+$ncLbl = function ($key) { return htmlspecialchars(preg_replace('/[\s:\x{FF1A}]+$/u', '', \app\common\util\TemplateText::raw($key)), ENT_QUOTES, 'UTF-8'); };
+$ncCode = \app\common\util\AvdbLanguage::displayCode($obj); /* 2.11 rule 1: code only from vod_display_code */
+if ($ncCode === '' || stripos($ncCode, 'avdb-') === 0 || strlen($ncCode) > 40) { $ncCode = ''; }
+$ncActors = $ncSplit($ncField('vod_display_actor', 'vod_actor'));
+$ncActors = array_values(array_filter($ncActors, function ($ncA) use ($ncPlain) { return !in_array(strtolower(trim($ncPlain($ncA))), ['actresses & casts', 'unknown'], true); }));
+$ncGenres = $ncSplit($ncField('vod_display_class', 'vod_class'));
+$ncTagSkip = array_map('mb_strtolower', array_merge($ncActors, $ncGenres)); foreach ($ncActors as $ncTagA) { foreach (preg_split('/\s+/u', $ncTagA) as $ncTagW) { if (mb_strlen($ncTagW) > 1) { $ncTagSkip[] = mb_strtolower($ncTagW); } } } $ncTagCode = strtolower(preg_replace('/[^a-z0-9]/i', '', (string)($obj['vod_remarks'] ?? ''))); $ncTags = [];
+foreach ($ncSplit($ncField('vod_display_tag', 'vod_tag')) as $ncTag) { $ncTagKey = strtolower(preg_replace('/[^a-z0-9]/i', '', $ncTag)); $ncTagLen = mb_strlen($ncTag);
+ if ($ncTagLen < 2 || $ncTagLen > 40 || preg_match('/^[0-9]+$/', $ncTag) || in_array(mb_strtolower($ncTag), $ncTagSkip, true) || strpos($ncTag, '/') !== false || preg_match('/\p{Ll}\p{Lu}/u', $ncTag) || !\app\common\util\AutoIcon::keepTag($ncTag)) { continue; }
+ if ($ncTagLen === 2 && !preg_match('/^(?=.*[A-Z0-9])[A-Z0-9]{2}$/', $ncTag)) { continue; }
+ if ($ncTagCode !== '' && $ncTagKey !== '' && (strpos($ncTagKey, $ncTagCode) !== false || strpos($ncTagCode, $ncTagKey) !== false)) { continue; }
+ $ncTags[] = $ncTag; if (count($ncTags) >= 24) { break; } }
+$ncDirectors = $ncSplit($ncField('vod_display_director', 'vod_director'));
+$ncStudio = $ncField('vod_display_writer', 'vod_writer');
+$ncRelease = trim((string)($obj['vod_pubdate'] ?? ''));
+if ($ncRelease === '' && !empty($obj['vod_year'])) { $ncRelease = (string)$obj['vod_year']; }
+$ncDuration = trim((string)($obj['vod_duration'] ?? ''));
+$ncTypeName = trim(htmlspecialchars_decode((string)($obj['type']['type_name'] ?? ''), ENT_QUOTES));
+$ncDesc = $ncField('vod_display_content', 'vod_content');
+if ($ncDesc === '') { $ncDesc = $ncField('vod_display_blurb', 'vod_blurb'); }
+$ncDesc = trim($ncPlain($ncDesc));
+$ncScore = (float)($obj['vod_score'] ?? 0);
+$ncScoreTxt = $ncScore > 0 ? number_format($ncScore, 1) : '';
+$ncName = trim((string)($obj['vod_display_name'] ?? ''));
+if ($ncName === '') { $ncName = trim((string)($obj['vod_name'] ?? '')); }
+$ncName = trim($ncPlain($ncName));
+$ncPicCover = trim((string)($obj['vod_pic'] ?? ''));
+$ncPicCover = $ncPicCover === '' ? $maccms['path_tpl'] . 'assets/brand/ph-dark.svg' : mac_url_img($ncPicCover);
+$ncHitsNum = number_format((int)($obj['vod_hits'] ?? 0));
+$ncUpNum = number_format((int)($obj['vod_up'] ?? 0));
+$ncSourceTotal = 0; $ncEpisodeTotal = 0;
+if (!empty($obj['vod_play_list']) && is_array($obj['vod_play_list'])) { foreach ($obj['vod_play_list'] as $ncSrcItem) { $ncSourceTotal++; $ncEpisodeTotal += (isset($ncSrcItem['urls']) && is_array($ncSrcItem['urls'])) ? count($ncSrcItem['urls']) : 0; } }
+$ncShowEpisodes = ($ncSourceTotal > 1 || $ncEpisodeTotal > 1) ? 1 : 0;
+if (!isset($ncIco)) { $ncIco = $maccms['path_tpl'] . 'assets/icons.svg?v=20261012c#'; }
+{/php}

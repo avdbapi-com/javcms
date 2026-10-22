@@ -1,0 +1,33 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-variant="modern" data-template-theme="javcms" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+     {include file="seo/index"}   
+	{include file="public/include"}
+	</head>
+	<body>
+
+		<div class="shadow"></div>
+		{include file="public/head"}
+		<div class="wrapped">
+			<main id="main-content">
+				{include file="public/nav"}<!--Navigation menu-->
+				<div class="content">
+                {include file="index/watch"}<!--Popularity-->
+			    {include file="index/new"}<!--Latest videos-->
+				{include file="index/list"}<!--All categories-->
+			<!--{include file="public/paging"}--><!--Pagination-->
+	        <!-- {include file="public/link"}--><!--Friendly link-->
+	            
+				</div>
+			</main>
+				{include file="public/foot"}<!--Bottom of the page-->
+		</div>
+	</body>
+</html>

@@ -1,0 +1,410 @@
+/*
+ * This file is part of JavCMS - https://javcms.net
+ * Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+ * License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+ * See the LICENSE and NOTICE files that come with JavCMS.
+ * Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Telegram: https://t.me/avdb_api
+ */
+/*
+ * JavCMS shared display rules (xvid scale build, brief 2.11; lane T). Loaded by every theme's public/include.html
+ * together with lowres.js. Colours come from the theme (currentColor), so the same rules fit dark and light themes.
+ *   1. is-lowres frames (rule 2): small picture contained at <= 1.5x over a blurred copy of itself
+ *   2. RTL bidi (rule 1): a title that starts with a number or a Latin word keeps its own direction on Arabic pages
+ *   3. subcats chip row (rule 5), 4. quality badge (rule 7), 5. provider block (the "International" home block)
+ *   6. shared pager (NOLIMIT D1), 7. theme pager adjustments for long page numbers
+ *   8. light content column under the brand-takeover wallpaper ad (verify r6 T-LB-01, decision D-15)
+ */
+
+/* 1. low-resolution frames (lowres.js sets is-lowres, --jv-lowres-w and --jv-lowres-bg) */
+.is-lowres {
+  overflow: hidden;
+  isolation: isolate;
+  background-color: #000;
+}
+.is-lowres::before {
+  content: "";
+  position: absolute;
+  inset: -24px;
+  z-index: -1;
+  background-image: var(--jv-lowres-bg, none);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  filter: blur(18px) brightness(.55);
+  transform: scale(1.06);
+  pointer-events: none;
+}
+/* the blurred copy sits at z-index -1 inside the isolated frame: above the frame background, below the theme's own
+   picture and overlays, whatever their positioning (lowres.js makes a static frame position: relative) */
+.is-lowres img {
+  object-fit: contain !important;
+  max-width: min(100%, var(--jv-lowres-w, 100%)) !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* 2. RTL bidi: on Arabic pages every title, description, actor and tag line takes its direction from its own first
+      strong character, so "18 Year Old ..." keeps "18" at the line start (THM 5.6, bidi.json) */
+:root[dir="rtl"] :is(h1, h2, h3, [class*="title"], [class*="desc"], [class*="synopsis"], [class*="summary"], [class*="actor"], [class*="tag"]) {
+  unicode-bidi: plaintext;
+}
+/* paragraphs inside description blocks (jav "film-desc__body", topaz "tz-prose", topaz-modern "tp-prose",
+   velvet-modern "vp-synopsis"): unicode-bidi is not inherited, so each paragraph gets the rule itself */
+:root[dir="rtl"] :is([class*="desc"], [class*="synopsis"], [class*="prose"], [class*="summary"]) :is(p, li) {
+  unicode-bidi: plaintext;
+}
+
+/* 3. subcats: child categories of the current category as one horizontally scrolling chip row */
+.jv-subcats {
+  margin: .5rem 0 1rem;
+  max-width: 100%;
+}
+.jv-subcats-row {
+  display: flex;
+  gap: .5rem;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  padding: 2px 2px 6px;
+}
+.jv-subcat {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 4px 12px;
+  border: 1px solid rgba(127, 127, 127, .4);
+  border: 1px solid color-mix(in srgb, currentColor 28%, transparent);
+  border-radius: 999px;
+  color: inherit;
+  font-size: .875rem;
+  line-height: 1.2;
+  white-space: nowrap;
+  text-decoration: none;
+}
+.jv-subcat:hover,
+.jv-subcat:focus-visible {
+  border-color: currentColor;
+}
+.jv-subcat.is-active {
+  border-color: currentColor;
+  background: rgba(127, 127, 127, .18);
+  background: color-mix(in srgb, currentColor 14%, transparent);
+  font-weight: 600;
+}
+
+/* 4. quality badge (AvdbLanguage::qualityBadge); themes place it with their own class */
+.jv-q {
+  display: inline-block;
+  padding: 1px 5px;
+  border-radius: 3px;
+  background: rgba(0, 0, 0, .72);
+  color: #fff;
+  font: 700 11px/1.4 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  letter-spacing: .02em;
+  white-space: nowrap;
+}
+
+/* 5. provider block: one home section for the provider parent when another catalog also has videos */
+.jv-pblock {
+  margin: 1.5rem 0;
+}
+.jv-pblock-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: .75rem;
+}
+.jv-pblock-title {
+  margin: 0;
+  font-size: 1.25rem;
+  line-height: 1.3;
+}
+.jv-pblock-more {
+  color: inherit;
+  opacity: .85;
+  white-space: nowrap;
+}
+.jv-pblock-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+}
+@media (max-width: 640px) {
+  .jv-pblock-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: .6rem;
+  }
+}
+/* list notes (HO-S-2 / HO-S-5): search planner message, "About {n} results", "{n}+ videos" */
+.jv-list-note {
+  margin: .75rem 0;
+  font-size: .9em;
+  opacity: .8;
+}
+.jv-list-note span + span::before {
+  content: " \00b7  ";
+}
+/* 6. shared pager (NOLIMIT D1): gaps, jump links, "Go to page" (pager.js), open-mode links (Newer / Older results / Oldest) */
+.jv-pg-gap {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 .25rem;
+  opacity: .7;
+}
+.jv-pg-more {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: .45rem .5rem;
+  max-width: 100%;
+  margin: .75rem auto 0;
+  font-size: .875rem;
+  line-height: 1.2;
+}
+.jv-pg-jumps {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: .35rem;
+}
+.jv-pg-jump,
+.jv-pg-link,
+.jv-pg-btn,
+.jv-pg-in {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.75rem;
+  min-height: 2.5rem;
+  margin: 0;
+  padding: .45rem .7rem;
+  border: 1px solid rgba(127, 127, 127, .45);
+  border-radius: 999px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.jv-pg-jump:hover,
+.jv-pg-link:hover,
+.jv-pg-btn:hover {
+  border-color: currentColor;
+}
+.jv-pg-jump:focus-visible,
+.jv-pg-link:focus-visible,
+.jv-pg-btn:focus-visible,
+.jv-pg-in:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+.jv-pg-link,
+.jv-pg-btn {
+  font-weight: 600;
+  cursor: pointer;
+}
+.jv-pg-go {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: .4rem;
+  margin: 0;
+}
+.jv-pg-go label {
+  opacity: .85;
+}
+.jv-pg-in {
+  width: 6.5em;
+  min-width: 0;
+  border-radius: .5rem;
+  text-align: center;
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+.jv-pg-in::-webkit-outer-spin-button,
+.jv-pg-in::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.jv-pg-of {
+  font-size: .85em;
+  opacity: .7;
+}
+/* 7. theme pager adjustments for long page numbers (NOLIMIT D1: first / last stay visible on phones, 7-digit labels fit) */
+.nc-pager[data-long] .nc-pg {
+  width: auto;
+  min-width: 46px;
+  padding: 0 10px;
+}
+.nc-pager[data-long] .nc-pg b {
+  font-size: 12px;
+}
+nav.pager .jump input {
+  width: 5.5em;
+}
+@media (max-width: 767px) {
+  .hn-pager[data-long] a.hn-pg.jv-pg-edge {
+    display: grid !important;
+  }
+  .stui-page__item li.pg-edge {
+    display: block;
+  }
+  nav.tz-pager a.tz-pg--edge {
+    display: grid;
+  }
+  nav.tp-pager a.tp-pg--edge {
+    display: inline-flex;
+  }
+  nav.pager a.edge {
+    display: inline-grid;
+  }
+  nav.ox-pager a.ox-pg-edge {
+    display: grid;
+  }
+  .nc-pager[data-long] .nc-pg {
+    min-width: 42px;
+    padding: 0 8px;
+  }
+}
+
+/* 8. brand-takeover wallpaper in LIGHT mode (verify r6 T-LB-01, decision D-15).
+      The ad engine's JcxM.wall() (static/jcx/jcx-m.js; unit U18 in place P02 = home page, viewport >= 1400 px) puts the
+      takeover art on <body> (fixed, centred, 1920 x 1080, dark) and adds html.jcx-wp. Most themes keep a transparent
+      content column and rely on the light page colour behind it, so in light mode their dark text landed on the dark art
+      (verify r6 probe: in 15 of the 18 themes, text that meets WCAG contrast without the wallpaper failed with it).
+      While the wallpaper is on in light mode, each theme's content column below gets that theme's own light page colour
+      as an opaque band 16 px wider than its text column (opaque bar instead of glass for the two headers whose text sat
+      on the art; the top ad strip in onyx-modern); the art stays visible in the side gutters. The selectors always start
+      with html.jcx-wp[data-color-mode="light"], so dark mode, pages without the wallpaper and narrow screens are untouched.
+      Theme custom properties are used where the theme has them, with the theme's literal light value as the fallback;
+      browsers without min() keep the first background-size (full width: readable, art hidden inside the column).
+      Not listed (their content already sits on opaque surfaces in light mode): javcms (classic), jav. */
+html.jcx-wp[data-color-mode="light"][data-template-theme="javcms"][data-template-variant="modern"] .wrapped {
+  background-image: linear-gradient(var(--jc-bg, #f6f7f8), var(--jc-bg, #f6f7f8));
+  background-position: 50% 0;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-size: calc(100% - 32px) 100%;
+}
+html.jcx-wp[data-color-mode="light"][data-template-theme="ember"] #main-content {
+  background-image: linear-gradient(var(--e-bg, #f4f4f5), var(--e-bg, #f4f4f5));
+  background-position: 50% 0;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-size: min(100%, calc(var(--e-max, 1200px) + 32px)) 100%;
+}
+html.jcx-wp[data-color-mode="light"][data-template-theme="ember-modern"] #main-content:not(.t-wrap) {
+  background-image: linear-gradient(var(--bg, #fff5ec), var(--bg, #fff5ec));
+  background-position: 50% 0;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-size: min(calc(100% - 2 * var(--pad, 32px) + 32px), 1472px) 100%;
+}
+html.jcx-wp[data-color-mode="light"][data-template-theme="ember-modern"] #main-content.t-wrap {
+  background-color: var(--bg, #fff5ec);
+  box-shadow: 0 0 0 16px var(--bg, #fff5ec);
+}
+html.jcx-wp[data-color-mode="light"][data-template-theme="topaz"] #main-content {
+  background-image: linear-gradient(var(--tz-bg, #f4f5f7), var(--tz-bg, #f4f5f7));
+  background-position: 50% 0;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-size: min(100%, calc(var(--tz-max, 1380px) + 32px)) 100%;
+}
+html.jcx-wp[data-color-mode="light"][data-template-theme="topaz-modern"] #main-content:not(.tp-wrap) {
+  background-image: linear-gradient(var(--bg, #f6f8fb), var(--bg, #f6f8fb));
+  background-position: 50% 0;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-size: min(calc(100% - 32px), 1392px) 100%;
+}
+html.jcx-wp[data-color-mode="light"][data-template-theme="topaz-modern"] #main-content.tp-wrap {
+  background-color: var(--bg, #f6f8fb);
+  box-shadow: 0 0 0 16px var(--bg, #f6f8fb);
+}
+html.jcx-wp[data-color-mode="light"][data-template-theme="topaz-modern"] .tp-hd {
+  background: var(--glass-solid, #f2f5f9);
+}
+html.jcx-wp[data-color-mode="light"][data-template-theme="jav-modern"] #main-content {
+  background-color: var(--bg, #edf1f6);
+}
+html.jcx-wp[data-color-mode="light"][data-template-theme="onyx"] #main-content {
+  background-color: var(--bg, #f4f4f4);
+  box-shadow: 0 0 0 12px var(--bg, #f4f4f4);
+}
+/* onyx-modern: the content is full-bleed on opaque blocks already; only the top ad strip (P01, where a text link may be
+   served in the theme's ink colour) sat on the art */
+html.jcx-wp[data-color-mode="light"][data-template-theme="onyx-modern"] #main-content > .jcx-s[data-jcx="P01"] {
+  background-color: var(--bg, #f0eee6);
+}
+html.jcx-wp[data-color-mode="light"][data-template-theme="velvet"] #main-content {
+  background-image: linear-gradient(var(--vv-bg, #f4f5f8), var(--vv-bg, #f4f5f8));
+  background-position: 50% 0;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-size: min(100%, calc(var(--vv-max, 1200px) + 2 * var(--vv-gutter, 16px))) 100%;
+}
+html.jcx-wp[data-color-mode="light"][data-template-theme="velvet-modern"] #main-content {
+  background-image: linear-gradient(var(--vp-bg, #fbf6f1), var(--vp-bg, #fbf6f1));
+  background-position: 50% 0;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-size: min(100%, calc(var(--vp-wrap, 1400px) - 2 * var(--vp-gutter, 40px) + 32px)) 100%;
+}
+html.jcx-wp[data-color-mode="light"][data-template-theme="honey"] #main-content {
+  background-image: linear-gradient(var(--hn-page, #f5f5f5), var(--hn-page, #f5f5f5));
+  background-position: 50% 0;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-size: min(100%, 1232px) 100%;
+}
+@media (min-width: 1680px) {
+  html.jcx-wp[data-color-mode="light"][data-template-theme="honey"] #main-content {
+    background-size: min(100%, 1392px) 100%;
+  }
+}
+html.jcx-wp[data-color-mode="light"][data-template-theme="honey-modern"] #main-content {
+  background-image: linear-gradient(var(--nc-bg, #fff8ec), var(--nc-bg, #fff8ec));
+  background-position: 50% 0;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-size: min(calc(100% - 2 * var(--nc-gutter, 36px) + 32px), calc(var(--nc-max, 1360px) + 32px)) 100%;
+}
+html.jcx-wp[data-color-mode="light"][data-template-theme="neon"] #main-content {
+  background-image: linear-gradient(var(--nx-bg, #f4f4f7), var(--nx-bg, #f4f4f7));
+  background-position: 50% 0;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-size: calc(min(100%, 1600px) - 2 * var(--nx-pad, 32px) + 32px) 100%;
+}
+html.jcx-wp[data-color-mode="light"][data-template-theme="neon-modern"] #main-content {
+  background-image: linear-gradient(var(--bg, #f5f2fa), var(--bg, #f5f2fa));
+  background-position: 50% 0;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-size: min(calc(100% - 2 * var(--gut, 32px) + 32px), calc(var(--wrap, 1440px) + 32px)) 100%;
+}
+html.jcx-wp[data-color-mode="light"][data-template-theme="neon-modern"] .nn-bar {
+  background: var(--bg, #f5f2fa);
+}
+html.jcx-wp[data-color-mode="light"][data-template-theme="crimson"] #main-content {
+  background-image: linear-gradient(var(--ct-bg, #fff), var(--ct-bg, #fff));
+  background-position: 50% 0;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-size: min(100%, calc(100% - 2 * var(--ct-gut, 32px) + 32px)) 100%;
+}
+html.jcx-wp[data-color-mode="light"][data-template-theme="crimson-modern"] #main-content {
+  background-image: linear-gradient(var(--bg, #f7efe0), var(--bg, #f7efe0));
+  background-position: 50% 0;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-size: min(calc(100% - 32px), 1448px) 100%;
+}

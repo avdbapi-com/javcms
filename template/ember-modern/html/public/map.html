@@ -1,0 +1,38 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="ember-modern" data-fx="vt" data-fx-vt-style="ember-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/auto"}
+{include file="public/include"}
+</head>
+<body class="t-page-list t-page-map">
+{include file="public/head"}
+{php}$tplCardN = 100; $tuiMapSitemap = ''; try { $tuiMapSitemap = \app\common\util\Sitemap::indexUrl(); } catch (\Throwable $tuiMapError) {}{/php}
+<main id="main-content" class="t-main" tabindex="-1">
+  <section class="t-band is-static">
+    <div class="t-wrap">
+      <nav class="t-crumb" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.main_navigation')}"><a href="{$maccms.path|htmlspecialchars=ENT_QUOTES}">{:\\app\\common\\util\\TemplateText::get('ui.home')}</a><svg class="t-i t-flip" aria-hidden="true"><use href="{$tplIcons}#chev-right"></use></svg><span aria-current="page">{:\\app\\common\\util\\TemplateText::get('ui.latest_100_updates')}</span></nav>
+      <div class="t-band-in"><span class="t-band-ic">{:\\app\\common\\util\\AutoIcon::navIcon('latest-100', '', ['size'=>'xl', 'plate'=>true])}</span><h1 data-t-expand>{:\\app\\common\\util\\TemplateText::get('ui.latest_100_updates')}</h1></div>
+      <div class="t-maplinks">{if condition="$tuiMapSitemap neq ''"}<a class="t-btn" href="{$tuiMapSitemap|htmlspecialchars=ENT_QUOTES}"><svg class="t-i" aria-hidden="true"><use href="{$tplIcons}#sitemap"></use></svg>{:\\app\\common\\util\\TemplateText::get('ui.sitemap')}</a>{/if}<a class="t-btn" href="{:mac_safe_url(mac_url('rss/index'))}"><svg class="t-i" aria-hidden="true"><use href="{$tplIcons}#rss"></use></svg>{:\\app\\common\\util\\TemplateText::get('rss')}</a></div>
+    </div>
+  </section>
+  <div class="t-wrap">
+    <section class="t-sec" aria-labelledby="t-map-heat">
+      <div class="t-sec-head" data-ai-group data-ai-hot><span class="t-sec-ic">{:\\app\\common\\util\\AutoIcon::navIcon('categories', '', ['size'=>'lg', 'plate'=>true])}</span><h2 class="t-sec-t" id="t-map-heat" data-t-kin><span>{:\\app\\common\\util\\TemplateText::get('emt.heat_map')}</span></h2><span class="t-legend" aria-hidden="true"><i></i></span></div>
+      {php}$emtHeatCtx = 'map';{/php}{include file="public/heatmap"}
+    </section>
+    <section class="t-sec" aria-labelledby="t-map-latest">
+      <div class="t-sec-head" data-ai-group data-ai-hot><span class="t-sec-ic">{:\\app\\common\\util\\AutoIcon::navIcon('latest', '', ['size'=>'lg', 'plate'=>true])}</span><h2 class="t-sec-t" id="t-map-latest" data-t-kin><span>{:\\app\\common\\util\\TemplateText::get('emt.fresh_sparks')}</span></h2><span class="t-legend" aria-hidden="true"><i></i></span></div>
+      <ul class="t-grid" data-grid-fill data-fx="glow">{maccms:vod num="100" type="all" order="desc" by="time" paging="no" id="vo"}{include file="public/vodbox"}{/maccms:vod}</ul>
+    </section>
+  </div>
+</main>
+{include file="public/foot"}
+</body>
+</html>

@@ -1,0 +1,30 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+Partly based on a third-party theme. This license covers the JavCMS changes only.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-variant="modern" data-template-theme="javcms" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>{include file="seo/auto"}
+
+
+    {include file="public/include"}
+</head>
+<body><div class="shadow"></div>
+{include file="public/head"}
+<div class="wrapped"><main id="main-content">{include file="public/nav"}<div class="content">
+<section class="section"><div class="wrap"><div class="heading"><div class="title"><h1>{$obj.vod_display_name|mac_default=$obj.vod_name|htmlspecialchars=ENT_QUOTES}</h1></div></div>
+
+<p><a class="btn" href="{:htmlspecialchars(mac_url_vod_detail($obj), ENT_QUOTES)}">{:\\app\\common\\util\\TemplateText::get('ui.details')}</a> <a class="btn" href="{:htmlspecialchars(mac_url_vod_play($obj,['sid'=>1,'nid'=>1]), ENT_QUOTES)}">{:\\app\\common\\util\\TemplateText::get('ui.watch_online')}</a></p>
+{notempty name="obj.vod_down_list"}
+{maccms:foreach name="obj.vod_down_list" id="source"}
+<h2>{$source.player_info.show|mac_default=$source.from|htmlspecialchars=ENT_QUOTES}</h2><div class="block-post">
+{maccms:foreach name="source.urls" id="episode"}
+<div class="itemplay"><a class="btn" href="{:mac_safe_url($episode['url'])}" target="_blank" rel="nofollow noopener noreferrer">{$episode.name|htmlspecialchars=ENT_QUOTES}</a></div>
+{/maccms:foreach}</div>
+{/maccms:foreach}
+{else/}<p>{:\\app\\common\\util\\TemplateText::get('ui.no_download_links_are_available_for_this_video')}</p>{/notempty}
+</div></section></div></main>{include file="public/foot"}</div></body></html>

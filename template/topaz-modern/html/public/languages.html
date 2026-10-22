@@ -1,0 +1,8 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}$galleryLanguages = \app\common\util\TemplateText::languages(); $tplLangCode = strtoupper((string)\app\common\util\TemplateText::locale());{/php}<details class="tp-pop tp-lang" data-tp-pop><summary aria-label="{:\\app\\common\\util\\TemplateText::get('ui.language')}" title="{:\\app\\common\\util\\TemplateText::get('ui.language')}">{:\\app\\common\\util\\AutoIcon::ui('languages')}<span>{$tplLangCode|htmlspecialchars=ENT_QUOTES}</span></summary><div class="tp-pop-panel tp-lang-panel language-links">{volist name="galleryLanguages" id="galleryLanguage" key="galleryLanguageIndex"}<a href="{:\\app\\common\\util\\TemplateText::languageUrl($key)}" lang="{$key|htmlspecialchars=ENT_QUOTES}" hreflang="{$key|htmlspecialchars=ENT_QUOTES}" style="--tp-i:{$galleryLanguageIndex}" {if condition="$key eq $maccms['ui_lang']"}aria-current="true"{/if}>{if condition="$key eq $maccms['ui_lang']"}{:\\app\\common\\util\\AutoIcon::ui('check', ['size'=>'sm', 'class'=>'tp-lang-ok'])}{/if}<span>{$galleryLanguage|htmlspecialchars=ENT_QUOTES}</span><small>{$key|strtoupper|htmlspecialchars=ENT_QUOTES}</small></a>{/volist}</div></details>

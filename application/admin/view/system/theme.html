@@ -1,0 +1,101 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{include file="../../../application/admin/view/public/head" /}
+<link rel="stylesheet" href="__STATIC__/css/admin_template_workspace_v1.css?v={:filemtime(ROOT_PATH . 'static/css/admin_template_workspace_v1.css')}">
+
+<div class="page-container ax-theme-page">
+    <header class="ax-page-head">
+        <span class="ax-page-head__icon" aria-hidden="true"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-palette"/></svg></span>
+        <div class="ax-page-head__text">
+            <h1>{$title|htmlspecialchars}</h1>
+            <p class="ax-page-head__help">{:lang('admin/ux/system/themes_help')}</p>
+        </div>
+        <div class="ax-page-head__actions">
+            <a class="ax-btn ax-btn--ghost" href="{:url('template/index')}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-file-code"/></svg><span>{:lang('admin/ux/system/theme_files_link')}</span></a>
+        </div>
+    </header>
+
+    {if condition="$preview_theme neq ''"}
+    <div class="ax-notice" role="note"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-eye"/></svg>
+        <div><p>{:lang('admin/ux/system/theme_preview')}: <strong>{$preview_theme|htmlspecialchars}</strong> &nbsp; <a class="ax-btn ax-btn--sm" href="{:url('system/config')}?section=theme&amp;preview=off">{:lang('admin/ux/system/theme_preview_stop')}</a></p></div>
+    </div>
+    {/if}
+
+    <input type="hidden" id="theme-token" name="__token__" value="{$Request.token}" />
+    <ul class="ax-theme-grid" role="list">
+        {volist name="cards" id="vo"}
+        <li class="ax-theme-card{if condition="$vo.current"} is-current{/if}">
+            <div class="ax-theme-card__shot">
+                {if condition="$vo.dark neq ''"}
+                <img src="{$vo.dark|htmlspecialchars}" {if condition="$vo.light neq ''"}data-light="{$vo.light|htmlspecialchars}"{/if} data-dark="{$vo.dark|htmlspecialchars}" alt="{$vo.name|htmlspecialchars}" loading="lazy" decoding="async" width="640" height="400">
+                {/if}
+            </div>
+            <div class="ax-theme-card__body">
+                <div class="ax-theme-card__title">
+                    <h2>{$vo.name|htmlspecialchars}</h2>
+                    {if condition="$vo.current"}<span class="ax-chip ax-chip--ok">{:lang('admin/ux/system/theme_in_use')}</span>{/if}
+                </div>
+                <p class="ax-faint ax-mono">{$vo.dir|htmlspecialchars}</p>
+                <div class="ax-theme-card__actions">
+                    {if condition="!$vo.current"}
+                    <button type="button" class="ax-btn ax-btn--sm j-theme-use" data-dir="{$vo.dir|htmlspecialchars}" data-name="{$vo.name|htmlspecialchars}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-check"/></svg>{:lang('admin/ux/system/theme_use')}</button>
+                    {/if}
+                    <a class="ax-btn ax-btn--sm" href="{:url('system/config')}?section=theme&amp;preview={$vo.dir|urlencode}" target="_blank" rel="noopener"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-eye"/></svg>{:lang('admin/ux/system/theme_preview')}<span class="ax-sr-only"> {$vo.name|htmlspecialchars}</span></a>
+                </div>
+            </div>
+        </li>
+        {/volist}
+    </ul>
+</div>
+
+{include file="../../../application/admin/view/public/foot" /}
+<script type="text/javascript">
+(function () {
+    var grid = document.querySelector('.ax-theme-grid');
+    if (!grid) { return; }
+    // preview-light.webp on hover / focus, back to dark afterwards
+    function swap(card, light) {
+        var img = card.querySelector('img[data-light]');
+        if (img) { img.src = light ? img.getAttribute('data-light') : img.getAttribute('data-dark'); }
+    }
+    Array.prototype.forEach.call(grid.querySelectorAll('.ax-theme-card'), function (card) {
+        card.addEventListener('mouseenter', function () { swap(card, true); });
+        card.addEventListener('mouseleave', function () { swap(card, false); });
+        card.addEventListener('focusin', function () { swap(card, true); });
+        card.addEventListener('focusout', function (e) { if (!card.contains(e.relatedTarget)) { swap(card, false); } });
+    });
+    var busy = false;
+    grid.addEventListener('click', function (e) {
+        var btn = e.target.closest('.j-theme-use');
+        if (!btn || busy) { return; }
+        busy = true;
+        btn.disabled = true;
+        var token = document.getElementById('theme-token');
+        $.ajax({
+            type: 'POST',
+            url: "{:url('system/config')}",
+            data: { theme_only: 1, template_dir: btn.getAttribute('data-dir'), __token__: token.value },
+            dataType: 'json'
+        }).done(function (res) {
+            if (res && res.data && res.data.__token__) { token.value = res.data.__token__; }
+            if (res && res.code == 1) {
+                AxUX.toast(res.msg, 'ok');
+                setTimeout(function () { location.reload(); }, 1200);
+            } else {
+                AxUX.toast(res && res.msg ? res.msg : AxUX.t('request_failed'), 'error');
+                btn.disabled = false; busy = false;
+            }
+        }).fail(function () {
+            AxUX.toast(AxUX.t('request_failed'), 'error');
+            btn.disabled = false; busy = false;
+        });
+    });
+}());
+</script>
+</body>
+</html>

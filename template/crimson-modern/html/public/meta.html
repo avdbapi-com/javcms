@@ -1,0 +1,23 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}$ciTagShow = array_slice($ciTagItems, 0, 12);
+/* auto-icons: performer chips get an ink squircle face, genre/tag chips a concept glyph (stop words and numbers get none) */
+foreach ($ciActorItems as $ciMk => $ciMv) { $ciActorItems[$ciMk]['av'] = \app\common\util\AutoIcon::avatar($ciMv['v'], '', ['size' => 'xs', 'decorative' => true]); }
+foreach ($ciGenreItems as $ciMk => $ciMv) { $ciGenreItems[$ciMk]['ai'] = \app\common\util\AutoIcon::keepTag($ciMv['v']) ? \app\common\util\AutoIcon::icon('tag', $ciMv['v'], ['size' => 'sm', 'i' => $ciMk]) : ''; }
+foreach ($ciTagShow as $ciMk => $ciMv) { $ciTagShow[$ciMk]['ai'] = \app\common\util\AutoIcon::keepTag($ciMv['v']) ? \app\common\util\AutoIcon::icon('tag', $ciMv['v'], ['size' => 'sm', 'i' => $ciMk]) : ''; }
+$ciDtI = function ($c) { return \app\common\util\AutoIcon::ui($c, ['size' => 'sm']); };{/php}<section class="ci-panel ci-prof" aria-labelledby="ci-prof-h"><h2 class="ci-panel-h" id="ci-prof-h"><svg class="ci-i" aria-hidden="true"><use href="{$ciIco|htmlspecialchars=ENT_QUOTES}#info"></use></svg>{:\\app\\common\\util\\TemplateText::get('ink.profile')}</h2><dl class="ci-profile">
+{if condition="$ciCode neq ''"}<div class="ci-prow"><dt>{:$ciDtI('hash')}{:\\app\\common\\util\\TemplateText::get('ink.code')}</dt><dd><span class="ci-tag ci-tag--plain" dir="ltr">{$ciCode|htmlspecialchars=ENT_QUOTES}</span></dd></div>{/if}
+{notempty name="ciActorItems"}<div class="ci-prow"><dt>{:$ciDtI('users')}{:\\app\\common\\util\\TemplateText::get('ink.performers')}</dt><dd>{volist name="ciActorItems" id="ciIt"}<a class="ci-chip ci-chip--cast" href="{:mac_url_search(['actor'=>$ciIt['v']])}" dir="auto">{$ciIt.av}<span>{$ciIt.l|htmlspecialchars=ENT_QUOTES}</span></a>{/volist}</dd></div>{/notempty}
+{if condition="$ciStudio neq ''"}<div class="ci-prow"><dt>{:$ciDtI('video')}{$ciStudioLabel|htmlspecialchars=ENT_QUOTES}</dt><dd><span class="ci-studio" dir="auto">{:\\app\\common\\util\\AutoIcon::ui('building', ['size'=>'sm'])}{$ciStudio|htmlspecialchars=ENT_QUOTES}</span></dd></div>{/if}
+{notempty name="ciDirectorItems"}<div class="ci-prow"><dt>{:$ciDtI('clapperboard')}{:\\app\\common\\util\\TemplateText::get('ink.director')}</dt><dd>{volist name="ciDirectorItems" id="ciIt"}<a class="ci-ink" href="{:mac_url_search(['director'=>$ciIt['v']])}" dir="auto">{$ciIt.l|htmlspecialchars=ENT_QUOTES}</a>{/volist}</dd></div>{/notempty}
+{if condition="$ciRelease neq ''"}<div class="ci-prow"><dt>{:$ciDtI('calendar')}{:\\app\\common\\util\\TemplateText::get('ink.released')}</dt><dd><span class="ci-ltr">{$ciRelease|htmlspecialchars=ENT_QUOTES}</span></dd></div>{/if}
+{if condition="$ciDuration neq ''"}<div class="ci-prow"><dt>{:$ciDtI('clock')}{:\\app\\common\\util\\TemplateText::get('ink.duration')}</dt><dd><span class="ci-ltr">{$ciDuration|htmlspecialchars=ENT_QUOTES}</span></dd></div>{/if}
+{if condition="$ciTypeName neq ''"}<div class="ci-prow"><dt>{:$ciDtI('folder')}{:\\app\\common\\util\\TemplateText::get('ink.category')}</dt><dd><a class="ci-ink" href="{:mac_url_type($obj['type'])}">{:\\app\\common\\util\\AutoIcon::icon('category', $obj['type']['type_name'], ['size'=>'sm'])}<span>{:\\app\\common\\util\\TemplateText::get($ciTypeName)}</span></a></dd></div>{/if}
+{notempty name="ciGenreItems"}<div class="ci-prow"><dt>{:$ciDtI('tags')}{:\\app\\common\\util\\TemplateText::get('ink.genres')}</dt><dd>{volist name="ciGenreItems" id="ciIt"}<a class="ci-tag ci-tag--tone" href="{:mac_url_search(['class'=>$ciIt['v']])}" dir="auto">{$ciIt.ai}<span>{$ciIt.l|htmlspecialchars=ENT_QUOTES}</span></a>{/volist}</dd></div>{/notempty}
+{php}$ciTagShow = \app\common\util\AvdbLanguage::tagFilter(isset($ciTagShow) ? $ciTagShow : [], 12, 'v');{/php}{notempty name="ciTagShow"}<div class="ci-prow"><dt>{:$ciDtI('tag')}{:\\app\\common\\util\\TemplateText::get('ink.tags')}</dt><dd>{volist name="ciTagShow" id="ciIt"}<a class="ci-tag ci-tag--tone" href="{:mac_url_search(['tag'=>$ciIt['v']])}" dir="auto">{$ciIt.ai}<span>{:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::tagLabel($ciIt['l']), ENT_QUOTES, 'UTF-8')}</span></a>{/volist}</dd></div>{/notempty}
+</dl></section>

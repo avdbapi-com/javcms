@@ -1,0 +1,11 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}$tzRel = [];{/php}{maccms:vod num="16" type="current" not="'.$obj['vod_id'].'" order="desc" by="time" paging="no" id="tzRv" key="tzRvk"}{php}$tzRel[] = $tzRv;{/php}{/maccms:vod}{php}$tzUp = array_slice($tzRel, 10, 6);{/php}<aside class="tz-side" aria-labelledby="tz-upnext-h">
+  <h2 class="tz-side-h" id="tz-upnext-h">{:\\app\\common\\util\\AutoIcon::ui('list', ['class'=>'tz-i', 'tint'=>'none'])}{:\\app\\common\\util\\TemplateText::get('you_may_also_like')}</h2>
+  <ol class="tz-rows">{foreach name="tzUp" item="vo" key="tzUk"}{php}$tzRowTitle = $tzPlain(($vo['vod_display_name'] ?? '') !== '' ? $vo['vod_display_name'] : ($vo['vod_name'] ?? '')); $tzRowHits = (int)($vo['vod_hits'] ?? 0); $tzRowScore = trim((string)($vo['vod_score'] ?? ''));{/php}<li><a class="tz-row" href="{:mac_url_vod_play($vo)}"><span class="tz-row-thumb"><img src="{$vo.vod_pic|mac_default=$tplNoPic|mac_url_img|htmlspecialchars=ENT_QUOTES}" alt="" width="124" height="70" loading="lazy" decoding="async">{if condition="$tzRowScore neq '' && $tzRowScore neq '0' && $tzRowScore neq '0.0'"}<span class="tz-score">{$tzRowScore|htmlspecialchars=ENT_QUOTES}{:\\app\\common\\util\\AutoIcon::ui('star', ['class'=>'tz-i', 'tint'=>'none'])}</span>{/if}</span><span class="tz-row-txt"><b>{$tzRowTitle|htmlspecialchars=ENT_QUOTES}</b><small>{if condition="$tzRowHits gt 0"}{:\\app\\common\\util\\AutoIcon::ui('eye', ['class'=>'tz-i', 'tint'=>'none'])}{:number_format($tzRowHits)}{else/}{:\\app\\common\\util\\AutoIcon::ui('calendar', ['class'=>'tz-i', 'tint'=>'none'])}<time datetime="{$vo.vod_time|date='Y-m-d',###}">{$vo.vod_time|date='Y-m-d',###}</time>{/if}</small></span></a></li>{/foreach}</ol>
+</aside>

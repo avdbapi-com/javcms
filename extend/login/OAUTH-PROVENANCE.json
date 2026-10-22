@@ -1,0 +1,45 @@
+{
+  "repository": "https://github.com/magicblack/maccms10",
+  "commit": "a468b6236c1e028b1aca3f91f463345cf72f16c7",
+  "commit_date": "2026-09-18T14:28:21Z",
+  "files": [
+    {
+      "path": "extend/login/ThinkOauth.php",
+      "url": "https://raw.githubusercontent.com/magicblack/maccms10/a468b6236c1e028b1aca3f91f463345cf72f16c7/extend/login/ThinkOauth.php",
+      "sha256": "d07ccc2ad0516eda56d6b5eef1e19bdbfeded45ff905ce247c5ec3bd0d7da0e4",
+      "bytes": 7035
+    },
+    {
+      "path": "extend/login/sdk/QqSDK.php",
+      "url": "https://raw.githubusercontent.com/magicblack/maccms10/a468b6236c1e028b1aca3f91f463345cf72f16c7/extend/login/sdk/QqSDK.php",
+      "sha256": "eee285b5346a498a482246c153215cdef47f3d16ad886acd8bdb6dd5718c5dcd",
+      "bytes": 2638
+    },
+    {
+      "path": "extend/login/sdk/WeixinSDK.php",
+      "url": "https://raw.githubusercontent.com/magicblack/maccms10/a468b6236c1e028b1aca3f91f463345cf72f16c7/extend/login/sdk/WeixinSDK.php",
+      "sha256": "15ae23cc8bf5ee02787ee154f148086eefeb64bfc0e19e0e3a62fa27f2ae120d",
+      "bytes": 2821
+    },
+    {
+      "path": "LICENSE",
+      "url": "https://raw.githubusercontent.com/magicblack/maccms10/a468b6236c1e028b1aca3f91f463345cf72f16c7/LICENSE",
+      "sha256": "2552365b424a8b0c2ee85bf7712ba33f585878d45056f18ad23da8d1e181c506",
+      "bytes": 1763
+    }
+  ],
+  "production_writes": 0,
+  "modifications": [
+    "Reimplemented matching API with strict provider endpoints, TLS, bounded bodies and safe failure messages",
+    "Added provider/user/app/callback bound expiring one-use session state",
+    "QQ minimal get_user_info scope and documented GET token exchange",
+    "WeChat website snsapi_login/OpenID retained; GET token exchange corroborated by pinned Socialite maintainer implementation (reference only), current provider docs unavailable"
+  ],
+  "protocol_reference": {
+    "repository": "https://github.com/overtrue/socialite",
+    "commit": "d1a8fb7b899e6afb59e86871116316ee0899860a",
+    "source": "https://raw.githubusercontent.com/overtrue/socialite/d1a8fb7b899e6afb59e86871116316ee0899860a/src/Providers/WeChat.php",
+    "sha256": "765e57ca052d51c2a313a768731001d41288435dacb1716203eeb444e43d3f97",
+    "supports": "Maintainer implementation uses snsapi_login website qrconnect with state/fragment and GET /sns/oauth2/access_token using appid/secret/code/grant_type, preserving OpenID. Referenced only; not added as a dependency."
+  }
+}

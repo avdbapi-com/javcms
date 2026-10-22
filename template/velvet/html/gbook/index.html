@@ -1,0 +1,51 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="velvet" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+<meta name="robots" content="noindex, follow" />
+<title>{:\\app\\common\\util\\TemplateText::get('ui.contact')} {:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$maccms['site_name']), ENT_QUOTES, 'UTF-8')}</title>
+{include file="public/include"}
+</head>
+<body class="vv-page-gbook">
+{include file="public/head"}
+<main id="main-content" class="vv-main">
+  <div class="vv-wrap">
+    <div class="vv-list-head">
+      <div class="vv-list-title"><span class="vv-tile vv-tile--cat vv-tile--sm" aria-hidden="true">{:\\app\\common\\util\\AutoIcon::ui('messages', ['class'=>'vv-i'])}</span><h1>{:\\app\\common\\util\\TemplateText::get('ui.contact_the_site')}</h1></div>
+    </div>
+    <div class="vv-info-grid">
+      <section class="vv-board">
+        <h2>{:\\app\\common\\util\\AutoIcon::ui('edit', ['class'=>'vv-i vv-h2-ai'])}{:\\app\\common\\util\\TemplateText::get('ui.submit_a_message')}</h2>
+        <p class="vv-tip" style="margin-bottom:14px">{:\\app\\common\\util\\TemplateText::get('ui.send_a_message_about_content_access_or_a_site_issue')}</p>
+        <form class="gbook_form vv-cform" method="post" action="{:mac_url('gbook/index')}">
+          <input type="hidden" name="gbook_rid" value="{:intval($param['id'] ?? 0)}">
+          {:token()}
+          <label for="gbook-content">{:\\app\\common\\util\\AutoIcon::ui('message', ['class'=>'vv-i vv-field-ai', 'size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ui.your_message')}</label>
+          <textarea id="gbook-content" class="gbook_content" name="gbook_content" maxlength="1000" required placeholder="{:\\app\\common\\util\\TemplateText::get('enter_your_message')}">{$param.name|default=''}</textarea>
+          <div class="vv-cform-row">
+            {if condition="$gbook.verify eq 1"}<label class="vv-sr" for="gbook-verify">{:\\app\\common\\util\\TemplateText::get('ui.verification_code')}</label><input id="gbook-verify" class="mac_verify" name="verify" maxlength="4" autocomplete="off" placeholder="{:\\app\\common\\util\\TemplateText::get('ui.verification_code')}">{/if}
+            <button class="gbook_submit vv-btn vv-btn-primary" type="button">{:\\app\\common\\util\\AutoIcon::ui('send', ['class'=>'vv-i', 'tint'=>'none'])}{:\\app\\common\\util\\TemplateText::get('ui.send_message')}</button>
+          </div>
+        </form>
+      </section>
+      <aside class="vv-panel-card">
+        <h2>{:\\app\\common\\util\\AutoIcon::ui('info', ['class'=>'vv-i'])}{:\\app\\common\\util\\TemplateText::get('ui.site_message')}</h2>
+        <p class="vv-tip">{:\\app\\common\\util\\TemplateText::get('ui.for_adults_only_contact_the_site_for_content_or_copyright_concerns')}</p>
+      </aside>
+    </div>
+    <section class="vv-board" style="margin-top:24px">
+      <h2>{:\\app\\common\\util\\TemplateText::get('ui.recent_messages')}</h2>
+      {include file="gbook/ajax"}
+    </section>
+  </div>
+</main>
+{include file="public/foot"}
+<script>MAC.Gbook.Login={$gbook.login|intval};MAC.Gbook.Verify={$gbook.verify|intval};MAC.Gbook.Init();</script>
+</body>
+</html>

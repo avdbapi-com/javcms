@@ -1,0 +1,133 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{include file="../../../application/admin/view/public/head" /}
+<link rel="stylesheet" href="__STATIC__/css/admin_seo.css?v={:filemtime(ROOT_PATH . 'static/css/admin_seo.css')}">
+
+<div class="page-container">
+    {include file="../../../application/admin/view/public/page_head" icon="ai-scale" title="admin/ux/seo/legal_title" help="admin/ux/seo/legal_page_help" /}
+
+    <form class="ax-form layui-form" action="" data-ax-dirty>
+        <input type="hidden" name="__token__" value="{$Request.token}" />
+
+        <section class="ax-section" aria-labelledby="legal-pages-title">
+            <h2 id="legal-pages-title">{:lang('admin/ux/seo/legal_pages')}</h2>
+            <p class="ax-help">{:lang('admin/ux/seo/legal_pages_help')}</p>
+            {volist name="legal_pages" id="p"}
+            <div class="seo-legal-row">
+                <input type="checkbox" lay-skin="primary" name="legal_pages[]" value="{$p.slug}" title="{$p.name|htmlspecialchars}" {if condition="$p.on"}checked {/if}>
+                <span class="seo-grow"><span class="ax-chip {if condition="$p.own"}ax-chip--ok{else /}ax-chip--warn{/if}" data-seo-chip="{$p.slug}">{if condition="$p.own"}{:lang('admin/ux/seo/legal_own_chip')}{else /}{:lang('admin/ux/seo/legal_tpl_chip')}{/if}</span></span>
+                <button type="button" class="ax-btn ax-btn--sm" data-seo-edit="{$p.slug}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-pencil"/></svg>{:lang('admin/ux/seo/legal_edit')}<span class="ax-sr-only"> {$p.name|htmlspecialchars}</span></button>
+                <a class="ax-btn ax-btn--sm ax-btn--ghost" href="{$p.url|htmlspecialchars}" target="_blank" rel="noopener"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-external-link"/></svg>{:lang('admin/ux/seo/legal_open')}<span class="ax-sr-only"> {$p.name|htmlspecialchars}</span></a>
+            </div>
+            {/volist}
+            {volist name="legal_pages" id="p"}
+            <details class="ax-advanced seo-legal-edit" id="legal-edit-{$p.slug}">
+                <summary>{:lang('admin/ux/seo/legal_edit')}: {$p.name|htmlspecialchars}</summary>
+                {if condition="!$p.own"}<div class="ax-notice ax-notice--warn"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-triangle-alert"/></svg><div><p>{:lang('admin/ux/seo/legal_example_warn')}</p></div></div>{/if}
+                <input type="hidden" name="legal[{$p.slug}][restore]" value="0" id="legal-restore-{$p.slug}">
+                <textarea hidden id="legal-tpl-{$p.slug}" aria-hidden="true" tabindex="-1">{$p.template|htmlspecialchars=ENT_QUOTES,'UTF-8'}</textarea>
+                <div class="ax-field ax-field--md">
+                    <label for="legal-title-{$p.slug}">{:lang('admin/ux/seo/legal_page_title')}</label>
+                    <input id="legal-title-{$p.slug}" type="text" class="layui-input" name="legal[{$p.slug}][title]" maxlength="120" value="{$p.title|htmlspecialchars=ENT_QUOTES,'UTF-8'}" placeholder="{$p.default_title|htmlspecialchars}">
+                    <p class="ax-help">{:lang('admin/ux/seo/legal_page_title_help', [$p['default_title']])}</p>
+                </div>
+                <div class="ax-field">
+                    <label for="legal-body-{$p.slug}">{:lang('admin/ux/seo/legal_body')}</label>
+                    <textarea id="legal-body-{$p.slug}" class="layui-textarea" name="legal[{$p.slug}][body]" rows="16" maxlength="30000" spellcheck="true" aria-describedby="legal-help-{$p.slug}">{$p.body|htmlspecialchars=ENT_QUOTES,'UTF-8'}</textarea>
+                    <p class="ax-help" id="legal-help-{$p.slug}">{:lang('admin/ux/seo/legal_format_help')}</p>
+                    <div class="seo-tokens"><span class="ax-help">{:lang('admin/ux/seo/legal_insert')}:</span>{volist name="legal_tokens" id="tk"}<button type="button" class="ax-btn ax-btn--sm ax-btn--ghost" data-seo-insert="{$tk|htmlspecialchars}" data-for="legal-body-{$p.slug}">{$tk|htmlspecialchars}</button>{/volist}</div>
+                </div>
+                <p><button type="button" class="ax-btn" data-seo-restore="{$p.slug}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-rotate-ccw"/></svg>{:lang('admin/ux/seo/legal_restore')}</button></p>
+            </details>
+            {/volist}
+        </section>
+
+        <section class="ax-section" aria-labelledby="legal-details-title">
+            <h2 id="legal-details-title">{:lang('admin/ux/seo/legal_details')}</h2>
+            <p class="ax-help">{:lang('admin/ux/seo/legal_details_help')}</p>
+            <div class="ax-field ax-field--md">
+                <label for="legal-operator">{:lang('admin/ux/seo/operator')}</label>
+                <input id="legal-operator" type="text" class="layui-input" name="site[legal_operator]" maxlength="120" value="{$legal.legal_operator|htmlspecialchars=ENT_QUOTES,'UTF-8'}" aria-describedby="legal-operator-help">
+                <p class="ax-help" id="legal-operator-help">{:lang('admin/ux/seo/operator_help')}</p>
+            </div>
+            <div class="ax-field ax-field--md">
+                <label for="legal-dmca">{:lang('admin/ux/seo/dmca_agent')}</label>
+                <input id="legal-dmca" type="text" class="layui-input" name="site[legal_dmca_agent]" maxlength="120" value="{$legal.legal_dmca_agent|htmlspecialchars=ENT_QUOTES,'UTF-8'}" aria-describedby="legal-dmca-help">
+                <p class="ax-help" id="legal-dmca-help">{:lang('admin/ux/seo/dmca_help')}</p>
+            </div>
+            <div class="ax-field ax-field--md">
+                <label for="legal-dmca-address">{:lang('admin/ux/seo/dmca_address')}</label>
+                <textarea id="legal-dmca-address" class="layui-textarea" rows="2" name="site[legal_dmca_address]" maxlength="300">{$legal.legal_dmca_address|htmlspecialchars=ENT_QUOTES,'UTF-8'}</textarea>
+            </div>
+            <div class="ax-field ax-field--md">
+                <label for="legal-custodian">{:lang('admin/ux/seo/custodian')}</label>
+                <input id="legal-custodian" type="text" class="layui-input" name="site[legal_custodian]" maxlength="120" value="{$legal.legal_custodian|htmlspecialchars=ENT_QUOTES,'UTF-8'}" aria-describedby="legal-custodian-help">
+                <p class="ax-help" id="legal-custodian-help">{:lang('admin/ux/seo/custodian_help')}</p>
+            </div>
+            <div class="ax-field ax-field--md">
+                <label for="legal-custodian-address">{:lang('admin/ux/seo/custodian_address')}</label>
+                <textarea id="legal-custodian-address" class="layui-textarea" rows="2" name="site[legal_custodian_address]" maxlength="300">{$legal.legal_custodian_address|htmlspecialchars=ENT_QUOTES,'UTF-8'}</textarea>
+            </div>
+        </section>
+
+        <section class="ax-section" aria-labelledby="legal-labels-title">
+            <h2 id="legal-labels-title">{:lang('admin/ux/seo/labels_card')}</h2>
+            <div class="ax-field">
+                <label>{:lang('admin/ux/seo/rta')}</label>
+                <div><input type="hidden" name="seo[rta]" value="0"><input type="checkbox" name="seo[rta]" value="1" lay-skin="switch" lay-text="{:lang('admin/ux/system/on')}|{:lang('admin/ux/system/off')}" aria-label="{:lang('admin/ux/seo/rta')}" {if condition="$legal.rta eq 1"}checked {/if}></div>
+                <p class="ax-help">{:lang('admin/ux/seo/rta_help')}</p>
+            </div>
+            <p class="ax-help">{:lang('admin/ux/seo/adult_always')}</p>
+        </section>
+
+        <section class="ax-section" aria-labelledby="legal-age-title">
+            <h2 id="legal-age-title">{:lang('admin/ux/seo/age_card')}</h2>
+            <div class="ax-field">
+                <label>{:lang('admin/ux/seo/age_gate')}</label>
+                <div><input type="hidden" name="site[age_gate]" value="0"><input type="checkbox" name="site[age_gate]" value="1" lay-skin="switch" lay-text="{:lang('admin/ux/system/on')}|{:lang('admin/ux/system/off')}" aria-label="{:lang('admin/ux/seo/age_gate')}" {if condition="$legal.age_gate eq 1"}checked {/if}></div>
+                <p class="ax-help">{:lang('admin/ux/seo/age_gate_help')}</p>
+            </div>
+            <div class="ax-notice ax-notice--warn"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-triangle-alert"/></svg><div><p>{:lang('admin/ux/seo/age_law_warn')}</p></div></div>
+            <div class="ax-field ax-field--sm">
+                <label for="legal-age-days">{:lang('admin/ux/seo/age_days')}</label>
+                <input id="legal-age-days" type="number" min="1" max="365" class="layui-input" name="site[age_gate_days]" value="{$legal.age_gate_days}" aria-describedby="legal-age-days-help">
+                <p class="ax-help" id="legal-age-days-help">{:lang('admin/ux/seo/age_days_help')}</p>
+            </div>
+            <div class="ax-field ax-field--md">
+                <label for="legal-age-leave">{:lang('admin/ux/seo/age_leave')}</label>
+                <input id="legal-age-leave" type="url" class="layui-input" name="site[age_gate_leave]" maxlength="300" value="{$legal.age_gate_leave|htmlspecialchars=ENT_QUOTES,'UTF-8'}" aria-describedby="legal-age-leave-help">
+                <p class="ax-help" id="legal-age-leave-help">{:lang('admin/ux/seo/age_leave_help')}</p>
+            </div>
+        </section>
+
+        <section class="ax-section" aria-labelledby="legal-cookie-title">
+            <h2 id="legal-cookie-title">{:lang('admin/ux/seo/cookie_card')}</h2>
+            <div class="ax-field" role="radiogroup" aria-labelledby="legal-cookie-title">
+                <div>
+                    <input type="radio" name="site[cookie_notice]" value="auto" title="{:lang('admin/ux/seo/cookie_auto')}" {if condition="$legal.cookie_notice eq 'auto'"}checked {/if}>
+                    <input type="radio" name="site[cookie_notice]" value="on" title="{:lang('admin/ux/seo/cookie_on')}" {if condition="$legal.cookie_notice eq 'on'"}checked {/if}>
+                    <input type="radio" name="site[cookie_notice]" value="off" title="{:lang('admin/ux/seo/cookie_off')}" {if condition="$legal.cookie_notice eq 'off'"}checked {/if}>
+                </div>
+                <p class="ax-help">{:lang('admin/ux/seo/cookie_help')}</p>
+            </div>
+        </section>
+
+        <div class="ax-savebar">
+            <span class="ax-savebar__status" role="status"></span>
+            <div class="ax-savebar__end">
+                <button type="submit" class="ax-btn ax-btn--primary" lay-submit="" lay-filter="formSubmit"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-save"/></svg>{:lang('admin/ux/kit/save')}</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+{include file="../../../application/admin/view/public/foot" /}
+<script type="application/json" id="seo-strings">{$seo_js}</script>
+<script defer src="__STATIC__/js/admin_seo.js?v={:filemtime(ROOT_PATH . 'static/js/admin_seo.js')}"></script>
+</body>
+</html>

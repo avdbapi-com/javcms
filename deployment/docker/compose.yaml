@@ -1,0 +1,106 @@
+name: javcms
+services:
+  php:
+    build:
+      context: .
+      target: runtime
+      args:
+        APP_UID: ${APP_UID:-1000}
+        APP_GID: ${APP_GID:-1000}
+    image: javcms-php:8.4.26-local
+    restart: unless-stopped
+    read_only: true
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: [ALL]
+    tmpfs:
+      - /tmp:rw,nosuid,nodev,mode=1777,size=128m
+    volumes:
+      - type: bind
+        source: ../..
+        target: /var/www/javcms
+        bind:
+          create_host_path: false
+    networks: [frontend, database]
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "php", "-r", "$$s = @fsockopen('127.0.0.1', 9000); if (!$$s) { exit(1); } fclose($$s);"]
+      interval: 10s
+      timeout: 3s
+      retries: 6
+      start_period: 20s
+    cpus: 1.0
+    mem_limit: 512m
+
+  web:
+    image: nginx:1.30.5@sha256:0623fd2455fb2bb0bc2ba7038817adcf7805d0790f78af91de33389d50774385
+    user: "101:101"
+    entrypoint: ["nginx"]
+    command: ["-g", "daemon off;"]
+    restart: unless-stopped
+    read_only: true
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: [ALL]
+    tmpfs:
+      - /tmp:rw,nosuid,nodev,mode=1777,size=64m
+    ports:
+      - "127.0.0.1:${JAVCMS_HTTP_PORT:-8080}:8080"
+    volumes:
+      - type: bind
+        source: ../..
+        target: /var/www/javcms
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: bind
+        source: ./nginx.conf
+        target: /etc/nginx/nginx.conf
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: bind
+        source: ..
+        target: /etc/nginx/javcms
+        read_only: true
+        bind:
+          create_host_path: false
+    networks: [frontend]
+    depends_on:
+      php:
+        condition: service_healthy
+    cpus: 0.5
+    mem_limit: 128m
+
+  db:
+    image: mariadb:11.4@sha256:1292844148b311e4ed4300022a996d39083f415a963e970cf47cad1b3b18e3a6
+    restart: unless-stopped
+    environment:
+      MARIADB_DATABASE: ${JAVCMS_DB_NAME:-javcms}
+      MARIADB_USER: ${JAVCMS_DB_USER:-javcms}
+      MARIADB_PASSWORD_FILE: /run/secrets/db_password
+      MARIADB_ROOT_PASSWORD_FILE: /run/secrets/db_root_password
+    secrets: [db_password, db_root_password]
+    volumes:
+      - database_data:/var/lib/mysql
+    networks: [database]
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 40s
+    cpus: 1.0
+    mem_limit: 1g
+
+secrets:
+  db_password:
+    file: ${JAVCMS_DB_PASSWORD_FILE:?Set an absolute external database password file path}
+  db_root_password:
+    file: ${JAVCMS_DB_ROOT_PASSWORD_FILE:?Set an absolute external root password file path}
+volumes:
+  database_data:
+networks:
+  frontend:
+  database:
+    internal: true

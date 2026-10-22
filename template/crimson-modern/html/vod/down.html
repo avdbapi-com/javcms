@@ -1,0 +1,22 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="crimson-modern" data-fx="vt" data-fx-vt-style="crimson-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/auto"}
+{include file="public/include"}
+</head>
+<body class="ci-down-page">
+{include file="public/head"}
+<main id="main-content" class="ci-wrap">
+{include file="public/metavars"}<div class="ci-phead"><div class="ci-phead-main"><h1 class="ci-h1" dir="auto">{$ciTitle|htmlspecialchars=ENT_QUOTES}</h1></div><div class="ci-phead-tools"><a class="ci-pill ci-pill--sm" href="{:htmlspecialchars(mac_url_vod_detail($obj), ENT_QUOTES)}">{:\\app\\common\\util\\TemplateText::get('ui.details')}</a><a class="ci-btn" href="{:htmlspecialchars(mac_url_vod_play($obj,['sid'=>1,'nid'=>1]), ENT_QUOTES)}"><svg class="ci-i" aria-hidden="true"><use href="{$ciIco|htmlspecialchars=ENT_QUOTES}#play"></use></svg>{:\\app\\common\\util\\TemplateText::get('ui.watch_online')}</a></div></div>
+{notempty name="obj.vod_down_list"}{maccms:foreach name="obj.vod_down_list" id="source"}<section class="ci-panel ci-eps"><h2 class="ci-panel-h"><svg class="ci-i" aria-hidden="true"><use href="{$ciIco|htmlspecialchars=ENT_QUOTES}#download"></use></svg>{$source.player_info.show|mac_default=$source.from|htmlspecialchars=ENT_QUOTES}</h2><div class="ci-chips">{maccms:foreach name="source.urls" id="episode"}<a class="ci-chip" href="{:mac_safe_url($episode['url'])}" target="_blank" rel="nofollow noopener noreferrer">{$episode.name|htmlspecialchars=ENT_QUOTES}</a>{/maccms:foreach}</div></section>{/maccms:foreach}{else/}{php}$ciEmptyKey = 'ui.no_download_links_are_available_for_this_video';{/php}{include file="public/empty"}{/notempty}
+</main>
+{include file="public/foot"}
+</body>
+</html>

@@ -1,0 +1,33 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<section class="vv-module" data-vv-module data-vv-reveal data-ai-group>
+  <div class="vv-mod-head" data-ai-hot><span class="vv-tile vv-tile--new" aria-hidden="true">{:\\app\\common\\util\\AutoIcon::ui('sparkles', ['class'=>'vv-i'])}</span><h2><a href="{:mac_url('label/new')}">{:\\app\\common\\util\\TemplateText::get('ui.latest_videos')}</a></h2><span class="vv-mod-info">{:\\app\\common\\util\\TemplateText::get('velvet.latest_sub')}</span></div>
+  <div class="vv-mod-tools"><button class="vv-pill" type="button" data-vv-shuffle>{:\\app\\common\\util\\AutoIcon::ui('shuffle', ['class'=>'vv-i'])}{:\\app\\common\\util\\TemplateText::get('velvet.shuffle')}</button><a class="vv-pill" href="{:mac_url('label/new')}">{:\\app\\common\\util\\AutoIcon::ui('arrow-right', ['class'=>'vv-i'])}{:\\app\\common\\util\\TemplateText::get('velvet.more')}</a></div>
+  <div class="vv-mod-body">
+    {maccms:vod num="30" type="all" order="desc" by="time" paging="no" id="vo" key="vvK"}{if condition="$vvK eq 1"}<div class="vv-grid vv-batch" data-grid-fill data-vv-batch>{elseif condition="$vvK eq 11 || $vvK eq 21"/}</div><div class="vv-grid vv-batch" data-grid-fill data-vv-batch hidden>{/if}{include file="public/vodbox"}{/maccms:vod}{if condition="$vvK gt 0"}</div>{/if}
+    {empty name="__LIST__"}{include file="public/empty"}{/empty}
+  </div>
+</section>
+
+<section class="vv-module" data-vv-module data-vv-reveal data-ai-group>
+  <div class="vv-mod-head" data-ai-hot><span class="vv-tile vv-tile--top" aria-hidden="true">{:\\app\\common\\util\\AutoIcon::ui('trophy', ['class'=>'vv-i'])}</span><h2><a href="{:mac_url('label/score')}">{:\\app\\common\\util\\TemplateText::get('top_rated')}</a></h2><span class="vv-mod-info">{:\\app\\common\\util\\TemplateText::get('velvet.top_sub')}</span></div>
+  <div class="vv-mod-tools"><button class="vv-pill" type="button" data-vv-shuffle>{:\\app\\common\\util\\AutoIcon::ui('shuffle', ['class'=>'vv-i'])}{:\\app\\common\\util\\TemplateText::get('velvet.shuffle')}</button><a class="vv-pill" href="{:mac_url('label/score')}">{:\\app\\common\\util\\AutoIcon::ui('arrow-right', ['class'=>'vv-i'])}{:\\app\\common\\util\\TemplateText::get('velvet.more')}</a></div>
+  <div class="vv-mod-body">
+    {php}$vvK = 0;{/php}{maccms:vod num="30" type="all" order="desc" by="score" paging="no" id="vo" key="vvK"}{if condition="$vvK eq 1"}<div class="vv-grid vv-batch" data-grid-fill data-vv-batch>{elseif condition="$vvK eq 11 || $vvK eq 21"/}</div><div class="vv-grid vv-batch" data-grid-fill data-vv-batch hidden>{/if}{include file="public/vodbox"}{/maccms:vod}{if condition="$vvK gt 0"}</div>{/if}
+    {empty name="__LIST__"}{include file="public/empty"}{/empty}
+  </div>
+</section>
+
+<section class="vv-module" data-vv-module data-vv-reveal data-ai-group>
+  <div class="vv-mod-head" data-ai-hot><span class="vv-tile vv-tile--hot" aria-hidden="true">{:\\app\\common\\util\\AutoIcon::ui('flame', ['class'=>'vv-i'])}</span><h2><a href="{:mac_url('label/hot')}">{:\\app\\common\\util\\TemplateText::get('ui.popular_videos')}</a></h2><span class="vv-mod-info">{:\\app\\common\\util\\TemplateText::get('velvet.hot_sub')}</span></div>
+  <div class="vv-mod-tools"><button class="vv-pill" type="button" data-vv-shuffle>{:\\app\\common\\util\\AutoIcon::ui('shuffle', ['class'=>'vv-i'])}{:\\app\\common\\util\\TemplateText::get('velvet.shuffle')}</button><a class="vv-pill" href="{:mac_url('label/hot')}">{:\\app\\common\\util\\AutoIcon::ui('arrow-right', ['class'=>'vv-i'])}{:\\app\\common\\util\\TemplateText::get('velvet.more')}</a></div>
+  <div class="vv-mod-body">
+    {php}$vvK = 0;{/php}{maccms:vod num="30" type="all" order="desc" by="hits" paging="no" id="vo" key="vvK"}{if condition="$vvK eq 1"}<div class="vv-grid vv-batch" data-grid-fill data-vv-batch>{elseif condition="$vvK eq 11 || $vvK eq 21"/}</div><div class="vv-grid vv-batch" data-grid-fill data-vv-batch hidden>{/if}{include file="public/vodbox"}{/maccms:vod}{if condition="$vvK gt 0"}</div>{/if}
+    {empty name="__LIST__"}{include file="public/empty"}{/empty}
+  </div>
+</section>

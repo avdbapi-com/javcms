@@ -1,0 +1,49 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Based on MacCMS 10 (Apache-2.0) by magicblack, changed by JavCMS.
+JavCMS changes: Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors,
+JavCMS Community License 1.0. The MacCMS parts stay under the Apache License 2.0.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>{:lang('admin/public/jump/title')} · {:lang('admin/index/title')}</title>
+    <link rel="stylesheet" href="__STATIC__/vendor/fonts/fonts.css">
+    <link rel="stylesheet" href="__STATIC__/css/admin_ux.css?v={:filemtime(ROOT_PATH . 'static/css/admin_ux.css')}">
+</head>
+<?php
+$axJumpOk = (int) $code === 1;
+$axJumpMsg = htmlspecialchars(html_entity_decode(strip_tags((string) $msg), ENT_QUOTES, 'UTF-8'), ENT_QUOTES, 'UTF-8');
+$axJumpUrl = htmlspecialchars((string) $url, ENT_QUOTES, 'UTF-8');
+$axJumpWait = max(0, (int) $wait);
+$axJumpIcons = '__STATIC__/admin/icons/admin-icons.svg?v=' . (int) @filemtime(ROOT_PATH . 'static/admin/icons/admin-icons.svg');
+$axJumpParts = explode('%s', lang('admin/ux/kit/redirect_in'), 2);
+?>
+<body class="admin-studio ax-raw-output">
+    <main class="ax-msg<?php echo $axJumpOk ? '' : ' ax-msg--error'; ?>" role="status" aria-live="polite">
+        <div class="ax-msg__icon" aria-hidden="true"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="<?php echo $axJumpIcons; ?>#<?php echo $axJumpOk ? 'ai-circle-check' : 'ai-circle-alert'; ?>"/></svg></div>
+        <p class="ax-msg__text"><?php echo $axJumpMsg; ?></p>
+        <p class="ax-msg__jump">
+            <a id="href" class="ax-btn<?php echo $axJumpOk ? ' ax-btn--primary' : ''; ?>" href="<?php echo $axJumpUrl; ?>">{:lang('admin/ux/kit/continue_now')}</a><br>
+            <?php echo htmlspecialchars($axJumpParts[0], ENT_QUOTES, 'UTF-8'); ?><b id="wait"><?php echo $axJumpWait; ?></b><?php echo htmlspecialchars(isset($axJumpParts[1]) ? $axJumpParts[1] : '', ENT_QUOTES, 'UTF-8'); ?>
+        </p>
+    </main>
+    <script type="text/javascript">
+        (function () {
+            var wait = document.getElementById('wait'),
+                href = document.getElementById('href').href;
+            var interval = setInterval(function () {
+                var time = --wait.innerHTML;
+                if (time <= 0) {
+                    location.href = href;
+                    clearInterval(interval);
+                }
+            }, 1000);
+        })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+{
+  "ember.hottest": "Hottest",
+  "ember.share_site": "Share this site",
+  "ember.back_to_top": "Back to top",
+  "ember.quick_search": "Quick search",
+  "ember.quick_search_hint": "Type a title, a code or a performer.",
+  "ember.start_search": "Start searching",
+  "ember.show_more": "Show more",
+  "ember.show_less": "Show less",
+  "ember.under_18": "If you are under 18, please leave this site now!",
+  "ember.adult_notice": "This website contains adult content and is intended for adults only.",
+  "ember.page_url": "Page URL",
+  "ember.player_hint": "If the video does not start, refresh the page.",
+  "ember.report_problem": "Video not playing? Report it",
+  "ember.performers": "Performers:",
+  "ember.genres": "Genres:",
+  "ember.more": "More",
+  "ember.hot_searches": "Popular searches",
+  "ember.show_password": "Show password",
+  "ember.hide_password": "Hide password"
+}

@@ -1,0 +1,19 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<section class="tp-tray tp-tray--gem" id="tp-more" aria-labelledby="tp-more-h" data-ai-group>
+  <header class="tp-tray-head">
+    <h2 class="tp-tray-title" id="tp-more-h">{:\\app\\common\\util\\AutoIcon::ui('layers', ['size'=>'lg', 'plate'=>true])}{:\\app\\common\\util\\TemplateText::get('ui.more_to_watch')}</h2>
+    <span class="tp-tray-line" aria-hidden="true"></span>
+    {if condition="$tplTypeName neq ''"}<span class="tp-tray-count">{$tplTypeName|htmlspecialchars=ENT_QUOTES}</span>{/if}
+    {if condition="$tplTypeUrl neq ''"}<a class="tp-tray-more" href="{$tplTypeUrl|htmlspecialchars=ENT_QUOTES}"><span>{:\\app\\common\\util\\TemplateText::get('tp.view_collection')}</span><i class="tp-dia" aria-hidden="true"></i>{:\\app\\common\\util\\AutoIcon::ui('arrow-right', ['size'=>'sm', 'class'=>'tp-more-ai'])}</a>{/if}
+  </header>
+  <div class="tp-tray-body">
+    {php}$tpRelGrid = isset($tpRel) && is_array($tpRel) ? array_slice($tpRel, 0, 10) : null;{/php}<div class="tp-grid" data-grid-fill data-tp-stagger>{if condition="is_array($tpRelGrid)"}{foreach name="tpRelGrid" item="vo" key="tpRk"}{include file="public/vodbox"}{/foreach}{else/}{php}$tpRelGrid = [];{/php}{maccms:vod num="10" type="current" not="'.$obj['vod_id'].'" order="desc" by="time" paging="no" id="vo" key="tpRvk"}{php}$tpRelGrid[] = $vo;{/php}{include file="public/vodbox"}{/maccms:vod}{/if}</div>
+    {if condition="empty($tpRelGrid)"}{include file="public/empty"}{/if}
+  </div>
+</section>

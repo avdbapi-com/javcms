@@ -1,0 +1,38 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="onyx" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/actor_detail"}
+{include file="public/include"}
+</head>
+<body class="page-detail page-actor">
+{include file="public/head"}
+<main id="main-content" class="wrap">
+<article class="dt dt-actor">
+  <div class="dt-avatar">{:\\app\\common\\util\\AutoIcon::avatar($obj['actor_name'] ?? '', (string)($obj['actor_pic'] ?? ''), ['size'=>'xl', 'decorative'=>true])}</div>
+  <div class="dt-info">
+    <h1 class="dt-title">{:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)($obj['actor_name'] ?? '')), ENT_QUOTES, 'UTF-8')}</h1>
+    <dl class="meta-box" data-ai-group>
+      {if condition="$obj.actor_sex neq ''"}<dt>{:\\app\\common\\util\\AutoIcon::ui('user', ['i'=>0])}{:\\app\\common\\util\\TemplateText::get('onyx.gender')}</dt><dd>{$obj.actor_sex}</dd>{/if}
+      {if condition="$obj.actor_birthday neq ''"}<dt>{:\\app\\common\\util\\AutoIcon::ui('calendar', ['i'=>1])}{:\\app\\common\\util\\TemplateText::get('birthday')}</dt><dd>{:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)($obj['actor_birthday'] ?? '')), ENT_QUOTES, 'UTF-8')}</dd>{/if}
+      {if condition="$obj.actor_area neq ''"}<dt>{:\\app\\common\\util\\AutoIcon::ui('globe', ['i'=>2])}{:\\app\\common\\util\\TemplateText::get('region')}</dt><dd>{:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)($obj['actor_area'] ?? '')), ENT_QUOTES, 'UTF-8')}</dd>{/if}
+      {if condition="$obj.actor_height neq ''"}<dt>{:\\app\\common\\util\\AutoIcon::ui('arrow-up', ['i'=>3])}{:\\app\\common\\util\\TemplateText::get('onyx.height')}</dt><dd>{:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)($obj['actor_height'] ?? '')), ENT_QUOTES, 'UTF-8')}</dd>{/if}
+      {if condition="$obj.actor_weight neq ''"}<dt>{:\\app\\common\\util\\AutoIcon::ui('activity', ['i'=>4])}{:\\app\\common\\util\\TemplateText::get('onyx.weight')}</dt><dd>{:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)($obj['actor_weight'] ?? '')), ENT_QUOTES, 'UTF-8')}</dd>{/if}
+    </dl>
+  </div>
+</article>
+{if condition="$obj.actor_content neq ''"}<section class="desc" data-clamp><h2>{:\\app\\common\\util\\TemplateText::get('description')}</h2><div class="desc-body">{:\\app\\common\\util\\TemplateContent::html($obj['actor_content'] ?? '')}</div><button class="desc-toggle" type="button" hidden data-more="{:\\app\\common\\util\\TemplateText::get('onyx.show_more')}" data-less="{:\\app\\common\\util\\TemplateText::get('onyx.show_less')}">{:\\app\\common\\util\\TemplateText::get('onyx.show_more')}</button></section>{/if}
+<section class="sec" data-ai-group>
+  <div class="sec-head"><h2 class="sec-title"><span class="sec-ico">{:\\app\\common\\util\\AutoIcon::ui('film')}</span>{:\\app\\common\\util\\TemplateText::get('videos_featuring_this_performer')}</h2></div>
+  <div class="grid" data-grid-fill>{maccms:vod num="20" actor="'.$obj['actor_name'].'" order="desc" by="time" paging="no" id="vo"}{include file="public/vodbox"}{/maccms:vod}</div>
+</section>
+</main>
+{include file="public/foot"}
+</body>
+</html>

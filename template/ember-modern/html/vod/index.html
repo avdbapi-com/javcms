@@ -1,0 +1,60 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="ember-modern" data-fx="vt" data-fx-vt-style="ember-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/index"}
+{include file="public/include"}
+</head>
+<body class="t-page-home">
+{include file="public/head"}
+<main id="main-content" class="t-main" tabindex="-1">
+  {include file="index/watch"}
+  {php}$tplCardN = 100; $tplCardEager = 0;{/php}
+  <section class="t-sec t-wrap" id="t-burning" aria-labelledby="t-burning-title">
+    <div class="t-sec-head">
+      <h2 class="t-sec-t" id="t-burning-title" data-t-kin><span>{:\\app\\common\\util\\TemplateText::get('emt.burning_now')}</span></h2>
+      <span class="t-legend" aria-hidden="true"><i></i></span>
+      <a class="t-more" href="{:mac_url('label/hot')}">{:\\app\\common\\util\\TemplateText::get('ui.view_more')}<svg class="t-i t-flip" aria-hidden="true"><use href="{$tplIcons}#arrow-right"></use></svg></a>
+    </div>
+    <ul class="t-grid" data-grid-fill data-fx="glow stagger">{maccms:vod num="10" type="all" order="desc" by="hits_day" paging="no" id="vo"}{include file="public/vodbox"}{/maccms:vod}</ul>
+  </section>
+  {include file="index/new"}
+  {include file="index/list"}
+  <section class="t-sec t-wrap" id="t-top-rated" aria-labelledby="t-top-rated-title">
+    <div class="t-sec-head">
+      <h2 class="t-sec-t" id="t-top-rated-title" data-t-kin><span>{:\\app\\common\\util\\TemplateText::get('top_rated')}</span></h2>
+      <span class="t-legend" aria-hidden="true"><i></i></span>
+      <a class="t-more" href="{:mac_url('label/score')}">{:\\app\\common\\util\\TemplateText::get('ui.view_more')}<svg class="t-i t-flip" aria-hidden="true"><use href="{$tplIcons}#arrow-right"></use></svg></a>
+    </div>
+    {php}$tplChipMode = 'score';{/php}
+    <ul class="t-grid" data-grid-fill data-fx="glow stagger">{maccms:vod num="10" type="all" order="desc" by="score" paging="no" id="vo"}{include file="public/vodbox"}{/maccms:vod}</ul>
+    {php}$tplChipMode = '';{/php}
+  </section>
+  <section class="t-sec t-wrap" id="t-most-liked" aria-labelledby="t-most-liked-title">
+    <div class="t-sec-head">
+      <h2 class="t-sec-t" id="t-most-liked-title" data-t-kin><span>{:\\app\\common\\util\\TemplateText::get('most_liked')}</span></h2>
+      <span class="t-legend" aria-hidden="true"><i></i></span>
+      <a class="t-more" href="{:mac_url('label/up')}">{:\\app\\common\\util\\TemplateText::get('ui.view_more')}<svg class="t-i t-flip" aria-hidden="true"><use href="{$tplIcons}#arrow-right"></use></svg></a>
+    </div>
+    <ul class="t-grid" data-grid-fill data-fx="glow stagger">{maccms:vod num="10" type="all" order="desc" by="up" paging="no" id="vo"}{include file="public/vodbox"}{/maccms:vod}</ul>
+  </section>
+  {maccms:type ids="parent" flag="vod" order="asc" by="sort" num="2" id="tplRow" key="tplRowKey" hide_empty="1"}
+  <section class="t-sec t-wrap" aria-labelledby="t-row-{$tplRow.type_id}">
+    <div class="t-sec-head">
+      <h2 class="t-sec-t" id="t-row-{$tplRow.type_id}" data-t-kin><span>{:\\app\\common\\util\\TemplateText::get(htmlspecialchars_decode((string)$tplRow['type_name'], ENT_QUOTES))}</span></h2>
+      <span class="t-legend" aria-hidden="true"><i></i></span>
+      <a class="t-more" href="{:mac_url_type($tplRow)}">{:\\app\\common\\util\\TemplateText::get('ui.view_more')}<svg class="t-i t-flip" aria-hidden="true"><use href="{$tplIcons}#arrow-right"></use></svg></a>
+    </div>
+    <ul class="t-grid" data-grid-fill data-fx="glow stagger">{maccms:vod num="10" type="'.$tplRow['type_id'].'" order="desc" by="time" paging="no" id="vo" key="tplRowVodKey"}{include file="public/vodbox"}{/maccms:vod}</ul>
+  </section>
+  {/maccms:type}
+</main>
+{include file="public/foot"}
+</body>
+</html>

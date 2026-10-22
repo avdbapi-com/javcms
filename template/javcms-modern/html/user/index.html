@@ -1,0 +1,216 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+Partly based on a third-party theme. This license covers the JavCMS changes only.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+
+<html data-template-variant="modern" data-template-theme="javcms" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+<meta name="robots" content="noindex, follow" />
+<meta charset="utf-8"/>
+<title>
+   {:\\app\\common\\util\\TemplateText::get('ui.account_overview')} {:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$maccms['site_name']), ENT_QUOTES, 'UTF-8')}
+  </title>
+<meta content="Account overview,{:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$maccms['site_keywords']), ENT_QUOTES, 'UTF-8')}" name="keywords"/>
+<meta content="{:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$maccms['site_description']), ENT_QUOTES, 'UTF-8')}" name="description"/>
+  {include file="public/include"}
+  {include file="user/include"}
+ </head>
+<body class="fed-min-width">
+{php}
+$themeNotProvided = \app\common\util\TemplateText::raw('not_provided');
+{/php}
+
+<div class="shadow">
+</div>
+  {include file="public/head"}
+  <div class="wrapped">
+<main id="main-content">
+    {include file="public/nav"}
+    <div>
+<div class="fed-part-case">
+<div class="fed-user-head fed-margin-top fed-back-whits">
+<div class="fed-list-pics fed-lazy fed-part-5by2 fed-part-rows" style="background:url({$maccms.path_tpl}ksassets/image/portrait-placeholder.svg);">
+<div class="fed-part-core fed-text-center">
+<div class="fed-user-image" data-role="{:mac_url('user/portrait')}">
+<img class="face fed-user-avat fed-part-roun jQuery-image-upload" src="{$obj.user_portrait|mac_default=$jcNoFace|mac_url_img}" alt="" />
+</div>
+<span class="fed-visible fed-text-white fed-padding">
+          {$obj.user_name|htmlspecialchars=ENT_QUOTES}
+         </span>
+</div>
+</div>
+
+</div>
+<div class="fed-part-rows">
+<div class="fed-main-left fed-col-xs12 fed-col-md4 fed-col-lg3 fed-hide-sm fed-show-md-block">
+        {include file="user/menu"}
+       </div>
+<div class="fed-main-right fed-col-xs12 fed-col-md8 fed-col-lg9 fed-hide-xs fed-hide-sm fed-show-md-block">
+<div class="fed-part-layout fed-back-whits">
+<div class="fed-user-title fed-list-head fed-part-rows fed-padding fed-line-bottom">
+<h1 class="fed-font-xvi fed-padding">
+           {:\\app\\common\\util\\TemplateText::get('ui.account_overview_c42e0c')}
+          </h1>
+<ul class="fed-part-tips fed-padding">
+<li class="fed-padding">
+<a class="fed-more" href="{:mac_url('user/index')}">
+             {:\\app\\common\\util\\TemplateText::get('ui.account_overview_c42e0c')}
+            </a>
+</li>
+</ul>
+</div>
+<ul class="fed-user-list fed-part-rows fed-back-whits">
+<li class="fed-padding-x fed-part-rows fed-line-bottom">
+<div class="fed-user-input fed-visible fed-font-xvi fed-part-rows">
+<span class="fed-col-xs4 fed-col-sm3 fed-part-eone">
+             {:\\app\\common\\util\\TemplateText::get('ui.username')}
+            </span>
+<span class="fed-col-xs7 fed-col-sm8 fed-part-eone">
+             {$obj.user_name|htmlspecialchars=ENT_QUOTES}
+            </span>
+
+</div>
+</li>
+<li class="fed-padding-x fed-part-rows fed-line-bottom">
+<div class="fed-user-input fed-visible fed-font-xvi fed-part-rows">
+<span class="fed-col-xs4 fed-col-sm3 fed-part-eone">
+             {:\\app\\common\\util\\TemplateText::get('ui.membership')}
+            </span>
+<span class="fed-col-xs7 fed-col-sm8 fed-part-eone">
+             {$obj.group.group_name|htmlspecialchars=ENT_QUOTES}
+            </span>
+
+</div>
+</li>
+<li class="fed-padding-x fed-part-rows fed-line-bottom">
+<div class="fed-user-input fed-visible fed-font-xvi fed-part-rows">
+<span class="fed-col-xs4 fed-col-sm3 fed-part-eone">
+             {:\\app\\common\\util\\TemplateText::get('ui.membership_expires')}
+            </span>
+<span class="fed-col-xs7 fed-col-sm8 fed-part-eone">
+             {$obj.user_end_time|mac_day|mac_default=$themeNotProvided}
+            </span>
+
+</div>
+</li>
+<li class="fed-padding-x fed-part-rows fed-line-bottom">
+<div class="fed-user-input fed-visible fed-font-xvi fed-part-rows">
+<span class="fed-col-xs4 fed-col-sm3 fed-part-eone">
+             {:\\app\\common\\util\\TemplateText::get('ui.points')}
+            </span>
+<span class="fed-col-xs7 fed-col-sm8 fed-part-eone">
+             {$obj.user_points}
+            </span>
+
+</div>
+</li>
+
+<li class="fed-padding-x fed-part-rows fed-line-bottom">
+<div class="fed-user-input fed-visible fed-font-xvi fed-part-rows">
+<span class="fed-col-xs4 fed-col-sm3 fed-part-eone">
+             {:\\app\\common\\util\\TemplateText::get('ui.email')}
+            </span>
+<span class="fed-col-xs7 fed-col-sm8 fed-part-eone">
+             {$obj.user_email|mac_default=$themeNotProvided|htmlspecialchars=ENT_QUOTES}
+            </span>
+
+</div>
+</li>
+<li class="fed-padding-x fed-part-rows fed-line-bottom">
+<div class="fed-user-input fed-visible fed-font-xvi fed-part-rows">
+<span class="fed-col-xs4 fed-col-sm3 fed-part-eone">
+             {:\\app\\common\\util\\TemplateText::get('ui.phone')}
+            </span>
+<span class="fed-col-xs7 fed-col-sm8 fed-part-eone">
+             {$obj.user_phone|mac_default=$themeNotProvided|htmlspecialchars=ENT_QUOTES}
+            </span>
+
+</div>
+</li>
+<li class="fed-padding-x fed-part-rows fed-line-bottom">
+<div class="fed-user-input fed-visible fed-font-xvi fed-part-rows">
+<span class="fed-col-xs4 fed-col-sm3 fed-part-eone">
+             {:\\app\\common\\util\\TemplateText::get('ui.registered')}
+            </span>
+<span class="fed-col-xs7 fed-col-sm8 fed-part-eone">
+             {$obj.user_reg_time|mac_day|mac_default=$themeNotProvided}
+            </span>
+
+</div>
+</li>
+<li class="fed-padding-x fed-part-rows fed-line-bottom">
+<div class="fed-user-input fed-visible fed-font-xvi fed-part-rows">
+<span class="fed-col-xs4 fed-col-sm3 fed-part-eone">
+             {:\\app\\common\\util\\TemplateText::get('ui.last_login')}
+            </span>
+<span class="fed-col-xs7 fed-col-sm8 fed-part-eone">
+             {$obj.user_login_time|mac_day}
+            </span>
+
+</div>
+</li>
+<li class="fed-padding-x fed-part-rows fed-line-bottom">
+<div class="fed-user-input fed-visible fed-font-xvi fed-part-rows">
+<span class="fed-col-xs4 fed-col-sm3 fed-part-eone">
+             {:\\app\\common\\util\\TemplateText::get('ui.login_ip')}
+            </span>
+<span class="fed-col-xs7 fed-col-sm8 fed-part-eone">
+             {$obj.user_login_ip|long2ip}
+            </span>
+
+</div>
+</li>
+<li class="fed-padding-x fed-part-rows fed-line-bottom">
+<div class="fed-user-input fed-visible fed-font-xvi fed-part-rows">
+<span class="fed-col-xs4 fed-col-sm3 fed-part-eone">
+             {:\\app\\common\\util\\TemplateText::get('ui.login_count')}
+            </span>
+<span class="fed-col-xs7 fed-col-sm8 fed-part-eone">
+             {$obj.user_login_num}
+            </span>
+
+</div>
+</li>
+          {if $GLOBALS['config']['user']['invite_reg_points'] gt 0}
+          <li class="fed-padding-x fed-part-rows fed-line-bottom">
+<div class="fed-user-input fed-visible fed-font-xvi fed-part-rows">
+<span class="fed-col-xs4 fed-col-sm3 fed-part-eone">
+             {:\\app\\common\\util\\TemplateText::get('ui.registration_invitation')}
+            </span>
+<span class="fed-col-xs7 fed-col-sm8 fed-part-eone">
+<input class="fed-visible" id="url" value="{$maccms.http_type}{:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)($maccms['site_url'] ?? '')), ENT_QUOTES, 'UTF-8')}{:mac_url('user/reg')}?uid={$obj.user_id}" />
+</span>
+<button type="button" class="fed-col-xs2 fed-col-sm1 fed-part-eone fed-text-right" data-copy-target="url">{:\\app\\common\\util\\TemplateText::get('ui.copy_link')}</button>
+</div>
+</li>
+          {/if}
+		{if $GLOBALS['config']['user']['invite_visit_points'] gt 0}
+          <li class="fed-padding-x fed-part-rows fed-line-bottom">
+<div class="fed-user-input fed-visible fed-font-xvi fed-part-rows">
+<span class="fed-col-xs4 fed-col-sm3 fed-part-eone">
+             {:\\app\\common\\util\\TemplateText::get('ui.visit_invitation')}
+            </span>
+<span class="fed-col-xs7 fed-col-sm8 fed-part-eone">
+<input class="fed-visible" id="url2" value="{$maccms.http_type}{:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)($maccms['site_url'] ?? '')), ENT_QUOTES, 'UTF-8')}{:mac_url('user/visit')}?uid={$obj.user_id}" />
+</span>
+<button type="button" class="fed-col-xs2 fed-col-sm1 fed-part-eone fed-text-right" data-copy-target="url2">{:\\app\\common\\util\\TemplateText::get('ui.copy_link')}</button>
+</div>
+</li>
+          {/if}
+         </ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+   {include file="public/foot"}
+  </div>
+
+</body>
+</html>

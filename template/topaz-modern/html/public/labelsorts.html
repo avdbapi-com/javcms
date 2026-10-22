@@ -1,0 +1,13 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}$tplAid = (int)($maccms['aid'] ?? 0); $tplSorts = [
+  ['label' => \app\common\util\TemplateText::raw('latest'), 'url' => mac_url('label/new'), 'on' => ($tplAid === 9999 || $tplAid === 9995), 'icon' => 'bolt'],
+  ['label' => \app\common\util\TemplateText::raw('ui.popular'), 'url' => mac_url('label/hot'), 'on' => ($tplAid === 9998), 'icon' => 'fire'],
+  ['label' => \app\common\util\TemplateText::raw('top_rated'), 'url' => mac_url('label/score'), 'on' => ($tplAid === 9997), 'icon' => 'star'],
+  ['label' => \app\common\util\TemplateText::raw('most_liked'), 'url' => mac_url('label/up'), 'on' => ($tplAid === 9996), 'icon' => 'thumb-up'],
+];{/php}

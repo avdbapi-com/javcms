@@ -1,0 +1,13 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}$oxBandWord = \app\common\util\TemplateText::raw('latest'); $oxSecNum = '01'; $oxSecId = 'sec-new'; $oxSecTitle = \app\common\util\TemplateText::raw('ui.latest_videos'); $oxSecSub = \app\common\util\TemplateText::raw('ox.sort_date'); $oxSecUrl = mac_url('label/new'); $tplIdxBase = 0;{/php}
+{include file="public/band"}
+<section class="ox-sec" aria-labelledby="sec-new">
+  {include file="index/sechead"}
+  <div class="ox-grid" data-grid-fill data-ox-stagger>{maccms:vod num="10" type="all" order="desc" by="time" paging="no" id="vo"}{php}$tplHomeSeen[] = (int)$vo['vod_id'];{/php}{include file="public/vodbox"}{/maccms:vod}</div>
+</section>

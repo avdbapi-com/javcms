@@ -1,0 +1,14 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}$emtEmptyKey = isset($emtEmptyKey) && $emtEmptyKey !== '' ? (string)$emtEmptyKey : 'ui.no_results_found_try_another_category_or_search'; $emtEmptyScene = strpos((string)($emtAct ?? ''), 'search') !== false ? 'search-empty' : 'empty-library';{/php}<div class="t-empty" role="status">
+  <div class="t-vf" aria-hidden="true"><svg viewBox="0 0 160 100" focusable="false"><path class="t-vf-c" d="M14 30V14h16M130 14h16v16M146 70v16h-16M30 86H14V70"/><path class="t-vf-x" d="M80 10v8M80 82v8M40 50h8M112 50h8"/></svg>{:\\app\\common\\util\\AutoIcon::scene($emtEmptyScene, ['class'=>'t-vf-scene'])}<span class="t-vf-scan"></span><span class="t-vf-read">{:\\app\\common\\util\\TemplateText::get('emt.no_signal')}</span></div>
+  <h2 class="t-empty-t">{:\\app\\common\\util\\TemplateText::get('emt.no_heat_signature')}</h2>
+  <p>{:\\app\\common\\util\\TemplateText::get($emtEmptyKey)}</p>
+  <a class="t-btn is-molten" href="{:mac_url('label/hot')}"><svg class="t-i" aria-hidden="true"><use href="{$maccms.path_tpl}assets/icons.svg#flame"></use></svg>{:\\app\\common\\util\\TemplateText::get('emt.browse_hot_videos')}</a>
+</div>
+{php}$emtEmptyKey = '';{/php}

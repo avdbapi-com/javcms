@@ -1,0 +1,40 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="crimson-modern" data-fx="vt" data-fx-vt-style="crimson-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+<title>{:\\app\\common\\util\\TemplateText::get('ui.my_account')} - {:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$maccms['site_name']), ENT_QUOTES, 'UTF-8')}</title>
+<meta name="robots" content="noindex, follow" />
+{include file="public/include"}
+{include file="user/include"}
+</head>
+<body class="ci-user-page ci-uindex">
+{include file="public/head"}
+<main id="main-content" class="ci-wrap"><div class="ci-ulayout">{include file="user/menu"}<section class="ci-ucontent"><div class="ci-phead"><div class="ci-phead-main"><h1 class="ci-h1">{:\\app\\common\\util\\TemplateText::get('ui.my_account')}</h1></div></div>
+{php}$ciFace = trim((string)($obj['user_portrait'] ?? '')); $ciFace = $ciFace === '' ? $maccms['path_tpl'] . 'assets/brand/avatar.svg' : mac_url_img($ciFace); $ciVip = intval($obj['group_id'] ?? ($obj['group']['group_id'] ?? 0)) > 2 ? 1 : 0; $ciEnd = intval($obj['user_end_time'] ?? 0); $ciDays = ($ciVip && $ciEnd > time()) ? (int)ceil(($ciEnd - time()) / 86400) : 0;{/php}
+<section class="ci-member"><div class="ci-member-bg" aria-hidden="true"></div><div class="ci-member-face">{if condition="$ciVip eq 1"}<svg class="ci-crown" aria-hidden="true"><use href="{$maccms.path_tpl|htmlspecialchars=ENT_QUOTES}assets/icons.svg#crown"></use></svg>{/if}<img src="{$ciFace|htmlspecialchars=ENT_QUOTES}" width="96" height="96" alt=""></div>
+<p class="ci-member-name" dir="auto">{$obj.user_name|htmlspecialchars=ENT_QUOTES}</p><p class="ci-member-sub">{$obj.group.group_name|htmlspecialchars=ENT_QUOTES}{if condition="$ciVip eq 1 && $ciEnd gt 0"} &middot; {:\\app\\common\\util\\TemplateText::get('ui.membership_expires')} <span dir="ltr">{$obj.user_end_time|mac_day}</span>{/if}</p>
+<div class="ci-member-btns"><a class="ci-btn" href="{:mac_url('user/upgrade')}"><svg class="ci-i" aria-hidden="true"><use href="{$maccms.path_tpl|htmlspecialchars=ENT_QUOTES}assets/icons.svg#crown"></use></svg>{:\\app\\common\\util\\TemplateText::get('ui.upgrade_member')}</a><a class="ci-btn ci-btn--ghost" href="{:mac_url('user/info')}"><svg class="ci-i" aria-hidden="true"><use href="{$maccms.path_tpl|htmlspecialchars=ENT_QUOTES}assets/icons.svg#edit"></use></svg>{:\\app\\common\\util\\TemplateText::get('edit_profile')}</a></div></section>
+<div class="ci-stats2"><div class="ci-stat"><b dir="ltr">{$obj.user_points|intval}</b><span>{:\\app\\common\\util\\TemplateText::get('ui.points')}</span></div><div class="ci-stat"><b dir="ltr">{$ciDays}</b><span>{:\\app\\common\\util\\TemplateText::get('ink.vip_days_left')}</span></div><div class="ci-stat"><b dir="ltr">{$obj.user_login_num|intval}</b><span>{:\\app\\common\\util\\TemplateText::get('ui.login_count')}</span></div><div class="ci-stat"><b>{$obj.group.group_name|htmlspecialchars=ENT_QUOTES}</b><span>{:\\app\\common\\util\\TemplateText::get('ui.membership')}</span></div></div>
+<ul class="ci-ulist ci-ulist--phone">{volist name="ciUMenu" id="ciU"}<li><a class="ci-uitem" href="{$ciU.href|htmlspecialchars=ENT_QUOTES}"><svg class="ci-i" aria-hidden="true"><use href="{$maccms.path_tpl|htmlspecialchars=ENT_QUOTES}assets/icons.svg#{$ciU.icon}"></use></svg>{$ciU.text}<svg class="ci-i ci-chev-r" aria-hidden="true"><use href="{$maccms.path_tpl|htmlspecialchars=ENT_QUOTES}assets/icons.svg#chev-r"></use></svg></a></li>{/volist}<li><a class="ci-uitem" href="{:mac_url('user/logout')}"><svg class="ci-i" aria-hidden="true"><use href="{$maccms.path_tpl|htmlspecialchars=ENT_QUOTES}assets/icons.svg#logout"></use></svg>{:\\app\\common\\util\\TemplateText::get('ui.quit')}</a></li></ul>
+{php}$ciNA = \app\common\util\TemplateText::raw('not_provided');{/php}<section class="ci-panel"><h2 class="ci-panel-h"><svg class="ci-i" aria-hidden="true"><use href="{$maccms.path_tpl|htmlspecialchars=ENT_QUOTES}assets/icons.svg#user"></use></svg>{:\\app\\common\\util\\TemplateText::get('ui.account_overview_c42e0c')}</h2><dl class="ci-kv">
+<dt>{:\\app\\common\\util\\TemplateText::get('ui.username')}</dt><dd dir="auto">{$obj.user_name|htmlspecialchars=ENT_QUOTES}</dd>
+<dt>{:\\app\\common\\util\\TemplateText::get('ui.membership')}</dt><dd>{$obj.group.group_name|htmlspecialchars=ENT_QUOTES}</dd>
+<dt>{:\\app\\common\\util\\TemplateText::get('ui.membership_expires')}</dt><dd dir="ltr">{$obj.user_end_time|mac_day|mac_default=$ciNA}</dd>
+<dt>{:\\app\\common\\util\\TemplateText::get('ui.points')}</dt><dd dir="ltr">{$obj.user_points|intval}</dd>
+<dt>{:\\app\\common\\util\\TemplateText::get('ui.email')}</dt><dd>{$obj.user_email|mac_default=$ciNA|htmlspecialchars=ENT_QUOTES}</dd>
+<dt>{:\\app\\common\\util\\TemplateText::get('ui.phone')}</dt><dd dir="ltr">{$obj.user_phone|mac_default=$ciNA|htmlspecialchars=ENT_QUOTES}</dd>
+<dt>{:\\app\\common\\util\\TemplateText::get('ui.registered')}</dt><dd dir="ltr">{$obj.user_reg_time|mac_day|mac_default=$ciNA}</dd>
+<dt>{:\\app\\common\\util\\TemplateText::get('ui.last_login')}</dt><dd dir="ltr">{$obj.user_login_time|mac_day}</dd>
+<dt>{:\\app\\common\\util\\TemplateText::get('ui.login_count')}</dt><dd dir="ltr">{$obj.user_login_num|intval}</dd>
+</dl></section>
+</section></div></main>
+{include file="public/foot"}
+
+</body>
+</html>

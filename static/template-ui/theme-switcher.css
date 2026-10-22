@@ -1,0 +1,119 @@
+/*
+ * This file is part of JavCMS - https://javcms.net
+ * Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+ * License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+ * See the LICENSE and NOTICE files that come with JavCMS.
+ * Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Telegram: https://t.me/avdb_api
+ */
+/*! JavCMS visitor theme switcher | JavCMS Community License 1.0 (project-owned) */
+/* Loaded by theme-switcher.js. Self-contained: works on every theme, with or without ui.css.
+   Placement variables (a theme may set them on :root[data-template-theme="x"]):
+     --jv-switcher-bottom        gap from the viewport bottom, bottom-end corner
+     --jv-switcher-bottom-start  same for the bottom-start corner (default: --jv-switcher-bottom)
+     --jv-switcher-end / --jv-switcher-start   gap from the inline edge
+   env(safe-area-inset-*) is added on top (0 unless a theme uses viewport-fit=cover). */
+.jv-ts{--jv-ts-bg:#17171c;--jv-ts-panel:#1d1d23;--jv-ts-card:#25252d;--jv-ts-line:rgba(255,255,255,.14);--jv-ts-ink:#f4f4f6;--jv-ts-muted:#b6b6c0;--jv-ts-accent:#ffb347;--jv-ts-accent-ink:#1a1206;--jv-ts-ring:#ffd38a;--jv-ts-shadow:0 10px 30px rgba(0,0,0,.45);font-family:inherit;font-size:16px;line-height:1.4;color:var(--jv-ts-ink)}
+html[data-color-mode="light"] .jv-ts{--jv-ts-bg:#ffffff;--jv-ts-panel:#ffffff;--jv-ts-card:#f3f3f6;--jv-ts-line:rgba(0,0,0,.14);--jv-ts-ink:#16161a;--jv-ts-muted:#55555f;--jv-ts-accent:#9a4f00;--jv-ts-accent-ink:#ffffff;--jv-ts-ring:#7a3d00;--jv-ts-shadow:0 10px 30px rgba(0,0,0,.18)}
+.jv-ts *,.jv-ts *::before,.jv-ts *::after{box-sizing:border-box}
+
+/* floating button: z 90 = above every theme bar/dock/FAB (max 80), below theme drawers and sheets */
+.jv-ts-btn{position:fixed;z-index:90;inset-block-end:calc(var(--jv-switcher-bottom,16px) + env(safe-area-inset-bottom,0px));inset-inline-end:calc(var(--jv-switcher-end,16px) + env(safe-area-inset-right,0px));display:grid;place-items:center;width:48px;height:48px;margin:0;padding:0;border:1px solid var(--jv-ts-line);border-radius:50%;background:var(--jv-ts-bg);color:var(--jv-ts-ink);box-shadow:var(--jv-ts-shadow);cursor:pointer;-webkit-tap-highlight-color:transparent;transition:opacity .2s,visibility 0s,transform .2s;font:inherit}
+.jv-ts-btn[hidden]{display:none}
+html[data-jv-switcher-pos="bottom-start"] .jv-ts-btn{inset-inline-end:auto;inset-block-end:calc(var(--jv-switcher-bottom-start,var(--jv-switcher-bottom,16px)) + env(safe-area-inset-bottom,0px));inset-inline-start:calc(var(--jv-switcher-start,16px) + env(safe-area-inset-left,0px))}
+.jv-ts-btn svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
+@media (hover:hover){.jv-ts-btn:hover{border-color:var(--jv-ts-accent);color:var(--jv-ts-accent)}}
+.jv-ts-btn:active{transform:scale(.94)}
+/* parked (the reserved space at the page end is not in view): never drawn over page content, click-through,
+   but still a Tab stop that shows itself while it has keyboard focus */
+.jv-ts-btn[data-jv-park]:not(:focus-visible){opacity:0;pointer-events:none}
+.jv-ts-btn[data-jv-hide]{opacity:0;visibility:hidden;pointer-events:none;transition:opacity .2s,visibility 0s linear .2s}
+.jv-ts .jv-ts-btn:focus,.jv-ts .jv-ts-close:focus,.jv-ts .jv-ts-card:focus{outline:none}
+/* ONE focus ring. The button ring sits on the page, so its colour follows the page tone that the script measures
+   (data-jv-bg); box-shadow is reset so a theme-wide :focus-visible shadow never adds a second ring. */
+.jv-ts{--jv-ts-ring-page:#ffd38a}
+.jv-ts[data-jv-bg="light"]{--jv-ts-ring-page:#16161a}
+.jv-ts .jv-ts-btn:focus-visible{outline:3px solid var(--jv-ts-ring-page);outline-offset:2px;box-shadow:var(--jv-ts-shadow)}
+.jv-ts .jv-ts-close:focus-visible,.jv-ts .jv-ts-card:focus-visible{outline:3px solid var(--jv-ts-ring);outline-offset:2px;box-shadow:none}
+/* reserved space at the page end: the script sets the height to the button's band (min 80 px) */
+.jv-ts-spacer{height:80px;pointer-events:none}
+.jv-ts-sr{position:absolute!important;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+/* scrim + panel: z just below ui.css overlays (2147483000) and notices (2147483100) */
+html.jv-ts-lock,html.jv-ts-lock body{overflow:hidden!important}
+html.jv-ts-lock{scrollbar-gutter:stable}
+.jv-ts-scrim{display:none;position:fixed;inset:0;z-index:2147482000;background:rgba(0,0,0,.5)}
+.jv-ts-panel{display:none;position:fixed;z-index:2147482001;flex-direction:column;width:min(440px,calc(100vw - 32px));max-height:calc(100vh - 120px);max-height:calc(100dvh - 120px);padding:14px 14px 16px;border:1px solid var(--jv-ts-line);border-radius:16px;background:var(--jv-ts-panel);color:var(--jv-ts-ink);box-shadow:var(--jv-ts-shadow);outline:none;text-align:start}
+.jv-ts-open .jv-ts-scrim{display:block}
+.jv-ts-open .jv-ts-panel{display:flex;animation:jv-ts-in .18s ease-out}
+@keyframes jv-ts-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.jv-ts-handle{display:none}
+.jv-ts-head{display:flex;align-items:center;gap:8px;margin:0 0 2px}
+.jv-ts-title{flex:1 1 auto;min-width:0;margin:0;font-size:18px;font-weight:700;line-height:1.25;color:var(--jv-ts-ink);letter-spacing:0;text-transform:none}
+.jv-ts-close{flex:0 0 auto;display:grid;place-items:center;width:44px;height:44px;margin:-6px;padding:0;border:0;border-radius:50%;background:transparent;color:var(--jv-ts-ink);cursor:pointer;font:inherit}
+.jv-ts-close svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+@media (hover:hover){.jv-ts-close:hover{background:var(--jv-ts-card)}}
+.jv-ts-hint{margin:0 0 12px;font-size:13px;color:var(--jv-ts-muted)}
+.jv-ts-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));grid-auto-rows:max-content;align-content:start;gap:10px;flex:1 1 auto;min-height:0;margin:0 -4px;padding:4px;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+.jv-ts-card{display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;gap:6px;min-width:0;min-height:44px;height:auto;overflow:hidden;margin:0;padding:6px 6px 8px;border:2px solid transparent;border-radius:12px;background:var(--jv-ts-card);color:var(--jv-ts-ink);text-align:start;cursor:pointer;font:inherit}
+.jv-ts-card[aria-checked="true"]{border-color:var(--jv-ts-accent)}
+.jv-ts-card[aria-disabled="true"]{cursor:default}
+.jv-ts-card:disabled{opacity:.6;cursor:progress}
+@media (hover:hover){.jv-ts-card:not([aria-checked="true"]):not([aria-disabled="true"]):hover{border-color:var(--jv-ts-line)}}
+.jv-ts-shot{position:relative;display:block;flex:none;width:100%;height:0;padding-top:56.25%;overflow:hidden;border-radius:8px;background:linear-gradient(135deg,var(--jv-ts-line),transparent)}
+.jv-ts-shot img{position:absolute;inset:0;display:block;width:100%;height:100%;max-width:none;object-fit:cover;object-position:top;border:0}
+.jv-ts-noshot img{visibility:hidden}
+.jv-ts-tick{position:absolute;inset-block-start:6px;inset-inline-end:6px;display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--jv-ts-accent);color:var(--jv-ts-accent-ink)}
+.jv-ts-tick svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.jv-ts-name{display:block;font-size:14px;font-weight:700;line-height:1.25;overflow-wrap:anywhere;unicode-bidi:isolate}
+.jv-ts-chips{display:flex;flex-wrap:wrap;gap:4px}
+.jv-ts-chip{display:inline-block;max-width:100%;padding:1px 7px;border:1px solid var(--jv-ts-line);border-radius:999px;font-size:11px;line-height:1.5;color:var(--jv-ts-muted);overflow-wrap:anywhere}
+.jv-ts-chip-cur{border-color:var(--jv-ts-accent);color:var(--jv-ts-ink)}
+.jv-ts-chip-def{color:var(--jv-ts-ink)}
+
+/* phones and short touch screens: bottom sheet */
+@media (max-width:767px),(pointer:coarse) and (max-height:500px){
+  .jv-ts-panel{inset:auto 0 0 0!important;width:100%;max-height:80vh;max-height:min(80dvh,calc(100dvh - 48px))!important;padding:6px 14px calc(14px + env(safe-area-inset-bottom,0px));border-radius:18px 18px 0 0;border-inline:0;border-bottom:0}
+  .jv-ts-open .jv-ts-panel{animation-name:jv-ts-up}
+  .jv-ts-handle{display:block;width:40px;height:4px;margin:2px auto 8px;border-radius:2px;background:var(--jv-ts-line)}
+}
+@keyframes jv-ts-up{from{transform:translateY(24px);opacity:.4}to{transform:none;opacity:1}}
+@media (prefers-reduced-motion:reduce){.jv-ts-btn,.jv-ts-btn[data-jv-hide]{transition:none}.jv-ts-btn:active{transform:none}.jv-ts-open .jv-ts-panel{animation:none}}
+html.jv-ts-reduced .jv-ts-btn,html.jv-ts-reduced .jv-ts-btn[data-jv-hide]{transition:none}
+html.jv-ts-reduced .jv-ts-btn:active{transform:none}
+html.jv-ts-reduced .jv-ts-open .jv-ts-panel{animation:none}
+@media print{.jv-ts,.jv-ts-spacer{display:none!important}}
+@media (forced-colors:active){.jv-ts-btn,.jv-ts-card,.jv-ts-panel{border:1px solid CanvasText}.jv-ts-card[aria-checked="true"]{outline:3px solid Highlight}}
+
+/* ---------------------------------------------------------------------------------------------
+   Per-theme defaults (THEME-SWITCHER-SPEC 6.2 as corrected by -REVIEW table E). Each block uses
+   that theme's own breakpoints. Keyed on html[data-template-theme]; no theme file is edited.
+   --------------------------------------------------------------------------------------------- */
+/* jav, jav-modern: .to-top 44 px at 16 px (all widths) */
+html[data-template-theme="jav"],html[data-template-theme="jav-modern"]{--jv-switcher-bottom:72px}
+/* ember: .e-tabbar 56 px <=767; .e-quick column at the inline end >=1360 (moves with --e-max) */
+@media (max-width:767px){html[data-template-theme="ember"]{--jv-switcher-bottom:68px;--jv-switcher-bottom-start:68px}}
+@media (min-width:1360px){html[data-template-theme="ember"]{--jv-switcher-end:calc(50% - var(--e-max,1200px) / 2 - 4px)}}
+/* onyx: .to-top 46 px at 16 px <=767, 56 px at 26 px above */
+html[data-template-theme="onyx"]{--jv-switcher-bottom:94px;--jv-switcher-end:22px}
+@media (max-width:767px){html[data-template-theme="onyx"]{--jv-switcher-bottom:74px;--jv-switcher-end:16px}}
+/* velvet: .vv-tabbar 56 px <=767 */
+@media (max-width:767px){html[data-template-theme="velvet"]{--jv-switcher-bottom:68px;--jv-switcher-bottom-start:68px}}
+/* honey: .hn-tabbar 58 px + .hn-totop ending 122 px up <=767; .hn-totop at 24 px from 768 to 1339 */
+@media (max-width:767px){html[data-template-theme="honey"]{--jv-switcher-bottom:134px;--jv-switcher-bottom-start:70px}}
+@media (min-width:768px) and (max-width:1339px){html[data-template-theme="honey"]{--jv-switcher-bottom:82px}}
+/* neon: .nx-tabbar 56 px + .nx-gotop to 1023 px; landscape phones hide the bar; desktop gotop at 32 px */
+html[data-template-theme="neon"]{--jv-switcher-bottom:92px}
+@media (max-width:1023px){html[data-template-theme="neon"]{--jv-switcher-bottom:136px;--jv-switcher-bottom-start:68px}}
+@media (orientation:landscape) and (max-height:540px) and (max-width:1023px){html[data-template-theme="neon"]{--jv-switcher-bottom:76px;--jv-switcher-bottom-start:16px}}
+/* crimson: .ct-dock 58 px + .ct-totop to 1023 px; desktop .ct-totop at 24 px */
+html[data-template-theme="crimson"]{--jv-switcher-bottom:82px}
+@media (max-width:1023px){html[data-template-theme="crimson"]{--jv-switcher-bottom:132px;--jv-switcher-bottom-start:70px}}
+/* ember-modern: .t-dock 64 px <=767 */
+@media (max-width:767px){html[data-template-theme="ember-modern"]{--jv-switcher-bottom:76px;--jv-switcher-bottom-start:76px}}
+/* honey-modern: hex FAB 60x68 at 16 px <=1023; html.nc-compact shows it at 22 px on wide screens */
+@media (max-width:1023px){html[data-template-theme="honey-modern"]{--jv-switcher-bottom:96px}}
+@media (min-width:1024px){html[data-template-theme="honey-modern"].nc-compact{--jv-switcher-bottom:102px}}
+/* neon-modern: .nn-gotop 46 px at 18 px (all widths) */
+html[data-template-theme="neon-modern"]{--jv-switcher-bottom:76px;--jv-switcher-end:18px}
+/* javcms, javcms-modern, topaz, topaz-modern, onyx-modern, velvet-modern, crimson-modern: nothing fixed at the bottom (16 px) */

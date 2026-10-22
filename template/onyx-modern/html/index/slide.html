@@ -1,0 +1,19 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}$oxCatCount = 0;{/php}{maccms:type ids="parent" flag="vod" order="asc" by="sort" id="tplCc" hide_empty="1"}{php}$oxCatCount++;{/php}{/maccms:type}
+{php}$oxBandWord = \app\common\util\TemplateText::raw('ui.categories'); $oxSecNum = '05'; $oxSecId = 'sec-cats'; $oxSecTitle = \app\common\util\TemplateText::raw('ui.categories'); $oxSecSub = \app\common\util\TemplateText::raw('ox.cat_sub', ['count' => $oxCatCount]); $oxSecUrl = mac_url('label/sort');{/php}
+{include file="public/band"}
+<section class="ox-sec ox-sec-cats" aria-labelledby="sec-cats" data-ox-reveal-zone>
+  {include file="index/sechead"}
+  <ol class="ox-cattab" data-ox-stagger>
+    {maccms:type ids="parent" flag="vod" order="asc" by="sort" id="tplCt" key="tplCtKey" hide_empty="1"}{php}$oxCtPic = '';{/php}{maccms:vod num="1" type="'.$tplCt['type_id'].'" order="desc" by="time" paging="no" id="tplCtVo"}{php}$oxCtRaw = trim((string)($tplCtVo['vod_pic'] ?? '')); $oxCtPic = $oxCtRaw !== '' ? (string)mac_url_img($oxCtRaw) : '';{/php}{/maccms:vod}
+    <li><a class="ox-cattab-a" href="{:mac_url_type($tplCt)}"{if condition="$oxCtPic neq ''"} data-ox-pic="{$oxCtPic|htmlspecialchars=ENT_QUOTES}"{/if}><span class="ox-cattab-i" aria-hidden="true">{$tplCtKey|sprintf='%02d',###}</span>{:\\app\\common\\util\\AutoIcon::icon('category', $tplCt['type_name'] ?? '', ['size'=>'lg', 'plate'=>true, 'i'=>(int)$tplCtKey, 'class'=>'ox-cattab-ai'])}<span class="ox-cattab-n">{:\\app\\common\\util\\TemplateText::get(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)($tplCt['type_name'] ?? '')))}</span><span class="ox-cattab-c">{:number_format((float)mac_data_count($tplCt['type_id'],'all'))}</span><svg class="ox-i ox-dir" aria-hidden="true"><use href="{$tplIcons}#i-more"/></svg></a></li>
+    {/maccms:type}
+  </ol>
+  <div class="ox-reveal" aria-hidden="true" data-ox-reveal><img src="{$tplNoPic}" alt="" width="240" height="135" decoding="async"></div>
+</section>

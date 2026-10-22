@@ -1,0 +1,465 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Based on MacCMS 10 (Apache-2.0) by magicblack, changed by JavCMS.
+JavCMS changes: Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors,
+JavCMS Community License 1.0. The MacCMS parts stay under the Apache License 2.0.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{include file="../../../application/admin/view/public/head" /}
+<link rel="stylesheet" href="__STATIC__/css/admin_content_workspace_v1.css?v={:filemtime(ROOT_PATH . 'static/css/admin_content_workspace_v1.css')}">
+<link rel="stylesheet" href="__STATIC__/css/admin_vod_workspace_v1.css?v={:filemtime(ROOT_PATH . 'static/css/admin_vod_workspace_v1.css')}">
+{php}
+$axSprite = '__STATIC__/admin/icons/admin-icons.svg?v=' . $admin_icons_v;
+$axSel = isset($param['select']) && (string)$param['select'] === '1';
+$axIn = (isset($param['input']) && is_string($param['input']) && preg_match('/^[A-Za-z0-9_\[\]-]{1,64}$/D', $param['input'])) ? $param['input'] : '';
+$axRecycle = (int)$param['recycle'] === 1;
+$axDupes = !empty($param['repeat']);
+// 1.2.0 (CONTRACT HO-S-NL2, XVID-NOLIMIT-BRIEF B3 / C3): a filtered list past its bounded count ("10,000+") and the word
+// search past page 50 continue with "Older videos": the same filters and page size plus after=<sort value>.<id> (list) or
+// cursor=<doc id> (word search), the value the controller assigns as page_cursor_next. A cursor page (page_cursor_on) has
+// no page numbers: "First page", the page size and "Older videos" while more rows follow, "No older videos." at the end.
+$axCurNext = isset($page_cursor_next) && is_scalar($page_cursor_next) ? trim((string)$page_cursor_next) : '';
+$axCurKey = preg_match('/^[0-9]{1,10}\.[0-9]{1,10}$/D', $axCurNext) ? 'after' : (preg_match('/^[1-9][0-9]{0,19}$/D', $axCurNext) ? 'cursor' : '');
+$axCursorOn = !empty($page_cursor_on);
+$axNav = [];
+foreach ((array)$param as $axK => $axV) {
+    if (is_string($axK) && preg_match('/^[A-Za-z0-9_]{1,40}$/D', $axK) && is_scalar($axV) && (string)$axV !== ''
+        && !in_array($axK, ['page', 'limit', 'after', 'cursor', '__token__'], true)) {
+        $axNav[$axK] = (string)$axV;
+    }
+}
+$axNav['limit'] = max(1, (int)$limit);
+$axListUrl = (string)url('vod/data');
+$axListUrl .= (strpos($axListUrl, '?') === false ? '?' : '&') . http_build_query($axNav, '', '&', PHP_QUERY_RFC3986);
+$axOlderUrl = $axCurKey === '' ? '' : $axListUrl . '&' . $axCurKey . '=' . rawurlencode($axCurNext);
+// "Total: 10,000+" instead of the bounded count 10,001 (HO-S-6 total_more): rounded down to two digits, then "+"
+$axTotalMore = !empty($total_more) && !$axCursorOn;
+$axMoreText = '';
+if ($axTotalMore) {
+    $axT = max(0, (int)$total);
+    $axMag = strlen((string)$axT) > 2 ? (int)pow(10, strlen((string)$axT) - 2) : 1;
+    $axMoreText = str_replace(chr(123) . 'n' . chr(125), number_format(intdiv($axT, $axMag) * $axMag) . '+', (string)lang('admin/ux/kit/pager_total'));
+}
+$axLayout = $axCursorOn ? ['limit'] : ($axTotalMore ? ['prev', 'page', 'next', 'limit', 'skip'] : ['count', 'prev', 'page', 'next', 'limit', 'skip']);
+{/php}
+<div class="page-container p10 admin-vod-index ax-list">
+    {include file="../../../application/admin/view/public/page_head" icon="ai-film" title="menu/vod_data" help="admin/ux/help/all_videos" /}
+
+    {if condition="!$axSel"}
+    <nav class="ax-chips" aria-label="{:lang('menu/vod_data')}">
+        <a class="ax-chip" href="{:url('data')}" {if condition="$chip eq 'all'"}aria-current="page"{/if}>{:lang('admin/ux/content/chip_all')}</a>
+        <a class="ax-chip" href="{:url('data',['status'=>0])}" {if condition="$chip eq 'hidden'"}aria-current="page"{/if}>{:lang('admin/ux/content/chip_hidden')}</a>
+        <a class="ax-chip" href="{:url('data',['added'=>1])}" {if condition="$chip eq 'new24'"}aria-current="page"{/if}>{:lang('admin/ux/content/chip_new24')}</a>
+        <a class="ax-chip" href="{:url('data',['url'=>1])}" {if condition="$chip eq 'nolink'"}aria-current="page"{/if}>{:lang('admin/ux/content/chip_nolink')}</a>
+        <a class="ax-chip" href="{:url('data',['lock'=>1])}" {if condition="$chip eq 'protected'"}aria-current="page"{/if} title="{:lang('admin/ux/content/protected_help')}">{:lang('admin/ux/content/chip_protected')}</a>
+        {if condition="$has_paid eq 1 || $chip eq 'paid'"}<a class="ax-chip" href="{:url('data',['points'=>1])}" {if condition="$chip eq 'paid'"}aria-current="page"{/if}>{:lang('admin/ux/content/chip_paid')}</a>{/if}
+        <a class="ax-chip" href="{:url('data',['repeat'=>1])}" {if condition="$chip eq 'dupes'"}aria-current="page"{/if}>{:lang('admin/ux/content/chip_dupes')}</a>
+        <a class="ax-chip" href="{:url('data',['recycle'=>1])}" {if condition="$chip eq 'recycle'"}aria-current="page"{/if}>{:lang('admin/ux/content/chip_recycle')}</a>
+    </nav>
+    {/if}
+
+    <form class="ax-filters" method="get" action="{:url('data')}" role="search">
+        {if condition="$axRecycle"}<input type="hidden" name="recycle" value="1">{/if}
+        {if condition="$axSel"}<input type="hidden" value="1" name="select"><input type="hidden" value="{$axIn}" name="input">{/if}
+        {if condition="$axDupes"}<input type="hidden" name="repeat" value="1">{/if}
+        {if condition="!empty($param['added'])"}<input type="hidden" name="added" value="1">{/if}
+        {if condition="!empty($param['points'])"}<input type="hidden" name="points" value="1">{/if}
+        {if condition="!empty($param['url'])"}<input type="hidden" name="url" value="1">{/if}
+        <input type="search" autocomplete="off" placeholder="{:lang('wd')}" aria-label="{:lang('wd')}" class="layui-input" name="wd" value="{$param['wd']|mac_restore_htmlfilter|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}">
+        <select name="type" aria-label="{:lang('type')}">
+            <option value="">{:lang('select_type')}</option>
+            {volist name="type_tree" id="vo"}
+            {if condition="$vo.type_mid eq 1"}
+            <option value="{$vo.type_id}" {if condition="$param['type'] eq $vo.type_id"}selected {/if}>{$vo.type_name|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}</option>
+            {volist name="vo.child" id="ch"}
+            <option value="{$ch.type_id}" {if condition="$param['type'] eq $ch.type_id"}selected {/if}>&nbsp;&nbsp;&nbsp;&nbsp;├&nbsp;{$ch.type_name|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}</option>
+            {/volist}
+            {/if}
+            {/volist}
+        </select>
+        <select name="status" aria-label="{:lang('status')}">
+            <option value="">{:lang('select_status')}</option>
+            <option value="1" {if condition="$param['status'] eq '1'"}selected {/if}>{:lang('admin/ux/content/visible')}</option>
+            <option value="0" {if condition="$param['status'] eq '0'"}selected {/if}>{:lang('admin/ux/content/hidden')}</option>
+        </select>
+        <button type="submit" class="ax-btn"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axSprite}#ai-search"/></svg>{:lang('btn_search')}</button>
+        {php}$studioFilterCount=0; foreach (["level", "lock", "weekday", "area", "lang", "server", "player", "downer", "pic", "isend", "copyright", "plot", "order"] as $studioFilterName) { if (isset($param[$studioFilterName]) && (string)$param[$studioFilterName] !== '') { $studioFilterCount++; } }{/php}
+        <details {if condition="$studioFilterCount gt 0"}open{/if}>
+            <summary><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axSprite}#ai-funnel"/></svg> {if condition="$studioFilterCount gt 0"}{:str_replace(chr(123).'count'.chr(125),(string)$studioFilterCount,lang('admin/studio/active_filters'))}{else/}{:lang('admin/studio/more_filters')}{/if}</summary>
+            <div class="ax-filters__more">
+                <select name="level" aria-label="{:lang('level')}">
+                    <option value="">{:lang('select_level')}</option>
+                    <option value="9" {if condition="$param['level'] eq '9'"}selected {/if}>{:lang('level')} 9-{:lang('slide')}</option>
+                    {for start="1" end="9"}
+                    <option value="{$i}" {if condition="$param['level'] eq $i"}selected {/if}>{:lang('level')} {$i}</option>
+                    {/for}
+                </select>
+                <select name="lock" aria-label="{:lang('admin/ux/content/chip_protected')}">
+                    <option value="">{:lang('admin/ux/content/chip_protected')}: {:lang('admin/ux/content/chip_all')}</option>
+                    <option value="1" {if condition="$param['lock'] eq '1'"}selected {/if}>{:lang('admin/ux/content/chip_protected')}</option>
+                    <option value="0" {if condition="$param['lock'] eq '0'"}selected {/if}>{:lang('admin/ux/content/not_protected')}</option>
+                </select>
+                <select name="weekday" aria-label="{:lang('admin/vod/select_weekday')}">
+                    <option value="">{:lang('admin/vod/select_weekday')}</option>
+                    {volist name=":explode(',',$GLOBALS['config']['app']['vod_extend_weekday'])" id="vo2"}
+                    <option value="{$vo2|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}" {if condition="$param['weekday'] eq $vo2"}selected {/if}>{$vo2|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}</option>
+                    {/volist}
+                </select>
+                <select name="area" aria-label="{:lang('admin/vod/select_area')}">
+                    <option value="">{:lang('admin/vod/select_area')}</option>
+                    {volist name=":explode(',',$GLOBALS['config']['app']['vod_extend_area'])" id="vo2"}
+                    <option value="{$vo2|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}" {if condition="$param['area'] eq $vo2"}selected {/if}>{$vo2|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}</option>
+                    {/volist}
+                </select>
+                <select name="lang" aria-label="{:lang('admin/vod/select_lang')}">
+                    <option value="">{:lang('admin/vod/select_lang')}</option>
+                    {volist name=":explode(',',$GLOBALS['config']['app']['vod_extend_lang'])" id="vo2"}
+                    <option value="{$vo2|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}" {if condition="$param['lang'] eq $vo2"}selected {/if}>{$vo2|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}</option>
+                    {/volist}
+                </select>
+                <select name="server" aria-label="{:lang('admin/vod/select_server')}">
+                    <option value="">{:lang('admin/vod/select_server')}</option>
+                    {volist name="server_list" id="vo"}
+                    <option value="{$vo.from|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}" {if condition="$param['server'] eq $vo.from"}selected{/if}>{$vo.show|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}</option>
+                    {/volist}
+                </select>
+                <select name="player" aria-label="{:lang('admin/vod/select_player')}">
+                    <option value="">{:lang('admin/vod/select_player')}</option>
+                    <option value="no" {if condition="$param['player'] eq 'no'"}selected{/if}>{:lang('admin/vod/player_empty')}</option>
+                    {volist name="player_list" id="vo"}
+                    <option value="{$vo.from|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}" {if condition="$param['player'] eq $vo.from"}selected{/if}>{$vo.show|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}</option>
+                    {/volist}
+                </select>
+                <select name="downer" aria-label="{:lang('admin/vod/select_downer')}">
+                    <option value="">{:lang('admin/vod/select_downer')}</option>
+                    <option value="no" {if condition="$param['downer'] eq 'no'"}selected{/if}>{:lang('admin/vod/downer_empty')}</option>
+                    {volist name="downer_list" id="vo"}
+                    <option value="{$vo.from|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}" {if condition="$param['downer'] eq $vo.from"}selected{/if}>{$vo.show|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}</option>
+                    {/volist}
+                </select>
+                <select name="pic" aria-label="{:lang('select_pic')}">
+                    <option value="">{:lang('select_pic')}</option>
+                    <option value="1" {if condition="$param['pic'] eq '1'"}selected{/if}>{:lang('pic_empty')}</option>
+                    <option value="2" {if condition="$param['pic'] eq '2'"}selected{/if}>{:lang('pic_remote')}</option>
+                    <option value="3" {if condition="$param['pic'] eq '3'"}selected{/if}>{:lang('pic_sync_err')}</option>
+                </select>
+                <select name="isend" aria-label="{:lang('admin/vod/select_isend')}">
+                    <option value="">{:lang('admin/vod/select_isend')}</option>
+                    <option value="0" {if condition="$param['isend'] eq '0'"}selected {/if}>{:lang('admin/vod/no_end')}</option>
+                    <option value="1" {if condition="$param['isend'] eq '1'"}selected {/if}>{:lang('admin/vod/is_end')}</option>
+                </select>
+                <select name="copyright" aria-label="{:lang('admin/vod/select_copyright')}">
+                    <option value="">{:lang('admin/vod/select_copyright')}</option>
+                    <option value="0" {if condition="$param['copyright'] eq '0'"}selected {/if}>{:lang('close')}</option>
+                    <option value="1" {if condition="$param['copyright'] eq '1'"}selected {/if}>{:lang('open')}</option>
+                </select>
+                {if condition="isset($param['plot']) && $param['plot'] neq ''"}<input type="hidden" name="plot" value="{$param.plot|mac_filter_xss}">{/if}
+                <select name="order" aria-label="{:lang('select_sort')}">
+                    <option value="">{:lang('select_sort')}</option>
+                    <option value="vod_time" {if condition="$param['order'] eq 'vod_time'"}selected{/if}>{:lang('update_time')}</option>
+                    <option value="vod_id" {if condition="$param['order'] eq 'vod_id'"}selected{/if}>{:lang('id')}</option>
+                    <option value="vod_hits" {if condition="$param['order'] eq 'vod_hits'"}selected{/if}>{:lang('hits')}</option>
+                    <option value="vod_hits_month" {if condition="$param['order'] eq 'vod_hits_month'"}selected{/if}>{:lang('hits_month')}</option>
+                    <option value="vod_hits_week" {if condition="$param['order'] eq 'vod_hits_week'"}selected{/if}>{:lang('hits_week')}</option>
+                    <option value="vod_hits_day" {if condition="$param['order'] eq 'vod_hits_day'"}selected{/if}>{:lang('hits_day')}</option>
+                </select>
+            </div>
+        </details>
+    </form>
+
+    <div class="ax-toolbar">
+        {if condition="$axSel"}
+        <button type="button" data-ax-select-return="{$axIn}" class="ax-btn ax-btn--primary">{:lang('select_return')}</button>
+        {elseif condition="$axRecycle"/}
+        <a href="{:url('data')}" class="ax-btn"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axSprite}#ai-arrow-left"/></svg>{:lang('vod/recycle_back')}</a>
+        {else/}
+        {if condition="$can.info"}<a href="javascript:void(0)" data-href="{:url('info')}" data-title="{:lang('admin/ux/content/add_video')}" data-full="1" class="ax-btn ax-btn--primary j-iframe"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axSprite}#ai-plus"/></svg>{:lang('admin/ux/content/add_video')}</a>{/if}
+        <a href="{:url('data',['recycle'=>1])}" class="ax-btn"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axSprite}#ai-archive"/></svg>{:lang('admin/ux/content/recycle_bin')}</a>
+        {/if}
+        <span class="ax-toolbar__spacer"></span>
+        <span class="ax-toolbar__count" id="axSelCount" aria-live="polite"></span>
+        {if condition="!$axSel && ($can.field || $can.del || $can.images || $can.make || $can.restore)"}
+        <div class="ax-menu ax-menu--end" id="vodBulk">
+            <button type="button" class="ax-btn" aria-haspopup="menu" aria-expanded="false">{:lang('admin/ux/kit/bulk')}<svg class="ax-ic ax-ic--chevron" aria-hidden="true" focusable="false"><use href="{$axSprite}#ai-chevron-down"/></svg></button>
+            <div class="ax-menu__list" role="menu" hidden>
+                {if condition="$axRecycle"}
+                {if condition="$can.restore"}<button type="button" class="ax-menu__item j-vod-restore" role="menuitem" data-href="{:url('restore')}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axSprite}#ai-archive-restore"/></svg>{:lang('vod/recycle_restore')}</button>{/if}
+                {if condition="$can.del"}
+                <div class="ax-menu__sep" role="separator"></div>
+                <button type="button" class="ax-menu__item ax-menu__item--danger j-vod-permanent" role="menuitem" data-href="{:url('del')}" data-scope="recycle"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axSprite}#ai-trash-2"/></svg>{:lang('admin/ux/content/delete_forever')}…</button>
+                <button type="button" class="ax-menu__item ax-menu__item--danger j-vod-cleanup" id="vod-cleanup-trigger" role="menuitem" data-href="{:url('del')}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axSprite}#ai-database-zap"/></svg>{:lang('admin/ux/content/clean_all')}…</button>
+                {/if}
+                {else/}
+                {if condition="$can.field"}
+                <button type="button" class="ax-menu__item j-vod-field" role="menuitem" data-href="{:url('field')}" data-col="vod_status" data-val="1"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axSprite}#ai-eye"/></svg>{:lang('admin/ux/content/show')}</button>
+                <button type="button" class="ax-menu__item j-vod-field" role="menuitem" data-href="{:url('field')}" data-col="vod_status" data-val="0"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axSprite}#ai-eye-off"/></svg>{:lang('admin/ux/content/hide')}</button>
+                <button type="button" class="ax-menu__item j-select" role="menuitem" data-href="{:url('index/select')}?tab=vod&col=type_id&tpl=select_type&url=vod/field" data-title="{:lang('select_type')}" data-width="270" data-height="100" data-checkbox="1"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axSprite}#ai-arrow-right-left"/></svg>{:lang('admin/ux/content/move_category')}</button>
+                <button type="button" class="ax-menu__item j-select" role="menuitem" data-href="{:url('index/select')}?tab=vod&col=vod_level&tpl=select_level&url=vod/field" data-title="{:lang('select_level')}" data-width="270" data-height="100" data-checkbox="1"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axSprite}#ai-star"/></svg>{:lang('level')}</button>
+                <button type="button" class="ax-menu__item j-select" role="menuitem" data-href="{:url('index/select')}?tab=vod&col=vod_hits&tpl=select_hits&url=vod/field" data-title="{:lang('hits')}" onclick="this.setAttribute('data-width',window.innerWidth<490?'370':'470');this.setAttribute('data-height',window.innerWidth<490?'200':'100');" data-width="470" data-height="100" data-checkbox="1"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axSprite}#ai-eye"/></svg>{:lang('hits')}</button>
+                <button type="button" class="ax-menu__item j-select" role="menuitem" data-href="{:url('index/select')}?tab=vod&col=vod_lock&tpl=select_lock&url=vod/field" data-title="{:lang('admin/ux/content/chip_protected')}" data-width="270" data-height="100" data-checkbox="1"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axSprite}#ai-lock"/></svg>{:lang('admin/ux/content/chip_protected')}</button>
+                <button type="button" class="ax-menu__item j-select" role="menuitem" data-href="{:url('index/select')}?tab=vod&col=vod_copyright&tpl=select_copyright&url=vod/field" data-title="{:lang('admin/vod/select_copyright')}" data-width="270" data-height="100" data-checkbox="1"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axSprite}#ai-toggle-right"/></svg>{:lang('admin/vod/copyright')}</button>
+                {/if}
+                {if condition="$can.images"}<button type="button" class="ax-menu__item j-iframe" role="menuitem" data-title="{:lang('pic_sync')}" data-href="{:url('images/opt?tab=vod')}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axSprite}#ai-image"/></svg>{:lang('pic_sync')}</button>{/if}
+                {if condition="$can.make"}<button type="button" class="ax-menu__item j-iframe" role="menuitem" data-checkbox="true" data-ax-post="1" data-title="{:lang('make_page')}" data-href="{:url('make/make?ac=info&tab=vod')}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axSprite}#ai-refresh-cw"/></svg>{:lang('make_page')}</button>{/if}
+                {if condition="$can.del"}
+                <button type="button" class="ax-menu__item j-vod-recycle" role="menuitem" data-href="{:url('del')}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axSprite}#ai-archive"/></svg>{:lang('admin/ux/content/to_recycle')}</button>
+                {if condition="$axDupes"}
+                <div class="ax-menu__sep" role="separator"></div>
+                <div class="ax-menu__label">{:lang('admin/ux/content/chip_dupes')}</div>
+                <button type="button" class="ax-menu__item j-vod-dupes" role="menuitem" data-href="{:url('del')}" data-retain="min"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axSprite}#ai-archive"/></svg>{:lang('del_auto_keep_min')}</button>
+                <button type="button" class="ax-menu__item j-vod-dupes" role="menuitem" data-href="{:url('del')}" data-retain="max"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axSprite}#ai-archive"/></svg>{:lang('del_auto_keep_max')}</button>
+                {/if}
+                <div class="ax-menu__sep" role="separator"></div>
+                <button type="button" class="ax-menu__item ax-menu__item--danger j-vod-cleanup" id="vod-cleanup-trigger" role="menuitem" data-href="{:url('del')}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axSprite}#ai-database-zap"/></svg>{:lang('admin/ux/content/clean_all')}…</button>
+                {/if}
+                {/if}
+            </div>
+        </div>
+        {/if}
+    </div>
+
+    <form class="layui-form" method="post" id="pageListForm" aria-label="{:lang('menu/vod_data')}">
+        <input type="hidden" name="__token__" value="{:mac_admin_csrf_token()}">
+        {if condition="empty($list)"}
+        <div class="ax-empty">
+            <svg class="ax-ic ax-ic--xl" aria-hidden="true" focusable="false"><use href="{$axSprite}#ai-inbox"/></svg>
+            {if condition="$axCursorOn"}
+            <p class="ax-empty__text">{if condition="$axOlderUrl neq ''"}{:lang('admin/ux/scale/list_gap')}{else/}{:lang('admin/ux/scale/list_end')}{/if}</p>
+            {elseif condition="$filtered eq 0 && !$axRecycle"/}
+            <p class="ax-empty__text">{:lang('admin/ux/content/empty_videos')}</p>
+            <div class="ax-empty__actions">
+                <a class="ax-btn ax-btn--primary" href="{:url('avdbimport/index')}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axSprite}#ai-cloud-download"/></svg>{:lang('admin/ux/content/import_avdb')}</a>
+                {if condition="$can.info"}<a class="ax-btn j-iframe" href="javascript:void(0)" data-href="{:url('info')}" data-title="{:lang('admin/ux/content/add_video')}" data-full="1"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axSprite}#ai-plus"/></svg>{:lang('admin/ux/content/add_video')}</a>{/if}
+            </div>
+            {else/}
+            <p class="ax-empty__text">{:lang('admin/ux/content/empty_generic')}</p>
+            {/if}
+        </div>
+        {else/}
+        <div class="ax-table-wrap">
+        <table class="ax-table ax-table--cards vod-table">
+            <thead>
+            <tr>
+                <th class="ax-col-check"><input type="checkbox" lay-skin="primary" lay-filter="allChoose" aria-label="{:lang('admin/ux/content/select_all')}"></th>
+                <th class="ax-num">{:lang('id')}</th>
+                <th>{:lang('name')}</th>
+                <th class="ax-num">{:lang('hits')}</th>
+                <th class="ax-num ax-hide-md">{:lang('hits_week')}</th>
+                <th class="ax-num ax-hide-md">{:lang('score')}</th>
+                <th>{:lang('level')}</th>
+                <th>{:lang('status')}</th>
+                <th class="ax-hide-md">{:lang('menu/player')}</th>
+                <th>{:lang('update_time')}</th>
+                <th class="ax-row-actions"><span class="ax-sr-only">{:lang('opt')}</span></th>
+            </tr>
+            </thead>
+            <tbody>
+            {volist name="list" id="vo"}
+            {php}$axName = htmlspecialchars(html_entity_decode((string)$vo['vod_name'], ENT_QUOTES, 'UTF-8'), ENT_QUOTES, 'UTF-8'); $axLink = $axRecycle ? '' : mac_url_vod_detail($vo);{/php}
+            <tr data-id="{$vo.vod_id}">
+                <td class="ax-col-check" data-label=""><input type="checkbox" name="ids[]" value="{$vo.vod_id}" class="layui-checkbox checkbox-ids" lay-skin="primary" aria-label="{$axName}"></td>
+                <td class="ax-num" data-label="{:lang('id')}">{$vo.vod_id}</td>
+                <td class="ax-cell-title" data-label="{:lang('name')}">
+                    <span class="ax-cell-title__meta">{$vo.type.type_name|default=''|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}</span>
+                    {if condition="$axLink neq ''"}<a target="_blank" rel="noopener" href="{$axLink}">{$axName}</a>{else/}<span>{$axName}</span>{/if}
+                    <span class="ax-cell-title__tags">
+                        {if condition="$vo.vod_remarks neq ''"}<span class="ax-tag">{$vo.vod_remarks|htmlspecialchars}</span>{/if}
+                        {if condition="$vo.vod_lock eq 1"}<span class="ax-chip ax-chip--warn" title="{:lang('admin/ux/content/protected_help')}">{:lang('admin/ux/content/chip_protected')}</span>{/if}
+                        {if condition="$vo.vod_isend eq 0 && $vo.vod_serial neq ''"}<span class="ax-tag">{:lang('admin/vod/serialize')} {$vo.vod_serial|htmlspecialchars}</span>{/if}
+                        {if condition="$vo.vod_copyright eq 1"}<span class="ax-tag">{:lang('admin/vod/copyright')}</span>{/if}
+                    </span>
+                </td>
+                <td class="ax-num" data-label="{:lang('hits')}">{$vo.vod_hits}</td>
+                <td class="ax-num ax-hide-md" data-label="{:lang('hits_week')}">{$vo.vod_hits_week}</td>
+                <td class="ax-num ax-hide-md" data-label="{:lang('score')}">{$vo.vod_score}</td>
+                <td data-label="{:lang('level')}">{if condition="!$axRecycle && $can.field"}<button type="button" class="ax-btn ax-btn--sm ax-btn--ghost j-select" data-href="{:url('index/select')}?tab=vod&col=vod_level&tpl=select_level&url=vod/field&ids={$vo.vod_id}" data-title="{:lang('select_level')}" data-width="270" data-height="100" title="{:lang('select_level')}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axSprite}#ai-star"/></svg>{$vo.vod_level}</button>{else/}{$vo.vod_level}{/if}</td>
+                <td data-label="{:lang('status')}">{if condition="$vo.vod_status eq 1"}<span class="ax-chip ax-chip--ok">{:lang('admin/ux/content/visible')}</span>{else/}<span class="ax-chip ax-chip--off">{:lang('admin/ux/content/hidden')}</span>{/if}</td>
+                <td class="ax-hide-md ax-cell-clip" data-label="{:lang('menu/player')}"><span title="{$vo['vod_play_from']|str_replace='$$$',', ',###|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}">{$vo['vod_play_from']|str_replace='$$$',', ',###|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}</span></td>
+                <td class="ax-cell-time" data-label="{:lang('update_time')}">{$vo.vod_time|mac_day}</td>
+                <td class="ax-row-actions">
+                    {if condition="$axRecycle"}
+                    {if condition="$can.restore"}<button type="button" class="ax-btn ax-btn--sm j-vod-restore" data-href="{:url('restore')}" data-ids="{$vo.vod_id}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axSprite}#ai-archive-restore"/></svg>{:lang('vod/recycle_restore')}</button>{/if}
+                    {if condition="$can.del"}<button type="button" class="ax-btn ax-btn--sm ax-btn--icon ax-btn--ghost ax-danger-text j-vod-permanent" data-href="{:url('del')}" data-scope="recycle" data-ids="{$vo.vod_id}" aria-label="{:lang('admin/ux/content/delete_forever')}" title="{:lang('admin/ux/content/delete_forever')}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axSprite}#ai-trash-2"/></svg></button>{/if}
+                    {else/}
+                    {if condition="$can.info"}<a class="ax-btn ax-btn--sm j-iframe" data-full="1" data-title="{:lang('admin/ux/content/ved_edit')} #{$vo.vod_id}" data-href="{:url('info?id='.$vo['vod_id'])}" href="javascript:void(0)"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axSprite}#ai-pencil"/></svg>{:lang('edit')}</a>{/if}
+                    {if condition="$can.field"}
+                    {if condition="$vo.vod_status eq 1"}
+                    <button type="button" class="ax-btn ax-btn--sm ax-btn--icon ax-btn--ghost j-vod-field" data-href="{:url('field')}" data-col="vod_status" data-val="0" data-ids="{$vo.vod_id}" aria-label="{:lang('admin/ux/content/hide')}" title="{:lang('admin/ux/content/hide')}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axSprite}#ai-eye-off"/></svg></button>
+                    {else/}
+                    <button type="button" class="ax-btn ax-btn--sm ax-btn--icon ax-btn--ghost j-vod-field" data-href="{:url('field')}" data-col="vod_status" data-val="1" data-ids="{$vo.vod_id}" aria-label="{:lang('admin/ux/content/show')}" title="{:lang('admin/ux/content/show')}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axSprite}#ai-eye"/></svg></button>
+                    {/if}
+                    {/if}
+                    {if condition="$can.del"}<button type="button" class="ax-btn ax-btn--sm ax-btn--icon ax-btn--ghost j-vod-recycle" data-href="{:url('del')}" data-ids="{$vo.vod_id}" aria-label="{:lang('admin/ux/content/to_recycle')}" title="{:lang('admin/ux/content/to_recycle')}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axSprite}#ai-archive"/></svg></button>{/if}
+                    <div class="ax-menu ax-menu--end">
+                        <button type="button" class="ax-btn ax-btn--sm ax-btn--icon ax-btn--ghost" aria-haspopup="menu" aria-expanded="false" aria-label="{:lang('admin/ux/kit/more')}" title="{:lang('admin/ux/kit/more')}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axSprite}#ai-ellipsis"/></svg></button>
+                        <div class="ax-menu__list" role="menu" hidden>
+                            <button type="button" class="ax-menu__item j-copy-link" role="menuitem" data-url="{$axLink}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axSprite}#ai-copy"/></svg>{:lang('admin/ux/content/copy_link')}</button>
+                            <a class="ax-menu__item" role="menuitem" target="_blank" rel="noopener" href="{$axLink}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axSprite}#ai-external-link"/></svg>{:lang('admin/ux/content/open_on_site')}</a>
+                        </div>
+                    </div>
+                    {/if}
+                </td>
+            </tr>
+            {/volist}
+            </tbody>
+        </table>
+        </div>
+        {/if}
+        <div id="pages" class="ax-pages"></div>
+        {if condition="$axTotalMore || $axCursorOn || $axOlderUrl neq ''"}
+        <nav class="ax-pages ax-pages--more" aria-label="{:lang('admin/ux/scale/list_nav')}">
+            {if condition="$axTotalMore"}<span class="ax-pages__count">{:htmlspecialchars($axMoreText, ENT_QUOTES, 'UTF-8')}</span>{/if}
+            {if condition="$axCursorOn"}<a class="ax-btn ax-btn--sm" href="{:htmlspecialchars($axListUrl, ENT_QUOTES, 'UTF-8')}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axSprite}#ai-chevrons-left"/></svg>{:lang('admin/ux/kit/first_page')}</a>{/if}
+            {if condition="$axOlderUrl neq ''"}<a class="ax-btn ax-btn--sm" rel="next" href="{:htmlspecialchars($axOlderUrl, ENT_QUOTES, 'UTF-8')}">{:lang('admin/ux/scale/list_older')}<svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axSprite}#ai-chevron-right"/></svg></a>{elseif condition="$axCursorOn && !empty($list)"/}<span class="ax-pages__end">{:lang('admin/ux/scale/list_end')}</span>{/if}
+        </nav>
+        {/if}
+    </form>
+</div>
+
+{include file="../../../application/admin/view/public/foot" /}
+
+<script type="application/json" id="vodListLang">{:json_encode([
+    'recycle_title'=>lang('admin/ux/content/to_recycle'), 'recycle'=>lang('admin/ux/content/confirm_recycle'), 'recycle_one'=>lang('admin/ux/content/confirm_recycle_one'),
+    'delete_title'=>lang('admin/ux/content/delete_forever'), 'delete'=>lang('admin/ux/content/confirm_delete_forever'), 'delete_one'=>lang('admin/ux/content/confirm_delete_forever_one'),
+    'dupes'=>lang('admin/ux/content/confirm_dupes'), 'none'=>lang('admin/ux/content/batch_none'),
+    'selected'=>lang('admin/ux/kit/selected'), 'select_first'=>lang('admin/ux/kit/select_first'),
+    'copied'=>lang('admin/ux/content/link_copied'), 'failed'=>lang('admin/ux/kit/request_failed'),
+    'ok'=>lang('admin/ux/kit/confirm_ok')
+], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP)}</script>
+<script type="text/javascript">
+    {php}$axUrlParam = array_filter((array)$param, function ($v, $k) { return is_string($k) && preg_match('/^[A-Za-z0-9_]{1,40}$/D', $k) && is_scalar($v); }, ARRAY_FILTER_USE_BOTH);{/php}
+    var curUrl = {:json_encode(url('vod/data',$axUrlParam),JSON_HEX_TAG|JSON_HEX_AMP|JSON_HEX_APOS|JSON_HEX_QUOT)};
+    layui.use(['laypage', 'layer','form'], function() {
+        var laypage = layui.laypage, layer = layui.layer, form = layui.form, $ = layui.jquery;
+        var L = JSON.parse(document.getElementById('vodListLang').textContent);
+        var token = function () { return $('#pageListForm input[name="__token__"]').val(); };
+
+        laypage.render({
+            elem: 'pages'
+            ,count: {$total|default=0|intval}
+            ,limit: {$limit|default=20|intval}
+            ,limits: [10, 20, 50, 100, 200, 500, 1000]
+            ,curr: {$page|default=1|intval}
+            ,layout: {:json_encode($axLayout)}
+            ,jump: function(obj,first){
+                if(!first){
+                    location.href = curUrl.replace('%7Bpage%7D',obj.curr).replace('%7Blimit%7D',obj.limit);
+                }
+            }
+        });
+
+        // "{n} selected" next to the Bulk menu.
+        function selIds() { return $('#pageListForm .checkbox-ids:checked').map(function () { return this.value; }).get(); }
+        function syncCount() { var n = selIds().length; $('#axSelCount').text(n ? AxUX.format(L.selected, { n: n }) : ''); }
+        form.on('checkbox', function () { setTimeout(syncCount, 0); });
+        $(document).on('change', '#pageListForm input[type="checkbox"]', syncCount);
+
+        function idsFor(btn) { return btn.attr('data-ids') ? [btn.attr('data-ids')] : selIds(); }
+        function post(url, data) {
+            data.__token__ = token();
+            return $.ajax({ url: url, type: 'POST', dataType: 'json', data: data });
+        }
+        function done(res) {
+            var ok = res && res.code == 1;
+            AxUX.toast(res && res.msg ? res.msg : L.failed, ok ? 'ok' : 'error');
+            if (ok) { setTimeout(function () { location.reload(); }, 600); }
+        }
+
+        // Show / Hide (row eye button and Bulk menu): the existing field action, no confirm (nothing is lost).
+        $(document).on('click', '.j-vod-field', function () {
+            var btn = $(this), ids = idsFor(btn);
+            if (!ids.length) { AxUX.toast(L.select_first, 'warn'); return; }
+            post(btn.attr('data-href'), { ids: ids.join(','), col: btn.attr('data-col'), val: btn.attr('data-val') }).done(done).fail(function () { AxUX.toast(L.failed, 'error'); });
+        });
+        // Move to recycle bin (row archive button and Bulk menu).
+        $(document).on('click', '.j-vod-recycle', function () {
+            var btn = $(this), ids = idsFor(btn);
+            if (!ids.length) { AxUX.toast(L.select_first, 'warn'); return; }
+            AxUX.confirm({ title: L.recycle_title, message: ids.length === 1 ? L.recycle_one : L.recycle, count: ids.length, danger: false, confirmLabel: L.recycle_title }).then(function (yes) {
+                if (yes) { post(btn.attr('data-href'), { ids: ids.join(',') }).done(done).fail(function () { AxUX.toast(L.failed, 'error'); }); }
+            });
+        });
+        // Restore from the recycle bin.
+        $(document).on('click', '.j-vod-restore', function () {
+            var btn = $(this), ids = idsFor(btn);
+            if (!ids.length) { AxUX.toast(L.select_first, 'warn'); return; }
+            post(btn.attr('data-href'), { ids: ids.join(',') }).done(done).fail(function () { AxUX.toast(L.failed, 'error'); });
+        });
+        // Permanent delete: recycle-bin view only.
+        $(document).on('click', '.j-vod-permanent', function () {
+            var btn = $(this), ids = idsFor(btn);
+            if (!ids.length) { AxUX.toast(L.select_first, 'warn'); return; }
+            AxUX.confirm({ title: L.delete_title, message: ids.length === 1 ? L.delete_one : L.delete, count: ids.length, confirmLabel: L.delete_title }).then(function (yes) {
+                if (yes) { post(btn.attr('data-href'), { operation: 'permanent', scope: btn.attr('data-scope'), ids: ids.join(',') }).done(done).fail(function () { AxUX.toast(L.failed, 'error'); }); }
+            });
+        });
+        // Remove duplicates (B6): dry run for the counts, then recycle every copy but one per group.
+        $(document).on('click', '.j-vod-dupes', function () {
+            var btn = $(this), retain = btn.attr('data-retain');
+            post(btn.attr('data-href'), { repeat: 1, retain: retain, dry: 1 }).done(function (res) {
+                var n = res && res.data ? parseInt(res.data.n, 10) || 0 : 0, m = res && res.data ? parseInt(res.data.m, 10) || 0 : 0;
+                if (!res || res.code != 1) { AxUX.toast(res && res.msg ? res.msg : L.failed, 'error'); return; }
+                if (n < 1) { AxUX.toast(L.none, 'warn'); return; }
+                AxUX.confirm({ title: btn.text(), message: AxUX.format(L.dupes, { n: n, m: m }), count: n, danger: false, confirmLabel: L.recycle_title }).then(function (yes) {
+                    if (yes) { post(btn.attr('data-href'), { repeat: 1, retain: retain }).done(done).fail(function () { AxUX.toast(L.failed, 'error'); }); }
+                });
+            }).fail(function () { AxUX.toast(L.failed, 'error'); });
+        });
+        // Row "More" menu: copy the public link.
+        $(document).on('click', '.j-copy-link', function () {
+            var u = $(this).attr('data-url') || '';
+            if (u && u.charAt(0) === '/') { u = location.origin + u; }
+            if (navigator.clipboard && u) { navigator.clipboard.writeText(u).then(function () { AxUX.toast(L.copied, 'ok'); }, function () { AxUX.toast(u, 'info'); }); }
+            else if (u) { AxUX.toast(u, 'info'); }
+        });
+    });
+</script>
+<style>
+.vod-cleanup-dialog{box-sizing:border-box;padding:18px;max-height:calc(90vh - 60px);overflow:auto;line-height:1.5}
+.vod-cleanup-dialog p{margin:0 0 12px}.vod-cleanup-dialog label{display:block;margin-bottom:6px}
+.vod-cleanup-dialog input{box-sizing:border-box;width:100%;max-width:100%;color:inherit;background:transparent}
+.vod-cleanup-dialog progress{width:100%;height:16px;margin:0 0 12px}
+.vod-cleanup-actions{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
+.vod-cleanup-error{border:1px solid currentColor;padding:10px;overflow-wrap:anywhere}
+.vod-cleanup-irreversible{font-weight:700}.vod-cleanup-literal{font-family:monospace;margin-top:6px!important}
+.vod-cleanup-dialog button:focus-visible,.vod-cleanup-dialog input:focus-visible{outline:2px solid currentColor;outline-offset:2px}
+.vod-cleanup-dialog [hidden]{display:none!important}
+.layui-layer:has(.vod-cleanup-dialog){max-height:90vh}
+.ax-pages--more{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:0}
+.ax-pages--more .ax-btn{white-space:normal}
+.ax-pages__count,.ax-pages__end{color:var(--ax-muted)}
+</style>
+<script type="application/json" id="vod-cleanup-config">{:json_encode([
+ 'title'=>lang('vod/cleanup_title'),'scope'=>lang('vod/cleanup_scope'),'files'=>lang('vod/cleanup_files'),
+ 'imports'=>lang('vod/cleanup_imports'),'irreversible'=>lang('vod/cleanup_irreversible'),'typed'=>lang('vod/cleanup_typed'),
+ 'active'=>lang('vod/cleanup_active'),'recycled'=>lang('vod/cleanup_recycled'),'total'=>lang('vod/cleanup_total'),
+ 'start'=>lang('vod/cleanup_start'),'refresh'=>lang('vod/cleanup_refresh'),'close'=>lang('vod/cleanup_close'),
+ 'pause'=>lang('vod/cleanup_pause'),'resume'=>lang('vod/cleanup_resume'),'cancel_remaining'=>lang('vod/cleanup_cancel_remaining'),
+ 'cancel_confirm'=>lang('vod/cleanup_cancel_confirm'),'reload'=>lang('vod/cleanup_reload'),'progress'=>lang('vod/cleanup_progress'),
+ 'deleted'=>lang('vod/cleanup_deleted'),'relations'=>lang('vod/cleanup_relations'),'newer'=>lang('vod/cleanup_newer'),
+ 'saved'=>lang('vod/cleanup_saved'),'running'=>lang('vod/cleanup_running'),'paused'=>lang('vod/cleanup_paused'),
+ 'cancelled'=>lang('vod/cleanup_cancelled'),'complete'=>lang('vod/cleanup_complete'),'empty'=>lang('vod/cleanup_empty'),
+ 'loading'=>lang('vod/cleanup_loading'),'busy'=>lang('vod/cleanup_busy'),'failed'=>lang('vod/cleanup_failed'),
+ 'transport'=>lang('vod/cleanup_transport'),'recovered'=>lang('vod/cleanup_recovered')
+], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP)}
+</script>
+<script src="__STATIC__/js/vod_cleanup.js?v=20261007-cleanall1"></script>
+<script>
+// F50: after a clean-all job ran, closing its dialog reloads the list so deleted rows disappear.
+(function () {
+    var ran = false;
+    new MutationObserver(function () {
+        var d = document.querySelector('.vod-cleanup-dialog');
+        if (d) {
+            var p = d.querySelector('progress');
+            if (p && !p.closest('[hidden]') && p.offsetParent !== null) { ran = true; }
+        } else if (ran) {
+            ran = false;
+            location.reload();
+        }
+    }).observe(document.body, { childList: true, subtree: true });
+})();
+</script>
+</body>
+</html>

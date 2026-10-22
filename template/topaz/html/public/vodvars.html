@@ -1,0 +1,56 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}
+if (!isset($tzPlain)) { $tzPlain = function ($v) { $v = (string)$v; for ($i = 0; $i < 6; $i++) { $d = html_entity_decode($v, ENT_QUOTES | ENT_HTML5, 'UTF-8'); if ($d === $v) { break; } $v = $d; } return trim($v); }; }
+$tzSplit = function ($value) { $out = []; foreach (explode(',', (string)$value) as $tzPart) { $tzPart = trim($tzPart); if ($tzPart !== '' && !in_array($tzPart, $out, true)) { $out[] = $tzPart; } } return $out; };
+$tplTitle = $tzPlain(($obj['vod_display_name'] ?? '') !== '' ? $obj['vod_display_name'] : ($obj['vod_name'] ?? ''));
+$tplCode = \app\common\util\AvdbLanguage::displayCode($obj); /* 2.11 rule 1: code only from vod_display_code */
+$tplCode = (string)preg_replace('/-(UNCENSORED-LEAK(?:ED)?|ENGLISH-SUBTITLES?)$/i', '', $tplCode);
+if ($tplCode === '' || stripos($tplCode, 'avdb-') === 0 || strlen($tplCode) > 32) { $tplCode = ''; }
+$tplActors = $tzSplit($obj['vod_display_actor'] ?? '');
+$tplGenres = $tzSplit($obj['vod_display_class'] ?? '');
+$tplTagSkip = array_map('mb_strtolower', array_map($tzPlain, array_merge($tplActors, $tplGenres)));
+foreach ($tplActors as $tplTagA) { foreach (preg_split('/\s+/u', $tzPlain($tplTagA)) as $tplTagW) { if (mb_strlen($tplTagW) > 1) { $tplTagSkip[] = mb_strtolower($tplTagW); } } }
+$tplTagCode = strtolower(preg_replace('/[^a-z0-9]/i', '', (string)($obj['vod_remarks'] ?? '')));
+$tplTags = [];
+foreach ($tzSplit($obj['vod_display_tag'] ?? '') as $tplTag) { $tplTagPlain = $tzPlain($tplTag); $tplTagKey = strtolower(preg_replace('/[^a-z0-9]/i', '', $tplTagPlain)); $tplTagLen = mb_strlen($tplTagPlain);
+ if ($tplTagLen < 2 || $tplTagLen > 40 || preg_match('/^[0-9]+$/', $tplTagPlain) || in_array(mb_strtolower($tplTagPlain), $tplTagSkip, true) || strpos($tplTagPlain, '/') !== false || preg_match('/\p{Ll}\p{Lu}/u', $tplTagPlain)) { continue; }
+ if ($tplTagLen === 2 && !preg_match('/^[A-Z0-9]{2}$/', $tplTagPlain)) { continue; }
+ if ($tplTagCode !== '' && $tplTagKey !== '' && (strpos($tplTagKey, $tplTagCode) !== false || strpos($tplTagCode, $tplTagKey) !== false)) { continue; }
+ $tplTags[] = $tplTag; if (count($tplTags) >= 24) { break; } }
+if ($tplTagCode !== '') { $tplGenres = array_values(array_filter($tplGenres, function ($g) use ($tzPlain, $tplTagCode) { $k = strtolower(preg_replace('/[^a-z0-9]/i', '', $tzPlain($g))); return strlen($k) < 3 || (strpos($k, $tplTagCode) === false && strpos($tplTagCode, $k) === false); })); }
+if (\app\common\util\AutoIcon::enabled()) { $tplGenres = array_values(array_filter($tplGenres, function ($g) { return \app\common\util\AutoIcon::keepTag($g); })); $tplTags = array_values(array_filter($tplTags, function ($g) { return \app\common\util\AutoIcon::keepTag($g); })); }
+$tplDirectors = $tzSplit($obj['vod_display_director'] ?? '');
+$tplStudio = $tzPlain($obj['vod_display_writer'] ?? '');
+$tplArea = $tzPlain($obj['vod_display_area'] ?? '');
+$tplDate = trim((string)($obj['vod_pubdate'] ?? ''));
+if ($tplDate === '' && !empty($obj['vod_year'])) { $tplDate = trim((string)$obj['vod_year']); }
+$tplDuration = trim((string)($obj['vod_duration'] ?? ''));
+$tplDesc = $tzPlain($obj['vod_display_content'] ?? '');
+if ($tplDesc === '') { $tplDesc = $tzPlain($obj['vod_display_blurb'] ?? ''); }
+$tplDesc = trim(preg_replace('/\s+/u', ' ', strip_tags($tplDesc)));
+$tplScore = trim((string)($obj['vod_score'] ?? ''));
+if ($tplScore === '0' || $tplScore === '0.0') { $tplScore = ''; }
+$tplHits = (int)($obj['vod_hits'] ?? 0);
+$tplUp = (int)($obj['vod_up'] ?? 0);
+$tplDown = (int)($obj['vod_down'] ?? 0);
+$tplType = (isset($obj['type']) && is_array($obj['type'])) ? $obj['type'] : [];
+$tplTypeName = trim((string)\app\common\util\TemplateText::raw($tzPlain($tplType['type_name'] ?? '')));
+$tplTypeRaw = (string)($tplType['type_name'] ?? '');
+$tplTypeUrl = $tplTypeName !== '' ? mac_url_type($tplType) : '';
+$tplPlayUrl = ((!empty($obj['vod_play_list']) && is_array($obj['vod_play_list'])) ? mac_url_vod_play($obj, 'first') : '');
+$tplDetailUrl = mac_url_vod_detail($obj);
+$tplEpCount = 0;
+foreach ((array)($obj['vod_play_list'] ?? []) as $tplSrcRow) { $tplEpCount += (isset($tplSrcRow['urls']) && is_array($tplSrcRow['urls'])) ? count($tplSrcRow['urls']) : 0; }
+$tplLbl = [];
+foreach (['code' => 'code', 'studio' => 'ui.studio_label', 'date' => 'ui.release_date', 'duration' => 'ui.duration', 'actor' => 'ui.performers', 'director' => 'ui.director', 'genres' => 'genres', 'tags' => 'ui.tag', 'category' => 'category', 'area' => 'region', 'updated' => 'updated', 'views' => 'views', 'score' => 'ui.score'] as $tplLk => $tplLv) { $tplLbl[$tplLk] = preg_replace('/[\s:：]+$/u', '', \app\common\util\TemplateText::raw($tplLv)); }
+$tplShare = '';
+try { $tplShare = \app\common\util\Sitemap::absolute(mac_url_vod_play($obj)); } catch (\Throwable $tplShareErr) { $tplShare = ''; }
+$tplReportText = \app\common\util\TemplateText::raw('topaz.report_prefill', ['name' => ($tplCode !== '' && stripos($tplTitle, $tplCode) !== 0 ? '[' . $tplCode . '] ' : '') . $tplTitle]);
+$tplReportUrl = mac_url('gbook/index') . (strpos(mac_url('gbook/index'), '?') === false ? '?' : '&') . 'id=' . (int)($obj['vod_id'] ?? 0) . '&name=' . rawurlencode(mb_substr($tplReportText, 0, 300));
+{/php}

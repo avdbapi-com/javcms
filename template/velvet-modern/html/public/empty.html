@@ -1,0 +1,13 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}$vpEmptyScene = isset($vpEmptyScene) ? (string)$vpEmptyScene : ''; $vpEmptyTitle = isset($vpEmptyKey) && $vpEmptyKey !== '' ? $vpEmptyKey : 'vp.stage_is_set'; $vpEmptyText = isset($vpEmptyTextKey) && $vpEmptyTextKey !== '' ? $vpEmptyTextKey : 'ui.no_results_found_try_another_category_or_search';{/php}<div class="vp-empty">
+  {if condition="$vpEmptyScene neq ''"}{:\\app\\common\\util\\AutoIcon::scene($vpEmptyScene, ['class'=>'vp-empty-scene'])}{else/}<svg class="vp-empty-art" viewBox="0 0 240 150" aria-hidden="true" focusable="false"><path d="M24 150V58A96 96 0 0 1 216 58V150" fill="none" stroke="currentColor" stroke-width="2" opacity=".75"/><path d="M14 150V54A106 106 0 0 1 226 54V150" fill="none" stroke="currentColor" stroke-width="1" opacity=".3"/><ellipse cx="120" cy="134" rx="74" ry="11" fill="currentColor" opacity=".16"/><g class="vp-cone"><path d="M112 0H128L162 134H78Z" fill="currentColor" opacity=".12"/></g><g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M104 100V72Q104 64 112 64H128Q136 64 136 72V100"/><path d="M98 100H142V108H98Z"/><path d="M102 108V130M138 108V130"/></g><path d="M0 150H240" stroke="currentColor" stroke-width="2" opacity=".5"/></svg>{/if}
+  <p class="vp-empty-title">{:\\app\\common\\util\\TemplateText::get($vpEmptyTitle)}</p>
+  <p class="vp-empty-text">{:\\app\\common\\util\\TemplateText::get($vpEmptyText)}</p>
+  <div class="vp-empty-cta"><a class="vp-btn vp-btn-gold" href="{:mac_url('label/new')}">{:\\app\\common\\util\\AutoIcon::navIcon('latest', '', ['class'=>'vp-i'])}{:\\app\\common\\util\\TemplateText::get('vp.browse_latest')}</a><a class="vp-btn vp-btn-ghost" href="{$maccms.path|htmlspecialchars=ENT_QUOTES}">{:\\app\\common\\util\\AutoIcon::navIcon('home', '', ['class'=>'vp-i'])}{:\\app\\common\\util\\TemplateText::get('ui.home')}</a></div>
+</div>

@@ -1,0 +1,34 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+Partly based on a third-party theme. This license covers the JavCMS changes only.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!--Log in the pop -up window start-->
+<div class="mac_report reply_box">
+    <form class="gbook_form">
+        <input type="hidden" name="gbook_rid" value="{:intval($param['id'] ?? 0)}">
+        <p class="msg_cue">{:\\app\\common\\util\\TemplateText::get('ui.please_enter_the_error_content')}</p>
+        <textarea class="gbook_content" name="gbook_content" style="width:98%;height:150px;" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.your_message')}">{$param.name}</textarea>
+        <div class="msg_code">
+            {if condition="$gbook.verify eq 1"}
+            <div class="verification-field"><label for="report-verify">{:\\app\\common\\util\\AutoIcon::ui('shield', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ui.verification_code_4e450d')}</label><input id="report-verify" type="text" name="verify" class="mac_verify" maxlength="4"  aria-label="{:\\app\\common\\util\\TemplateText::get('ui.verification_code')}"></div>
+            {/if}
+            <div class="remaining-w fr">{:\\app\\common\\util\\TemplateText::get('ui.you_can_also_enter')}<span class="gbook_remaining remaining " > </span></div>
+        </div>
+        <div style="text-align: center;">
+            <input type="button" class="gbook_submit submit_btn"  value="{:\\app\\common\\util\\TemplateText::get('ui.submit_a_message')}">
+        </div>
+
+    </form>
+</div>
+<!--Log in the pop -up window-->
+<script>
+    $(function(){
+        MAC.Gbook.Login = {$gbook.login};
+        MAC.Gbook.Verify = {$gbook.verify};
+        MAC.Gbook.Init();
+    });
+</script>

@@ -1,0 +1,255 @@
+/*
+ * This file is part of JavCMS - https://javcms.net
+ * Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+ * License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+ * See the LICENSE and NOTICE files that come with JavCMS.
+ * Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Telegram: https://t.me/avdb_api
+ */
+/* admin-downloader-workspace-v1: scoped dark downloader configuration workspace. */
+/* V9 palette -> kit tokens (admin-content builder) */
+html body.admin-dark .admin-downloader-workspace-v1, html body.admin-dark .admin-downloader-editor-v1 { --ap-cyan: var(--ax-accent); --ap-cyan-soft: var(--ax-accent); --ap-ink: var(--ax-text); --ap-muted: var(--ax-muted); --ap-quiet: var(--ax-faint); --ap-surface: var(--ax-surface); --ap-surface-2: var(--ax-surface); --ap-line: var(--ax-line); --ap-line-soft: var(--ax-line); }
+body.admin-dark .admin-downloader-workspace-v1,
+body.admin-dark .admin-downloader-editor-v1 {
+  --ap-cyan: #63d7e9;
+  --ap-cyan-soft: rgba(99, 215, 233, .12);
+  --ap-ink: #f2f7ff;
+  --ap-muted: #a6b5c9;
+  --ap-quiet: #7c8ea7;
+  --ap-surface: #111d31;
+  --ap-surface-2: #0d192b;
+  --ap-line: rgba(157, 178, 207, .19);
+  --ap-line-soft: rgba(157, 178, 207, .11);
+  color: var(--ap-muted);
+}
+body.admin-dark .admin-downloader-workspace-v1 { min-height: calc(100vh - 14px); }
+body.admin-dark .admin-downloader-hero,
+body.admin-dark .admin-downloader-editor-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin: 0 0 14px;
+  padding: 20px 22px;
+  border: 1px solid var(--ap-line);
+  border-radius: 13px;
+  background: radial-gradient(circle at 100% 0, rgba(99, 215, 233, .12), transparent 38%), linear-gradient(145deg, rgba(23, 40, 65, .96), rgba(13, 25, 44, .96));
+  box-shadow: 0 14px 30px rgba(0, 0, 0, .18);
+}
+body.admin-dark .admin-downloader-hero-copy { min-width: 0; }
+body.admin-dark .admin-downloader-eyebrow {
+  display: block;
+  color: var(--ap-cyan);
+  font-size: 11px;
+  font-weight: 750;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+body.admin-dark .admin-downloader-hero h1,
+body.admin-dark .admin-downloader-editor-head h1 {
+  margin: 5px 0 6px;
+  color: var(--ap-ink);
+  font-size: 22px;
+  font-weight: 740;
+  line-height: 1.25;
+}
+body.admin-dark .admin-downloader-hero p,
+body.admin-dark .admin-downloader-editor-head p { margin: 0; color: var(--ap-muted); font-size: 13px; }
+body.admin-dark .admin-downloader-hero code,
+body.admin-dark .admin-downloader-editor-head code {
+  padding: 3px 6px;
+  border: 1px solid var(--ap-line);
+  border-radius: 5px;
+  background: rgba(8, 16, 29, .5);
+  color: #c8f7fb;
+  font-size: 12px;
+}
+body.admin-dark .admin-downloader-hero-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex: 0 0 auto;
+  padding: 8px 11px;
+  border: 1px solid rgba(99, 215, 233, .25);
+  border-radius: 999px;
+  color: var(--ap-cyan);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+body.admin-dark .admin-downloader-meta-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--ap-cyan); box-shadow: 0 0 0 4px rgba(99, 215, 233, .14); }
+body.admin-dark .admin-downloader-workspace-v1 .my-toolbar-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0 0 14px;
+  padding: 13px 14px;
+  border: 1px solid var(--ap-line);
+  border-radius: 12px;
+  background: linear-gradient(145deg, rgba(22, 38, 63, .94), rgba(13, 24, 42, .94));
+  box-shadow: 0 11px 24px rgba(0, 0, 0, .14);
+}
+body.admin-dark .admin-downloader-workspace-v1 .btn-primary-group { display: flex; align-items: center; flex-wrap: wrap; gap: 7px; }
+body.admin-dark .admin-downloader-workspace-v1 .btn-primary-group .btn { margin: 0 !important; }
+body.admin-dark .admin-downloader-workspace-v1 .btn-primary {
+  min-height: 35px;
+  border: 1px solid rgba(99, 215, 233, .24);
+  border-radius: 8px;
+  background: var(--ap-cyan-soft);
+  color: var(--ap-cyan);
+  font-weight: 700;
+}
+body.admin-dark .admin-downloader-workspace-v1 .btn-primary:hover { border-color: rgba(99, 215, 233, .55); background: rgba(99, 215, 233, .2); color: #d5fbff; }
+body.admin-dark .admin-downloader-workspace-v1 #pageListForm {
+  overflow-x: auto;
+  max-width: 100%;
+  border: 1px solid var(--ap-line);
+  border-radius: 12px;
+  background: var(--ap-surface);
+  box-shadow: 0 13px 27px rgba(0, 0, 0, .13);
+}
+body.admin-dark .admin-downloader-workspace-v1 #pageListForm .layui-table { min-width: 1180px; margin: 0; background: transparent; }
+body.admin-dark .admin-downloader-workspace-v1 .layui-table thead tr { background: #172640; }
+body.admin-dark .admin-downloader-workspace-v1 .layui-table th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  border-color: var(--ap-line);
+  color: var(--ap-ink);
+  font-size: 11px;
+  font-weight: 750;
+  letter-spacing: .055em;
+  text-transform: uppercase;
+}
+body.admin-dark .admin-downloader-workspace-v1 .layui-table td { border-color: var(--ap-line-soft); color: var(--ap-muted); vertical-align: middle; }
+body.admin-dark .admin-downloader-workspace-v1 .layui-table tbody tr { transition: background .16s ease; }
+body.admin-dark .admin-downloader-workspace-v1 .layui-table tbody tr:hover { background: rgba(99, 215, 233, .045); }
+body.admin-dark .admin-downloader-workspace-v1 .admin-downloader-name strong { color: var(--ap-ink); font-size: 13px; }
+body.admin-dark .admin-downloader-workspace-v1 .admin-downloader-code code {
+  padding: 3px 7px;
+  border: 1px solid var(--ap-line);
+  border-radius: 5px;
+  background: var(--ap-surface-2);
+  color: #bcd1e9;
+  font-size: 12px;
+}
+body.admin-dark .admin-downloader-workspace-v1 .admin-downloader-parse,
+body.admin-dark .admin-downloader-workspace-v1 .admin-downloader-description,
+body.admin-dark .admin-downloader-workspace-v1 .admin-downloader-tip { max-width: 240px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+body.admin-dark .admin-downloader-workspace-v1 .badge { border-radius: 999px; }
+body.admin-dark .admin-downloader-workspace-v1 .badge.bg-primary { border: 1px solid rgba(99, 215, 233, .26); background: rgba(99, 215, 233, .12); color: #bdf6fb; }
+body.admin-dark .admin-downloader-workspace-v1 .badge.bg-danger { border: 1px solid rgba(255, 113, 133, .26); background: rgba(255, 113, 133, .12); color: #ffafba; }
+body.admin-dark .admin-downloader-workspace-v1 .admin-downloader-row-actions { white-space: nowrap; }
+body.admin-dark .admin-downloader-workspace-v1 .admin-downloader-row-actions a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  margin: 2px 3px 2px 0;
+  padding: 0 8px;
+  border: 1px solid rgba(99, 215, 233, .22);
+  border-radius: 999px;
+  background: var(--ap-cyan-soft);
+  color: var(--ap-cyan);
+}
+body.admin-dark .admin-downloader-workspace-v1 .admin-downloader-row-actions a:hover { border-color: rgba(99, 215, 233, .55); background: rgba(99, 215, 233, .2); color: #d5fbff; }
+body.admin-dark .admin-downloader-workspace-v1 .layui-form-checkbox[lay-skin=primary] i { border-color: var(--ap-line); background: var(--ap-surface-2); }
+body.admin-dark .admin-downloader-workspace-v1 .layui-form-checkbox[lay-skin=primary].layui-form-checked i { border-color: var(--ap-cyan); background: var(--ap-cyan); color: #071421; }
+body.admin-dark .admin-downloader-editor-v1 { min-height: calc(100vh - 14px); }
+body.admin-dark .admin-downloader-editor-head { display: block; padding: 17px 20px; }
+body.admin-dark .admin-downloader-editor-v1 .admin-downloader-form {
+  margin: 0;
+  padding: 12px 18px 10px;
+  border: 1px solid var(--ap-line);
+  border-radius: 12px;
+  background: var(--ap-surface);
+  box-shadow: 0 13px 27px rgba(0, 0, 0, .13);
+}
+body.admin-dark .admin-downloader-editor-v1 .layui-tab { margin: 0; border: 1px solid var(--ap-line); border-radius: 11px; overflow: hidden; background: var(--ap-surface-2); }
+body.admin-dark .admin-downloader-editor-v1 .layui-tab-title {
+  display: flex;
+  align-items: center;
+  height: auto;
+  min-height: 50px;
+  padding: 5px 8px;
+  border-bottom: 1px solid var(--ap-line);
+  background: #172640;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+body.admin-dark .admin-downloader-editor-v1 .layui-tab-title li { height: 38px; line-height: 38px; margin: 1px 3px; padding: 0 15px; border-radius: 8px; color: var(--ap-muted); font-weight: 700; transition: color .16s ease, background-color .16s ease; }
+body.admin-dark .admin-downloader-editor-v1 .layui-tab-title li::after { display: none; }
+body.admin-dark .admin-downloader-editor-v1 .layui-tab-title li:hover { color: var(--ap-cyan); background: var(--ap-cyan-soft); }
+body.admin-dark .admin-downloader-editor-v1 .layui-tab-title li.layui-this { color: #071421; background: var(--ap-cyan); box-shadow: 0 5px 14px rgba(99, 215, 233, .2); }
+body.admin-dark .admin-downloader-editor-v1 .layui-tab-content { padding: 14px 14px 6px; background: var(--ap-surface-2); }
+body.admin-dark .admin-downloader-editor-v1 .layui-tab-item > .layui-form-item { margin: 0 0 8px; padding: 9px 10px; border: 1px solid var(--ap-line-soft); border-radius: 9px; background: rgba(17, 28, 45, .66); transition: background .16s ease, border-color .16s ease; }
+body.admin-dark .admin-downloader-editor-v1 .layui-tab-item > .layui-form-item:hover,
+body.admin-dark .admin-downloader-editor-v1 .layui-tab-item > .layui-form-item:focus-within { border-color: rgba(99, 215, 233, .45); background: rgba(27, 43, 67, .66); }
+body.admin-dark .admin-downloader-editor-v1 .layui-form-label { width: 150px; border-color: transparent; background: transparent; color: var(--ap-ink); font-size: 12px; font-weight: 700; }
+body.admin-dark .admin-downloader-editor-v1 .layui-input-block { margin-left: 170px; }
+body.admin-dark .admin-downloader-editor-v1 .layui-input,
+body.admin-dark .admin-downloader-editor-v1 .layui-textarea,
+body.admin-dark .admin-downloader-editor-v1 .layui-form-select .layui-input { border: 1px solid var(--ap-line); border-radius: 8px; background: var(--ap-surface-2); color: var(--ap-ink); }
+body.admin-dark .admin-downloader-editor-v1 .layui-input:focus,
+body.admin-dark .admin-downloader-editor-v1 .layui-textarea:focus { border-color: var(--ap-cyan); box-shadow: 0 0 0 3px rgba(99, 215, 233, .13); }
+body.admin-dark .admin-downloader-editor-v1 .layui-textarea[name=code] { min-height: 330px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; line-height: 1.55; }
+body.admin-dark .admin-downloader-editor-v1 .admin-downloader-form-actions { margin: 12px 0 0; padding: 16px 10px 8px; border-top: 1px solid var(--ap-line); }
+body.admin-dark .admin-downloader-editor-v1 .admin-downloader-form-actions .layui-input-block { margin-left: 0; text-align: left; }
+body.admin-dark .admin-downloader-editor-v1 .admin-downloader-form-actions .btn { min-height: 38px; border-radius: 8px; font-weight: 700; }
+body.admin-dark .admin-downloader-editor-v1 .admin-downloader-form-actions .btn-primary { background: var(--ap-cyan); color: #071421; }
+body.admin-dark .admin-downloader-editor-v1 .admin-downloader-form-actions .btn-warning { background: rgba(255, 186, 88, .15); color: #ffd49b; }
+@media (max-width: 760px) {
+  body.admin-dark .admin-downloader-workspace-v1,
+  body.admin-dark .admin-downloader-editor-v1 { padding: 8px !important; }
+  body.admin-dark .admin-downloader-hero,
+  body.admin-dark .admin-downloader-editor-head { padding: 15px; }
+  body.admin-dark .admin-downloader-hero { align-items: flex-start; }
+  body.admin-dark .admin-downloader-hero-meta { margin-top: 2px; }
+  body.admin-dark .admin-downloader-workspace-v1 .my-toolbar-box { align-items: stretch; flex-direction: column; padding: 10px; }
+  body.admin-dark .admin-downloader-workspace-v1 .btn-primary-group { align-items: stretch; }
+  body.admin-dark .admin-downloader-workspace-v1 .btn-primary-group .btn { flex: 1 1 130px; }
+  body.admin-dark .admin-downloader-workspace-v1 #pageListForm .layui-table { min-width: 1180px; }
+  body.admin-dark .admin-downloader-editor-v1 .admin-downloader-form { padding: 10px 8px 8px; }
+  body.admin-dark .admin-downloader-editor-v1 .layui-tab-content { padding: 10px 6px 2px; }
+  body.admin-dark .admin-downloader-editor-v1 .layui-form-label { float: none; display: block; width: auto; min-height: 28px; padding: 0 2px; line-height: 28px; }
+  body.admin-dark .admin-downloader-editor-v1 .layui-input-block { margin-left: 0; }
+  body.admin-dark .admin-downloader-editor-v1 .layui-input,
+  body.admin-dark .admin-downloader-editor-v1 .layui-textarea { max-width: 100%; box-sizing: border-box; }
+  body.admin-dark .admin-downloader-editor-v1 .layui-tab-item > .layui-form-item { padding: 9px 7px; }
+}
+
+/* The downloader editor has direct form-item children rather than the Player tab layout. */
+body.admin-dark .admin-downloader-editor-v1 .admin-downloader-form > .layui-form-item:not(.admin-downloader-form-actions) {
+  margin: 0 0 8px;
+  padding: 9px 10px;
+  border: 1px solid var(--ap-line-soft);
+  border-radius: 9px;
+  background: rgba(17, 28, 45, .66);
+}
+body.admin-dark .admin-downloader-editor-v1 .admin-downloader-form > .layui-form-item:not(.admin-downloader-form-actions):focus-within {
+  border-color: rgba(99, 215, 233, .45);
+  background: rgba(27, 43, 67, .66);
+}
+@media (max-width: 760px) {
+  body.admin-dark .admin-downloader-editor-v1 .admin-downloader-form > .layui-form-item:not(.admin-downloader-form-actions) > .layui-form-label {
+    float: none;
+    display: block;
+    width: 100%;
+    height: auto;
+    min-height: 0;
+    max-width: none;
+    box-sizing: border-box;
+    padding: 0 0 8px;
+    border: 0;
+    background: transparent;
+    line-height: 1.4;
+    text-align: left;
+    white-space: normal;
+  }
+  body.admin-dark .admin-downloader-editor-v1 .admin-downloader-form > .layui-form-item:not(.admin-downloader-form-actions) > .layui-input-block {
+    width: 100%;
+    min-width: 0;
+    margin-left: 0;
+  }
+}

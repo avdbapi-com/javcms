@@ -1,0 +1,174 @@
+/*
+ * This file is part of JavCMS - https://javcms.net
+ * Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+ * License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+ * See the LICENSE and NOTICE files that come with JavCMS.
+ * Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Telegram: https://t.me/avdb_api
+ */
+/* admin-vod-plot-editor-workspace-v1
+ * Plot-only layout additions. Existing VOD fields, routes, editors and hooks stay intact.
+ */
+body.admin-dark .admin-vod-plot #plot_list {
+    margin-top: 0;
+}
+
+body.admin-dark .admin-vod-plot #plot_list > .layui-form-item {
+    display: grid;
+    grid-template-columns: 112px minmax(240px, 1fr) minmax(280px, auto);
+    gap: 10px;
+    align-items: center;
+    min-width: 0;
+}
+
+body.admin-dark .admin-vod-plot #plot_list > .layui-form-item > .layui-form-label,
+body.admin-dark .admin-vod-plot #plot_list > .layui-form-item > .layui-input-inline,
+body.admin-dark .admin-vod-plot #plot_list > .layui-form-item > .layui-input-block {
+    float: none;
+    min-width: 0;
+    margin: 0 !important;
+}
+
+body.admin-dark .admin-vod-plot #plot_list > .layui-form-item > .layui-form-label {
+    display: flex;
+    align-items: center;
+    width: auto;
+    min-height: 38px;
+}
+
+body.admin-dark .admin-vod-plot #plot_list > .layui-form-item > .w500,
+body.admin-dark .admin-vod-plot #plot_list > .layui-form-item > .w400 {
+    width: auto !important;
+    max-width: none;
+}
+
+body.admin-dark .admin-vod-plot #plot_list > .layui-form-item > .w400 {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding-bottom: 0 !important;
+}
+
+body.admin-dark .admin-vod-plot #plot_list > .layui-form-item > .w400 br,
+body.admin-dark .admin-vod-plot #plot_list > .layui-form-item > .p10.m20 {
+    display: none;
+}
+
+body.admin-dark .admin-vod-plot #plot_list .j-editor-clear,
+body.admin-dark .admin-vod-plot #plot_list .j-editor-remove,
+body.admin-dark .admin-vod-plot #plot_list .j-editor-up,
+body.admin-dark .admin-vod-plot #plot_list .j-editor-down {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 36px;
+    margin: 0 !important;
+    padding: 0 10px;
+    border-radius: 7px;
+    line-height: 1.2;
+}
+
+body.admin-dark .admin-vod-plot #plot_list > .layui-form-item > .layui-input-block {
+    grid-column: 1 / -1;
+    width: 100%;
+}
+
+body.admin-dark .admin-vod-plot #plot_list .edui-container,
+body.admin-dark .admin-vod-plot #plot_list .edui-editor,
+body.admin-dark .admin-vod-plot #plot_list .edui-editor-body,
+body.admin-dark .admin-vod-plot #plot_list .edui-editor-iframeholder {
+    width: 100% !important;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+body.admin-dark .admin-vod-plot #plot_list .edui-toolbar {
+    width: auto !important;
+}
+
+body.admin-dark .admin-vod-plot .j-plot-add {
+    min-height: 38px;
+}
+
+.layui-layer.admin-vod-plot-layer-v1 .layui-layer-setwin {
+    top: 6px;
+    right: 8px;
+}
+
+.layui-layer.admin-vod-plot-layer-v1 .layui-layer-setwin .layui-layer-close {
+    position: relative;
+    top: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    margin: 0;
+    border: 1px solid #36516d;
+    border-radius: 8px;
+    background: #142238 !important;
+    color: #e8f1fb;
+    text-decoration: none;
+}
+
+.layui-layer.admin-vod-plot-layer-v1 .layui-layer-setwin .layui-layer-close::before {
+    content: "\00d7";
+    font: 24px/1 Arial, sans-serif;
+}
+
+.layui-layer.admin-vod-plot-layer-v1 .layui-layer-setwin .layui-layer-close:hover,
+.layui-layer.admin-vod-plot-layer-v1 .layui-layer-setwin .layui-layer-close:focus-visible {
+    border-color: #4fd1a5;
+    background: #1b3c4b !important;
+    outline: 2px solid rgba(79, 209, 165, .45);
+    outline-offset: 1px;
+}
+
+@media (max-width: 900px) {
+    body.admin-dark .admin-vod-plot #plot_list > .layui-form-item {
+        grid-template-columns: 104px minmax(0, 1fr);
+    }
+
+    body.admin-dark .admin-vod-plot #plot_list > .layui-form-item > .w400 {
+        grid-column: 2;
+    }
+}
+
+@media (max-width: 760px) {
+    body.admin-dark .admin-vod-plot #plot_list {
+        padding: 7px;
+    }
+
+    body.admin-dark .admin-vod-plot #plot_list > .layui-form-item {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 8px;
+        padding: 9px;
+    }
+
+    body.admin-dark .admin-vod-plot #plot_list > .layui-form-item > .layui-form-label,
+    body.admin-dark .admin-vod-plot #plot_list > .layui-form-item > .w500,
+    body.admin-dark .admin-vod-plot #plot_list > .layui-form-item > .w400,
+    body.admin-dark .admin-vod-plot #plot_list > .layui-form-item > .layui-input-block {
+        grid-column: 1;
+        width: 100% !important;
+    }
+
+    body.admin-dark .admin-vod-plot #plot_list > .layui-form-item > .w400 {
+        margin-bottom: 0 !important;
+    }
+
+    body.admin-dark .admin-vod-plot #plot_list .j-editor-clear,
+    body.admin-dark .admin-vod-plot #plot_list .j-editor-remove,
+    body.admin-dark .admin-vod-plot #plot_list .j-editor-up,
+    body.admin-dark .admin-vod-plot #plot_list .j-editor-down {
+        flex: 1 1 calc(50% - 6px);
+        min-width: 0;
+    }
+
+    body.admin-dark .admin-vod-plot #plot_list .edui-editor-body,
+    body.admin-dark .admin-vod-plot #plot_list .edui-editor-iframeholder {
+        min-height: 240px;
+    }
+}

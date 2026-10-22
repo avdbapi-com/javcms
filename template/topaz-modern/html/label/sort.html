@@ -1,0 +1,28 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="topaz-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/sort"}
+{assign name="$maccms.aid" value="9995" /}
+{include file="public/include"}
+</head>
+<body class="tp-page-list">
+{include file="public/head"}
+{include file="public/labelsorts"}
+{php}$tpH1 = \app\common\util\TemplateText::raw('ui.all_videos'); $tpSub = \app\common\util\TemplateText::raw('tp.sub_all'); $tpCount = (int)($tpDc['vod_all'] ?? 0);{/php}
+<main id="main-content" class="tp-main tp-wrap tp-list">
+  {include file="public/listhead"}
+  <div class="tp-filters">{include file="public/sortmenu"}{include file="public/catrail"}</div>
+  <div class="tp-tray-body"><div class="tp-grid" data-grid-fill data-tp-stagger>{maccms:vod num="20" paging="yes" type="all" order="desc" by="time" pageurl="label/sort" id="vo"}{include file="public/vodbox"}{/maccms:vod}</div>
+  {if condition="$__PAGING__.record_total eq 0"}{include file="public/empty"}{/if}</div>
+  {include file="public/paging"}
+</main>
+{include file="public/foot"}
+</body>
+</html>

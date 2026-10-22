@@ -1,0 +1,208 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Based on MacCMS 10 (Apache-2.0) by magicblack, changed by JavCMS.
+JavCMS changes: Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors,
+JavCMS Community License 1.0. The MacCMS parts stay under the Apache License 2.0.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{include file="../../../application/admin/view/public/head" /}
+<link rel="stylesheet" href="__STATIC__/css/admin_vod_batch_workspace_v1.css?v={:filemtime(ROOT_PATH . 'static/css/admin_vod_batch_workspace_v1.css')}">
+<div class="page-container p10 admin-vod-batch-workspace ax-batch">
+    {include file="../../../application/admin/view/public/page_head" icon="ai-file-stack" title="admin/ux/menu/bulk_articles" help="admin/ux/help/bulk_articles" /}
+
+    <form class="ax-form" id="batchForm" method="post" action="{:url('batch')}">
+        <input type="hidden" name="__token__" value="{:mac_admin_csrf_token()}">
+        <input type="hidden" name="confirm" value="">
+
+        <section class="ax-section" id="batchFilters">
+            <h2>{:lang('admin/ux/content/batch_filters')}</h2>
+            <p class="ax-help">{:lang('admin/ux/content/batch_filters_help')}</p>
+            <div class="ax-batch-grid">
+                <div class="ax-field">
+                    <label for="bf-type">{:lang('type')}</label>
+                    <select id="bf-type" name="type" lay-ignore>
+                        <option value="">{:lang('admin/ux/content/chip_all')}</option>
+                        {volist name="type_tree" id="vo"}
+                        {if condition="$vo.type_mid eq 2"}
+                        <option value="{$vo.type_id}">{$vo.type_name|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}</option>
+                        {volist name="vo.child" id="ch"}
+                        <option value="{$ch.type_id}">&nbsp;&nbsp;&nbsp;&nbsp;├&nbsp;{$ch.type_name|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}</option>
+                        {/volist}
+                        {/if}
+                        {/volist}
+                    </select>
+                </div>
+                <div class="ax-field">
+                    <label for="bf-status">{:lang('status')}</label>
+                    <select id="bf-status" name="status" lay-ignore>
+                        <option value="">{:lang('admin/ux/content/chip_all')}</option>
+                        <option value="1">{:lang('admin/ux/content/visible')}</option>
+                        <option value="0">{:lang('admin/ux/content/hidden')}</option>
+                    </select>
+                </div>
+                <div class="ax-field">
+                    <label for="bf-level">{:lang('level')}</label>
+                    <select id="bf-level" name="level" lay-ignore>
+                        <option value="">{:lang('admin/ux/content/chip_all')}</option>
+                        <option value="9">{:lang('level')} 9-{:lang('slide')}</option>
+                        {for start="1" end="9"}
+                        <option value="{$i}">{:lang('level')} {$i}</option>
+                        {/for}
+                    </select>
+                </div>
+                <div class="ax-field">
+                    <label for="bf-lock">{:lang('admin/ux/content/chip_protected')}</label>
+                    <select id="bf-lock" name="lock" lay-ignore>
+                        <option value="">{:lang('admin/ux/content/chip_all')}</option>
+                        <option value="1">{:lang('admin/ux/content/chip_protected')}</option>
+                        <option value="0">{:lang('admin/ux/content/not_protected')}</option>
+                    </select>
+                </div>
+                <div class="ax-field">
+                    <label for="bf-pic">{:lang('pic')}</label>
+                    <select id="bf-pic" name="pic" lay-ignore>
+                        <option value="">{:lang('admin/ux/content/chip_all')}</option>
+                        <option value="1">{:lang('pic_empty')}</option>
+                        <option value="2">{:lang('pic_remote')}</option>
+                        <option value="3">{:lang('pic_sync_err')}</option>
+                    </select>
+                </div>
+                <div class="ax-field">
+                    <label for="bf-wd">{:lang('wd')}</label>
+                    <input id="bf-wd" type="search" autocomplete="off" class="layui-input" name="wd" value="">
+                </div>
+            </div>
+            <p class="ax-batch-count" id="batchCount" aria-live="polite"></p>
+        </section>
+
+        <section class="ax-section" id="batchChange">
+            <h2>{:lang('admin/ux/content/batch_change_articles')}</h2>
+            <p class="ax-help">{:lang('admin/ux/content/batch_change_help')}</p>
+            <div class="ax-batch-rows">
+                <div class="ax-batch-row">
+                    <label class="ax-check"><input type="checkbox" lay-ignore value="1" name="ck_level">{:lang('level')}</label>
+                    <div class="ax-batch-row__val">
+                        <select name="val_level" lay-ignore aria-label="{:lang('level')}">
+                            <option value="">{:lang('select_level')}</option>
+                            <option value="9">{:lang('level')} 9-{:lang('slide')}</option>
+                            {for start="1" end="9"}
+                            <option value="{$i}">{:lang('level')} {$i}</option>
+                            {/for}
+                        </select>
+                    </div>
+                </div>
+                <div class="ax-batch-row">
+                    <label class="ax-check"><input type="checkbox" lay-ignore value="1" name="ck_status">{:lang('status')}</label>
+                    <div class="ax-batch-row__val">
+                        <select name="val_status" lay-ignore aria-label="{:lang('status')}">
+                            <option value="1">{:lang('admin/ux/content/visible')}</option>
+                            <option value="0">{:lang('admin/ux/content/hidden')}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="ax-batch-row">
+                    <label class="ax-check"><input type="checkbox" lay-ignore value="1" name="ck_lock">{:lang('admin/ux/content/chip_protected')}</label>
+                    <div class="ax-batch-row__val">
+                        <select name="val_lock" lay-ignore aria-label="{:lang('admin/ux/content/chip_protected')}">
+                            <option value="1">{:lang('admin/ux/content/chip_protected')}</option>
+                            <option value="0">{:lang('admin/ux/content/not_protected')}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="ax-batch-row">
+                    <label class="ax-check"><input type="checkbox" lay-ignore value="1" name="ck_hits">{:lang('hits')}</label>
+                    <div class="ax-batch-row__val">
+                        <input type="number" min="0" name="val_hits_min" placeholder="{:lang('min_val')}" aria-label="{:lang('min_val')}" autocomplete="off" class="layui-input">
+                        <input type="number" min="0" name="val_hits_max" placeholder="{:lang('max_val')}" aria-label="{:lang('max_val')}" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="ax-batch-row">
+                    <label for="bf-limit">{:lang('page_limit')}</label>
+                    <div class="ax-batch-row__val">
+                        <input id="bf-limit" type="number" min="1" max="1000" name="limit" value="100" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="ax-batch-actions">
+                <button type="button" class="ax-btn ax-btn--primary" id="batchApply" data-label="{:lang('admin/ux/content/batch_apply_articles')}" data-label-one="{:lang('admin/ux/r7/batch_apply_articles_one')}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-play"/></svg><span>{:lang('admin/ux/content/batch_apply_articles')}</span></button>
+            </div>
+        </section>
+
+        <section class="ax-section ax-section--danger" id="batchDanger">
+            <h2>{:lang('admin/ux/kit/danger_zone')}</h2>
+            <p class="ax-help">{:lang('admin/ux/content/batch_danger_help')}</p>
+            <button type="button" class="ax-btn ax-btn--danger" id="batchDelete"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-trash-2"/></svg>{:lang('admin/ux/content/batch_delete_articles')}</button>
+        </section>
+    </form>
+</div>
+
+<script type="application/json" id="batchLang">{:json_encode([
+    'count'=>lang('admin/ux/content/batch_count'), 'count_one'=>lang('admin/ux/r7/batch_count_one'), 'apply_confirm_one'=>lang('admin/ux/r7/batch_apply_confirm_one'), 'none'=>lang('admin/ux/content/batch_none'),
+    'need_filter'=>lang('admin/ux/content/batch_need_filter'), 'pick_change'=>lang('admin/ux/content/batch_pick_change'),
+    'apply_confirm'=>lang('admin/ux/content/batch_apply_confirm'),
+    'delete_title'=>lang('admin/ux/content/batch_delete_articles'), 'delete_confirm'=>lang('admin/ux/content/batch_delete_confirm'),
+    'delete_ok'=>lang('del'), 'failed'=>lang('admin/ux/kit/request_failed')
+], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP)}</script>
+<script type="text/javascript">
+layui.use(['jquery'], function () {
+    var $ = layui.jquery;
+    var L = JSON.parse(document.getElementById('batchLang').textContent);
+    var form = $('#batchForm'), countUrl = form.attr('action'), lastCount = 0, timer = null, seq = 0;
+    var changeBoxes = 'input[name^="ck_"]';
+
+    function filterQuery() { return $('#batchFilters').find(':input').serialize(); }
+    function hasFilter() {
+        var any = false;
+        $('#batchFilters').find(':input').each(function () { if ($.trim($(this).val() || '') !== '') { any = true; } });
+        return any;
+    }
+    // r7 repair (r5 note): one match reads "Apply to 1 article", not "1 articles".
+    function applyLabel(n) { var b = $('#batchApply'); return AxUX.format((n === 1 && b.attr('data-label-one')) || b.attr('data-label'), { n: n }); }
+    function fetchCount() {
+        var mine = ++seq;
+        return $.ajax({ url: countUrl, type: 'GET', dataType: 'json', data: filterQuery() + '&count=1' }).then(function (res) {
+            var n = res && res.data ? parseInt(res.data.count, 10) || 0 : 0;
+            if (mine === seq) { show(n); }
+            return n;
+        });
+    }
+    function show(n) {
+        lastCount = n;
+        $('#batchCount').text(AxUX.format(n === 1 ? L.count_one : L.count, { n: n }));
+        $('#batchApply').find('span').text(applyLabel(n));
+    }
+    function refresh() { clearTimeout(timer); timer = setTimeout(fetchCount, 250); }
+    $('#batchFilters').on('change input', ':input', refresh);
+    fetchCount();
+
+    $('#batchApply').on('click', function () {
+        if (!form.find(changeBoxes + ':checked').length) { AxUX.toast(L.pick_change, 'warn'); return; }
+        fetchCount().then(function (n) {
+            if (n < 1) { AxUX.toast(L.none, 'warn'); return; }
+            AxUX.confirm({ title: applyLabel(n), message: L.apply_confirm, messageOne: L.apply_confirm_one, danger: false, count: n }).then(function (yes) {
+                if (!yes) { return; }
+                form.find('input[name="confirm"]').val('1');
+                form[0].submit();
+            });
+        }, function () { AxUX.toast(L.failed, 'error'); });
+    });
+
+    $('#batchDelete').on('click', function () {
+        if (!hasFilter()) { AxUX.toast(L.need_filter, 'warn'); return; }
+        fetchCount().then(function (n) {
+            if (n < 1) { AxUX.toast(L.none, 'warn'); return; }
+            AxUX.confirm({ title: L.delete_title, message: L.delete_confirm, typed: 'DELETE', confirmLabel: L.delete_ok, count: n }).then(function (yes) {
+                if (!yes) { return; }
+                var data = filterQuery() + '&ck_del=1&confirm=1&__token__=' + encodeURIComponent(form.find('input[name="__token__"]').val());
+                $.ajax({ url: countUrl, type: 'POST', dataType: 'json', data: data }).done(function (res) {
+                    AxUX.toast(res && res.msg ? res.msg : L.failed, res && res.code == 1 ? 'ok' : 'error');
+                    fetchCount();
+                }).fail(function () { AxUX.toast(L.failed, 'error'); });
+            });
+        }, function () { AxUX.toast(L.failed, 'error'); });
+    });
+});
+</script>
+</body>
+</html>

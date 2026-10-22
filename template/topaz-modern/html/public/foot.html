@@ -1,0 +1,62 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}$tuiFooterSitemap = ''; try { $tuiFooterSitemap = \app\common\util\Sitemap::indexUrl(); } catch (\Throwable $tuiFooterError) { $tuiFooterSitemap = ''; }{/php}{include file="public/brand"}{include file="public/types"}
+<footer class="tp-foot" data-template-footer>
+  <div class="tp-wrap">
+    <div class="tp-foot-brand">
+      {:$tpLogoHtml('f', false)}
+      <p>{:\\app\\common\\util\\TemplateText::get('tp.footer_about', ['site'=>$tpSite])}</p>
+    </div>
+    <div class="tp-foot-cols">
+      <nav class="tp-foot-col" aria-labelledby="tp-fh-browse" data-ai-group>
+        <h2 class="tp-foot-h" id="tp-fh-browse">{:\\app\\common\\util\\AutoIcon::navIcon('categories', '', ['size'=>'sm'])}<span>{:\\app\\common\\util\\TemplateText::get('ui.categories')}</span></h2>
+        <ul>{foreach name="tpTypes" item="tpT" key="tpTk"}<li><a class="tp-gem-i-{$tpT.gem}" href="{$tpT.url|htmlspecialchars=ENT_QUOTES}">{:\\app\\common\\util\\AutoIcon::icon('category', $tpT['tn'], ['i'=>$tpTk, 'tint'=>'none'])}{$tpT.name|htmlspecialchars=ENT_QUOTES}</a></li>{/foreach}</ul>
+      </nav>
+      <nav class="tp-foot-col" aria-labelledby="tp-fh-explore" data-ai-group>
+        <h2 class="tp-foot-h" id="tp-fh-explore">{:\\app\\common\\util\\AutoIcon::ui('compass', ['size'=>'sm'])}<span>{:\\app\\common\\util\\TemplateText::get('tp.explore')}</span></h2>
+        <ul>
+          <li><a href="{:mac_url('label/new')}">{:\\app\\common\\util\\AutoIcon::navIcon('latest', '', ['i'=>0])}{:\\app\\common\\util\\TemplateText::get('latest')}</a></li>
+          <li><a href="{:mac_url('label/hot')}">{:\\app\\common\\util\\AutoIcon::navIcon('hot', '', ['i'=>1])}{:\\app\\common\\util\\TemplateText::get('ui.popular')}</a></li>
+          <li><a href="{:mac_url('label/score')}">{:\\app\\common\\util\\AutoIcon::navIcon('top', '', ['i'=>2])}{:\\app\\common\\util\\TemplateText::get('top_rated')}</a></li>
+          <li><a href="{:mac_url('label/up')}">{:\\app\\common\\util\\AutoIcon::navIcon('liked', '', ['i'=>3])}{:\\app\\common\\util\\TemplateText::get('most_liked')}</a></li>
+          <li><a href="{:mac_url('label/sort')}">{:\\app\\common\\util\\AutoIcon::navIcon('all-videos', '', ['i'=>4])}{:\\app\\common\\util\\TemplateText::get('ui.all_videos')}</a></li>
+          <li><a href="{:mac_safe_url(mac_url('map/index'))}">{:\\app\\common\\util\\AutoIcon::navIcon('latest-100', '', ['i'=>5])}{:\\app\\common\\util\\TemplateText::get('ui.latest_updates')}</a></li>
+        </ul>
+      </nav>
+      <nav class="tp-foot-col" aria-labelledby="tp-fh-info" data-ai-group>
+        <h2 class="tp-foot-h" id="tp-fh-info">{:\\app\\common\\util\\AutoIcon::ui('info', ['size'=>'sm'])}<span>{:\\app\\common\\util\\TemplateText::get('tp.information')}</span></h2>
+        <ul>
+          {if condition="$tuiFooterSitemap neq ''"}<li><a href="{$tuiFooterSitemap|htmlspecialchars=ENT_QUOTES}">{:\\app\\common\\util\\AutoIcon::navIcon('sitemap', '', ['i'=>0])}{:\\app\\common\\util\\TemplateText::get('ui.sitemap')}</a></li>{/if}
+          <li><a href="{:mac_safe_url(mac_url('rss/index'))}">{:\\app\\common\\util\\AutoIcon::navIcon('rss', '', ['i'=>1])}{:\\app\\common\\util\\TemplateText::get('rss')}</a></li>
+          <li><a href="{:mac_safe_url(mac_url('gbook/index'))}">{:\\app\\common\\util\\AutoIcon::navIcon('contact', '', ['i'=>2])}{:\\app\\common\\util\\TemplateText::get('ui.contact_the_site')}</a></li>
+          {if condition="$tplHasActor eq 1"}<li><a href="{:mac_url('actor/index')}">{:\\app\\common\\util\\AutoIcon::navIcon('actors', '', ['i'=>3])}{:\\app\\common\\util\\TemplateText::get('ui.performers')}</a></li>{/if}
+          {if condition="$tplHasTopic eq 1"}<li><a href="{:mac_url('topic/index')}">{:\\app\\common\\util\\AutoIcon::navIcon('topics', '', ['i'=>4])}{:\\app\\common\\util\\TemplateText::get('ui.collections')}</a></li>{/if}
+          {if condition="$tplHasArt eq 1"}<li><a href="{:mac_url('art/index')}">{:\\app\\common\\util\\AutoIcon::navIcon('articles', '', ['i'=>5])}{:\\app\\common\\util\\TemplateText::get('ui.articles')}</a></li>{/if}
+        </ul>
+      </nav>
+      <nav class="tp-foot-col" aria-labelledby="tp-fh-acct" data-ai-group>
+        <h2 class="tp-foot-h" id="tp-fh-acct">{:\\app\\common\\util\\AutoIcon::ui('user-circle', ['size'=>'sm'])}<span>{:\\app\\common\\util\\TemplateText::get('ui.account')}</span></h2>
+        <ul>
+          <li><a href="{:mac_url('user/login')}" rel="nofollow">{:\\app\\common\\util\\AutoIcon::navIcon('login', '', ['i'=>0])}{:\\app\\common\\util\\TemplateText::get('ui.log_in')}</a></li>
+          <li><a href="{:mac_url('user/reg')}" rel="nofollow">{:\\app\\common\\util\\AutoIcon::navIcon('register', '', ['i'=>1])}{:\\app\\common\\util\\TemplateText::get('ui.create_account')}</a></li>
+          <li><a href="{:mac_url('user/favs')}" rel="nofollow">{:\\app\\common\\util\\AutoIcon::navIcon('favourites', '', ['i'=>2])}{:\\app\\common\\util\\TemplateText::get('ui.my_collection')}</a></li>
+          <li><a href="{:mac_url('user/plays')}" rel="nofollow">{:\\app\\common\\util\\AutoIcon::navIcon('history', '', ['i'=>3])}{:\\app\\common\\util\\TemplateText::get('ui.play_record')}</a></li>
+        </ul>
+        <p class="tp-note" style="margin-top:10px">{:\\app\\common\\util\\TemplateText::get('tp.footer_account')}</p>
+      </nav>
+    </div>
+    <div class="tp-foot-bottom">
+      <span>&copy; {:date('Y')} {$tpSite|htmlspecialchars=ENT_QUOTES}. {:\\app\\common\\util\\TemplateText::get('tp.rights')}</span>
+      <span><span class="tp-adult-dot" aria-hidden="true"></span>{:\\app\\common\\util\\TemplateText::get('ui.for_adults_only_contact_the_site_for_content_or_copyright_concerns')}{php}$tpSiteEmail = trim(\app\common\util\AvdbLanguage::decodeEntities((string)($maccms['site_email'] ?? '')));{/php}{if condition="filter_var($tpSiteEmail, FILTER_VALIDATE_EMAIL)"} <a href="mailto:{$tpSiteEmail|rawurlencode}">{$tpSiteEmail|htmlspecialchars=ENT_QUOTES}</a>{/if}</span>
+      <button class="tp-ibtn tp-top" type="button" data-tp-top aria-label="{:\\app\\common\\util\\TemplateText::get('tp.back_to_top')}" title="{:\\app\\common\\util\\TemplateText::get('tp.back_to_top')}">{:\\app\\common\\util\\AutoIcon::ui('arrow-up')}</button>
+    </div>
+  </div>
+</footer>
+{include file="public/style"}
+<script src="{$maccms.path_tpl|htmlspecialchars=ENT_QUOTES}assets/js/home.js?v=20261013-tp11"></script>
+{$maccms.site_tj}

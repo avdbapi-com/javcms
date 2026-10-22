@@ -1,0 +1,34 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="ember" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/sort"}
+{include file="public/include"}
+</head>
+<body class="e-page-list">
+{include file="public/head"}
+<main id="main-content" class="e-main container">
+  <div class="e-head h_x" data-ai-group>
+    <h1 class="e-title">{:\\app\\common\\util\\AutoIcon::ui('grid', ['class'=>'e-ico'])}{:\\app\\common\\util\\TemplateText::get('ui.all_videos')}</h1>
+    <nav class="e-tabs" aria-label="{:\\app\\common\\util\\TemplateText::get('sort_by')}">
+      <a href="{:mac_url('label/new')}">{:\\app\\common\\util\\AutoIcon::navIcon('latest', '', ['size'=>'sm', 'i'=>0])}{:\\app\\common\\util\\TemplateText::get('ui.latest')}</a>
+      <a href="{:mac_url('label/hot')}">{:\\app\\common\\util\\AutoIcon::navIcon('hot', '', ['size'=>'sm', 'i'=>1])}{:\\app\\common\\util\\TemplateText::get('ui.popular')}</a>
+      <a href="{:mac_url('label/score')}">{:\\app\\common\\util\\AutoIcon::navIcon('top', '', ['size'=>'sm', 'i'=>2])}{:\\app\\common\\util\\TemplateText::get('top_rated')}</a>
+      <a href="{:mac_url('label/up')}">{:\\app\\common\\util\\AutoIcon::navIcon('liked', '', ['size'=>'sm', 'i'=>3])}{:\\app\\common\\util\\TemplateText::get('most_liked')}</a>
+      <a href="{:mac_url('label/sort')}" aria-current="page">{:\\app\\common\\util\\AutoIcon::navIcon('all', '', ['size'=>'sm', 'i'=>4])}{:\\app\\common\\util\\TemplateText::get('ui.all_videos')}</a>
+    </nav>
+  </div>
+  {include file="public/catrail"}
+  <ul class="e-grid" data-grid-fill>{maccms:vod num="20" paging="yes" type="all" order="desc" by="time" pageurl="label/sort" id="vo"}{include file="public/vodbox"}{/maccms:vod}</ul>
+  {if condition="$__PAGING__.record_total eq 0"}<div class="e-empty">{:\\app\\common\\util\\AutoIcon::scene('empty-library')}{:\\app\\common\\util\\TemplateText::get('ui.no_results_found_try_another_category_or_search')}</div>{/if}
+  {include file="public/paging"}
+</main>
+{include file="public/foot"}
+</body>
+</html>

@@ -1,0 +1,23 @@
+/*
+ * This file is part of JavCMS - https://javcms.net
+ * Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+ * License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+ * See the LICENSE and NOTICE files that come with JavCMS.
+ * Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Telegram: https://t.me/avdb_api
+ */
+*{box-sizing:border-box}html,body{width:100%;height:100%;margin:0;background:#100b05;color:#fff4df;font-family:"Quicksand","Inter",system-ui,-apple-system,"Segoe UI",sans-serif}body{overflow:auto}
+#native-player{width:100%;height:100%;min-width:0}.MacPlayer{width:100%!important;height:100%!important;min-width:0}
+#native-player iframe,#native-player video,#native-player object,#native-player embed{max-width:100%;border:0}
+.player_showtry[hidden]{display:none!important}
+.native-preview-ended{display:grid!important;place-items:center;padding:clamp(16px,4vw,36px);overflow:auto;background:radial-gradient(90% 70% at 50% 0%,rgba(255,178,30,.14),rgba(255,178,30,0)),#100b05}
+.player_showtry{width:min(100%,580px);margin:auto}
+.native-preview-card{border:1px solid rgba(255,178,30,.3);border-radius:26px;background:linear-gradient(160deg,#2b1a08,#1a1209 60%,#140d06);padding:clamp(22px,5vw,40px);overflow-wrap:anywhere;text-align:start;box-shadow:0 30px 70px -36px rgba(0,0,0,.8)}
+.native-preview-kicker{display:inline-block;margin:0 0 18px;padding:6px 13px;border-radius:999px;background:#ffb21e;color:#1f1406;font-weight:800;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase}
+.native-preview-card h1{font-size:clamp(1.35rem,4vw,1.9rem);line-height:1.2;margin:0 0 20px;color:#fff4df}
+.native-preview-card p{line-height:1.65;color:#dcc49c}.native-preview-note{font-size:.85rem;color:#bea67e}
+.native-preview-actions{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin-top:24px}
+.native-preview-actions a{display:inline-flex;align-items:center;min-height:44px;color:#ffd36b;text-underline-offset:4px}
+.native-preview-primary,.native-preview-actions a.native-preview-primary{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:12px 22px;border-radius:999px;border:0;background:#ffb21e;color:#1f1406;font:inherit;font-weight:800;text-decoration:none;cursor:pointer;box-shadow:inset 0 1px 0 rgba(255,255,255,.5)}
+.native-preview-card :focus-visible{outline:2px solid #ffd36b;outline-offset:3px}#player-status:empty{display:none}
+@media(max-width:480px){.native-preview-actions{align-items:stretch;flex-direction:column}.native-preview-primary{width:100%}.native-preview-card{padding:24px 20px}}

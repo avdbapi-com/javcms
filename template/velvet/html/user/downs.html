@@ -1,0 +1,34 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="velvet" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+<meta name="robots" content="noindex, follow" />
+<title>{:\\app\\common\\util\\TemplateText::get('ui.downloads')} - {:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$maccms['site_name']), ENT_QUOTES, 'UTF-8')}</title>
+{include file="public/include"}
+{include file="user/include"}
+</head>
+<body class="vv-page-user vv-user-sub">
+{include file="public/head"}
+<main id="main-content" class="vv-main">
+  <div class="vv-wrap vv-ulayout">
+    <aside class="vv-uside">{include file="user/menu"}</aside>
+    <section class="vv-panel">
+      <div class="vv-panel-head"><h1>{:\\app\\common\\util\\TemplateText::get('ui.downloads')}</h1><a class="vv-chip" href="{:mac_url('user/index')}">{:\\app\\common\\util\\AutoIcon::ui('arrow-left', ['class'=>'vv-i vv-i-14'])}{:\\app\\common\\util\\TemplateText::get('ui.return')}</a></div>
+      <form id="form1" name="form1" data-vv-records data-url-key="user_ulog_del" data-url="{:url('user/ulog_del')}" data-type="5" onsubmit="return false">
+        <div class="vv-toolbar" style="margin:0 0 6px"><button class="vv-pill" type="button" data-vv-act="all">{:\\app\\common\\util\\TemplateText::get('ui.full_selection')}</button><button class="vv-pill" type="button" data-vv-act="invert">{:\\app\\common\\util\\TemplateText::get('ui.counter_selection')}</button><button class="vv-pill" type="button" data-vv-act="delete">{:\\app\\common\\util\\AutoIcon::ui('trash', ['class'=>'vv-i'])}{:\\app\\common\\util\\TemplateText::get('ui.delete')}</button><button class="vv-pill" type="button" data-vv-act="clear">{:\\app\\common\\util\\TemplateText::get('ui.empty')}</button></div>
+        <ul class="vv-records">{volist name="list" id="vo"}<li><input type="checkbox" name="ids[]" value="{$vo.ulog_id|intval}" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.choose')}"><span class="vv-rec-main"><a href="{$vo.data.link|htmlspecialchars=ENT_QUOTES}">{$vo.data.name|htmlspecialchars=ENT_QUOTES}</a><small>{:\\app\\common\\util\\TemplateText::get(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)($vo['data']['type']['type_name'] ?? '')))} &middot; {$vo.ulog_time|mac_day}</small></span><a class="vv-chip" href="{$vo.data.link|htmlspecialchars=ENT_QUOTES}">{:\\app\\common\\util\\TemplateText::get('ui.re_watch')}</a></li>{/volist}</ul>
+        {empty name="list"}<p class="vv-muted-note">{:\\app\\common\\util\\TemplateText::get('account_no_records')}</p>{/empty}
+        {include file="public/paging"}
+      </form>
+    </section>
+  </div>
+</main>
+{include file="public/foot"}
+</body>
+</html>

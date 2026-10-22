@@ -1,0 +1,8 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}$galleryLanguages = \app\common\util\TemplateText::languages(); $nnLangCode = \app\common\util\TemplateText::locale();{/php}<details class="nn-pop nn-lang"><summary class="nn-iconbtn" title="{:\\app\\common\\util\\TemplateText::get('ui.language')}">{:\\app\\common\\util\\AutoIcon::ui('languages')}<span class="nn-sr">{:\\app\\common\\util\\TemplateText::get('ui.language')}</span><span class="nn-lang-code" aria-hidden="true">{$nnLangCode|htmlspecialchars=ENT_QUOTES}</span></summary><div class="nn-panel-pop nn-lang-menu">{volist name="galleryLanguages" id="galleryLanguage" key="galleryLanguageIndex"}<a style="--i:{$galleryLanguageIndex}" href="{:\\app\\common\\util\\TemplateText::languageUrl($key)}" lang="{$key|htmlspecialchars=ENT_QUOTES}" hreflang="{$key|htmlspecialchars=ENT_QUOTES}"{if condition="$key eq $nnLangCode"} aria-current="true"{/if}>{if condition="$key eq $nnLangCode"}{:\\app\\common\\util\\AutoIcon::ui('check', ['size'=>'sm'])}{/if}{$galleryLanguage|htmlspecialchars=ENT_QUOTES}</a>{/volist}</div></details>

@@ -1,0 +1,34 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="ember" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/auto"}
+{include file="public/include"}
+</head>
+<body class="e-page-detail">
+{include file="public/metavars"}
+{include file="public/head"}
+<main id="main-content" class="e-main container">
+  <nav class="e-crumb" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.main_navigation')}"><a href="{$maccms.path}">{:\\app\\common\\util\\TemplateText::get('ui.home')}</a>{:\\app\\common\\util\\AutoIcon::ui('chevron-right', ['class'=>'e-ico'])}<a href="{:mac_url_vod_detail($obj)}">{if condition="$tplCode neq ''"}{$tplCode|htmlspecialchars=ENT_QUOTES}{else/}{:\\app\\common\\util\\TemplateText::get('ui.details')}{/if}</a></nav>
+  <div class="e-vtitle"><h1>{$tplTitle|htmlspecialchars=ENT_QUOTES}</h1></div>
+  <div class="e-actions" style="justify-content:center">
+    <a class="e-pill e-magnet" href="{:htmlspecialchars(mac_url_vod_detail($obj), ENT_QUOTES)}">{:\\app\\common\\util\\AutoIcon::ui('info', ['class'=>'e-ico'])}{:\\app\\common\\util\\TemplateText::get('ui.details')}</a>
+    {if condition="$tplPlayUrl neq ''"}<a class="e-pill e-magnet" href="{$tplPlayUrl|htmlspecialchars=ENT_QUOTES}">{:\\app\\common\\util\\AutoIcon::ui('play', ['class'=>'e-ico'])}{:\\app\\common\\util\\TemplateText::get('ui.watch_online')}</a>{/if}
+  </div>
+  {notempty name="obj.vod_down_list"}
+  {maccms:foreach name="obj.vod_down_list" id="source"}
+  <section class="e-eps"><h2>{:\\app\\common\\util\\AutoIcon::ui('download', ['class'=>'e-ico'])}{$source.player_info.show|mac_default=$source.from|htmlspecialchars=ENT_QUOTES}</h2>
+    <div class="e-chips">{maccms:foreach name="source.urls" id="episode"}<a href="{:mac_safe_url($episode['url'])}" target="_blank" rel="nofollow noopener noreferrer">{$episode.name|htmlspecialchars=ENT_QUOTES}</a>{/maccms:foreach}</div>
+  </section>
+  {/maccms:foreach}
+  {else/}<div class="e-empty">{:\\app\\common\\util\\AutoIcon::scene('empty-library')}{:\\app\\common\\util\\TemplateText::get('ui.no_download_links_are_available_for_this_video')}</div>{/notempty}
+</main>
+{include file="public/foot"}
+</body>
+</html>

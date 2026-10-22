@@ -1,0 +1,16 @@
+{
+ "$schema": "javcms.auto-icon.v1",
+ "family": "remix-fill",
+ "motion": "stamp",
+ "enter": "spin",
+ "plate": "splash",
+ "plateMotion": "pulse",
+ "avatar": "squircle ink",
+ "tint": "accent",
+ "hue": [
+  350,
+  40
+ ],
+ "map": {},
+ "nav": {}
+}

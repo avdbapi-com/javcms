@@ -1,0 +1,58 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="onyx-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="public/include"}
+<title>{:\\app\\common\\util\\TemplateText::get('ui.modify_the_information')} - {:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$maccms['site_name']), ENT_QUOTES, 'UTF-8')}</title>
+<meta name="robots" content="noindex, follow">
+{include file="user/include"}
+</head>
+<body class="page-user">
+{include file="public/head"}
+<main id="main-content" class="wrap">
+{include file="user/menu"}
+<section class="uc-box">
+  <h1>{:\\app\\common\\util\\TemplateText::get('ui.modify_the_information')} <a class="btn btn-ghost" href="{:mac_url('user/index')}">{:\\app\\common\\util\\TemplateText::get('ui.return')}</a></h1>
+  {if condition="$GLOBALS['config']['user']['portrait_status'] eq 1"}<form class="gallery-avatar-form verify-row" method="post" enctype="multipart/form-data" action="{:url('user/portrait')}" style="margin-bottom:18px">{:token()}<label class="btn btn-ghost" for="gallery-avatar-file">{:\\app\\common\\util\\TemplateText::get('choose_avatar')}</label><input id="gallery-avatar-file" class="sr-only" name="file" type="file" accept="image/jpeg,image/png,image/gif,image/webp"><button class="btn" type="submit">{:\\app\\common\\util\\TemplateText::get('upload_avatar')}</button></form>{/if}
+  <form id="fm" class="form-card" method="post" action="{:url('user/info')}" onsubmit="return false">
+    <div class="field"><span class="lbl">{:\\app\\common\\util\\TemplateText::get('ui.username')}</span><strong>{$obj.user_name|htmlspecialchars=ENT_QUOTES}</strong></div>
+    <div class="field"><label for="user_pwd">{:\\app\\common\\util\\AutoIcon::ui('lock', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ui.original_password')}</label><input class="input" type="password" id="user_pwd" name="user_pwd" maxlength="20" autocomplete="current-password"></div>
+    <div class="field"><label for="user_pwd1">{:\\app\\common\\util\\TemplateText::get('ui.new_password')}</label><input class="input" type="password" id="user_pwd1" name="user_pwd1" maxlength="20" autocomplete="new-password"></div>
+    <div class="field"><label for="user_pwd2">{:\\app\\common\\util\\AutoIcon::ui('lock', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ui.duplicate_password')}</label><input class="input" type="password" id="user_pwd2" name="user_pwd2" maxlength="20" autocomplete="new-password"></div>
+    <div class="field"><label for="user_email">{:\\app\\common\\util\\TemplateText::get('ui.email_address')}</label><div class="verify-row"><input class="input" type="email" id="user_email" name="user_email" value="{$obj.user_email|htmlspecialchars=ENT_QUOTES}">{if condition="$obj.user_email eq ''"}<a class="btn btn-ghost" href="{:mac_url('user/bind')}?ac=email">{:\\app\\common\\util\\TemplateText::get('ui.bind')}</a>{else/}<button class="btn btn-ghost btn_unbind" type="button" data-ac="email">{:\\app\\common\\util\\TemplateText::get('ui.unbind')}</button>{/if}</div></div>
+    <div class="field"><label for="user_phone">{:\\app\\common\\util\\TemplateText::get('ui.phone')}</label><div class="verify-row"><input class="input" type="tel" id="user_phone" name="user_phone" value="{$obj.user_phone|htmlspecialchars=ENT_QUOTES}">{if condition="$obj.user_phone eq ''"}<a class="btn btn-ghost" href="{:mac_url('user/bind')}?ac=phone">{:\\app\\common\\util\\TemplateText::get('ui.bind')}</a>{else/}<button class="btn btn-ghost btn_unbind" type="button" data-ac="phone">{:\\app\\common\\util\\TemplateText::get('ui.unbind')}</button>{/if}</div></div>
+    <div class="field"><label for="user_question">{:\\app\\common\\util\\AutoIcon::ui('help', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ui.password_problem')}</label><input class="input" type="text" id="user_question" name="user_question" value="{$obj.user_question|htmlspecialchars=ENT_QUOTES}" placeholder="{:\\app\\common\\util\\TemplateText::get('ui.retrieve_the_password_problem')}"></div>
+    <div class="field"><label for="user_answer">{:\\app\\common\\util\\AutoIcon::ui('key', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ui.password_answer')}</label><input class="input" type="text" id="user_answer" name="user_answer" value="{$obj.user_answer|htmlspecialchars=ENT_QUOTES}" placeholder="{:\\app\\common\\util\\TemplateText::get('ui.retrieve_the_password_answer')}"></div>
+    <button class="btn btn-fill btn-lg" type="button" id="btn_submit">{:\\app\\common\\util\\TemplateText::get('ui.save')}</button>
+  </form>
+</section>
+</main>
+{include file="public/foot"}
+<script>
+$(function () {
+  var m = window.TemplateMessages || {};
+  $('.btn_unbind').on('click', async function () {
+    var ac = $(this).attr('data-ac');
+    if (ac !== 'email' && ac !== 'phone') { TemplateUI.message(m['ui.parameter_error']); return; }
+    if (await TemplateUI.confirm(m['ui.confirm_the_lifting_binding_this_operation_cannot_be_restored'])) {
+      $.ajax({ url: "{:url('user/unbind')}", type: 'post', dataType: 'json', data: { ac: ac },
+        success: function (r) { TemplateUI.message(r.msg); if (r.code == 1) { location.href = "{:url('user/info')}"; } } });
+    }
+  });
+  $('#btn_submit').on('click', function () {
+    var btn = $(this), btnLabel = btn.text(); btn.prop('disabled', true).text(m['ui.loading']);
+    $.ajax({ url: "{:url('user/info')}", type: 'post', dataType: 'json', data: $('#fm').serialize(),
+      success: function (r) { TemplateUI.message(r.msg); if (r.code == 1) { location.reload(); } },
+      error: function () { TemplateUI.message(m['ui.connection_failed_try_again']); },
+      complete: function () { btn.prop('disabled', false).text(btnLabel); } });
+  });
+});
+</script>
+</body>
+</html>

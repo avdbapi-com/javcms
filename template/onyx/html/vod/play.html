@@ -1,0 +1,68 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="onyx" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/vod_play"}
+{include file="public/include"}
+</head>
+<body class="page-play">
+{include file="public/head"}
+{include file="public/vodvars"}
+{php}$tplShareUrl = \app\common\util\Sitemap::absolute(mac_url_vod_play($obj)); $tplReportUrl = mac_url('gbook/index') . (strpos(mac_url('gbook/index'), '?') === false ? '?' : '&') . 'id=' . (int)$obj['vod_id'] . '&name=' . rawurlencode(($tplCode !== '' && stripos($tplName, $tplCode) !== 0 ? '[' . $tplCode . '] ' : '') . $tplName); $tplLinkPre = (string)($obj['player_info']['link_pre'] ?? ''); $tplLinkNext = (string)($obj['player_info']['link_next'] ?? '');{/php}
+<main id="main-content" class="wrap">
+  <div class="player-box">{$player_data}{$player_js}</div>
+  <section class="play-panel" aria-labelledby="play-title">
+    <div class="play-top">
+      <div class="play-head">
+        <h1{php}echo \app\common\util\AvdbLanguage::langAttr(isset($obj) && is_array($obj) ? $obj : []);{/php} class="play-title" id="play-title">{$tplName|htmlspecialchars=ENT_QUOTES}</h1>
+        <div class="play-tabs" role="tablist" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.details')}">
+          <button type="button" role="tab" id="tab-about" aria-controls="pane-about" aria-selected="true"><svg class="ico" aria-hidden="true"><use href="{$tplIcons}#i-info"/></svg>{:\\app\\common\\util\\TemplateText::get('onyx.about')}</button>
+          <button type="button" role="tab" id="tab-share" aria-controls="pane-share" aria-selected="false" tabindex="-1"><svg class="ico" aria-hidden="true"><use href="{$tplIcons}#i-share"/></svg>{:\\app\\common\\util\\TemplateText::get('share')}</button>
+          <a href="{$tplReportUrl|htmlspecialchars=ENT_QUOTES}" rel="nofollow"><svg class="ico" aria-hidden="true"><use href="{$tplIcons}#i-flag"/></svg>{:\\app\\common\\util\\TemplateText::get('ui.report')}</a>
+        </div>
+      </div>
+      <div class="play-stats">
+        {include file="public/votes"}
+        <div class="views-box">
+          {php}$tplViewsLbl = preg_replace('/[\s:\x{FF1A}]+$/u', '', \app\common\util\TemplateText::raw('views'));{/php}<span class="lbl">{$tplViewsLbl|htmlspecialchars=ENT_QUOTES}</span>
+          <div class="nums"><span>{:\\app\\common\\util\\AutoIcon::ui('eye')} <b class="mac_hits" data-mid="1" data-id="{$obj.vod_id}" data-type="hits">{$obj.vod_hits|intval}</b></span>{if condition="$tplVotes gt 0"}<span>{:\\app\\common\\util\\AutoIcon::ui('thumbs-up')} {$tplLike}%</span>{/if}{if condition="$tplScore neq ''"}<span>{:\\app\\common\\util\\AutoIcon::ui('star')} {$tplScore|htmlspecialchars=ENT_QUOTES}</span>{/if}</div>
+        </div>
+      </div>
+    </div>
+    <div id="pane-about" role="tabpanel" aria-labelledby="tab-about" class="tab-pane">
+      {include file="public/meta"}
+      {if condition="$tplDesc neq ''"}<div class="desc-inline" data-clamp><div class="desc-body">{$tplDesc|htmlspecialchars=ENT_QUOTES}</div><button class="desc-toggle" type="button" hidden aria-expanded="false" data-more="{:\\app\\common\\util\\TemplateText::get('onyx.show_more')}" data-less="{:\\app\\common\\util\\TemplateText::get('onyx.show_less')}">{:\\app\\common\\util\\TemplateText::get('onyx.show_more')}</button></div>{/if}
+      <div class="ep-nav">
+        {if condition="$tplLinkPre neq ''"}<a class="btn btn-ghost" href="{$tplLinkPre|htmlspecialchars=ENT_QUOTES}"><svg class="ico ico-dir" aria-hidden="true"><use href="{$tplIcons}#i-prev"/></svg>{:\\app\\common\\util\\TemplateText::get('previous_episode')}</a>{/if}
+        <a class="btn btn-ghost" href="{:mac_url_vod_detail($obj)}"><svg class="ico" aria-hidden="true"><use href="{$tplIcons}#i-info"/></svg>{:\\app\\common\\util\\TemplateText::get('ui.details')}</a>
+        {if condition="$tplLinkNext neq ''"}<a class="btn btn-ghost" href="{$tplLinkNext|htmlspecialchars=ENT_QUOTES}">{:\\app\\common\\util\\TemplateText::get('next_episode')}<svg class="ico ico-dir" aria-hidden="true"><use href="{$tplIcons}#i-next"/></svg></a>{/if}
+      </div>
+    </div>
+    <div id="pane-share" role="tabpanel" aria-labelledby="tab-share" class="tab-pane" hidden>
+      <div class="share-box"><input id="share-link" type="text" readonly value="{$tplShareUrl|htmlspecialchars=ENT_QUOTES}" aria-label="{:\\app\\common\\util\\TemplateText::get('onyx.share_video')}"><button class="btn btn-fill" type="button" data-copy="share-link"><svg class="ico" aria-hidden="true"><use href="{$tplIcons}#i-copy"/></svg>{:\\app\\common\\util\\TemplateText::get('ui.copy_link')}</button></div>
+    </div>
+    {include file="public/episodes"}
+  </section>
+  <div class="big-tabs" role="tablist" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.more_to_watch')}">
+    <button type="button" role="tab" id="tab-related" aria-controls="pane-related" aria-selected="true">{:\\app\\common\\util\\TemplateText::get('ui.more_to_watch')}</button>
+    {if condition="$GLOBALS['config']['comment']['status'] eq 1"}<button type="button" role="tab" id="tab-comments" aria-controls="pane-comments" aria-selected="false" tabindex="-1" data-comments>{:\\app\\common\\util\\TemplateText::get('ui.comments')}</button>{/if}
+  </div>
+  <section id="pane-related" role="tabpanel" aria-labelledby="tab-related" class="tab-pane">
+    {include file="public/related"}
+    <div class="sec-foot"><a class="btn btn-ghost" href="{if condition="$tplTypeName neq ''"}{:mac_url_type($tplType)}{else/}{:mac_url('label/new')}{/if}">{if condition="$tplTypeName neq ''"}{$tplTypeIco}{/if}<span>{:\\app\\common\\util\\TemplateText::get('ui.view_more')}</span>{:\\app\\common\\util\\AutoIcon::ui('chevron-right', ['size'=>'sm', 'tint'=>'none'])}</a></div>
+  </section>
+  {if condition="$GLOBALS['config']['comment']['status'] eq 1"}<section id="pane-comments" role="tabpanel" aria-labelledby="tab-comments" class="tab-pane" hidden><div data-jcx-at="P16"></div>
+    <div class="mac_comment comments" data-id="{$obj.vod_id}" data-mid="1"><p>{:\\app\\common\\util\\TemplateText::get('ui.loading_comments')}</p></div>
+  </section>{/if}
+  <span hidden data-history-entry data-name="{$tplName|htmlspecialchars=ENT_QUOTES}" data-link="{:mac_url_vod_play($obj)}" data-pic="{$obj.vod_pic|mac_default=$tplNoPic|mac_url_img|htmlspecialchars=ENT_QUOTES}"></span>
+</main>
+{include file="public/foot"}
+{if condition="$GLOBALS['config']['comment']['status'] eq 1"}<script>MAC.Comment.Init();</script>{/if}
+</body>
+</html>

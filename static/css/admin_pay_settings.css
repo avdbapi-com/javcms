@@ -1,0 +1,22 @@
+/*
+ * This file is part of JavCMS - https://javcms.net
+ * Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+ * License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+ * See the LICENSE and NOTICE files that come with JavCMS.
+ * Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Telegram: https://t.me/avdb_api
+ */
+.pay-settings .pay-card { padding:20px; margin:16px 0; border:1px solid var(--studio-line,#d9dce1); border-radius:12px; background:var(--studio-surface,#fff); color:var(--studio-text,inherit); }
+.pay-settings .pay-card h2 { margin:0 0 8px; font-size:18px; color:inherit; }
+.pay-settings .pay-card p { margin:8px 0 16px; color:var(--studio-muted,#59616d); }
+.pay-settings .pay-field { max-width:720px; margin:16px 0; }
+.pay-settings .pay-field label { display:block; margin-bottom:8px; font-weight:600; }
+.pay-settings summary { cursor:pointer; font-weight:600; padding:8px 0; }
+.pay-settings .pay-warning { padding-left:12px; border-left:3px solid var(--studio-accent,#366bcb); }
+.pay-settings .pay-status:empty { display:none; }
+.pay-settings .pay-status:not(:empty) { padding:12px; border:1px solid var(--studio-line,#d9dce1); }
+.pay-settings .layui-tab-title { white-space:normal!important; height:auto!important; flex-wrap:wrap!important; overflow:visible!important; }
+.pay-settings .layui-tab-bar { display:none!important; }
+.pay-settings .layui-tab-title li { margin-bottom:2px; }
+.pay-settings code { overflow-wrap:anywhere; }
+@media(max-width:700px) { .pay-settings .pay-card { padding:14px; } .pay-settings .layui-tab-content { padding:0; } .pay-settings .layui-tab-title li { min-width:0; padding:0 10px; } }

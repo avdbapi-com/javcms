@@ -1,0 +1,122 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{include file="../../../application/admin/view/public/head" /}
+<div class="page-container p10 jx-page" data-jx-page="lists">
+    {include file="../../../application/admin/view/public/page_head" icon="ai-megaphone" title="admin/ux/jcx/title" help="admin/ux/jcx/help" /}
+    {include file="../../../application/admin/view/jcx/_tabs" /}
+
+    <nav class="ax-chips" aria-label="{:$jxE(lang('admin/ux/jcx/tab_list'))}">
+        {foreach name="chips" item="c"}
+        <a class="ax-chip" href="{:url('jcx/lists', ['chip' => $c])}"{if condition="$chip eq $c"} aria-current="page"{/if}>{:$jxE($chip_labels[$c])} <span class="ax-chip__n">{$counts[$c]}</span></a>
+        {/foreach}
+    </nav>
+    {if condition="$examples_n gt 0 && $chip neq 'examples'"}<p class="ax-help jx-own-note" style="margin:-4px 0 14px">{:$jxE(str_replace('%s', $examples_n, lang('admin/ux/jcx/own_note')))}</p>{/if}
+
+    <div class="ax-toolbar">
+        {if condition="$jx_cfg.can.info"}<a class="ax-btn ax-btn--primary" href="{:url('jcx/info')}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-plus"/></svg>{:$jxE(lang('admin/ux/jcx/add'))}</a>{/if}
+        {include file="../../../application/admin/view/jcx/_preview" /}
+        <span class="ax-toolbar__spacer"></span>
+        <span class="ax-toolbar__count" id="jxSel" aria-live="polite"></span>
+        {if condition="($jx_cfg.can.status && $chip neq 'examples') || $jx_cfg.can.del"}
+        <div class="ax-menu ax-menu--end">
+            <button type="button" class="ax-btn" aria-haspopup="menu" aria-expanded="false">{:$jxE(lang('admin/ux/kit/bulk'))}<svg class="ax-ic ax-ic--chevron" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-chevron-down"/></svg></button>
+            <div class="ax-menu__list" role="menu" hidden>
+                {if condition="$jx_cfg.can.status && $chip neq 'examples'"}
+                <button type="button" class="ax-menu__item" role="menuitem" data-jx-act="bulk" data-op="on"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-toggle-right"/></svg>{:$jxE(lang('admin/ux/jcx/bulk_on'))}</button>
+                <button type="button" class="ax-menu__item" role="menuitem" data-jx-act="bulk" data-op="off"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-toggle-left"/></svg>{:$jxE(lang('admin/ux/jcx/bulk_off'))}</button>
+                {/if}
+                {if condition="$jx_cfg.can.del"}
+                {if condition="$jx_cfg.can.status && $chip neq 'examples'"}<div class="ax-menu__sep" role="separator"></div>{/if}
+                <button type="button" class="ax-menu__item ax-menu__item--danger" role="menuitem" data-jx-act="bulk" data-op="delete"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-trash-2"/></svg>{:$jxE(lang('admin/ux/jcx/bulk_delete'))}</button>
+                {/if}
+            </div>
+        </div>
+        {/if}
+    </div>
+
+    {if condition="$chip eq 'examples'"}
+    <div class="ax-notice" role="note"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-info"/></svg>
+        <div><p>{:$jxE(lang('admin/ux/jcx/examples_note'))}</p>
+        <p class="jx-btns">{if condition="$jx_cfg.can.preview && $examples_n gt 0"}<button type="button" class="ax-btn ax-btn--sm" data-jx-act="preview" data-scope="ex"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-eye"/></svg>{:$jxE(lang('admin/ux/jcx/see_examples'))}</button>{/if}
+        {if condition="$jx_cfg.can.examples"}<button type="button" class="ax-btn ax-btn--sm" data-jx-act="examples" data-op="install"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-refresh-cw"/></svg>{:$jxE(lang('admin/ux/jcx/install_examples'))}</button>
+        {if condition="$examples_n gt 0"}<button type="button" class="ax-btn ax-btn--sm ax-btn--danger" data-jx-act="examples" data-op="remove"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-trash-2"/></svg>{:$jxE(lang('admin/ux/jcx/remove_examples'))}</button>{/if}{/if}</p></div></div>
+    {/if}
+    {if condition="empty($rows)"}
+        {if condition="$chip neq 'examples' && $own_n eq 0"}
+        <div class="ax-empty">
+            <svg class="ax-ic ax-ic--xl" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-megaphone"/></svg>
+            <p class="ax-empty__text">{if condition="$examples_n gt 0"}{:$jxE(lang('admin/ux/jcx/empty_own'))}{else /}{:$jxE(lang('admin/ux/jcx/empty'))}{/if}</p>
+            <div class="ax-empty__actions">
+                {if condition="$jx_cfg.can.info"}<a class="ax-btn ax-btn--primary" href="{:url('jcx/info')}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-plus"/></svg>{:$jxE(lang('admin/ux/jcx/add'))}</a>{/if}
+                {if condition="$examples_n gt 0"}<a class="ax-btn" href="{:url('jcx/lists', ['chip' => 'examples'])}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-copy"/></svg>{:$jxE(str_replace('%s', $examples_n, lang('admin/ux/jcx/browse_examples')))}</a>
+                {elseif condition="$jx_cfg.can.examples"/}<button type="button" class="ax-btn" data-jx-act="examples" data-op="install"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-download"/></svg>{:$jxE(lang('admin/ux/jcx/install_examples'))}</button>{/if}
+            </div>
+        </div>
+        {else /}
+        {include file="../../../application/admin/view/public/empty_state" icon="ai-funnel" text="admin/ux/jcx/empty_filter" /}
+        {/if}
+    {else /}
+    <form id="pageListForm" onsubmit="return false">
+    <div class="ax-table-wrap">
+    <table class="ax-table ax-table--cards jx-table">
+        <thead><tr>
+            <th class="ax-col-check"><input type="checkbox" data-jx-all aria-label="{:$jxE(lang('admin/ux/content/select_all'))}" lay-ignore></th>
+            <th><span class="ax-sr-only">{:$jxE(lang('admin/ux/jcx/upload_image'))}</span></th>
+            <th>{:$jxE(lang('admin/ux/jcx/col_name'))}</th>
+            <th>{:$jxE(lang('admin/ux/jcx/col_format'))}</th>
+            <th>{:$jxE(lang('admin/ux/jcx/col_where'))}</th>
+            <th class="ax-hide-md">{:$jxE(lang('admin/ux/jcx/col_devices'))}</th>
+            <th class="ax-hide-md">{:$jxE(lang('admin/ux/jcx/col_schedule'))}</th>
+            <th class="ax-hide-md">{:$jxE(lang('admin/ux/jcx/col_share'))}</th>
+            <th class="ax-num">{:$jxE(lang('admin/ux/jcx/col_views'))}</th>
+            <th class="ax-num ax-hide-md">{:$jxE(lang('admin/ux/jcx/col_ctr'))}</th>
+            <th>{:$jxE(lang('admin/ux/jcx/col_status'))}</th>
+            <th class="ax-row-actions"><span class="ax-sr-only">{:$jxE(lang('admin/ux/jcx/col_actions'))}</span></th>
+        </tr></thead>
+        <tbody>
+        {volist name="rows" id="r"}
+        <tr data-id="{$r.id}" data-unit="{$r.unit}" data-name="{:$jxE($r['name'])}">
+            <td class="ax-col-check jx-selcell" data-label="{:$jxE(lang('admin/ux/jcx/col_select'))}"><input type="checkbox" class="checkbox-ids" name="ids[]" value="{$r.id}" aria-label="{:$jxE($r['name'])}" lay-ignore></td>
+            <td class="jx-thumb" data-label="">{if condition="$r.thumb neq ''"}<img src="{:$jxE($r['thumb'])}" alt="" width="40" height="40" loading="lazy">{else /}<svg class="ax-ic ax-ic--lg" aria-hidden="true" focusable="false"><use href="{$jxS}#{$r.icon}"/></svg>{/if}</td>
+            <td data-label="{:$jxE(lang('admin/ux/jcx/col_name'))}">{if condition="$jx_cfg.can.info"}<a href="{:url('jcx/info', ['id' => $r['id']])}">{:$jxE($r['name'])}</a>{else /}{:$jxE($r['name'])}{/if}
+                {if condition="$r.ex"} <span class="ax-chip" title="{$r.x}" data-x="{$r.x}">{:$jxE(lang('admin/ux/jcx/example_chip'))}</span>{/if}
+                {if condition="$r.risk"} <span class="ax-chip ax-chip--danger" title="{:$jxE(lang('admin/ux/jcx/chrome_risk'))}">{:$jxE(lang('admin/ux/jcx/chrome_risk'))}</span>{/if}
+                {if condition="$r.gone"} <span class="ax-chip ax-chip--warn" title="{:$jxE(lang('admin/ux/jcx/v_gone_note'))}">{:$jxE(lang('admin/ux/jcx/v_gone'))}</span><span class="ax-help jx-gone">{:$jxE(lang('admin/ux/jcx/v_gone_note'))}</span>{/if}</td>
+            <td data-label="{:$jxE(lang('admin/ux/jcx/col_format'))}" title="{:$jxE(str_replace('%s', $r['aka'], lang('admin/ux/jcx/aka')))}">{:$jxE($r['format'])}</td>
+            <td data-label="{:$jxE(lang('admin/ux/jcx/col_where'))}">{:$jxE($r['where'])}</td>
+            <td class="ax-hide-md" data-label="{:$jxE(lang('admin/ux/jcx/col_devices'))}">{:$jxE($r['dev_text'])}</td>
+            <td class="ax-hide-md" data-label="{:$jxE(lang('admin/ux/jcx/col_schedule'))}">{:$jxE($r['sched'])}</td>
+            <td class="ax-hide-md" data-label="{:$jxE(lang('admin/ux/jcx/col_share'))}">{if condition="$r.share_n"}<span class="jx-nowrap" title="{:$jxE($r['share'])}">{:$jxE(str_replace('%s', $r['share_n'], lang('admin/ux/jcx/share_short')))}</span>{else /}—{/if}</td>
+            <td class="ax-num" data-label="{:$jxE(lang('admin/ux/jcx/col_views'))}">{:number_format($r['views'])}</td>
+            <td class="ax-num ax-hide-md" data-label="{:$jxE(lang('admin/ux/jcx/col_ctr'))}"><span class="jx-nowrap">{:$jxE($r['ctr'])}</span></td>
+            <td data-label="{:$jxE(lang('admin/ux/jcx/col_status'))}">{if condition="$r.on"}<span class="ax-chip ax-chip--ok">{:$jxE(lang('admin/ux/jcx/status_on'))}</span>{else /}<span class="ax-chip ax-chip--off">{:$jxE(lang('admin/ux/jcx/status_off'))}</span>{/if}</td>
+            <td class="ax-row-actions">
+                {if condition="$jx_cfg.can.info"}<a class="ax-btn ax-btn--sm" href="{:url('jcx/info', ['id' => $r['id']])}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-pencil"/></svg>{:$jxE(lang('edit'))}</a>{/if}
+                {if condition="$jx_cfg.can.status && !$r['ex'] && !$r['gone']"}<button type="button" class="ax-btn ax-btn--sm jx-switch{if condition="$r.on"} is-on{/if}" role="switch" aria-checked="{if condition="$r.on"}true{else /}false{/if}" data-jx-act="switch" data-risk="{$r.risk}" title="{:$jxE(sprintf(lang('admin/ux/jcx/switch_label'), $r['name']))}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#{if condition="$r.on"}ai-toggle-right{else /}ai-toggle-left{/if}"/></svg><span class="ax-sr-only">{:$jxE(sprintf(lang('admin/ux/jcx/switch_label'), $r['name']))}: </span>{if condition="$r.on"}{:$jxE(lang('admin/ux/jcx/status_on'))}{else /}{:$jxE(lang('admin/ux/jcx/status_off'))}{/if}</button>{/if}
+                <div class="ax-menu ax-menu--end">
+                    <button type="button" class="ax-btn ax-btn--sm ax-btn--icon ax-btn--ghost" aria-haspopup="menu" aria-expanded="false" aria-label="{:$jxE(lang('admin/ux/kit/more'))}" title="{:$jxE(lang('admin/ux/kit/more'))}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-ellipsis"/></svg></button>
+                    <div class="ax-menu__list" role="menu" hidden>
+                        {if condition="$jx_cfg.can.save && !$r['gone']"}<button type="button" class="ax-menu__item" role="menuitem" data-jx-act="duplicate"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-copy"/></svg>{:$jxE(lang('admin/ux/jcx/duplicate'))}</button>{/if}
+                        {if condition="$jx_cfg.can.preview"}<button type="button" class="ax-menu__item" role="menuitem" data-jx-act="preview" data-scope="item-{$r.id}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-eye"/></svg>{:$jxE(lang('admin/ux/jcx/see_on_site'))}</button>{/if}
+                        {if condition="$jx_cfg.can.del"}<div class="ax-menu__sep" role="separator"></div><button type="button" class="ax-menu__item ax-menu__item--danger" role="menuitem" data-jx-act="del"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-trash-2"/></svg>{:$jxE(lang('del'))}</button>{/if}
+                    </div>
+                </div>
+            </td>
+        </tr>
+        {/volist}
+        </tbody>
+    </table>
+    </div>
+    </form>
+    {/if}
+</div>
+{include file="../../../application/admin/view/public/foot" /}
+<script type="application/json" id="jxCfg">{$jxJson}</script>
+<script src="__STATIC__/js/admin_jcx.js?v={:filemtime(ROOT_PATH . 'static/js/admin_jcx.js')}"></script>
+</body>
+</html>

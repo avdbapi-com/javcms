@@ -1,0 +1,40 @@
+/*
+ * This file is part of JavCMS - https://javcms.net
+ * Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+ * License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+ * See the LICENSE and NOTICE files that come with JavCMS.
+ * Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Telegram: https://t.me/avdb_api
+ */
+/* SEO / site settings pages (SEO-ADMIN-BRIEF CF17). --ax-* tokens only. */
+.ax-serp{margin:4px 0 16px;max-width:600px}
+.ax-serp__box{padding:12px 14px;border:1px solid var(--ax-line);border-radius:var(--ax-r);background:var(--ax-raised);font-family:Arial,var(--ax-font);overflow:hidden}
+.ax-serp__site{display:flex;gap:10px;align-items:center;font-size:13px;line-height:1.3;color:var(--ax-text)}
+.ax-serp__site>span{display:flex;flex-direction:column;min-width:0}
+.ax-serp__site cite{font-style:normal;color:var(--ax-muted);font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ax-serp__icon{width:26px;height:26px;padding:4px;border-radius:50%;background:var(--ax-overlay);object-fit:contain}
+.ax-serp__title{margin:6px 0 3px;font-size:19px;line-height:1.3;color:var(--ax-accent);overflow-wrap:anywhere}
+.ax-serp__desc{font-size:14px;line-height:1.55;color:var(--ax-muted);overflow-wrap:anywhere}
+.ax-serp__desc:empty,.ax-serp__title:empty{display:none}
+details.ax-advanced{margin:8px 0 0}
+details.ax-advanced>summary{cursor:pointer;padding:10px 0;color:var(--ax-text);font:650 14px/1.3 var(--ax-font)}
+.seo-count.is-amber{color:var(--ax-warn)}.seo-count.is-green{color:var(--ax-ok)}
+.seo-actions,.seo-color,.seo-icon__previews,.seo-tokens{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:8px 0}
+.seo-tile{margin:0;display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:center;width:120px;padding:10px;border-radius:var(--ax-r);border:1px solid var(--ax-line)}
+.seo-tile--dark{background:var(--ax-bg)}.seo-tile--light{background:var(--ax-text)}
+.seo-tile figcaption{flex-basis:100%;text-align:center;font-size:11.5px;color:var(--ax-faint)}
+.seo-tile__phone{border-radius:14px}
+.seo-share{display:block;max-width:300px;width:100%;margin:6px 0;border-radius:var(--ax-r);border:1px solid var(--ax-line)}
+.ax-field .seo-color input[type=color]{flex:none;width:44px;height:40px;padding:2px;border:1px solid var(--ax-field);border-radius:var(--ax-r-sm);background:var(--ax-surface)}
+.ax-field .seo-color .layui-input{width:120px;flex:none}
+.seo-code{min-height:120px;font-size:13px}
+.seo-checks{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:8px}
+.seo-checks li{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center}
+.seo-checks li>span:nth-child(2){flex:1 1 260px}
+.seo-cards{display:grid;gap:10px;margin-bottom:12px;grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
+.seo-cards label{display:block;padding:12px;border:1px solid var(--ax-field);border-radius:var(--ax-r);cursor:pointer}
+.seo-cards label:has(input:checked){border-color:var(--ax-accent);background:var(--ax-accent-soft)}
+.seo-cards .ax-help{display:block;margin-top:4px}
+.seo-table input,.seo-table select{width:100%;min-width:120px}
+.seo-legal-row{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;padding:8px 0;border-bottom:1px solid var(--ax-line)}
+.seo-grow{flex:1 1 180px}

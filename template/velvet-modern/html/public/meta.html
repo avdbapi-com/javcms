@@ -1,0 +1,40 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}
+if (!isset($vpPlain)) { $vpPlain = function ($v) { $v = (string)$v; for ($i = 0; $i < 4; $i++) { $d = html_entity_decode($v, ENT_QUOTES | ENT_HTML5, 'UTF-8'); if ($d === $v) { break; } $v = $d; } return trim($v); }; }
+$vpSplit = function ($value) use ($vpPlain) { $out = []; foreach (explode(',', (string)$value) as $vpPart) { $vpPart = $vpPlain($vpPart); if ($vpPart !== '' && !in_array($vpPart, $out, true)) { $out[] = $vpPart; } } return array_slice($out, 0, 24); };
+$vpCode = \app\common\util\AvdbLanguage::displayCode($obj); /* 2.11 rule 1: code only from vod_display_code */
+$vpCode = (string)preg_replace('/-(UNCENSORED-LEAK(?:ED)?|ENGLISH-SUBTITLES?)$/i', '', $vpCode);
+if ($vpCode === '' || stripos($vpCode, 'avdb-') === 0 || strlen($vpCode) > 32) { $vpCode = ''; }
+$vpActors = $vpSplit($obj['vod_display_actor'] ?? '');
+$vpGenres = $vpSplit($obj['vod_display_class'] ?? '');
+$vpTags = $vpSplit($obj['vod_display_tag'] ?? '');
+$vpDirectors = $vpSplit($obj['vod_display_director'] ?? '');
+$vpStudio = $vpPlain($obj['vod_display_writer'] ?? '');
+$vpKeepTags = function ($list) { $o = []; foreach ($list as $t) { if (\app\common\util\AutoIcon::keepTag($t)) { $o[] = ['n' => $t, 'ico' => \app\common\util\AutoIcon::icon('tag', $t, ['size' => 'sm', 'i' => count($o)])]; } } return $o; };
+$vpFaces = function ($list) { $o = []; foreach ($list as $t) { $o[] = ['n' => $t, 'ico' => \app\common\util\AutoIcon::avatar($t, '', ['size' => 'xs', 'decorative' => true])]; } return $o; };
+$vpDate = $vpPlain($obj['vod_pubdate'] ?? '');
+if ($vpDate === '' && !empty($obj['vod_year'])) { $vpDate = trim((string)$obj['vod_year']); }
+$vpActors = $vpFaces($vpActors); $vpDirectors = $vpFaces($vpDirectors); $vpGenres = $vpKeepTags($vpGenres); $vpTags = $vpKeepTags($vpTags);
+$vpDuration = trim((string)($obj['vod_duration'] ?? ''));
+$vpArea = $vpPlain($obj['vod_display_area'] ?? '');
+$vpTypeName = trim(\app\common\util\AvdbLanguage::decodeEntities((string)($obj['type']['type_name'] ?? '')));
+$vpTypeUrl = $vpTypeName !== '' ? mac_url_type($obj['type']) : '';
+{/php}
+<dl class="vp-credits">
+  {if condition="$vpCode neq ''"}<div class="vp-credit"><dt><span>{:\\app\\common\\util\\AutoIcon::ui('hash', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('vp.code')}</span><span class="vp-dots" aria-hidden="true"></span></dt><dd><span class="vp-code-val">{$vpCode|htmlspecialchars=ENT_QUOTES,'UTF-8',false}</span></dd></div>{/if}
+  {if condition="$vpStudio neq ''"}<div class="vp-credit"><dt><span>{:\\app\\common\\util\\AutoIcon::icon('tag', $vpStudio, ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ui.studio')}</span><span class="vp-dots" aria-hidden="true"></span></dt><dd>{$vpStudio|htmlspecialchars=ENT_QUOTES}</dd></div>{/if}
+  {if condition="$vpDate neq ''"}<div class="vp-credit"><dt><span>{:\\app\\common\\util\\AutoIcon::ui('calendar', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('vp.released')}</span><span class="vp-dots" aria-hidden="true"></span></dt><dd><bdi dir="ltr">{$vpDate|htmlspecialchars=ENT_QUOTES}</bdi></dd></div>{/if}
+  {if condition="$vpDuration neq ''"}<div class="vp-credit"><dt><span>{:\\app\\common\\util\\AutoIcon::ui('clock', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('vp.running_time')}</span><span class="vp-dots" aria-hidden="true"></span></dt><dd><bdi dir="ltr">{$vpDuration|htmlspecialchars=ENT_QUOTES}</bdi></dd></div>{/if}
+  {notempty name="vpActors"}<div class="vp-credit"><dt><span>{:\\app\\common\\util\\AutoIcon::ui('users', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('vp.cast')}</span><span class="vp-dots" aria-hidden="true"></span></dt><dd><span class="vp-chips" data-ai-group>{volist name="vpActors" id="vpName"}<a class="vp-chip vp-chip--cast" href="{:mac_url_search(['actor'=>$vpName['n']])}">{$vpName.ico}<span dir="auto">{$vpName.n|htmlspecialchars=ENT_QUOTES}</span></a>{/volist}</span></dd></div>{/notempty}
+  {notempty name="vpGenres"}<div class="vp-credit"><dt><span>{:\\app\\common\\util\\AutoIcon::ui('layers', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('vp.genres')}</span><span class="vp-dots" aria-hidden="true"></span></dt><dd><span class="vp-chips" data-ai-group>{volist name="vpGenres" id="vpName"}<a class="vp-chip" href="{:mac_url_search(['class'=>$vpName['n']])}">{$vpName.ico}<span dir="auto">{$vpName.n|htmlspecialchars=ENT_QUOTES}</span></a>{/volist}</span></dd></div>{/notempty}
+  {php}$vpTags = \app\common\util\AvdbLanguage::tagFilter(isset($vpTags) ? $vpTags : [], 12, 'n');{/php}{notempty name="vpTags"}<div class="vp-credit"><dt><span>{:\\app\\common\\util\\AutoIcon::ui('tags', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('vp.tags')}</span><span class="vp-dots" aria-hidden="true"></span></dt><dd><span class="vp-chips" data-ai-group>{volist name="vpTags" id="vpName"}<a class="vp-chip" href="{:mac_url_search(['tag'=>$vpName['n']])}">{$vpName.ico}<span dir="auto">{:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::tagLabel($vpName['n']), ENT_QUOTES, 'UTF-8')}</span></a>{/volist}</span></dd></div>{/notempty}
+  {notempty name="vpDirectors"}<div class="vp-credit"><dt><span>{:\\app\\common\\util\\AutoIcon::ui('clapperboard', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('vp.director')}</span><span class="vp-dots" aria-hidden="true"></span></dt><dd><span class="vp-chips">{volist name="vpDirectors" id="vpName"}<a class="vp-chip vp-chip--cast" href="{:mac_url_search(['director'=>$vpName['n']])}">{$vpName.ico}<span dir="auto">{$vpName.n|htmlspecialchars=ENT_QUOTES}</span></a>{/volist}</span></dd></div>{/notempty}
+  {if condition="$vpTypeName neq ''"}<div class="vp-credit"><dt><span>{:\\app\\common\\util\\AutoIcon::ui('folder', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('vp.category')}</span><span class="vp-dots" aria-hidden="true"></span></dt><dd><a class="vp-chip" href="{$vpTypeUrl|htmlspecialchars=ENT_QUOTES}">{:\\app\\common\\util\\AutoIcon::icon('category', $obj['type']['type_name'] ?? '', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get($vpTypeName)}</a></dd></div>{/if}
+  {if condition="$vpArea neq ''"}<div class="vp-credit"><dt><span>{:\\app\\common\\util\\AutoIcon::ui('globe', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('vp.origin')}</span><span class="vp-dots" aria-hidden="true"></span></dt><dd>{$vpArea|htmlspecialchars=ENT_QUOTES}</dd></div>{/if}
+</dl>

@@ -1,0 +1,30 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="jav" data-template-variant="classic" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/auto"}
+{include file="block/include"}
+</head>
+<body class="gallery-page page-map">
+{include file="block/head"}
+<main id="main-content" class="container list-page">
+  <div class="list-head">
+    <div class="list-title"><h1>{:\\app\\common\\util\\AutoIcon::navIcon('latest-100', '', ['size'=>'xl', 'plate'=>true])}<span>{:\\app\\common\\util\\TemplateText::get('latest_100_updates')}</span></h1></div>
+    <nav class="sort-tabs" aria-label="{:\\app\\common\\util\\TemplateText::get('jav.sort_order')}"><a href="{:mac_url('label/new')}">{:\\app\\common\\util\\AutoIcon::navIcon('latest', '', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ui.latest_videos')}</a><a href="{:mac_url('label/hot')}">{:\\app\\common\\util\\AutoIcon::navIcon('hot', '', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ui.popular_videos')}</a></nav>
+  </div>
+  <ol class="gallery-updates">
+    {maccms:vod paging="no" num="100" type="all" order="desc" by="time"}{php}$tplMapName = trim(html_entity_decode((string)($vo['vod_display_name'] ?? ($vo['vod_name'] ?? '')), ENT_QUOTES | ENT_HTML5, 'UTF-8')); $tplMapCode = \app\common\util\AvdbLanguage::displayCode($vo); if (stripos($tplMapCode, 'avdb-') === 0) { $tplMapCode = ''; }{/php}
+    <li><a class="upd-title" href="{:mac_url_vod_play($vo)}">{if condition="$tplMapCode neq ''"}<span class="upd-code">{$tplMapCode|htmlspecialchars=ENT_QUOTES}</span>{/if}<span class="upd-name">{$tplMapName|htmlspecialchars=ENT_QUOTES}</span></a><a class="upd-type" href="{:mac_url_type($vo['type'])}">{:\\app\\common\\util\\AutoIcon::icon('category', $vo['type']['type_name'], ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$vo['type']['type_name']))}</a><time datetime="{$vo.vod_time|date='Y-m-d',###}">{$vo.vod_time|date='Y-m-d',###}</time></li>
+    {/maccms:vod}
+  </ol>
+</main>
+{include file="block/copy"}
+{include file="block/foot"}
+</body>
+</html>

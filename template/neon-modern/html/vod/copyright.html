@@ -1,0 +1,32 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="neon-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head><meta name="robots" content="noindex, follow" />
+<meta charset="utf-8">
+<title>{:\\app\\common\\util\\TemplateText::get('ui.copyright_video_unavailable', ['name'=>mac_default($obj['vod_display_name'] ?? '',$obj['vod_name'] ?? '')])}</title>
+{include file="public/include"}</head>
+<body class="nn-page-access">
+{include file="public/head"}
+<main id="main-content" class="nn-main"><div class="nn-wrap">
+<section class="nn-state mac_msg_jump">
+<svg class="nn-state-ico" aria-hidden="true"><use href="{$nnSvg|htmlspecialchars=ENT_QUOTES}#lock"></use></svg>
+<p class="nn-form-note">{:\\app\\common\\util\\TemplateText::get('ui.video_access')}</p>
+<h1>{:\\app\\common\\util\\TemplateText::get('ui.access_required')}</h1>
+<p class="nn-msg">{:\\app\\common\\util\\TemplateText::get('ui.copyright_video_unavailable', ['name'=>mac_default($obj['vod_display_name'] ?? '',$obj['vod_name'] ?? '')])}</p>
+<p>{$GLOBALS['config']['app']['copyright_notice']|htmlspecialchars=ENT_QUOTES}</p>
+{if condition="$obj['vod_jumpurl'] neq ''"}<p>{:\\app\\common\\util\\TemplateText::get('ui.automatic_page')} <a id="href" href="<?php echo htmlspecialchars(mac_safe_url($obj['vod_jumpurl']), ENT_QUOTES); ?>">{:\\app\\common\\util\\TemplateText::get('ui.jump')}</a> {:\\app\\common\\util\\TemplateText::get('ui.wait_time')} <b id="wait">3</b></p>{/if}
+<div class="nn-state-actions"><a class="nn-btn" href="{$maccms.path}">{:\\app\\common\\util\\TemplateText::get('ui.back_to_home')}</a></div>
+</section>
+</div></main>
+{include file="public/foot"}
+{if condition="$obj['vod_jumpurl'] neq ''"}<script>
+(function(){var wait=document.getElementById('wait'),link=document.getElementById('href');if(!wait||!link){return;}var timer=setInterval(function(){var left=parseInt(wait.textContent,10)-1;wait.textContent=String(Math.max(left,0));if(left<=0){clearInterval(timer);window.location.href=link.href;}},1000);})();
+</script>{/if}
+</body>
+</html>

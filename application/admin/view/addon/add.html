@@ -1,0 +1,65 @@
+﻿{/*
+This file is part of JavCMS - https://javcms.net
+Based on MacCMS 10 (Apache-2.0) by magicblack, changed by JavCMS.
+JavCMS changes: Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors,
+JavCMS Community License 1.0. The MacCMS parts stay under the Apache License 2.0.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{include file="../../../application/admin/view/public/head" /}
+<link rel="stylesheet" href="__STATIC__/css/admin_addon_workspace.css?{$MAC_VERSION}&rev=2">
+
+<div class="page-container p10 addon-workspace">
+    <header class="addon-hero">
+        <div>
+            <p class="addon-eyebrow">{:lang('admin/addon/title')}</p>
+            <h1 class="addon-title">{:lang('local_setup')}</h1>
+            <p class="addon-subtitle">{:lang('admin/addon/add_tip')}</p>
+        </div>
+        <span class="addon-status">{:lang('local_setup')}</span>
+    </header>
+
+    <div class="layui-tab layui-tab-brief" lay-filter="tabs">
+        <ul class="layui-tab-title addon-tabs">
+            <li class="btn-local"><a href="{:url('index')}">{:lang('local_app')}</a></li>
+            <li class="layui-this"><a href="{:url('add')}">{:lang('local_setup')}</a></li>
+        </ul>
+        <div class="layui-tab-content">
+            <section class="addon-form-shell" aria-labelledby="addon-upload-title">
+                <h2 id="addon-upload-title" class="layui-hide">{:lang('local_setup')}</h2>
+                <blockquote class="layui-elem-quote layui-quote-nm">{:lang('admin/addon/add_tip')}</blockquote>
+                <input type="hidden" id="token" name="__token__" value="{$Request.token}" />
+                <button type="button" class="layui-btn layui-upload" id="upload1" aria-describedby="addon-upload-help">{:lang('upload')}</button>
+                <p id="addon-upload-help" class="layui-word-aux">{:lang('admin/addon/downandinstalltheme/ext_err')}</p>
+            </section>
+        </div>
+    </div>
+</div>
+
+{include file="../../../application/admin/view/public/foot" /}
+
+<script type="text/javascript">
+    var url = '';
+    layui.use(['form', 'laypage', 'layer', 'upload', 'element'], function () {
+        var layer = layui.layer;
+        var upload = layui.upload;
+        upload.render({
+            elem: '.layui-upload',
+            url: "{:url('addon/local')}?__token__=" + encodeURIComponent($('#token').val() || ''),
+            method: 'post',
+            exts: 'zip',
+            data: {__token__: function () { return $('#token').val() || ''; }},
+            before: function () { layer.msg("{:lang('upload_ing')}", {time: 3000000}); },
+            done: function (res) {
+                if (res && res.data && res.data.__token__) { $('#token').val(res.data.__token__); }
+                if (!res || res.code === 0) { layer.msg(res && res.msg ? res.msg : "{:lang('request_err')}"); return; }
+                layer.msg(res.msg);
+                setTimeout(function () { layer.closeAll(); location.reload(); }, 1200);
+            },
+            error: function () { layer.msg("{:lang('request_err')}"); }
+        });
+    });
+</script>
+</body>
+</html>
+

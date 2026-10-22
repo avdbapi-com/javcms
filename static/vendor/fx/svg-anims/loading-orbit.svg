@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" class="fxsvg fxsvg-orbit" aria-hidden="true" focusable="false">
+<!-- JavCMS fx | original animation, JavCMS Community License 1.0 | colours: CSS custom properties fx-accent, fx-accent-2, fx-ink, fx-muted (two leading hyphens; fallbacks in the style rules) -->
+<style>
+.fxsvg-orbit .track{fill:none;stroke:var(--fx-muted,#8a90a6);stroke-opacity:.35;stroke-width:3}
+.fxsvg-orbit .spin{transform-origin:120px 120px;animation:fxsvg-orbit-spin 1.5s cubic-bezier(.45,.05,.55,.95) infinite}
+.fxsvg-orbit .breathe{transform-origin:120px 120px;animation:fxsvg-orbit-breathe 1.5s ease-in-out infinite}
+.fxsvg-orbit .d0{fill:var(--fx-accent,#ff3d81)}.fxsvg-orbit .d1{fill:var(--fx-accent-2,#7c5cff)}.fxsvg-orbit .d2{fill:var(--fx-ink,#e6e8f0)}
+@keyframes fxsvg-orbit-spin{to{transform:rotate(360deg)}}
+@keyframes fxsvg-orbit-breathe{0%,100%{transform:scale(1)}50%{transform:scale(.7)}}
+@media (prefers-reduced-motion:reduce){.fxsvg-orbit .spin{animation-duration:6s;animation-timing-function:linear}.fxsvg-orbit .breathe{animation:none}}
+</style>
+<circle class="track" cx="120" cy="120" r="34"/>
+<g class="spin"><g class="breathe"><circle class="d0" cx="120" cy="86" r="11"/><circle class="d1" cx="149.4" cy="137" r="11"/><circle class="d2" cx="90.6" cy="137" r="11"/></g></g>
+</svg>

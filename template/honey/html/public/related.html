@@ -1,0 +1,36 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}
+$hnRelSelf = intval($obj['vod_id'] ?? 0);
+$hnRelIds = [$hnRelSelf];
+if (isset($hnSideIds) && is_array($hnSideIds)) { foreach ($hnSideIds as $hnRelSid) { $hnRelIds[] = (int)$hnRelSid; } }
+$hnRelShown = 0;
+$hnRelTid = intval($obj['type_id'] ?? 0);
+/* "More to watch" = the lead performer's newest videos, then the lead genre's most viewed among the newest videos of
+   the category, then the newest of the category. verify r4 G7 (slim index set, no B-tree vod_actor): the performer ids
+   come from the ac_ token through the search planner (AvdbLanguage::relatedActorIds: term map or one bounded MATCH;
+   placeholder names skipped), the genre ids from the newest rows of the category read once through the list layer
+   (AvdbLanguage::relatedGenreIds, idx_type_list); both are cached per lead / per category and genre, empty answers and
+   failures included. No table scan, no 3,000-row window. */
+$hnRelLead = trim((string)strtok((string)\app\common\util\AvdbLanguage::dropPlaceholders($obj['vod_actor'] ?? ''), ','));
+$hnRelGenre = trim((string)strtok((string)($obj['vod_class'] ?? ''), ','));
+$hnRelPick = [];
+$hnRelPick2 = [];
+foreach (\app\common\util\AvdbLanguage::relatedActorIds($hnRelLead, 20) as $hnRelId) {
+  if (count($hnRelPick) < 10 && !in_array($hnRelId, $hnRelIds, true)) { $hnRelPick[] = $hnRelId; }
+}
+if (count($hnRelPick) < 10 && $hnRelTid > 0 && $hnRelGenre !== '') {
+  foreach (\app\common\util\AvdbLanguage::relatedGenreIds($hnRelTid, $hnRelGenre, 30, 'hits') as $hnRelId) {
+    if (count($hnRelPick) + count($hnRelPick2) < 10 && !in_array($hnRelId, $hnRelIds, true) && !in_array($hnRelId, $hnRelPick, true)) { $hnRelPick2[] = $hnRelId; }
+  }
+}
+$hnRelActorIds = implode(',', $hnRelPick);
+$hnRelGenreIds = implode(',', $hnRelPick2);
+{/php}<section class="hn-section hn-related" aria-labelledby="hn-related-title"><div class="top-header" data-ai-group><h2 class="area-title" data-ai-hot id="hn-related-title">{:\\app\\common\\util\\AutoIcon::ui('sparkles', ['size'=>'lg', 'plate'=>true, 'class'=>'hn-cell'])}<span>{:\\app\\common\\util\\TemplateText::get('ui.more_to_watch')}</span></h2><a class="more" href="{:mac_url_type($obj['type'])}">{:\\app\\common\\util\\TemplateText::get('ui.view_more')}{:\\app\\common\\util\\AutoIcon::ui('chevron-right', ['class'=>'hn-i', 'tint'=>'none'])}</a></div>
+<div class="hn-grid" data-grid-fill>{if condition="$hnRelActorIds neq ''"}{maccms:vod num="10" ids="'.$hnRelActorIds.'" order="desc" by="id" paging="no" id="vo"}{php}$hnRelIds[] = intval($vo['vod_id']); $hnRelShown++;{/php}{include file="public/vodbox"}{/maccms:vod}{/if}{if condition="$hnRelGenreIds neq '' && $hnRelShown lt 10"}{maccms:vod num="10" ids="'.$hnRelGenreIds.'" order="desc" by="hits" paging="no" id="vo"}{if condition="$hnRelShown lt 10"}{php}$hnRelIds[] = intval($vo['vod_id']); $hnRelShown++;{/php}{include file="public/vodbox"}{/if}{/maccms:vod}{/if}{if condition="$hnRelShown lt 10"}{php}$hnRelNeed = 10 - $hnRelShown; $hnRelNot = implode(',', $hnRelIds);{/php}{maccms:vod num="'.$hnRelNeed.'" not="'.$hnRelNot.'" type="current" order="desc" by="time" paging="no" id="vo"}{php}$hnRelShown++;{/php}{include file="public/vodbox"}{/maccms:vod}{/if}</div>
+<a class="hn-more-pill" href="{:mac_url_type($obj['type'])}">{:\\app\\common\\util\\TemplateText::get('ui.view_more')}{:\\app\\common\\util\\AutoIcon::ui('chevron-right', ['class'=>'hn-i', 'tint'=>'none'])}</a></section>

@@ -1,0 +1,31 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="neon-modern" data-nn-page="home" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/index"}
+{include file="public/include"}
+</head>
+<body class="nn-page-home">
+{include file="public/head"}
+{php}$nnSeen = [];{/php}
+<main id="main-content" class="nn-main">
+{include file="index/banner"}
+{include file="index/notice"}
+<div class="nn-wrap">
+{include file="index/board"}
+{php}$jvPbOpt = ['section' => 'nn-section nn-sec', 'head' => 'nn-sec-head', 'title' => 'nn-hsign nn-sign nn-tube', 'more' => 'nn-more', 'grid' => 'nn-grid'];{/php}{include file="public/provider_block"}{include file="index/new"}
+{include file="index/watch"}
+{include file="index/rated"}
+{include file="index/list"}
+{include file="public/link"}
+</div>
+</main>
+{include file="public/foot"}
+</body>
+</html>

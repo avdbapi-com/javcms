@@ -1,0 +1,20 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}$nnHasActor = false; $nnHasTopic = false; $nnHasArt = false;{/php}{maccms:actor num="1" id="nnProbeActor"}{php}$nnHasActor = true;{/php}{/maccms:actor}{maccms:topic num="1" id="nnProbeTopic"}{php}$nnHasTopic = true;{/php}{/maccms:topic}{maccms:art num="1" id="nnProbeArt"}{php}$nnHasArt = true;{/php}{/maccms:art}
+<nav class="nn-catbar" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.main_navigation')}"><div class="nn-wrap nn-catbar-in">
+<a href="{$maccms.path}"{if condition="$maccms.aid eq 1"} aria-current="page"{/if}>{:\\app\\common\\util\\TemplateText::get('ui.home')}</a>
+{maccms:type ids="parent" flag="vod" order="asc" by="sort" id="nnNav" hide_empty="1"}<a href="{:mac_url_type($nnNav)}"{if condition="$nnNav.type_id eq $GLOBALS['type_id'] || $nnNav.type_id eq $GLOBALS['type_pid']"} aria-current="page"{/if}>{:\\app\\common\\util\\TemplateText::get(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)($nnNav['type_name'] ?? '')))}</a>{/maccms:type}
+<span class="nn-sep" aria-hidden="true"></span>
+<a href="{:mac_url('label/new')}"{if condition="$maccms.aid eq 9999"} aria-current="page"{/if}>{:\\app\\common\\util\\TemplateText::get('ui.latest_videos')}</a>
+<a href="{:mac_url('label/hot')}"{if condition="$maccms.aid eq 9998"} aria-current="page"{/if}>{:\\app\\common\\util\\TemplateText::get('ui.popular_videos')}</a>
+<a href="{:mac_url('label/score')}"{if condition="$maccms.aid eq 9997"} aria-current="page"{/if}>{:\\app\\common\\util\\TemplateText::get('top_rated')}</a>
+{if condition="$nnHasActor"}<a href="{:mac_url('actor/index')}">{:\\app\\common\\util\\TemplateText::get('performers')}</a>{/if}
+{if condition="$nnHasTopic"}<a href="{:mac_url('topic/index')}">{:\\app\\common\\util\\TemplateText::get('collections')}</a>{/if}
+{if condition="$nnHasArt"}<a href="{:mac_url('art/index')}">{:\\app\\common\\util\\TemplateText::get('articles')}</a>{/if}
+<details class="nn-catmore" hidden><summary><span>{:\\app\\common\\util\\TemplateText::get('nn.more')}</span><svg class="nn-ico" aria-hidden="true"><use href="{$nnSvg|htmlspecialchars=ENT_QUOTES}#chev"></use></svg></summary><div class="nn-catmore-menu"></div></details>
+</div></nav>

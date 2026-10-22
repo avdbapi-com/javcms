@@ -1,0 +1,58 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<script src="{$maccms.path|htmlspecialchars=ENT_QUOTES}static/template-ui/theme.js?v=20261007-theme1"></script>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+{if condition="in_array(strtolower($maccms['controller_action']), ['index/index','vod/index','vod/type','vod/show','vod/search','vod/detail','vod/play','vod/down','map/index','label/new','label/hot','label/sort','label/up','label/score'])"}<meta name="rating" content="adult" />{/if}
+<meta name="theme-color" content="#fcc324" />
+<link rel="icon" href="{$maccms.path}static/template-ui/favicon-javcms.svg" type="image/svg+xml" /><link rel="alternate icon" href="{$maccms.path}static/template-ui/favicon-javcms.ico" /><link rel="apple-touch-icon" href="{$maccms.path}static/template-ui/favicon-javcms-180.png" />
+<link rel="stylesheet" href="{$maccms.path}static/vendor/fonts/fonts.css?v=20261014-k3" /><link rel="stylesheet" href="{$maccms.path}static/vendor/fonts/quicksand.css" />
+<link rel="stylesheet" href="{$maccms.path}static/template-ui/ui.css?v=20261009-hover1" />
+{:\\app\\common\\util\\AutoIcon::head()}
+<link rel="stylesheet" href="{$maccms.path_tpl}assets/css/honey.css?v=20261014-wf1" />
+<script>(function(r){try{if(!(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches))r.classList.add("hn-anim")}catch(e){}})(document.documentElement);window.HONEY_TPL="{$maccms.path_tpl}";(function(d){d.addEventListener("error",function(e){var t=e.target;if(!t||t.tagName!=="IMG"||t.getAttribute("data-hn-fb")||!t.closest||!t.closest(".hn-thumb,.hn-cover,.hn-slide,.hn-side-thumb,.hn-history-list"))return;t.setAttribute("data-hn-fb","1");t.src=window.HONEY_TPL+"assets/img/placeholder.svg";},true);d.addEventListener("load",function(e){var t=e.target,b;if(t&&t.tagName==="IMG"&&t.closest&&(b=t.closest(".hn-thumb")))b.classList.add("is-ok");},true);})(document);</script>
+<script src="{$maccms.path|htmlspecialchars=ENT_QUOTES}static/vendor/jquery/jquery-3.7.1.min.js"></script>
+<script>{php}
+echo 'var maccms=' . json_encode([
+    'path'=>rtrim((string)($maccms['path'] ?? MAC_PATH), '/'),
+    'mid'=>(string)($maccms['mid'] ?? ''),
+    'url'=>(string)($maccms['site_url'] ?? ''),
+    'wapurl'=>(string)($maccms['site_wapurl'] ?? ''),
+    'mob_status'=>(string)($maccms['mob_status'] ?? ''),
+    'templatePath'=>(string)($maccms['path_tpl'] ?? ''),
+    'template_urls'=>[
+        'user_login'=>mac_url('user/login'),
+        'ajax_pwd'=>mac_url('ajax/pwd'),
+        'user_index'=>mac_url('user/index'),
+        'user_token'=>mac_url('user/token'),
+        'user_info'=>mac_url('user/info'),
+        'user_bind'=>mac_url('user/bind'),
+        'user_bindmsg'=>mac_url('user/bindmsg'),
+        'user_buy'=>mac_url('user/buy'),
+        'user_upgrade'=>mac_url('user/upgrade'),
+        'user_cash'=>mac_url('user/cash'),
+        'user_unbind'=>mac_url('user/unbind'),
+        'user_ulog_del'=>mac_url('user/ulog_del'),
+        'user_plog_del'=>mac_url('user/plog_del'),
+        'user_cash_del'=>mac_url('user/cash_del'),
+        'user_ajax_buy_popedom'=>mac_url('user/ajax_buy_popedom'),
+        'user_ajax_ulog'=>mac_url('user/ajax_ulog'),
+        'gbook_index'=>mac_url('gbook/index'),
+        'gbook_token'=>mac_url('gbook/token'),
+        'gbook_save'=>mac_url('gbook/saveData'),
+        'comment_token'=>mac_url('comment/token'),
+        'comment_save'=>mac_url('comment/saveData'),
+    ],
+], JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) . ';';
+{/php}</script>
+<script src="{$maccms.path}static/template-ui/secure-forms.js"></script>
+<script src="{$maccms.path}static/template-ui/ui.js"></script><script>document.documentElement.dataset.templateTheme='honey';TemplateUI.installLayerAdapter();</script>
+<script src="{$maccms.path_tpl}assets/js/home.js?v=20261009-s1"></script>
+<script>window.TemplateMessages={:\\app\\common\\util\\TemplateText::json(["user_bookmark","network_error","score_loading_failed","data_error","comment_loading_failed","please_enter_comment","ui.enter_message","related_id_error","module_mid_error","comments_closed","ui.no_comments_yet_start_the_conversation","ui.reply","ui.cancel_reply","ui.enter_comment","log_out","favorites","not_to_see_change_one","verification_code","copy_manually","homepage_browser_settings","bookmark_browser_menu","choose_avatar","upload_avatar","template_ui_working","avatar_updated","select_avatar_file","avatar_upload_failed","clear_history","history","history_clear","history_empty","no_history","subscription_authorize","template_ui_cancel","template_ui_close","template_ui_confirm","template_ui_confirm_title","template_ui_dismiss","template_ui_notifications","ui.confirm_the_purchase","ui.are_you_sure_if_you_want_to_recharge_online","ui.are_you_sure_to_use_the_recharge_card_to_recharge","ui.choose","ui.confirm_clear_records","ui.confirm_delete_selected_records","ui.confirm_the_lifting_binding_this_operation_cannot_be_restored","ui.confirm_upgrade_membership","ui.connection_failed_try_again","ui.copy_link","ui.copyright_video_unavailable","ui.delete_failed_reason","ui.delete_failure","ui.determine_to_upgrade_to","ui.email_format_is_incorrect","ui.enter_email_or_phone","ui.enter_payee_name","ui.get_the_verification_code","ui.incorrect_mobile_phone_number_format","ui.it_takes_to_spend","ui.link_copied","ui.loading","ui.log_in_now","ui.log_in","ui.no_results_found_try_another_category_or_search","ui.parameter_error","ui.pay_complete_it","ui.payment_completed_redirecting","ui.please_enter_the_bank_account","ui.please_enter_the_bank_name","ui.please_enter_the_confirmation_password","ui.please_enter_the_new_password_ec0b3e","ui.please_enter_the_password_ab9294","ui.please_enter_the_payee","ui.please_enter_the_recharge_card_number_and_password","please_enter_the_user","ui.please_enter_the_user","ui.please_enter_the_verification_code","ui.please_enter_the_verification_code_0d14a4","ui.please_enter_the_withdrawal_amount","ui.please_select_at_least_one_data","ui.preview_membership_limit","ui.preview_points_limit","ui.records_deleted","ui.register_now","ui.resend_verification_countdown","ui.reset_password","ui.retos_it_now","ui.search_for_query","ui.select_and_copy_the_address","ui.send_mail","ui.share","ui.submit","ui.the_second_password_is_inconsistent","ui.my_account","ui.member_center","ui.search_videos_or_performers","search_results","honey.hot_searches","honey.suggestions","honey.show_more","honey.show_less"])};window.galleryText={copied:window.TemplateMessages["ui.link_copied"],select:window.TemplateMessages["ui.select_and_copy_the_address"],network:window.TemplateMessages["ui.connection_failed_try_again"],empty:window.TemplateMessages["ui.no_results_found_try_another_category_or_search"]};window.galleryMessage=function(key,values){var text=window.TemplateMessages[key]||key;Object.keys(values||{}).forEach(function(name){text=text.split("{"+name+"}").join(String(values[name]));});return text;};</script>
+<script defer src="{$maccms.path}static/template-ui/grid-fill.js"></script><script defer src="{$maccms.path_tpl}assets/js/honey.js?v=20261013-g3a"></script>
+<link rel="stylesheet" href="{$maccms.path|htmlspecialchars=ENT_QUOTES}static/template-ui/lowres.css?v={:\\app\\common\\util\\AvdbLanguage::assetVersion('lowres.css')}" /><script src="{$maccms.path|htmlspecialchars=ENT_QUOTES}static/template-ui/lowres.js?v={:\\app\\common\\util\\AvdbLanguage::assetVersion('lowres.js')}" defer></script>

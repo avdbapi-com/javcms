@@ -1,0 +1,56 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="honey" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/vod_play"}
+{include file="public/include"}
+</head>
+<body class="hn-page-watch">
+{include file="public/metavars"}
+{php}
+$hnShareUrl = '';
+try { $hnShareUrl = \app\common\util\Sitemap::absolute(mac_url_vod_play($obj)); } catch (\Throwable $hnShareError) { $hnShareUrl = ''; }
+$hnLinkPre = (string)($obj['player_info']['link_pre'] ?? '');
+$hnLinkNext = (string)($obj['player_info']['link_next'] ?? '');
+$hnSideNot = intval($obj['vod_id'] ?? 0); $hnSideIds = [];
+{/php}
+{include file="public/head"}
+<span hidden data-hn-history-set data-name="{$hnName|htmlspecialchars=ENT_QUOTES}" data-link="{:mac_url_vod_play($obj)}" data-pic="{$hnPicCover|htmlspecialchars=ENT_QUOTES}"></span>
+<main id="main-content" class="hn-main">
+<div class="hn-wrap hn-watch">
+<div class="hn-watch-main">
+<div class="hn-player" data-frame-title="{:\\app\\common\\util\\TemplateText::get('ui.iframeplayer')}">{$player_data}{$player_js}</div>
+<header class="hn-watch-head">
+<h1{php}echo \app\common\util\AvdbLanguage::langAttr(isset($obj) && is_array($obj) ? $obj : []);{/php} class="hn-title" dir="auto" data-hn-title>{$hnName|htmlspecialchars=ENT_QUOTES}</h1>
+<div class="hn-watch-sub">{if condition="$hnScoreTxt neq ''"}<span class="hn-rating" title="{:\\app\\common\\util\\TemplateText::get('ui.score')}"><span class="hn-stars" style="--v:{$hnStarPct}%" aria-hidden="true"></span><b class="hn-ltr">{$hnScoreTxt}</b></span>{/if}<span title="{:\\app\\common\\util\\TemplateText::get('ui.views')}">{:\\app\\common\\util\\AutoIcon::ui('eye', ['class'=>'hn-i', 'tint'=>'none'])}<span class="mac_hits hits hn-ltr" data-mid="1" data-id="{$obj.vod_id}" data-type="hits">{$obj.vod_hits}</span><span class="hn-sr">{:\\app\\common\\util\\TemplateText::get('ui.views')}</span></span>{if condition="$hnRelease neq ''"}<span>{:\\app\\common\\util\\AutoIcon::ui('calendar', ['class'=>'hn-i', 'tint'=>'none'])}<span class="hn-ltr">{$hnRelease|htmlspecialchars=ENT_QUOTES}</span></span>{/if}{if condition="$hnDuration neq ''"}<span>{:\\app\\common\\util\\AutoIcon::ui('clock', ['class'=>'hn-i', 'tint'=>'none'])}<span class="hn-ltr">{$hnDuration|htmlspecialchars=ENT_QUOTES}</span></span>{/if}</div>
+<div class="tips-wrap">
+{if condition="$hnLinkPre neq ''"}<a class="tips-item" href="{$hnLinkPre|htmlspecialchars=ENT_QUOTES}"><span class="hn-orb">{:\\app\\common\\util\\AutoIcon::ui('chevron-left', ['class'=>'hn-i', 'tint'=>'none'])}</span>{:\\app\\common\\util\\TemplateText::get('previous_episode')}</a>{/if}
+{if condition="$hnLinkNext neq ''"}<a class="tips-item" href="{$hnLinkNext|htmlspecialchars=ENT_QUOTES}"><span class="hn-orb">{:\\app\\common\\util\\AutoIcon::ui('chevron-right', ['class'=>'hn-i', 'tint'=>'none'])}</span>{:\\app\\common\\util\\TemplateText::get('next_episode')}</a>{/if}
+<button class="tips-item" type="button" data-hn-share data-url="{$hnShareUrl|htmlspecialchars=ENT_QUOTES}" data-title="{$hnName|htmlspecialchars=ENT_QUOTES}"><span class="hn-orb">{:\\app\\common\\util\\AutoIcon::ui('share', ['class'=>'hn-i', 'tint'=>'none'])}</span>{:\\app\\common\\util\\TemplateText::get('share')}</button>
+<a class="tips-item mac_ulog" href="{:mac_url('user/favs')}" role="button" data-type="2" data-mid="1" data-id="{$obj.vod_id}"><span class="hn-orb">{:\\app\\common\\util\\AutoIcon::ui('heart', ['class'=>'hn-i', 'tint'=>'none'])}</span>{:\\app\\common\\util\\TemplateText::get('favorites')}</a>
+{if condition="$GLOBALS['config']['comment']['status'] eq 1"}<a class="tips-item" href="#comments"><span class="hn-orb">{:\\app\\common\\util\\AutoIcon::ui('message', ['class'=>'hn-i', 'tint'=>'none'])}</span>{:\\app\\common\\util\\TemplateText::get('ui.comments')}</a>{/if}
+<a class="tips-item" href="{:mac_url_vod_detail($obj)}"><span class="hn-orb">{:\\app\\common\\util\\AutoIcon::ui('info', ['class'=>'hn-i', 'tint'=>'none'])}</span>{:\\app\\common\\util\\TemplateText::get('ui.details')}</a>
+<a class="tips-item" href="{:mac_url('gbook/index') . (strpos(mac_url('gbook/index'), '?') === false ? '?' : '&amp;') . 'id=' . intval($obj['vod_id'])}" rel="nofollow"><span class="hn-orb">{:\\app\\common\\util\\AutoIcon::ui('flag', ['class'=>'hn-i', 'tint'=>'none'])}</span>{:\\app\\common\\util\\TemplateText::get('ui.report')}</a>
+</div>
+</header>
+{if condition="$hnShowEpisodes eq 1"}<section class="hn-episodes hn-card" aria-label="{:\\app\\common\\util\\TemplateText::get('playback_sources')}">{maccms:foreach name="obj.vod_play_list" id="hnSrc" key="hnSid"}<h2 class="hn-block-title" data-ai-hot>{:\\app\\common\\util\\AutoIcon::ui('list', ['size'=>'lg', 'plate'=>true, 'class'=>'hn-cell'])}{$hnSrc.player_info.show|htmlspecialchars=ENT_QUOTES}</h2><div class="hn-chips">{maccms:foreach name="hnSrc.urls" id="hnEp" key="hnNid"}<a class="hn-chip" href="{:mac_url_vod_play($obj,['sid'=>$hnSrc['sid'],'nid'=>$hnEp['nid']])}"{if condition="$param.sid eq $hnSrc.sid && $param.nid eq $hnEp.nid"} aria-current="page"{/if}>{$hnEp.name|htmlspecialchars=ENT_QUOTES}</a>{/maccms:foreach}</div>{/maccms:foreach}</section>{/if}
+{include file="public/meta"}
+{if condition="$hnDesc neq ''"}<section class="hn-desc hn-card is-clamp" data-hn-clamp><h2>{:\\app\\common\\util\\TemplateText::get('description')}</h2><p dir="auto">{$hnDesc|htmlspecialchars=ENT_QUOTES}</p></section>{/if}
+</div>
+<aside class="hn-side" aria-labelledby="hn-side-title"><h2 id="hn-side-title">{:\\app\\common\\util\\TemplateText::get('honey.recommended_for_you')}</h2><div class="hn-side-list">{maccms:vod num="8" type="current" not="'.$hnSideNot.'" order="desc" by="score" paging="no" id="hnRv"}{php}$hnRvPic = trim((string)($hnRv['vod_pic'] ?? '')); $hnRvPic = $hnRvPic === '' ? $maccms['path_tpl'] . 'assets/img/placeholder.svg' : mac_url_img($hnRvPic); $hnRvScore = (float)($hnRv['vod_score'] ?? 0); $hnSideIds[] = (int)$hnRv['vod_id']; $hnRvTitle = (string)($hnRv['vod_display_name'] ?? ''); if (trim($hnRvTitle) === '') { $hnRvTitle = (string)($hnRv['vod_name'] ?? ''); } for ($hnK = 0; $hnK < 3 && strpos($hnRvTitle, '&') !== false; $hnK++) { $hnKd = html_entity_decode($hnRvTitle, ENT_QUOTES | ENT_HTML5, 'UTF-8'); if ($hnKd === $hnRvTitle) { break; } $hnRvTitle = $hnKd; }{/php}<a class="hn-side-item" href="{:mac_url_vod_play($hnRv)}"><span class="hn-side-thumb hn-thumb"><img src="{$hnRvPic|htmlspecialchars=ENT_QUOTES}" alt="" width="150" height="84" loading="lazy" decoding="async">{notempty name="hnRv.vod_duration"}<span class="video-item-tag video-item-tag-duration">{$hnRv.vod_duration|htmlspecialchars=ENT_QUOTES}</span>{/notempty}</span><span class="hn-side-info"><span class="hn-side-title" dir="auto">{$hnRvTitle|htmlspecialchars=ENT_QUOTES}</span>{if condition="$hnRvScore gt 0"}<span class="hn-side-stars"><span class="hn-stars" style="--v:{:intval(round($hnRvScore * 10))}%" aria-hidden="true"></span><span class="hn-ltr">{:number_format($hnRvScore, 1)}</span></span>{/if}<span class="hn-side-views">{:\\app\\common\\util\\AutoIcon::ui('eye', ['class'=>'hn-i', 'tint'=>'none'])} <span class="hn-ltr">{:number_format((int)$hnRv['vod_hits'])}</span></span></span></a>{/maccms:vod}</div></aside>
+</div>
+<div class="hn-wrap hn-stack">
+{include file="public/related"}
+{if condition="$GLOBALS['config']['comment']['status'] eq 1"}<section class="hn-comments hn-card" id="comments" aria-labelledby="hn-comments-title"><h2 class="hn-block-title" data-ai-hot id="hn-comments-title">{:\\app\\common\\util\\AutoIcon::ui('message', ['size'=>'lg', 'plate'=>true, 'class'=>'hn-cell'])}{:\\app\\common\\util\\TemplateText::get('ui.comments')}</h2><div class="mac_comment" data-id="{$obj.vod_id}" data-mid="1"><p class="hn-muted">{:\\app\\common\\util\\TemplateText::get('ui.loading_comments')}</p></div></section><script>MAC.Comment.Init();MAC.Comment.Show(1);</script>{/if}
+</div>
+</main>
+{include file="public/foot"}
+</body>
+</html>
+

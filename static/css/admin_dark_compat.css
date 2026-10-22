@@ -1,0 +1,1866 @@
+/*
+ * This file is part of JavCMS - https://javcms.net
+ * Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+ * License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+ * See the LICENSE and NOTICE files that come with JavCMS.
+ * Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Telegram: https://t.me/avdb_api
+ */
+/* Dark admin theme for the existing MacCMS admin surface. Scope is limited to admin head pages. */
+body.admin-dark {
+    --admin-dark-bg: #0b1220;
+    --admin-dark-surface: #111827;
+    --admin-dark-surface-alt: #162033;
+    --admin-dark-border: #26354d;
+    --admin-dark-ink: #e7eef8;
+    --admin-dark-muted: #94a3b8;
+    --admin-dark-accent: #35d39b;
+    --admin-dark-accent-strong: #6ee7b7;
+    background: var(--admin-dark-bg);
+    color: var(--admin-dark-ink);
+    color-scheme: dark;
+}
+body.admin-dark .page-container,
+body.admin-dark .layui-body { background: var(--admin-dark-bg); color: var(--admin-dark-ink); }
+body.admin-dark .layui-table,
+body.admin-dark .layui-card,
+body.admin-dark .layui-panel,
+body.admin-dark .layui-collapse,
+body.admin-dark .layui-elem-quote {
+    color: var(--admin-dark-ink);
+    background: var(--admin-dark-surface);
+    border-color: var(--admin-dark-border);
+}
+body.admin-dark .layui-table thead tr,
+body.admin-dark .layui-table-header,
+body.admin-dark .layui-table tbody tr {
+    color: var(--admin-dark-ink);
+    background: var(--admin-dark-surface);
+    border-color: var(--admin-dark-border);
+}
+body.admin-dark .layui-table tbody tr:hover,
+body.admin-dark .layui-table-hover { background: #17263b; }
+body.admin-dark .layui-table td,
+body.admin-dark .layui-table th { border-color: var(--admin-dark-border); }
+body.admin-dark .layui-form-label,
+body.admin-dark .layui-form-mid,
+body.admin-dark .layui-form-radio,
+body.admin-dark .layui-form-checkbox,
+body.admin-dark .layui-form-switch { color: var(--admin-dark-ink); }
+body.admin-dark .layui-input,
+body.admin-dark .layui-textarea,
+body.admin-dark .layui-select,
+body.admin-dark .layui-form-select .layui-input {
+    color: var(--admin-dark-ink);
+    background: #0d1829;
+    border-color: var(--admin-dark-border);
+}
+body.admin-dark .layui-input::placeholder,
+body.admin-dark .layui-textarea::placeholder { color: #71839b; }
+body.admin-dark .layui-input:focus,
+body.admin-dark .layui-textarea:focus,
+body.admin-dark .layui-form-select .layui-input:focus {
+    border-color: var(--admin-dark-accent);
+    box-shadow: none;
+}
+body.admin-dark .layui-form-select dl,
+body.admin-dark .layui-transfer,
+body.admin-dark .layui-layer,
+body.admin-dark .layui-layer-title,
+body.admin-dark .layui-layer-content,
+body.admin-dark .layui-layer-btn {
+    color: var(--admin-dark-ink);
+    background: var(--admin-dark-surface);
+    border-color: var(--admin-dark-border);
+}
+body.admin-dark .layui-form-select dl dd:hover,
+body.admin-dark .layui-form-select dl dd.layui-this { background: #173b45; color: #fff; }
+body.admin-dark .layui-btn {
+    color: #ecfffa;
+    background: #17624f;
+    border-color: #237a64;
+}
+body.admin-dark .layui-btn:hover { background: #1d8068; color: #fff; }
+body.admin-dark .layui-btn-primary { color: var(--admin-dark-ink); background: var(--admin-dark-surface-alt); border-color: var(--admin-dark-border); }
+body.admin-dark .layui-btn-danger { background: #9f3149; border-color: #c2415c; }
+body.admin-dark .layui-btn-normal { background: #175b83; border-color: #1f739f; }
+body.admin-dark .layui-tab-title,
+body.admin-dark .layui-tab-content,
+body.admin-dark .layui-tab-brief > .layui-tab-title .layui-this:after {
+    color: var(--admin-dark-ink);
+    background: var(--admin-dark-surface);
+    border-color: var(--admin-dark-border);
+}
+body.admin-dark .layui-tab-title li { color: var(--admin-dark-muted); }
+body.admin-dark .layui-tab-title li.layui-this { color: var(--admin-dark-accent-strong); }
+body.admin-dark .layui-elem-field { border-color: var(--admin-dark-border); }
+body.admin-dark .layui-elem-field legend { color: var(--admin-dark-ink); }
+body.admin-dark .layui-breadcrumb a,
+body.admin-dark .layui-breadcrumb cite,
+body.admin-dark .layui-text { color: var(--admin-dark-muted); }
+body.admin-dark .layui-badge,
+body.admin-dark .layui-bg-red { background: #b63b53 !important; }
+body.admin-dark .layui-bg-blue { background: #1b6f9d !important; }
+body.admin-dark .layui-bg-green { background: #197354 !important; }
+body.admin-dark .layui-progress-bar { background: var(--admin-dark-accent); }
+body.admin-dark ::selection { color: #04120e; background: #6ee7b7; }
+body.admin-dark ::-webkit-scrollbar { width: 10px; height: 10px; }
+body.admin-dark ::-webkit-scrollbar-track { background: #0b1220; }
+body.admin-dark ::-webkit-scrollbar-thumb { background: #33445f; border: 2px solid #0b1220; border-radius: 10px; }
+body.admin-dark ::-webkit-scrollbar-thumb:hover { background: #46617f; }
+
+/* v2 controls and legacy admin surfaces: keep all existing DOM/JS hooks while
+   making Layui, DashLite and admin_style components readable on dark surfaces. */
+body.admin-dark {
+    --admin-dark-control: #0d1829;
+    --admin-dark-control-hover: #16273d;
+    --admin-dark-subtle: #162033;
+    --admin-dark-border-strong: #3b506e;
+    --admin-dark-muted-strong: #b8c4d6;
+}
+body.admin-dark .layui-text,
+body.admin-dark .layui-word-aux,
+body.admin-dark .layui-form-mid,
+body.admin-dark .c-999,
+body.admin-dark .text-muted,
+body.admin-dark .help-block { color: var(--admin-dark-muted-strong) !important; }
+body.admin-dark .red,
+body.admin-dark .text-danger { color: #ff9aaa !important; }
+body.admin-dark .green,
+body.admin-dark .text-success { color: #6ee7b7 !important; }
+body.admin-dark .blue,
+body.admin-dark .text-info { color: #7dd3fc !important; }
+
+/* MacCMS legacy page wrappers and cards. */
+body.admin-dark .page-body,
+body.admin-dark .page-tab-content,
+body.admin-dark .layui-tab-content,
+body.admin-dark .my-toolbar-box,
+body.admin-dark .page-toolbar,
+body.admin-dark .page-filter,
+body.admin-dark .page-container { background: var(--admin-dark-bg); color: var(--admin-dark-ink); }
+body.admin-dark .bread-crumbs {
+    background: var(--admin-dark-surface-alt);
+    border-bottom: 1px solid var(--admin-dark-border);
+}
+body.admin-dark .bread-crumbs li,
+body.admin-dark .bread-crumbs li a { color: var(--admin-dark-muted-strong); }
+body.admin-dark .page-tips .layui-colla-title,
+body.admin-dark .layui-colla-title,
+body.admin-dark .role-list-form dl dt {
+    background: var(--admin-dark-surface-alt);
+    color: var(--admin-dark-ink);
+    border-color: var(--admin-dark-border);
+}
+body.admin-dark .layui-colla-content,
+body.admin-dark .role-list-form-top,
+body.admin-dark .role-list-form dl dd { border-color: var(--admin-dark-border); }
+body.admin-dark .page-tab-content,
+body.admin-dark .update,
+body.admin-dark .addon,
+body.admin-dark .card,
+body.admin-dark .card-header,
+body.admin-dark .card-body,
+body.admin-dark .card-footer {
+    background: var(--admin-dark-surface);
+    color: var(--admin-dark-ink);
+    border-color: var(--admin-dark-border);
+}
+body.admin-dark .addon-caption { color: var(--admin-dark-ink); }
+body.admin-dark .addon-caption p,
+body.admin-dark .addon-caption small { color: var(--admin-dark-muted-strong); }
+body.admin-dark .update h1 { border-color: var(--admin-dark-border); color: var(--admin-dark-ink); }
+body.admin-dark .tool-btns,
+body.admin-dark .tool-btns .sys-icon { color: var(--admin-dark-muted-strong); }
+body.admin-dark .pop-bottom-bar { background: var(--admin-dark-surface-alt); border-top: 1px solid var(--admin-dark-border); color: var(--admin-dark-ink); }
+body.admin-dark .showpic { background: var(--admin-dark-surface); border-color: var(--admin-dark-border-strong); color: var(--admin-dark-ink); }
+
+/* Layui controls whose vendor stylesheet otherwise forces light surfaces. */
+body.admin-dark .layui-form-label,
+body.admin-dark .layui-form-pane .layui-form-label { color: var(--admin-dark-ink); background: var(--admin-dark-surface-alt); border-color: var(--admin-dark-border); }
+body.admin-dark .layui-input,
+body.admin-dark .layui-textarea,
+body.admin-dark .layui-select,
+body.admin-dark .layui-form-select .layui-input,
+body.admin-dark .input-sort,
+body.admin-dark .menu-dl .menu-sort {
+    color: var(--admin-dark-ink);
+    background: var(--admin-dark-control);
+    border-color: var(--admin-dark-border-strong);
+}
+body.admin-dark select option,
+body.admin-dark .layui-form-select dl { color: var(--admin-dark-ink); background: var(--admin-dark-surface); }
+body.admin-dark .layui-input:hover,
+body.admin-dark .layui-textarea:hover,
+body.admin-dark .layui-input:focus,
+body.admin-dark .layui-textarea:focus,
+body.admin-dark .layui-form-select .layui-input:hover,
+body.admin-dark .layui-form-select .layui-input:focus,
+body.admin-dark .input-sort:focus,
+body.admin-dark .menu-dl .menu-sort:focus {
+    color: var(--admin-dark-ink);
+    background: var(--admin-dark-control-hover);
+    border-color: var(--admin-dark-accent);
+}
+body.admin-dark .layui-input[disabled],
+body.admin-dark .layui-textarea[disabled],
+body.admin-dark .layui-input[readonly] { color: var(--admin-dark-muted-strong); background: #111b2b; }
+body.admin-dark .layui-form-select dl dd,
+body.admin-dark .layui-form-select dl dt { color: var(--admin-dark-ink); }
+body.admin-dark .layui-form-select dl dd:hover,
+body.admin-dark .layui-form-select dl dd.layui-this { color: #effff9; background: #174b48; }
+body.admin-dark .layui-form-radio,
+body.admin-dark .layui-form-checkbox,
+body.admin-dark .layui-form-switch { color: var(--admin-dark-ink); }
+body.admin-dark .layui-form-radio > i { color: #9eb0c7; }
+body.admin-dark .layui-form-radioed,
+body.admin-dark .layui-form-radioed > i,
+body.admin-dark .layui-form-radio:hover > i { color: var(--admin-dark-accent-strong); }
+body.admin-dark .layui-form-checkbox { background: var(--admin-dark-control); }
+body.admin-dark .layui-form-checkbox > div { color: var(--admin-dark-ink); background: var(--admin-dark-subtle); }
+body.admin-dark .layui-form-checkbox > i { color: var(--admin-dark-muted-strong); border-color: var(--admin-dark-border-strong); background: var(--admin-dark-control); }
+body.admin-dark .layui-form-checkbox[lay-skin=primary] > div { color: var(--admin-dark-ink); }
+body.admin-dark .layui-form-checkbox[lay-skin=primary] > i { background: var(--admin-dark-control); border-color: var(--admin-dark-border-strong); }
+body.admin-dark .layui-form-checkbox[lay-skin=primary]:hover > i,
+body.admin-dark .layui-form-checkbox[lay-skin=primary].layui-form-checked > i { color: #071a14; background: var(--admin-dark-accent); border-color: var(--admin-dark-accent); }
+body.admin-dark .layui-form-switch { background: var(--admin-dark-control); border-color: var(--admin-dark-border-strong); }
+body.admin-dark .layui-form-switch > i { background: #9eb0c7; }
+body.admin-dark .layui-form-onswitch { background: var(--admin-dark-accent); border-color: var(--admin-dark-accent); }
+body.admin-dark .layui-form-onswitch > i { background: #071a14; }
+body.admin-dark .layui-form-switch > div { color: var(--admin-dark-muted-strong) !important; }
+body.admin-dark .layui-form-onswitch > div { color: #071a14 !important; }
+
+/* Tables, breadcrumbs, pagination, tabs and dialogs. */
+body.admin-dark .layui-table,
+body.admin-dark .layui-table-view,
+body.admin-dark .layui-table-header,
+body.admin-dark .layui-table thead tr,
+body.admin-dark .layui-table tbody tr,
+body.admin-dark .layui-table[lay-even] tbody tr:nth-child(even) { color: var(--admin-dark-ink); background: var(--admin-dark-surface); border-color: var(--admin-dark-border); }
+body.admin-dark .layui-table td,
+body.admin-dark .layui-table th,
+body.admin-dark .layui-table-cell { border-color: var(--admin-dark-border); }
+body.admin-dark .layui-table tbody tr:hover { background: #17263b; }
+body.admin-dark .layui-laypage a,
+body.admin-dark .layui-laypage span,
+body.admin-dark .layui-laypage button,
+body.admin-dark .layui-laypage input,
+body.admin-dark .pagination li a,
+body.admin-dark .pagination li span,
+body.admin-dark .page-link {
+    color: var(--admin-dark-ink);
+    background: var(--admin-dark-surface-alt);
+    border-color: var(--admin-dark-border);
+}
+body.admin-dark .layui-laypage a:hover,
+body.admin-dark .pagination li a:hover,
+body.admin-dark .page-link:hover { color: #071a14; background: var(--admin-dark-accent); border-color: var(--admin-dark-accent); }
+body.admin-dark .layui-laypage .layui-laypage-curr em,
+body.admin-dark .pagination li.active,
+body.admin-dark .page-item.active .page-link { color: #071a14 !important; background: var(--admin-dark-accent) !important; border-color: var(--admin-dark-accent) !important; }
+body.admin-dark .layui-breadcrumb a,
+body.admin-dark .layui-breadcrumb cite { color: var(--admin-dark-muted-strong) !important; }
+body.admin-dark .layui-breadcrumb a:hover { color: var(--admin-dark-accent-strong) !important; }
+body.admin-dark .layui-layer,
+body.admin-dark .layui-layer-title,
+body.admin-dark .layui-layer-content,
+body.admin-dark .layui-layer-btn { color: var(--admin-dark-ink); background: var(--admin-dark-surface); border-color: var(--admin-dark-border); }
+body.admin-dark .layui-layer-btn a { color: var(--admin-dark-ink); background: var(--admin-dark-surface-alt); border-color: var(--admin-dark-border-strong); }
+body.admin-dark .layui-layer-btn a:hover { color: #071a14; background: var(--admin-dark-accent); border-color: var(--admin-dark-accent); }
+body.admin-dark .layui-layer-btn .layui-layer-btn0 { color: #071a14; background: var(--admin-dark-accent); border-color: var(--admin-dark-accent); }
+body.admin-dark .layui-layer-btn .layui-layer-btn1 { color: var(--admin-dark-ink); background: var(--admin-dark-subtle); border-color: var(--admin-dark-border-strong); }
+
+/* DashLite-compatible controls used by custom JAV screens. */
+body.admin-dark .form-control,
+body.admin-dark .form-select,
+body.admin-dark .form-file-label,
+body.admin-dark .input-group-text {
+    color: var(--admin-dark-ink);
+    background-color: var(--admin-dark-control);
+    border-color: var(--admin-dark-border-strong);
+}
+body.admin-dark .form-control:focus,
+body.admin-dark .form-select:focus { color: var(--admin-dark-ink); background-color: var(--admin-dark-control-hover); border-color: var(--admin-dark-accent); }
+body.admin-dark .form-control::placeholder { color: #9eafc2; }
+body.admin-dark .form-control:disabled,
+body.admin-dark .form-select:disabled { color: var(--admin-dark-muted); background-color: #111b2b; }
+body.admin-dark .btn:not(.btn-primary):not(.btn-warning):not(.btn-danger):not(.btn-success):not(.btn-info):not(.btn-dark):not(.layui-btn) {
+    color: var(--admin-dark-ink); background: var(--admin-dark-subtle); border-color: var(--admin-dark-border-strong);
+}
+body.admin-dark .btn:not(.btn-primary):not(.btn-warning):not(.btn-danger):not(.btn-success):not(.btn-info):not(.btn-dark):not(.layui-btn):hover { color: #071a14; background: var(--admin-dark-accent); border-color: var(--admin-dark-accent); }
+body.admin-dark .bg-light,
+body.admin-dark .bg-lighter,
+body.admin-dark .bg-white { color: var(--admin-dark-ink) !important; background-color: var(--admin-dark-surface) !important; }
+body.admin-dark .bg-dark { color: var(--admin-dark-ink) !important; background-color: var(--admin-dark-subtle) !important; }
+body.admin-dark .badge-dim { border-color: var(--admin-dark-border-strong); }
+
+/* Rich-text/editor chrome: leave editable content text readable and preserve tool APIs. */
+body.admin-dark .edui-container,
+body.admin-dark .edui-toolbar,
+body.admin-dark .edui-editor-body,
+body.admin-dark .cke,
+body.admin-dark .cke_inner,
+body.admin-dark .cke_top,
+body.admin-dark .cke_bottom,
+body.admin-dark .tox-tinymce,
+body.admin-dark .tox .tox-editor-header,
+body.admin-dark .tox .tox-toolbar,
+body.admin-dark .tox .tox-toolbar__primary,
+body.admin-dark .note-editor,
+body.admin-dark .note-toolbar { color: var(--admin-dark-ink); background: var(--admin-dark-surface); border-color: var(--admin-dark-border); }
+body.admin-dark .edui-editor-body,
+body.admin-dark .cke_contents,
+body.admin-dark .tox .tox-edit-area,
+body.admin-dark .CodeMirror { color: var(--admin-dark-ink); background: var(--admin-dark-control); }
+body.admin-dark .edui-button,
+body.admin-dark .edui-combox,
+body.admin-dark .cke_button,
+body.admin-dark .tox .tox-tbtn,
+body.admin-dark .note-btn { color: var(--admin-dark-ink); background: transparent; }
+body.admin-dark .edui-button:hover,
+body.admin-dark .edui-combox:hover,
+body.admin-dark .cke_button:hover,
+body.admin-dark .tox .tox-tbtn:hover,
+body.admin-dark .note-btn:hover { color: #071a14; background: var(--admin-dark-accent); }
+body.admin-dark .CodeMirror-gutters { color: var(--admin-dark-muted-strong); background: var(--admin-dark-surface-alt); border-color: var(--admin-dark-border); }
+body.admin-dark .CodeMirror-linenumber { color: #9eafc2; }
+/* V8 (kit): the green focus ring was removed; admin_ux.css draws the one accent ring for every focusable. */
+
+/* Vendor-rendered controls may be appended after this stylesheet; retain these
+   contrast guarantees when Layui rebuilds a control after page load. */
+body.admin-dark .layui-form-pane .layui-form-label { background: var(--admin-dark-surface-alt) !important; color: var(--admin-dark-ink) !important; border-color: var(--admin-dark-border) !important; }
+body.admin-dark .layui-form-checkbox,
+body.admin-dark .layui-form-checkbox > div { background: var(--admin-dark-subtle) !important; color: var(--admin-dark-ink) !important; }
+body.admin-dark .layui-form-checkbox > i,
+body.admin-dark .layui-form-checkbox[lay-skin=primary] > i { background: var(--admin-dark-control) !important; border-color: var(--admin-dark-border-strong) !important; color: var(--admin-dark-muted-strong) !important; }
+body.admin-dark .layui-form-checkbox[lay-skin=primary]:hover > i,
+body.admin-dark .layui-form-checkbox[lay-skin=primary].layui-form-checked > i { background: var(--admin-dark-accent) !important; border-color: var(--admin-dark-accent) !important; color: #071a14 !important; }
+body.admin-dark .layui-laypage a,
+body.admin-dark .layui-laypage span,
+body.admin-dark .layui-laypage button,
+body.admin-dark .layui-laypage input { background: var(--admin-dark-surface-alt) !important; color: var(--admin-dark-ink) !important; border-color: var(--admin-dark-border) !important; }
+body.admin-dark .layui-laypage a:hover { background: var(--admin-dark-accent) !important; color: #071a14 !important; border-color: var(--admin-dark-accent) !important; }
+
+/* Keep branded and semantic action buttons readable against their dark mode colors. */
+body.admin-dark .btn-primary,
+body.admin-dark .layui-btn-normal { color: #ecfffa !important; background: #17624f !important; border-color: #237a64 !important; }
+body.admin-dark .btn-primary:hover,
+body.admin-dark .layui-btn-normal:hover { color: #fff !important; background: #1d8068 !important; border-color: #2b9579 !important; }
+body.admin-dark .btn-warning,
+body.admin-dark .layui-btn-warm,
+body.admin-dark .badge.bg-warning { color: #071a14 !important; background: #f4bd0e !important; border-color: #d6a308 !important; }
+body.admin-dark .btn-danger,
+body.admin-dark .layui-btn-danger,
+body.admin-dark .badge.bg-danger { color: #fff !important; background: #9f3149 !important; border-color: #c2415c !important; }
+body.admin-dark .btn-info,
+body.admin-dark .badge.bg-info,
+body.admin-dark .badge.bg-primary { color: #ecfffa !important; background: #175b83 !important; border-color: #277ca9 !important; }
+body.admin-dark .btn-success,
+body.admin-dark .badge.bg-success { color: #ecfffa !important; background: #197354 !important; border-color: #278f6a !important; }
+body.admin-dark .btn-dark,
+body.admin-dark .badge.bg-dark { color: var(--admin-dark-ink) !important; background: #33445f !important; border-color: #46617f !important; }
+body.admin-dark .layui-bg-orange { color: #071a14 !important; background: #b78000 !important; }
+body.admin-dark .layui-btn-primary { color: var(--admin-dark-ink) !important; background: var(--admin-dark-subtle) !important; border-color: var(--admin-dark-border-strong) !important; }
+
+/* Keep dynamically opened Layui menus dark after form/select rendering. */
+body.admin-dark .layui-form-select dl,
+body.admin-dark .layui-form-select dl dd,
+body.admin-dark .layui-form-select dl dt { color: var(--admin-dark-ink) !important; background: var(--admin-dark-surface) !important; border-color: var(--admin-dark-border) !important; }
+body.admin-dark .layui-form-select dl dd:hover,
+body.admin-dark .layui-form-select dl dd.layui-this { color: #effff9 !important; background: #174b48 !important; }
+
+/* Dark dim badges: vendor DashLite light backgrounds must not leak into dark pages. */
+body.admin-dark .badge-dim.bg-primary,
+body.admin-dark .badge-dim.bg-outline-primary,
+body.admin-dark .badge-dim.bg-info,
+body.admin-dark .badge-dim.bg-outline-info { color: #7dd3fc !important; background: #123542 !important; border-color: #105e70 !important; }
+body.admin-dark .badge-dim.bg-success,
+body.admin-dark .badge-dim.bg-outline-success { color: #6ee7b7 !important; background: #16393a !important; border-color: #186a5c !important; }
+body.admin-dark .badge-dim.bg-warning,
+body.admin-dark .badge-dim.bg-outline-warning { color: #f4bd0e !important; background: #363422 !important; border-color: #6e5c1c !important; }
+body.admin-dark .badge-dim.bg-danger,
+body.admin-dark .badge-dim.bg-outline-danger { color: #ff9aaa !important; background: #34242b !important; border-color: #693233 !important; }
+body.admin-dark .badge-dim.bg-secondary,
+body.admin-dark .badge-dim.bg-outline-secondary { color: #b8c4d6 !important; background: #26303d !important; border-color: #445264 !important; }
+body.admin-dark .badge-dim.bg-dark,
+body.admin-dark .badge-dim.bg-outline-dark { color: #e7eef8 !important; background: #333b45 !important; border-color: #686e78 !important; }
+body.admin-dark .badge-dim.bg-light,
+body.admin-dark .badge-dim.bg-outline-light,
+body.admin-dark .badge-dim.bg-gray,
+body.admin-dark .badge-dim.bg-outline-gray,
+body.admin-dark .badge-dim.bg-lighter,
+body.admin-dark .badge-dim.bg-outline-lighter { color: #b8c4d6 !important; background: #242e39 !important; border-color: #3f4b5a !important; }
+body.admin-dark .badge-dot.bg-primary,
+body.admin-dark .badge-dot.bg-info { color: #7dd3fc !important; background: transparent !important; }
+body.admin-dark .badge-dot.bg-success { color: #6ee7b7 !important; background: transparent !important; }
+body.admin-dark .badge-dot.bg-warning { color: #f4bd0e !important; background: transparent !important; }
+body.admin-dark .badge-dot.bg-danger { color: #ff9aaa !important; background: transparent !important; }
+body.admin-dark .layui-badge-rim { color: var(--admin-dark-muted-strong); background: transparent; border-color: var(--admin-dark-border-strong); }
+
+/* admin-filter-surface-v1: visual backport of upstream view_new toolbar spacing.
+   The legacy DOM, form names, data-href hooks and iframe routes stay unchanged. */
+body.admin-dark .page-container.p10 {
+    padding: 16px !important;
+}
+body.admin-dark .my-toolbar-box {
+    margin: 0 0 14px;
+    padding: 14px;
+    border: 1px solid #26354d;
+    border-radius: 14px;
+    background: linear-gradient(145deg, #111c2d 0%, #111827 72%);
+    box-shadow: 0 10px 26px rgba(0,0,0,.16);
+}
+body.admin-dark .my-toolbar-box > .center.mb10,
+body.admin-dark .my-toolbar-box > .mb-2 {
+    margin-bottom: 12px !important;
+    padding: 2px 2px 14px;
+    border-bottom: 1px solid #26354d;
+}
+body.admin-dark .my-toolbar-box > .center.mb10 form.layui-form,
+body.admin-dark .my-toolbar-box > .mb-2 form.layui-form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+}
+body.admin-dark .my-toolbar-box form.layui-form .layui-input-inline {
+    float: none;
+    width: 150px;
+    margin: 0;
+}
+body.admin-dark .my-toolbar-box form.layui-form .layui-input-inline:last-of-type {
+    flex: 1 1 180px;
+    min-width: 150px;
+}
+body.admin-dark .my-toolbar-box form.layui-form .layui-input,
+body.admin-dark .my-toolbar-box form.layui-form .layui-form-select .layui-input {
+    border-radius: 8px;
+}
+body.admin-dark .my-toolbar-box form.layui-form .j-search,
+body.admin-dark .my-toolbar-box form.layui-form .layui-btn {
+    min-height: 38px;
+    margin: 0 !important;
+    border-radius: 8px;
+    font-weight: 700;
+}
+body.admin-dark .my-toolbar-box > .btn-primary-group,
+body.admin-dark .my-toolbar-box > .flex {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    padding: 2px 0;
+    overflow-x: auto;
+    scrollbar-width: thin;
+}
+body.admin-dark .my-toolbar-box > .btn-primary-group .btn,
+body.admin-dark .my-toolbar-box > .flex > .layui-btn {
+    flex: 0 0 auto;
+    margin: 0 !important;
+    min-height: 36px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.12);
+}
+body.admin-dark #pageListForm {
+    margin: 0;
+    padding: 8px;
+    border: 1px solid #26354d;
+    border-radius: 14px;
+    background: #111827;
+    box-shadow: 0 10px 26px rgba(0,0,0,.13);
+    overflow-x: auto;
+}
+body.admin-dark #pageListForm > .layui-table {
+    margin: 0;
+    min-width: 920px;
+    border: 0;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 9px;
+    overflow: hidden;
+}
+body.admin-dark #pageListForm > .layui-table thead th {
+    height: 42px;
+    color: #a9bad0;
+    background: #162033;
+    font-size: 11px;
+    font-weight: 750;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+}
+body.admin-dark #pageListForm > .layui-table tbody tr {
+    transition: background-color .16s ease, box-shadow .16s ease;
+}
+body.admin-dark #pageListForm > .layui-table tbody tr:hover {
+    background: #17283d;
+    box-shadow: inset 3px 0 0 #35d39b;
+}
+body.admin-dark #pageListForm > .layui-table tbody td {
+    height: 42px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+body.admin-dark #pageListForm > .layui-table .badge,
+body.admin-dark #pageListForm > .layui-table .layui-badge {
+    border-radius: 6px;
+}
+@media (max-width: 700px) {
+    body.admin-dark .page-container.p10 { padding: 10px !important; }
+    body.admin-dark .my-toolbar-box { padding: 10px; border-radius: 12px; }
+    body.admin-dark .my-toolbar-box form.layui-form .layui-input-inline,
+    body.admin-dark .my-toolbar-box form.layui-form .layui-input-inline:last-of-type {
+        flex: 1 1 calc(50% - 4px);
+        min-width: 0;
+        width: auto;
+    }
+    body.admin-dark .my-toolbar-box form.layui-form .j-search,
+    body.admin-dark .my-toolbar-box form.layui-form .layui-btn { flex: 1 1 100%; }
+    body.admin-dark #pageListForm { padding: 5px; border-radius: 12px; }
+}
+
+
+/* admin-content-surface-v1: scoped form surfaces inspired by the pinned
+   maccms10 view_new cards/tabs. Existing field names, editors, submit hooks,
+   iframe routes and controller payloads remain untouched. */
+body.admin-dark .page-container > form.layui-form-pane {
+    margin: 0;
+    padding: 16px;
+    border: 1px solid var(--admin-dark-border);
+    border-radius: 16px;
+    background: linear-gradient(145deg, #111c2d 0%, #111827 74%);
+    box-shadow: 0 12px 30px rgba(0,0,0,.16);
+}
+body.admin-dark .page-container > form.layui-form-pane > .layui-tab {
+    margin: 0;
+    border: 1px solid var(--admin-dark-border);
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--admin-dark-surface);
+}
+body.admin-dark .page-container > form.layui-form-pane .layui-tab-title {
+    height: auto;
+    min-height: 44px;
+    padding: 0 8px;
+    border-bottom: 1px solid var(--admin-dark-border);
+    background: var(--admin-dark-surface-alt);
+}
+body.admin-dark .page-container > form.layui-form-pane .layui-tab-title li {
+    height: 44px;
+    line-height: 44px;
+    color: var(--admin-dark-muted-strong);
+    transition: color .16s ease, background-color .16s ease;
+}
+body.admin-dark .page-container > form.layui-form-pane .layui-tab-title li:hover {
+    color: var(--admin-dark-accent-strong);
+    background: rgba(53,211,155,.08);
+}
+body.admin-dark .page-container > form.layui-form-pane .layui-tab-title li.layui-this {
+    color: var(--admin-dark-accent-strong);
+    font-weight: 700;
+}
+body.admin-dark .page-container > form.layui-form-pane .layui-tab-content {
+    padding: 16px 12px 6px;
+    background: var(--admin-dark-surface);
+}
+body.admin-dark .page-container > form.layui-form-pane > .layui-form-item,
+body.admin-dark .page-container > form.layui-form-pane .layui-tab-item > .layui-form-item {
+    margin-bottom: 0;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(59,80,110,.52);
+}
+body.admin-dark .page-container > form.layui-form-pane > .layui-form-item:last-child,
+body.admin-dark .page-container > form.layui-form-pane .layui-tab-item > .layui-form-item:last-child {
+    border-bottom: 0;
+}
+body.admin-dark .page-container > form.layui-form-pane .layui-form-label {
+    min-height: 38px;
+    line-height: 38px;
+    width: 132px;
+    padding: 0 12px;
+    border-color: var(--admin-dark-border);
+    border-radius: 8px 0 0 8px;
+    color: var(--admin-dark-ink);
+    background: var(--admin-dark-surface-alt);
+    font-weight: 650;
+}
+body.admin-dark .page-container > form.layui-form-pane .layui-input-block {
+    min-height: 38px;
+    margin-left: 152px;
+}
+body.admin-dark .page-container > form.layui-form-pane .layui-input-inline {
+    min-height: 38px;
+}
+body.admin-dark .page-container > form.layui-form-pane .layui-input,
+body.admin-dark .page-container > form.layui-form-pane .layui-textarea,
+body.admin-dark .page-container > form.layui-form-pane .layui-form-select .layui-input {
+    border-radius: 8px;
+}
+body.admin-dark .page-container > form.layui-form-pane .layui-form-item.center {
+    margin-top: 8px;
+    padding-top: 16px;
+    border-top: 1px solid var(--admin-dark-border);
+}
+body.admin-dark .page-container > form.layui-form-pane .layui-form-item.center .btn {
+    min-height: 38px;
+    border-radius: 8px;
+    font-weight: 700;
+}
+body.admin-dark .page-container > form.layui-form-pane .layui-elem-quote {
+    margin: 0 0 12px;
+    border-color: var(--admin-dark-border-strong);
+    border-radius: 10px;
+    color: var(--admin-dark-muted-strong);
+    background: rgba(22,32,51,.72);
+}
+body.admin-dark #pageListForm > .layui-table td.w200 {
+    white-space: nowrap;
+}
+body.admin-dark #pageListForm > .layui-table td.w200 .badge {
+    display: inline-flex;
+    align-items: center;
+    min-height: 28px;
+    margin: 0 4px 0 0;
+    padding: 0 9px;
+    border-radius: 7px;
+    font-size: 12px;
+    font-weight: 650;
+    transition: transform .16s ease, border-color .16s ease, background-color .16s ease;
+}
+body.admin-dark #pageListForm > .layui-table td.w200 .badge:hover {
+    transform: translateY(-1px);
+}
+@media (max-width: 700px) {
+    body.admin-dark .page-container > form.layui-form-pane {
+        padding: 10px;
+        border-radius: 12px;
+    }
+    body.admin-dark .page-container > form.layui-form-pane .layui-tab-content {
+        padding: 10px 6px 2px;
+    }
+    body.admin-dark .page-container > form.layui-form-pane .layui-form-label {
+        width: 116px;
+        padding: 0 9px;
+        font-size: 12px;
+    }
+    body.admin-dark .page-container > form.layui-form-pane .layui-input-block {
+        margin-left: 136px;
+    }
+}
+
+/* admin-content-surface-v1-regression-fix: preserve long English labels and
+   keep mobile label/control columns separated. Scoped; no route or field changes. */
+body.admin-dark .page-container > form.layui-form-pane .layui-form-label {
+    height: auto;
+    min-height: 38px;
+    display: flex;
+    align-items: center;
+    white-space: normal;
+    overflow: visible;
+    overflow-wrap: anywhere;
+    text-overflow: clip;
+    line-height: 18px;
+}
+body.admin-dark .page-container > form.layui-form-pane input.color {
+    background-color: var(--admin-dark-control) !important;
+    color: var(--admin-dark-ink) !important;
+    border-color: var(--admin-dark-border-strong) !important;
+}
+@media (max-width: 700px) {
+    body.admin-dark .page-container > form.layui-form-pane .layui-form-label {
+        line-height: 17px;
+    }
+    body.admin-dark .page-container > form.layui-form-pane .layui-form-label.w200 {
+        width: 116px !important;
+    }
+    body.admin-dark .page-container > form.layui-form-pane .layui-input-inline {
+        margin-left: 119px;
+    }
+}
+
+/* admin-system-config-surface-v2: scoped settings workspace treatment.
+   Backports the pinned view_new system/config tab workspace while preserving
+   the legacy form wrapper, field names, submit hooks, and routes. */
+body.admin-dark .page-container > form.layui-form-pane:has(> .layui-tab[lay-filter="tb1"]) {
+    padding: 18px;
+    border: 1px solid #2b3b55;
+    border-radius: 18px;
+    background: linear-gradient(145deg, #101b2d 0%, #111827 68%, #0f172a 100%);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, .2);
+}
+body.admin-dark .page-container > form.layui-form-pane:has(> .layui-tab[lay-filter="tb1"]) > .layui-tab {
+    margin: 0;
+    border: 1px solid #2b3b55;
+    border-radius: 14px;
+    background: #101a2b;
+    overflow: hidden;
+}
+body.admin-dark .page-container > form.layui-form-pane:has(> .layui-tab[lay-filter="tb1"]) > .layui-tab > .layui-tab-title {
+    display: flex;
+    align-items: stretch;
+    gap: 4px;
+    height: auto;
+    min-height: 52px;
+    padding: 6px;
+    border-bottom: 1px solid #2b3b55;
+    background: #162033;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: thin;
+}
+body.admin-dark .page-container > form.layui-form-pane:has(> .layui-tab[lay-filter="tb1"]) > .layui-tab > .layui-tab-title li {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    height: 40px;
+    line-height: 40px;
+    padding: 0 15px;
+    border: 1px solid transparent;
+    border-radius: 9px;
+    color: #91a4bd;
+    font-size: 13px;
+    font-weight: 650;
+    white-space: nowrap;
+    transition: color .16s ease, background-color .16s ease, border-color .16s ease, transform .16s ease;
+}
+body.admin-dark .page-container > form.layui-form-pane:has(> .layui-tab[lay-filter="tb1"]) > .layui-tab > .layui-tab-title li::after {
+    display: none;
+}
+body.admin-dark .page-container > form.layui-form-pane:has(> .layui-tab[lay-filter="tb1"]) > .layui-tab > .layui-tab-title li:hover {
+    color: #d8e5f5;
+    border-color: #334966;
+    background: #1b2b43;
+    transform: translateY(-1px);
+}
+body.admin-dark .page-container > form.layui-form-pane:has(> .layui-tab[lay-filter="tb1"]) > .layui-tab > .layui-tab-title li.layui-this {
+    color: #081b18;
+    border-color: #35d39b;
+    background: linear-gradient(135deg, #35d39b, #55e6bb);
+    box-shadow: 0 5px 14px rgba(53, 211, 155, .2);
+}
+body.admin-dark .page-container > form.layui-form-pane:has(> .layui-tab[lay-filter="tb1"]) > .layui-tab > .layui-tab-content {
+    padding: 18px 20px 8px;
+    background: #101a2b;
+}
+body.admin-dark .page-container > form.layui-form-pane:has(> .layui-tab[lay-filter="tb1"]) .layui-tab-item {
+    max-width: 1180px;
+    margin: 0 auto;
+}
+body.admin-dark .page-container > form.layui-form-pane:has(> .layui-tab[lay-filter="tb1"]) .layui-tab-item > .layui-form-item {
+    margin: 0;
+    padding: 12px 10px;
+    border-bottom: 1px solid rgba(59, 80, 110, .52);
+    border-radius: 9px;
+    transition: background-color .16s ease, box-shadow .16s ease;
+}
+body.admin-dark .page-container > form.layui-form-pane:has(> .layui-tab[lay-filter="tb1"]) .layui-tab-item > .layui-form-item:hover,
+body.admin-dark .page-container > form.layui-form-pane:has(> .layui-tab[lay-filter="tb1"]) .layui-tab-item > .layui-form-item:focus-within {
+    background: rgba(27, 43, 67, .58);
+    box-shadow: inset 3px 0 0 var(--ax-accent, #82b1ff);
+}
+body.admin-dark .page-container > form.layui-form-pane:has(> .layui-tab[lay-filter="tb1"]) .layui-tab-item > .layui-form-item:last-child {
+    border-bottom: 0;
+}
+body.admin-dark .page-container > form.layui-form-pane:has(> .layui-tab[lay-filter="tb1"]) .layui-form-label {
+    border-color: transparent;
+    border-radius: 7px 0 0 7px;
+    background: transparent;
+    color: #c7d5e7;
+    font-weight: 700;
+}
+body.admin-dark .page-container > form.layui-form-pane:has(> .layui-tab[lay-filter="tb1"]) .layui-input,
+body.admin-dark .page-container > form.layui-form-pane:has(> .layui-tab[lay-filter="tb1"]) .layui-textarea,
+body.admin-dark .page-container > form.layui-form-pane:has(> .layui-tab[lay-filter="tb1"]) .layui-form-select .layui-input {
+    border-color: #30435f;
+    background: #0d1727;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .18);
+}
+body.admin-dark .page-container > form.layui-form-pane:has(> .layui-tab[lay-filter="tb1"]) .layui-input:focus,
+body.admin-dark .page-container > form.layui-form-pane:has(> .layui-tab[lay-filter="tb1"]) .layui-textarea:focus,
+body.admin-dark .page-container > form.layui-form-pane:has(> .layui-tab[lay-filter="tb1"]) .layui-form-select .layui-input:focus {
+    border-color: var(--ax-accent, #82b1ff);
+    box-shadow: none;
+}
+body.admin-dark .page-container > form.layui-form-pane:has(> .layui-tab[lay-filter="tb1"]) .layui-form-mid.layui-word-aux {
+    color: #8498b3;
+}
+body.admin-dark .page-container > form.layui-form-pane:has(> .layui-tab[lay-filter="tb1"]) .layui-form-item.center {
+    margin-top: 14px;
+    padding: 18px 10px 8px;
+    border-top: 1px solid #2b3b55;
+}
+body.admin-dark .page-container > form.layui-form-pane:has(> .layui-tab[lay-filter="tb1"]) .layui-form-item.center .layui-btn,
+body.admin-dark .page-container > form.layui-form-pane:has(> .layui-tab[lay-filter="tb1"]) .layui-form-item.center .btn {
+    min-height: 40px;
+    border-radius: 9px;
+    font-weight: 750;
+}
+@media (max-width: 760px) {
+    body.admin-dark .page-container > form.layui-form-pane:has(> .layui-tab[lay-filter="tb1"]) {
+        padding: 10px;
+        border-radius: 13px;
+    }
+    body.admin-dark .page-container > form.layui-form-pane:has(> .layui-tab[lay-filter="tb1"]) > .layui-tab > .layui-tab-content {
+        padding: 12px 8px 4px;
+    }
+    body.admin-dark .page-container > form.layui-form-pane:has(> .layui-tab[lay-filter="tb1"]) .layui-tab-item > .layui-form-item {
+        padding: 10px 7px;
+    }
+    body.admin-dark .page-container > form.layui-form-pane:has(> .layui-tab[lay-filter="tb1"]) .layui-form-label {
+        width: 112px;
+        padding: 0 9px;
+        font-size: 12px;
+    }
+    body.admin-dark .page-container > form.layui-form-pane:has(> .layui-tab[lay-filter="tb1"]) .layui-input-block {
+        margin-left: 132px;
+    }
+}
+@media (max-width: 520px) {
+    body.admin-dark .page-container > form.layui-form-pane:has(> .layui-tab[lay-filter="tb1"]) .layui-form-label {
+        float: none;
+        display: block;
+        width: auto;
+        min-height: 28px;
+        line-height: 28px;
+        padding: 0 2px;
+    }
+    body.admin-dark .page-container > form.layui-form-pane:has(> .layui-tab[lay-filter="tb1"]) .layui-input-block {
+        margin-left: 0;
+    }
+    body.admin-dark .page-container > form.layui-form-pane:has(> .layui-tab[lay-filter="tb1"]) .layui-input-inline {
+        float: none;
+        display: inline-block;
+        max-width: 100%;
+        margin-right: 5px;
+    }
+}
+/* admin-player-api-surface-v1: bounded visual upgrade for the custom player
+   and API configuration forms. Existing names, hidden settings, Layui hooks,
+   save handlers, and provider/provider1 contracts remain unchanged. */
+body.admin-dark .page-container > form.layui-form-pane:has(input[name="play[width]"]) > .layui-tab {
+    border-color: #2b3b55;
+    border-radius: 13px;
+    background: #111827;
+    overflow: hidden;
+}
+body.admin-dark .page-container > form.layui-form-pane:has(input[name="play[width]"]) > .layui-tab > .layui-tab-title {
+    display: flex;
+    align-items: center;
+    min-height: 52px;
+    height: auto;
+    padding: 5px 8px;
+    background: #162033;
+    border-bottom: 1px solid #2b3b55;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+body.admin-dark .page-container > form.layui-form-pane:has(input[name="play[width]"]) > .layui-tab > .layui-tab-title li {
+    height: 40px;
+    line-height: 40px;
+    margin: 1px 0;
+    border: 0;
+    border-radius: 9px;
+    padding: 0 15px;
+    color: #b8c4d6;
+    font-weight: 700;
+    transition: color .16s ease, background-color .16s ease, box-shadow .16s ease;
+}
+body.admin-dark .page-container > form.layui-form-pane:has(input[name="play[width]"]) > .layui-tab > .layui-tab-title li:hover {
+    color: #6ee7b7;
+    background: rgba(53,211,155,.09);
+}
+body.admin-dark .page-container > form.layui-form-pane:has(input[name="play[width]"]) > .layui-tab > .layui-tab-title li.layui-this {
+    color: #071a14;
+    background: linear-gradient(135deg, #35d39b, #55e6bb);
+    box-shadow: 0 5px 14px rgba(53,211,155,.2);
+}
+body.admin-dark .page-container > form.layui-form-pane:has(input[name="play[width]"]) > .layui-tab > .layui-tab-content {
+    padding: 16px 12px 8px;
+    background: #101a2b;
+}
+body.admin-dark .page-container > form.layui-form-pane:has(input[name="play[width]"]) .layui-elem-quote {
+    margin: 0 0 14px;
+    padding: 13px 16px;
+    border: 1px solid #3b506e;
+    border-left: 4px solid #35d39b;
+    border-radius: 10px;
+    color: #b8c4d6;
+    background: linear-gradient(135deg, rgba(22,32,51,.96), rgba(17,31,48,.88));
+    line-height: 1.7;
+}
+body.admin-dark .page-container > form.layui-form-pane:has(input[name="play[width]"]) .layui-tab-item > .layui-form-item:not([style*="display: none"]):not([style*="display:none"]) {
+    margin: 0 0 7px;
+    padding: 10px;
+    border: 1px solid rgba(59,80,110,.52);
+    border-radius: 10px;
+    background: rgba(17,28,45,.66);
+    transition: background-color .16s ease, border-color .16s ease, box-shadow .16s ease;
+}
+body.admin-dark .page-container > form.layui-form-pane:has(input[name="play[width]"]) .layui-tab-item > .layui-form-item:not([style*="display: none"]):not([style*="display:none"]):hover,
+body.admin-dark .page-container > form.layui-form-pane:has(input[name="play[width]"]) .layui-tab-item > .layui-form-item:not([style*="display: none"]):not([style*="display:none"]):focus-within {
+    border-color: rgba(130,177,255,.35);
+    background: rgba(27,43,67,.66);
+    box-shadow: inset 3px 0 0 var(--ax-accent, #82b1ff);
+}
+body.admin-dark .page-container > form.layui-form-pane:has(input[name="play[width]"]) .layui-form-item.center {
+    margin-top: 12px;
+    padding: 16px 10px 8px;
+    border-top: 1px solid #2b3b55;
+}
+body.admin-dark .page-container > form.layui-form-pane:has(input[name="play[width]"]) .layui-form-item.center .layui-btn {
+    min-height: 40px;
+    border-radius: 9px;
+    font-weight: 750;
+}
+
+/* The upstream configapi page uses a vertical inner tab. Recreate that
+   layout around the legacy horizontal markup without changing tab IDs or JS. */
+body.admin-dark .page-container > form.layui-form-pane:has(input[name="api[vod][status]"]) > .layui-tab[lay-filter="tb1"] {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    gap: 0;
+    min-height: 360px;
+    border: 1px solid #2b3b55;
+    border-radius: 13px;
+    background: #111827;
+    overflow: hidden;
+}
+body.admin-dark .page-container > form.layui-form-pane:has(input[name="api[vod][status]"]) > .layui-tab[lay-filter="tb1"] > .layui-tab-title {
+    flex: 0 0 188px;
+    display: block;
+    width: 188px;
+    height: auto;
+    max-height: 72vh;
+    margin: 0;
+    padding: 10px 0 14px;
+    border: 0;
+    border-right: 1px solid #2b3b55;
+    background: #162033;
+    overflow: auto;
+    white-space: normal;
+}
+body.admin-dark .page-container > form.layui-form-pane:has(input[name="api[vod][status]"]) > .layui-tab[lay-filter="tb1"] > .layui-tab-title li {
+    display: block;
+    float: none;
+    width: auto;
+    min-height: 40px;
+    height: auto;
+    margin: 3px 8px;
+    padding: 9px 10px;
+    border: 0;
+    border-radius: 8px;
+    line-height: 1.45;
+    color: #b8c4d6;
+    text-align: left;
+    white-space: normal;
+    transition: color .16s ease, background-color .16s ease;
+}
+body.admin-dark .page-container > form.layui-form-pane:has(input[name="api[vod][status]"]) > .layui-tab[lay-filter="tb1"] > .layui-tab-title li:hover {
+    color: #6ee7b7;
+    background: rgba(53,211,155,.09);
+}
+body.admin-dark .page-container > form.layui-form-pane:has(input[name="api[vod][status]"]) > .layui-tab[lay-filter="tb1"] > .layui-tab-title li.layui-this {
+    color: #071a14;
+    background: linear-gradient(135deg, #35d39b, #55e6bb);
+    font-weight: 750;
+    box-shadow: 0 5px 14px rgba(53,211,155,.18);
+}
+body.admin-dark .page-container > form.layui-form-pane:has(input[name="api[vod][status]"]) > .layui-tab[lay-filter="tb1"] > .layui-tab-title li.layui-this::after {
+    display: none;
+}
+body.admin-dark .page-container > form.layui-form-pane:has(input[name="api[vod][status]"]) > .layui-tab[lay-filter="tb1"] > .layui-tab-content {
+    flex: 1 1 auto;
+    min-width: 0;
+    max-height: 72vh;
+    margin: 0;
+    padding: 12px 20px 20px;
+    border: 0;
+    background: #101a2b;
+    overflow: auto;
+}
+body.admin-dark .page-container > form.layui-form-pane:has(input[name="api[vod][status]"]) > .layui-tab[lay-filter="tb1"] .layui-tab-item {
+    height: auto;
+    padding-top: 0;
+}
+body.admin-dark .page-container > form.layui-form-pane:has(input[name="api[vod][status]"]) > .layui-tab[lay-filter="tb1"] .layui-elem-quote {
+    margin: 0 0 14px;
+    padding: 13px 16px;
+    border: 1px solid #3b506e;
+    border-left: 4px solid #35d39b;
+    border-radius: 10px;
+    color: #b8c4d6;
+    background: linear-gradient(135deg, rgba(22,32,51,.96), rgba(17,31,48,.88));
+    line-height: 1.7;
+}
+body.admin-dark .page-container > form.layui-form-pane:has(input[name="api[vod][status]"]) > .layui-tab[lay-filter="tb1"] .layui-tab-item > .layui-form-item {
+    margin: 0 0 7px;
+    padding: 10px;
+    border: 1px solid rgba(59,80,110,.52);
+    border-radius: 10px;
+    background: rgba(17,28,45,.66);
+    transition: background-color .16s ease, border-color .16s ease, box-shadow .16s ease;
+}
+body.admin-dark .page-container > form.layui-form-pane:has(input[name="api[vod][status]"]) > .layui-tab[lay-filter="tb1"] .layui-tab-item > .layui-form-item:hover,
+body.admin-dark .page-container > form.layui-form-pane:has(input[name="api[vod][status]"]) > .layui-tab[lay-filter="tb1"] .layui-tab-item > .layui-form-item:focus-within {
+    border-color: rgba(130,177,255,.35);
+    background: rgba(27,43,67,.66);
+    box-shadow: inset 3px 0 0 var(--ax-accent, #82b1ff);
+}
+body.admin-dark .page-container > form.layui-form-pane:has(input[name="api[vod][status]"]) > .layui-tab[lay-filter="tb1"] > .layui-tab-title > .layui-tab-bar {
+    color: #b8c4d6;
+    background: #162033;
+    border-color: #2b3b55;
+}
+
+@media (max-width: 992px) {
+    body.admin-dark .page-container > form.layui-form-pane:has(input[name="api[vod][status]"]) > .layui-tab[lay-filter="tb1"] {
+        flex-direction: column;
+        min-height: 0;
+    }
+    body.admin-dark .page-container > form.layui-form-pane:has(input[name="api[vod][status]"]) > .layui-tab[lay-filter="tb1"] > .layui-tab-title {
+        width: 100%;
+        max-height: none;
+        flex-basis: auto;
+        border-right: 0;
+        border-bottom: 1px solid #2b3b55;
+        padding: 6px 4px 10px;
+        white-space: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    body.admin-dark .page-container > form.layui-form-pane:has(input[name="api[vod][status]"]) > .layui-tab[lay-filter="tb1"] > .layui-tab-title li {
+        display: inline-block;
+        vertical-align: top;
+        width: auto;
+        min-width: 96px;
+        max-width: 220px;
+        min-height: 40px;
+        margin: 3px 4px;
+        white-space: normal;
+    }
+    body.admin-dark .page-container > form.layui-form-pane:has(input[name="api[vod][status]"]) > .layui-tab[lay-filter="tb1"] > .layui-tab-content {
+        max-height: none;
+        padding: 12px 12px 16px;
+    }
+}
+@media (max-width: 520px) {
+    body.admin-dark .page-container > form.layui-form-pane:has(input[name="play[width]"]) > .layui-tab > .layui-tab-content {
+        padding: 12px 8px 4px;
+    }
+    body.admin-dark .page-container > form.layui-form-pane:has(input[name="play[width]"]) .layui-tab-item > .layui-form-item:not([style*="display: none"]):not([style*="display:none"]) {
+        padding: 10px 7px;
+    }
+    body.admin-dark .page-container > form.layui-form-pane:has(input[name="play[width]"]) .layui-form-label {
+        float: none;
+        display: block;
+        width: auto;
+        min-height: 28px;
+        line-height: 28px;
+        padding: 0 2px;
+        border-radius: 7px;
+    }
+    body.admin-dark .page-container > form.layui-form-pane:has(input[name="play[width]"]) .layui-input-block,
+    body.admin-dark .page-container > form.layui-form-pane:has(input[name="play[width]"]) .layui-input-inline {
+        float: none;
+        display: block;
+        width: auto;
+        max-width: none;
+        margin-left: 0;
+        margin-right: 0;
+    }
+    body.admin-dark .page-container > form.layui-form-pane:has(input[name="play[width]"]) .layui-input-inline .layui-input,
+    body.admin-dark .page-container > form.layui-form-pane:has(input[name="play[width]"]) .layui-input-block .layui-input.w150 {
+        width: 100%;
+    }
+}
+
+/* admin-collect-surface-v1: dark vertical collection workspace and resource list.
+   Mirrors the pinned maccms10 view_new inner-tab pattern while preserving the
+   legacy config fields, collection routes, iframe hooks, and API payloads. */
+body.admin-dark .page-container > form.layui-form-pane > .layui-tab.maccms-inner-tab-vertical {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    min-height: 420px;
+    margin: 0;
+    border: 1px solid #2b3b55;
+    border-radius: 15px;
+    overflow: hidden;
+    background: #0f1a2b;
+    box-shadow: 0 16px 34px rgba(0,0,0,.18);
+}
+body.admin-dark .page-container > form.layui-form-pane > .layui-tab.maccms-inner-tab-vertical > .layui-tab-title {
+    display: block !important;
+    flex: 0 0 196px;
+    width: 196px;
+    height: auto;
+    min-height: 420px;
+    margin: 0;
+    padding: 10px 0 14px;
+    border: 0;
+    border-right: 1px solid #2b3b55;
+    background: #121e31;
+    overflow: auto;
+}
+body.admin-dark .page-container > form.layui-form-pane > .layui-tab.maccms-inner-tab-vertical > .layui-tab-title li {
+    display: block !important;
+    float: none;
+    min-height: 42px;
+    height: auto !important;
+    margin: 4px 8px;
+    padding: 9px 11px;
+    border: 1px solid transparent;
+    border-radius: 9px;
+    line-height: 1.35 !important;
+    text-align: left;
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+    color: #91a4bd;
+    font-size: 13px;
+    font-weight: 650;
+    cursor: pointer;
+    transition: color .16s ease, background-color .16s ease, border-color .16s ease, transform .16s ease;
+}
+body.admin-dark .page-container > form.layui-form-pane > .layui-tab.maccms-inner-tab-vertical > .layui-tab-title li::after {
+    display: none;
+}
+body.admin-dark .page-container > form.layui-form-pane > .layui-tab.maccms-inner-tab-vertical > .layui-tab-title > .layui-tab-bar {
+    display: none !important;
+}
+body.admin-dark .page-container > form.layui-form-pane > .layui-tab.maccms-inner-tab-vertical > .layui-tab-title li:hover {
+    color: #d8e5f5;
+    border-color: #334966;
+    background: #1b2b43;
+    transform: translateX(2px);
+}
+body.admin-dark .page-container > form.layui-form-pane > .layui-tab.maccms-inner-tab-vertical > .layui-tab-title li.layui-this {
+    color: #071a14;
+    border-color: #35d39b;
+    background: linear-gradient(135deg, #35d39b, #55e6bb);
+    box-shadow: 0 5px 14px rgba(53,211,155,.2);
+}
+body.admin-dark .page-container > form.layui-form-pane > .layui-tab.maccms-inner-tab-vertical > .layui-tab-content {
+    flex: 1;
+    min-width: 0;
+    max-height: none;
+    margin: 0;
+    padding: 16px 20px 20px;
+    border: 0;
+    background: #0f1a2b;
+    overflow: visible;
+}
+body.admin-dark .page-container > form.layui-form-pane > .layui-tab.maccms-inner-tab-vertical .layui-tab-item {
+    max-width: 1180px;
+    margin: 0 auto;
+}
+body.admin-dark .page-container > form.layui-form-pane > .layui-tab.maccms-inner-tab-vertical .layui-tab-item > .layui-form-item {
+    min-height: 44px;
+    margin: 0;
+    padding: 10px 8px;
+    border-bottom: 1px solid rgba(59,80,110,.52);
+    border-radius: 9px;
+    transition: background-color .16s ease, box-shadow .16s ease;
+}
+body.admin-dark .page-container > form.layui-form-pane > .layui-tab.maccms-inner-tab-vertical .layui-tab-item > .layui-form-item:hover,
+body.admin-dark .page-container > form.layui-form-pane > .layui-tab.maccms-inner-tab-vertical .layui-tab-item > .layui-form-item:focus-within {
+    background: rgba(27,43,67,.58);
+    box-shadow: inset 3px 0 0 var(--ax-accent, #82b1ff);
+}
+body.admin-dark .page-container > form.layui-form-pane > .layui-tab.maccms-inner-tab-vertical .layui-form-label {
+    width: 168px;
+    min-height: 38px;
+    height: auto;
+    padding: 0 11px;
+    border: 1px solid #30435f;
+    border-radius: 7px 0 0 7px;
+    background: #162033;
+    color: #c7d5e7;
+    font-weight: 700;
+    line-height: 18px;
+    white-space: normal;
+    overflow-wrap: anywhere;
+}
+body.admin-dark .page-container > form.layui-form-pane > .layui-tab.maccms-inner-tab-vertical .layui-input-block {
+    min-height: 38px;
+    margin-left: 184px;
+}
+body.admin-dark .page-container > form.layui-form-pane > .layui-tab.maccms-inner-tab-vertical .layui-input-inline {
+    min-height: 38px;
+    margin-right: 8px;
+    vertical-align: top;
+}
+body.admin-dark .page-container > form.layui-form-pane > .layui-tab.maccms-inner-tab-vertical .layui-input-block:has(.layui-form-radio),
+body.admin-dark .page-container > form.layui-form-pane > .layui-tab.maccms-inner-tab-vertical .layui-input-block:has(.layui-form-checkbox) {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px 10px;
+}
+body.admin-dark .page-container > form.layui-form-pane > .layui-tab.maccms-inner-tab-vertical .layui-input-inline:has(.layui-form-radio),
+body.admin-dark .page-container > form.layui-form-pane > .layui-tab.maccms-inner-tab-vertical .layui-input-inline:has(.layui-form-checkbox) {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px 10px;
+}
+body.admin-dark .page-container > form.layui-form-pane > .layui-tab.maccms-inner-tab-vertical .layui-form-radio,
+body.admin-dark .page-container > form.layui-form-pane > .layui-tab.maccms-inner-tab-vertical .layui-form-checkbox {
+    margin: 0 6px 0 0;
+}
+body.admin-dark .page-container > form.layui-form-pane > .layui-tab.maccms-inner-tab-vertical .layui-form-mid.layui-word-aux {
+    color: #8498b3;
+    line-height: 1.55;
+}
+body.admin-dark .page-container > form.layui-form-pane > .layui-tab.maccms-inner-tab-vertical .layui-form-item > .layui-form-mid.layui-word-aux {
+    float: none;
+    clear: both;
+    display: block;
+    margin-left: 184px;
+    padding-top: 6px;
+    white-space: normal;
+}
+body.admin-dark .page-container > form.layui-form-pane > .layui-tab.maccms-inner-tab-vertical .layui-textarea {
+    min-height: 92px;
+}
+
+/* Collection resource list: card framing, readable action groups, and a
+   scrollable table on narrow screens. */
+body.admin-dark .page-container.p10:has(> #pageListForm) {
+    padding: 16px;
+}
+body.admin-dark .page-container.p10:has(> #pageListForm) > .my-toolbar-box {
+    margin-bottom: 14px;
+    padding: 12px;
+    border: 1px solid #2b3b55;
+    border-radius: 14px;
+    background: linear-gradient(145deg, #101b2d 0%, #111827 72%, #0f172a 100%);
+    box-shadow: 0 12px 28px rgba(0,0,0,.16);
+}
+body.admin-dark .page-container.p10:has(> #pageListForm) > .my-toolbar-box .btn-primary-group {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+}
+body.admin-dark .page-container.p10:has(> #pageListForm) > .my-toolbar-box .btn {
+    min-height: 36px;
+    margin: 0;
+    padding: 0 13px;
+    border-radius: 9px;
+    font-weight: 700;
+}
+body.admin-dark .page-container.p10:has(> #pageListForm) > #pageListForm {
+    margin: 0;
+    padding: 10px;
+    border: 1px solid #2b3b55;
+    border-radius: 14px;
+    background: #101a2b;
+    overflow-x: auto;
+}
+body.admin-dark .page-container.p10:has(> #pageListForm) > #pageListForm .layui-table {
+    min-width: 920px;
+    margin: 0;
+    border: 0;
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: hidden;
+}
+body.admin-dark .page-container.p10:has(> #pageListForm) > #pageListForm .layui-table th {
+    height: 44px;
+    background: #162033;
+    color: #b8c8dc;
+    font-size: 12px;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+}
+body.admin-dark .page-container.p10:has(> #pageListForm) > #pageListForm .layui-table td {
+    min-height: 48px;
+    padding: 10px 9px;
+    vertical-align: middle;
+}
+body.admin-dark .page-container.p10:has(> #pageListForm) > #pageListForm .layui-table tbody tr:hover {
+    background: #17263b;
+}
+body.admin-dark .page-container.p10:has(> #pageListForm) > #pageListForm .layui-table td:nth-child(5) a {
+    color: #9fe8d0;
+    border-color: #237a64;
+    background: rgba(23,98,79,.34);
+}
+body.admin-dark .page-container.p10:has(> #pageListForm) > #pageListForm .layui-table td .badge {
+    display: inline-flex;
+    align-items: center;
+    min-height: 28px;
+    margin: 2px 4px 2px 0;
+    padding: 0 9px;
+    border: 1px solid transparent;
+    border-radius: 7px;
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+    transition: transform .16s ease, border-color .16s ease, background-color .16s ease;
+}
+body.admin-dark .page-container.p10:has(> #pageListForm) > #pageListForm .layui-table td .badge:hover {
+    transform: translateY(-1px);
+}
+
+/* Collection source editor iframe page. */
+body.admin-dark .page-container.p10:has(> form #collect_id) {
+    padding: 16px;
+}
+body.admin-dark .page-container.p10:has(> form #collect_id) > form.layui-form-pane {
+    margin: 0 auto;
+    padding: 16px;
+    border: 1px solid #2b3b55;
+    border-radius: 15px;
+    background: linear-gradient(145deg, #101b2d 0%, #111827 72%, #0f172a 100%);
+    box-shadow: 0 16px 34px rgba(0,0,0,.18);
+}
+body.admin-dark .page-container.p10:has(> form #collect_id) > form.layui-form-pane .layui-form-item {
+    min-height: 44px;
+    margin: 0;
+    padding: 10px 8px;
+    border-bottom: 1px solid rgba(59,80,110,.52);
+    border-radius: 9px;
+}
+body.admin-dark .page-container.p10:has(> form #collect_id) > form.layui-form-pane .layui-form-item:last-of-type {
+    border-bottom: 0;
+}
+body.admin-dark .page-container.p10:has(> form #collect_id) > form.layui-form-pane .layui-form-item.center {
+    margin-top: 12px;
+    padding-top: 16px;
+    border-top: 1px solid #2b3b55;
+}
+body.admin-dark .page-container.p10:has(> form #collect_id) > form.layui-form-pane .layui-form-label {
+    width: 168px;
+    min-height: 38px;
+    height: auto;
+    padding: 0 11px;
+    border-radius: 7px 0 0 7px;
+    background: #162033;
+    color: #c7d5e7;
+    line-height: 18px;
+    white-space: normal;
+    overflow-wrap: anywhere;
+}
+body.admin-dark .page-container.p10:has(> form #collect_id) > form.layui-form-pane .layui-input-block {
+    min-height: 38px;
+    margin-left: 184px;
+}
+body.admin-dark .page-container.p10:has(> form #collect_id) > form.layui-form-pane .layui-input-block:has(.layui-form-radio) {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px 10px;
+}
+body.admin-dark .page-container.p10:has(> form #collect_id) > form.layui-form-pane .layui-form-radio {
+    margin: 0 7px 0 0;
+}
+body.admin-dark .page-container.p10:has(> form #collect_id) > form.layui-form-pane .layui-form-mid.layui-word-aux {
+    display: block;
+    float: none;
+    clear: both;
+    margin-left: 184px !important;
+    padding-top: 6px;
+    color: #8498b3;
+    line-height: 1.55;
+    white-space: normal;
+}
+body.admin-dark .page-container.p10:has(> form #collect_id) > form.layui-form-pane .layui-form-item.center .layui-input-block {
+    margin-left: 0;
+    text-align: center;
+}
+body.admin-dark .page-container.p10:has(> form #collect_id) > form.layui-form-pane .layui-form-item.center .btn {
+    min-height: 40px;
+    margin: 0 4px 4px 0;
+    border-radius: 9px;
+    font-weight: 750;
+}
+@media (max-width: 992px) {
+    body.admin-dark .page-container > form.layui-form-pane > .layui-tab.maccms-inner-tab-vertical {
+        flex-direction: column;
+        min-height: 0;
+    }
+    body.admin-dark .page-container > form.layui-form-pane > .layui-tab.maccms-inner-tab-vertical > .layui-tab-title {
+        width: 100%;
+        min-height: 0;
+        max-height: none;
+        padding: 6px 4px 10px;
+        border-right: 0;
+        border-bottom: 1px solid #2b3b55;
+        white-space: nowrap;
+        overflow-x: auto;
+    }
+    body.admin-dark .page-container > form.layui-form-pane > .layui-tab.maccms-inner-tab-vertical > .layui-tab-title li {
+        display: inline-block !important;
+        width: auto;
+        min-width: 132px;
+        max-width: 220px;
+        margin: 3px 4px;
+        vertical-align: top;
+    }
+    body.admin-dark .page-container > form.layui-form-pane > .layui-tab.maccms-inner-tab-vertical > .layui-tab-content {
+        padding: 12px 10px 16px;
+    }
+}
+@media (max-width: 700px) {
+    body.admin-dark .page-container > form.layui-form-pane > .layui-tab.maccms-inner-tab-vertical .layui-form-label,
+    body.admin-dark .page-container.p10:has(> form #collect_id) > form.layui-form-pane .layui-form-label {
+        float: none;
+        display: block;
+        width: auto;
+        min-height: 28px;
+        margin-bottom: 6px;
+        padding: 0 2px;
+        border-radius: 6px;
+        line-height: 28px;
+    }
+    body.admin-dark .page-container > form.layui-form-pane > .layui-tab.maccms-inner-tab-vertical .layui-input-block,
+    body.admin-dark .page-container.p10:has(> form #collect_id) > form.layui-form-pane .layui-input-block {
+        margin-left: 0;
+    }
+    body.admin-dark .page-container > form.layui-form-pane > .layui-tab.maccms-inner-tab-vertical .layui-form-item > .layui-form-mid.layui-word-aux,
+    body.admin-dark .page-container.p10:has(> form #collect_id) > form.layui-form-pane .layui-form-mid.layui-word-aux {
+        margin-left: 0 !important;
+    }
+    body.admin-dark .page-container.p10:has(> #pageListForm) {
+        padding: 10px;
+    }
+    body.admin-dark .page-container.p10:has(> #pageListForm) > #pageListForm {
+        padding: 6px;
+    }
+}
+
+/* admin-system-seo-mobile-v1: make the six SEO destinations scannable without
+   changing tab ids, form names, submit hooks, or save behavior. */
+body.admin-dark .page-container > form.layui-form-pane:has(input[name="seo[vod][name]"]) > .layui-tab[lay-filter="tb1"] {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    min-height: 286px;
+    border: 1px solid #2b3b55;
+    border-radius: 13px;
+    background: #111827;
+    overflow: hidden;
+}
+body.admin-dark .page-container > form.layui-form-pane:has(input[name="seo[vod][name]"]) > .layui-tab[lay-filter="tb1"] > .layui-tab-title {
+    flex: 0 0 188px;
+    display: block;
+    width: 188px;
+    height: auto;
+    max-height: 72vh;
+    margin: 0;
+    padding: 10px 0 14px;
+    border: 0;
+    border-right: 1px solid #2b3b55;
+    background: #162033;
+    overflow: auto;
+    white-space: normal;
+}
+body.admin-dark .page-container > form.layui-form-pane:has(input[name="seo[vod][name]"]) > .layui-tab[lay-filter="tb1"] > .layui-tab-title li {
+    display: block;
+    float: none;
+    width: auto;
+    min-height: 40px;
+    height: auto;
+    margin: 3px 8px;
+    padding: 9px 10px;
+    border: 0;
+    border-radius: 8px;
+    line-height: 1.45;
+    color: #b8c4d6;
+    text-align: left;
+    white-space: normal;
+    transition: color .16s ease, background-color .16s ease;
+}
+body.admin-dark .page-container > form.layui-form-pane:has(input[name="seo[vod][name]"]) > .layui-tab[lay-filter="tb1"] > .layui-tab-title li:hover {
+    color: #6ee7b7;
+    background: rgba(53,211,155,.09);
+}
+body.admin-dark .page-container > form.layui-form-pane:has(input[name="seo[vod][name]"]) > .layui-tab[lay-filter="tb1"] > .layui-tab-title li.layui-this {
+    color: #071a14;
+    background: linear-gradient(135deg, #35d39b, #55e6bb);
+    font-weight: 750;
+    box-shadow: 0 5px 14px rgba(53,211,155,.18);
+}
+body.admin-dark .page-container > form.layui-form-pane:has(input[name="seo[vod][name]"]) > .layui-tab[lay-filter="tb1"] > .layui-tab-title li::after,
+body.admin-dark .page-container > form.layui-form-pane:has(input[name="seo[vod][name]"]) > .layui-tab[lay-filter="tb1"] > .layui-tab-title > .layui-tab-bar {
+    display: none;
+}
+body.admin-dark .page-container > form.layui-form-pane:has(input[name="seo[vod][name]"]) > .layui-tab[lay-filter="tb1"] > .layui-tab-content {
+    flex: 1 1 auto;
+    min-width: 0;
+    max-height: 72vh;
+    margin: 0;
+    padding: 12px 20px 20px;
+    border: 0;
+    background: #101a2b;
+    overflow: auto;
+}
+body.admin-dark .page-container > form.layui-form-pane:has(input[name="seo[vod][name]"]) > .layui-tab[lay-filter="tb1"] .layui-tab-item {
+    height: auto;
+    padding-top: 0;
+}
+body.admin-dark .page-container > form.layui-form-pane:has(input[name="seo[vod][name]"]) > .layui-tab[lay-filter="tb1"] .layui-elem-quote {
+    margin: 0 0 14px;
+    padding: 13px 16px;
+    border: 1px solid #3b506e;
+    border-left: 4px solid #35d39b;
+    border-radius: 10px;
+    color: #b8c4d6;
+    background: linear-gradient(135deg, rgba(22,32,51,.96), rgba(17,31,48,.88));
+    line-height: 1.7;
+}
+body.admin-dark .page-container > form.layui-form-pane:has(input[name="seo[vod][name]"]) > .layui-tab[lay-filter="tb1"] .layui-tab-item > .layui-form-item {
+    margin: 0 0 7px;
+    padding: 10px;
+    border: 1px solid rgba(59,80,110,.52);
+    border-radius: 10px;
+    background: rgba(17,28,45,.66);
+    transition: background-color .16s ease, border-color .16s ease, box-shadow .16s ease;
+}
+body.admin-dark .page-container > form.layui-form-pane:has(input[name="seo[vod][name]"]) > .layui-tab[lay-filter="tb1"] .layui-tab-item > .layui-form-item:hover,
+body.admin-dark .page-container > form.layui-form-pane:has(input[name="seo[vod][name]"]) > .layui-tab[lay-filter="tb1"] .layui-tab-item > .layui-form-item:focus-within {
+    border-color: rgba(130,177,255,.35);
+    background: rgba(27,43,67,.66);
+    box-shadow: inset 3px 0 0 var(--ax-accent, #82b1ff);
+}
+body.admin-dark .page-container > form.layui-form-pane:has(input[name="seo[vod][name]"]) .layui-form-item.center {
+    margin-top: 12px;
+    padding: 16px 10px 8px;
+    border-top: 1px solid #2b3b55;
+}
+body.admin-dark .page-container > form.layui-form-pane:has(input[name="seo[vod][name]"]) .layui-form-item.center .layui-btn,
+body.admin-dark .page-container > form.layui-form-pane:has(input[name="seo[vod][name]"]) .layui-form-item.center .btn {
+    min-height: 40px;
+    border-radius: 9px;
+    font-weight: 750;
+}
+
+@media (max-width: 992px) {
+    body.admin-dark .page-container > form.layui-form-pane:has(input[name="seo[vod][name]"]) > .layui-tab[lay-filter="tb1"] {
+        flex-direction: column;
+        min-height: 0;
+    }
+    body.admin-dark .page-container > form.layui-form-pane:has(input[name="seo[vod][name]"]) > .layui-tab[lay-filter="tb1"] > .layui-tab-title {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 4px;
+        width: 100%;
+        max-height: none;
+        flex-basis: auto;
+        padding: 6px 4px 10px;
+        border-right: 0;
+        border-bottom: 1px solid #2b3b55;
+        overflow: visible;
+    }
+    body.admin-dark .page-container > form.layui-form-pane:has(input[name="seo[vod][name]"]) > .layui-tab[lay-filter="tb1"] > .layui-tab-title li {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: auto;
+        min-width: 0;
+        min-height: 40px;
+        height: auto;
+        margin: 0;
+        padding: 6px 8px;
+        line-height: 1.25;
+        text-align: center;
+        white-space: normal;
+    }
+    body.admin-dark .page-container > form.layui-form-pane:has(input[name="seo[vod][name]"]) > .layui-tab[lay-filter="tb1"] > .layui-tab-content {
+        max-height: none;
+        padding: 12px 12px 16px;
+    }
+}
+@media (max-width: 520px) {
+    body.admin-dark .page-container > form.layui-form-pane:has(input[name="seo[vod][name]"]) > .layui-tab[lay-filter="tb1"] > .layui-tab-title {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 3px;
+        padding: 5px 3px 8px;
+    }
+    body.admin-dark .page-container > form.layui-form-pane:has(input[name="seo[vod][name]"]) > .layui-tab[lay-filter="tb1"] > .layui-tab-title li {
+        min-height: 42px;
+        padding: 6px 4px;
+        font-size: 12px;
+        line-height: 16px;
+    }
+    body.admin-dark .page-container > form.layui-form-pane:has(input[name="seo[vod][name]"]) > .layui-tab[lay-filter="tb1"] > .layui-tab-content {
+        padding: 12px 8px 4px;
+    }
+    body.admin-dark .page-container > form.layui-form-pane:has(input[name="seo[vod][name]"]) > .layui-tab[lay-filter="tb1"] .layui-form-label {
+        float: none;
+        display: block;
+        width: auto;
+        min-height: 28px;
+        line-height: 28px;
+        padding: 0 2px;
+        border-radius: 7px;
+    }
+    body.admin-dark .page-container > form.layui-form-pane:has(input[name="seo[vod][name]"]) > .layui-tab[lay-filter="tb1"] .layui-input-block,
+    body.admin-dark .page-container > form.layui-form-pane:has(input[name="seo[vod][name]"]) > .layui-tab[lay-filter="tb1"] .layui-input-inline {
+        float: none;
+        display: block;
+        width: auto;
+        max-width: none;
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
+
+
+/* admin-system-config-mobile-v3: make the legacy settings tabs and fields usable at tablet and phone widths. */
+body.admin-dark .page-container > form.layui-form-pane:has(> .layui-tab[lay-filter="tb1"]) > .layui-tab > .layui-tab-title > .layui-tab-bar {
+    display: none !important;
+}
+@media (max-width: 760px) {
+    body.admin-dark .page-container > form.layui-form-pane:has(> .layui-tab[lay-filter="tb1"]) > .layui-tab > .layui-tab-title {
+        display: flex;
+        flex-flow: row wrap;
+        align-items: stretch;
+        gap: 6px;
+        height: auto;
+        min-height: 0;
+        padding: 8px;
+        overflow: visible;
+        white-space: normal;
+    }
+    body.admin-dark .page-container > form.layui-form-pane:has(> .layui-tab[lay-filter="tb1"]) > .layui-tab > .layui-tab-title li {
+        box-sizing: border-box;
+        flex: 1 1 calc(50% - 6px);
+        min-width: 0;
+        width: auto;
+        height: auto;
+        min-height: 40px;
+        margin: 0;
+        padding: 8px 10px;
+        line-height: 18px;
+        white-space: normal;
+        text-align: center;
+    }
+    body.admin-dark .page-container > form.layui-form-pane:has(> .layui-tab[lay-filter="tb1"]) > .layui-tab > .layui-tab-content {
+        padding: 14px 10px 8px;
+    }
+    body.admin-dark .page-container > form.layui-form-pane:has(> .layui-tab[lay-filter="tb1"]) .layui-tab-item > .layui-form-item {
+        padding: 10px 8px;
+    }
+    body.admin-dark .page-container > form.layui-form-pane:has(> .layui-tab[lay-filter="tb1"]) .layui-tab-item .layui-input-inline[class*="w"] {
+        width: calc(100% - 132px) !important;
+        max-width: calc(100% - 132px);
+    }
+    body.admin-dark .page-container > form.layui-form-pane:has(> .layui-tab[lay-filter="tb1"]) .layui-tab-item .layui-input-inline .layui-input,
+    body.admin-dark .page-container > form.layui-form-pane:has(> .layui-tab[lay-filter="tb1"]) .layui-tab-item .layui-input-inline .layui-textarea {
+        box-sizing: border-box;
+        max-width: 100%;
+    }
+    body.admin-dark .page-container > form.layui-form-pane:has(> .layui-tab[lay-filter="tb1"]) .layui-form-label,
+    body.admin-dark .page-container > form.layui-form-pane:has(> .layui-tab[lay-filter="tb1"]) .layui-input-block,
+    body.admin-dark .page-container > form.layui-form-pane:has(> .layui-tab[lay-filter="tb1"]) .layui-input-inline {
+        box-sizing: border-box;
+        min-width: 0;
+    }
+}
+@media (max-width: 520px) {
+    body.admin-dark .page-container > form.layui-form-pane:has(> .layui-tab[lay-filter="tb1"]) > .layui-tab > .layui-tab-title {
+        gap: 5px;
+        padding: 8px;
+    }
+    body.admin-dark .page-container > form.layui-form-pane:has(> .layui-tab[lay-filter="tb1"]) > .layui-tab > .layui-tab-title li {
+        flex: 1 1 100%;
+        width: 100%;
+        min-height: 38px;
+        padding: 9px 12px;
+        text-align: left;
+    }
+    body.admin-dark .page-container > form.layui-form-pane:has(> .layui-tab[lay-filter="tb1"]) .layui-form-label {
+        float: none;
+        display: block;
+        width: auto;
+        min-height: 28px;
+        margin-bottom: 6px;
+        padding: 0 2px;
+        line-height: 28px;
+    }
+    body.admin-dark .page-container > form.layui-form-pane:has(> .layui-tab[lay-filter="tb1"]) .layui-input-block,
+    body.admin-dark .page-container > form.layui-form-pane:has(> .layui-tab[lay-filter="tb1"]) .layui-input-inline {
+        float: none;
+        display: block;
+        width: 100% !important;
+        max-width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+    }
+    body.admin-dark .page-container > form.layui-form-pane:has(> .layui-tab[lay-filter="tb1"]) .layui-input-block .layui-input,
+    body.admin-dark .page-container > form.layui-form-pane:has(> .layui-tab[lay-filter="tb1"]) .layui-input-block .layui-textarea,
+    body.admin-dark .page-container > form.layui-form-pane:has(> .layui-tab[lay-filter="tb1"]) .layui-input-inline .layui-input {
+        box-sizing: border-box;
+        width: 100%;
+        max-width: 100%;
+    }
+    body.admin-dark .page-container > form.layui-form-pane:has(> .layui-tab[lay-filter="tb1"]) .layui-form-mid.layui-word-aux {
+        display: block;
+        float: none;
+        clear: both;
+        margin-left: 0 !important;
+        padding-top: 5px;
+        line-height: 1.5;
+    }
+}
+/* admin-configupload-responsive-v1: contain legacy upload fields and status badge at narrow frame widths. */
+@media (max-width:700px) {
+    body.admin-dark .page-container > form.layui-form-pane:has(input[name="upload[img_key]"]) .layui-input-inline.w500,
+    body.admin-dark .page-container > form.layui-form-pane:has(input[name="upload[img_api]"]) .layui-input-inline.w500 {
+        box-sizing: border-box;
+        width: calc(100% - 119px) !important;
+        max-width: calc(100% - 119px);
+    }
+}
+@media (max-width:520px) {
+    body.admin-dark .page-container > form.layui-form-pane:has(input[name="upload[img_key]"]) .layui-elem-quote.layui-quote-nm {
+        overflow-wrap: anywhere;
+        word-break: break-word;
+    }
+    body.admin-dark .page-container > form.layui-form-pane:has(input[name="upload[img_key]"]) .layui-elem-quote .badge {
+        display: inline-block;
+        box-sizing: border-box;
+        max-width: 100%;
+        white-space: normal;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+    }
+}
+/* admin-configcollect-tabs-responsive-v1: let vertical collect tabs size to all rows on narrow frames. */
+@media (max-width:700px) {
+    body.admin-dark .page-container > form.layui-form-pane > .layui-tab.maccms-inner-tab-vertical > .layui-tab-title {
+        flex: 0 0 auto !important;
+        height: auto !important;
+        min-height: 0 !important;
+        max-height: none !important;
+        overflow: visible !important;
+    }
+}
+
+
+/* admin-collect-timing-dark-v1: keep the legacy scheduler controls and iframe IDs while making the page responsive and dark. */
+body.admin-dark .admin-collect-timing-page {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 980px;
+    margin: 0 auto;
+    color: #d8e3f2;
+}
+body.admin-dark .admin-collect-timing-page > .admin-collect-timing-controls,
+body.admin-dark .admin-collect-timing-page > #dsinfo {
+    box-sizing: border-box;
+    width: min(100%, 760px) !important;
+    max-width: 760px;
+    margin-left: auto;
+    margin-right: auto;
+}
+body.admin-dark .admin-collect-timing-page > .admin-collect-timing-controls {
+    height: auto !important;
+    padding: 18px;
+    border: 1px solid #29405e;
+    border-radius: 14px;
+    background: linear-gradient(145deg, rgba(21, 35, 57, .98), rgba(14, 25, 42, .98));
+    box-shadow: 0 12px 30px rgba(0, 0, 0, .16);
+}
+body.admin-dark .admin-collect-timing-page > .admin-collect-timing-controls .layui-elem-quote {
+    margin: 0 0 14px;
+    border: 1px solid #355477;
+    border-left: 4px solid #35d39b;
+    border-radius: 9px;
+    color: #c6d5e8;
+    background: rgba(19, 34, 56, .92);
+    line-height: 1.65;
+}
+body.admin-dark .admin-collect-timing-page > .admin-collect-timing-controls table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 7px;
+    color: #cbd8e8;
+}
+body.admin-dark .admin-collect-timing-page > .admin-collect-timing-controls table td {
+    padding: 7px 8px;
+    vertical-align: middle;
+}
+body.admin-dark .admin-collect-timing-page > .admin-collect-timing-controls table td:first-child {
+    width: 42%;
+}
+body.admin-dark .admin-collect-timing-page > .admin-collect-timing-controls .layui-input {
+    width: 86px;
+    box-sizing: border-box;
+    border-color: #355477;
+    color: #e7f0fb;
+    background: #0d192b;
+}
+body.admin-dark .admin-collect-timing-page > .admin-collect-timing-controls .layui-input:focus {
+    border-color: var(--ax-accent, #82b1ff);
+    box-shadow: none;
+}
+body.admin-dark .admin-collect-timing-page > .admin-collect-timing-controls #btnGO,
+body.admin-dark .admin-collect-timing-page > .admin-collect-timing-controls #btnCancel {
+    min-height: 38px;
+    border: 0;
+    border-radius: 8px;
+    font-weight: 700;
+}
+body.admin-dark .admin-collect-timing-page > .admin-collect-timing-controls #btnCancel:disabled {
+    opacity: .55;
+}
+body.admin-dark .admin-collect-timing-page > #dsinfo {
+    margin-top: 18px;
+    overflow-x: auto;
+}
+body.admin-dark .admin-collect-timing-page > #dsinfo table {
+    width: 100% !important;
+    max-width: 760px;
+    height: auto !important;
+    border: 1px solid #29405e !important;
+    border-radius: 12px;
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: hidden;
+    color: #cbd8e8;
+    background: #101a2b;
+}
+body.admin-dark .admin-collect-timing-page > #dsinfo table td[style*="#ECF5FF"],
+body.admin-dark .admin-collect-timing-page > #dsinfo table td[style*="#e8e8e8"] {
+    background: #172a45 !important;
+    color: #d8e6f5;
+}
+body.admin-dark .admin-collect-timing-page > #dsinfo table td[id^="sp_"] {
+    box-sizing: border-box;
+    min-height: 150px;
+    padding: 12px;
+    background: #0d192b !important;
+    color: #aebfd3;
+}
+body.admin-dark .admin-collect-timing-page > #dsinfo iframe {
+    display: block;
+    max-width: 100%;
+    border: 1px solid #29405e;
+    border-radius: 7px;
+    background: #0a1424;
+}
+@media (max-width: 560px) {
+    body.admin-dark .admin-collect-timing-page { padding: 8px; }
+    body.admin-dark .admin-collect-timing-page > .admin-collect-timing-controls { padding: 12px; }
+    body.admin-dark .admin-collect-timing-page > .admin-collect-timing-controls table,
+    body.admin-dark .admin-collect-timing-page > .admin-collect-timing-controls table tbody,
+    body.admin-dark .admin-collect-timing-page > .admin-collect-timing-controls table tr,
+    body.admin-dark .admin-collect-timing-page > .admin-collect-timing-controls table td {
+        display: block;
+        width: 100% !important;
+        box-sizing: border-box;
+    }
+    body.admin-dark .admin-collect-timing-page > .admin-collect-timing-controls table td { padding: 5px 0; }
+    body.admin-dark .admin-collect-timing-page > .admin-collect-timing-controls table tr { margin-bottom: 12px; }
+    body.admin-dark .admin-collect-timing-page > .admin-collect-timing-controls table td[rowspan="4"] { display: none; }
+    body.admin-dark .admin-collect-timing-page > .admin-collect-timing-controls .layui-input { width: 100% !important; max-width: 100%; }
+    body.admin-dark .admin-collect-timing-page > .admin-collect-timing-controls #btnGO,
+    body.admin-dark .admin-collect-timing-page > .admin-collect-timing-controls #btnCancel { width: 100%; margin: 4px 0; }
+}

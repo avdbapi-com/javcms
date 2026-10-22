@@ -1,0 +1,27 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="crimson" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/auto"}
+{include file="public/include"}
+</head>
+<body class="ct-list ct-hubpage">
+{include file="public/head"}
+<main id="main-content" class="ct-wrap">
+<div class="ct-phead"><div class="ct-phead-main"><h1 class="ct-h1">{:\\app\\common\\util\\AutoIcon::navIcon('all-videos', '', ['class'=>'ct-h1-ico'])}<span>{:\\app\\common\\util\\TemplateText::get('ui.all_videos_59a0c0')}</span></h1></div></div>
+<section class="ct-sec" aria-labelledby="ct-h-hub"><div class="ct-sec-head"><h2 class="ct-h2" id="ct-h-hub">{:\\app\\common\\util\\AutoIcon::ui('layers', ['class'=>'ct-h2-ico'])}{:\\app\\common\\util\\TemplateText::get('crimson.browse_categories')}</h2></div><div class="ct-hub" data-ai-group>{maccms:type ids="parent" flag="vod" order="asc" by="sort" id="ctCat" key="ctHubK" hide_empty="1"}{php}$ctHubPic = ''; $ctHubCount = intval(mac_data_count($ctCat['type_id'], 'all'));{/php}{maccms:vod num="1" type="'.$ctCat['type_id'].'" order="desc" by="time" paging="no" id="ctHubVo"}{php}$ctHubPic = trim((string)($ctHubVo['vod_pic'] ?? ''));{/php}{/maccms:vod}{php}$ctHubNoPic = $ctHubPic === '' ? 1 : 0; $ctHubPic = $ctHubPic === '' ? $maccms['path_tpl'] . 'assets/img/poster.svg' : mac_url_img($ctHubPic);{/php}<a class="ct-hub-tile{if condition="$ctHubNoPic eq 1"} ct-hub-tile--nopic{/if}" href="{:mac_url_type($ctCat,[],'type')}"><img src="{$ctHubPic|htmlspecialchars=ENT_QUOTES}" alt="" width="320" height="180" loading="lazy" decoding="async"><span class="ct-hub-seal">{:\\app\\common\\util\\AutoIcon::icon('category', $ctCat['type_name'], ['size'=>'xl', 'plate'=>true, 'i'=>intval($ctHubK)])}</span><span class="ct-hub-cap"><strong>{:\\app\\common\\util\\TemplateText::get(htmlspecialchars_decode((string)$ctCat['type_name'], ENT_QUOTES))}</strong><span dir="ltr">{$ctHubCount|number_format}</span></span></a>{/maccms:type}</div></section>
+{php}ob_start();{/php}{maccms:vod num="20" paging="yes" type="all" order="desc" by="time" pageurl="vod/index" id="vo"}{include file="public/vodbox"}{/maccms:vod}{php}$ctGridHtml = ob_get_clean(); $ctTotal = isset($__PAGING__['record_total']) ? intval($__PAGING__['record_total']) : 0;{/php}
+<section class="ct-sec" aria-labelledby="ct-h-all"><div class="ct-sec-head"><h2 class="ct-h2" id="ct-h-all">{:\\app\\common\\util\\AutoIcon::navIcon('latest', '', ['class'=>'ct-h2-ico'])}{:\\app\\common\\util\\TemplateText::get('ui.latest_videos')}</h2>{if condition="$ctTotal gt 0"}<span class="ct-count">{:\\app\\common\\util\\TemplateText::get('crimson.n_videos', ['count' => number_format($ctTotal)])}</span>{/if}</div>
+<div class="ct-grid" data-grid-fill data-ct-list>{$ctGridHtml}</div>
+{if condition="$ctTotal eq 0"}{include file="public/empty"}{/if}
+{include file="public/listfoot"}</section>
+</main>
+{include file="public/foot"}
+</body>
+</html>

@@ -1,0 +1,49 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Based on MacCMS 10 (Apache-2.0) by magicblack, changed by JavCMS.
+JavCMS changes: Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors,
+JavCMS Community License 1.0. The MacCMS parts stay under the Apache License 2.0.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{include file="../../../application/admin/view/public/head" /}
+<link rel="stylesheet" href="__STATIC__/css/admin_addon_workspace.css?{$MAC_VERSION}&rev=3">
+
+<div class="page-container addon-workspace addon-workspace--kit">
+    {include file="../../../application/admin/view/public/page_head" icon="ai-plug" title="admin/addon/title" /}
+
+    {if condition="empty($list)"}
+    <div class="ax-notice" role="status">
+        <svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-info"/></svg>
+        <div><p>{:lang('admin/ux/tools/addons_offline')}</p></div>
+    </div>
+    {else /}
+    <div class="ax-notice" role="note">
+        <svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-info"/></svg>
+        <div><p>{:lang('admin/ux/tools/addons_offline')}</p></div>
+    </div>
+    <!-- close-security (security r4 P3-4): the add-on store is retired; installed add-ons are listed read-only. -->
+    <div class="ax-table-wrap">
+        <table class="ax-table ax-table--cards">
+            <thead><tr>
+                <th>{:lang('name')}</th>
+                <th>{:lang('ver')}</th>
+                <th>{:lang('status')}</th>
+            </tr></thead>
+            <tbody>
+            {volist name="list" id="vo"}
+            <tr>
+                <td data-label="{:lang('name')}"><strong>{$vo.title|htmlspecialchars}</strong>{if condition="$vo.intro neq ''"}<div class="ax-faint">{$vo.intro|htmlspecialchars}</div>{/if}</td>
+                <td data-label="{:lang('ver')}">{$vo.version|htmlspecialchars}</td>
+                <td data-label="{:lang('status')}">{if condition="$vo.state eq 1"}<span class="ax-chip ax-chip--ok">{:lang('enable')}</span>{else /}<span class="ax-chip ax-chip--off">{:lang('disable')}</span>{/if}</td>
+            </tr>
+            {/volist}
+            </tbody>
+        </table>
+    </div>
+    {/if}
+</div>
+
+{include file="../../../application/admin/view/public/foot" /}
+</body>
+</html>

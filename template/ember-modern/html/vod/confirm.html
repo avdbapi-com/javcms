@@ -1,0 +1,44 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+Partly based on a third-party theme. This license covers the JavCMS changes only.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="ember-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head><meta name="robots" content="noindex, follow" />
+	<meta charset="utf-8">
+	<title>{:\\app\\common\\util\\TemplateText::get('ui.purchase_permission_to_use_points')}</title>
+	
+	
+	
+	
+	
+{include file="public/include"}</head>
+<body class="permission-page">
+<div class="mac_msg_jump">
+	<h1 class="msg_jump_tit">{:\\app\\common\\util\\TemplateText::get('ui.access_required')}</h1>
+	<div class="title">{:\\app\\common\\util\\TemplateText::get('ui.video_access')}</div>
+	<div class="text">
+		{$popedom.msg}
+		<p>{:\\app\\common\\util\\TemplateText::get('ui.tip_payment_watch_permanently_do_not_repeat_the_fee_thank_you_for_your_support')}</p>
+		<p>
+			{if condition="$user.group.group_id eq 1"}
+			<a href="javascript:;" class="mac_user" target="_blank" rel="noopener noreferrer">{:\\app\\common\\util\\TemplateText::get('ui.log_in_immediately')}</a>
+			{else/}
+			<a href="{:url('user/buy')}" target="_blank" rel="noopener noreferrer">{:\\app\\common\\util\\TemplateText::get('ui.immediately_recharge')}</a>
+			<a href="javascript:;" onclick="MAC.User.BuyPopedom(this)" data-id="{$obj.vod_id}" data-sid="{$param.sid}" data-nid="{$param.nid}" data-type="{if condition="$obj.player_info.flag eq 'play'"}4{else/}5{/if}" data-mid="1">{:\\app\\common\\util\\TemplateText::get('ui.confirm_the_purchase')}</a>
+			{/if}
+		</p>
+	</div>
+</div>
+<script type="text/javascript">
+
+</script>
+</body>
+</html>
+
+
+

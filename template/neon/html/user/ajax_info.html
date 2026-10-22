@@ -1,0 +1,8 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<div class="nx-upanel"><div class="nx-cform-row">{php}$nxAjaxFace = $maccms['path_tpl'] . 'assets/img/avatar.svg';{/php}<img src="{$obj.user_portrait|mac_default=$nxAjaxFace|mac_url_img|htmlspecialchars=ENT_QUOTES}" alt="" width="40" height="40" data-nx-face><div><strong>{$obj.user_name|htmlspecialchars=ENT_QUOTES}</strong><p class="nx-form-note">{$obj.group.group_name|htmlspecialchars=ENT_QUOTES} &middot; {:\\app\\common\\util\\TemplateText::get('ui.points')}: {$obj.user_points|intval}</p></div></div><div class="nx-toolbar" style="margin-top:10px"><a class="nx-btn nx-btn-primary" href="{:mac_url('user/index')}">{:\\app\\common\\util\\TemplateText::get('ui.my_account')}</a><a class="nx-btn" href="{:mac_url('user/logout')}">{:\\app\\common\\util\\TemplateText::get('ui.quit')}</a></div></div>

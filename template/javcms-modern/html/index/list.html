@@ -1,0 +1,10 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{maccms:type order="asc" by="sort" ids="parent" id="jcType" key="jcTypeKey" flag="vod" hide_empty="1" not="'.intval($GLOBALS['jvPbShown'] ?? 0).'"}<section class="jc-section index-list"><div class="jc-head"><h2 class="jc-h2"><a href="{:mac_url_type($jcType,[],'type')}">{:\\app\\common\\util\\AutoIcon::icon('category', $jcType['type_name'], ['size'=>'lg', 'plate'=>true])}<span>{:\\app\\common\\util\\TemplateText::get(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)($jcType['type_name'] ?? '')))}</span></a></h2><a class="jc-more" href="{:mac_url_type($jcType,[],'type')}">{:\\app\\common\\util\\TemplateText::get('ui.view_more')}{:\\app\\common\\util\\AutoIcon::ui('arrow-right', ['size'=>'sm', 'class'=>'jc-more-ico'])}</a></div>
+<div class="jc-grid" data-grid-fill>{maccms:vod num="10" type="'.$jcType['type_id'].'" order="desc" by="time" paging="no"}{include file="public/vodbox"}{/maccms:vod}</div></section>
+{/maccms:type}

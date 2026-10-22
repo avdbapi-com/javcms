@@ -1,0 +1,24 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="topaz-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/art_detail"}
+{include file="public/include"}
+</head>
+<body class="tp-page-detail">
+{include file="public/head"}
+{php}$tpH1 = html_entity_decode((string)($obj['art_name'] ?? ''), ENT_QUOTES | ENT_HTML5, 'UTF-8'); $tpH1Plain = true; $tpEyebrow = \app\common\util\TemplateText::raw('ui.articles'); $tpCrumb = \app\common\util\TemplateText::raw('ui.articles'); $tpCrumbUrl = mac_url('art/index'); $tpSub = date('Y-m-d', (int)($obj['art_time'] ?? 0));{/php}
+<main id="main-content" class="tp-main tp-wrap tp-list">
+  {include file="public/listhead"}
+  <article class="tp-panel tp-prose">{php}$jcxBody = \app\common\util\TemplateContent::html($obj['art_page_list'][$param['page']]['content'] ?? ''); $jcxCut = 0; $jcxAt = 0; for ($jcxN = 0; $jcxN < 3 && $jcxAt !== false; $jcxN++) { $jcxAt = stripos($jcxBody, '</p>', $jcxAt); if ($jcxAt !== false) { $jcxAt += 4; $jcxCut = $jcxN === 2 ? $jcxAt : 0; } } $jcxHead = strtolower(substr($jcxBody, 0, $jcxCut)); foreach (['div', 'blockquote', 'ul', 'ol', 'table', 'figure'] as $jcxTag) { if (substr_count($jcxHead, '<' . $jcxTag) !== substr_count($jcxHead, '</' . $jcxTag . '>')) { $jcxCut = 0; } } echo $jcxCut ? substr($jcxBody, 0, $jcxCut) . '<div data-jcx-at="P13"></div>' . substr($jcxBody, $jcxCut) : $jcxBody . '<div data-jcx-at="P13"></div>';{/php}{include file="public/paging"}</article>
+  {if condition="$GLOBALS['config']['comment']['status'] eq 1"}<section class="tp-comments" aria-labelledby="tp-com-h" data-ai-group><h2 class="tp-tray-title" id="tp-com-h">{:\\app\\common\\util\\AutoIcon::ui('messages', ['size'=>'lg', 'plate'=>true])}{:\\app\\common\\util\\TemplateText::get('ui.comments')}</h2><div class="mac_comment" data-id="{$obj.art_id|intval}" data-mid="2" data-tp-comments>{include file="public/comment_wait"}</div></section>{/if}
+</main>
+{include file="public/foot"}
+</body>
+</html>

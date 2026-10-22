@@ -1,0 +1,39 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="neon-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/vod_detail"}
+{include file="public/include"}
+</head>
+<body class="nn-page-detail">
+{include file="public/head"}
+{include file="public/metavars"}
+<main id="main-content" class="nn-main"><div class="nn-wrap">
+<div class="nn-detail{if condition="$nnDesc eq ''"} nn-detail--nodesc{/if}">
+<div class="nn-cover-wrap"><a class="nn-cover" href="{if condition="$nnPlayUrl neq ''"}{$nnPlayUrl|htmlspecialchars=ENT_QUOTES}{else/}#nn-desc-box{/if}" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.watch_online')}"><img data-lowres src="{$obj.vod_pic|mac_default=$tplNoPic|mac_url_img|htmlspecialchars=ENT_QUOTES}" alt="{$nnTitle|htmlspecialchars=ENT_QUOTES}" width="800" height="450" decoding="async">{if condition="$nnDuration neq ''"}<i class="nn-dur">{$nnDuration|htmlspecialchars=ENT_QUOTES}</i>{/if}<em class="nn-play" aria-hidden="true"></em></a></div>
+<div class="nn-dinfo">
+<h1{php}echo \app\common\util\AvdbLanguage::langAttr(isset($obj) && is_array($obj) ? $obj : []);{/php} dir="{$nnTitleDir}">{$nnTitle|htmlspecialchars=ENT_QUOTES}</h1>
+<div class="nn-stats">{if condition="$nnScore gt 0"}<span class="is-score" title="{:\\app\\common\\util\\TemplateText::get('ui.score')}"><svg class="nn-ico" aria-hidden="true"><use href="{$nnSvg|htmlspecialchars=ENT_QUOTES}#star"></use></svg><span class="nn-ltr">{$obj.vod_score|htmlspecialchars=ENT_QUOTES}</span></span>{/if}{if condition="$nnRelease neq ''"}<span><svg class="nn-ico" aria-hidden="true"><use href="{$nnSvg|htmlspecialchars=ENT_QUOTES}#calendar"></use></svg><span class="nn-ltr">{$nnRelease|htmlspecialchars=ENT_QUOTES}</span></span>{/if}<span title="{:\\app\\common\\util\\TemplateText::get('ui.views')}"><svg class="nn-ico" aria-hidden="true"><use href="{$nnSvg|htmlspecialchars=ENT_QUOTES}#eye"></use></svg><span class="mac_hits nn-ltr" data-mid="1" data-id="{$obj.vod_id}" data-type="hits">{$obj.vod_hits|intval}</span><span class="nn-sr">{:\\app\\common\\util\\TemplateText::get('ui.views')}</span></span>{if condition="$nnDuration neq ''"}<span><svg class="nn-ico" aria-hidden="true"><use href="{$nnSvg|htmlspecialchars=ENT_QUOTES}#clock"></use></svg><span class="nn-ltr">{$nnDuration|htmlspecialchars=ENT_QUOTES}</span></span>{/if}</div>
+{if condition="$nnPlayUrl neq ''"}<div class="nn-cta-row"><a class="nn-btn nn-btn-cta" href="{$nnPlayUrl|htmlspecialchars=ENT_QUOTES}"><svg class="nn-ico" aria-hidden="true"><use href="{$nnSvg|htmlspecialchars=ENT_QUOTES}#playbox"></use></svg>{:\\app\\common\\util\\TemplateText::get('ui.watch_online')}</a></div>{/if}
+<div class="nn-acts">
+<button class="digg_link" type="button" data-id="{$obj.vod_id}" data-mid="1" data-type="up" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.like')}"><svg class="nn-ico" aria-hidden="true"><use href="{$nnSvg|htmlspecialchars=ENT_QUOTES}#like"></use></svg><span class="digg_num nn-ltr">{$obj.vod_up|intval}</span></button>
+<button class="digg_link" type="button" data-id="{$obj.vod_id}" data-mid="1" data-type="down" aria-label="{:\\app\\common\\util\\TemplateText::get('nn.dislike')}"><svg class="nn-ico" aria-hidden="true"><use href="{$nnSvg|htmlspecialchars=ENT_QUOTES}#dislike"></use></svg><span class="digg_num nn-ltr">{$obj.vod_down|intval}</span></button>
+<a class="mac_ulog" href="{:mac_url('user/favs')}" data-type="2" data-mid="1" data-id="{$obj.vod_id}"><svg class="nn-ico" aria-hidden="true"><use href="{$nnSvg|htmlspecialchars=ENT_QUOTES}#heart"></use></svg><span>{:\\app\\common\\util\\TemplateText::get('favorites')}</span></a>
+<button type="button" data-nn-share data-url="{$nnShareUrl|htmlspecialchars=ENT_QUOTES}" data-title="{$nnTitle|htmlspecialchars=ENT_QUOTES}"><svg class="nn-ico" aria-hidden="true"><use href="{$nnSvg|htmlspecialchars=ENT_QUOTES}#share"></use></svg><span>{:\\app\\common\\util\\TemplateText::get('share')}</span></button>
+</div>
+<div class="nn-panel">{include file="public/meta"}</div>
+</div>
+{if condition="$nnDesc neq ''"}<section class="nn-panel nn-ddesc" id="nn-desc-box" aria-labelledby="nn-h-desc"><div class="nn-cap"><h2 class="nn-cap-title" id="nn-h-desc">{:\\app\\common\\util\\AutoIcon::ui('file-text', ['class'=>'nn-cap-ai'])}<span>{:\\app\\common\\util\\TemplateText::get('description')}</span></h2></div><p class="nn-desc" id="nn-desc" data-nn-clamp dir="{$nnDescDir}">{$nnDesc|htmlspecialchars=ENT_QUOTES}</p><button class="nn-desc-toggle" type="button" data-nn-more aria-controls="nn-desc" aria-expanded="false" data-more="{:\\app\\common\\util\\TemplateText::get('ui.view_more')}" data-less="{:\\app\\common\\util\\TemplateText::get('nn.show_less')}" hidden></button></section>{/if}
+</div>
+{include file="public/related"}
+{if condition="$nnCommentsOn"}<section class="nn-comments" id="nn-comments" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.comments')}"><div class="mac_comment" data-id="{$obj.vod_id}" data-mid="1"><p>{:\\app\\common\\util\\TemplateText::get('ui.loading_comments')}</p></div></section><script>MAC.Comment.Init();MAC.Comment.Show(1);</script>{/if}
+</div></main>
+{include file="public/foot"}
+</body>
+</html>

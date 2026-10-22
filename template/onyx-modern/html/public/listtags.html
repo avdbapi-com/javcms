@@ -1,0 +1,9 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}$tplTagCount = []; $tplTagForm = []; if (isset($tplTagPool) && is_array($tplTagPool)) { foreach ($tplTagPool as $tplRow) { foreach (explode(',', (string)$tplRow) as $tplTagName) { $tplTagName = trim($tplTagName); $tplTagLabel = trim(\app\common\util\AvdbLanguage::decodeEntities($tplTagName)); if ($tplTagName !== '' && $tplTagLabel !== '' && mb_strlen($tplTagLabel) <= 40) { $tplTagCount[$tplTagLabel] = ($tplTagCount[$tplTagLabel] ?? 0) + 1; $tplTagForm[$tplTagLabel][$tplTagName] = ($tplTagForm[$tplTagLabel][$tplTagName] ?? 0) + 1; } } } } arsort($tplTagCount); $tplTags = []; foreach (array_keys($tplTagCount) as $tplTagLabel) { if (count($tplTags) >= 24) { break; } $tplTagForms = $tplTagForm[$tplTagLabel]; arsort($tplTagForms); $tplTagQ = (string)key($tplTagForms); if (!\app\common\util\AutoIcon::keepTag($tplTagQ)) { continue; } $tplTags[] = ['q' => $tplTagQ, 'l' => (string)$tplTagLabel, 'n' => (int)$tplTagCount[$tplTagLabel], 'ai' => \app\common\util\AutoIcon::icon('tag', $tplTagQ, ['size' => 'sm', 'i' => count($tplTags)])]; }{/php}
+{notempty name="tplTags"}<section class="ox-tagbox" aria-labelledby="ox-tags-h"><h2 class="ox-label" id="ox-tags-h">{:\\app\\common\\util\\TemplateText::get('onyx.popular_tags')}</h2><div class="ox-brackets" data-ai-group>{volist name="tplTags" id="tplTag"}<a href="{:mac_url_search(['class'=>$tplTag['q']])}">{$tplTag.ai}{$tplTag.l|htmlspecialchars=ENT_QUOTES}<sup aria-hidden="true">{$tplTag.n}</sup></a>{/volist}</div></section>{/notempty}

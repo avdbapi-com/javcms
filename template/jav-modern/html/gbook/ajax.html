@@ -1,0 +1,14 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}header('X-Robots-Tag: noindex, follow');{/php}
+<section class="stui-gbook" data-native-fragment="true">
+{maccms:gbook num="10" paging="yes" pageurl="gbook/index" order="desc" by="id"}
+<ul class="stui-gbook__item"><li class="name"><h2>{$vo.gbook_name|htmlspecialchars=ENT_QUOTES}</h2></li><li class="cont">{$vo.gbook_content|htmlspecialchars=ENT_QUOTES}{if condition="$vo.gbook_reply_time gt 0"}<p class="text-red">{:\\app\\common\\util\\TemplateText::get('admin_reply')} {$vo.gbook_reply|htmlspecialchars=ENT_QUOTES}</p>{/if}</li><li class="foot"><time>{$vo.gbook_time|date='Y-m-d H:i:s',###}</time></li></ul>
+{/maccms:gbook}
+{if condition="$__PAGING__.record_total eq 0"}<p class="gallery-empty">{:\\app\\common\\util\\TemplateText::get('ui.no_messages_yet')}</p>{/if}
+{include file="block/page"}</section>

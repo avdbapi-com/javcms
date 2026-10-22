@@ -1,0 +1,25 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="honey" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/new"}
+{include file="public/include"}
+</head>
+{assign name="$maccms.aid" value="9999" /}
+<body class="hn-page-list hn-page-rank">
+{include file="public/head"}
+<main id="main-content" class="hn-main"><div class="hn-wrap">
+{php}$hnRankOn = 'new';{/php}{include file="public/ranktabs"}
+<div class="hn-grid" data-grid-fill>{maccms:vod num="20" paging="yes" type="all" order="desc" by="time" pageurl="label/new"}{include file="public/vodbox"}{/maccms:vod}</div>
+{include file="public/listend"}
+</div></main>
+{include file="public/foot"}
+</body>
+</html>
+

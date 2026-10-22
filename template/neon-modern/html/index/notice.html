@@ -1,0 +1,12 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}$nnHotT = []; foreach (explode(',', (string)($maccms['search_hot'] ?? '')) as $nnHotW) { $nnHotW = trim($nnHotW); if (mb_strlen($nnHotW, 'UTF-8') >= 2 && \app\common\util\AutoIcon::keepTag($nnHotW) && !in_array($nnHotW, $nnHotT, true)) { $nnHotT[] = $nnHotW; } } $nnHotT = array_slice($nnHotT, 0, 26);{/php}
+<div class="nn-ticker" role="region" aria-label="{if condition="!empty($nnHotT)"}{:\\app\\common\\util\\TemplateText::get('nn.hot_searches')}{else/}{:\\app\\common\\util\\TemplateText::get('ui.categories')}{/if}">
+  <span class="nn-ticker-led" aria-hidden="true"><svg class="nn-ico" aria-hidden="true"><use href="{$nnSvg|htmlspecialchars=ENT_QUOTES}#zap"></use></svg><span>{if condition="!empty($nnHotT)"}{:\\app\\common\\util\\TemplateText::get('nn.hot_searches')}{else/}{:\\app\\common\\util\\TemplateText::get('ui.categories')}{/if}</span></span>
+  <div class="nn-ticker-track" data-fx="marquee" data-fx-speed="36"><ul class="nn-ticker-list">{if condition="!empty($nnHotT)"}{volist name="nnHotT" id="nnHotWord"}<li><a href="{:mac_url_search(['wd'=>$nnHotWord])}">{:\\app\\common\\util\\AutoIcon::icon('tag', $nnHotWord, ['size'=>'sm', 'tint'=>'none'])}{$nnHotWord|htmlspecialchars=ENT_QUOTES}</a></li>{/volist}{else/}{maccms:type ids="parent" flag="vod" order="asc" by="sort" id="nnTkCat" hide_empty="1"}<li><a href="{:mac_url_type($nnTkCat)}">{:\\app\\common\\util\\AutoIcon::icon('category', $nnTkCat['type_name'], ['size'=>'sm', 'tint'=>'none'])}{:\\app\\common\\util\\TemplateText::get(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)($nnTkCat['type_name'] ?? '')))}</a></li>{/maccms:type}{/if}</ul></div>
+</div>

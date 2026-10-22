@@ -1,0 +1,30 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}
+$tplCardN = isset($tplCardN) ? $tplCardN + 1 : 1;
+$tplCardName = trim(strip_tags(\app\common\util\AvdbLanguage::decodeEntities(!empty($vo['vod_display_name']) ? $vo['vod_display_name'] : ($vo['vod_name'] ?? ''))));
+$tplCardHits = intval($vo['vod_hits'] ?? 0);
+$tplCardTier = $tplCardHits >= 5000 ? 5 : ($tplCardHits >= 1000 ? 4 : ($tplCardHits >= 250 ? 3 : ($tplCardHits >= 50 ? 2 : ($tplCardHits >= 5 ? 1 : 0))));
+$tplCardHc = $tplCardHits >= 1000000 ? round($tplCardHits / 1000000, 1) . 'M' : ($tplCardHits >= 1000 ? round($tplCardHits / 1000, 1) . 'K' : (string)$tplCardHits);
+$tplCardCode = \app\common\util\AvdbLanguage::displayCode($vo);
+if ($tplCardCode === '' || stripos($tplCardCode, 'avdb-') === 0 || strlen($tplCardCode) > 16) { $tplCardCode = ''; }
+$tplCardScore = round((float)($vo['vod_score'] ?? 0), 1); $tplCardG = (int)round($tplCardScore * 10); $tplChipMode = isset($tplChipMode) ? (string)$tplChipMode : '';
+$tplCardDur = trim((string)($vo['vod_duration'] ?? ''));
+$tplCardRank = 0; $tplCardRc = ''; $tplCardRcl = '';
+if (!empty($tplRankOn)) {
+    $tplRankN = isset($tplRankN) ? $tplRankN + 1 : 1;
+    $tplCardRank = $tplRankN + intval($tplRankBase ?? 0);
+    $tplRankRamp = array('#fff3c4','#ffe7a3','#ffd76a','#ffc531','#ffb02a','#ff9a1f','#ff8a17','#ff7a12','#f9612a','#ee3b3b','#dd3159','#c92670','#b0207f','#952190','#7a1f9a','#6b28b8','#7a45d8','#8558ee','#8f6bff','#9a82ff');
+    $tplCardRc = $tplCardRank <= 20 ? $tplRankRamp[$tplCardRank - 1] : '#9a82ff';
+    $tplRankRampL = array('#8f2f00','#962f00','#9d3300','#a43800','#ab3a00','#b23c00','#b5311a','#b8261f','#b51d3c','#b0175f','#a1196e','#911c7d','#7f1f8c','#6d2399','#6327a6','#5b2fd6','#5b2fd6','#5b2fd6','#5b2fd6','#5b2fd6');
+    $tplCardRcl = $tplCardRank <= 20 ? $tplRankRampL[$tplCardRank - 1] : '#5b2fd6';
+}
+$tplCardFresh = !empty($tplFreshOn) && intval($vo['vod_time'] ?? 0) >= intval($tplFreshFrom ?? 0);
+$tplCardEagerOn = isset($tplCardEager) && $tplCardN <= intval($tplCardEager);
+$tplCardPic = mac_url_img(mac_default($vo['vod_pic'] ?? '', $maccms['path_tpl'] . 'assets/brand/ph-dark.svg'));
+{/php}<li class="t-card heat-{$tplCardTier}{if condition="$tplCardRank gt 0 && $tplCardRank elt 3"} is-top{$tplCardRank}{/if}"><div class="t-card-in">{if condition="$tplCardRank gt 0"}<span class="t-rank" style="--rc:{$tplCardRc};--rcl:{$tplCardRcl}" aria-hidden="true">{$tplCardRank|sprintf='%02d',###}</span>{/if}<a class="t-thumb" href="{:mac_url_vod_play($vo)}" tabindex="-1" aria-hidden="true" data-fx="skeleton"><img src="{$tplCardPic|htmlspecialchars=ENT_QUOTES}" alt="" width="320" height="180" {if condition="$tplCardEagerOn"}loading="eager" fetchpriority="high"{else/}loading="lazy"{/if} decoding="async">{if condition="$tplChipMode eq 'score' && $tplCardScore gt 0"}<span class="t-gchip" style="--g:{$tplCardG}"><i></i>{$tplCardScore}</span>{elseif condition="$tplChipMode eq 'up'"/}<span class="t-code t-up"><svg class="t-i" aria-hidden="true"><use href="{$tplIcons}#thumb-up"></use></svg>{$vo.vod_up|intval}</span>{elseif condition="$tplCardCode neq ''"/}<span class="t-code">{$tplCardCode|htmlspecialchars=ENT_QUOTES}</span>{/if}<span class="t-heat" title="{$tplCardHits|number_format} {:\\app\\common\\util\\TemplateText::get('ui.views')}"><svg class="t-i" aria-hidden="true"><use href="{$tplIcons}#flame"></use></svg>{$tplCardHc}</span>{if condition="$tplCardDur neq ''"}<span class="t-dur">{$tplCardDur|htmlspecialchars=ENT_QUOTES}</span>{/if}<span class="t-disc"><svg class="t-i" aria-hidden="true"><use href="{$tplIcons}#play"></use></svg></span>{if condition="$tplCardFresh"}<span class="t-spark"></span>{/if}</a><span class="t-therm" aria-hidden="true"></span><h3{php}echo \app\common\util\AvdbLanguage::langAttr(isset($vo) && is_array($vo) ? $vo : []);{/php} class="t-ct"><a href="{:mac_url_vod_play($vo)}" title="{$tplCardName|htmlspecialchars=ENT_QUOTES}"><span>{$tplCardName|htmlspecialchars=ENT_QUOTES}</span></a></h3><p class="t-cm"><time datetime="{$vo.vod_time|date='Y-m-d',###}">{$vo.vod_time|date='Y-m-d',###}</time>{if condition="$tplCardScore gt 0"}<span class="t-score"><svg class="t-i" aria-hidden="true"><use href="{$tplIcons}#star"></use></svg>{$tplCardScore}</span>{/if}</p></div></li>

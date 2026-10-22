@@ -1,0 +1,36 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="velvet-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}" data-fx="vt smooth" data-fx-lerp="0.09" data-fx-vt-style="velvet-modern">
+<head>
+{include file="seo/vod_type"}
+{include file="public/include"}
+</head>
+<body class="vp-page-list">
+{include file="public/head"}
+<main id="main-content" class="vp-main">
+  <div class="vp-wrap">
+    <header class="vp-bill" data-ai-group>
+      {:\\app\\common\\util\\AutoIcon::icon('category', $obj['type_name'] ?? '', ['size'=>'xl', 'plate'=>true, 'class'=>'vp-bill-ico'])}
+      <p class="vp-eyebrow">{:\\app\\common\\util\\TemplateText::get('vp.playbill')}</p>
+      <h1 class="vp-bill-title">{:\\app\\common\\util\\TemplateText::get(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)($obj['type_name'] ?? '')))}</h1>
+      <p class="vp-bill-count">{:\\app\\common\\util\\TemplateText::get('vp.titles_count', ['count'=>number_format((float)mac_data_count($obj['type_id'],'all'))])}</p>
+      <span class="vp-orn" aria-hidden="true"></span>
+      <div class="vp-bill-tools">
+        <nav class="vp-tabs" aria-label="{:\\app\\common\\util\\TemplateText::get('sort_by')}"><a class="vp-tab" href="{:mac_url_type($obj)}" aria-current="page">{:\\app\\common\\util\\AutoIcon::ui('clock', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ui.latest')}</a><a class="vp-tab" href="{:mac_url_type($obj,['by'=>'hits'],'show')}">{:\\app\\common\\util\\AutoIcon::ui('flame', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ui.popular')}</a><a class="vp-tab" href="{:mac_url_type($obj,['by'=>'score'],'show')}">{:\\app\\common\\util\\AutoIcon::ui('star', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('highest_rated')}</a><a class="vp-tab" href="{:mac_url_type($obj,['by'=>'up'],'show')}">{:\\app\\common\\util\\AutoIcon::ui('thumbs-up', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('most_liked')}</a></nav>
+        {include file="public/catchips"}
+      </div>
+    </header>
+    {include file="public/subcats"}<div class="vp-grid" data-grid-fill data-fx="stagger">{maccms:vod num="20" paging="yes" type="current" order="desc" by="time" pageurl="vod/type"}{include file="public/vodbox"}{/maccms:vod}</div>
+    {if condition="$__PAGING__.record_total eq 0"}{include file="public/empty"}{/if}
+    {include file="public/list_note"}{include file="public/paging"}
+  </div>
+</main>
+{include file="public/foot"}
+</body>
+</html>

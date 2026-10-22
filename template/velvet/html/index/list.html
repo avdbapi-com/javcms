@@ -1,0 +1,14 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{maccms:type ids="parent" flag="vod" order="asc" by="sort" id="vvCat" key="vvCatKey" hide_empty="1" not="'.intval($GLOBALS['jvPbShown'] ?? 0).'"}
+<section class="vv-module" data-vv-module data-vv-reveal data-ai-group>
+  <div class="vv-mod-head" data-ai-hot><h2 class="vv-mod-h2cat"><a class="vv-mod-link" href="{:mac_url_type($vvCat)}"><span class="vv-tile vv-tile--s{:\\app\\common\\util\\AutoIcon::slot($vvCat['type_name'] ?? '')}" aria-hidden="true">{:\\app\\common\\util\\AutoIcon::icon('category', $vvCat['type_name'] ?? '', ['tint'=>'none', 'class'=>'vv-i vv-tile-ai'])}</span><span class="vv-mod-link-t">{:\\app\\common\\util\\TemplateText::get(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)($vvCat['type_name'] ?? '')))}</span></a></h2><span class="vv-mod-info">{:number_format((float)mac_data_count($vvCat['type_id'],'all'))} {:\\app\\common\\util\\TemplateText::get('ui.videos')}</span></div>
+  <div class="vv-mod-tools"><a class="vv-pill" href="{:mac_url_type($vvCat)}">{:\\app\\common\\util\\AutoIcon::ui('arrow-right', ['class'=>'vv-i', 'size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('velvet.more')}</a></div>
+  <div class="vv-mod-body"><div class="vv-grid" data-grid-fill>{maccms:vod num="10" type="'.$vvCat['type_id'].'" order="desc" by="time" paging="no" id="vo"}{include file="public/vodbox"}{/maccms:vod}</div></div>
+</section>
+{/maccms:type}

@@ -1,0 +1,8 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{include file="public/brand"}<ol class="ox-idxtable ox-modlist">{maccms:topic num="20" paging="yes" type="all" pageurl="topic/search" order="desc" by="time" id="vo"}<li><a class="ox-mrow" href="{:mac_url_topic_detail($vo)}"><span class="ox-idx" aria-hidden="true">[{$key|sprintf='%03d',###}]</span><span class="ox-mth"><img src="{$vo.topic_pic|mac_default=$tplNoPic|mac_url_img|htmlspecialchars=ENT_QUOTES}" alt="" width="128" height="72" loading="lazy" decoding="async"></span><span class="ox-t">{:htmlspecialchars(trim(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)($vo['topic_name'] ?? ''))), ENT_QUOTES, 'UTF-8')}</span><span class="ox-c">{:number_format((int)($vo['topic_hits'] ?? 0))} {:\\app\\common\\util\\TemplateText::get('ui.views')}</span></a></li>{/maccms:topic}</ol>{if condition="$__PAGING__.record_total eq 0"}<p class="ox-results-line">{:\\app\\common\\util\\TemplateText::get('ox.zero_results')}</p>{/if}{include file="public/paging"}

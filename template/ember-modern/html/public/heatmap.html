@@ -1,0 +1,50 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}
+$emtHeatCtx = isset($emtHeatCtx) ? (string)$emtHeatCtx : 'home';
+if (!isset($emtHeatRows)) {
+    $emtHeatRows = array();
+    $emtHeatTotal = intval(mac_data_count(0, 'all'));
+}
+{/php}{if condition="!$emtHeatRows"}{maccms:type ids="parent" flag="vod" order="asc" by="sort" id="tplHm" hide_empty="1"}{php}
+    $emtHmCount = intval(mac_data_count($tplHm['type_id'], 'all'));
+    $emtHmBucket = $emtHmCount >= 100000 ? 3 : ($emtHmCount >= 50000 ? 2 : ($emtHmCount >= 15000 ? 1 : 0));
+    $emtHeatRows[] = array(
+        'id' => intval($tplHm['type_id']),
+        'name' => \app\common\util\TemplateText::raw(htmlspecialchars_decode((string)$tplHm['type_name'], ENT_QUOTES)),
+        'url' => (string)mac_url_type($tplHm),
+        'tn' => (string)$tplHm['type_name'],
+        'count' => $emtHmCount,
+        'b' => $emtHmBucket,
+        'n' => count($emtHeatRows),
+    );
+{/php}{/maccms:type}{php}
+    usort($emtHeatRows, function ($a, $b) { return $a['b'] === $b['b'] ? $a['n'] - $b['n'] : $b['b'] - $a['b']; });
+    $emtHeatMax = 1;
+    foreach ($emtHeatRows as $emtHr) { $emtHeatMax = max($emtHeatMax, $emtHr['count']); }
+    $emtCellsD = 0; $emtCellsP = 0; $emtCellsT = 0;
+    foreach ($emtHeatRows as $emtHi => $emtHr) {
+        $emtSpan = array(3 => array(3, 2), 2 => array(3, 1), 1 => array(2, 1), 0 => array(1, 1));
+        $emtHeatRows[$emtHi]['cs'] = $emtSpan[$emtHr['b']][0];
+        $emtHeatRows[$emtHi]['rs'] = $emtSpan[$emtHr['b']][1];
+        $emtHeatRows[$emtHi]['pc'] = $emtHi === 0 ? 2 : 1;
+        $emtHeatRows[$emtHi]['pct'] = max(4, (int)round(100 * $emtHr['count'] / $emtHeatMax));
+        $emtHeatRows[$emtHi]['fmt'] = number_format($emtHr['count']);
+        $emtCellsD += $emtSpan[$emtHr['b']][0] * $emtSpan[$emtHr['b']][1];
+        $emtCellsP += $emtHi === 0 ? 2 : 1;
+        $emtCellsT += ($emtHr['b'] === 0 ? 2 : $emtSpan[$emtHr['b']][0]) * $emtSpan[$emtHr['b']][1];
+    }
+    $emtAllSpanD = (6 - $emtCellsD % 6) % 6; if ($emtAllSpanD === 0) { $emtAllSpanD = 6; }
+    $emtAllSpanP = (2 - $emtCellsP % 2) % 2; if ($emtAllSpanP === 0) { $emtAllSpanP = 2; }
+    $emtAllSpanT = (6 - $emtCellsT % 6) % 6; if ($emtAllSpanT === 0) { $emtAllSpanT = 6; } /* tablets: one-column tiles span two */
+{/php}{/if}
+{if condition="$emtHeatCtx eq 'sheet' || $emtHeatCtx eq 'map'"}
+<ul class="t-heatlist" data-ai-group>{volist name="emtHeatRows" id="emtRow"}<li class="b{$emtRow.b}"><a href="{$emtRow.url|htmlspecialchars=ENT_QUOTES}">{:\\app\\common\\util\\AutoIcon::icon('category', $emtRow['tn'], ['i'=>$key])}<span class="t-hl-name">{$emtRow.name|htmlspecialchars=ENT_QUOTES}</span><span class="t-hl-count">{$emtRow.fmt}</span><span class="t-hl-bar" aria-hidden="true"><i style="--w:{$emtRow.pct}%"></i></span></a></li>{/volist}<li class="is-all"><a href="{:mac_url('label/sort')}">{:\\app\\common\\util\\AutoIcon::navIcon('all', '')}<span class="t-hl-name">{:\\app\\common\\util\\TemplateText::get('ui.all_videos')}</span><span class="t-hl-count">{$emtHeatTotal|number_format}</span><span class="t-hl-bar" aria-hidden="true"><i style="--w:100%"></i></span></a></li></ul>
+{else/}
+<ul class="t-heatmap{if condition="$emtHeatCtx eq 'mega'"} is-mini{/if}" data-ai-group>{volist name="emtHeatRows" id="emtRow"}<li class="b{$emtRow.b}" style="--cs:{$emtRow.cs};--rs:{$emtRow.rs};--pc:{$emtRow.pc}"><a href="{$emtRow.url|htmlspecialchars=ENT_QUOTES}">{if condition="$emtHeatCtx eq 'mega'"}{:\\app\\common\\util\\AutoIcon::icon('category', $emtRow['tn'], ['i'=>$key, 'class'=>'t-hm-ic'])}{else/}{:\\app\\common\\util\\AutoIcon::icon('category', $emtRow['tn'], ['size'=>'lg', 'plate'=>true, 'i'=>$key, 'class'=>'t-hm-ic'])}{/if}<span class="t-hm-name">{$emtRow.name|htmlspecialchars=ENT_QUOTES}</span><span class="t-hm-count">{if condition="$emtHeatCtx eq 'home'"}<b data-fx="count" data-fx-to="{$emtRow.count}">{$emtRow.fmt}</b>{else/}<b>{$emtRow.fmt}</b>{/if}</span><span class="t-hm-bar" aria-hidden="true"><i style="--w:{$emtRow.pct}%"></i></span></a></li>{/volist}<li class="is-all" style="--cs:{$emtAllSpanD};--rs:1;--pc:{$emtAllSpanP};--tc:{$emtAllSpanT}"><a href="{:mac_url('label/sort')}">{:\\app\\common\\util\\AutoIcon::navIcon('all', '')}<span class="t-hm-name">{:\\app\\common\\util\\TemplateText::get('ui.all_videos')}</span><span class="t-hm-count"><b>{$emtHeatTotal|number_format}</b></span><svg class="t-i" aria-hidden="true"><use href="{$tplIcons}#arrow-right"></use></svg></a></li></ul>
+{/if}

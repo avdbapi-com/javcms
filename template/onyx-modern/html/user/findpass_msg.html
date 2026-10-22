@@ -1,0 +1,64 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="onyx-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="public/include"}
+<title>{:\\app\\common\\util\\TemplateText::get('ui.reset_password')} - {:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$maccms['site_name']), ENT_QUOTES, 'UTF-8')}</title>
+<meta name="robots" content="noindex, follow">
+{include file="user/include"}
+</head>
+<body class="page-user page-auth">
+{include file="public/head"}
+<main id="main-content" class="wrap">
+{php}$tplAc = (isset($param['ac']) && $param['ac'] === 'phone') ? 'phone' : 'email';{/php}
+<div class="auth">
+  <div class="auth-card">
+    <h1>{:\\app\\common\\util\\TemplateText::get('ui.reset_password')}</h1>
+    <p class="sub">{:\\app\\common\\util\\TemplateText::get('ui.enter_email_or_phone')}</p>
+    <form id="fm" method="post" action="{:mac_url('user/findpass_msg')}" onsubmit="return false">
+      <input type="hidden" name="ac" value="{$tplAc}">
+      <div class="field"><label for="to">{:\\app\\common\\util\\AutoIcon::ui('send', ['size'=>'sm'])}{if condition="$tplAc eq 'phone'"}{:\\app\\common\\util\\TemplateText::get('ui.phone')}{else/}{:\\app\\common\\util\\TemplateText::get('ui.email')}{/if}</label><input class="input" type="{if condition="$tplAc eq 'phone'"}tel{else/}email{/if}" id="to" name="to" maxlength="60"></div>
+      <div class="field"><label for="verify">{:\\app\\common\\util\\AutoIcon::ui('shield', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ui.verification_code')}</label><div class="verify-row"><input class="input" type="text" id="verify" name="verify" maxlength="6" autocomplete="off"><img id="verify_img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="{:mac_url('verify/index')}" hidden alt="{:\\app\\common\\util\\TemplateText::get('ui.verification_code')}" title="{:\\app\\common\\util\\TemplateText::get('not_to_see_change_one')}" role="button" tabindex="0" onclick="this.hidden=false;this.src=this.getAttribute('data-src').split('?')[0]+'?'+Date.now()"></div></div>
+      <div class="form-actions"><button class="btn" type="button" id="btn_send">{:\\app\\common\\util\\TemplateText::get('ui.send_mail')}</button></div>
+      <hr style="border:0;border-top:1px solid var(--line);margin:18px 0">
+      <div class="field"><label for="code">{:\\app\\common\\util\\AutoIcon::ui('key', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ui.verification_code')}</label><input class="input" type="text" id="code" name="code" maxlength="20"></div>
+      <div class="field"><label for="user_pwd">{:\\app\\common\\util\\AutoIcon::ui('lock', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ui.new_password')}</label><input class="input" type="password" id="user_pwd" name="user_pwd" maxlength="20" autocomplete="new-password"></div>
+      <div class="field"><label for="user_pwd2">{:\\app\\common\\util\\AutoIcon::ui('lock', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ui.confirm_password')}</label><input class="input" type="password" id="user_pwd2" name="user_pwd2" maxlength="20" autocomplete="new-password"></div>
+      <button class="btn btn-fill btn-lg btn-block" type="button" id="btn_submit">{:\\app\\common\\util\\TemplateText::get('ui.reset_password')}</button>
+      <div class="auth-links"><a href="{:mac_url('user/findpass')}">{:\\app\\common\\util\\TemplateText::get('ui.password_problem')}</a><a href="{:mac_url('user/login')}">{:\\app\\common\\util\\TemplateText::get('ui.log_in_now')}</a></div>
+    </form>
+  </div>
+</div>
+</main>
+{include file="public/foot"}
+<script>
+$(function () {
+  var m = window.TemplateMessages || {};
+  $('#btn_send').on('click', function () {
+    if ($.trim($('#to').val()) === '') { TemplateUI.message(m['ui.enter_email_or_phone']); $('#to').focus(); return false; }
+    var btn = $(this), btnLabel = btn.text(); btn.prop('disabled', true).text(m['ui.loading']);
+    $.ajax({ url: "{:mac_url('user/findpass_msg')}", type: 'post', dataType: 'json', data: $('#fm').serialize(),
+      success: function (r) { TemplateUI.message(r.msg); },
+      complete: function () { $('#verify_img').click(); btn.prop('disabled', false).text(btnLabel); } });
+  });
+  $('#btn_submit').on('click', function () {
+    if ($.trim($('#to').val()) === '') { TemplateUI.message(m['ui.enter_email_or_phone']); $('#to').focus(); return false; }
+    if ($('#code').val() === '') { TemplateUI.message(m['ui.please_enter_the_verification_code_0d14a4']); $('#code').focus(); return false; }
+    if ($('#user_pwd').val() === '') { TemplateUI.message(m['ui.please_enter_the_new_password_ec0b3e']); $('#user_pwd').focus(); return false; }
+    if ($('#user_pwd').val() !== $('#user_pwd2').val()) { TemplateUI.message(m['ui.the_second_password_is_inconsistent']); $('#user_pwd2').focus(); return false; }
+    var btn = $(this), btnLabel = btn.text(); btn.prop('disabled', true).text(m['ui.loading']);
+    $.ajax({ url: "{:mac_url('user/findpass_reset')}", type: 'post', dataType: 'json',
+      data: { ac: $('input[name="ac"]').val(), to: $('#to').val(), code: $('#code').val(), user_pwd: $('#user_pwd').val(), user_pwd2: $('#user_pwd2').val() },
+      success: function (r) { TemplateUI.message(r.msg); if (r.code == 1) { location.href = "{:mac_url('user/login')}"; } },
+      complete: function () { btn.prop('disabled', false).text(btnLabel); } });
+  });
+});
+</script>
+</body>
+</html>

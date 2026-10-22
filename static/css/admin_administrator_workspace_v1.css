@@ -1,0 +1,420 @@
+/*
+ * This file is part of JavCMS - https://javcms.net
+ * Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+ * License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+ * See the LICENSE and NOTICE files that come with JavCMS.
+ * Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Telegram: https://t.me/avdb_api
+ */
+/* admin-administrator-workspace-v1 */
+body.admin-dark .admin-administrator-workspace-v1,
+body.admin-dark .admin-administrator-editor-v1 {
+    /* V9: private palette mapped to the kit tokens (admin_ux.css) */
+    --aa-surface: var(--ax-surface);
+    --aa-surface-2: var(--ax-bg);
+    --aa-surface-3: var(--ax-raised);
+    --aa-line: var(--ax-line);
+    --aa-line-soft: var(--ax-line);
+    --aa-ink: var(--ax-text);
+    --aa-muted: var(--ax-muted);
+    --aa-cyan: var(--ax-accent);
+    --aa-green: var(--ax-ok);
+    color: var(--aa-ink);
+}
+
+body.admin-dark .admin-administrator-workspace-v1 {
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+body.admin-dark .admin-administrator-hero {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 18px;
+    margin-bottom: 14px;
+    padding: 18px 20px;
+    border: 1px solid var(--aa-line);
+    border-radius: 14px;
+    background: #111c2d;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, .18);
+}
+
+body.admin-dark .admin-administrator-hero__copy {
+    min-width: 0;
+}
+
+body.admin-dark .admin-administrator-kicker {
+    display: block;
+    margin-bottom: 4px;
+    color: #75e7c2;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: .14em;
+}
+
+body.admin-dark .admin-administrator-title {
+    margin: 0;
+    color: #f4f8ff;
+    font-size: 23px;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+body.admin-dark .admin-administrator-summary {
+    max-width: 680px;
+    margin: 6px 0 0;
+    color: var(--aa-muted);
+    font-size: 13px;
+    line-height: 1.55;
+}
+
+body.admin-dark .admin-administrator-count {
+    display: inline-flex;
+    align-items: center;
+    min-height: 32px;
+    padding: 0 11px;
+    border: 1px solid rgba(99, 216, 234, .3);
+    border-radius: 999px;
+    color: #b8f4f9;
+    background: rgba(99, 216, 234, .1);
+    font-size: 12px;
+    font-weight: 750;
+    white-space: nowrap;
+}
+
+body.admin-dark .admin-administrator-workspace-v1 > .my-toolbar-box {
+    margin-bottom: 12px;
+    padding: 11px;
+    border: 1px solid var(--aa-line);
+    border-radius: 12px;
+    background: var(--aa-surface);
+}
+
+body.admin-dark .admin-administrator-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+body.admin-dark .admin-administrator-actions .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-height: 38px;
+    margin: 0 !important;
+    padding: 0 13px;
+    border-radius: 8px;
+    font-weight: 750;
+}
+
+body.admin-dark .admin-administrator-table-wrap {
+    width: 100%;
+    overflow-x: auto;
+    border: 1px solid var(--aa-line);
+    border-radius: 12px;
+    background: var(--aa-surface);
+    scrollbar-color: #36516f var(--aa-surface-2);
+    scrollbar-width: thin;
+}
+
+body.admin-dark .admin-administrator-table-wrap .layui-table {
+    width: 100%;
+    min-width: 900px;
+    margin: 0;
+    border: 0;
+    background: transparent;
+}
+
+body.admin-dark .admin-administrator-table-wrap .layui-table thead tr {
+    background: var(--aa-surface-3);
+}
+
+body.admin-dark .admin-administrator-table-wrap .layui-table th {
+    color: #b8c8da;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: .045em;
+    text-transform: uppercase;
+}
+
+body.admin-dark .admin-administrator-table-wrap .layui-table td {
+    color: var(--aa-ink);
+    border-color: var(--aa-line-soft);
+}
+
+body.admin-dark .admin-administrator-table-wrap .layui-table tbody tr:hover {
+    background: rgba(99, 216, 234, .055);
+}
+
+body.admin-dark .admin-administrator-table-wrap td[data-label="Operation"] .badge {
+    border: 1px solid rgba(99, 216, 234, .24);
+    color: #bceff4;
+    background: rgba(99, 216, 234, .09);
+}
+
+/* V4: clip instead of hidden so the sticky save bar can stick */
+body.admin-dark .admin-administrator-editor-v1 > form {
+    overflow: clip;
+}
+
+body.admin-dark .admin-administrator-editor-v1 .admin-administrator-permission-panel {
+    min-width: 0;
+}
+
+body.admin-dark .admin-administrator-editor-v1 .role-list-form,
+body.admin-dark .admin-administrator-editor-v1 .permission-list,
+body.admin-dark .admin-administrator-editor-v1 .permission-list dt,
+body.admin-dark .admin-administrator-editor-v1 .permission-list dd {
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+body.admin-dark .admin-administrator-editor-v1 .permission-list {
+    margin-bottom: 8px;
+    border-color: var(--aa-line);
+    border-radius: 9px;
+    overflow: hidden;
+    background: var(--aa-surface-2);
+}
+
+body.admin-dark .admin-administrator-editor-v1 .permission-list dt {
+    padding: 8px 10px;
+    background: var(--aa-surface-3);
+}
+
+body.admin-dark .admin-administrator-editor-v1 .permission-list dd {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px 10px;
+    padding: 8px 10px;
+}
+
+body.admin-dark .admin-administrator-editor-v1 .permission-list .layui-form-checkbox {
+    max-width: 100%;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body.admin-dark .admin-administrator-editor-v1 .permission-list .layui-form-checkbox > div {
+    max-width: none;
+    white-space: nowrap;
+    overflow-wrap: normal;
+}
+
+/* V5: one label per cell, never one letter per line */
+body.admin-dark .admin-administrator-editor-v1 .permission-list dd {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+}
+
+/* Role editor (ADMIN-IA-BRIEF 1.6 P4-P7): blocks per menu group, one row per page with its actions */
+body.admin-dark .admin-administrator-editor-v1 .role-form { max-width: 1100px; }
+body.admin-dark .admin-administrator-editor-v1 .role-label { display: block; margin-bottom: 6px; color: var(--ax-text); font-weight: 600; }
+body.admin-dark .admin-administrator-editor-v1 .role-status { display: flex; flex-wrap: wrap; gap: 8px 20px; }
+body.admin-dark .admin-administrator-editor-v1 .role-status label { display: inline-flex; align-items: center; gap: 8px; min-height: 40px; cursor: pointer; }
+body.admin-dark .admin-administrator-editor-v1 .role-form input[type="radio"],
+body.admin-dark .admin-administrator-editor-v1 .role-form input[type="checkbox"] { width: 18px; height: 18px; margin: 0; flex: 0 0 18px; accent-color: var(--ax-accent); cursor: pointer; }
+body.admin-dark .admin-administrator-editor-v1 .role-presets { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 4px 0 6px; }
+body.admin-dark .admin-administrator-editor-v1 .role-presets__label { color: var(--ax-muted); font-size: 13px; margin-right: 4px; }
+body .admin-administrator-editor-v1 .role-presets .ax-btn { max-width: 100%; height: auto; min-height: 36px; white-space: normal; text-align: left; overflow-wrap: anywhere; padding-top: 6px; padding-bottom: 6px; line-height: 1.35; }
+body.admin-dark .admin-administrator-editor-v1 .role-block { margin-top: 12px; border: 1px solid var(--ax-line); border-radius: var(--ax-r); background: var(--ax-bg); }
+body.admin-dark .admin-administrator-editor-v1 .role-block > summary { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 44px; padding: 8px 14px; cursor: pointer; color: var(--ax-text); font-weight: 650; list-style: none; }
+body.admin-dark .admin-administrator-editor-v1 .role-block > summary::-webkit-details-marker { display: none; }
+body.admin-dark .admin-administrator-editor-v1 .role-block > summary::before { content: ""; width: 8px; height: 8px; margin-right: 4px; border-right: 2px solid var(--ax-faint); border-bottom: 2px solid var(--ax-faint); transform: rotate(-45deg); transition: transform .2s ease-out; flex: 0 0 auto; }
+body.admin-dark .admin-administrator-editor-v1 .role-block[open] > summary::before { transform: rotate(45deg); }
+body.admin-dark .admin-administrator-editor-v1 .role-block__title { flex: 1 1 auto; }
+body.admin-dark .admin-administrator-editor-v1 .role-block__count { color: var(--ax-faint); font-size: 12.5px; font-weight: 400; white-space: nowrap; }
+body.admin-dark .admin-administrator-editor-v1 .role-block--advanced { border-style: dashed; }
+body.admin-dark .admin-administrator-editor-v1 .role-rows { margin: 0; padding: 0 14px 8px; list-style: none; }
+body.admin-dark .admin-administrator-editor-v1 .role-row { display: grid; grid-template-columns: minmax(200px, 260px) minmax(0, 1fr); gap: 6px 16px; padding: 10px 0; border-top: 1px solid var(--ax-line); list-style: none; }
+body.admin-dark .admin-administrator-editor-v1 .role-page { display: flex; align-items: flex-start; gap: 10px; min-width: 0; cursor: pointer; }
+body.admin-dark .admin-administrator-editor-v1 .role-page--plain { cursor: default; padding-left: 28px; }
+body.admin-dark .admin-administrator-editor-v1 .role-page > span { display: flex; flex-direction: column; min-width: 0; }
+body.admin-dark .admin-administrator-editor-v1 .role-page strong { color: var(--ax-text); font-weight: 600; overflow-wrap: anywhere; }
+body.admin-dark .admin-administrator-editor-v1 .role-page__hint { color: var(--ax-faint); font-size: 12px; font-weight: 400; }
+body.admin-dark .admin-administrator-editor-v1 .role-entries { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 6px 16px; min-width: 0; }
+body.admin-dark .admin-administrator-editor-v1 .role-entry { display: flex; align-items: flex-start; gap: 8px; min-height: 28px; color: var(--ax-muted); font-size: 13px; line-height: 18px; cursor: pointer; overflow-wrap: normal; }
+body.admin-dark .admin-administrator-editor-v1 .is-always { cursor: default; opacity: .85; }
+@media (max-width: 767px) {
+    body.admin-dark .admin-administrator-editor-v1 .role-row { grid-template-columns: 1fr; }
+    body.admin-dark .admin-administrator-editor-v1 .role-entries { grid-template-columns: 1fr; padding-left: 28px; row-gap: 0; }
+    /* repair r2 (visual R2-6): every permission row is a 44 px tap target on phones */
+    body.admin-dark .admin-administrator-editor-v1 .role-entry { min-height: 44px; align-items: center; }
+    body.admin-dark .admin-administrator-editor-v1 label.role-page { min-height: 44px; align-items: center; }
+}
+
+@media (max-width: 760px) {
+    body.admin-dark .admin-administrator-workspace-v1,
+    body.admin-dark .admin-administrator-editor-v1 {
+        padding: 8px !important;
+    }
+
+    body.admin-dark .admin-administrator-hero {
+        display: block;
+        padding: 15px;
+    }
+
+    body.admin-dark .admin-administrator-title {
+        font-size: 20px;
+    }
+
+    body.admin-dark .admin-administrator-count {
+        margin-top: 12px;
+    }
+
+    body.admin-dark .admin-administrator-actions,
+    body.admin-dark .admin-administrator-actions .btn {
+        width: 100%;
+    }
+
+    body.admin-dark .admin-administrator-actions .btn {
+        flex: 1 1 130px;
+    }
+
+    body.admin-dark .admin-administrator-table-wrap {
+        overflow: visible;
+        border: 0;
+        background: transparent;
+    }
+
+    body.admin-dark .admin-administrator-table-wrap .layui-table,
+    body.admin-dark .admin-administrator-table-wrap .layui-table tbody,
+    body.admin-dark .admin-administrator-table-wrap .layui-table tr,
+    body.admin-dark .admin-administrator-table-wrap .layui-table td {
+        display: block;
+        width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+    }
+
+    body.admin-dark .admin-administrator-table-wrap .layui-table thead {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        clip-path: inset(50%);
+        white-space: nowrap;
+    }
+
+    body.admin-dark .admin-administrator-table-wrap .layui-table tbody tr {
+        margin-bottom: 10px;
+        padding: 8px 12px;
+        border: 1px solid var(--aa-line);
+        border-radius: 11px;
+        background: var(--aa-surface);
+        box-shadow: 0 8px 18px rgba(0, 0, 0, .13);
+    }
+
+    body.admin-dark .admin-administrator-table-wrap .layui-table td {
+        display: grid;
+        grid-template-columns: minmax(88px, .38fr) minmax(0, 1fr);
+        align-items: center;
+        gap: 10px;
+        min-height: 40px;
+        padding: 8px 0;
+        border-width: 0 0 1px;
+        border-color: var(--aa-line-soft);
+        white-space: normal;
+        overflow-wrap: anywhere;
+    }
+
+    body.admin-dark .admin-administrator-table-wrap .layui-table td:last-child {
+        border-bottom: 0;
+    }
+
+    body.admin-dark .admin-administrator-table-wrap .layui-table td::before {
+        content: attr(data-label);
+        color: var(--aa-muted);
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: .055em;
+        text-transform: uppercase;
+    }
+
+    body.admin-dark .admin-administrator-table-wrap .layui-table td[data-label=""] {
+        display: flex;
+        justify-content: flex-end;
+        min-height: 28px;
+    }
+
+    body.admin-dark .admin-administrator-table-wrap .layui-table td[data-label=""]::before {
+        display: none;
+    }
+
+    body.admin-dark .admin-administrator-editor-v1 > form.layui-form-pane > .layui-form-item {
+        display: block !important;
+    }
+
+    body.admin-dark .admin-administrator-editor-v1 > form.layui-form-pane .layui-form-label {
+        float: none !important;
+        display: block !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        min-height: 34px;
+        margin: 0;
+        padding: 8px 10px;
+        border-radius: 8px 8px 0 0;
+        line-height: 18px;
+        box-sizing: border-box;
+    }
+
+    body.admin-dark .admin-administrator-editor-v1 > form.layui-form-pane .layui-input-block,
+    body.admin-dark .admin-administrator-editor-v1 > form.layui-form-pane .layui-input-inline {
+        float: none !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        margin-left: 0 !important;
+        box-sizing: border-box;
+    }
+
+    body.admin-dark .admin-administrator-editor-v1 .layui-elem-quote {
+        width: 100%;
+        margin: 8px 0 10px;
+        padding: 10px 12px;
+        box-sizing: border-box;
+    }
+
+    body.admin-dark .admin-administrator-editor-v1 .permission-list dd {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    body.admin-dark .admin-administrator-editor-v1 .permission-list .layui-form-checkbox {
+        display: flex;
+        align-items: flex-start;
+        width: 100%;
+        min-height: 30px;
+        height: auto;
+    }
+
+    body.admin-dark .admin-administrator-editor-v1 .permission-list .layui-form-checkbox > div {
+        flex: 1 1 auto;
+        min-width: 0;
+        max-width: none;
+        line-height: 1.4;
+    }
+
+    body.admin-dark .admin-administrator-editor-v1 .layui-form-item.center .layui-input-block {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+    }
+
+    body.admin-dark .admin-administrator-editor-v1 .layui-form-item.center .btn {
+        width: 100%;
+        margin: 0 !important;
+    }
+}
+
+/* final-polish (R9-2): the "Full access" chip of the role editor, and the boxes of rights a limited admin does not hold. */
+.admin-administrator-editor-v1 .role-full { align-self: flex-start; flex: 0 0 auto; margin: 2px 0; }
+.admin-administrator-editor-v1 .role-entry .role-full { margin: -3px 0 0; }
+.admin-administrator-editor-v1 .role-full-help .ax-chip { vertical-align: middle; margin-right: 4px; }
+body.admin-dark .admin-administrator-editor-v1 .is-locked, .admin-administrator-editor-v1 .is-locked { cursor: not-allowed; opacity: .55; }

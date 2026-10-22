@@ -1,0 +1,57 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="topaz" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="public/include"}
+<title>{:\\app\\common\\util\\TemplateText::get('ui.points_record')} - {:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$maccms['site_name']), ENT_QUOTES, 'UTF-8')}</title>
+<meta name="robots" content="noindex, follow">
+{include file="user/include"}
+</head>
+<body class="tz-page-user">
+{include file="public/head"}
+<main id="main-content" class="tz-main tz-wrap tz-uc">
+{include file="user/menu"}
+<div class="tz-uc-main">
+<section class="tz-panel">
+  <div class="tz-panel-head"><h1>{:\\app\\common\\util\\TemplateText::get('ui.points_record')}</h1></div>
+  <form id="form1" method="post" onsubmit="return false">
+    <div class="tz-uc-actions">
+      <button class="tz-btn tz-btn--line tz-btn--sm" type="button" onclick="MAC.CheckBox.All('ids[]');">{:\\app\\common\\util\\TemplateText::get('ui.full_selection')}</button>
+      <button class="tz-btn tz-btn--line tz-btn--sm" type="button" onclick="MAC.CheckBox.Other('ids[]');">{:\\app\\common\\util\\TemplateText::get('ui.counter_selection')}</button>
+      <button class="tz-btn tz-btn--line tz-btn--sm" type="button" id="btnDel">{:\\app\\common\\util\\TemplateText::get('ui.delete')}</button>
+      <button class="tz-btn tz-btn--line tz-btn--sm" type="button" id="btnClear">{:\\app\\common\\util\\TemplateText::get('ui.empty')}</button>
+    </div>
+    <div class="tz-table-wrap"><table class="tz-table">
+      <thead><tr><th><span class="tz-sr">{:\\app\\common\\util\\TemplateText::get('ui.select_item')}</span></th><th>{:\\app\\common\\util\\TemplateText::get('ui.categories')}</th><th>{:\\app\\common\\util\\TemplateText::get('ui.points')}</th><th>{:\\app\\common\\util\\TemplateText::get('ui.time')}</th></tr></thead>
+      <tbody>{volist name="list" id="vo"}<tr><td class="tz-td-check"><input type="checkbox" name="ids[]" value="{$vo.plog_id}" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.select_item')}"></td><td>{$vo.plog_type|mac_get_plog_type_text}</td><td>{if condition="in_array($vo.plog_type,[1,2,3,4])"}+{else/}-{/if}{$vo.plog_points}</td><td class="tz-td-muted">{$vo.plog_time|mac_day}</td></tr>{/volist}</tbody>
+    </table></div>
+    {empty name="list"}<div class="tz-empty"><p>{:\\app\\common\\util\\TemplateText::get('ui.no_results_found_try_another_category_or_search')}</p></div>{/empty}
+    {include file="public/paging"}
+  </form>
+</section>
+</div>
+</main>
+{include file="public/foot"}
+<script>
+$(function () {
+  var m = window.TemplateMessages || {};
+  async function delData(ids, all) {
+    if (await TemplateUI.confirm(m[all == 1 ? 'ui.confirm_clear_records' : 'ui.confirm_delete_selected_records'])) {
+      $.post("{:url('user/plog_del')}", { ids: ids, all: all }, function (data) {
+        if (data.code == '1') { TemplateUI.message(m['ui.records_deleted']); location.reload(); }
+        else { TemplateUI.message(window.galleryMessage('ui.delete_failed_reason', { reason: data.msg })); }
+      }, 'json');
+    }
+  }
+  $('#btnClear').on('click', function () { delData('', 1); });
+  $('#btnDel').on('click', function () { var ids = MAC.CheckBox.Ids('ids[]'); if (ids == '') { TemplateUI.message(m['ui.please_select_at_least_one_data']); return; } delData(ids, 0); });
+});
+</script>
+</body>
+</html>

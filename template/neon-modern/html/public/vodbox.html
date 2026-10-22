@@ -1,0 +1,24 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}
+$nnCT = trim((string)($vo['vod_display_name'] ?? ''));
+if ($nnCT === '') { $nnCT = trim(\app\common\util\AvdbLanguage::decodeEntities(strip_tags((string)($vo['vod_name'] ?? '')))); }
+$nnCC = \app\common\util\AvdbLanguage::displayCode($vo);
+if ($nnCC === '' || stripos($nnCC, 'avdb-') === 0 || strlen($nnCC) > 26 || preg_match('/\s{2,}|[<>]/', $nnCC)) { $nnCC = ''; }
+$nnCV = $nnCT;
+if ($nnCC !== '' && stripos($nnCT, $nnCC . ' ') === 0) { $nnCV = trim(substr($nnCT, strlen($nnCC))); if ($nnCV === '') { $nnCV = $nnCT; } }
+$nnCImg = trim((string)($vo['vod_pic'] ?? ''));
+$nnCImg = $nnCImg !== '' ? (string)mac_url_img($nnCImg) : $tplNoPic;
+$nnCImgCss = str_replace(['"', "'", '(', ')', '\\', ' ', "\n", "\r", "\t"], ['%22', '%27', '%28', '%29', '%5C', '%20', '', '', ''], $nnCImg);
+$nnCDir = preg_match('/[\x{0590}-\x{08FF}\x{FB1D}-\x{FDFF}\x{FE70}-\x{FEFF}]/u', $nnCT) ? 'rtl' : 'ltr';
+$nnCHits = number_format(intval($vo['vod_hits'] ?? 0));
+$nnCScore = (float)($vo['vod_score'] ?? 0);
+$nnCDur = trim((string)($vo['vod_duration'] ?? ''));
+$nnCUp = intval($vo['vod_up'] ?? 0);
+if (isset($nnSeen) && is_array($nnSeen)) { $nnSeen[] = intval($vo['vod_id'] ?? 0); }
+{/php}<article class="nn-card{if condition="isset($nnCardMod)"} {$nnCardMod}{/if}"><a class="nn-card-link" href="{:mac_url_vod_play($vo)}"><span class="nn-shot" data-fx="skeleton" style="--img:url('{$nnCImgCss|htmlspecialchars=ENT_QUOTES}')"><img src="{$nnCImg|htmlspecialchars=ENT_QUOTES}" alt="" width="320" height="180" loading="lazy" decoding="async"><span class="nn-ghost" aria-hidden="true"></span>{if condition="!empty($nnRankShow)"}<span class="nn-rank nn-sign" aria-hidden="true">{$nnRankNo}</span>{/if}{if condition="$nnCC neq ''"}<span class="nn-tag" aria-hidden="true">{$nnCC|htmlspecialchars=ENT_QUOTES}</span>{/if}{if condition="!empty($nnNewTag)"}<span class="nn-newtag nn-sign" aria-hidden="true">{:\\app\\common\\util\\TemplateText::get('nn.new_tag')}</span>{/if}{if condition="$nnCDur neq ''"}<span class="nn-dur">{$nnCDur|htmlspecialchars=ENT_QUOTES}</span>{/if}</span><span class="nn-card-body"><span{php}echo \app\common\util\AvdbLanguage::langAttr(isset($vo) && is_array($vo) ? $vo : []);{/php} class="nn-card-title" dir="{$nnCDir}">{if condition="!empty($nnRankShow)"}<span class="nn-sr">{$nnRankNo}. </span>{/if}{if condition="$nnCC neq '' && $nnCV neq $nnCT"}<span class="nn-sr">{$nnCC|htmlspecialchars=ENT_QUOTES} </span>{/if}{$nnCV|htmlspecialchars=ENT_QUOTES}</span><span class="nn-card-meta"><span><svg class="nn-ico" aria-hidden="true"><use href="{$nnSvg}#eye"></use></svg><span class="nn-ltr">{$nnCHits}</span><span class="nn-sr"> {:\\app\\common\\util\\TemplateText::get('ui.views')}</span></span>{if condition="!empty($nnShowUp)"}<span class="nn-likes"><svg class="nn-ico" aria-hidden="true"><use href="{$nnSvg}#heart"></use></svg><span class="nn-ltr">{$nnCUp}</span><span class="nn-sr"> {:\\app\\common\\util\\TemplateText::get('most_liked')}</span></span>{/if}{if condition="$nnCScore gt 0"}<span{if condition="!empty($nnShowScore)"} class="nn-score-big"{/if}><svg class="nn-ico nn-star" aria-hidden="true"><use href="{$nnSvg}#star"></use></svg><span class="nn-ltr">{$nnCScore|number_format=1}</span><span class="nn-sr"> {:\\app\\common\\util\\TemplateText::get('ui.score')}</span></span>{/if}</span></span></a></article>

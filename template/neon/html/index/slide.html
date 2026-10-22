@@ -1,0 +1,8 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}$nxSlideNo++; $nxSlideIds[] = intval($vo['vod_id']);{/php}{php}$nxDir = preg_match('/[\x{0590}-\x{08FF}\x{FB1D}-\x{FDFF}\x{FE70}-\x{FEFF}]/u', (string)($vo['vod_display_name'] ?? '')) ? 'rtl' : 'ltr';{/php}<a class="nx-slide" href="{:mac_url_vod_play($vo)}" aria-roledescription="slide"><img data-lowres src="{$vo.vod_pic|mac_default=$tplNoPic|mac_url_img|htmlspecialchars=ENT_QUOTES}" alt="{$vo.vod_display_name|mac_default=$vo.vod_name|htmlspecialchars=ENT_QUOTES}" width="640" height="360" decoding="async"{if condition="$nxSlideNo gt 3"} loading="lazy"{/if}><span class="nx-slide-shade" aria-hidden="true"></span><span class="nx-slide-title" dir="{$nxDir}">{$vo.vod_display_name|mac_default=$vo.vod_name|htmlspecialchars=ENT_QUOTES}</span>{if condition="$vo.vod_duration neq ''"}<i class="nx-dur">{$vo.vod_duration|htmlspecialchars=ENT_QUOTES}</i>{/if}<em class="nx-play" aria-hidden="true"></em></a>

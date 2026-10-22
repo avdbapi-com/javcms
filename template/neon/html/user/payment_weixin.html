@@ -1,0 +1,22 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="neon" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+<meta name="robots" content="noindex, follow" />
+<title>{:\\app\\common\\util\\TemplateText::get('neon.payment')} - {:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$maccms['site_name']), ENT_QUOTES, 'UTF-8')}</title>
+{include file="public/include"}
+</head>
+<body class="nx-page-user">
+{include file="public/head"}
+<main id="main-content" class="nx-main"><div class="nx-wrap">
+<section class="nx-state"><svg class="nx-state-ico" aria-hidden="true"><use href="{$nxSvg|htmlspecialchars=ENT_QUOTES}#card"></use></svg><h1>{:\\app\\common\\util\\TemplateText::get('neon.payment')}</h1><p>{:\\app\\common\\util\\TemplateText::get('neon.payment_unavailable')}</p><div class="nx-state-actions"><a class="nx-btn nx-btn-primary" href="{:mac_url('user/buy')}">{:\\app\\common\\util\\TemplateText::get('neon.use_card')}</a><a class="nx-btn" href="{:mac_url('user/index')}">{:\\app\\common\\util\\TemplateText::get('ui.my_account')}</a></div></section>
+</div></main>
+{include file="public/foot"}
+</body>
+</html>

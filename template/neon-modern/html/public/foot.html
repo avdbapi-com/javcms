@@ -1,0 +1,47 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}$nnSitemap = ''; try { $nnSitemap = \app\common\util\Sitemap::indexUrl(); } catch (\Throwable $nnSitemapError) { $nnSitemap = ''; } $nnFootSvg = $maccms['path_tpl'] . 'assets/icons.svg?v=20261010-n1'; $nnFootDesc = method_exists('app\common\util\TemplateSeo', 'siteTagline') ? \app\common\util\TemplateSeo::siteTagline(is_array($maccms) ? $maccms : []) : (\app\common\util\TemplateText::locale() === \app\common\util\AvdbLanguage::defaultLocale() ? trim(\app\common\util\AvdbLanguage::decodeEntities((string)($maccms['site_description'] ?? ''))) : ''); if (function_exists('mb_strlen') && mb_strlen($nnFootDesc, 'UTF-8') > 220) { $nnFootDesc = rtrim(mb_substr($nnFootDesc, 0, 217, 'UTF-8')) . '...'; } $nnFootMail = trim(\app\common\util\AvdbLanguage::decodeEntities((string)($maccms['site_email'] ?? '')));{/php}
+<footer class="nn-footer">
+  <div class="nn-wrap nn-footer-in">
+    <div class="nn-fbrand">
+      {include file="public/brand"}
+      {if condition="!$nnCustomLogo"}<div class="nn-fpuddle" aria-hidden="true"><span class="nn-tube">{$nnBrand|htmlspecialchars=ENT_QUOTES}</span></div>{/if}
+      {if condition="$nnFootDesc neq ''"}<p class="nn-ftag">{$nnFootDesc|htmlspecialchars=ENT_QUOTES}</p>{else/}<p class="nn-ftag">{:\\app\\common\\util\\TemplateText::get('nn.footer_tagline')}</p>{/if}
+    </div>
+    <nav class="nn-fcol" aria-labelledby="nn-f-browse" data-ai-group>
+      <h2 class="nn-fhead nn-tube" id="nn-f-browse">{:\\app\\common\\util\\AutoIcon::navIcon('all', '', ['class'=>'nn-fhead-ai'])}{:\\app\\common\\util\\TemplateText::get('nn.browse')}</h2>
+      <ul>
+        <li><a href="{:mac_url('label/new')}">{:\\app\\common\\util\\AutoIcon::navIcon('latest', '', ['i'=>0])}<span>{:\\app\\common\\util\\TemplateText::get('ui.latest_videos')}</span></a></li>
+        <li><a href="{:mac_url('label/hot')}">{:\\app\\common\\util\\AutoIcon::navIcon('hot', '', ['i'=>1])}<span>{:\\app\\common\\util\\TemplateText::get('ui.popular_videos')}</span></a></li>
+        <li><a href="{:mac_url('label/score')}">{:\\app\\common\\util\\AutoIcon::navIcon('top', '', ['i'=>2])}<span>{:\\app\\common\\util\\TemplateText::get('top_rated')}</span></a></li>
+        <li><a href="{:mac_url('label/up')}">{:\\app\\common\\util\\AutoIcon::navIcon('liked', '', ['i'=>3])}<span>{:\\app\\common\\util\\TemplateText::get('most_liked')}</span></a></li>
+        <li><a href="{:mac_url('label/sort')}">{:\\app\\common\\util\\AutoIcon::navIcon('all', '', ['i'=>4])}<span>{:\\app\\common\\util\\TemplateText::get('ui.all_videos_59a0c0')}</span></a></li>
+      </ul>
+    </nav>
+    <nav class="nn-fcol" aria-labelledby="nn-f-cats" data-ai-group>
+      <h2 class="nn-fhead nn-tube nn-tube--violet" id="nn-f-cats">{:\\app\\common\\util\\AutoIcon::navIcon('categories', '', ['class'=>'nn-fhead-ai'])}{:\\app\\common\\util\\TemplateText::get('ui.categories')}</h2>
+      <ul>{maccms:type ids="parent" flag="vod" order="asc" by="sort" id="nnFt" key="nnFtKey" hide_empty="1"}<li><a href="{:mac_url_type($nnFt)}">{:\\app\\common\\util\\AutoIcon::icon('category', $nnFt['type_name'], ['i'=>$nnFtKey])}<span>{:\\app\\common\\util\\TemplateText::get(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)($nnFt['type_name'] ?? '')))}</span></a></li>{/maccms:type}</ul>
+    </nav>
+    <nav class="nn-fcol nn-fcol--site" aria-labelledby="nn-f-site" data-ai-group>
+      <h2 class="nn-fhead nn-tube nn-tube--mint" id="nn-f-site">{:\\app\\common\\util\\AutoIcon::navIcon('sitemap', '', ['class'=>'nn-fhead-ai'])}{:\\app\\common\\util\\TemplateText::get('nn.site_links')}</h2>
+      <ul>
+        <li><a href="{:mac_url('map/index')}">{:\\app\\common\\util\\AutoIcon::navIcon('latest-100', '', ['i'=>0])}<span>{:\\app\\common\\util\\TemplateText::get('ui.latest_updates')}</span></a></li>
+        {if condition="$nnSitemap neq ''"}<li><a href="{$nnSitemap|htmlspecialchars=ENT_QUOTES}">{:\\app\\common\\util\\AutoIcon::navIcon('sitemap', '', ['i'=>1])}<span>{:\\app\\common\\util\\TemplateText::get('ui.sitemap')}</span></a></li>{/if}
+        <li><a href="{:mac_url('rss/index')}">{:\\app\\common\\util\\AutoIcon::navIcon('rss', '', ['i'=>2])}<span>{:\\app\\common\\util\\TemplateText::get('rss')}</span></a></li>
+        <li><a href="{:mac_url('gbook/index')}">{:\\app\\common\\util\\AutoIcon::navIcon('contact', '', ['i'=>3])}<span>{:\\app\\common\\util\\TemplateText::get('ui.contact_the_site')}</span></a></li>
+        {if condition="$nnFootMail neq ''"}<li><a href="mailto:{$nnFootMail|htmlspecialchars=ENT_QUOTES}">{:\\app\\common\\util\\AutoIcon::ui('mail', ['i'=>4])}<span class="nn-ltr">{$nnFootMail|htmlspecialchars=ENT_QUOTES}</span></a></li>{/if}
+              <li><a href="{:mac_url('user/login')}" data-nn-user data-center="{:mac_url('user/index')}">{:\\app\\common\\util\\AutoIcon::navIcon('login', '', ['i'=>5])}<span>{:\\app\\common\\util\\TemplateText::get('ui.member_center')}</span></a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="nn-wrap"><div class="nn-fbottom"><span>&copy; {:date('Y')} {$nnSiteName|htmlspecialchars=ENT_QUOTES}</span><span class="nn-18"><b aria-hidden="true">18+</b>{:\\app\\common\\util\\TemplateText::get('nn.adults_only')}</span><a class="nn-totop" href="#main-content" data-nn-top>{:\\app\\common\\util\\AutoIcon::ui('arrow-up')}<span>{:\\app\\common\\util\\TemplateText::get('nn.back_to_top')}</span></a></div></div>
+</footer>
+<button class="nn-gotop" type="button" data-nn-top aria-label="{:\\app\\common\\util\\TemplateText::get('nn.back_to_top')}" title="{:\\app\\common\\util\\TemplateText::get('nn.back_to_top')}">{:\\app\\common\\util\\AutoIcon::ui('arrow-up')}</button>
+<nav class="nn-dock" aria-label="{:\\app\\common\\util\\TemplateText::get('nn.shortcuts')}"><a href="{$maccms.path|htmlspecialchars=ENT_QUOTES}"{if condition="$nnAid eq 1"} aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::navIcon('home')}<span>{:\\app\\common\\util\\TemplateText::get('ui.home')}</span></a><a href="{:mac_url('label/new')}"{if condition="$nnAid eq 9999"} aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::navIcon('latest')}<span>{:\\app\\common\\util\\TemplateText::get('ui.latest')}</span></a><a href="{:mac_url('label/hot')}"{if condition="$nnAid eq 9998"} aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::navIcon('hot')}<span>{:\\app\\common\\util\\TemplateText::get('ui.popular')}</span></a><button type="button"{if condition="$nnCatOn"} class="is-current"{/if} aria-controls="nn-drawer" aria-expanded="false" data-nn-drawer-open>{:\\app\\common\\util\\AutoIcon::navIcon('categories')}<span>{:\\app\\common\\util\\TemplateText::get('ui.categories')}</span></button><a href="{:mac_url('user/login')}" data-nn-user data-center="{:mac_url('user/index')}"{if condition="strpos($nnCa, 'user/') === 0"} aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::navIcon('account')}<span>{:\\app\\common\\util\\TemplateText::get('ui.account')}</span></a></nav>
+{include file="public/style"}
+{$maccms.site_tj}

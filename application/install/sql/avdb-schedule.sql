@@ -1,0 +1,22 @@
+CREATE TABLE IF NOT EXISTS `javcms_avdb_import_schedule` (
+ `client_id` char(32) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
+ `admin_id` int unsigned NOT NULL,
+ `secret` char(64) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
+ `callback_url` varchar(2048) NOT NULL,
+ `options` mediumtext NOT NULL,
+ `interval_minutes` int unsigned NOT NULL DEFAULT 1440,
+ `enabled` tinyint unsigned NOT NULL DEFAULT 0,
+ `state` varchar(16) NOT NULL DEFAULT 'off',
+ `epoch` bigint unsigned NOT NULL DEFAULT 1,
+ `last_sequence` bigint unsigned NOT NULL DEFAULT 0,
+ `management_timestamp` bigint unsigned NOT NULL DEFAULT 0,
+ `lease_token` char(32) NOT NULL DEFAULT '',
+ `lease_until` bigint unsigned NOT NULL DEFAULT 0,
+ `job_id` char(32) NOT NULL DEFAULT '',
+ `next_run_at` bigint unsigned NOT NULL DEFAULT 0,
+ `last_run_at` bigint unsigned NOT NULL DEFAULT 0,
+ `error` varchar(255) NOT NULL DEFAULT '',
+ `created_at` bigint unsigned NOT NULL,
+ `updated_at` bigint unsigned NOT NULL,
+ PRIMARY KEY (`client_id`), UNIQUE KEY `owner` (`admin_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

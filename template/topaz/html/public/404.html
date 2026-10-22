@@ -1,0 +1,32 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="topaz" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="public/include"}
+<title>{:\\app\\common\\util\\TemplateText::get('ui.page_not_found_bc3023')} - {:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$maccms['site_name']), ENT_QUOTES, 'UTF-8')}</title>
+<meta name="robots" content="noindex">
+</head>
+<body class="tz-page-state">
+{include file="public/head"}
+<main id="main-content" class="tz-main tz-wrap tz-state">
+  <section class="tz-state-card tz-state-card--404">
+    {php}$tzScene404 = \app\common\util\AutoIcon::scene('not-found'); if ($tzScene404 !== '') { $GLOBALS['tz_scene_done'] = 1; } echo $tzScene404;{/php}<span class="tz-state-big" aria-hidden="true">404</span>
+    <h1>{:\\app\\common\\util\\TemplateText::get('ui.page_not_found_bc3023')}</h1>
+    <p>{:\\app\\common\\util\\TemplateText::get('ui.this_page_may_have_moved_browse_the_latest_videos_or_try_a_search')}</p>
+    <form class="tz-bigsearch" action="{:mac_url('vod/search')}" method="get" role="search"><label class="tz-sr" for="tz-404q">{:\\app\\common\\util\\TemplateText::get('ui.search')}</label>{:\\app\\common\\util\\AutoIcon::ui('search', ['class'=>'tz-i', 'tint'=>'none'])}<input id="tz-404q" class="tz-input" type="search" name="wd" maxlength="60" autocomplete="off" placeholder="{:\\app\\common\\util\\TemplateText::get('ui.search_videos_or_performers')}"><button class="tz-btn tz-btn--gold" type="submit">{:\\app\\common\\util\\TemplateText::get('ui.search')}</button></form>
+    <div class="tz-state-act"><a class="tz-btn tz-btn--gold" href="{$maccms.path}">{:\\app\\common\\util\\AutoIcon::ui('home', ['class'=>'tz-i', 'tint'=>'none'])}<span>{:\\app\\common\\util\\TemplateText::get('ui.back_to_home')}</span></a><a class="tz-btn tz-btn--line" href="{:mac_url('label/new')}">{:\\app\\common\\util\\AutoIcon::ui('zap', ['class'=>'tz-i', 'tint'=>'none'])}<span>{:\\app\\common\\util\\TemplateText::get('ui.latest_videos')}</span></a></div>
+  </section>
+  <section class="tz-coll" aria-labelledby="tz-404-pop">
+    <header class="tz-coll-head" data-ai-group data-ai-hot><div class="tz-coll-title"><span class="tz-coll-ico" aria-hidden="true">{:\\app\\common\\util\\AutoIcon::ui('flame', ['class'=>'tz-i', 'tint'=>'none'])}</span><div><h2 id="tz-404-pop">{:\\app\\common\\util\\TemplateText::get('ui.popular_videos')}</h2></div></div><div class="tz-seg"><a class="tz-seg-all tz-seg-all--solo" href="{:mac_url('label/hot')}">{:\\app\\common\\util\\TemplateText::get('view_all')}</a></div></header>
+    <div class="tz-grid" data-grid-fill>{maccms:vod num="10" type="all" order="desc" by="hits" paging="no" id="vo"}{include file="public/vodbox"}{/maccms:vod}</div>
+  </section>
+</main>
+{include file="public/foot"}
+</body>
+</html>

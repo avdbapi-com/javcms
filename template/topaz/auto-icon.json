@@ -1,0 +1,12 @@
+{
+ "$schema": "javcms.auto-icon.v1",
+ "family": "phosphor-fill",
+ "motion": "ripple",
+ "enter": "pop",
+ "plate": "disc",
+ "plateMotion": "pulse",
+ "avatar": "circle mono",
+ "tint": "slot",
+ "map": {},
+ "nav": {}
+}

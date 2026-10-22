@@ -1,0 +1,9 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}if (!isset($tplSorts) || !is_array($tplSorts)) { $tplSorts = []; } if (!isset($tplReset)) { $tplReset = ''; } $tzSortIco = ['sort' => 'clock', 'eye' => 'eye', 'star' => 'star', 'thumb-up' => 'thumbs-up']; $tplSorts = array_map(function ($s) use ($tzSortIco) { $s['ico'] = isset($tzSortIco[$s['icon'] ?? '']) ? $tzSortIco[$s['icon']] : 'sort'; return $s; }, $tplSorts);{/php}
+{notempty name="tplSorts"}<div class="tz-sortbar" role="navigation" aria-label="{:\\app\\common\\util\\TemplateText::get('sort_by')}"><div class="tz-sorts" data-ai-group><span class="tz-sort-lbl">{:\\app\\common\\util\\TemplateText::get('sort_by')}</span>{volist name="tplSorts" id="tplS"}<a class="tz-sort" href="{$tplS.url|htmlspecialchars=ENT_QUOTES}" rel="nofollow" {if condition="$tplS.on"}aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::ui($tplS['ico'], ['class'=>'tz-i', 'tint'=>'none'])}<span>{$tplS.label|htmlspecialchars=ENT_QUOTES}</span></a>{/volist}</div>{if condition="$tplReset neq ''"}<a class="tz-sort tz-sort--reset" href="{$tplReset|htmlspecialchars=ENT_QUOTES}" rel="nofollow">{:\\app\\common\\util\\AutoIcon::ui('refresh', ['class'=>'tz-i', 'tint'=>'none'])}<span>{:\\app\\common\\util\\TemplateText::get('topaz.reset_filters')}</span></a>{/if}</div>{/notempty}

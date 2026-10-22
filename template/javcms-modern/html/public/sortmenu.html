@@ -1,0 +1,30 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}
+$jcSortKeys = ['time' => 'ui.latest', 'hits' => 'ui.popular', 'score' => 'top_rated', 'up' => 'most_liked'];
+$jcSortPages = ['time' => 'new', 'hits' => 'hot', 'score' => 'score', 'up' => 'up'];
+$jcSortMode = isset($jcSortMode) ? (string)$jcSortMode : 'label';
+$jcSortActive = (isset($jcSortActive) && isset($jcSortKeys[$jcSortActive])) ? $jcSortActive : 'time';
+$jcSortParam = (isset($param) && is_array($param)) ? $param : [];
+$jcSortItems = [];
+foreach ($jcSortKeys as $jcSortBy => $jcSortKey) {
+    if ($jcSortMode === 'type' && isset($obj['type_id'])) {
+        $jcSortHref = mac_url_type($obj, ['by' => $jcSortBy], 'show');
+    } elseif ($jcSortMode === 'search') {
+        $jcSortQuery = ['by' => $jcSortBy];
+        foreach (['wd', 'area', 'lang', 'year', 'level', 'letter', 'state', 'tag', 'class', 'actor', 'director', 'order'] as $jcSortField) {
+            if (isset($jcSortParam[$jcSortField]) && $jcSortParam[$jcSortField] !== '') { $jcSortQuery[$jcSortField] = $jcSortParam[$jcSortField]; }
+        }
+        $jcSortHref = mac_url_search($jcSortQuery, 'vod');
+    } else {
+        $jcSortHref = mac_url('label/' . $jcSortPages[$jcSortBy]);
+    }
+    $jcSortItems[] = ['href' => $jcSortHref, 'text' => \app\common\util\TemplateText::get($jcSortKey), 'on' => $jcSortBy === $jcSortActive ? 1 : 0, 'nav' => ['time' => 'latest', 'hits' => 'hot', 'score' => 'top', 'up' => 'liked'][$jcSortBy]];
+}
+$jcSortCurrent = \app\common\util\TemplateText::get($jcSortKeys[$jcSortActive]);
+{/php}<details class="jc-drop jc-sort"><summary>{:\\app\\common\\util\\AutoIcon::ui('sort', ['size'=>'sm'])}<span class="jc-drop-label">{:\\app\\common\\util\\TemplateText::get('sort_by')}</span><span>{$jcSortCurrent}</span><svg class="jc-ico jc-ico-chevron" aria-hidden="true"><use href="{$maccms.path_tpl|htmlspecialchars=ENT_QUOTES}ksassets/image/jc-icons.svg#chevron"></use></svg></summary><ul class="jc-drop-menu">{volist name="jcSortItems" id="jcSortItem"}<li><a href="{$jcSortItem.href|htmlspecialchars=ENT_QUOTES}"{if condition="$jcSortItem.on eq 1"} aria-current="true"{/if}>{:\\app\\common\\util\\AutoIcon::navIcon($jcSortItem['nav'], '', ['size'=>'sm'])}<span>{$jcSortItem.text}</span></a></li>{/volist}</ul></details>

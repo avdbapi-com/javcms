@@ -1,0 +1,39 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Based on MacCMS 10 (Apache-2.0) by magicblack, changed by JavCMS.
+JavCMS changes: Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors,
+JavCMS Community License 1.0. The MacCMS parts stay under the Apache License 2.0.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{include file="../../../application/admin/view/public/head" /}
+<div class="page-container p10">
+    <section class="ax-section">
+        <p class="ax-help ax-mono">{$url_list|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}</p>
+        <p>{:lang('admin/ux/r7/cj_url_summary', [(int)$total, (int)$total - (int)$re, (int)$re])}</p>
+    </section>
+    {if condition="!empty($url)"}
+    <div class="ax-table-wrap">
+    <table class="ax-table ax-table--cards">
+    <thead>
+      <tr>
+        <th class="ax-num">{:lang('serial_num')}</th>
+        <th>{:lang('link')}</th>
+        <th>{:lang('name')}</th>
+      </tr>
+    </thead>
+    <tbody>
+        {foreach name="url" item="v"}
+          <tr>
+              <td class="ax-num" data-label="{:lang('serial_num')}">{$n=$n+1}</td>
+              <td class="ax-faint" data-label="{:lang('link')}">{$v.url|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}</td>
+              <td data-label="{:lang('name')}">{$v.title|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}</td>
+          </tr>
+      {/foreach}
+    </tbody>
+    </table>
+    </div>
+    {/if}
+</div>
+</body>
+</html>

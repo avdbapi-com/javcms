@@ -1,0 +1,61 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<script src="{$maccms.path|htmlspecialchars=ENT_QUOTES}static/template-ui/theme.js?v=20261007-theme1"></script>
+{:\\app\\common\\util\\AutoIcon::head()}
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+{if condition="in_array(strtolower($maccms['controller_action']), ['index/index','vod/index','vod/type','vod/show','vod/search','vod/detail','vod/play','vod/down','map/index','label/new','label/hot','label/sort','label/up','label/score'])"}<meta name="rating" content="adult" />{/if}
+<link rel="icon" href="{$maccms.path}static/template-ui/favicon-javcms.svg" type="image/svg+xml" /><link rel="alternate icon" href="{$maccms.path}static/template-ui/favicon-javcms.ico" /><link rel="apple-touch-icon" href="{$maccms.path}static/template-ui/favicon-javcms-180.png" />
+<meta name="theme-color" content="#0d1118" />
+<link rel="stylesheet" href="{$maccms.path}static/vendor/fonts/fonts.css?v=20261014-k3" />
+<link rel="stylesheet" href="{$maccms.path}static/template-ui/ui.css?v=20261009-hover1" />
+<link rel="stylesheet" href="{$maccms.path_tpl|htmlspecialchars=ENT_QUOTES}assets/css/topaz.css?v=20261014-kp1" />
+<script>(function (d) { var p = {:json_encode((string)$maccms['path_tpl'] . 'assets/img/poster.svg')}; d.addEventListener('error', function (e) { var t = e.target; if (!t || t.tagName !== 'IMG' || t.getAttribute('data-tz-failed') !== null) return; if (!t.closest) return; if (t.closest('.tz-slide-media,.tz-dhero-bg')) { t.setAttribute('data-tz-failed', ''); return; } if (!t.closest('.tz-cover,.tz-row-thumb,.tz-poster,.tz-thumb,.tz-sug-thumb,.tz-profile-cover')) return; t.setAttribute('data-tz-failed', ''); t.removeAttribute('srcset'); t.src = p; }, true); })(document);</script>
+<script src="{$maccms.path|htmlspecialchars=ENT_QUOTES}static/vendor/jquery/jquery-3.7.1.min.js"></script>
+<script>{php}
+echo 'var maccms=' . json_encode([
+    'path'=>rtrim((string)($maccms['path'] ?? MAC_PATH), '/'),
+    'mid'=>(string)($maccms['mid'] ?? ''),
+    'url'=>(string)($maccms['site_url'] ?? ''),
+    'wapurl'=>(string)($maccms['site_wapurl'] ?? ''),
+    'mob_status'=>(string)($maccms['mob_status'] ?? ''),
+    'templatePath'=>(string)($maccms['path_tpl'] ?? ''),
+    'template_urls'=>[
+        'user_login'=>mac_url('user/login'),
+        'ajax_pwd'=>mac_url('ajax/pwd'),
+        'user_index'=>mac_url('user/index'),
+        'user_token'=>mac_url('user/token'),
+        'user_info'=>mac_url('user/info'),
+        'user_bind'=>mac_url('user/bind'),
+        'user_bindmsg'=>mac_url('user/bindmsg'),
+        'user_buy'=>mac_url('user/buy'),
+        'user_upgrade'=>mac_url('user/upgrade'),
+        'user_cash'=>mac_url('user/cash'),
+        'user_unbind'=>mac_url('user/unbind'),
+        'user_ulog_del'=>mac_url('user/ulog_del'),
+        'user_plog_del'=>mac_url('user/plog_del'),
+        'user_cash_del'=>mac_url('user/cash_del'),
+        'user_ajax_buy_popedom'=>mac_url('user/ajax_buy_popedom'),
+        'user_ajax_ulog'=>mac_url('user/ajax_ulog'),
+        'gbook_index'=>mac_url('gbook/index'),
+        'gbook_token'=>mac_url('gbook/token'),
+        'gbook_save'=>mac_url('gbook/saveData'),
+        'comment_token'=>mac_url('comment/token'),
+        'comment_save'=>mac_url('comment/saveData'),
+    ],
+], JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) . ';';
+{/php}</script>
+<script src="{$maccms.path}static/template-ui/secure-forms.js"></script>
+<script src="{$maccms.path}static/template-ui/ui.js"></script><script>document.documentElement.dataset.templateTheme='topaz';TemplateUI.installLayerAdapter();</script>
+<script src="{$maccms.path_tpl|htmlspecialchars=ENT_QUOTES}assets/js/home.js?v=20261009-r2"></script>
+<script>window.TemplateMessages={:\\app\\common\\util\\TemplateText::json(["user_bookmark","network_error","score_loading_failed","data_error","comment_loading_failed","please_enter_comment","related_id_error","module_mid_error","comments_closed","ui.no_comments_yet_start_the_conversation","ui.reply","ui.cancel_reply","ui.enter_comment","log_out","favorites","not_to_see_change_one","verification_code","copy_manually","homepage_browser_settings","bookmark_browser_menu","choose_avatar","upload_avatar","template_ui_working","avatar_updated","select_avatar_file","avatar_upload_failed","clear_history","history","history_clear","history_empty","no_history","scan_the_qr_code_to_watch_this_movie_on_your_mobile_phone","subscription_authorize","template_ui_cancel","template_ui_close","template_ui_confirm","template_ui_confirm_title","template_ui_dismiss","template_ui_notifications","ui.confirm_the_purchase","ui.are_you_sure_if_you_want_to_recharge_online","ui.are_you_sure_to_use_the_recharge_card_to_recharge","ui.choose","ui.confirm_clear_records","ui.confirm_delete_selected_records","ui.confirm_the_lifting_binding_this_operation_cannot_be_restored","ui.confirm_upgrade_membership","ui.connection_failed_try_again","ui.copy_link","ui.copyright_video_unavailable","ui.delete_failed_reason","ui.delete_failure","ui.determine_to_upgrade_to","ui.email_format_is_incorrect","ui.enter_email_or_phone","ui.enter_payee_name","ui.get_the_verification_code","ui.incorrect_mobile_phone_number_format","ui.it_takes_to_spend","ui.link_copied","ui.loading","ui.log_in_now","ui.no_results_found_try_another_category_or_search","ui.parameter_error","ui.pay_complete_it","ui.payment_completed_redirecting","ui.please_enter_the_bank_account","ui.please_enter_the_bank_name","ui.please_enter_the_confirmation_password","ui.please_enter_the_new_password_ec0b3e","ui.please_enter_the_password_ab9294","ui.please_enter_the_payee","ui.please_enter_the_recharge_card_number_and_password","ui.please_enter_the_user","ui.please_enter_the_verification_code","ui.please_enter_the_verification_code_0d14a4","ui.please_enter_the_withdrawal_amount","ui.please_select_at_least_one_data","ui.preview_membership_limit","ui.preview_points_limit","ui.records_deleted","ui.register_now","ui.resend_verification_countdown","ui.reset_password","ui.retos_it_now","ui.search_for_query","ui.select_and_copy_the_address","ui.send_mail","ui.share","ui.submit","ui.the_second_password_is_inconsistent","ui.your_promotion_access_address_has_been_copied_and_ctrl_v_paste_to_the_browser_to_open_the_","ui.your_promotional_registration_address_has_been_copied_use_ctrl_v_paste_to_the_browser_to_o"])};window.galleryText={copied:window.TemplateMessages["ui.link_copied"],select:window.TemplateMessages["ui.select_and_copy_the_address"],network:window.TemplateMessages["ui.connection_failed_try_again"],empty:window.TemplateMessages["ui.no_results_found_try_another_category_or_search"]};</script>
+<script>window.galleryMessage=function(key,values){var text=window.TemplateMessages[key]||key;Object.keys(values||{}).forEach(function(name){text=text.split("{"+name+"}").join(String(values[name]));});return text;};</script>
+<script>window.TopazText={:\\app\\common\\util\\TemplateText::json(["topaz.show_more","topaz.show_less","topaz.page_status","topaz.go_to_slide","topaz.slide_of","topaz.report_prefill","topaz.view_all_results","topaz.no_suggestions","ui.loading","ui.link_copied","ui.member_center","history_empty","template_ui_close","ui.menu"])};</script>
+<script src="{$maccms.path|htmlspecialchars=ENT_QUOTES}static/template-ui/grid-fill.js?v=20261008" defer></script>
+<script src="{$maccms.path_tpl|htmlspecialchars=ENT_QUOTES}assets/js/topaz.js?v=20261009-r1" defer></script>
+<link rel="stylesheet" href="{$maccms.path|htmlspecialchars=ENT_QUOTES}static/template-ui/lowres.css?v={:\\app\\common\\util\\AvdbLanguage::assetVersion('lowres.css')}" /><script src="{$maccms.path|htmlspecialchars=ENT_QUOTES}static/template-ui/lowres.js?v={:\\app\\common\\util\\AvdbLanguage::assetVersion('lowres.js')}" defer></script>

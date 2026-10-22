@@ -1,0 +1,26 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="onyx-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/auto"}
+{include file="public/include"}
+</head>
+<body class="page-map">
+{include file="public/head"}
+<main id="main-content" class="ox-main">
+  <header class="ox-list-hd">
+    <nav class="ox-crumbs" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.main_navigation')}"><a href="{$maccms.path}">{:\\app\\common\\util\\TemplateText::get('ox.index')}</a><span aria-hidden="true">/</span><span aria-current="page">{:\\app\\common\\util\\TemplateText::get('ui.latest_updates')}</span></nav>
+    <span class="ox-h1-ai" data-ai-hot>{:\\app\\common\\util\\AutoIcon::navIcon('latest-100', '', ['size'=>'xl', 'plate'=>true])}</span><h1 class="ox-list-h1" data-ox-desk-scramble>{:\\app\\common\\util\\TemplateText::get('ui.latest_100_updates')}</h1>
+    <p class="ox-list-meta"><span>{:\\app\\common\\util\\TemplateText::get('ox.entries_n', ['count' => 100])}</span><span>{:\\app\\common\\util\\TemplateText::get('ox.sort_date')}</span></p>
+  </header>
+  <ol class="ox-idxtable">{maccms:vod num="100" type="all" order="desc" by="time" paging="no" id="vo"}{php}$oxMapName = trim(\app\common\util\AvdbLanguage::decodeEntities((string)($vo['vod_display_name'] ?? ''))); if ($oxMapName === '') { $oxMapName = trim(\app\common\util\AvdbLanguage::decodeEntities((string)($vo['vod_name'] ?? ''))); } $oxMapDir = preg_match('/[\x{0590}-\x{08FF}\x{FB1D}-\x{FDFF}\x{FE70}-\x{FEFF}]/u', $oxMapName) ? 'rtl' : 'ltr';{/php}<li><a href="{:mac_url_vod_detail($vo)}"><span class="ox-idx" aria-hidden="true">[{$key|sprintf='%03d',###}]</span><span class="ox-t" dir="{$oxMapDir}">{$oxMapName|htmlspecialchars=ENT_QUOTES}</span><time class="ox-c" datetime="{$vo.vod_time|date='Y-m-d',###}">{$vo.vod_time|date='Y-m-d',###}</time></a></li>{/maccms:vod}</ol>
+</main>
+{include file="public/foot"}
+</body>
+</html>

@@ -1,0 +1,26 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}$tplAct = strtolower((string)request()->action()); $tplPortrait = !empty($obj['user_portrait']) ? mac_url_img($obj['user_portrait']) : ''; $tplIcons = $maccms['path_tpl'] . 'assets/icons.svg';{/php}
+<header class="uc-head">
+  {if condition="$tplPortrait neq ''"}<img class="uc-avatar" src="{$tplPortrait|htmlspecialchars=ENT_QUOTES}" alt="" width="76" height="76" data-fallback-img>{else/}<span class="uc-avatar" aria-hidden="true"><svg class="ox-i"><use href="{$tplIcons}#i-user"/></svg></span>{/if}
+  <div class="uc-who">
+    <p class="ox-label" aria-hidden="true">[#{$obj.user_id|intval}]</p>
+    <div class="uc-name">{$obj.user_name|htmlspecialchars=ENT_QUOTES}<span class="uc-badge">{$obj.group.group_name|htmlspecialchars=ENT_QUOTES}</span></div>
+    <div class="uc-sub">{:\\app\\common\\util\\TemplateText::get('onyx.member_since')} {$obj.user_reg_time|date='Y-m-d',###} &middot; {:\\app\\common\\util\\TemplateText::get('ui.points')}: {$obj.user_points|intval}</div>
+  </div>
+</header>
+<nav class="uc-tabs" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.member_center')}" data-ox-strip>
+  <a href="{:mac_url('user/index')}" {if condition="$tplAct eq 'index'"}aria-current="page"{/if}><span class="ox-idx" aria-hidden="true">01</span>{:\\app\\common\\util\\TemplateText::get('ui.my_account')}</a>
+  <a href="{:mac_url('user/info')}" {if condition="in_array($tplAct, ['info','portrait','bind','unbind'])"}aria-current="page"{/if}><span class="ox-idx" aria-hidden="true">02</span>{:\\app\\common\\util\\TemplateText::get('ui.my_information')}</a>
+  <a href="{:mac_url('user/favs')}" {if condition="$tplAct eq 'favs'"}aria-current="page"{/if}><span class="ox-idx" aria-hidden="true">03</span>{:\\app\\common\\util\\TemplateText::get('ui.my_collection')}</a>
+  <a href="{:mac_url('user/plays')}" {if condition="$tplAct eq 'plays'"}aria-current="page"{/if}><span class="ox-idx" aria-hidden="true">04</span>{:\\app\\common\\util\\TemplateText::get('ui.play_record')}</a>
+  <a href="{:mac_url('user/plog')}" {if condition="$tplAct eq 'plog'"}aria-current="page"{/if}><span class="ox-idx" aria-hidden="true">05</span>{:\\app\\common\\util\\TemplateText::get('ui.points_record')}</a>
+  <a href="{:mac_url('user/upgrade')}" {if condition="$tplAct eq 'upgrade'"}aria-current="page"{/if}><span class="ox-idx" aria-hidden="true">06</span>{:\\app\\common\\util\\TemplateText::get('ui.upgrade_member')}</a>
+  <a href="{:mac_url('user/comment')}" {if condition="in_array($tplAct, ['comment','gbook'])"}aria-current="page"{/if}><span class="ox-idx" aria-hidden="true">07</span>{:\\app\\common\\util\\TemplateText::get('ui.comments')}</a>
+  <a href="{:mac_url('user/logout')}" rel="nofollow"><span class="ox-idx" aria-hidden="true">08</span>{:\\app\\common\\util\\TemplateText::get('ui.quit')}</a>
+</nav>

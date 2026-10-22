@@ -1,0 +1,151 @@
+/*
+ * This file is part of JavCMS - https://javcms.net
+ * Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+ * License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+ * See the LICENSE and NOTICE files that come with JavCMS.
+ * Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Telegram: https://t.me/avdb_api
+ */
+/* admin-vodserver-list-mobile-v1: keep server actions and values usable on narrow screens. */
+@media (max-width: 960px) {
+    .admin-vodserver-list-mobile-v1 > .my-toolbar-box {
+        width: 100% !important;
+        box-sizing: border-box;
+    }
+
+    .admin-vodserver-list-mobile-v1 > #pageListForm {
+        margin: 0;
+        padding: 0;
+        overflow: visible;
+        border: 0;
+        background: transparent;
+        box-shadow: none;
+    }
+
+    .admin-vodserver-list-mobile-v1 > #pageListForm .layui-table,
+    .admin-vodserver-list-mobile-v1 > #pageListForm .layui-table tbody {
+        display: block;
+        width: 100% !important;
+        min-width: 0 !important;
+    }
+
+    .admin-vodserver-list-mobile-v1 > #pageListForm .layui-table {
+        margin: 0;
+        background: transparent;
+    }
+
+    .admin-vodserver-list-mobile-v1 > #pageListForm .layui-table thead {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        margin: -1px;
+        padding: 0;
+        overflow: hidden;
+        border: 0;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
+    }
+
+    .admin-vodserver-list-mobile-v1 > #pageListForm .layui-table tbody {
+        display: grid;
+        gap: 12px;
+    }
+
+    .admin-vodserver-list-mobile-v1 > #pageListForm .layui-table tbody tr {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        overflow: hidden;
+        border: 1px solid var(--admin-dark-border, rgba(148, 163, 184, .2));
+        border-radius: 12px;
+        background: linear-gradient(145deg, var(--admin-dark-surface, #111827), var(--admin-dark-surface-alt, #172033));
+        box-shadow: 0 10px 24px rgba(3, 8, 20, .18);
+    }
+
+    .admin-vodserver-list-mobile-v1 > #pageListForm .layui-table tbody td,
+    .admin-vodserver-list-mobile-v1 > #pageListForm .layui-table tbody td.w200 {
+        display: flex;
+        width: auto !important;
+        min-width: 0;
+        min-height: 64px !important;
+        box-sizing: border-box;
+        flex-direction: column;
+        gap: 5px;
+        justify-content: center;
+        padding: 11px 12px !important;
+        border: 0;
+        border-right: 1px solid var(--admin-dark-border, rgba(148, 163, 184, .2));
+        border-bottom: 1px solid var(--admin-dark-border, rgba(148, 163, 184, .2));
+        color: var(--admin-dark-text, #e5edf8);
+        overflow-wrap: anywhere;
+        white-space: normal;
+    }
+
+    .admin-vodserver-list-mobile-v1 > #pageListForm .layui-table tbody td:nth-child(3n),
+    .admin-vodserver-list-mobile-v1 > #pageListForm .layui-table tbody td:last-child {
+        border-right: 0;
+    }
+
+    .admin-vodserver-list-mobile-v1 > #pageListForm .layui-table tbody td::before {
+        color: var(--admin-dark-muted, #94a3b8);
+        content: attr(data-label);
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: .06em;
+        line-height: 1.2;
+        text-transform: uppercase;
+    }
+
+    .admin-vodserver-list-mobile-v1 > #pageListForm .layui-table tbody td:last-child {
+        grid-column: 1 / -1;
+        min-height: 82px !important;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 8px;
+        border-bottom: 0;
+    }
+
+    .admin-vodserver-list-mobile-v1 > #pageListForm .layui-table tbody td:last-child::before {
+        flex: 0 0 100%;
+    }
+
+    .admin-vodserver-list-mobile-v1 > #pageListForm .layui-table tbody td:last-child .badge {
+        display: inline-flex;
+        height: auto !important;
+        min-height: 36px !important;
+        align-items: center;
+        margin: 0;
+        padding: 0 12px !important;
+        border-radius: 8px;
+        white-space: nowrap;
+    }
+
+    .admin-vodserver-list-mobile-v1 > #pageListForm .layui-table tbody td:last-child a:focus-visible {
+        outline: 2px solid var(--admin-dark-accent-strong, #67e8f9);
+        outline-offset: 2px;
+    }
+}
+
+@media (max-width: 520px) {
+    .admin-vodserver-list-mobile-v1 > #pageListForm .layui-table tbody tr {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .admin-vodserver-list-mobile-v1 > #pageListForm .layui-table tbody td:nth-child(3n) {
+        border-right: 1px solid var(--admin-dark-border, rgba(148, 163, 184, .2));
+    }
+
+    .admin-vodserver-list-mobile-v1 > #pageListForm .layui-table tbody td:nth-child(2n),
+    .admin-vodserver-list-mobile-v1 > #pageListForm .layui-table tbody td:nth-child(5),
+    .admin-vodserver-list-mobile-v1 > #pageListForm .layui-table tbody td:nth-child(6),
+    .admin-vodserver-list-mobile-v1 > #pageListForm .layui-table tbody td:last-child {
+        border-right: 0;
+    }
+
+    .admin-vodserver-list-mobile-v1 > #pageListForm .layui-table tbody td:nth-child(5),
+    .admin-vodserver-list-mobile-v1 > #pageListForm .layui-table tbody td:nth-child(6),
+    .admin-vodserver-list-mobile-v1 > #pageListForm .layui-table tbody td:last-child {
+        grid-column: 1 / -1;
+    }
+}

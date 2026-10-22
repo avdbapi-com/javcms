@@ -1,0 +1,46 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Based on MacCMS 10 (Apache-2.0) by magicblack, changed by JavCMS.
+JavCMS changes: Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors,
+JavCMS Community License 1.0. The MacCMS parts stay under the Apache License 2.0.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="ember-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head><meta name="robots" content="noindex, follow" />
+    <meta charset="utf-8">
+    
+    <title>{:\\app\\common\\util\\TemplateText::get('ui.copyright_video_unavailable', ['name'=>mac_default($obj['vod_display_name'] ?? '',$obj['vod_name'] ?? '')])}</title>
+    
+    
+{include file="public/include"}</head>
+<body class="permission-page">
+<div class="mac_msg_jump">
+    <h1 class="msg_jump_tit">{:\\app\\common\\util\\TemplateText::get('ui.access_required')}</h1>
+    <div class="title">{:\\app\\common\\util\\TemplateText::get('ui.video_access')}</div>
+    <div class="text"><p>{:\\app\\common\\util\\TemplateText::get('ui.copyright_video_unavailable', ['name'=>mac_default($obj['vod_display_name'] ?? '',$obj['vod_name'] ?? '')])}</p><p>{$GLOBALS['config']['app']['copyright_notice']|htmlspecialchars=ENT_QUOTES}</p></div>
+    <div class="jump">
+        {if condition="$obj['vod_jumpurl'] neq ''"}
+        {:\\app\\common\\util\\TemplateText::get('ui.automatic_page')} <a id="href" href="{:mac_safe_url($obj['vod_jumpurl'])}">{:\\app\\common\\util\\TemplateText::get('ui.jump')}</a> {:\\app\\common\\util\\TemplateText::get('ui.wait_time')} <b id="wait">3</b>
+        {/if}
+    </div>
+    <!-- Can customize the display method of this page, you can add advertisements -->
+</div>
+<script type="text/javascript">
+    {if condition="$obj['vod_jumpurl'] neq ''"}
+    (function(){
+        var wait = document.getElementById('wait'),
+            href = document.getElementById('href').href;
+        var interval = setInterval(function(){
+            var time = --wait.innerHTML;
+            if(time <= 0) {
+                var target = window.top || window; target.location.href = href;
+                clearInterval(interval);
+            };
+        }, 1000);
+    })();
+    {/if}
+</script>
+</body>
+</html>

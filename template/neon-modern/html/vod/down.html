@@ -1,0 +1,29 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="neon-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>{include file="seo/auto"}
+{include file="public/include"}
+</head>
+<body class="nn-page-down">
+{include file="public/head"}
+{include file="public/metavars"}
+<main id="main-content" class="nn-main"><div class="nn-wrap">
+{php}$nnPH = $nnTitle; $nnPHText = true; $nnPHIcon = 'download';{/php}{include file="public/pagehead"}
+<section class="nn-panel">
+<div class="nn-cta-row"><a class="nn-btn" href="{:mac_url_vod_detail($obj)}">{:\\app\\common\\util\\TemplateText::get('ui.details')}</a>{if condition="$nnPlayUrl neq ''"}<a class="nn-btn nn-btn-primary" href="{$nnPlayUrl|htmlspecialchars=ENT_QUOTES}">{:\\app\\common\\util\\TemplateText::get('ui.watch_online')}</a>{/if}</div>
+{notempty name="obj.vod_down_list"}
+{maccms:foreach name="obj.vod_down_list" id="nnDl"}
+<div class="nn-plhead"><h2>{$nnDl.player_info.show|mac_default=$nnDl.from|htmlspecialchars=ENT_QUOTES}</h2></div><div class="nn-eps">{maccms:foreach name="nnDl.urls" id="nnDlEp"}<a href="{:mac_safe_url($nnDlEp['url'])}" target="_blank" rel="nofollow noopener noreferrer">{$nnDlEp.name|htmlspecialchars=ENT_QUOTES}</a>{/maccms:foreach}</div>
+{/maccms:foreach}
+{else/}<p class="nn-end">{:\\app\\common\\util\\TemplateText::get('ui.no_download_links_are_available_for_this_video')}</p>{/notempty}
+</section>
+</div></main>
+{include file="public/foot"}
+</body>
+</html>

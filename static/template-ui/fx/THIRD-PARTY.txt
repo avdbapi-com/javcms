@@ -1,0 +1,34 @@
+JavCMS FX kit - third-party notices
+
+1. Embedded in morph.js: icon geometry (SVG path data) of 22 Lucide icons
+   (menu, x/close, sun, moon, play, pause, search, plus, minus, check, copy,
+   chevron-down, chevron-up, layout-grid, list, volume-2, volume-x, eye, eye-off,
+   heart, arrow-left, arrow-right), Lucide 1.48.0, https://lucide.dev
+
+   ISC License
+   Copyright (c) 2026 Lucide Icons and Contributors
+
+   Permission to use, copy, modify, and/or distribute this software for any
+   purpose with or without fee is hereby granted, provided that the above
+   copyright notice and this permission notice appear in all copies.
+
+   THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+   WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+   MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+   ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+   WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+   ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+   OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+   Some of these icons (x, check, chevron-down, chevron-up, moon, plus, minus,
+   search, arrow-left, arrow-right) derive from Feather: The MIT License (MIT),
+   Copyright (c) 2013-present Cole Bemis. Full text:
+   static/vendor/fx/lucide@1.48.0/LICENSE.txt
+
+2. Imported at runtime from static/vendor/fx (not copied here; licences next to them):
+   - OGL 1.0.11 (Unlicense)            static/vendor/fx/ogl@1.0.11/LICENSE.txt     -> gl.js
+   - morphicons 1.7.1 (MIT)            static/vendor/fx/morphicons@1.7.1/LICENSE.txt -> morph.js
+   - Lenis 1.3.26 (MIT)                static/vendor/fx/lenis@1.3.26/LICENSE.txt   -> smooth.js
+
+3. demo.html (developer page, excluded from the release package) also uses the
+   vendored Unbounded and Space Grotesk fonts (SIL OFL 1.1, static/vendor/fx/fonts).

@@ -1,0 +1,23 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="jav" data-template-variant="classic" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/auto"}
+{include file="block/include"}
+</head>
+<body class="gallery-page">
+{include file="block/head"}
+<main id="main-content" class="container list-page">
+<div class="list-head"><div class="list-title"><h1>{:\\app\\common\\util\\AutoIcon::navIcon('sitemap', '', ['size'=>'xl', 'plate'=>true])}<span>{:\\app\\common\\util\\TemplateText::get('ui.sitemap')}</span></h1></div></div>
+<ul class="cat-chips" data-ai-group>{maccms:type ids="parent" order="asc" by="sort" flag="vod" id="tplCat" key="tplCatK" hide_empty="1"}<li><a href="{:mac_url_type($tplCat)}">{:\\app\\common\\util\\AutoIcon::icon('category', $tplCat['type_name'], ['size'=>'lg', 'plate'=>true, 'i'=>$tplCatK])}{:\\app\\common\\util\\TemplateText::get(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$tplCat['type_name']))}</a></li>{/maccms:type}</ul>
+</main>
+{include file="block/copy"}
+{include file="block/foot"}
+</body>
+</html>

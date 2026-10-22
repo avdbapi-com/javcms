@@ -1,0 +1,40 @@
+/*
+ * This file is part of JavCMS - https://javcms.net
+ * Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+ * License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+ * See the LICENSE and NOTICE files that come with JavCMS.
+ * Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Telegram: https://t.me/avdb_api
+ */
+/* Topaz: iframe player page (vod/player.html) and the password / access pages. Plain, full-bleed, navy + gold. */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { width: 100%; height: 100%; margin: 0; background: #05070a; color: #f4f5f7; font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", Arial, sans-serif; }
+body { overflow: auto; }
+#native-player { width: 100%; height: 100%; min-width: 0; }
+.MacPlayer { width: 100% !important; height: 100% !important; min-width: 0; }
+#native-player iframe, #native-player video, #native-player object, #native-player embed { max-width: 100%; border: 0; }
+.player_showtry[hidden] { display: none !important; }
+.native-preview-ended { display: grid !important; place-items: center; padding: clamp(16px, 4vw, 36px); overflow: auto; background: #0d1118; }
+.player_showtry { width: min(100%, 560px); margin: auto; }
+.native-preview-card { padding: clamp(20px, 5vw, 36px); border: 1px solid #2c3746; border-radius: 16px; background: #141b25; box-shadow: 0 18px 50px rgba(0, 0, 0, .45); text-align: start; overflow-wrap: anywhere; }
+.native-preview-kicker { margin: 0 0 12px; color: #f3c669; font-size: .75rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+.native-preview-card h1 { margin: 0 0 14px; font-size: clamp(1.3rem, 4vw, 1.8rem); line-height: 1.25; }
+.native-preview-card p { color: #a3acb9; line-height: 1.65; }
+.native-preview-note { font-size: .85rem; }
+.native-preview-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 20px; }
+.native-preview-actions a { display: inline-flex; align-items: center; min-height: 44px; color: #f3c669; text-underline-offset: 4px; }
+.native-preview-primary, .native-preview-actions a.native-preview-primary { display: inline-flex; align-items: center; justify-content: center; min-height: 46px; padding: 0 20px; border: 0; border-radius: 10px; background: linear-gradient(135deg, #f7d57f, #e5a72f); color: #171b21; font: inherit; font-weight: 800; text-decoration: none; cursor: pointer; }
+#player-status { min-height: 1.4em; color: #f3c669; }
+:focus-visible { outline: 2px solid #f3c669; outline-offset: 2px; border-radius: 6px; }
+
+/* access / password pages (they also load public/include, so topaz.css tokens are present) */
+.tz-access-page { min-height: 100%; display: grid; place-items: center; padding: 24px 14px; background: radial-gradient(700px 400px at 20% 10%, rgba(243, 198, 105, .1), transparent 70%), var(--tz-bg, #0d1118); color: var(--tz-text, #f4f5f7); }
+.tz-access-card { display: flex; flex-direction: column; align-items: center; gap: 12px; width: min(460px, 100%); padding: 32px 26px; border: 1px solid var(--tz-line-2, #2c3746); border-radius: 18px; background: var(--tz-panel, #141b25); box-shadow: 0 24px 70px rgba(0, 0, 0, .4); text-align: center; }
+.tz-access-card h1 { margin: 0; font-size: 24px; font-weight: 800; }
+.tz-access-card h2 { margin: 0; color: var(--tz-muted, #a3acb9); font-size: 15px; font-weight: 600; overflow-wrap: anywhere; }
+.tz-access-card p { margin: 0; color: var(--tz-muted, #a3acb9); }
+.tz-access-form { display: grid; gap: 10px; width: 100%; margin-top: 6px; text-align: start; }
+.tz-access-form label { font-size: 13px; font-weight: 700; }
+.tz-access-act { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; margin-top: 8px; }
+.tz-access-act a:not(.tz-btn) { display: inline-flex; align-items: center; min-height: 40px; color: var(--tz-gold-ink, #f3c669); text-decoration: underline; text-underline-offset: 3px; }
+.tz-access-price strong { color: var(--tz-gold-ink, #f3c669); font-size: 28px; font-weight: 800; }

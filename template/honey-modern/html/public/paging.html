@@ -1,0 +1,23 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}/* shared pager (NOLIMIT D1, lane T): AvdbLanguage::pager() decides the links (first / prev / window / next / last, jumps, "Go to page", open mode); this skin is the theme's own markup. */
+$tplPgIco = htmlspecialchars(isset($ncIco) ? (string)$ncIco : '', ENT_QUOTES, 'UTF-8');
+$tplPgSkin = [
+    'nav' => 'nc-pager',
+    'long_at' => 1000,
+    'prev' => '<a class="nc-pg nc-pg-step" href="%url%"%rel% aria-label="%aria%" title="%aria%"><span class="nc-pg-hex" aria-hidden="true"></span><svg class="nc-i nc-flip" aria-hidden="true"><use href="' . $tplPgIco . 'chevron-left"></use></svg></a>',
+    'prev_off' => '<span class="nc-pg nc-pg-step is-off" aria-hidden="true"><span class="nc-pg-hex"></span><svg class="nc-i nc-flip"><use href="' . $tplPgIco . 'chevron-left"></use></svg></span>',
+    'next' => '<a class="nc-pg nc-pg-step" href="%url%"%rel% aria-label="%aria%" title="%aria%"><span class="nc-pg-hex" aria-hidden="true"></span><svg class="nc-i nc-flip" aria-hidden="true"><use href="' . $tplPgIco . 'chevron-right"></use></svg></a>',
+    'next_off' => '<span class="nc-pg nc-pg-step is-off" aria-hidden="true"><span class="nc-pg-hex"></span><svg class="nc-i nc-flip"><use href="' . $tplPgIco . 'chevron-right"></use></svg></span>',
+    'first' => '<a class="nc-pg nc-pg-edge" href="%url%"%attr%><span class="nc-pg-hex" aria-hidden="true"></span><b class="nc-ltr">%label%</b></a>',
+    'last' => '<a class="nc-pg nc-pg-edge" href="%url%"%attr%><span class="nc-pg-hex" aria-hidden="true"></span><b class="nc-ltr">%label%</b></a>',
+    'gap' => '<span class="nc-pg-gap nc-hide-s" aria-hidden="true">&hellip;</span>',
+    'num' => '<a class="nc-pg" href="%url%"><span class="nc-pg-hex" aria-hidden="true"></span><b class="nc-ltr">%label%</b></a>',
+    'cur' => '<span class="nc-pg is-on" aria-current="page"><span class="nc-pg-hex" aria-hidden="true"><span class="nc-pg-honey"></span></span><b class="nc-ltr">%label%</b></span>',
+];
+echo \app\common\util\AvdbLanguage::pagerHtml(isset($__PAGING__) && is_array($__PAGING__) ? $__PAGING__ : [], isset($__LIST__) && is_array($__LIST__) ? $__LIST__ : [], $tplPgSkin);{/php}

@@ -1,0 +1,45 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}$tuiFooterSitemap = ''; try { $tuiFooterSitemap = \app\common\util\Sitemap::indexUrl(); } catch (\Throwable $tuiFooterError) {}{/php}
+<footer class="ft" data-template-footer>
+  <div class="wrap ft-in">
+    <div class="ft-brand">
+      <a href="{$maccms.path|htmlspecialchars=ENT_QUOTES}">{if condition="$maccms.site_logo neq ''"}<img src="{:mac_safe_url(mac_url_img($maccms['site_logo']))}" alt="{:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$maccms['site_name']), ENT_QUOTES, 'UTF-8')}" width="127" height="34" loading="lazy">{else/}<strong>{:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$maccms['site_name']), ENT_QUOTES, 'UTF-8')}</strong>{/if}</a>
+    </div>
+    <p class="ft-text">{:\\app\\common\\util\\TemplateText::get('onyx.footer_about', ['site'=>\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$maccms['site_name'])])}</p>
+    <p class="ft-text">{:\\app\\common\\util\\TemplateText::get('ui.for_adults_only_contact_the_site_for_content_or_copyright_concerns')}{php}$tplSiteEmail = trim(\app\common\util\AvdbLanguage::decodeEntities((string)($maccms['site_email'] ?? '')));{/php}{if condition="filter_var($tplSiteEmail, FILTER_VALIDATE_EMAIL)"} <a href="mailto:{$tplSiteEmail|rawurlencode}">{$tplSiteEmail|htmlspecialchars=ENT_QUOTES}</a>{/if}</p>
+    <div class="ft-groups">
+      <nav class="ft-group" aria-labelledby="ft-cats-h" data-ai-group>
+        <h2 class="ft-h" id="ft-cats-h">{:\\app\\common\\util\\AutoIcon::navIcon('categories', '', ['size'=>'sm'])}<span>{:\\app\\common\\util\\TemplateText::get('ui.categories')}</span></h2>
+        <div class="ft-chips">{maccms:type ids="parent" flag="vod" order="asc" by="sort" id="tplFt" key="tplFtKey" hide_empty="1"}<a href="{:mac_url_type($tplFt)}">{:\\app\\common\\util\\AutoIcon::icon('category', $tplFt['type_name'], ['i'=>$tplFtKey, 'size'=>'sm'])}<span>{:\\app\\common\\util\\TemplateText::get(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)($tplFt['type_name'] ?? '')))}</span></a>{/maccms:type}</div>
+      </nav>
+      <nav class="ft-group" aria-labelledby="ft-browse-h" data-ai-group>
+        <h2 class="ft-h" id="ft-browse-h">{:\\app\\common\\util\\AutoIcon::ui('compass', ['size'=>'sm'])}<span>{:\\app\\common\\util\\TemplateText::get('onyx.browse')}</span></h2>
+        <div class="ft-chips">
+          <a href="{:mac_safe_url(mac_url('label/new'))}">{:\\app\\common\\util\\AutoIcon::navIcon('latest', '', ['i'=>0, 'size'=>'sm'])}<span>{:\\app\\common\\util\\TemplateText::get('ui.latest_videos')}</span></a>
+          <a href="{:mac_safe_url(mac_url('label/hot'))}">{:\\app\\common\\util\\AutoIcon::navIcon('hot', '', ['i'=>1, 'size'=>'sm'])}<span>{:\\app\\common\\util\\TemplateText::get('ui.popular_videos')}</span></a>
+          <a href="{:mac_safe_url(mac_url('label/score'))}">{:\\app\\common\\util\\AutoIcon::navIcon('top', '', ['i'=>2, 'size'=>'sm'])}<span>{:\\app\\common\\util\\TemplateText::get('top_rated')}</span></a>
+          <a href="{:mac_safe_url(mac_url('label/up'))}">{:\\app\\common\\util\\AutoIcon::navIcon('liked', '', ['i'=>3, 'size'=>'sm'])}<span>{:\\app\\common\\util\\TemplateText::get('most_liked')}</span></a>
+          <a href="{:mac_safe_url(mac_url('label/sort'))}">{:\\app\\common\\util\\AutoIcon::navIcon('all', '', ['i'=>4, 'size'=>'sm'])}<span>{:\\app\\common\\util\\TemplateText::get('ui.all_videos')}</span></a>
+          <a href="{:mac_safe_url(mac_url('vod/search'))}">{:\\app\\common\\util\\AutoIcon::navIcon('search', '', ['i'=>5, 'size'=>'sm'])}<span>{:\\app\\common\\util\\TemplateText::get('ui.search')}</span></a>
+        </div>
+      </nav>
+    </div>
+    <nav class="ft-links" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.footer_navigation')}" data-ai-group>
+      <a href="{$maccms.path|htmlspecialchars=ENT_QUOTES}">{:\\app\\common\\util\\AutoIcon::navIcon('home', '', ['i'=>0])}<span>{:\\app\\common\\util\\TemplateText::get('ui.home')}</span></a>
+      <a href="{:mac_safe_url(mac_url('map/index'))}">{:\\app\\common\\util\\AutoIcon::navIcon('latest-100', '', ['i'=>1])}<span>{:\\app\\common\\util\\TemplateText::get('ui.latest_updates')}</span></a>
+      <a href="{:mac_safe_url(mac_url('gbook/index'))}">{:\\app\\common\\util\\AutoIcon::navIcon('contact', '', ['i'=>2])}<span>{:\\app\\common\\util\\TemplateText::get('ui.contact_b37456')}</span></a>
+      {if condition="$tuiFooterSitemap neq ''"}<a href="{$tuiFooterSitemap|htmlspecialchars=ENT_QUOTES}">{:\\app\\common\\util\\AutoIcon::navIcon('sitemap', '', ['i'=>3])}<span>{:\\app\\common\\util\\TemplateText::get('ui.sitemap')}</span></a>{/if}
+      <a href="{:mac_safe_url(mac_url('rss/index'))}">{:\\app\\common\\util\\AutoIcon::navIcon('rss', '', ['i'=>4])}<span>{:\\app\\common\\util\\TemplateText::get('rss')}</span></a>
+    </nav>
+  </div>
+  <div class="ft-copy">&copy; {:date('Y')} {:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$maccms['site_name']), ENT_QUOTES, 'UTF-8')}</div>
+</footer>
+<button class="to-top" type="button" aria-label="{:\\app\\common\\util\\TemplateText::get('onyx.back_to_top')}"><svg class="to-top-ring" viewBox="0 0 56 56" aria-hidden="true" focusable="false"><circle cx="28" cy="28" r="26.5" pathLength="1"/></svg>{:\\app\\common\\util\\AutoIcon::ui('arrow-up', ['tint'=>'none'])}</button>
+{include file="public/style"}
+{$maccms.site_tj}

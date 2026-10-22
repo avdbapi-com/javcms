@@ -1,0 +1,22 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}/* shared pager (NOLIMIT D1, lane T): AvdbLanguage::pager() decides the links (first / prev / window / next / last, jumps, "Go to page", open mode); this skin is the theme's own markup. */
+$tplPgSkin = [
+    'nav' => 'stui-page',
+    'open' => '<ul class="stui-page__item">',
+    'close' => '</ul>',
+    'prev' => '<li class="pg-step"><a%rel% href="%url%" aria-label="%aria%">' . \app\common\util\AutoIcon::ui('chevron-left', ['size'=>'sm']) . '<span>%text%</span></a></li>',
+    'next' => '<li class="pg-step"><a%rel% href="%url%" aria-label="%aria%"><span>%text%</span>' . \app\common\util\AutoIcon::ui('chevron-right', ['size'=>'sm']) . '</a></li>',
+    'first' => '<li class="pg-edge"><a href="%url%"%attr%>' . \app\common\util\AutoIcon::ui('chevrons-left', ['size'=>'sm']) . '<span>%label%</span></a></li>',
+    'last' => '<li class="pg-edge"><a href="%url%"%attr%><span>%label%</span>' . \app\common\util\AutoIcon::ui('chevrons-right', ['size'=>'sm']) . '</a></li>',
+    'gap' => '<li class="hidden-xs" aria-hidden="true"><span>&hellip;</span></li>',
+    'num' => '<li class="hidden-xs"><a href="%url%">%label%</a></li>',
+    'cur' => '<li class="active"><span aria-current="page">%label%</span></li>',
+    'mid' => '<li class="num"><span dir="ltr">%cur% / %total%</span></li>',
+];
+echo \app\common\util\AvdbLanguage::pagerHtml(isset($__PAGING__) && is_array($__PAGING__) ? $__PAGING__ : [], isset($__LIST__) && is_array($__LIST__) ? $__LIST__ : [], $tplPgSkin);{/php}

@@ -1,0 +1,42 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="velvet-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+<meta name="robots" content="noindex, follow" />
+<title>{:\\app\\common\\util\\TemplateText::get('ui.copyright_video_unavailable', ['name'=>html_entity_decode(mac_default($obj['vod_display_name'] ?? '',$obj['vod_name'] ?? ''), ENT_QUOTES, 'UTF-8')])}</title>
+{include file="public/include"}
+</head>
+<body class="vp-page-gate">
+{php}$vpJumpUrl = !empty($obj['vod_jumpurl']) ? mac_safe_url($obj['vod_jumpurl']) : ''; $vpNotice = trim((string)($GLOBALS['config']['app']['copyright_notice'] ?? ''));{/php}
+<main id="main-content" class="vp-standalone">
+  <div class="vp-intermission vp-state">
+    <span class="vp-state-icon" aria-hidden="true"><svg class="vp-i"><use href="{$maccms.path_tpl}assets/icons.svg?v=20261010-r1#lock"></use></svg></span>
+    <p class="vp-eyebrow">{:\\app\\common\\util\\TemplateText::get('ui.video_access')}</p>
+    <h1>{:\\app\\common\\util\\TemplateText::get('ui.access_required')}</h1>
+    <p>{:\\app\\common\\util\\TemplateText::get('ui.copyright_video_unavailable', ['name'=>html_entity_decode(mac_default($obj['vod_display_name'] ?? '',$obj['vod_name'] ?? ''), ENT_QUOTES, 'UTF-8')])}</p>
+    {if condition="$vpNotice neq ''"}<p class="vp-state-msg">{$vpNotice|htmlspecialchars=ENT_QUOTES}</p>{/if}
+    <div class="vp-state-actions">
+      {if condition="$vpJumpUrl neq ''"}<a id="href" class="vp-btn vp-btn-gold" href="{$vpJumpUrl}" target="_top">{:\\app\\common\\util\\TemplateText::get('ui.jump')}</a> <span class="vp-dim">{:\\app\\common\\util\\TemplateText::get('ui.wait_time')} <b id="wait">3</b></span>{/if}
+      <a class="vp-btn vp-btn-ghost" href="{$maccms.path|htmlspecialchars=ENT_QUOTES}" target="_top">{:\\app\\common\\util\\TemplateText::get('ui.back_to_home')}</a>
+    </div>
+  </div>
+</main>
+{if condition="$vpJumpUrl neq ''"}<script>
+(function () {
+  var wait = document.getElementById('wait'), link = document.getElementById('href');
+  if (!wait || !link) return;
+  var timer = window.setInterval(function () {
+    var left = parseInt(wait.textContent, 10) - 1;
+    wait.textContent = String(Math.max(0, left));
+    if (left <= 0) { window.clearInterval(timer); window.location.href = link.href; }
+  }, 1000);
+})();
+</script>{/if}
+</body>
+</html>

@@ -1,0 +1,14 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}
+$nxRelIds = array_merge([intval($obj['vod_id'] ?? 0)], isset($nxRecIds) && is_array($nxRecIds) ? $nxRecIds : []);
+$nxRelShown = 0;
+$nxRelPick = $nxPickIds('vod_score desc', 10, $nxRelIds);
+{/php}<section class="nx-section" aria-labelledby="nx-h-more" data-ai-group><div class="nx-cap"><h2 class="nx-cap-title" id="nx-h-more"><span class="nx-cap-ico">{:\\app\\common\\util\\AutoIcon::ui('sparkles', ['size'=>'lg', 'plate'=>true])}</span><span>{:\\app\\common\\util\\TemplateText::get('ui.more_to_watch')}</span></h2>{if condition="$nxTypeName neq ''"}<div class="nx-cap-links"><a class="nx-more" href="{:mac_url_type($obj['type'])}">{:\\app\\common\\util\\TemplateText::get('ui.view_more')}{:\\app\\common\\util\\AutoIcon::ui('chevron-right', ['size'=>'sm', 'tint'=>'none', 'class'=>'nx-more-ico'])}</a></div>{/if}</div>
+<div class="nx-grid" data-grid-fill>{if condition="$nxRelPick neq ''"}{maccms:vod num="10" ids="'.$nxRelPick.'" order="desc" by="score" paging="no" id="vo"}{php}$nxRelIds[] = intval($vo['vod_id']); $nxRelShown++;{/php}{include file="public/vodbox"}{/maccms:vod}{/if}{if condition="$nxRelShown lt 10"}{php}$nxRelNeed = 10 - $nxRelShown; $nxRelNot = implode(',', $nxRelIds);{/php}{maccms:vod num="'.$nxRelNeed.'" not="'.$nxRelNot.'" type="current" order="desc" by="time" paging="no" id="vo"}{php}$nxRelIds[] = intval($vo['vod_id']); $nxRelShown++;{/php}{include file="public/vodbox"}{/maccms:vod}{/if}</div>
+</section>

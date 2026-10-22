@@ -1,0 +1,137 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Based on MacCMS 10 (Apache-2.0) by magicblack, changed by JavCMS.
+JavCMS changes: Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors,
+JavCMS Community License 1.0. The MacCMS parts stay under the Apache License 2.0.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{include file="../../../application/admin/view/public/head" /}
+<link rel="stylesheet" href="__STATIC__/css/admin_dashboard_studio.css?v={:filemtime(ROOT_PATH . 'static/css/admin_dashboard_studio.css')}">
+{php}$axS = '__STATIC__/admin/icons/admin-icons.svg?v=' . $admin_icons_v;{/php}
+<main class="page-container ov">
+    <header class="ax-page-head">
+        <span class="ax-page-head__icon" aria-hidden="true"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axS}#ai-layout-dashboard"/></svg></span>
+        <div class="ax-page-head__text">
+            <h1>{:lang('admin/ux/overview/title')}</h1>
+            <p class="ax-page-head__help">{$ov_site_line}</p>
+        </div>
+        <div class="ax-page-head__actions"><a class="ax-btn" href="__ROOT__/" target="_blank" rel="noopener"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axS}#ai-external-link"/></svg><span>{:lang('admin/ux/shell/view_site')}</span></a></div>
+    </header>
+
+    {if condition="$ov_seo_hidden"}<div class="ax-notice ax-notice--danger" role="alert"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axS}#ai-eye-off"/></svg><div><p>{:lang('admin/ux/seo/hidden_notice')}{if condition="$ov_can_seo"} <a href="{$ov_seo_url}" data-tab="n210">{:lang('admin/ux/seo/fix')}</a>{/if}</p></div></div>{/if}
+
+    <ul class="ov-strip" aria-label="{:lang('admin/ux/overview/status')}">
+        {volist name="ov_strip" id="c"}
+        <li><span class="ax-chip ax-chip--{$c.kind}">{$c.text}</span>{if condition="!empty($c['theme']) && $ov_can_theme"} <a class="ax-btn ax-btn--ghost ax-btn--sm" href="{$ov_theme_url}" data-tab="n215"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axS}#ai-palette"/></svg>{:lang('admin/ux/overview/change_theme')}</a>{/if}</li>
+        {/volist}
+        {if condition="$ov_update_sql"}<li><a class="ax-btn ax-btn--sm j-iframe" href="javascript:void(0)" data-href="{:url('update/step2')}" data-title="{:lang('admin/ux/overview/btn_update')}">{:lang('admin/ux/overview/btn_update')}</a></li>{/if}
+    </ul>
+
+    {if condition="$ov_att_count gt 0"}
+    <section class="ax-section ov-attention" id="attention" tabindex="-1" aria-labelledby="ovAttTitle">
+        <h2 id="ovAttTitle">{:lang('admin/ux/overview/attention')}</h2>
+        <ul class="ov-rows">
+            {volist name="ov_att" id="a" key="i"}
+            <li class="ov-row"{if condition="$i gt 5"} hidden data-more{/if}>
+                <svg class="ax-ic ov-row__icon" aria-hidden="true" focusable="false"><use href="{$axS}#{$a.icon}"/></svg>
+                <span class="ov-row__text">{$a.text}</span>
+                {if condition="!empty($a['iframe'])"}<a class="ax-btn ax-btn--sm j-iframe" href="javascript:void(0)" data-href="{$a.url}" data-title="{$a.btn}">{$a.btn}</a>
+                {elseif condition="$a.url neq ''"/}<a class="ax-btn ax-btn--sm" href="{$a.url}" data-tab="{$a.tab}">{$a.btn}</a>{/if}
+            </li>
+            {/volist}
+        </ul>
+        {if condition="$ov_att_count gt 5"}<button type="button" class="ax-btn ax-btn--ghost ax-btn--sm ov-more" data-ov-more>{:lang('admin/ux/overview/show_all', [$ov_att_count])}</button>{/if}
+    </section>
+    {/if}
+
+    <section class="ax-section ov-gs" aria-labelledby="ovGsTitle" data-gs{if condition="$ov_gs_hidden"} hidden{/if}>
+        <div class="ov-section-head">
+            <div><h2 id="ovGsTitle">{:lang('admin/ux/overview/gs_title')}</h2><p class="ax-help">{$ov_gs_progress}</p></div>
+            <button type="button" class="ax-btn ax-btn--ghost ax-btn--sm" data-gs-act="gs_hide"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axS}#ai-eye-off"/></svg>{:lang('admin/ux/overview/gs_hide')}</button>
+        </div>
+        <ol class="ov-steps">
+            {volist name="ov_steps" id="s"}
+            <li class="ov-step{if condition="$s.done"} is-done{/if}">
+                <svg class="ax-ic ov-step__state" role="img" aria-label="{if condition="$s.done"}{:lang('admin/ux/overview/gs_state_done')}{else /}{:lang('admin/ux/overview/gs_state_todo')}{/if}" focusable="false"><use href="{$axS}#{if condition="$s.done"}ai-circle-check{else /}ai-circle{/if}"/></svg>
+                <span class="ov-step__text"><strong>{$s.title}</strong><span>{$s.help}</span></span>
+                <span class="ov-step__actions">
+                    {if condition="$s.n eq 6 && !$s.done"}<button type="button" class="ax-btn ax-btn--sm" data-gs-act="gs_done" data-step="6"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axS}#ai-check"/></svg>{:lang('admin/ux/overview/gs_keep')}</button>{if condition="$s.url neq ''"}<a class="ax-btn ax-btn--sm ax-btn--ghost" href="{$s.url}" data-tab="{$s.tab}">{:lang('admin/ux/overview/gs_change')}</a>{/if}
+                    {else /}
+                    {if condition="$s.n eq 7 && $s.url2 neq ''"}{if condition="$s.url neq ''"}<a class="ax-btn ax-btn--sm" href="{$s.url}" data-tab="{$s.tab}">{:lang('admin/ux/overview/gs7_ads')}</a>{/if}<a class="ax-btn ax-btn--sm" href="{$s.url2}" data-tab="{$s.tab2}">{:lang('admin/ux/overview/gs7_analytics')}</a>
+                    {elseif condition="$s.url neq ''"/}<a class="ax-btn ax-btn--sm" href="{$s.url}" data-tab="{$s.tab}">{:lang('admin/ux/overview/gs_open')}</a>{/if}
+                    {if condition="$s.n eq 9 && !$s.done"}<button type="button" class="ax-btn ax-btn--sm ax-btn--ghost" data-gs-act="gs_done" data-step="9">{:lang('admin/ux/overview/gs_mark_done')}</button>{/if}
+                    {/if}
+                </span>
+            </li>
+            {/volist}
+        </ol>
+    </section>
+    <p class="ov-gs-show"{if condition="!$ov_gs_hidden"} hidden{/if} data-gs-show><button type="button" class="ax-btn ax-btn--ghost ax-btn--sm" data-gs-act="gs_show"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axS}#ai-list-checks"/></svg>{:lang('admin/ux/overview/gs_show')}</button></p>
+
+    {if condition="!empty($ov_cards)"}
+    <section class="ov-today" aria-labelledby="ovTodayTitle">
+        <h2 id="ovTodayTitle">{:lang('admin/ux/overview/today')}</h2>
+        <div class="ov-cards">
+            {volist name="ov_cards" id="c"}
+            <a class="ov-card" href="{$c.url}" data-tab="{$c.tab}">
+                <svg class="ax-ic ov-card__icon" aria-hidden="true" focusable="false"><use href="{$axS}#{$c.icon}"/></svg>
+                <span class="ov-card__n">{$c.n}</span>
+                <span class="ov-card__label">{$c.label}</span>
+                {if condition="$c.sub neq ''"}<span class="ov-card__sub">{$c.sub}</span>{/if}
+            </a>
+            {/volist}
+        </div>
+        <p class="ov-updated ax-help">{$ov_updated} · <button type="button" class="ov-link" data-gs-act="refresh"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axS}#ai-refresh-cw"/></svg>{:lang('admin/ux/overview/refresh')}</button></p>
+    </section>
+    {/if}
+
+    <div class="ov-split">
+        {if condition="$ov_can_import"}
+        <section class="ax-section ov-import" aria-labelledby="ovImportTitle">
+            <h2 id="ovImportTitle">{:lang('admin/ux/overview/import_title')}</h2>
+            <p class="ov-import__text">{if condition="$ov_import"}{$ov_import}{else /}{:lang('admin/ux/overview/import_none')}{/if}</p>
+            <a class="ax-btn ax-btn--primary" href="{$ov_import_url}" data-tab="n96"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axS}#ai-download"/></svg>{:lang('admin/ux/overview/import_now')}</a>
+        </section>
+        {/if}
+        {if condition="!empty($ov_quick)"}
+        <section class="ax-section ov-quick" aria-labelledby="ovQuickTitle">
+            <h2 id="ovQuickTitle">{:lang('admin/ux/overview/quick')}</h2>
+            <div class="ov-quick__list">
+                {volist name="ov_quick" id="q"}
+                <a class="ax-btn" href="{$q.url}" data-tab="{$q.tab}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axS}#{$q.icon}"/></svg>{$q.label}</a>
+                {/volist}
+            </div>
+        </section>
+        {/if}
+    </div>
+
+    <section class="ax-section ov-signin" aria-labelledby="ovSigninTitle">
+        <h2 id="ovSigninTitle">{:lang('admin/ux/overview/last_signin')}</h2>
+        <dl class="ov-dl">
+            <div><dt>{:lang('admin/index/welcome/filed_last_login_time')}</dt><dd>{$ov_last_time}</dd></div>
+            <div><dt>{:lang('admin/index/welcome/filed_last_login_ip')}</dt><dd>{$ov_last_ip}</dd></div>
+            <div><dt>{:lang('admin/index/welcome/filed_login_num')}</dt><dd>{$ov_login_num}</dd></div>
+        </dl>
+        <details class="ov-system">
+            <summary>{:lang('admin/ux/overview/system')} <span class="ax-help">{:lang('admin/ux/overview/system_help')}</span></summary>
+            <table class="ax-table ov-system__table">
+                <tbody>
+                    <tr><th scope="row">{:lang('admin/index/welcome/filed_ver')}</th><td>{$version.code}</td></tr>
+                    <tr><th scope="row">{:lang('admin/index/welcome/filed_os')}</th><td>{:PHP_OS} ({:htmlspecialchars((string)$_SERVER['SERVER_SOFTWARE'], ENT_QUOTES, 'UTF-8')})</td></tr>
+                    <tr><th scope="row">{:lang('admin/index/welcome/filed_host')}</th><td>{:htmlspecialchars((string)$_SERVER['HTTP_HOST'], ENT_QUOTES, 'UTF-8')}</td></tr>
+                    <tr><th scope="row">{:lang('admin/index/welcome/filed_max_upload')}</th><td>{:htmlspecialchars((string)ini_get('upload_max_filesize'), ENT_QUOTES, 'UTF-8')}</td></tr>
+                    <tr><th scope="row">{:lang('admin/index/welcome/filed_date')}</th><td>{:date('Y-m-d H:i')} ({:date_default_timezone_get()})</td></tr>
+                    <tr><th scope="row">{:lang('admin/index/welcome/filed_php_ver')}</th><td>{:PHP_VERSION}</td></tr>
+                    <tr><th scope="row">{:lang('admin/index/welcome/filed_thinkphp_ver')}</th><td>{:THINK_VERSION}</td></tr>
+                </tbody>
+            </table>
+        </details>
+    </section>
+    <input type="hidden" id="ovToken" value="{$ux_token}">
+    <input type="hidden" id="ovUrl" value="{:url('index/welcome')}">
+</main>
+<script type="text/javascript" src="__STATIC__/js/admin_common.js?v={:filemtime(ROOT_PATH . 'static/js/admin_common.js')}"></script>{/* public/foot.html loads this file with a fixed ?v=; the shell pages use the file time until hand-over HO-shell-1 is applied */}
+<script src="__STATIC__/js/admin_dashboard_studio.js?v={:filemtime(ROOT_PATH . 'static/js/admin_dashboard_studio.js')}"></script>
+</body>
+</html>

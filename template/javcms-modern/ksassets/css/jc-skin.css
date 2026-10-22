@@ -1,0 +1,348 @@
+/*
+ * This file is part of JavCMS - https://javcms.net
+ * Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+ * License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+ * See the LICENSE and NOTICE files that come with JavCMS.
+ * Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Telegram: https://t.me/avdb_api
+ */
+/* JAVCMS Modern skin: coral header bar + graphite navigation, rounded gallery cards.
+   Dark (default) = navy graphite with coral accents; light = the original coral-on-white gallery. */
+:root{
+ --jc-bg:#f6f7f8;--jc-surface:#fff;--jc-surface-2:#f2f4f6;--jc-ink:#202329;--jc-ink-soft:#30343b;--jc-muted:#626872;--jc-line:#dde1e5;
+ --jc-accent:#e0503b;--jc-accent-grad:linear-gradient(135deg,#c9402f 0%,#ad3024 100%);--jc-accent-ink:#fff;--jc-link:#ad3024;
+ --jc-thumb-bg:#1d242e;--jc-skel-hi:rgba(255,255,255,.08);--jc-spot:rgba(255,140,120,.24);--jc-thumb-shadow:0 1px 0 rgba(0,0,0,.04);
+ --jc-radius:8px;--jc-btn-radius:8px;--jc-pill:8px;--jc-h-weight:800;--jc-h1-size:28px;--jc-h2-size:21px;--jc-card-weight:650;--jc-title-size:24px;--jc-gutter-m:16px
+}
+html[data-color-mode="dark"]{
+ --jc-bg:#11161d;--jc-surface:#1b232e;--jc-surface-2:#232d3a;--jc-ink:#eef2f8;--jc-ink-soft:#d5dce6;--jc-muted:#b3becc;--jc-line:#374354;
+ --jc-accent:#f05c47;--jc-accent-grad:linear-gradient(135deg,#cb4532 0%,#b13427 100%);--jc-accent-ink:#fff;--jc-link:#ffb4a8;
+ --jc-thumb-bg:#1d2530;--jc-skel-hi:rgba(255,255,255,.06);--jc-thumb-shadow:none
+}
+
+/* ----- header ----- */
+.gallery-header{position:relative;z-index:50}
+.gallery-header .header-top{min-height:64px}
+.gallery-brand{min-width:0;max-width:min(640px,46vw);flex:0 1 auto}
+.gallery-brand>span{display:block;min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;overflow-wrap:normal!important}
+.gallery-brand-image{flex:none}
+.gallery-search button{white-space:nowrap;flex:none}
+html[data-color-mode="dark"] .gallery-brand-image{filter:brightness(1.6) saturate(1.1)}
+html[data-color-mode="light"] .gallery-brand-image{background:#fff;border-radius:8px;padding:3px 8px;height:40px;box-shadow:0 1px 2px rgba(0,0,0,.18)}
+.gallery-header .jc-icon-btn{display:none;align-items:center;justify-content:center;width:44px;height:44px;padding:0;border:0;border-radius:10px;background:transparent;color:var(--header-ink);cursor:pointer}
+.gallery-header .jc-icon-btn .jc-ico{width:22px;height:22px}
+.gallery-header .menu-toggle{display:none;align-items:center;justify-content:center;gap:0}
+.gallery-header .menu-toggle .tui-menu-icon{display:none!important}
+.gallery-navigation .nav-inner .jc-nav-account{display:none}
+.language-menu{margin-left:0;margin-right:0;margin-inline-start:auto}
+.gallery-navigation .language-menu>summary{display:inline-flex;align-items:center;gap:6px}
+.gallery-navigation .language-menu>summary .jc-ico{width:18px;height:18px}
+.language-links a[aria-current]{color:var(--jc-link);font-weight:700}
+.language-links{left:auto!important;right:auto!important;inset-inline-end:0!important;inset-inline-start:auto!important;max-width:calc(100vw - 24px)}
+@media(max-width:1180px){
+ .gallery-brand>span{display:none}
+ .gallery-navigation .nav-inner{flex-wrap:nowrap!important;overflow-x:auto;overflow-y:visible;scrollbar-width:none;gap:1.25rem}
+ .gallery-navigation .nav-inner::-webkit-scrollbar{display:none}
+}
+@media(min-width:768px) and (max-width:1180px){
+ .gallery-navigation .nav-inner{position:relative}
+ html[data-template-variant="modern"] .gallery-header .header-top{flex-wrap:nowrap;gap:1rem}
+ html[data-template-variant="modern"] .gallery-header .header-top .gallery-search{order:0;flex:1 1 auto;width:auto;min-width:0;max-width:none;margin-inline:0}
+ html[data-template-variant="modern"] .gallery-header .gallery-header-actions{margin-inline-start:auto;flex:none}
+ .gallery-navigation .gallery-history-panel,.gallery-navigation .gallery-qr-panel,.gallery-navigation .language-links{position:fixed;top:auto;margin-top:6px}
+}
+@media(min-width:768px) and (max-width:1023px){
+ .gallery-header .tui-color-toggle{width:42px;min-width:42px;padding:0!important;justify-content:center}
+ .gallery-header .tui-color-toggle [data-color-label]{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+}
+@media(max-width:767px){
+ .gallery-header .header-top{display:flex!important;flex-wrap:nowrap;align-items:center;gap:4px;min-height:60px;height:60px;padding:0 10px 0 14px!important}
+ .gallery-brand{flex:1 1 auto;max-width:none;min-height:40px}
+ .gallery-brand-image{height:32px!important;max-width:120px!important}
+ html[data-color-mode="light"] .gallery-brand-image{height:36px!important;padding:3px 7px}
+ .gallery-header .gallery-search{display:none!important}
+ .gallery-header.is-search-open .gallery-search{display:flex!important;position:absolute;top:60px;left:0;right:0;z-index:60;margin:0;padding:10px 12px;background:var(--header-bg);box-shadow:0 10px 24px rgba(0,0,0,.25)}
+ .gallery-header .jc-icon-btn{display:inline-flex}
+ .gallery-header .gallery-header-actions{display:flex!important;align-items:center;gap:2px!important;flex:none}
+ .gallery-header .tui-color-toggle{width:42px;min-width:42px;height:42px;padding:0!important;justify-content:center;border:0!important;background:transparent!important;color:var(--header-ink)!important}
+ .gallery-header .tui-color-toggle [data-color-label]{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+ .gallery-header .gallery-header-actions .account-link{display:inline-flex!important;align-items:center;justify-content:center;width:44px;min-width:44px;height:44px;padding:0;font-size:0!important;color:var(--header-ink)!important}
+ .gallery-header .gallery-header-actions .account-link .tui-icon{display:block!important;width:22px;height:22px}
+ .gallery-header .menu-toggle{display:inline-flex!important;width:42px;min-width:42px;height:42px;padding:0!important;border:0;border-radius:10px;background:transparent!important;color:var(--header-ink)!important;font-size:0}
+ .gallery-navigation{position:absolute;left:0;right:0;top:60px;z-index:55;max-height:calc(100vh - 60px);overflow:auto;box-shadow:0 18px 40px rgba(0,0,0,.35)}
+ .gallery-navigation .nav-inner{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 1rem!important;padding:.5rem 1rem 1rem!important;overflow:visible}
+ .gallery-navigation .nav-inner .jc-nav-account{display:flex;align-items:center;gap:8px}
+ .gallery-navigation .nav-inner>a{padding:.8rem 0;border-bottom:1px solid rgba(255,255,255,.08)}
+ .gallery-navigation .language-menu,.gallery-navigation .gallery-history,.gallery-navigation .gallery-qr{grid-column:1/-1}
+ .gallery-navigation .language-links{position:static!important;width:100%;max-width:none}
+}
+
+/* ----- layout: category sidebar on wide screens, chip strip below 1280px ----- */
+@media(max-width:1279px){
+ .wrapped>main{display:flex!important;flex-direction:column;gap:1.25rem}
+ .wrapped>main>*{width:100%}
+ .wrapped .sidebar{border:0!important;padding:0!important;margin:0}
+ .wrapped .sidebar .sidebar-heading{display:none}
+ .wrapped .sidebar .list-link{display:flex;overflow-x:auto;gap:.5rem;padding:6px 6px .4rem;margin:-6px -6px 0;scroll-padding-inline:6px;scrollbar-width:thin}
+ .wrapped .sidebar .list-link li{flex:none}
+ .wrapped .sidebar .list-link a{display:inline-flex;align-items:center;gap:.5rem;min-height:44px;box-sizing:border-box;padding:.45rem .8rem;border:1px solid var(--jc-line);border-radius:999px;background:var(--jc-surface);font-size:.85rem;white-space:nowrap}
+ .wrapped .sidebar .list-link a[aria-current=page]{border-color:var(--jc-accent)}
+ .wrapped .sidebar .browse-all{display:none}
+}
+@media(max-width:767px){
+ .wrapped{padding:1rem 1rem 0!important}
+ body.film-play .wrapped .sidebar{display:none}
+ .wrapped>.tui-footer[data-template-footer]{margin-inline:-1rem!important;width:auto!important;max-width:none!important}
+ body.film-play .wrapped{padding-top:0!important}
+ .comment-section{grid-column:auto}
+}
+.wrapped>main>.content,.wrapped>main>section{min-width:0}
+.comment-section{min-width:0}
+
+/* ----- headings, intro ----- */
+.gallery-intro h1{font-size:clamp(24px,2.4vw,34px);letter-spacing:-.02em}
+@media(max-width:767px){.gallery-intro{margin-bottom:1rem;padding-bottom:1rem}.gallery-intro h1{font-size:22px}.gallery-intro p{font-size:.85rem}}
+@media(hover:hover){.jc-head .jc-h2 a:hover{color:var(--jc-link)}}
+
+/* ----- cards: gallery look (rounded thumb, bold titles) ----- */
+.jc-card-meta{justify-content:space-between}
+.jc-card-meta .jc-like{display:none}
+.jc-thumb{border:1px solid color-mix(in srgb,var(--jc-line) 60%,transparent)}
+.jc-play{border-radius:10px}
+html[data-color-mode="light"] .jc-meta,html[data-color-mode="light"] .jc-desc{box-shadow:0 1px 2px rgba(16,24,40,.05)}
+
+/* ----- footer heading kept for screen readers only ----- */
+.tui-footer .tui-footer-heading{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ----- dark header search: a visible field edge on the navy bar (round 2) ----- */
+html[data-color-mode="dark"] .gallery-header .gallery-search input{background:rgba(255,255,255,.07)!important;box-shadow:inset 0 0 0 1px rgba(255,255,255,.18)}
+html[data-color-mode="dark"] .gallery-header .gallery-search input:focus{box-shadow:inset 0 0 0 1px var(--jc-accent)}
+
+/* ----- tablet nav strip (768-1180px): the language menu stays pinned at the end edge and a fade shows that the strip scrolls ----- */
+@media(min-width:768px) and (max-width:1180px){
+ .gallery-navigation .nav-inner>.language-menu{position:sticky;inset-inline-end:0;z-index:2;flex:none;padding-inline-start:6px;background:var(--graphite,#24272b);box-shadow:2rem 0 0 var(--graphite,#24272b)}
+ html[dir="rtl"] .gallery-navigation .nav-inner>.language-menu{box-shadow:-2rem 0 0 var(--graphite,#24272b)}
+ .gallery-navigation .nav-inner>.language-menu::before{content:"";position:absolute;top:0;bottom:0;inset-inline-end:100%;width:28px;background:linear-gradient(to left,var(--graphite,#24272b),rgba(36,39,43,0));pointer-events:none}
+ html[dir="rtl"] .gallery-navigation .nav-inner>.language-menu::before{background:linear-gradient(to right,var(--graphite,#24272b),rgba(36,39,43,0))}
+}
+
+/* ----- landscape phones (round 2): compact header rows, no category strip on the watch page, the whole player fits ----- */
+@media(orientation:landscape) and (max-height:500px) and (min-width:768px){
+ html[data-template-variant="modern"] .gallery-header .header-top{min-height:0;padding-top:.4rem;padding-bottom:.4rem}
+ .gallery-navigation .nav-inner>a,.gallery-navigation .nav-inner>details>summary{padding-top:.55rem;padding-bottom:.55rem}
+ .jc-watch-page .wrapped{padding-top:12px}
+ .jc-watch-page .wrapped>main>.sidebar{display:none}
+ html .jc-watch{max-width:calc((100vh - 124px) * 1.7778);max-width:calc((100svh - 124px) * 1.7778)}
+}
+@media(orientation:landscape) and (max-height:500px) and (max-width:767px){
+ html .jc-watch{max-width:calc((100vh - 85px) * 1.7778);max-width:calc((100svh - 85px) * 1.7778)}
+ html .jc-watch .jc-player{margin-inline:0;width:100%;border-radius:var(--jc-radius)}
+}
+
+/* ----- round 3 (review F3-P1-4): keyboard focus ring per surface in light mode, at least 3:1 against what it sits on.
+   The light page ring (--focus #126baf; colour toggle --tui-focus #b93635) fades into the coral header (1.7:1) and the
+   graphite nav strip (2.7:1): near-black ring on the coral header (5.7:1), white ring on the graphite strip (15.9:1),
+   the page blue again inside the white panels that open from the strip (5.6:1). Dark mode keeps its own rings. ----- */
+html[data-color-mode="light"] .gallery-header{--focus:#111;--tui-focus:#111}
+html[data-color-mode="light"] .gallery-navigation{--focus:#fff;--tui-focus:#fff}
+html[data-color-mode="light"] .gallery-navigation :is(.language-links,.gallery-history-panel,.gallery-qr-panel){--focus:#126baf;--tui-focus:#126baf}
+
+/* ----- round 3 (review F2-P2-1): the footer band runs edge to edge on tablets and desktops, as it does on phones.
+   border-image paints the 3px coral line and the graphite band out to the viewport edges without changing the layout
+   (no 100vw margins, so no horizontal scroll next to a scrollbar). ----- */
+@media(min-width:768px){
+ html[data-template-variant="modern"] .wrapped>.tui-footer[data-template-footer]{border-image:linear-gradient(var(--coral,#f05c47) 0 3px,var(--graphite,#24272b) 3px) fill 0/0/0 100vmax}
+}
+/* ----- sweep item 2: white text on the coral gradient needs >= 4.5:1 on every stop (the first stops were 4.29 dark / 4.47 light,
+   now 4.73 / 4.93). The shared hover (brightness 1.06) lowered it to 3.87, so the modern primary button turns to a deeper coral on hover (5.8:1). ----- */
+@media(hover:hover){html[data-template-variant="modern"] .jc-btn-primary:hover{filter:none;background:linear-gradient(135deg,#b8382b 0%,#962a1e 100%)}}
+
+/* ----- fix round (P2-3): findpass_msg has one H1; the second form heading is an H2 with the H1 look ----- */
+html[data-template-variant="modern"] .fed-list-head h2.jc-form-h{font-size:24px;font-weight:750;line-height:1.2;margin:0 0 .67em}
+
+/* ===== auto-icons (2026-10-13): Tabler 1.75 outline, draw + tilt, pop entrance, soft squircle plates, graphite duotone tiles.
+   Coral leads; the slot colours stay inside the coral/graphite family (coral, rose, link blue, peach). ===== */
+/* theme icon tones (readable >= 3:1 on --jc-surface and --jc-bg in each mode); --ai-* only point at them */
+html[data-color-mode="dark"]{--jc-tone-1:#ff7a66;--jc-tone-2:var(--jc-link);--jc-tone-3:#8fc1ff;--jc-tone-4:#ffcf9e;--jc-tone-ink:#fff4f1;--jc-tone-plate:#2a3442}
+html[data-color-mode="light"]{--jc-tone-1:#c43a27;--jc-tone-2:var(--jc-link);--jc-tone-3:#1f5f9e;--jc-tone-4:#8a4b12;--jc-tone-ink:#7a2216;--jc-tone-plate:#fbe3dd}
+html[data-color-mode]{--ai-c1:var(--jc-tone-1);--ai-c2:var(--jc-tone-2);--ai-c3:var(--jc-tone-3);--ai-c4:var(--jc-tone-4);--ai-ink:var(--jc-tone-ink);--ai-bg:var(--jc-bg);--ai-plate:var(--jc-tone-plate);--ai-plate-o:.3;--ai-pf:var(--ai-tone)}
+/* on the graphite strips (nav, footer, drawer) icons use the light coral family in both modes */
+.gallery-navigation,.tui-footer--javcms-modern{--jc-tone-1:#ff8f7e;--jc-tone-2:#ffb4a8;--jc-tone-3:#9cc8ff;--jc-tone-4:#ffd2a6;--ai-c1:var(--jc-tone-1);--ai-c2:var(--jc-tone-2);--ai-c3:var(--jc-tone-3);--ai-c4:var(--jc-tone-4)}
+.gallery-header .header-top .ai{--ai-color:currentColor}
+.gallery-search button .ai{width:18px;height:18px}
+.gallery-header .gallery-header-actions .account-link .ai{width:22px;height:22px}
+.gallery-header .jc-icon-btn .ai{width:22px;height:22px}
+/* search toggle: the search glyph turns into close (both glyphs stacked; rotate + fade) */
+.jc-st{position:relative}
+.jc-st .ai{position:absolute;inset:0;margin:auto;transition:opacity .22s ease,rotate .3s cubic-bezier(.2,.8,.2,1),scale .3s cubic-bezier(.2,.8,.2,1)}
+.jc-st .jc-st-x{opacity:0;rotate:-90deg;scale:.6}
+.jc-st[aria-expanded="true"] .jc-st-s{opacity:0;rotate:90deg;scale:.6}
+.jc-st[aria-expanded="true"] .jc-st-x{opacity:1;rotate:0deg;scale:1}
+
+/* desktop nav: icon + label; the coral underline grows from the centre on hover / current page */
+.gallery-navigation .nav-inner>a{display:inline-flex;align-items:center;gap:.5rem;position:relative}
+.gallery-navigation .nav-inner>a .ai{width:18px;height:18px}
+.gallery-navigation .gallery-history>summary .ai,.gallery-navigation .gallery-qr>summary .ai,.gallery-navigation .language-menu>summary .ai{width:18px;height:18px}
+.gallery-navigation .nav-inner>a::after{content:"";position:absolute;inset-inline:0;bottom:0;height:3px;border-radius:3px 3px 0 0;background:var(--coral,#f05c47);scale:0 1;transition:scale .25s cubic-bezier(.2,.8,.2,1)}
+.gallery-navigation .nav-inner>a[aria-current=page]{box-shadow:none}
+.gallery-navigation .nav-inner>a[aria-current=page]::after{scale:1 1}
+@media(hover:hover){.gallery-navigation .nav-inner>a:hover::after{scale:1 1}}
+.gallery-navigation .nav-inner>a:focus-visible::after{scale:1 1}
+.language-links a{display:flex!important;align-items:center;justify-content:center;gap:.35rem}
+.language-links a .ai{width:15px;height:15px;--ai-color:var(--jc-link)}
+.gallery-navigation .language-menu[open] .language-links{animation:jc-pop .18s ease-out}
+.gallery-qr-panel button .ai{width:16px;height:16px;--ai-color:currentColor}
+
+/* sidebar categories: tinted squircle icon wells, one colour slot per category */
+.sidebar .sidebar-heading{display:flex;align-items:center;gap:.5rem}
+.sidebar .sidebar-heading .ai{width:16px;height:16px}
+.wrapped .sidebar .list-link a{align-items:center}
+.wrapped .sidebar .list-link a .ai{width:28px;height:28px;padding:5px;border-radius:9px;box-sizing:border-box;background:color-mix(in srgb,var(--ai-tone) 14%,transparent);flex:none}
+.wrapped .sidebar .list-link a .jc-cat-name{flex:1 1 auto;min-width:0}
+.wrapped .sidebar .list-link a[aria-current=page] .ai{background:color-mix(in srgb,var(--ai-tone) 26%,transparent)}
+@media(hover:hover){.wrapped .sidebar .list-link a:hover .ai{background:color-mix(in srgb,var(--ai-tone) 24%,transparent)}}
+.sidebar .browse-all{display:flex;align-items:center;gap:.5rem}
+.sidebar .browse-all .ai{width:16px;height:16px}
+@media(max-width:1279px){
+ .wrapped .sidebar .list-link a .ai{width:24px;height:24px;padding:4px;border-radius:8px}
+ .wrapped .sidebar .list-link a .jc-cat-name{flex:none}
+ .wrapped .sidebar .jc-hot{display:none}
+}
+.jc-hot{margin-top:1.25rem}
+.jc-hot-list{display:flex;flex-wrap:wrap;gap:6px}
+html .jc-hot .jc-chip-hot{min-height:36px;font-size:13px}
+
+/* headings with icons */
+html .jc-head .jc-h2 a,html .jc-head .jc-h2{display:inline-flex;align-items:center;gap:.6rem}
+.jc-head .jc-h2 .ai-lg{width:34px;height:34px}
+.jc-h1-ico,.jc-h1-cat,.heading .title h1.jc-h1-ico{display:flex;align-items:center;gap:.75rem}
+html .jc-head .jc-h1-cat .ai-xl{width:52px;height:52px}
+.jc-h1-ico .ai-lg{width:40px;height:40px}
+.jc-h-ico{width:26px!important;height:26px!important;margin-inline-end:.4rem;vertical-align:-.2em}
+.gallery-intro h1{display:flex;align-items:center;gap:.6rem}
+.gallery-intro h1 .jc-intro-ico{width:34px;height:34px}
+.jc-more .jc-more-ico{width:16px;height:16px;transition:translate .2s ease;--ai-color:currentColor}
+@media(hover:hover){.jc-more:hover .jc-more-ico{translate:3px 0}[dir="rtl"] .jc-more:hover .jc-more-ico{translate:-3px 0}}
+@media(max-width:767px){.jc-head .jc-h2 .ai-lg{width:28px;height:28px}html .jc-head .jc-h1-cat .ai-xl{width:40px;height:40px}.jc-h1-ico .ai-lg{width:32px;height:32px}.gallery-intro h1 .jc-intro-ico{width:26px;height:26px}}
+
+/* chips: the icon leads; actor chips start with a duotone tile avatar */
+html .jc-chip .ai{width:15px;height:15px}
+html .jc-chip-actor{padding-inline-start:5px}
+html .jc-chip-actor .ai-av{border-radius:6px}
+.jc-meta dt .ai{width:17px;height:17px;--ai-tone:var(--ai-c1)}
+.jc-stats .ai{width:16px;height:16px;--ai-color:var(--jc-muted)}
+.jc-stats .jc-star{--ai-color:#ffb400}
+html[data-color-mode="light"] .jc-stats .jc-star{--ai-color:#a86a00;color:#a86a00}
+.jc-btn .ai{width:18px;height:18px;--ai-color:currentColor}
+.jc-desc h2,.jc-episodes h2,.jc-comments .mac_comment>h2,.jc-messages .jc-h2{display:flex;align-items:center;gap:.5rem}
+.jc-drop>summary .ai{width:16px;height:16px;--ai-color:var(--jc-muted)}
+html .jc-drop-menu a{justify-content:flex-start}
+html .jc-drop-menu a .ai{width:16px;height:16px}
+html .jc-drop-menu a>span:not(.jc-num){flex:1 1 auto}
+html .pagination .btn{gap:.35rem}
+html .pagination .btn .ai{width:16px;height:16px;--ai-color:currentColor}
+
+/* actor cards: generated duotone tiles replace the bare portrait */
+.jc-actors{display:grid!important;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:1.25rem 1rem!important}
+.jc-actors>.item{display:flex;flex-direction:column;align-items:center;text-align:center;padding:1rem .75rem;border:1px solid var(--jc-line)!important;border-radius:var(--jc-radius);background:var(--jc-surface)!important}
+.jc-actor-face{display:grid;place-items:center}
+.jc-actors .info-post{width:100%}
+.jc-actors .action-info{justify-content:center}
+.block-post .action-info>span{display:inline-flex;align-items:center;gap:4px}
+@media(hover:hover){.jc-actors>.item:hover{border-color:var(--jc-accent)!important}}
+.jc-actor-portrait{display:grid;place-items:start center}
+.model-info .list-info li{display:flex;align-items:center;gap:.45rem;flex-wrap:wrap}
+.model-info .list-info li .ai{width:16px;height:16px;--ai-tone:var(--ai-c1)}
+.heading .title h2{display:flex;align-items:center;gap:.5rem}
+@media(max-width:600px){.jc-actors{grid-template-columns:repeat(2,minmax(0,1fr))}.jc-actor-face .ai-av-lg{--ai-av:80px}.model-info{grid-template-columns:minmax(0,1fr)!important}.jc-actor-portrait .ai-av-xl{--ai-av:120px}}
+
+/* empty state + 404 scenes (one per page; they stop under reduced motion) */
+.jc-empty{flex-direction:column}
+.jc-empty .jc-empty-scene{--ai-scene:clamp(110px,28vw,150px)}
+.jc-empty p{margin:0;display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap}
+.jc-empty a{gap:.35rem}
+.jc-notfound-scene{--ai-scene:clamp(120px,30vw,180px);margin-bottom:-12px}
+
+/* forms: icon inside the field, password reveal */
+.jc-field{position:relative;display:block;width:100%}
+.jc-field .jc-field-ico{position:absolute;inset-inline-start:14px;top:50%;margin-top:-.5em;width:17px;height:17px;--ai-color:var(--jc-muted);z-index:1}
+html .jc-field>input{padding-inline-start:42px!important}
+.jc-field.has-pw>input{padding-inline-end:52px!important}
+.jc-pw{position:absolute!important;inset-inline-end:2px;top:50%;translate:0 -50%;display:inline-grid!important;place-items:center;width:44px!important;min-width:44px!important;height:44px!important;min-height:44px!important;padding:0!important;border:0!important;background:transparent!important;color:var(--jc-muted)!important;cursor:pointer}
+.jc-pw .ai{width:18px;height:18px;--ai-color:currentColor}
+.jc-pw .jc-pw-off,.jc-pw[aria-pressed="true"] .jc-pw-on{display:none}
+.jc-pw[aria-pressed="true"] .jc-pw-off{display:inline-block}
+@media(hover:hover){.jc-pw:hover{color:var(--jc-link)!important}}
+.jc-form-h{display:flex;flex-direction:column;align-items:center;gap:.5rem}
+.jc-form label,.comment_form label{display:flex;align-items:center;gap:.45rem}
+.jc-form label .ai,.comment_form label .ai{width:16px;height:16px;--ai-tone:var(--ai-c1)}
+.comment_submit .ai,.gbook_submit .ai{width:16px;height:16px;--ai-color:currentColor;margin-inline-end:.35rem}
+
+/* footer: categories + quick links columns with icons; the headings are visible now */
+:root[data-template-theme] .tui-footer--javcms-modern .jc-foot-top{grid-template-columns:minmax(0,.75fr) minmax(0,1fr) minmax(0,1.45fr)}
+/* desktop: link columns sized by their labels so "Uncensored Leaked" / "Latest 100 updates" and longer translations stay on one line */
+@media(min-width:1024px){:root[data-template-theme] .tui-footer--javcms-modern .jc-foot-cats .tui-footer-links{grid-template-columns:repeat(2,auto)}:root[data-template-theme] .tui-footer--javcms-modern .jc-foot-top>.tui-footer-nav:not(.jc-foot-cats) .tui-footer-links{grid-template-columns:repeat(3,auto)}}
+.tui-footer--javcms-modern .tui-footer-heading.jc-foot-h{position:static;width:auto;height:auto;overflow:visible;clip:auto;white-space:normal;display:flex;align-items:center;gap:.45rem;margin:0 0 4px;color:var(--footer-muted);font-size:13px;letter-spacing:.06em;text-transform:uppercase}
+.tui-footer--javcms-modern .jc-foot-h .ai{width:15px;height:15px}
+:root[data-template-theme] .tui-footer--javcms-modern .jc-foot-cats .tui-footer-links{grid-template-columns:repeat(2,minmax(0,1fr))}
+.tui-footer--javcms-modern .tui-footer-links a{gap:.55rem}
+.tui-footer--javcms-modern .tui-footer-links a .ai,.tui-footer--javcms-modern .tui-footer-contact .ai{width:16px;height:16px;flex:none}
+.tui-footer--javcms-modern .tui-footer-contact{display:flex;align-items:center;gap:.45rem}
+.tui-footer--javcms-modern .tui-footer-contact a{gap:.45rem}
+@media(max-width:1023px){:root[data-template-theme] .tui-footer--javcms-modern .jc-foot-top{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.tui-footer--javcms-modern .jc-foot-top>.tui-footer-brand-block{grid-column:1/-1}}
+@media(max-width:640px){:root[data-template-theme] .tui-footer--javcms-modern .jc-foot-top{grid-template-columns:minmax(0,1fr)}:root[data-template-theme] .tui-footer--javcms-modern .tui-footer-links{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* back to top: coral rounded square (the card play-badge shape), bottom end corner, shown after one screen */
+.jc-top{position:fixed;z-index:70;inset-inline-end:max(16px,env(safe-area-inset-right));bottom:max(18px,env(safe-area-inset-bottom));display:grid;place-items:center;width:46px;height:46px;border-radius:12px;background:var(--jc-accent-grad,var(--jc-accent));color:#fff;box-shadow:0 8px 22px rgba(0,0,0,.32);opacity:0;visibility:hidden;translate:0 12px;transition:opacity .25s ease,translate .25s ease,visibility 0s linear .25s}
+.jc-top.is-shown{opacity:1;visibility:visible;translate:0 0;transition:opacity .25s ease,translate .25s ease}
+.jc-top .ai{width:22px;height:22px;--ai-color:#fff}
+.jc-top:focus-visible{outline:3px solid var(--focus,#9dccff);outline-offset:3px}
+@media(hover:hover){.jc-top:hover{filter:brightness(1.08)}}
+
+/* mobile drawer: two-column icon tiles that pop in when it opens */
+@media(max-width:767px){
+ .gallery-navigation .nav-inner>a{gap:.6rem;min-height:48px}
+ .gallery-navigation .nav-inner>a::after{display:none}
+ .gallery-navigation .nav-inner>a[aria-current=page]{color:#ffb9af}
+ .gallery-navigation .nav-inner>a .ai{width:30px;height:30px;padding:6px;border-radius:9px;box-sizing:border-box;background:rgba(255,255,255,.07)}
+ .gallery-navigation .nav-inner>a[aria-current=page] .ai{background:color-mix(in srgb,var(--coral,#f05c47) 30%,transparent)}
+ .gallery-navigation .nav-inner>details>summary{gap:.6rem;min-height:48px}
+ .gallery-navigation .nav-inner>details>summary .ai{width:30px;height:30px;padding:6px;border-radius:9px;box-sizing:border-box;background:rgba(255,255,255,.07)}
+ .gallery-navigation.is-open .nav-inner>a .ai,.gallery-navigation.is-open .nav-inner>details>summary .ai{animation:ai-pop .4s cubic-bezier(.3,1.4,.5,1) calc(min(var(--ai-i,0),8) * 40ms) both}
+ .jc-top{width:44px;height:44px;inset-inline-end:14px;bottom:max(14px,env(safe-area-inset-bottom))}
+}
+@media(prefers-reduced-motion:reduce){.jc-st .ai,.gallery-navigation .nav-inner>a::after,.jc-top,.jc-more .jc-more-ico{transition:none!important}.gallery-navigation.is-open .nav-inner .ai,.gallery-navigation .language-menu[open] .language-links{animation:none!important}}
+html[data-ai-power="low"] .gallery-navigation.is-open .nav-inner .ai{animation:none!important}
+@media(forced-colors:active){.wrapped .sidebar .list-link a .ai,.gallery-navigation .nav-inner>a .ai{background:none}.jc-top{border:2px solid ButtonText}}
+[dir="rtl"] .jc-more .jc-more-ico{--ai-fx:scaleX(-1)}
+/* phones (no hover): no first-paint icon animations; only the tap press, the current-page draw and the drawer pop remain
+   (keeps full-tree style recalcs cheap on slow phones; desktop keeps entrances, draw + tilt hover) */
+@media (hover:none),(pointer:coarse){
+ html[data-color-mode] .ai,html[data-color-mode] .ai-g,html[data-color-mode] .ai-pl{animation:none}
+ html[data-color-mode] :is(a,button,summary,label):active .ai-g{animation:ai-press .25s ease-out both}
+ html[data-color-mode] .gallery-navigation [aria-current="page"] .ai-g{animation:ai-draw .7s cubic-bezier(.45,0,.2,1) both}
+}
+@media (hover:none) and (prefers-reduced-motion:reduce),(pointer:coarse) and (prefers-reduced-motion:reduce){html[data-color-mode] .ai,html[data-color-mode] .ai *{animation:none!important}}
+/* back to top never covers the site theme switcher (48px, bottom-end or bottom-start): it stacks above it on the same corner */
+html[data-jv-switcher-pos] .jc-top{bottom:calc(var(--jv-switcher-bottom,16px) + 64px + env(safe-area-inset-bottom,0px))}
+html[data-jv-switcher-pos="bottom-start"] .jc-top{bottom:max(18px,env(safe-area-inset-bottom))}
+@media(max-width:767px){html[data-jv-switcher-pos] .jc-top{bottom:calc(var(--jv-switcher-bottom,16px) + 60px + env(safe-area-inset-bottom,0px))}html[data-jv-switcher-pos="bottom-start"] .jc-top{bottom:max(14px,env(safe-area-inset-bottom))}}
+/* repair r1: keep back-to-top off the footer notice; light star contrast */
+.tui-footer--javcms-modern .tui-footer-bottom{padding-inline-end:76px}
+@media(max-width:767px){.tui-footer--javcms-modern .tui-footer-bottom{padding-inline-end:68px}}
+/* visual sweep g1: the switcher's 80px end spacer sits under the graphite footer; paint it graphite so the page does not end twice */
+.jv-ts-spacer{background:var(--graphite,#24272b)}
+/* footer content lines up with the header / main column (main is 1448px inside .wrapped's own padding) */
+:root[data-template-theme] .wrapped>.tui-footer--javcms-modern[data-template-footer]{--footer-width:1448px;--footer-gutter:0px}
+/* RSS is not a directional icon: keep it unmirrored in RTL (the shared flip list mirrors it) */
+html[dir="rtl"] .ai[data-ai="rss"]{--ai-fx:scaleX(1)}
+
+/* qa-g1 2026-10-14: legal pages / articles: keep list bullets and spacing (lists rendered as plain lines) */
+.contentart ul,.contentart ul li{list-style:disc outside}
+.contentart ol,.contentart ol li{list-style:decimal outside}
+.contentart ul,.contentart ol{margin:0 0 1rem;padding-inline-start:1.4em}
+.contentart li{display:list-item;margin:0 0 .4rem}
+/* qa-g1: legal text is English on every locale; resolve direction per paragraph so RTL pages keep punctuation in place */
+.contentart :is(p,li,h2,h3,h4){unicode-bidi:plaintext;text-align:start}
+[dir="rtl"] .contentart ul li{list-style:none}
+[dir="rtl"] .contentart ul li::before{content:"•";padding:0 .45em}

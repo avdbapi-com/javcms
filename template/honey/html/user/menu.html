@@ -1,0 +1,16 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}$hnUAct = strtolower((string)request()->action()); $hnUFace = trim((string)($obj['user_portrait'] ?? '')); $hnUFace = $hnUFace === '' ? $maccms['path_tpl'] . 'assets/img/avatar.svg' : mac_url_img($hnUFace); $hnCash = (string)($GLOBALS['config']['user']['cash_status'] ?? '0') === '1'; $hnUMenu = [['index', 'user', 'ui.my_information'], ['info', 'edit', 'ui.modify_the_information'], ['favs', 'heart', 'ui.my_collection'], ['plays', 'play', 'ui.play_record'], ['ulog', 'clock', 'history'], ['popedom', 'key', 'ui.my_authority'], ['upgrade', 'crown', 'ui.upgrade_member'], ['buy', 'diamond', 'ui.recharge_center'], ['orders', 'list', 'ui.recharge_record'], ['plog', 'bolt', 'ui.points_record']]; if ($hnCash) { $hnUMenu[] = ['cash', 'download', 'ui.withdrawal_record']; } $hnUMenu[] = ['comment', 'chat', 'ui.comments']; $hnUMenu[] = ['gbook', 'mail', 'ui.recent_messages']; $hnUMenu[] = ['logout', 'logout', 'ui.quit']; $hnUItems = []; foreach ($hnUMenu as $hnUm) { $hnUItems[] = ['href' => mac_url('user/' . $hnUm[0]), 'icon' => $hnUm[1], 'text' => \app\common\util\TemplateText::get($hnUm[2]), 'on' => ($hnUAct === $hnUm[0] || ($hnUm[0] === 'index' && $hnUAct === 'ajax_info')) ? 1 : 0]; }{/php}
+<div class="hn-umenu">
+<div class="hn-vipcard">
+<div class="hn-vip-top"><img src="{$hnUFace|htmlspecialchars=ENT_QUOTES}?v={:time()}" alt="" width="52" height="52"><div style="min-width:0"><div class="hn-vip-name" dir="auto">{$obj.user_name|htmlspecialchars=ENT_QUOTES}</div><span class="hn-vip-badge">{:\\app\\common\\util\\AutoIcon::ui('crown', ['class'=>'hn-i', 'tint'=>'none'])}{$obj.group.group_name|htmlspecialchars=ENT_QUOTES}</span></div></div>
+<div class="hn-vip-stats"><div><b>{$obj.user_points}</b><span>{:\\app\\common\\util\\TemplateText::get('ui.my_points')}</span></div><div><b>{$obj.group.group_name|htmlspecialchars=ENT_QUOTES}</b><span>{:\\app\\common\\util\\TemplateText::get('ui.my_level')}</span></div><div><b>{$obj.user_login_num}</b><span>{:\\app\\common\\util\\TemplateText::get('ui.number_of_login')}</span></div></div>
+<a class="hn-vip-btn" href="{:mac_url('user/upgrade')}">{:\\app\\common\\util\\TemplateText::get('ui.upgrade_member')}</a>
+</div>
+<ul class="hn-umenu-list">{volist name="hnUItems" id="hnUi"}<li><a href="{$hnUi.href|htmlspecialchars=ENT_QUOTES}"{if condition="$hnUi.on eq 1"} aria-current="page"{/if}>{php}$hnUiMap = ['user' => 'user', 'edit' => 'edit', 'heart' => 'heart', 'play' => 'play', 'clock' => 'clock', 'key' => 'key', 'crown' => 'crown', 'diamond' => 'gem', 'list' => 'list', 'bolt' => 'zap', 'download' => 'download', 'chat' => 'message', 'mail' => 'mail', 'logout' => 'log-out']; echo \app\common\util\AutoIcon::ui(isset($hnUiMap[$hnUi['icon']]) ? $hnUiMap[$hnUi['icon']] : 'link', ['class' => 'hn-i', 'tint' => 'none']);{/php}{$hnUi.text}</a></li>{/volist}</ul>
+</div>

@@ -1,0 +1,61 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}$emtDe = function ($v) { return trim(strip_tags(\app\common\util\AvdbLanguage::decodeEntities((string)$v))); }; $tplNoPic = $maccms['path_tpl'] . 'assets/brand/ph-dark.svg'; $tplIcons = $maccms['path_tpl'] . 'assets/icons.svg'; $emtAct = strtolower((string)($maccms['controller_action'] ?? '')); $emtTypeId = intval($GLOBALS['type_id'] ?? 0); $emtTypePid = intval($GLOBALS['type_pid'] ?? 0); $emtQ = isset($param['wd']) && is_string($param['wd']) ? $param['wd'] : ''; $emtHot = array(); foreach (explode(',', (string)($maccms['search_hot'] ?? '')) as $emtHotWord) { $emtHotWord = trim($emtHotWord); if ($emtHotWord !== '' && (function_exists('mb_strlen') ? mb_strlen($emtHotWord, 'UTF-8') : strlen($emtHotWord)) >= 2 && count($emtHot) < 10) { $emtHot[] = $emtHotWord; } }{/php}
+<a class="skip-link" href="#main-content">{:\\app\\common\\util\\TemplateText::get('ui.skip_to_content')}</a>
+<svg class="t-defs" width="0" height="0" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="t-ramp-mark" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#5b1696"/><stop offset=".45" stop-color="#ee3b3b"/><stop offset=".75" stop-color="#ff7a12"/><stop offset="1" stop-color="#ffc531"/></linearGradient>
+    <linearGradient id="t-ramp-arc" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#5b1696"/><stop offset=".35" stop-color="#b0207f"/><stop offset=".55" stop-color="#ee3b3b"/><stop offset=".75" stop-color="#ff7a12"/><stop offset="1" stop-color="#ffc531"/></linearGradient>
+    <filter id="t-thermal" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
+      <feColorMatrix type="matrix" values="0.30 0.59 0.11 0 0  0.30 0.59 0.11 0 0  0.30 0.59 0.11 0 0  0 0 0 1 0"/>
+      <feComponentTransfer>
+        <feFuncR type="table" tableValues="0.141 0.357 0.690 0.933 1 1 1"/>
+        <feFuncG type="table" tableValues="0.063 0.086 0.125 0.231 0.478 0.773 0.953"/>
+        <feFuncB type="table" tableValues="0.290 0.588 0.498 0.231 0.071 0.192 0.769"/>
+      </feComponentTransfer>
+    </filter>
+    <filter id="t-haze" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.012 0.04" numOctaves="2" seed="7" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="9" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </defs>
+</svg>
+<header class="t-hdr" id="t-hdr">
+  <div class="t-hdr-in t-wrap">
+    {include file="public/brand"}
+    <nav class="t-nav" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.main_navigation')}">
+      <a class="t-pill" href="{$maccms.path|htmlspecialchars=ENT_QUOTES}" {if condition="$emtAct eq 'index/index'"}aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::navIcon('home', '', ['i'=>0])}{:\\app\\common\\util\\TemplateText::get('ui.home')}</a>
+      <a class="t-pill" href="{:mac_url('label/new')}" {if condition="$emtAct eq 'label/new'"}aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::navIcon('latest', '', ['i'=>1])}{:\\app\\common\\util\\TemplateText::get('ui.latest')}</a>
+      <a class="t-pill is-hot" href="{:mac_url('label/hot')}" {if condition="$emtAct eq 'label/hot'"}aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::navIcon('hot', '', ['i'=>2])}{:\\app\\common\\util\\TemplateText::get('emt.burning')}</a>
+      <a class="t-pill" href="{:mac_url('label/score')}" {if condition="$emtAct eq 'label/score'"}aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::navIcon('top-rated', '', ['i'=>3])}{:\\app\\common\\util\\TemplateText::get('top_rated')}</a>
+      <button class="t-pill t-mega-btn" type="button" aria-expanded="false" aria-controls="t-mega" data-t-mega {if condition="$emtTypeId gt 0"}data-current="1"{/if}>{:\\app\\common\\util\\AutoIcon::navIcon('categories', '', ['i'=>4])}{:\\app\\common\\util\\TemplateText::get('ui.categories')}<svg class="t-i t-chev" aria-hidden="true"><use href="{$tplIcons}#chev-down"></use></svg></button>
+    </nav>
+    <form class="t-search" action="{:mac_url('vod/search')}" method="get" role="search" data-t-search>
+      <label class="sr-only" for="t-q">{:\\app\\common\\util\\TemplateText::get('ui.search')}</label>
+      <div class="t-search-ring" data-ai-hot>
+        {:\\app\\common\\util\\AutoIcon::ui('search', ['class'=>'t-i'])}
+        <input id="t-q" class="t-search-in" type="search" name="wd" value="{$emtQ|htmlspecialchars=ENT_QUOTES,'UTF-8',false}" placeholder="{:\\app\\common\\util\\TemplateText::get('ui.search')}" maxlength="60" autocomplete="off" enterkeyhint="search" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="t-sugg">
+      </div>
+      <div class="t-sugg" id="t-sugg" role="listbox" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.search')}" hidden></div>
+    </form>
+    <div class="t-tools">
+      {include file="public/languages"}
+      <button class="t-ibtn t-only-phone" type="button" data-t-sheet="t-search-sheet" aria-controls="t-search-sheet" aria-expanded="false" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.search')}" data-fx="morph" data-fx-icons="search close"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg></button>
+      <button class="t-ibtn t-mode" type="button" data-color-toggle data-fx="morph theme-reveal" data-fx-morph-map="dark:sun light:moon" data-light-label="{:\\app\\common\\util\\TemplateText::get('ui.light_mode')}" data-dark-label="{:\\app\\common\\util\\TemplateText::get('ui.dark_mode')}" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.light_mode')}" title="{:\\app\\common\\util\\TemplateText::get('ui.light_mode')}"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg></button>
+      <a class="t-acct mac_user" href="{:mac_url('user/login')}">{:\\app\\common\\util\\TemplateText::get('ui.log_in')}</a>
+    </div>
+  </div>
+  <div class="t-heatline" aria-hidden="true"><span data-fx="progress"></span></div>
+  <div class="t-mega" id="t-mega" hidden>
+    <div class="t-wrap">
+      <p class="t-mega-k"><svg class="t-i" aria-hidden="true"><use href="{$tplIcons}#temperature"></use></svg>{:\\app\\common\\util\\TemplateText::get('emt.heat_map')}</p>
+      {php}$emtHeatCtx = 'mega';{/php}{include file="public/heatmap"}
+    </div>
+  </div>
+</header>
+<div class="t-scale" aria-hidden="true"><span>{:\\app\\common\\util\\TemplateText::get('emt.hot')}</span><i></i><span>{:\\app\\common\\util\\TemplateText::get('emt.cold')}</span></div>

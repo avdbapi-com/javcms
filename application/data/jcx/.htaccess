@@ -1,0 +1,7 @@
+# Ads manager stored data (live.php, HTML5 zips): never served directly (jcx/h5 serves the zips).
+<IfModule mod_authz_core.c>
+Require all denied
+</IfModule>
+<IfModule !mod_authz_core.c>
+Deny from all
+</IfModule>

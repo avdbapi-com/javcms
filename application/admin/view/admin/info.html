@@ -1,0 +1,156 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Based on MacCMS 10 (Apache-2.0) by magicblack, changed by JavCMS.
+JavCMS changes: Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors,
+JavCMS Community License 1.0. The MacCMS parts stay under the Apache License 2.0.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{include file="../../../application/admin/view/public/head" /}
+<link rel="stylesheet" href="__STATIC__/css/admin_remaining_editor_return_v1.css?rev=1">
+<link rel="stylesheet" href="__STATIC__/css/admin_administrator_workspace_v1.css?v={:filemtime(ROOT_PATH . 'static/css/admin_administrator_workspace_v1.css')}">
+<script type="text/javascript" src="__STATIC__/js/admin_remaining_editor_return_v1.js?rev=20261006-return2"></script>
+{php}$axS = '__STATIC__/admin/icons/admin-icons.svg?v=' . $admin_icons_v;{/php}
+<div class="page-container admin-remaining-editor-v1 admin-administrator-editor-v1">
+    <div class="ax-editor-head">
+        <a href="{:url('index')}" class="ax-btn ax-btn--ghost admin-remaining-editor-return" data-admin-remaining-editor-return><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axS}#ai-arrow-left"/></svg>{:lang('admin/ux/kit/back')}</a>
+        <h1>{if condition="$is_new"}{:lang('admin/admin/editor_add')}{else /}{:lang('admin/admin/editor_edit')}{/if}</h1>
+    </div>
+
+    <form class="layui-form ax-form role-form" method="post" action="" data-ax-dirty>
+        <input id="admin_id" name="admin_id" type="hidden" value="{$info.admin_id}">
+        <input type="hidden" name="__token__" value="{$Request.token}" />
+        <section class="ax-section">
+            <div class="ax-field ax-field--md">
+                <label for="admin_name">{:lang('name')}</label>
+                <input type="text" class="layui-input" value="{$info.admin_name|htmlspecialchars}" id="admin_name" name="admin_name" autocomplete="off" required>
+            </div>
+            <div class="ax-field ax-field--md">
+                <label for="admin_pwd">{:lang('pass')}</label>
+                <input type="password" class="layui-input" value="" id="admin_pwd" name="admin_pwd" autocomplete="new-password" maxlength="72">
+            </div>
+            <div class="ax-field">
+                <span class="role-label" id="statusLabel">{:lang('status')}</span>
+                <div class="role-status" role="radiogroup" aria-labelledby="statusLabel" aria-describedby="statusHelp">
+                    <label><input name="admin_status" type="radio" value="1" lay-ignore {if condition="$info['admin_status'] eq 1"}checked{/if}> {:lang('enable')}</label>
+                    <label><input name="admin_status" type="radio" value="0" lay-ignore {if condition="$info['admin_status'] neq 1"}checked{/if}> {:lang('disable')}</label>
+                </div>
+                <p class="ax-help" id="statusHelp">{:lang('admin/ux/roles/status_help')}</p>
+            </div>
+        </section>
+
+        <section class="ax-section role-perms" aria-labelledby="rolePermsTitle">
+            <h2 id="rolePermsTitle">{:lang('popedom')}</h2>
+            <div class="role-presets">
+                <span class="role-presets__label">{:lang('admin/ux/roles/presets')}</span>
+                <button type="button" class="ax-btn ax-btn--sm" data-preset="editor">{:lang('admin/ux/roles/preset_editor')}</button>
+                <button type="button" class="ax-btn ax-btn--sm" data-preset="moderator">{:lang('admin/ux/roles/preset_moderator')}</button>
+                <button type="button" class="ax-btn ax-btn--sm" data-preset="importer">{:lang('admin/ux/roles/preset_importer')}</button>
+                <button type="button" class="ax-btn ax-btn--sm" data-preset="full">{:lang('admin/ux/roles/preset_full')}</button>
+            </div>
+            <p class="ax-help">{:lang('admin/ux/roles/preset_help')}</p>
+            <p class="ax-help role-full-help"><span class="ax-chip ax-chip--danger">{:lang('admin/ux/final/full_access')}</span> {:lang('admin/ux/final/full_access_help')}</p>
+            {if condition="$role_locked"}<p class="ax-help role-locked-help">{:lang('admin/ux/final/locked_help')}</p>{/if}
+            {volist name="role_blocks" id="b"}
+            <details class="role-block{if condition="$b.advanced"} role-block--advanced{/if}" data-block="{$b.key}"{if condition="!$b.advanced"} open{/if}>
+                <summary><span class="role-block__title">{$b.label}</span><span class="role-block__count" data-total="{$b.total}">{$b.count}</span></summary>
+                <ul class="role-rows">
+                    {volist name="b['rows']" id="r"}
+                    <li class="role-row">
+                        {if condition="$r['page']"}
+                        <label class="role-page{if condition="$r['page']['always']"} is-always{/if}{if condition="$r['page']['locked']"} is-always is-locked{/if}">
+                            <input type="checkbox" lay-ignore value="{$r['page']['pair']}" {if condition="!$r['page']['always']"}name="admin_auth[]"{/if} data-key="{$r['page']['key']}" data-pair="{$r['page']['pair']}" {if condition="$r['page']['checked']"} checked{/if}{if condition="$r['page']['always'] || $r['page']['locked']"} disabled{/if}>
+                            <span><strong>{$r['page']['label']}</strong>{if condition="$r['page']['full']"} <span class="ax-chip ax-chip--danger role-full">{:lang('admin/ux/final/full_access')}</span>{/if}<span class="role-page__hint">{if condition="$r['page']['always']"}{:lang('admin/ux/roles/always')}{else /}{:lang('admin/ux/roles/open_page')}{/if}</span></span>
+                        </label>
+                        {else /}
+                        <span class="role-page role-page--plain"><strong>{$r.label}</strong></span>
+                        {/if}
+                        {if condition="!empty($r['entries'])"}
+                        <span class="role-entries">
+                            {volist name="r['entries']" id="e"}
+                            <label class="role-entry{if condition="$e['always']"} is-always{/if}{if condition="$e['locked']"} is-always is-locked{/if}"><input type="checkbox" lay-ignore value="{$e.pair}" {if condition="!$e['always']"}name="admin_auth[]"{/if} data-page="{if condition="$r['page']"}{$r['page']['key']}{/if}" data-pair="{$e.pair}" {if condition="$e['checked']"} checked{/if}{if condition="$e['always'] || $e['locked']"} disabled{/if}> {$e.label}{if condition="$e['full']"} <span class="ax-chip ax-chip--danger role-full">{:lang('admin/ux/final/full_access')}</span>{/if}{if condition="$e['always']"} <span class="role-page__hint">{:lang('admin/ux/roles/always')}</span>{/if}</label>
+                            {/volist}
+                        </span>
+                        {/if}
+                    </li>
+                    {/volist}
+                </ul>
+            </details>
+            {/volist}
+        </section>
+
+        <div class="ax-savebar">
+            <a class="ax-btn ax-btn--ghost admin-remaining-editor-return" href="{:url('index')}" data-admin-remaining-editor-return><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axS}#ai-arrow-left"/></svg>{:lang('admin/ux/kit/back')}</a>
+            <span class="ax-savebar__status" role="status"></span>
+            <div class="ax-savebar__end">
+                <button type="reset" class="ax-btn" data-undone="{:lang('admin/ux/polish/undone')}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axS}#ai-rotate-ccw"/></svg>{:lang('admin/ux/system/undo_changes')}</button>
+                <button type="submit" class="ax-btn ax-btn--primary" lay-submit="" lay-filter="formSubmit" data-child="true"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axS}#ai-save"/></svg>{:lang('admin/ux/kit/save')}</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin_common.js?v={:filemtime(ROOT_PATH . 'static/js/admin_common.js')}"></script>{/* public/foot.html loads this file with a fixed ?v=; the shell pages use the file time until hand-over HO-shell-1 is applied */}
+<script>window.AX_ROLE_COUNT = {:json_encode(html_entity_decode((string)$role_count_tpl,ENT_QUOTES,'UTF-8'),JSON_HEX_TAG|JSON_HEX_AMP|JSON_HEX_APOS|JSON_HEX_QUOT)};</script>
+<script type="text/javascript">
+(function () {
+    'use strict';
+    var form = document.querySelector('.role-form');
+    if (!form) return;
+    // P6 presets: they only tick boxes (pages + their entries + listed extra pairs).
+    var PRESETS = {
+        editor: { pages: ['44', '45', '31', '495', '32', '51', '52'], pairs: ['upload/upload'] },
+        moderator: { pages: ['35', '34', '63'], pairs: [] },
+        importer: { pages: ['96', '24', '44', '45'], pairs: ['upload/upload'], prefix: ['avdbimport/'] },
+        full: 'all'
+    };
+    function boxes() { return Array.prototype.slice.call(form.querySelectorAll('.role-perms input[type="checkbox"]:not(:disabled)')); }
+    function count() {
+        Array.prototype.forEach.call(form.querySelectorAll('.role-block'), function (b) {
+            var all = b.querySelectorAll('input[type="checkbox"]');
+            var on = b.querySelectorAll('input[type="checkbox"]:checked');
+            var el = b.querySelector('.role-block__count');
+            el.textContent = String(window.AX_ROLE_COUNT || '%s / %s').replace('%s', on.length).replace('%s', all.length);
+        });
+    }
+    function tick(el) { if (!el.checked) { el.checked = true; } }
+    form.addEventListener('click', function (e) {
+        var b = e.target.closest && e.target.closest('[data-preset]');
+        if (!b) return;
+        var p = PRESETS[b.getAttribute('data-preset')];
+        boxes().forEach(function (el) {
+            var key = el.getAttribute('data-key') || el.getAttribute('data-page') || '';
+            var pair = el.getAttribute('data-pair') || '';
+            if (p === 'all' || (key && p.pages.indexOf(key) !== -1) || p.pairs.indexOf(pair) !== -1 ||
+                (p.prefix || []).some(function (x) { return pair.indexOf(x) === 0; })) tick(el);
+        });
+        if (window.AxUX) window.AxUX.markDirty();
+        count();
+    });
+    // Ticking an entry of a page also ticks the page; unticking the page unticks its entries.
+    form.addEventListener('change', function (e) {
+        var el = e.target;
+        if (!el.matches || !el.matches('.role-perms input[type="checkbox"]')) return;
+        var page = el.getAttribute('data-page');
+        if (page && el.checked) {
+            var p = form.querySelector('input[data-key="' + page + '"]');
+            if (p && !p.disabled) p.checked = true;
+        }
+        var key = el.getAttribute('data-key');
+        if (key && !el.checked) {
+            Array.prototype.forEach.call(form.querySelectorAll('input[data-page="' + key + '"]'), function (x) { if (!x.disabled) x.checked = false; });
+        }
+        count();
+    });
+    // R2-13: Undo changes puts every field and box back as loaded, then the counts and the status line follow.
+    form.addEventListener('reset', function () {
+        setTimeout(function () {
+            count();
+            var st = form.querySelector('.ax-savebar__status'), b = form.querySelector('.ax-savebar button[type="reset"]');
+            if (st && b) { st.textContent = b.getAttribute('data-undone') || ''; }
+        }, 0);
+    });
+    count();
+}());
+</script>
+</body>
+</html>

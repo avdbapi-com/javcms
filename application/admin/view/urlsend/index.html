@@ -1,0 +1,216 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Based on MacCMS 10 (Apache-2.0) by magicblack, changed by JavCMS.
+JavCMS changes: Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors,
+JavCMS Community License 1.0. The MacCMS parts stay under the Apache License 2.0.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{include file="../../../application/admin/view/public/head" /}
+
+<div class="page-container p10">
+
+    <form class="layui-form layui-form-pane" action="" id="admin-urlsend-settings-labels">
+        <input type="hidden" name="__token__" value="{:mac_admin_csrf_token()}">
+        <div class="layui-tab" lay-filter="tb1">
+            <ul class="layui-tab-title">
+                {volist name="$extends['ext_list']" id="vo"}
+                <li data-key="{$key|htmlspecialchars=(string)###,ENT_QUOTES,'UTF-8'}" lay-id="configpay_{$i+2}">{$vo|htmlspecialchars=(string)###,ENT_QUOTES,'UTF-8'} {:lang('config')}</li>
+                {/volist}
+
+            </ul>
+            <div class="layui-tab-content">
+
+                {$extends['ext_html']}
+
+            </div>
+        </div>
+        <div class="layui-form-item ">
+            <div class="layui-input-block">
+                <button type="submit" class="btn btn-primary me-1" lay-submit="" lay-filter="formSubmit">{:lang('btn_save')}</button>
+                <button class="btn btn-warning me-1 layui-btn-warm" type="reset">{:lang('btn_reset')}</button>
+            </div>
+        </div>
+    </form>
+
+
+    <form class="layui-form layui-form-pane" method="post" action="" target="_blank" id="form_post">
+        <input type="hidden" name="__token__" value="{:mac_admin_csrf_token()}">
+        <blockquote class="layui-elem-quote">
+            {:lang('admin/urlsend/tip2')}{$site_url|htmlspecialchars=(string)###,ENT_QUOTES,'UTF-8'}<br>
+        </blockquote>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label" id="label-ac-label" for="ac">{:lang('admin/urlsend/send_genre')}:</label>
+            <div class="layui-input-inline">
+                <select class="w150" id="ac" name="ac" lay-filter="ac" aria-labelledby="label-ac-label">
+                    {volist name="$extends['ext_list']" id="vo"}
+                    <option value="{$key|htmlspecialchars=(string)###,ENT_QUOTES,'UTF-8'}">{$vo|htmlspecialchars=(string)###,ENT_QUOTES,'UTF-8'}</option>
+                    {/volist}
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item" role="radiogroup" aria-labelledby="label-range-group">
+            <label class="layui-form-label" id="label-range-group">{:lang('admin/urlsend/send_range')}:</label>
+            <div class="layui-input-inline">
+                <div class="layui-input-inline w300">
+                    <input type="radio" name="range" value="0" title="{:lang('admin/urlsend/add_update')}" checked  id="label-range-control-0" aria-label="{:lang('admin/urlsend/send_range')} {:lang('admin/urlsend/add_update')}">
+                    <input type="radio" name="range" value="1" title="{:lang('admin/urlsend/add')}" id="label-range-control-1" aria-label="{:lang('admin/urlsend/send_range')} {:lang('admin/urlsend/add')}">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label" id="label-limit-label" for="limit">{:lang('admin/urlsend/page_send_num')}:</label>
+            <div class="layui-input-inline w400">
+                <input type="text" name="limit" id="limit" value="50" class="layui-input" aria-labelledby="label-limit-label">
+            </div>
+            <div class="layui-form-mid layui-word-aux"></div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" id="label-page-label" for="page">{:lang('admin/urlsend/start_page')}:</label>
+            <div class="layui-input-inline w400">
+                <input type="text" name="page" id="page" value="1" class="layui-input" aria-labelledby="label-page-label">
+            </div>
+            <div class="layui-form-mid layui-word-aux"></div>
+        </div>
+
+        <hr class="layui-bg-gray">
+        <input type="button" value="Today's videos" class="btn btn-primary me-1" onclick="post('ac2=today&mid=1');">
+        <input type="button" value="All videos" class="btn btn-primary me-1" onclick="post('ac2=all&mid=1');">
+
+        <input type="button" value="Today's articles" class="btn btn-primary me-1" onclick="post('ac2=today&mid=2');">
+        <input type="button" value="All articles" class="btn btn-primary me-1" onclick="post('ac2=all&mid=2');">
+        <hr class="layui-bg-gray">
+        <input type="button" value="Today's topics" class="btn btn-primary me-1" onclick="post('ac2=today&mid=3');">
+        <input type="button" value="All topics" class="btn btn-primary me-1" onclick="post('ac2=all&mid=3');">
+
+        <input type="button" value="Today's actors" class="btn btn-primary me-1" onclick="post('ac2=today&mid=8');">
+        <input type="button" value="All actors" class="btn btn-primary me-1" onclick="post('ac2=all&mid=8');">
+        <hr class="layui-bg-gray">
+        <input type="button" value="Today's roles" class="btn btn-primary me-1" onclick="post('ac2=today&mid=9');">
+        <input type="button" value="All roles" class="btn btn-primary me-1" onclick="post('ac2=all&mid=9');">
+
+        <input type="button" value="Today's URLs" class="btn btn-primary me-1" onclick="post('ac2=today&mid=11');">
+        <input type="button" value="All URLs" class="btn btn-primary me-1" onclick="post('ac2=all&mid=11');">
+        <hr class="layui-bg-gray">
+        
+    </form>
+
+</div>
+
+{include file="../../../application/admin/view/public/foot" /}
+<script type="text/javascript" src="__STATIC__/js/jquery.cookie.js"></script>
+<script type="text/javascript">
+    var curUrl = "{:url('push')}";
+    layui.use(['element', 'form', 'layer'], function() {
+        var element = layui.element
+            ,form = layui.form
+            , layer = layui.layer;
+
+
+        element.on('tab(tb1)', function(){
+            $.cookie('urlsend_tab', this.getAttribute('lay-id'));
+        });
+
+        if( $.cookie('urlsend_tab') !=null ) {
+            element.tabChange('tb1', $.cookie('urlsend_tab'));
+        }
+
+
+
+    });
+    function post(p)
+    {
+        var limit = $('#limit').val();
+        var page = $('#page').val();
+        var ac = $('#ac').val();
+        var range = $('input[name="range"]:checked').val();
+
+        $("#form_post").attr("action", curUrl + "?"+ 'ac=' +ac +'&limit='+limit +'&page='+page + '&range=' + range +'&' + p );
+        $("#form_post").submit();
+    }
+
+    $(function () {
+        if( $.cookie('urlsend_tab') == undefined) {
+            $('.layui-tab-title').find('li').first().addClass('layui-this');
+            $('.layui-tab-item').first().addClass('layui-show');
+        }
+    });
+
+</script>
+<script>
+(function () {
+    'use strict';
+    var roots = ['admin-collect-labels', 'admin-urlsend-settings-labels', 'form_post'].map(function (id) { return document.getElementById(id); }).filter(Boolean);
+    roots.forEach(function (root) {
+        if (root.dataset.fieldLabelsBound) return;
+        root.dataset.fieldLabelsBound = '1';
+        var pending = false;
+        var controls = new WeakMap();
+        function schedule() {
+            if (pending) return;
+            pending = true;
+            window.requestAnimationFrame(function () { pending = false; synchronize(); });
+        }
+        function synchronize() {
+            root.querySelectorAll('.layui-form-item').forEach(function (row) {
+                var label = row.querySelector('.layui-form-label');
+                if (!label) return;
+                var fields = row.querySelectorAll('input[name]:not([type="hidden"]):not([type="button"]), textarea[name], select[name]');
+                if (!fields.length) return;
+                if (!label.id) label.id = root.id + '-label-' + fields[0].name.replace(/[^a-zA-Z0-9_-]+/g, '-');
+                if (fields.length === 1 && !label.htmlFor) {
+                    if (!fields[0].id) fields[0].id = label.id + '-control';
+                    label.htmlFor = fields[0].id;
+                }
+                fields.forEach(function (field) {
+                    var widget = field.nextElementSibling;
+                    if (field.type === 'checkbox' || field.type === 'radio') {
+                        if (!widget || !widget.classList.contains('layui-form-' + (field.type === 'checkbox' ? 'checkbox' : 'radio'))) return;
+                        widget.setAttribute('role', field.type);
+                        widget.setAttribute('aria-label', field.getAttribute('aria-label') || label.textContent.trim() + ' ' + field.title);
+                        widget.setAttribute('aria-checked', String(field.checked));
+                        widget.setAttribute('aria-disabled', String(field.disabled));
+                        widget.setAttribute('tabindex', field.disabled ? '-1' : '0');
+                        controls.set(widget, field);
+                    } else if (field.tagName === 'SELECT') {
+                        if (!widget || !widget.classList.contains('layui-form-select')) return;
+                        var input = widget.querySelector('.layui-select-title input');
+                        if (input) input.setAttribute('aria-labelledby', field.getAttribute('aria-labelledby') || label.id);
+                    }
+                });
+            });
+        }
+        root.addEventListener('keydown', function (event) {
+            if (event.key !== ' ' && event.key !== 'Enter') return;
+            var widget = event.target.closest('.layui-form-radio,.layui-form-checkbox');
+            var field = widget && controls.get(widget);
+            if (!field || !root.contains(widget) || field.disabled) return;
+            event.preventDefault();
+            widget.click();
+            schedule();
+        });
+        root.addEventListener('click', function (event) {
+            var label = event.target.closest('label[for]');
+            if (label && root.contains(label)) {
+                var field = document.getElementById(label.htmlFor);
+                if (field && root.contains(field) && field.tagName === 'SELECT') {
+                    var widget = field.nextElementSibling;
+                    var input = widget && widget.classList.contains('layui-form-select') && widget.querySelector('.layui-select-title input');
+                    if (input) { event.preventDefault(); input.focus(); }
+                }
+            }
+            schedule();
+        });
+        root.addEventListener('change', schedule);
+        root.addEventListener('reset', function () { window.setTimeout(schedule, 0); });
+        // Observe widget replacement only; ARIA attributes never retrigger this observer.
+        new MutationObserver(schedule).observe(root, {childList:true, subtree:true});
+        synchronize();
+    });
+}());
+
+</script>
+</body>
+</html>

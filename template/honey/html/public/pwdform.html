@@ -1,0 +1,16 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<main id="main-content" class="hn-main"><div class="hn-wrap hn-state"><section class="hn-state-card">
+<span class="hn-state-ico">{:\\app\\common\\util\\AutoIcon::ui('lock', ['class'=>'hn-i', 'tint'=>'none'])}</span>
+<p class="hn-kicker">{:\\app\\common\\util\\TemplateText::get('ui.video_access')}</p>
+<h1 style="margin-top:12px">{:\\app\\common\\util\\TemplateText::get('ui.access_required')}</h1>
+<p class="hn-state-msg" dir="auto"><strong>{$hnPwdName|htmlspecialchars=ENT_QUOTES}</strong></p>
+<p class="hn-state-msg">{:\\app\\common\\util\\TemplateText::get('ui.enter_the_password_to_view_this_video')}</p>
+<form id="form1" name="form1" class="hn-form" style="margin-top:16px" action="{:mac_url('ajax/pwd')}" method="post" onsubmit="MAC.Pwd.Check(this.querySelector('[data-mid]'));return false;">{:token()}<input type="hidden" name="id" value="{$obj.vod_id|intval}"><input type="hidden" name="mid" value="1"><input type="hidden" name="type" value="{$hnPwdType}"><label class="hn-sr" for="video-access-password">{:\\app\\common\\util\\TemplateText::get('ui.access_password')}</label><div class="hn-inline"><input id="video-access-password" name="pwd" type="password" autocomplete="current-password" required maxlength="255" placeholder="{:\\app\\common\\util\\TemplateText::get('ui.please_enter_the_access_password_here')}"><button class="hn-btn hn-btn-amber submit_btn" type="submit" data-id="{$obj.vod_id|intval}" data-mid="1" data-type="{$hnPwdType}">{:\\app\\common\\util\\TemplateText::get('ui.click_to_confirm')}</button></div></form>
+<div class="hn-actions">{if condition="$hnPwdUrl neq ''"}<a class="hn-btn password-link" href="{$hnPwdUrl|htmlspecialchars=ENT_QUOTES}" target="_blank" rel="noopener noreferrer">{:\\app\\common\\util\\AutoIcon::ui('key', ['class'=>'hn-i', 'tint'=>'none'])}{:\\app\\common\\util\\TemplateText::get('ui.click_to_get_the_password')}</a>{/if}<a class="hn-btn" href="{$maccms.path}">{:\\app\\common\\util\\AutoIcon::ui('home', ['class'=>'hn-i', 'tint'=>'none'])}{:\\app\\common\\util\\TemplateText::get('ui.back_to_home')}</a></div>
+</section></div></main>

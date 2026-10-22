@@ -1,0 +1,60 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="javcms" data-template-variant="modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/vod_play"}
+{include file="public/include"}
+</head>
+<body class="film-page film-play jc-watch-page">
+{php}
+$jcShareUrl = '';
+try { $jcShareUrl = \app\common\util\Sitemap::absolute(mac_url_vod_play($obj)); } catch (\Throwable $jcShareError) { $jcShareUrl = ''; }
+$jcSourceTotal = 0; $jcEpisodeTotal = 0;
+if (!empty($obj['vod_play_list']) && is_array($obj['vod_play_list'])) { foreach ($obj['vod_play_list'] as $jcSrcItem) { $jcSourceTotal++; $jcEpisodeTotal += (isset($jcSrcItem['urls']) && is_array($jcSrcItem['urls'])) ? count($jcSrcItem['urls']) : 0; } }
+$jcShowEpisodes = ($jcSourceTotal > 1 || $jcEpisodeTotal > 1) ? 1 : 0;
+$jcLinkPre = (string)($obj['player_info']['link_pre'] ?? '');
+$jcLinkNext = (string)($obj['player_info']['link_next'] ?? '');
+{/php}
+{include file="public/metavars"}
+<div class="shadow"></div>
+{include file="public/head"}<span class="gallery-history-entry" hidden data-name="{$obj.vod_display_name|mac_default=$obj.vod_name|htmlspecialchars=ENT_QUOTES}" data-link="{:mac_url_vod_play($obj)}" data-pic="{$obj.vod_pic|mac_url_img|htmlspecialchars=ENT_QUOTES}"></span>
+<div class="wrapped">
+	<main id="main-content">
+		{include file="public/nav"}
+		<div class="content"><div class="section jc-page jc-page-watch"><div class="wrap jc-wrap">
+		<article class="jc-watch">
+			<div class="jc-player" data-frame-title="{:\\app\\common\\util\\TemplateText::get('ui.iframeplayer')}">{$player_data}{$player_js}</div>
+			<header class="jc-watch-head">
+				<h1{php}echo \app\common\util\AvdbLanguage::langAttr(isset($obj) && is_array($obj) ? $obj : []);{/php} class="jc-title" dir="auto">{$obj.vod_display_name|mac_default=$obj.vod_name|htmlspecialchars=ENT_QUOTES}</h1>
+				<ul class="jc-stats">
+					<li title="{:\\app\\common\\util\\TemplateText::get('ui.views')}">{:\\app\\common\\util\\AutoIcon::ui('eye', ['size'=>'sm'])}<span class="mac_hits hits" data-mid="1" data-id="{$obj.vod_id}" data-type="hits" dir="ltr">{$obj.vod_hits}</span><span class="jc-sr">{:\\app\\common\\util\\TemplateText::get('ui.views')}</span></li>
+					{if condition="$jcRelease neq ''"}<li>{:\\app\\common\\util\\AutoIcon::ui('calendar', ['size'=>'sm'])}<span dir="ltr">{$jcRelease|htmlspecialchars=ENT_QUOTES}</span></li>{/if}
+					{if condition="$jcDuration neq ''"}<li>{:\\app\\common\\util\\AutoIcon::ui('clock', ['size'=>'sm'])}<span dir="ltr">{$jcDuration|htmlspecialchars=ENT_QUOTES}</span></li>{/if}
+					{if condition="$jcScore gt 0"}<li title="{:\\app\\common\\util\\TemplateText::get('ui.score')}">{:\\app\\common\\util\\AutoIcon::ui('star', ['size'=>'sm', 'class'=>'jc-star'])}<span dir="ltr">{$obj.vod_score|htmlspecialchars=ENT_QUOTES} / 10</span></li>{/if}
+				</ul>
+			</header>
+			<div class="jc-actions">
+				{if condition="$jcLinkPre neq ''"}<a class="jc-btn" href="{$jcLinkPre|htmlspecialchars=ENT_QUOTES}">{:\\app\\common\\util\\AutoIcon::ui('skip-back', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('previous_episode')}</a>{/if}
+				{if condition="$jcLinkNext neq ''"}<a class="jc-btn jc-btn-primary" href="{$jcLinkNext|htmlspecialchars=ENT_QUOTES}">{:\\app\\common\\util\\TemplateText::get('next_episode')}{:\\app\\common\\util\\AutoIcon::ui('skip-forward', ['size'=>'sm'])}</a>{/if}
+				<a class="jc-btn" href="{:mac_url_vod_detail($obj)}">{:\\app\\common\\util\\AutoIcon::ui('info', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ui.details')}</a>
+				<button class="jc-btn" type="button" data-jc-share aria-expanded="false" aria-controls="jc-share">{:\\app\\common\\util\\AutoIcon::ui('share', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('share')}</button>
+			</div>
+			<div class="jc-share" id="jc-share"><label for="jc-share-url">{:\\app\\common\\util\\TemplateText::get('ui.sharing_address')}</label><div class="jc-share-row"><input id="jc-share-url" type="text" readonly value="{$jcShareUrl|htmlspecialchars=ENT_QUOTES}"><button class="jc-btn jc-btn-primary" type="button" data-copy-target="jc-share-url">{:\\app\\common\\util\\AutoIcon::ui('link', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ui.copy_link')}</button></div></div>
+			{if condition="$jcShowEpisodes eq 1"}<section class="jc-episodes" aria-label="{:\\app\\common\\util\\TemplateText::get('playback_sources')}">{maccms:foreach name="obj.vod_play_list" id="jcSrc" key="jcSid"}<h2>{:\\app\\common\\util\\AutoIcon::ui('monitor-play', ['size'=>'sm'])}{$jcSrc.player_info.show|htmlspecialchars=ENT_QUOTES}</h2><div class="jc-chips">{maccms:foreach name="jcSrc.urls" id="jcEp" key="jcNid"}<a class="jc-chip" href="{:mac_url_vod_play($obj,['sid'=>$jcSrc['sid'],'nid'=>$jcEp['nid']])}"{if condition="$param.sid eq $jcSrc.sid && $param.nid eq $jcEp.nid"} aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::ui('play', ['size'=>'sm'])}{$jcEp.name|htmlspecialchars=ENT_QUOTES}</a>{/maccms:foreach}</div>{/maccms:foreach}</section>{/if}
+			{include file="public/meta"}
+			{if condition="$jcDesc neq ''"}<section class="jc-desc"><h2>{:\\app\\common\\util\\AutoIcon::ui('file-text', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('description')}</h2><p dir="auto">{$jcDesc|htmlspecialchars=ENT_QUOTES}</p></section>{/if}
+			{include file="public/related"}
+			{if condition="$GLOBALS['config']['comment']['status'] eq 1"}<div data-jcx-at="P16"></div><section class="comment-section jc-comments"><div class="mac_comment" data-id="{$obj.vod_id}" data-mid="1"><h2>{:\\app\\common\\util\\AutoIcon::ui('messages', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ui.comments')}</h2><p>{:\\app\\common\\util\\TemplateText::get('ui.loading_comments')}</p></div></section><script>MAC.Comment.Init();MAC.Comment.Show(1);</script>{/if}
+		</article>
+		</div></div></div>
+	</main>
+	{include file="public/foot"}
+</div>
+</body>
+</html>

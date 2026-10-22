@@ -1,0 +1,24 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="onyx" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/auto"}
+{include file="public/include"}
+</head>
+<body class="page-list page-actors">
+{include file="public/head"}
+<main id="main-content" class="wrap">
+<div class="list-head"><h1>{:\\app\\common\\util\\AutoIcon::navIcon('actors')}<span>{:\\app\\common\\util\\TemplateText::get('ui.performers')} {$param.wd}</span></h1></div>
+<div class="agrid" data-ai-group>{maccms:actor num="20" paging="yes" type="all" pageurl="actor/search" order="desc" by="time" id="vo"}{include file="public/actorbox"}{/maccms:actor}</div>
+{if condition="$__PAGING__.record_total eq 0"}<div class="empty">{:\\app\\common\\util\\AutoIcon::scene('search-empty')}<p>{:\\app\\common\\util\\TemplateText::get('ui.no_results_found_try_another_category_or_search')}</p><a class="btn btn-fill" href="{$maccms.path}">{:\\app\\common\\util\\TemplateText::get('ui.back_to_home')}</a></div>{/if}
+{include file="public/paging"}
+</main>
+{include file="public/foot"}
+</body>
+</html>

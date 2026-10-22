@@ -1,0 +1,167 @@
+/*
+ * This file is part of JavCMS - https://javcms.net
+ * Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+ * License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+ * See the LICENSE and NOTICE files that come with JavCMS.
+ * Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Telegram: https://t.me/avdb_api
+ */
+/* Candidate-only additive overlay for Comment and Actor list workspaces.
+ * Visual language follows the pinned maccms10 view_new admin surfaces while
+ * preserving the existing MacCMS routes, forms, fields, actions and hooks.
+ */
+/* V9 palette -> kit tokens (admin-content builder) */
+html .admin-comment-actor-workspace-v1 { --acaw-canvas: var(--ax-bg); --acaw-surface: var(--ax-surface); --acaw-raised: var(--ax-raised); --acaw-line: var(--ax-line); --acaw-line-soft: var(--ax-line); --acaw-ink: var(--ax-text); --acaw-muted: var(--ax-muted); --acaw-quiet: var(--ax-faint); --acaw-cyan: var(--ax-accent); --acaw-danger: var(--ax-danger); }
+.admin-comment-actor-workspace-v1 {
+  --acaw-canvas: #0b1120;
+  --acaw-surface: #101a2c;
+  --acaw-raised: #14223a;
+  --acaw-line: #293850;
+  --acaw-line-soft: #1e2b42;
+  --acaw-ink: #e9eff8;
+  --acaw-muted: #9aa8bc;
+  --acaw-quiet: #718099;
+  --acaw-cyan: #58d6e9;
+  --acaw-violet: #a895ff;
+  --acaw-danger: #f38ba3;
+  min-height: calc(100vh - 24px);
+  color: var(--acaw-ink);
+}
+.admin-comment-actor-workspace-v1 .my-toolbar-box {
+  display: grid;
+  gap: 13px;
+  margin-bottom: 16px;
+  padding: 14px;
+  border: 1px solid var(--acaw-line);
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(20,34,58,.96), rgba(16,26,44,.98));
+  box-shadow: 0 10px 28px rgba(0,0,0,.16);
+}
+.admin-comment-actor-workspace-v1 .my-toolbar-box > .center { text-align: left; }
+.admin-comment-actor-workspace-v1 .my-toolbar-box form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+.admin-comment-actor-workspace-v1 .layui-input-inline { margin: 0; }
+.admin-comment-actor-workspace-v1 .layui-input,
+.admin-comment-actor-workspace-v1 select,
+.admin-comment-actor-workspace-v1 .layui-textarea {
+  min-height: 34px;
+  border: 1px solid var(--acaw-line);
+  border-radius: 8px;
+  background: #0d1729;
+  color: var(--acaw-ink);
+  transition: border-color .16s ease, box-shadow .16s ease;
+}
+.admin-comment-actor-workspace-v1 .layui-input:focus,
+.admin-comment-actor-workspace-v1 select:focus,
+.admin-comment-actor-workspace-v1 .layui-textarea:focus {
+  border-color: var(--acaw-cyan);
+  box-shadow: 0 0 0 3px rgba(88,214,233,.14);
+}
+.admin-comment-actor-workspace-v1 .btn,
+.admin-comment-actor-workspace-v1 .layui-btn {
+  min-height: 34px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  font-weight: 700;
+  letter-spacing: .01em;
+}
+.admin-comment-actor-workspace-v1 .btn-primary,
+.admin-comment-actor-workspace-v1 .layui-btn-normal {
+  background: var(--acaw-cyan);
+  color: #071521;
+}
+.admin-comment-actor-workspace-v1 .btn-primary:hover,
+.admin-comment-actor-workspace-v1 .layui-btn-normal:hover { background: #78e2f0; }
+.admin-comment-actor-workspace-v1 .btn-primary-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  padding-top: 2px;
+}
+.admin-comment-actor-workspace-v1 .btn-primary-group .btn { margin: 0 !important; }
+.admin-comment-actor-workspace-v1 #pageListForm {
+  overflow-x: auto;
+  max-width: 100%;
+  border: 1px solid var(--acaw-line);
+  border-radius: 12px;
+  background: var(--acaw-surface);
+  box-shadow: 0 12px 30px rgba(0,0,0,.13);
+}
+.admin-comment-actor-workspace-v1 #pageListForm .layui-table {
+  min-width: 980px;
+  margin: 0;
+}
+.admin-comment-actor-workspace-v1 .layui-table {
+  border: 0;
+  background: transparent;
+  color: var(--acaw-ink);
+}
+.admin-comment-actor-workspace-v1 .layui-table thead tr { background: #14223a; }
+.admin-comment-actor-workspace-v1 .layui-table th {
+  border-color: var(--acaw-line);
+  color: var(--acaw-quiet);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.admin-comment-actor-workspace-v1 .layui-table td {
+  border-color: var(--acaw-line-soft);
+  color: var(--acaw-muted);
+  vertical-align: middle;
+}
+.admin-comment-actor-workspace-v1 .layui-table tbody tr { transition: background .16s ease; }
+.admin-comment-actor-workspace-v1 .layui-table tbody tr:hover { background: rgba(88,214,233,.045); }
+.admin-comment-actor-workspace-v1 .layui-table .layui-input { min-height: 30px; padding: 0 8px; }
+.admin-comment-actor-workspace-v1 .badge,
+.admin-comment-actor-workspace-v1 .badge-dim,
+.admin-comment-actor-workspace-v1 .layui-badge { border-radius: 999px; }
+.admin-comment-actor-workspace-v1 .badge-dim.bg-primary,
+.admin-comment-actor-workspace-v1 .layui-badge.layui-bg-orange {
+  background: rgba(88,214,233,.13) !important;
+  color: var(--acaw-cyan) !important;
+  border: 1px solid rgba(88,214,233,.28);
+}
+.admin-comment-actor-workspace-v1 .bg-danger {
+  background: rgba(243,139,163,.13) !important;
+  color: var(--acaw-danger) !important;
+  border: 1px solid rgba(243,139,163,.28);
+}
+.admin-comment-actor-workspace-v1 .c-999,
+.admin-comment-actor-workspace-v1 .layui-table .c-999 { color: var(--acaw-muted) !important; }
+.admin-comment-actor-workspace-v1 .layui-table a { color: var(--acaw-cyan); }
+.admin-comment-actor-workspace-v1 .layui-table a:hover { color: #a5f0f7; }
+.admin-comment-actor-workspace-v1 .layui-form-checkbox[lay-skin=primary] i,
+.admin-comment-actor-workspace-v1 .layui-form-switch {
+  border-color: var(--acaw-line);
+  background: #0d1729;
+}
+.admin-comment-actor-workspace-v1 #pages { padding: 13px 0; }
+.admin-comment-actor-workspace-v1 .layui-laypage a,
+.admin-comment-actor-workspace-v1 .layui-laypage span {
+  border-color: var(--acaw-line);
+  background: #0d1729;
+  color: var(--acaw-muted);
+}
+.admin-comment-actor-workspace-v1 .layui-laypage .layui-laypage-curr .layui-laypage-em { background: var(--acaw-cyan); }
+.admin-comment-actor-workspace-v1 .j-iframe,
+.admin-comment-actor-workspace-v1 .j-tr-del,
+.admin-comment-actor-workspace-v1 .j-select { white-space: nowrap; }
+.admin-comment-actor-workspace-v1 .ml-20 { margin-left: 12px; }
+@media (max-width: 720px) {
+  .admin-comment-actor-workspace-v1 { min-height: calc(100vh - 12px); }
+  .admin-comment-actor-workspace-v1 .my-toolbar-box { padding: 11px; }
+  .admin-comment-actor-workspace-v1 .my-toolbar-box form { align-items: stretch; }
+  .admin-comment-actor-workspace-v1 .my-toolbar-box form > .layui-input-inline,
+  .admin-comment-actor-workspace-v1 .my-toolbar-box form > .btn,
+  .admin-comment-actor-workspace-v1 .my-toolbar-box form > .layui-btn { flex: 1 1 145px; }
+  .admin-comment-actor-workspace-v1 .btn-primary-group { align-items: stretch; }
+  .admin-comment-actor-workspace-v1 .btn-primary-group .btn { flex: 1 1 130px; }
+  .admin-comment-actor-workspace-v1 #pageListForm .layui-table { min-width: 900px; }
+}

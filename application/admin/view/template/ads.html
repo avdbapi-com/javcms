@@ -1,0 +1,96 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Based on MacCMS 10 (Apache-2.0) by magicblack, changed by JavCMS.
+JavCMS changes: Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors,
+JavCMS Community License 1.0. The MacCMS parts stay under the Apache License 2.0.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{include file="../../../application/admin/view/public/head" /}
+<link rel="stylesheet" href="__STATIC__/css/admin_template_workspace_v1.css?rev=20261007-3">
+<div class="page-container p10 admin-template-workspace admin-template-browser admin-template-ads">
+    <header class="ax-page-head"><span class="ax-page-head__icon" aria-hidden="true"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-megaphone"/></svg></span><div class="ax-page-head__text"><h1>{:lang('admin/template/ads/title')}</h1></div></header>
+    <div class="ax-notice ax-notice--warn" role="note"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-info"/></svg><div><p>{:lang('admin/ux/system/ads_retired')} <a class="ax-btn ax-btn--sm ax-btn--primary" href="{:url('system/config')}?section=code">{:lang('admin/ux/menu/ads_code')}</a></p></div></div>
+    <div class="my-btn-box admin-template-toolbar">
+        <div class="admin-template-location">
+            <span>{:lang('admin/template/current_dir')}</span>
+            <code>{$curpath|str_replace='@','/',###|htmlspecialchars=ENT_QUOTES,'UTF-8'}</code>
+        </div>
+    </div>
+
+    <form class="layui-form layui-form-pane" action="">
+        <div class="admin-template-table-scroll">
+            <table class="layui-table admin-template-table">
+                <thead>
+                    <tr>
+                        <th scope="col">{:lang('file_name')}</th>
+                        <th scope="col">{:lang('file_des')}</th>
+                        <th scope="col">{:lang('file_size')}</th>
+                        <th scope="col">{:lang('file_time')}</th>
+                        <th scope="col">{:lang('admin/template/call_code')}</th>
+                        <th scope="col">{:lang('opt')}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {if condition="empty($files)"}
+                    <tr class="admin-template-empty"><td colspan="6">{:lang('sum')} 0 {:lang('file')}</td></tr>
+                    {/if}
+                    {volist name="files" id="vo"}
+                    <tr class="admin-template-entry">
+                        <th scope="row" class="admin-template-name"><span><svg class="admin-template-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h6"/></svg><span>{$vo.name|htmlspecialchars=ENT_QUOTES,'UTF-8'}</span></span></th>
+                        <td class="admin-template-kind" data-label="{:lang('file_des')}">{$vo.note|htmlspecialchars=ENT_QUOTES,'UTF-8'}</td>
+                        <td class="admin-template-size" data-label="{:lang('file_size')}">{$vo.size}</td>
+                        <td class="admin-template-time" data-label="{:lang('file_time')}">{$vo.time|date='Y-m-d H:i',###}</td>
+                        <td class="admin-template-call" data-label="{:lang('admin/template/call_code')}">
+                            <textarea id="txt{$key}" class="layui-textarea" rows="2" readonly aria-label="{:lang('admin/template/call_code')} {$vo.name|htmlspecialchars=ENT_QUOTES,'UTF-8'}">&lt;script src="{literal}{$maccms.path_ads}{/literal}{$vo.name|htmlspecialchars=ENT_QUOTES,'UTF-8'}"&gt;&lt;/script&gt;</textarea>
+                        </td>
+                        <td class="admin-template-actions">
+                            <button type="button" class="ax-btn ax-btn--sm j-clipboard" data-clipboard-target="#txt{$key}" title="{:lang('copy')}">{:lang('copy')}</button>
+                            <a class="ax-btn ax-btn--sm" href="{:url('info')}?fpath={$vo.path|rawurlencode}&amp;fname={$vo.name|rawurlencode}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-eye"/></svg>{:lang('admin/ux/system/view_file')}</a>
+                        </td>
+                    </tr>
+                    {/volist}
+                </tbody>
+                <tfoot>
+                    <tr><td colspan="6"><div class="admin-template-summary"><span>{:lang('sum')}</span><span><b>{$num_file}</b> {:lang('file')}</span><span>{:lang('occupies')} <b>{$sum_size}</b> {:lang('space')}</span></div></td></tr>
+                </tfoot>
+            </table>
+        </div>
+    </form>
+</div>
+{include file="../../../application/admin/view/public/foot" /}
+<script type="text/javascript" src="__STATIC__/js/jquery.clipboard.js"></script>
+<script type="text/javascript">
+    var clipboard = new ClipboardJS('.j-clipboard');
+    clipboard.on('success', function(e) {
+       layer.msg({:json_encode(lang('copy'),JSON_HEX_TAG|JSON_HEX_AMP|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE)});
+    });
+
+    function data_info(path,name)
+    {
+        var index = layer.open({
+            type: 2,
+            shade:0.4,
+            title: "{:lang('edit')}",
+            content: "{:url('template/info')}?fpath="+path+'&fname='+name
+        });
+
+        layer.full(index);
+    }
+
+    function data_del(id)
+    {
+        if(!id){
+            id  = checkIds('fname[]');
+        }
+        layer.confirm("{:lang('del_confirm')}", function (index) {
+            location.href = "{:url('template/del')}?fname=" + id;
+        });
+    }
+
+    $(function(){
+
+    });
+</script>
+</body>
+</html>

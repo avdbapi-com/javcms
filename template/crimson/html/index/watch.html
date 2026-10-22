@@ -1,0 +1,10 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}$ctSeen = isset($ctSeen) && is_array($ctSeen) ? $ctSeen : []; $ctSeenNot = implode(',', $ctSeen ? $ctSeen : [0]); $ctN = 0;{/php}<section class="ct-sec" data-ai-group aria-labelledby="ct-h-top"><div class="ct-sec-head"><h2 class="ct-h2" id="ct-h-top"><a class="ct-h2-link" href="{:mac_url('label/hot')}">{:\\app\\common\\util\\AutoIcon::navIcon('hot', '', ['class'=>'ct-h2-ico'])}<span>{:\\app\\common\\util\\TemplateText::get('crimson.top_ranking')}</span></a></h2><a class="ct-more" href="{:mac_url('label/hot')}">{:\\app\\common\\util\\TemplateText::get('ui.view_more')}{:\\app\\common\\util\\AutoIcon::ui('chevron-right', ['class'=>'ct-ico'])}</a></div>
+<div class="ct-grid" id="ct-grid-top" data-grid-fill data-ct-show="1">{maccms:vod num="20" type="all" order="desc" by="hits" not="'.$ctSeenNot.'" paging="no" id="vo"}{php}$ctN++; $ctSeen[] = intval($vo['vod_id']);{/php}{if condition="$ctN eq 11"}<template data-ct-pool>{/if}{include file="public/vodbox"}{/maccms:vod}{if condition="$ctN gt 10"}</template>{/if}</div>
+{if condition="$ctN eq 0"}{include file="public/empty"}{/if}{if condition="$ctN gt 10"}<div class="ct-sec-foot"><button class="ct-pill ct-shuffle" type="button" data-ct-shuffle="ct-grid-top">{:\\app\\common\\util\\AutoIcon::ui('shuffle', ['class'=>'ct-ico'])}{:\\app\\common\\util\\TemplateText::get('crimson.shuffle')}</button></div>{/if}</section>

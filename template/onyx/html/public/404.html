@@ -1,0 +1,36 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="onyx" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="public/include"}
+<title>{:\\app\\common\\util\\TemplateText::get('ui.page_not_found_bc3023')} - {:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$maccms['site_name']), ENT_QUOTES, 'UTF-8')}</title>
+<meta name="robots" content="noindex">
+</head>
+<body class="page-state">
+{include file="public/head"}
+<main id="main-content" class="wrap">
+<div class="state">
+  <div class="state-card state-404">
+    {:\\app\\common\\util\\AutoIcon::scene('not-found')}
+    <div class="big" aria-hidden="true">404</div>
+    <h1>{:\\app\\common\\util\\TemplateText::get('ui.page_not_found_bc3023')}</h1>
+    <p>{:\\app\\common\\util\\TemplateText::get('ui.this_page_may_have_moved_browse_the_latest_videos_or_try_a_search')}</p>
+    <form class="hd-search" style="display:flex;margin:16px auto 0;max-width:420px" action="{:mac_url('vod/search')}" method="get" role="search"><input type="search" name="wd" placeholder="{:\\app\\common\\util\\TemplateText::get('ui.search_videos_or_performers')}" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.search')}" maxlength="60"><button type="submit" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.search')}">{:\\app\\common\\util\\AutoIcon::ui('search', ['tint'=>'none'])}</button></form>
+    <div class="state-hot">{include file="public/hotwords"}</div>
+    <div class="actions" data-ai-group><a class="btn btn-fill" href="{$maccms.path}">{:\\app\\common\\util\\AutoIcon::navIcon('home', '', ['size'=>'sm', 'tint'=>'none'])}<span>{:\\app\\common\\util\\TemplateText::get('ui.back_to_home')}</span></a><a class="btn" href="{:mac_url('label/new')}">{:\\app\\common\\util\\AutoIcon::navIcon('latest', '', ['size'=>'sm', 'tint'=>'none'])}<span>{:\\app\\common\\util\\TemplateText::get('ui.latest_videos')}</span></a></div>
+  </div>
+</div>
+<section class="sec" data-ai-group>
+  <div class="sec-head"><h2 class="sec-title"><span class="sec-ico">{:\\app\\common\\util\\AutoIcon::navIcon('hot')}</span>{:\\app\\common\\util\\TemplateText::get('ui.popular_videos')}</h2><a class="sec-more" href="{:mac_url('label/hot')}">{:\\app\\common\\util\\TemplateText::get('ui.view_more')}{:\\app\\common\\util\\AutoIcon::ui('chevron-right', ['size'=>'sm', 'tint'=>'none'])}</a></div>
+  <div class="grid" data-grid-fill>{maccms:vod num="10" type="all" order="desc" by="hits" paging="no" id="vo"}{include file="public/vodbox"}{/maccms:vod}</div>
+</section>
+</main>
+{include file="public/foot"}
+</body>
+</html>

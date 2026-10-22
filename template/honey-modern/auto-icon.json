@@ -1,0 +1,16 @@
+{
+ "$schema": "javcms.auto-icon.v1",
+ "family": "phosphor-fill",
+ "motion": "jelly glow",
+ "enter": "pop",
+ "plate": "drop",
+ "plateMotion": "pulse",
+ "avatar": "hex glass",
+ "tint": "slot",
+ "hue": [
+  58,
+  32
+ ],
+ "map": {},
+ "nav": {}
+}

@@ -1,0 +1,19 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<dl class="t-readout heat-{$tplTier}">
+  {if condition="$tplCode neq ''"}<div><dt>{:\\app\\common\\util\\AutoIcon::ui('id-card', ['size'=>'sm'])}{:$tplLbl('ui.id_code')}</dt><dd class="is-code">{$tplCode|htmlspecialchars=ENT_QUOTES}</dd></div>{/if}
+  {if condition="$tplStudio neq ''"}<div><dt>{:\\app\\common\\util\\AutoIcon::icon('tag', $tplStudio, ['size'=>'sm'])}{:$tplLbl('ui.studio_label')}</dt><dd>{$tplStudio|htmlspecialchars=ENT_QUOTES}</dd></div>{/if}
+  {if condition="$tplDate neq ''"}<div><dt>{:\\app\\common\\util\\AutoIcon::ui('calendar', ['size'=>'sm'])}{:$tplLbl('ui.release_date')}</dt><dd class="t-num">{$tplDate|htmlspecialchars=ENT_QUOTES}</dd></div>{/if}
+  {if condition="$tplDuration neq ''"}<div><dt>{:\\app\\common\\util\\AutoIcon::ui('clock', ['size'=>'sm'])}{:$tplLbl('ui.duration')}</dt><dd class="t-num">{$tplDuration|htmlspecialchars=ENT_QUOTES}</dd></div>{/if}
+  {if condition="$tplTypeName neq ''"}<div><dt>{:\\app\\common\\util\\AutoIcon::ui('folder', ['size'=>'sm'])}{:$tplLbl('category')}</dt><dd><a class="t-dd-cat" href="{:mac_url_type($obj['type'])}">{:\\app\\common\\util\\AutoIcon::icon('category', (string)($obj['type']['type_name'] ?? ''), ['size'=>'sm'])}{$tplTypeName|htmlspecialchars=ENT_QUOTES}</a></dd></div>{/if}
+  {if condition="$tplDirector neq ''"}<div><dt>{:\\app\\common\\util\\AutoIcon::ui('clapperboard', ['size'=>'sm'])}{:$tplLbl('ui.director')}</dt><dd><a href="{:mac_url_search(['director'=>$tplDirector])}">{$tplDirector|htmlspecialchars=ENT_QUOTES}</a></dd></div>{/if}
+  {if condition="!empty($tplShowScore) && $tplScore neq ''"}<div><dt>{:\\app\\common\\util\\AutoIcon::ui('star', ['size'=>'sm'])}{:$tplLbl('ui.score')}</dt><dd class="t-num">{$tplScore|htmlspecialchars=ENT_QUOTES} / 10</dd></div>{/if}
+  {if condition="!empty($tplLiveHits)"}<div><dt>{:\\app\\common\\util\\AutoIcon::ui('eye', ['size'=>'sm'])}{:$tplLbl('views')}</dt><dd class="t-num t-tierink">{if condition="$tplLiveHits eq 1"}<span class="mac_hits" data-mid="1" data-id="{$obj.vod_id|intval}" data-type="hits">{$tplHitsFmt}</span>{else/}{$tplHitsFmt}{/if}</dd></div>{/if}
+  {notempty name="tplActors"}<div class="is-wide"><dt>{:\\app\\common\\util\\AutoIcon::ui('users', ['size'=>'sm'])}{:$tplLbl('emt.performers')}</dt><dd><div class="t-chips t-cast" data-ai-group>{volist name="tplActors" id="tplName"}<a href="{:mac_url_search(['actor'=>$tplName])}" dir="auto">{:\\app\\common\\util\\AutoIcon::avatar($tplName, '', ['size'=>'xs', 'decorative'=>true])}{$tplName|htmlspecialchars=ENT_QUOTES}</a>{/volist}</div></dd></div>{/notempty}
+  {if condition="$tplGenres || $tplTags"}<div class="is-wide"><dt>{:\\app\\common\\util\\AutoIcon::ui('tags', ['size'=>'sm'])}{:$tplLbl('genres')}</dt><dd><div class="t-chips" data-ai-group>{volist name="tplGenres" id="tplName"}<a href="{:mac_url_search(['class'=>$tplName])}" dir="auto">{:\\app\\common\\util\\AutoIcon::icon('tag', $tplName, ['size'=>'sm'])}{$tplName|htmlspecialchars=ENT_QUOTES}</a>{/volist}{php}$tplTags = \app\common\util\AvdbLanguage::tagFilter(isset($tplTags) ? $tplTags : [], 12);{/php}{volist name="tplTags" id="tplName"}<a class="is-tag" href="{:mac_url_search(['tag'=>$tplName])}" dir="auto">{:\\app\\common\\util\\AutoIcon::icon('tag', $tplName, ['size'=>'sm', 'tint'=>'none'])}{:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::tagLabel($tplName), ENT_QUOTES, 'UTF-8')}</a>{/volist}</div></dd></div>{/if}
+</dl>

@@ -1,0 +1,35 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="honey" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+<title>{:\\app\\common\\util\\TemplateText::get('ui.contact_b37456')} - {:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$maccms['site_name']), ENT_QUOTES, 'UTF-8')}</title>
+<meta name="description" content="{:\\app\\common\\util\\TemplateText::get('ui.send_a_message_about_content_access_or_a_site_issue')}" />
+<meta name="robots" content="noindex, follow" />
+{include file="public/include"}
+</head>
+<body class="hn-page-gbook">
+{include file="public/head"}
+<main id="main-content" class="hn-main"><div class="hn-wrap hn-narrow">
+{php}$hnRepId = intval($param['id'] ?? 0); $hnRepName = ''; $hnRepLink = '';{/php}{if condition="$hnRepId gt 0"}{maccms:vod num="1" ids="'.$hnRepId.'" order="desc" by="id" paging="no" id="hnRepV"}{php}$hnRepName = trim((string)($hnRepV['vod_display_name'] ?? '')); if ($hnRepName === '') { $hnRepName = trim(html_entity_decode((string)($hnRepV['vod_name'] ?? ''), ENT_QUOTES, 'UTF-8')); } $hnRepCode = \app\common\util\AvdbLanguage::displayCode($hnRepV); if ($hnRepCode !== '' && stripos($hnRepCode, 'avdb-') !== 0 && strlen($hnRepCode) <= 40 && stripos($hnRepName, $hnRepCode) === false) { $hnRepName = $hnRepCode . ' · ' . $hnRepName; } $hnRepLink = mac_url_vod_play($hnRepV);{/php}{/maccms:vod}{/if}
+<div class="hn-page-head" data-ai-group><div><h1 class="hn-page-title hn-split" data-ai-hot>{:\\app\\common\\util\\AutoIcon::ui('message', ['size'=>'lg', 'plate'=>true, 'class'=>'hn-cell'])}<span>{:\\app\\common\\util\\TemplateText::get('ui.contact_the_site')}</span></h1><span class="hn-count">{:\\app\\common\\util\\TemplateText::get('ui.send_a_message_about_content_access_or_a_site_issue')}</span></div></div>
+<section class="hn-card"><form class="gbook_form" method="post" action="{:mac_url('gbook/index')}">
+<input type="hidden" name="gbook_rid" value="{:intval($param['id'] ?? 0)}">{:token()}
+{if condition="$hnRepName neq ''"}<p class="hn-report-note">{:\\app\\common\\util\\AutoIcon::ui('flag', ['class'=>'hn-i', 'tint'=>'none'])}<span><b>{:\\app\\common\\util\\TemplateText::get('honey.report_video')}</b><a href="{$hnRepLink|htmlspecialchars=ENT_QUOTES}" dir="auto">{$hnRepName|htmlspecialchars=ENT_QUOTES}</a></span></p>{/if}
+<label for="gbook-content">{:\\app\\common\\util\\AutoIcon::ui('message', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ui.your_message')}</label>
+<textarea id="gbook-content" class="gbook_content" name="gbook_content" maxlength="1000" rows="5" required placeholder="{:\\app\\common\\util\\TemplateText::get('enter_your_message')}">{if condition="$hnRepName neq ''"}[{$hnRepName|htmlspecialchars=ENT_QUOTES}]&#10;{else/}{$param.name|default=''}{/if}</textarea>
+{if condition="$gbook.verify eq 1"}<div class="verification-field"><label for="gbook-verify">{:\\app\\common\\util\\AutoIcon::ui('shield', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ui.verification_code')}</label><div class="hn-verify"><input id="gbook-verify" name="verify" maxlength="4" autocomplete="off" inputmode="text"><img class="mac_verify_img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='128' height='40'%2F%3E" data-hn-src="{:mac_url('verify/index')}" width="100" height="44" alt="{:\\app\\common\\util\\TemplateText::get('ui.verification_code')}" title="{:\\app\\common\\util\\TemplateText::get('not_to_see_change_one')}" role="button" tabindex="0"></div></div>{/if}
+<button class="gbook_submit hn-btn hn-btn-amber" type="button">{:\\app\\common\\util\\AutoIcon::ui('send', ['class'=>'hn-i', 'tint'=>'none'])}{:\\app\\common\\util\\TemplateText::get('ui.send_message')}</button>
+</form></section>
+<section class="hn-section" style="margin-top:26px" aria-labelledby="hn-msg-title"><div class="top-header" data-ai-group><h2 class="area-title" data-ai-hot id="hn-msg-title">{:\\app\\common\\util\\AutoIcon::ui('list', ['size'=>'lg', 'plate'=>true, 'class'=>'hn-cell'])}<span>{:\\app\\common\\util\\TemplateText::get('ui.recent_messages')}</span></h2></div>{include file="gbook/ajax"}</section>
+</div></main>
+<script>MAC.Gbook.Login={$gbook.login};MAC.Gbook.Verify={$gbook.verify};MAC.Gbook.Init();</script>
+{include file="public/foot"}
+</body>
+</html>
+

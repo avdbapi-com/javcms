@@ -1,0 +1,315 @@
+/*
+ * This file is part of JavCMS - https://javcms.net
+ * Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+ * License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+ * See the LICENSE and NOTICE files that come with JavCMS.
+ * Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Telegram: https://t.me/avdb_api
+ */
+/* admin-timming-workspace-v1: scoped dark scheduled-task workspace inspired by pinned maccms10 view_new. */
+body.admin-dark .admin-timming-workspace-v1,
+body.admin-dark .admin-timming-editor-v1 {
+  --at-cyan: #63d7e9;
+  --at-cyan-soft: rgba(99, 215, 233, .12);
+  --at-ink: #f2f7ff;
+  --at-muted: #a6b5c9;
+  --at-quiet: #7c8ea7;
+  --at-surface: #111d31;
+  --at-surface-2: #0d192b;
+  --at-line: rgba(157, 178, 207, .19);
+  --at-line-soft: rgba(157, 178, 207, .11);
+  color: var(--at-muted);
+}
+body.admin-dark .admin-timming-workspace-v1 {
+  min-height: calc(100vh - 14px);
+}
+body.admin-dark .admin-timming-hero,
+body.admin-dark .admin-timming-editor-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin: 0 0 14px;
+  padding: 20px 22px;
+  border: 1px solid var(--at-line);
+  border-radius: 13px;
+  background: radial-gradient(circle at 100% 0, rgba(99, 215, 233, .12), transparent 38%), linear-gradient(145deg, rgba(23, 40, 65, .96), rgba(13, 25, 44, .96));
+  box-shadow: 0 14px 30px rgba(0, 0, 0, .18);
+}
+body.admin-dark .admin-timming-hero-copy { min-width: 0; }
+body.admin-dark .admin-timming-eyebrow {
+  display: block;
+  color: var(--at-cyan);
+  font-size: 11px;
+  font-weight: 750;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+body.admin-dark .admin-timming-hero h1,
+body.admin-dark .admin-timming-editor-head h1 {
+  margin: 5px 0 6px;
+  color: var(--at-ink);
+  font-size: 22px;
+  font-weight: 740;
+  line-height: 1.25;
+}
+body.admin-dark .admin-timming-hero p,
+body.admin-dark .admin-timming-editor-head p {
+  margin: 0;
+  color: var(--at-muted);
+  font-size: 13px;
+}
+body.admin-dark .admin-timming-hero code,
+body.admin-dark .admin-timming-editor-head code {
+  padding: 3px 6px;
+  border: 1px solid var(--at-line);
+  border-radius: 5px;
+  background: rgba(8, 16, 29, .5);
+  color: #c8f7fb;
+  font-size: 12px;
+}
+body.admin-dark .admin-timming-hero-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex: 0 0 auto;
+  padding: 8px 11px;
+  border: 1px solid rgba(99, 215, 233, .25);
+  border-radius: 999px;
+  color: var(--at-cyan);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+body.admin-dark .admin-timming-meta-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--at-cyan);
+  box-shadow: 0 0 0 4px rgba(99, 215, 233, .14);
+}
+body.admin-dark .admin-timming-workspace-v1 .my-toolbar-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0 0 14px;
+  padding: 13px 14px;
+  border: 1px solid var(--at-line);
+  border-radius: 12px;
+  background: linear-gradient(145deg, rgba(22, 38, 63, .94), rgba(13, 24, 42, .94));
+  box-shadow: 0 11px 24px rgba(0, 0, 0, .14);
+}
+body.admin-dark .admin-timming-workspace-v1 .btn-primary-group {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+body.admin-dark .admin-timming-workspace-v1 .btn-primary-group .btn { margin: 0 !important; }
+body.admin-dark .admin-timming-workspace-v1 .btn-primary,
+body.admin-dark .admin-timming-workspace-v1 .layui-btn-primary {
+  min-height: 35px;
+  border: 1px solid rgba(99, 215, 233, .24);
+  border-radius: 8px;
+  background: var(--at-cyan-soft);
+  color: var(--at-cyan);
+  font-weight: 700;
+}
+body.admin-dark .admin-timming-workspace-v1 .btn-primary:hover,
+body.admin-dark .admin-timming-workspace-v1 .layui-btn-primary:hover {
+  border-color: rgba(99, 215, 233, .55);
+  background: rgba(99, 215, 233, .2);
+  color: #d5fbff;
+}
+body.admin-dark .admin-timming-workspace-v1 #pageListForm {
+  overflow-x: auto;
+  max-width: 100%;
+  border: 1px solid var(--at-line);
+  border-radius: 12px;
+  background: var(--at-surface);
+  box-shadow: 0 13px 27px rgba(0, 0, 0, .13);
+}
+body.admin-dark .admin-timming-workspace-v1 #pageListForm .layui-table {
+  min-width: 810px;
+  margin: 0;
+  background: transparent;
+}
+body.admin-dark .admin-timming-workspace-v1 .layui-table thead tr { background: #172640; }
+body.admin-dark .admin-timming-workspace-v1 .layui-table th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  border-color: var(--at-line);
+  color: var(--at-ink);
+  font-size: 11px;
+  font-weight: 750;
+  letter-spacing: .055em;
+  text-transform: uppercase;
+}
+body.admin-dark .admin-timming-workspace-v1 .layui-table td {
+  border-color: var(--at-line-soft);
+  color: var(--at-muted);
+  vertical-align: middle;
+}
+body.admin-dark .admin-timming-workspace-v1 .layui-table tbody tr { transition: background .16s ease; }
+body.admin-dark .admin-timming-workspace-v1 .layui-table tbody tr:hover { background: rgba(99, 215, 233, .045); }
+body.admin-dark .admin-timming-workspace-v1 .admin-timming-task-name strong { color: var(--at-ink); font-size: 13px; }
+body.admin-dark .admin-timming-workspace-v1 .admin-timming-task-description { max-width: 240px; color: var(--at-muted); }
+body.admin-dark .admin-timming-workspace-v1 .admin-timming-task-file {
+  padding: 3px 7px;
+  border: 1px solid var(--at-line);
+  border-radius: 5px;
+  background: var(--at-surface-2);
+  color: #bcd1e9;
+  font-size: 12px;
+}
+body.admin-dark .admin-timming-workspace-v1 .admin-timming-status-control { min-height: 24px; }
+body.admin-dark .admin-timming-workspace-v1 .layui-form-switch {
+  border-color: var(--at-line);
+  background: rgba(157, 178, 207, .1);
+}
+body.admin-dark .admin-timming-workspace-v1 .layui-form-onswitch {
+  border-color: var(--at-cyan);
+  background: var(--at-cyan);
+}
+body.admin-dark .admin-timming-workspace-v1 .admin-timming-row-actions {
+  white-space: nowrap;
+}
+body.admin-dark .admin-timming-workspace-v1 .admin-timming-row-actions a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  margin: 2px 3px 2px 0;
+  padding: 0 8px;
+  border: 1px solid rgba(99, 215, 233, .22);
+  border-radius: 999px;
+  background: var(--at-cyan-soft);
+  color: var(--at-cyan);
+}
+body.admin-dark .admin-timming-workspace-v1 .admin-timming-row-actions a:hover {
+  border-color: rgba(99, 215, 233, .55);
+  background: rgba(99, 215, 233, .2);
+  color: #d5fbff;
+}
+body.admin-dark .admin-timming-workspace-v1 .layui-form-checkbox[lay-skin=primary] i {
+  border-color: var(--at-line);
+  background: var(--at-surface-2);
+}
+body.admin-dark .admin-timming-workspace-v1 .layui-form-checkbox[lay-skin=primary].layui-form-checked i {
+  border-color: var(--at-cyan);
+  background: var(--at-cyan);
+  color: #071421;
+}
+body.admin-dark .admin-timming-editor-v1 {
+  min-height: calc(100vh - 14px);
+}
+body.admin-dark .admin-timming-editor-head {
+  display: block;
+  padding: 17px 20px;
+}
+body.admin-dark .admin-timming-editor-v1 .admin-timming-form {
+  margin: 0;
+  padding: 18px 20px 10px;
+  border: 1px solid var(--at-line);
+  border-radius: 12px;
+  background: var(--at-surface);
+  box-shadow: 0 13px 27px rgba(0, 0, 0, .13);
+}
+body.admin-dark .admin-timming-editor-v1 .layui-form-item {
+  margin: 0 0 14px;
+  padding: 0 0 14px;
+  border-bottom: 1px solid var(--at-line-soft);
+}
+body.admin-dark .admin-timming-editor-v1 .layui-form-item:last-of-type { border-bottom: 0; }
+body.admin-dark .admin-timming-editor-v1 .layui-form-label {
+  width: 185px;
+  border-color: transparent;
+  color: var(--at-ink);
+  font-size: 12px;
+  font-weight: 700;
+  text-align: left;
+}
+body.admin-dark .admin-timming-editor-v1 .layui-input-inline,
+body.admin-dark .admin-timming-editor-v1 .layui-input-block {
+  margin-left: 0;
+  min-width: 0;
+}
+body.admin-dark .admin-timming-editor-v1 .layui-input,
+body.admin-dark .admin-timming-editor-v1 select {
+  min-height: 38px;
+  border: 1px solid var(--at-line);
+  border-radius: 8px;
+  background: var(--at-surface-2);
+  color: var(--at-ink);
+}
+body.admin-dark .admin-timming-editor-v1 .layui-input:focus,
+body.admin-dark .admin-timming-editor-v1 select:focus {
+  border-color: var(--at-cyan);
+  box-shadow: 0 0 0 3px rgba(99, 215, 233, .13);
+}
+body.admin-dark .admin-timming-editor-v1 .layui-word-aux { color: var(--at-quiet); }
+body.admin-dark .admin-timming-editor-v1 .role-list-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(72px, 1fr));
+  gap: 6px;
+  padding: 9px;
+  border: 1px solid var(--at-line-soft);
+  border-radius: 9px;
+  background: var(--at-surface-2);
+}
+body.admin-dark .admin-timming-editor-v1 .role-list-form .layui-form-checkbox {
+  margin: 0;
+  min-width: 0;
+  color: var(--at-muted);
+}
+body.admin-dark .admin-timming-editor-v1 .admin-timming-form-actions {
+  padding-top: 8px;
+  border-bottom: 0;
+}
+body.admin-dark .admin-timming-editor-v1 .admin-timming-form-actions .layui-input-block { text-align: left; }
+body.admin-dark .admin-timming-editor-v1 .admin-timming-form-actions .btn {
+  min-height: 36px;
+  border-radius: 8px;
+  font-weight: 700;
+}
+body.admin-dark .admin-timming-editor-v1 .admin-timming-form-actions .btn-primary { background: var(--at-cyan); color: #071421; }
+body.admin-dark .admin-timming-editor-v1 .admin-timming-form-actions .btn-warning { background: rgba(255, 186, 88, .15); color: #ffd49b; }
+body.admin-dark .admin-timming-editor-v1 .admin-timming-form-actions .layui-btn-normal { background: var(--at-cyan-soft); color: var(--at-cyan); }
+@media (max-width: 760px) {
+  body.admin-dark .admin-timming-workspace-v1,
+  body.admin-dark .admin-timming-editor-v1 { padding: 8px !important; }
+  body.admin-dark .admin-timming-hero,
+  body.admin-dark .admin-timming-editor-head { padding: 15px; }
+  body.admin-dark .admin-timming-hero { align-items: flex-start; }
+  body.admin-dark .admin-timming-hero-meta { margin-top: 2px; }
+  body.admin-dark .admin-timming-workspace-v1 .my-toolbar-box { align-items: stretch; flex-direction: column; padding: 10px; }
+  body.admin-dark .admin-timming-workspace-v1 .btn-primary-group { align-items: stretch; }
+  body.admin-dark .admin-timming-workspace-v1 .btn-primary-group .btn { flex: 1 1 130px; }
+  body.admin-dark .admin-timming-workspace-v1 #pageListForm .layui-table { min-width: 810px; }
+  body.admin-dark .admin-timming-editor-v1 .admin-timming-form { padding: 14px 12px 8px; }
+  body.admin-dark .admin-timming-editor-v1 .layui-form-item { display: block; }
+  body.admin-dark .admin-timming-editor-v1 .layui-form-label { display: block; width: auto; padding: 7px 0; }
+  body.admin-dark .admin-timming-editor-v1 .layui-input-inline,
+  body.admin-dark .admin-timming-editor-v1 .layui-input-block { width: 100% !important; }
+}
+
+/* Keep legacy fixed-width inputs inside the mobile editor card. */
+@media (max-width: 760px) {
+  body.admin-dark .admin-timming-editor-v1 .layui-input,
+  body.admin-dark .admin-timming-editor-v1 input.w500 { max-width: 100%; box-sizing: border-box; }
+}
+
+/* Keep legacy fixed-width inputs and pane margins inside the mobile editor card. */
+@media (max-width: 760px) {
+  body.admin-dark .admin-timming-editor-v1 .layui-input,
+  body.admin-dark .admin-timming-editor-v1 input.w500 { max-width: 100%; box-sizing: border-box; }
+  body.admin-dark .admin-timming-editor-v1 .layui-input-block { margin-left: 0 !important; }
+}
+
+/* Remove legacy pane offsets from mobile editor controls. */
+@media (max-width: 760px) {
+  body.admin-dark .admin-timming-editor-v1 .layui-input-inline,
+  body.admin-dark .admin-timming-editor-v1 .layui-input-block { margin-left: 0 !important; }
+}

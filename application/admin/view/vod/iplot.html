@@ -1,0 +1,322 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Based on MacCMS 10 (Apache-2.0) by magicblack, with changes from the MacCMS editions
+RamCMS (Apache-2.0) and/or ApiiCMS (MIT, Copyright (c) 2024 apiiphim), changed by JavCMS.
+JavCMS changes: Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors,
+JavCMS Community License 1.0. The MacCMS, RamCMS and ApiiCMS parts keep their own licenses.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{include file="../../../application/admin/view/public/head" /}
+<link rel="stylesheet" href="__STATIC__/css/admin_vod_workspace_v1.css">
+<link rel="stylesheet" href="__STATIC__/css/admin_vod_editor_workspace_v1.css">
+<link rel="stylesheet" href="__STATIC__/css/admin_vod_plot_editor_workspace_v1.css">
+<script type="text/javascript" src="__STATIC__/js/jquery.jscolor.js"></script>
+{include file="../../../application/admin/view/public/editor" flag="vod_editor"/}
+<div class="page-container p10 admin-vod-info admin-vod-plot">
+    <div class="showpic" style="display:none;"><img class="showpic_img" width="120" height="160" referrerPolicy="no-referrer"></div>
+    
+    <form class="layui-form layui-form-pane" method="post" action="">
+        <input type="hidden" name="__token__" value="{:mac_admin_csrf_token()}" />
+        <input type="hidden" name="vod_id" value="{$info.vod_id|htmlspecialchars=(string)###,ENT_QUOTES,'UTF-8'}">
+        <input type="hidden" name="vod_name" value="{$info.vod_name|htmlspecialchars=(string)###,ENT_QUOTES,'UTF-8'}">
+        <input type="hidden" name="vod_en" value="{$info.vod_en|htmlspecialchars=(string)###,ENT_QUOTES,'UTF-8'}">
+        <input type="hidden" name="type_id" value="{$info.type_id|htmlspecialchars=(string)###,ENT_QUOTES,'UTF-8'}">
+
+        <!-- admin-vod-plot-toolbar-v1:start -->
+        <div class="admin-vod-editor-toolbar admin-vod-plot-toolbar" role="region" aria-label="{:lang('admin/vod/episode_plot')}">
+            <div class="admin-vod-editor-toolbar__identity">
+                <a href="{:url('vod/data')}" class="admin-vod-editor-back" data-vod-back title="{:lang('return')}">
+                    <span class="admin-vod-editor-back__icon" aria-hidden="true">&#8592;</span>
+                    <span>{:lang('return')}</span>
+                </a>
+                <div class="admin-vod-editor-titleline">
+                    <strong class="admin-vod-editor-title">{:lang('admin/vod/episode_plot')}</strong>
+                </div>
+                <div class="admin-vod-editor-meta">
+                    <span class="admin-vod-editor-meta__id">ID {$info.vod_id|htmlspecialchars=(string)###,ENT_QUOTES,'UTF-8'}</span>
+                </div>
+            </div>
+            <div class="admin-vod-editor-toolbar__actions">
+                <button type="button" class="btn admin-vod-editor-reset" data-vod-reset>{:lang('btn_reset')}</button>
+                <button type="button" class="btn admin-vod-editor-save" data-vod-save>{:lang('btn_save')}</button>
+            </div>
+        </div>
+        <!-- admin-vod-plot-toolbar-v1:end -->
+
+        <div class="layui-tab">
+            <ul class="layui-tab-title ">
+                <li class="layui-this">{:lang('admin/vod/episode_plot')}</a></li>
+            </ul>
+            <div class="layui-tab-content">
+
+                <script>
+                    var ueArray=[];
+                    var plot_arr_len = {$vod_plot_list|count};
+                </script>
+                <div class="layui-tab-item layui-show">
+                    <div id="plot_list" class="contents">
+                        {volist name="$vod_plot_list" id="vo"}
+                        <div class="layui-form-item" data-i="{$key}">
+                            <label class="layui-form-label">{:lang('admin/vod/plot')} {$key}:</label>
+                            <div class="layui-input-inline w500"><input type="text" name="vod_plot_name[]" class="layui-input" value="{$vo.name|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}" placeholder="{:lang('admin/vod/plot_name')}"></div>
+                            <div class="layui-input-inline w400 pb-1"><a href="javascript:void(0)" class="badge bg-dark me-1 j-editor-clear">{:lang('clear')}</a>&nbsp;<a href="javascript:void(0)" class="badge bg-dark me-1 j-editor-remove">{:lang('del')}</a>&nbsp;<a href="javascript:void(0)" class="badge bg-dark me-1 j-editor-up">{:lang('admin/vod/move_up')}</a>&nbsp;<a href="javascript:void(0)" class="badge bg-dark me-1 j-editor-down">{:lang('admin/vod/move_down')}</a><br></div>
+                            <div class="p10 m20"> </div>
+                            <div class="layui-input-block "><textarea id="vod_plot_detail{$key|intval}" name="vod_plot_detail[]" type="text/plain" style="width:100%;height:150px">{$vo.detail|mac_str_correct=###,'#',chr(13)|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}</textarea></div>
+                            <script>ueArray[{$key|intval}] = editor_getEditor('vod_plot_detail{$key|intval}');</script>
+                        </div>
+                        {/volist}
+                    </div>
+                    <div class="layui-form-item">
+                        <label class=""><button class="btn btn-primary me-1 radius j-plot-add" type="button">{:lang('add_group')}</button></label>
+                        <div class="layui-input-block">
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+                <div class="layui-form-item center">
+                    <div class="layui-input-block">
+                        <button type="submit" class="btn btn-primary me-1" lay-submit="" lay-filter="formSubmit" data-child="">{:lang('btn_save')}</button>
+                        <button class="btn btn-warning me-1 layui-btn-warm" type="reset">{:lang('btn_reset')}</button>
+                    </div>
+                </div>
+    </form>
+
+</div>
+{include file="../../../application/admin/view/public/foot" /}
+
+<script type="text/javascript">
+
+    layui.use(['form','upload', 'layer'], function () {
+        // Get the form, dialog and jQuery modules.
+        var form = layui.form
+                , layer = layui.layer
+                , $ = layui.jquery
+                ;
+
+        // Define form validation rules.
+        form.verify({
+            vod_name: function (value) {
+                if (value == "") {
+                    return "{:lang('name_empty')}";
+                }
+            }
+        });
+
+
+        $('.contents').on('click','.j-editor-clear',function(){
+            var row = $(this).parent().parent();
+            var datai = row.attr('data-i');
+            var editor = (window.ueArray || [])[datai];
+            if (editor && typeof editor_setContent === 'function') {
+                editor_setContent(editor, '');
+            }
+            row.find('textarea').val('');
+        });
+        $('.contents').on('click','.j-editor-remove',function(){
+            var datai = $(this).parent().parent().attr('data-i');
+            $(this).parent().parent().remove();
+        });
+        $('.contents').on('click','.j-editor-up',function(){
+            var current = $(this).parent().parent();
+            var current_index = current.index();
+            var current_i = current.attr('data-i');
+            var prev = current.prev();
+            var prev_i = prev.attr('data-i');
+            if(current_index>0){
+                current.insertBefore(prev);
+            }
+        });
+        $('.contents').on('click','.j-editor-down',function(){
+            var current = $(this).parent().parent();
+            var current_index = current.index();
+            var current_i = current.attr('data-i');
+            var next = current.next();
+            var next_i = next.attr('data-i');
+
+            if(next.length>0){
+                current.insertAfter(next);
+            }
+        });
+
+        $('.contents').on('click','.j-editor-xz',function(){
+            var arr1,s1,s2,urlarr,urlarrcount;
+            s1 = $(this).parent().parent().find('textarea').val(); s2="";
+            if (s1.length==0){return false;}
+            s1 = s1.replaceAll("\r","");
+            arr1 = s1.split("\n");
+            arr1len = arr1.length;
+            for(j=0;j<arr1len;j++){
+                if(arr1[j].length>0){
+                    urlarr = arr1[j].split('$'); urlarrcount = urlarr.length-1;
+                    if(urlarrcount==0){
+                        arr1[j]= getPatName(j,arr1len,arr1[j]) + '$' + arr1[j];
+                    }
+                    s2+=arr1[j]+"\r\n";
+                }
+            }
+            $(this).parent().parent().find('textarea').val(s2.trim()) ;
+        });
+        $('.contents').on('click','.j-editor-order',function(){
+            var arr1,s1,s2,urlarr,urlarrcount;
+            s1 = $(this).parent().parent().find('textarea').val(); s2="";
+            if (s1.length==0){return false;}
+            s1 = s1.replaceAll("\r","");
+            arr1=s1.split("\n");
+            for(j=arr1.length-1;j>=0;j--){
+                if(arr1[j].length>0){
+                    s2+=arr1[j]+"\r\n";
+                }
+            }
+            $(this).parent().parent().find('textarea').val(s2.trim()) ;
+        });
+        $('.contents').on('click','.j-editor-dn',function(){
+            var arr1,s1,s2,urlarr,urlarrcount;
+            s1 = $(this).parent().parent().find('textarea').val(); s2="";
+            if (s1.length==0){return false;}
+            s1 = s1.replaceAll("\r","");
+            arr1=s1.split("\n");
+            for(j=0;j<arr1.length;j++){
+                if(arr1[j].length>0){
+                    urlarr = arr1[j].split('$'); urlarrcount = urlarr.length-1;
+                    if(urlarrcount==0){
+                        arr1[j] = arr1[j];
+                    }
+                    else{
+                        arr1[j] = urlarr[1];
+                    }
+                    s2+=arr1[j]+"\r\n";
+                }
+            }
+            $(this).parent().parent().find('textarea').val(s2.trim()) ;
+        });
+
+
+        $('.j-plot-add').on('click',function(){
+            plot_arr_len++;
+            var tpl='<div class="layui-form-item" data-i="'+plot_arr_len+'"><label class="layui-form-label">{:lang('admin/vod/plot')} '+(plot_arr_len)+':</label><div class="layui-input-inline w500"><input type="text" name="vod_plot_name[]" class="layui-input" placeholder="{:lang('admin/vod/plot_name')}"></div><div class="layui-input-inline w400 pb-1"><a href="javascript:void(0)" class="badge bg-dark me-1 j-editor-clear">{:lang('clear')}</a>&nbsp;<a href="javascript:void(0)" class="badge bg-dark me-1 j-editor-remove">{:lang('del')}</a>&nbsp;<a href="javascript:void(0)" class="badge bg-dark me-1 j-editor-up">{:lang('admin/vod/move_up')}</a>&nbsp;<a href="javascript:void(0)" class="badge bg-dark me-1 j-editor-down">{:lang('admin/vod/move_down')}</a>&nbsp;</div><div class="p10 m20"></div><div class="layui-input-block"><textarea id="vod_plot_detail'+(plot_arr_len)+'" name="vod_plot_detail[]" class="layui-textarea" style="width:99%;height:250px"></textarea></div></div>';
+            $("#plot_list").append(tpl);
+            ueArray[plot_arr_len] = editor_getEditor( 'vod_plot_detail'+plot_arr_len );
+        });
+
+        if(plot_arr_len==0 ) {
+            $('.j-plot-add').click();
+        }
+    });
+    
+</script>
+
+<!-- admin-vod-plot-editor-actions-v1:start -->
+<script type="text/javascript">
+(function ($) {
+    $(function () {
+        var editorInitialContent = {};
+        var resetBound = false;
+
+        function rememberEditors() {
+            var editors = window.ueArray || [];
+            var found = false;
+            $.each(editors, function (index, editor) {
+                if (!editor || typeof editor.getContent !== 'function' || typeof editor.setContent !== 'function') {
+                    return;
+                }
+                found = true;
+                var capture = function () {
+                    if (!Object.prototype.hasOwnProperty.call(editorInitialContent, index)) {
+                        editorInitialContent[index] = editor.getContent();
+                    }
+                };
+                if (typeof editor.ready === 'function') {
+                    editor.ready(capture);
+                } else {
+                    capture();
+                }
+            });
+            if (!found) {
+                window.setTimeout(rememberEditors, 80);
+            }
+        }
+
+        function restoreEditors() {
+            $.each(window.ueArray || [], function (index, editor) {
+                if (editor && typeof editor.setContent === 'function' && Object.prototype.hasOwnProperty.call(editorInitialContent, index)) {
+                    editor.setContent(editorInitialContent[index]);
+                }
+            });
+        }
+
+        function prepareParentLayer() {
+            if (!window.parent || window.parent === window || !window.frameElement) {
+                return;
+            }
+            try {
+                var parentDocument = window.parent.document;
+                var sourceStyle = document.querySelector('link[href*="admin_vod_plot_editor_workspace_v1.css"]');
+                if (sourceStyle && !parentDocument.querySelector('link[data-vod-plot-layer-style="v1"]')) {
+                    var parentStyle = parentDocument.createElement('link');
+                    parentStyle.rel = 'stylesheet';
+                    parentStyle.href = sourceStyle.href;
+                    parentStyle.setAttribute('data-vod-plot-layer-style', 'v1');
+                    parentDocument.head.appendChild(parentStyle);
+                }
+                var layerNode = window.frameElement.closest('.layui-layer');
+                if (!layerNode) {
+                    return;
+                }
+                layerNode.classList.add('admin-vod-plot-layer-v1');
+                var closeControl = layerNode.querySelector('.layui-layer-close');
+                if (closeControl) {
+                    closeControl.setAttribute('title', "{:lang('close')}");
+                    closeControl.setAttribute('aria-label', "{:lang('close')}");
+                }
+            } catch (error) {
+                // Direct navigation and embedded editing keep the same in-form controls.
+            }
+        }
+
+        var form = $('.admin-vod-plot form.layui-form-pane').first();
+        if (form.length && !resetBound) {
+            form.on('reset.admin-vod-plot-editor-reset', function () {
+                window.setTimeout(restoreEditors, 0);
+            });
+            resetBound = true;
+        }
+        rememberEditors();
+        prepareParentLayer();
+
+        $(document).on('click', '.j-plot-add', function () {
+            window.setTimeout(rememberEditors, 80);
+        });
+        $(document).on('click', '[data-vod-back]', function (event) {
+            event.preventDefault();
+            if (window.parent && window.parent !== window && window.parent.layer) {
+                var parentLayer = window.parent.layer;
+                var frameIndex = typeof parentLayer.getFrameIndex === 'function' ? parentLayer.getFrameIndex(window.name) : null;
+                if (frameIndex !== null && frameIndex !== undefined && typeof parentLayer.close === 'function') {
+                    parentLayer.close(frameIndex);
+                } else if (typeof parentLayer.closeAll === 'function') {
+                    parentLayer.closeAll();
+                }
+                return false;
+            }
+            window.location.href = $(this).attr('href');
+            return false;
+        });
+        $(document).on('click', '[data-vod-reset]', function () {
+            $('.admin-vod-plot button[type="reset"]').first().trigger('click');
+            window.setTimeout(restoreEditors, 0);
+        });
+        $(document).on('click', '[data-vod-save]', function () {
+            $('.admin-vod-plot button[lay-filter="formSubmit"]').last().trigger('click');
+        });
+    });
+}(window.jQuery));
+</script>
+<!-- admin-vod-plot-editor-actions-v1:end -->
+
+</body>
+</html>

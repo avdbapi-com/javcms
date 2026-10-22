@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Legacy Flash/Silverlight policy. No other site may read this site's pages or member data through a plug-in. -->
+<cross-domain-policy>
+	<site-control permitted-cross-domain-policies="none"/>
+</cross-domain-policy>

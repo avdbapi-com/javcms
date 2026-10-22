@@ -1,0 +1,20 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="honey-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}" data-fx="vt smooth" data-fx-lerp="0.07" data-fx-vt-style="honey">
+<head>
+<title>{:\\app\\common\\util\\TemplateText::get('ui.access_required')} - {:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$maccms['site_name']), ENT_QUOTES, 'UTF-8')}</title>
+<meta name="robots" content="noindex, follow" />
+{include file="public/include"}
+</head>
+<body class="nc-page-state">
+{include file="public/head"}
+<main id="main-content" class="nc-main"><div class="nc-wrap nc-state"><section class="nc-statecard"><span class="nc-hexicon" aria-hidden="true"><svg class="nc-i" aria-hidden="true"><use href="{$ncIco}lock"></use></svg></span><p class="nc-eyebrow nc-eyebrow-soft"><svg class="nc-i" aria-hidden="true"><use href="{$ncIco}newspaper"></use></svg>{:\\app\\common\\util\\TemplateText::get('ui.articles')}</p><h1 class="msg_jump_tit">{:\\app\\common\\util\\TemplateText::get('ui.access_required')}</h1><p class="nc-statemsg" dir="auto"><strong>{:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$obj['art_name']), ENT_QUOTES, 'UTF-8')}</strong></p><form class="nc-form" action="{:mac_url('ajax/pwd')}" method="post" onsubmit="MAC.Pwd.Check(this.querySelector('[data-mid]'));return false;">{:token()}<input type="hidden" name="id" value="{$obj.art_id|intval}"><input type="hidden" name="mid" value="2"><input type="hidden" name="type" value="1"><label class="nc-sr" for="article-access-password">{:\\app\\common\\util\\TemplateText::get('ui.access_password')}</label><div class="nc-row"><input id="article-access-password" class="nc-input" name="pwd" type="password" autocomplete="current-password" required maxlength="255" placeholder="{:\\app\\common\\util\\TemplateText::get('ui.please_enter_the_access_password_here')}"><button class="nc-btn nc-btn-honey submit_btn" type="submit" data-id="{$obj.art_id|intval}" data-mid="2" data-type="1">{:\\app\\common\\util\\TemplateText::get('ui.click_to_confirm')}</button></div></form><div class="nc-empty-act">{if condition="!empty($obj['art_pwd_url']) AND in_array(strtolower((string)parse_url($obj['art_pwd_url'],PHP_URL_SCHEME)),array('http','https'))"}<a class="nc-btn nc-btn-soft" href="{$obj.art_pwd_url|htmlspecialchars=ENT_QUOTES}" target="_blank" rel="noopener noreferrer"><svg class="nc-i" aria-hidden="true"><use href="{$ncIco}key"></use></svg>{:\\app\\common\\util\\TemplateText::get('ui.click_to_get_the_password')}</a>{/if}<a class="nc-btn nc-btn-soft" href="{:mac_url('art/index')}">{:\\app\\common\\util\\TemplateText::get('ui.articles')}</a></div></section></div></main>
+{include file="public/foot"}
+</body>
+</html>

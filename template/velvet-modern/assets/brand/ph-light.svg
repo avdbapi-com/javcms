@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 180" width="320" height="180" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="vpd" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#b7536f"/><stop offset=".14" stop-color="#e29aac"/><stop offset=".27" stop-color="#b04f6b"/><stop offset=".41" stop-color="#e8a7b6"/><stop offset=".56" stop-color="#b9566f"/><stop offset=".72" stop-color="#de94a6"/><stop offset=".86" stop-color="#a9475f"/><stop offset="1" stop-color="#d48799"/>
+    </linearGradient>
+    <radialGradient id="vps" cx="160" cy="162" r="92" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#fff1d6" stop-opacity=".42"/><stop offset="1" stop-color="#fff1d6" stop-opacity="0"/></radialGradient>
+    <linearGradient id="vpg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff1d6" stop-opacity=".0"/><stop offset=".55" stop-color="#fff1d6" stop-opacity=".16"/><stop offset="1" stop-color="#fff1d6" stop-opacity="0"/></linearGradient>
+  </defs>
+  <rect width="320" height="180" fill="#f3e9e2"/>
+  <path d="M34 180 V70 A126 126 0 0 1 286 70 V180" fill="#fbf6f1"/>
+  <path d="M40 180 V72 Q40 22 158 18 C150 64 152 128 157 180 Z" fill="url(#vpd)"/>
+  <path d="M280 180 V72 Q280 22 162 18 C170 64 168 128 163 180 Z" fill="url(#vpd)"/>
+  <rect x="156" y="20" width="8" height="160" fill="url(#vpg)"/>
+  <ellipse cx="160" cy="166" rx="96" ry="16" fill="url(#vps)"/>
+  <path d="M34 180 V70 A126 126 0 0 1 286 70 V180" fill="none" stroke="#a3164a" stroke-opacity=".7" stroke-width="2"/>
+  <path d="M28 180 V68 A132 132 0 0 1 292 68 V180" fill="none" stroke="#8a5216" stroke-opacity=".28" stroke-width="1"/>
+</svg>

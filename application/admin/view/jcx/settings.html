@@ -1,0 +1,49 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{include file="../../../application/admin/view/public/head" /}
+<div class="page-container p10 jx-page" data-jx-page="settings">
+    {include file="../../../application/admin/view/public/page_head" icon="ai-megaphone" title="admin/ux/jcx/title" help="admin/ux/jcx/help" /}
+    {include file="../../../application/admin/view/jcx/_tabs" /}
+    <form id="jxSet" class="ax-form" data-ax-dirty onsubmit="return false">
+        <section class="ax-section" aria-labelledby="jxSeT">
+            <h2 id="jxSeT">{:$jxE(lang('admin/ux/jcx/tab_settings'))}</h2>
+            <div class="ax-field"><label class="jx-check"><input type="checkbox" name="on" value="1" lay-ignore {if condition="$jx_conf.on"}checked{/if} aria-describedby="jxHm"> {:$jxE(lang('admin/ux/jcx/set_master'))}</label><p class="ax-help" id="jxHm">{:$jxE(lang('admin/ux/jcx/help_master'))}</p></div>
+            <div class="ax-field"><label class="jx-check"><input type="checkbox" name="member_free" value="1" lay-ignore {if condition="$jx_conf.member_free"}checked{/if} aria-describedby="jxHmf"> {:$jxE(lang('admin/ux/jcx/set_members'))}</label><p class="ax-help" id="jxHmf">{:$jxE(lang('admin/ux/jcx/help_members'))}</p></div>
+            {if condition="!empty($groups)"}
+            <div class="ax-field"><label id="jxVipL">{:$jxE(lang('admin/ux/jcx/set_vip'))}</label>
+                <div class="jx-checks-inline" role="group" aria-labelledby="jxVipL">{volist name="groups" id="gr"}<label class="jx-check"><input type="checkbox" name="vip[]" value="{$gr.id}" lay-ignore {if condition="in_array($gr['id'], $vip)"}checked{/if}> {:$jxE($gr['name'])}</label>{/volist}</div>
+                <p class="ax-help">{:$jxE(lang('admin/ux/jcx/help_vip'))}</p></div>
+            {/if}
+            <div class="ax-field"><label class="jx-check"><input type="checkbox" name="stats" value="1" lay-ignore {if condition="$jx_conf.stats"}checked{/if} aria-describedby="jxHst"> {:$jxE(lang('admin/ux/jcx/set_stats'))}</label><p class="ax-help" id="jxHst">{:$jxE(lang('admin/ux/jcx/help_stats'))}</p></div>
+            <div class="ax-field ax-field--md"><label for="jxGeoH">{:$jxE(lang('admin/ux/jcx/set_country'))}</label>
+                <select id="jxGeoH" class="layui-input" name="geo_header" lay-ignore aria-describedby="jxHgeo"><option value="">{:$jxE(lang('admin/ux/jcx/set_country_none'))}</option>
+                    {volist name="headers" id="hd"}<option value="{$hd}"{if condition="$jx_conf.geo_header eq $hd"} selected{/if}>{$hd}</option>{/volist}</select>
+                <p class="ax-help" id="jxHgeo">{if condition="empty($headers)"}{:$jxE(lang('admin/ux/jcx/countries_off'))}{else /}{:$jxE(lang('admin/ux/jcx/help_country'))}{/if}</p></div>
+            <div class="ax-field"><label class="jx-check"><input type="checkbox" name="consent" value="1" lay-ignore {if condition="$jx_conf.consent"}checked{/if} aria-describedby="jxHco"> {:$jxE(lang('admin/ux/jcx/set_consent'))}</label><p class="ax-help" id="jxHco">{:$jxE(lang('admin/ux/jcx/set_consent_help'))}</p></div>
+            <div class="ax-field"><label class="jx-check"><input type="checkbox" name="safe" value="1" lay-ignore {if condition="$jx_conf.safe"}checked{/if} aria-describedby="jxHsa"> {:$jxE(lang('admin/ux/jcx/set_safe'))}</label><p class="ax-help" id="jxHsa">{:$jxE(lang('admin/ux/jcx/set_safe_help'))}</p></div>
+            <p class="ax-help">{:$jxE(lang('admin/ux/jcx/set_reports'))} <a href="https://support.google.com/webtools/answer/7308033" target="_blank" rel="noopener">{:$jxE(lang('admin/ux/jcx/set_report_aer'))}</a> · <a href="https://support.google.com/webtools/answer/7538608" target="_blank" rel="noopener">{:$jxE(lang('admin/ux/jcx/set_report_abuse'))}</a></p>
+        </section>
+        <div class="ax-savebar">
+            <span class="ax-savebar__status" role="status"></span>
+            {if condition="$jx_cfg.can.settings"}<button type="button" class="ax-btn ax-btn--primary" data-jx-act="setsave"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-save"/></svg>{:$jxE(lang('admin/ux/kit/save'))}</button>{/if}
+        </div>
+    </form>
+    {if condition="$jx_cfg.can.settings"}
+    <section class="ax-section ax-section--danger" aria-labelledby="jxDzT">
+        <h2 id="jxDzT">{:$jxE(lang('admin/ux/kit/danger_zone'))}</h2>
+        <p class="jx-btns"><button type="button" class="ax-btn ax-btn--danger" data-jx-act="reset"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-rotate-ccw"/></svg>{:$jxE(lang('admin/ux/jcx/reset_stats'))}</button>
+            <button type="button" class="ax-btn ax-btn--danger" data-jx-act="removeall"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-trash-2"/></svg>{:$jxE(lang('admin/ux/jcx/remove_all'))}…</button></p>
+        <p class="ax-help">{:$jxE(sprintf(lang('admin/ux/jcx/remove_all_note'), $uploads))}</p>
+    </section>
+    {/if}
+</div>
+{include file="../../../application/admin/view/public/foot" /}
+<script type="application/json" id="jxCfg">{$jxJson}</script>
+<script src="__STATIC__/js/admin_jcx.js?v={:filemtime(ROOT_PATH . 'static/js/admin_jcx.js')}"></script>
+</body>
+</html>

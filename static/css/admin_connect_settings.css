@@ -1,0 +1,19 @@
+/*
+ * This file is part of JavCMS - https://javcms.net
+ * Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+ * License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+ * See the LICENSE and NOTICE files that come with JavCMS.
+ * Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Telegram: https://t.me/avdb_api
+ */
+body.admin-studio .admin-connect-settings .connect-intro,body.admin-studio .admin-connect-settings .connect-help{color:var(--studio-muted,#606d80);line-height:1.6;margin:0 0 18px}
+body.admin-studio .admin-connect-settings .connect-provider{background:var(--studio-surface,#fff);border:1px solid var(--studio-line,#ccd4df);border-radius:10px;padding:22px;margin:0 0 20px;min-width:0}
+body.admin-studio .admin-connect-settings .connect-provider-header{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}
+body.admin-studio .admin-connect-settings .connect-provider h2{color:var(--studio-text,#263247);font-size:19px;margin:0}
+body.admin-studio .admin-connect-settings .connect-provider a{color:var(--studio-accent,#2563ad);text-decoration:underline}
+body.admin-studio .admin-connect-settings .connect-warning{padding:14px;border:1px solid var(--studio-danger,#b93845);color:var(--studio-text,#263247);border-radius:6px}
+body.admin-studio .admin-connect-settings .connect-callback-label{display:block;color:var(--studio-muted,#606d80);margin:16px 0 7px}
+body.admin-studio .admin-connect-settings details{color:var(--studio-muted,#606d80);line-height:1.6;margin-top:14px}
+body.admin-studio .admin-connect-settings summary{color:var(--studio-text,#263247);cursor:pointer;padding:8px 0}
+body.admin-studio .admin-connect-settings details p{margin:10px 0}
+@media(max-width:600px){body.admin-studio .admin-connect-settings .connect-provider{padding:16px}body.admin-studio .admin-connect-settings .connect-provider-header{align-items:flex-start;flex-direction:column}}

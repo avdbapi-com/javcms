@@ -1,0 +1,32 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="honey-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}" data-fx="vt smooth" data-fx-lerp="0.07" data-fx-vt-style="honey">
+<head>
+{include file="seo/index"}
+{include file="public/include"}
+</head>
+<body class="nc-page-home">
+{include file="public/head"}
+<main id="main-content" class="nc-main nc-main-home">
+{include file="index/slide"}
+<div class="nc-wrap">
+{php}$jvPbOpt = ['section' => 'nc-sec', 'head' => 'nc-sec-head', 'title' => 'nc-sec-title', 'more' => 'nc-more', 'grid' => 'nc-grid'];{/php}{include file="public/provider_block"}{include file="index/new"}
+{include file="public/drips"}
+{include file="index/hive"}
+{include file="public/drips"}
+{include file="index/watch"}
+{include file="public/drips"}
+{include file="index/top"}
+{include file="index/list"}
+{include file="public/link"}
+</div>
+</main>
+{include file="public/foot"}
+</body>
+</html>

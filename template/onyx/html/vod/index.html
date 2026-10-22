@@ -1,0 +1,30 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="onyx" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/auto"}
+{include file="public/include"}
+</head>
+<body class="page-home">
+{include file="public/head"}
+<main id="main-content" class="wrap">
+<h1 class="page-title">{:\\app\\common\\util\\AutoIcon::navIcon('all')}<span>{:\\app\\common\\util\\TemplateText::get('ui.all_videos')}</span></h1>
+{include file="index/new"}
+{include file="index/watch"}
+{include file="index/rated"}
+{maccms:type ids="parent" flag="vod" order="asc" by="sort" id="tplCat" hide_empty="1"}
+<section class="sec sec-home" data-ai-group>
+  <div class="sec-head"><h2 class="sec-title"><a href="{:mac_url_type($tplCat)}"><span class="sec-ico">{:\\app\\common\\util\\AutoIcon::icon('category', $tplCat['type_name'])}</span>{:\\app\\common\\util\\TemplateText::get(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)($tplCat['type_name'] ?? '')))}</a></h2><a class="sec-more" href="{:mac_url_type($tplCat)}">{:\\app\\common\\util\\TemplateText::get('ui.view_more')}{:\\app\\common\\util\\AutoIcon::ui('chevron-right', ['size'=>'sm', 'tint'=>'none'])}</a></div>
+  <div class="grid" data-grid-fill>{maccms:vod num="10" type="'.$tplCat['type_id'].'" order="desc" by="time" paging="no" id="vo"}{include file="public/vodbox"}{/maccms:vod}</div>
+</section>
+{/maccms:type}
+</main>
+{include file="public/foot"}
+</body>
+</html>

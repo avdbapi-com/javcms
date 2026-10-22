@@ -1,0 +1,28 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}
+$ciSortKeys = ['time' => 'ui.latest', 'hits' => 'ink.hot', 'hits_week' => 'ink.week', 'score' => 'top_rated', 'up' => 'most_liked'];
+$ciSortPages = ['time' => 'new', 'hits' => 'hot', 'score' => 'score', 'up' => 'up'];
+$ciSortIcons = ['time' => 'latest', 'hits' => 'hot', 'hits_week' => 'calendar', 'score' => 'top', 'up' => 'liked'];
+$ciSortMode = isset($ciSortMode) ? (string)$ciSortMode : 'label';
+$ciSortActive = (isset($ciSortActive) && isset($ciSortKeys[$ciSortActive])) ? $ciSortActive : 'time';
+$ciSortParam = (isset($param) && is_array($param)) ? $param : [];
+$ciSortItems = [];
+foreach ($ciSortKeys as $ciSortBy => $ciSortKey) {
+    if ($ciSortMode === 'type' && isset($obj['type_id'])) {
+        $ciSortHref = mac_url_type($obj, ['by' => $ciSortBy], 'show');
+    } elseif ($ciSortMode === 'search' || ($ciSortMode === 'label' && !isset($ciSortPages[$ciSortBy]))) {
+        $ciSortQuery = ['by' => $ciSortBy];
+        if ($ciSortMode === 'search') { foreach (['wd', 'area', 'lang', 'year', 'level', 'letter', 'state', 'tag', 'class', 'actor', 'director', 'order'] as $ciSortField) { if (isset($ciSortParam[$ciSortField]) && $ciSortParam[$ciSortField] !== '') { $ciSortQuery[$ciSortField] = $ciSortParam[$ciSortField]; } } }
+        $ciSortHref = mac_url_search($ciSortQuery, 'vod');
+    } else {
+        $ciSortHref = mac_url('label/' . $ciSortPages[$ciSortBy]);
+    }
+    $ciSortItems[] = ['href' => $ciSortHref, 'text' => \app\common\util\TemplateText::get($ciSortKey), 'on' => $ciSortBy === $ciSortActive ? 1 : 0, 'ai' => $ciSortBy === 'hits_week' ? \app\common\util\AutoIcon::ui('calendar', ['size' => 'sm', 'i' => count($ciSortItems)]) : \app\common\util\AutoIcon::navIcon($ciSortIcons[$ciSortBy], '', ['size' => 'sm', 'i' => count($ciSortItems)])];
+}
+{/php}<nav class="ci-sorts" aria-label="{:\\app\\common\\util\\TemplateText::get('ink.sort')}">{volist name="ciSortItems" id="ciSortItem"}<a class="ci-tab" href="{$ciSortItem.href|htmlspecialchars=ENT_QUOTES}"{if condition="$ciSortItem.on eq 1"} aria-current="page"{/if}><span class="ci-tab-l">{$ciSortItem.ai}<span>{$ciSortItem.text}</span></span></a>{/volist}</nav>

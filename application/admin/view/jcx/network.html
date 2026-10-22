@@ -1,0 +1,83 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{include file="../../../application/admin/view/public/head" /}
+<div class="page-container p10 jx-page" data-jx-page="network">
+    {include file="../../../application/admin/view/public/page_head" icon="ai-megaphone" title="admin/ux/jcx/title" help="admin/ux/jcx/help" /}
+    {include file="../../../application/admin/view/jcx/_tabs" /}
+    <p class="ax-help">{:$jxE(lang('admin/ux/jcx/net_help'))}</p>
+    {if condition="$push_on && !$https"}<div class="ax-notice ax-notice--warn" role="note"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-triangle-alert"/></svg><div><p>{:$jxE(lang('admin/ux/jcx/need_https'))}</p></div></div>{/if}
+    {if condition="!empty($conflicts)"}<div class="ax-notice ax-notice--warn" role="note"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-triangle-alert"/></svg><div>{volist name="conflicts" id="c"}<p>{:$jxE($c['name'])}: {:$jxE($c['text'])}</p>{/volist}</div></div>{/if}
+
+    <section class="ax-section" aria-labelledby="jxNiT">
+        <div class="jx-head-row"><h2 id="jxNiT">{:$jxE(lang('admin/ux/jcx/net_items'))}</h2>
+            {if condition="$jx_cfg.can.info"}<a class="ax-btn ax-btn--primary" href="{:url('jcx/info', ['card' => 'code'])}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-plus"/></svg>{:$jxE(lang('admin/ux/jcx/net_add'))}</a>{/if}</div>
+        {if condition="empty($items)"}<p class="ax-help">{:$jxE(lang('admin/ux/jcx/net_none'))}</p>{else /}
+        <div class="ax-table-wrap"><table class="ax-table ax-table--cards">
+            <thead><tr><th>{:$jxE(lang('admin/ux/jcx/col_name'))}</th><th>{:$jxE(lang('admin/ux/jcx/net_network'))}</th><th>{:$jxE(lang('admin/ux/jcx/col_where'))}</th><th>{:$jxE(lang('admin/ux/jcx/col_status'))}</th><th class="ax-row-actions"><span class="ax-sr-only">{:$jxE(lang('admin/ux/jcx/col_actions'))}</span></th></tr></thead>
+            <tbody>{volist name="items" id="r"}<tr data-id="{$r.id}">
+                <td data-label="{:$jxE(lang('admin/ux/jcx/col_name'))}"><a href="{:url('jcx/info', ['id' => $r['id']])}">{:$jxE($r['name'])}</a>
+                    {volist name="r.conflicts" id="cf"} <span class="ax-chip ax-chip--warn" title="{:$jxE($cf['text'])}">{:$jxE($cf['text'])}</span>{/volist}</td>
+                <td data-label="{:$jxE(lang('admin/ux/jcx/net_network'))}">{:$jxE($r['network'] ?: '—')}</td>
+                <td data-label="{:$jxE(lang('admin/ux/jcx/col_where'))}">{:$jxE($r['where'])}</td>
+                <td data-label="{:$jxE(lang('admin/ux/jcx/col_status'))}">{if condition="$r.on"}<span class="ax-chip ax-chip--ok">{:$jxE(lang('admin/ux/jcx/status_on'))}</span>{else /}<span class="ax-chip ax-chip--off">{:$jxE(lang('admin/ux/jcx/status_off'))}</span>{/if}</td>
+                <td class="ax-row-actions">{if condition="$jx_cfg.can.info"}<a class="ax-btn ax-btn--sm" href="{:url('jcx/info', ['id' => $r['id']])}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-pencil"/></svg>{:$jxE(lang('edit'))}</a>{/if}</td>
+            </tr>{/volist}</tbody>
+        </table></div>
+        {/if}
+    </section>
+
+    <section class="ax-section" aria-labelledby="jxNpT">
+        <h2 id="jxNpT">{:$jxE(lang('admin/ux/jcx/net_preset'))}</h2>
+        <p class="ax-help">{:$jxE(lang('admin/ux/jcx/help_preset'))}</p>
+        <div class="jx-presets">
+            {volist name="presets" id="p"}
+            {if condition="$p eq 'adstxt' || $p eq 'verify'"}<a class="jx-preset jx-preset--link" href="#jxRoots"><span class="jx-preset__t">{:$jxE(lang('admin/ux/jcx/preset_' . $p))}</span><span class="jx-preset__h">{:$jxE(lang('admin/ux/jcx/ph_' . $p))}</span></a>
+            {else /}<a class="jx-preset jx-preset--link" href="{:url('jcx/info', ['preset' => $p])}"><span class="jx-preset__t">{:$jxE(lang('admin/ux/jcx/preset_' . $p))}</span><span class="jx-preset__h">{:$jxE(lang('admin/ux/jcx/ph_' . $p))}</span></a>{/if}
+            {/volist}
+        </div>
+    </section>
+
+    <section class="ax-section" id="jxRoots" aria-labelledby="jxRtT">
+        <h2 id="jxRtT">{:$jxE(lang('admin/ux/jcx/root_title'))}</h2>
+        <p class="ax-help">{:$jxE(lang('admin/ux/jcx/root_help'))}</p>
+        {if condition="$sub"}<div class="ax-notice ax-notice--warn" role="note"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-triangle-alert"/></svg><div><p>{:$jxE(lang('admin/ux/jcx/subfolder'))}</p></div></div>{/if}
+        {if condition="!$can_code"}<div class="ax-notice ax-notice--warn" role="note"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-lock"/></svg><div><p>{:$jxE(lang('admin/ux/jcx/code_no_right'))}</p></div></div>{/if}
+        {foreach name="roots" item="rf" key="kind"}
+        <form class="ax-form jx-root" data-kind="{$kind}" onsubmit="return false">
+            <div class="jx-head-row"><h3 class="jx-h3">{:$jxE(lang('admin/ux/jcx/root_' . $kind))}</h3>
+                {if condition="$rf"}{if condition="$rf.state eq 'same'"}<span class="ax-chip ax-chip--ok">{:$jxE(lang('admin/ux/jcx/root_same'))}</span>{elseif condition="$rf.state eq 'off'"/}<span class="ax-chip ax-chip--off">{:$jxE(lang('admin/ux/jcx/status_off'))}</span>{else /}<span class="ax-chip ax-chip--warn">{:$jxE(lang('admin/ux/jcx/root_exists'))}</span>{/if}
+                <a class="ax-btn ax-btn--sm ax-btn--ghost" href="{:$jxE($jx_cfg['base'] . $rf['name'])}" target="_blank" rel="noopener"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-external-link"/></svg>{:$jxE(sprintf(lang('admin/ux/jcx/root_open'), '/' . $rf['name']))}</a>
+                {else /}<span class="ax-chip ax-chip--off">{:$jxE(lang('admin/ux/jcx/root_none'))}</span>{/if}</div>
+            <input type="hidden" name="rf_kind" value="{$kind}">
+            {if condition="$kind neq 'adstxt'"}
+            <div class="ax-field ax-field--sm"><label for="jxRn{$kind}">{:$jxE(lang('admin/ux/jcx/root_name'))}</label><input id="jxRn{$kind}" class="layui-input" name="rf_name" maxlength="64" value="{if condition="$rf"}{:$jxE($rf['name'])}{/if}" placeholder="{if condition="$kind eq 'sw'"}sw.js{else /}verify-123.txt{/if}" aria-describedby="jxRnH{$kind}" {if condition="!$can_code"}readonly{/if}><p class="ax-help" id="jxRnH{$kind}">{if condition="$kind eq 'verify'"}{:$jxE(lang('admin/ux/jcx/help_root_name_verify'))}{else /}{:$jxE(lang('admin/ux/jcx/help_root_name'))}{/if}</p></div>
+            {/if}
+            <div class="ax-field"><label for="jxRb{$kind}">{:$jxE(lang('admin/ux/jcx/root_body'))}</label><textarea id="jxRb{$kind}" class="layui-textarea jx-code" rows="4" name="rf_body" spellcheck="false" aria-describedby="jxRbH{$kind}" {if condition="!$can_code"}readonly{/if}>{if condition="$rf"}{:$jxE($rf['body'])}{/if}</textarea>
+                <p class="ax-help" id="jxRbH{$kind}">{if condition="$kind eq 'adstxt'"}{:$jxE(lang('admin/ux/jcx/help_root_adstxt'))}{else /}{:$jxE(lang('admin/ux/jcx/help_root_body'))}{/if}</p></div>
+            {if condition="$kind eq 'sw' && !$https"}<p class="ax-help jx-adult is-warn">{:$jxE(lang('admin/ux/jcx/need_https'))}</p>{/if}
+            <p class="ax-help ax-danger-text jx-err" role="alert" hidden></p>
+            {if condition="$can_code && $jx_cfg.can.root"}<p class="jx-btns"><button type="button" class="ax-btn" data-jx-act="rootsave"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-save"/></svg>{:$jxE(lang('admin/ux/kit/save'))}</button>
+                {if condition="$rf"}<button type="button" class="ax-btn ax-btn--danger" data-jx-act="rootdel" data-id="{$rf.id}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-trash-2"/></svg>{:$jxE(lang('admin/ux/jcx/root_remove'))}</button>{/if}</p>{/if}
+        </form>
+        {/foreach}
+    </section>
+
+    <section class="ax-section" aria-labelledby="jxScT">
+        <h2 id="jxScT">{:$jxE(lang('admin/ux/jcx/sitecode_title'))}</h2>
+        <p class="ax-help">{:$jxE(lang('admin/ux/jcx/sitecode_help'))}</p>
+        {if condition="$tj_short eq ''"}<p class="ax-help">{:$jxE(lang('admin/ux/jcx/sitecode_empty'))}</p>{else /}<pre class="ax-code">{:$jxE($tj_short)}</pre>{/if}
+        {if condition="$tj_host neq ''"}<div class="ax-notice ax-notice--warn" role="note"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-triangle-alert"/></svg><div><p>{:$jxE(sprintf(lang('admin/ux/jcx/conflict_tj'), $tj_host))}</p></div></div>{/if}
+        <p class="jx-btns"><a class="ax-btn" href="{:$jxE($tj_url)}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-pencil"/></svg>{:$jxE(lang('admin/ux/jcx/sitecode_edit'))}</a>
+            {if condition="$tj_host neq '' && $can_code && $jx_cfg.can.save"}<button type="button" class="ax-btn" data-jx-act="move-tj"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-arrow-right-left"/></svg>{:$jxE(lang('admin/ux/jcx/sitecode_move'))}</button>{/if}</p>
+    </section>
+</div>
+{include file="../../../application/admin/view/public/foot" /}
+<script type="application/json" id="jxCfg">{$jxJson}</script>
+<script src="__STATIC__/js/admin_jcx.js?v={:filemtime(ROOT_PATH . 'static/js/admin_jcx.js')}"></script>
+</body>
+</html>

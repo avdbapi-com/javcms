@@ -1,0 +1,27 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="neon" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/score"}
+{assign name="$maccms.aid" value="9997" /}
+{include file="public/include"}
+</head>
+<body class="nx-page-label">
+{include file="public/head"}
+<main id="main-content" class="nx-main"><div class="nx-wrap">
+{include file="public/sortmenu"}
+<section class="nx-section" aria-labelledby="nx-h-label"><div class="nx-cap"><h1 class="nx-cap-title" id="nx-h-label"><span class="nx-cap-ico">{:\\app\\common\\util\\AutoIcon::navIcon('top', '', ['size'=>'lg', 'plate'=>true])}</span><span>{:\\app\\common\\util\\TemplateText::get('top_rated')}</span></h1></div>
+<div class="nx-grid" data-grid-fill data-nx-list>{maccms:vod num="20" paging="yes" type="all" order="desc" by="score" pageurl="label/score" id="vo"}{include file="public/cardmax"}{/maccms:vod}</div>
+{if condition="$__PAGING__.record_total eq 0"}{include file="public/empty"}{/if}
+{include file="public/paging"}
+</section>
+</div></main>
+{include file="public/foot"}
+</body>
+</html>

@@ -1,0 +1,147 @@
+/*
+ * This file is part of JavCMS - https://javcms.net
+ * Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+ * License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+ * See the LICENSE and NOTICE files that come with JavCMS.
+ * Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Telegram: https://t.me/avdb_api
+ */
+/* admin-website-workspace-v1: scoped dark Website workspace inspired by pinned maccms10 view_new. */
+/* V9 palette -> kit tokens (admin-content builder) */
+html body.admin-dark .admin-website-workspace-v1 { --aw-cyan: var(--ax-accent); --aw-ink: var(--ax-text); --aw-muted: var(--ax-muted); --aw-quiet: var(--ax-faint); --aw-surface: var(--ax-surface); --aw-surface-2: var(--ax-surface); --aw-line: var(--ax-line); --aw-line-soft: var(--ax-line); }
+body.admin-dark .admin-website-workspace-v1 {
+  --aw-cyan: #58d6e9;
+  --aw-ink: #f3f8ff;
+  --aw-muted: #9aabc2;
+  --aw-quiet: #71839d;
+  --aw-surface: #111d31;
+  --aw-surface-2: #0e192b;
+  --aw-line: rgba(157, 178, 207, .18);
+  --aw-line-soft: rgba(157, 178, 207, .11);
+  min-height: calc(100vh - 14px);
+  color: var(--aw-muted);
+}
+body.admin-dark .admin-website-workspace-v1 .my-toolbar-box {
+  display: grid;
+  gap: 12px;
+  margin: 0 0 14px;
+  padding: 14px;
+  border: 1px solid var(--aw-line);
+  border-radius: 12px;
+  background: linear-gradient(145deg, rgba(22, 38, 63, .94), rgba(13, 24, 42, .94));
+  box-shadow: 0 12px 28px rgba(0, 0, 0, .16);
+}
+body.admin-dark .admin-website-workspace-v1 .my-toolbar-box > .center {
+  margin: 0;
+  text-align: left;
+}
+body.admin-dark .admin-website-workspace-v1 .my-toolbar-box form {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+body.admin-dark .admin-website-workspace-v1 .my-toolbar-box .layui-input-inline {
+  float: none;
+  margin: 0;
+  min-width: 142px;
+}
+body.admin-dark .admin-website-workspace-v1 .my-toolbar-box .layui-input-inline:last-of-type {
+  flex: 1 1 190px;
+}
+body.admin-dark .admin-website-workspace-v1 .my-toolbar-box .layui-input,
+body.admin-dark .admin-website-workspace-v1 .my-toolbar-box select {
+  min-height: 36px;
+  border: 1px solid var(--aw-line);
+  border-radius: 8px;
+  background: var(--aw-surface-2);
+  color: var(--aw-ink);
+}
+body.admin-dark .admin-website-workspace-v1 .my-toolbar-box .layui-input:focus,
+body.admin-dark .admin-website-workspace-v1 .my-toolbar-box select:focus {
+  border-color: var(--aw-cyan);
+  box-shadow: 0 0 0 3px rgba(88, 214, 233, .13);
+}
+body.admin-dark .admin-website-workspace-v1 .my-toolbar-box .j-search,
+body.admin-dark .admin-website-workspace-v1 .my-toolbar-box .btn-primary {
+  min-height: 36px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--aw-cyan);
+  color: #071421;
+  font-weight: 700;
+}
+body.admin-dark .admin-website-workspace-v1 .my-toolbar-box .j-search:hover,
+body.admin-dark .admin-website-workspace-v1 .my-toolbar-box .btn-primary:hover { background: #8be7f1; }
+body.admin-dark .admin-website-workspace-v1 .btn-primary-group {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+body.admin-dark .admin-website-workspace-v1 .btn-primary-group .btn { margin: 0 !important; }
+body.admin-dark .admin-website-workspace-v1 #pageListForm {
+  overflow-x: auto;
+  max-width: 100%;
+  border: 1px solid var(--aw-line);
+  border-radius: 12px;
+  background: var(--aw-surface);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, .13);
+}
+body.admin-dark .admin-website-workspace-v1 #pageListForm .layui-table {
+  min-width: 1140px;
+  margin: 0;
+  background: transparent;
+}
+body.admin-dark .admin-website-workspace-v1 .layui-table thead tr {
+  background: #172640;
+}
+body.admin-dark .admin-website-workspace-v1 .layui-table th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  border-color: var(--aw-line);
+  color: var(--aw-ink);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .055em;
+  text-transform: uppercase;
+}
+body.admin-dark .admin-website-workspace-v1 .layui-table td {
+  border-color: var(--aw-line-soft);
+  color: var(--aw-muted);
+  vertical-align: middle;
+}
+body.admin-dark .admin-website-workspace-v1 .layui-table tbody tr { transition: background .16s ease; }
+body.admin-dark .admin-website-workspace-v1 .layui-table tbody tr:hover { background: rgba(88, 214, 233, .045); }
+body.admin-dark .admin-website-workspace-v1 .layui-table td:nth-child(3) { color: var(--aw-ink); font-weight: 600; }
+body.admin-dark .admin-website-workspace-v1 .layui-table td:nth-child(4) { max-width: 350px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+body.admin-dark .admin-website-workspace-v1 .layui-table a { color: var(--aw-cyan); }
+body.admin-dark .admin-website-workspace-v1 .layui-table a:hover { color: #b3f3f8; }
+body.admin-dark .admin-website-workspace-v1 .badge,
+body.admin-dark .admin-website-workspace-v1 .badge-dim,
+body.admin-dark .admin-website-workspace-v1 .layui-badge { border-radius: 999px; }
+body.admin-dark .admin-website-workspace-v1 .badge-dim.bg-primary { border-color: rgba(88, 214, 233, .25); background: rgba(88, 214, 233, .09); }
+body.admin-dark .admin-website-workspace-v1 .bg-danger { border: 1px solid rgba(255, 113, 133, .26); background: rgba(255, 113, 133, .12); color: #ffafba; }
+body.admin-dark .admin-website-workspace-v1 .layui-badge.layui-bg-orange { background: rgba(255, 186, 88, .14); color: #ffd49b; }
+body.admin-dark .admin-website-workspace-v1 .j-iframe,
+body.admin-dark .admin-website-workspace-v1 .j-ajax,
+body.admin-dark .admin-website-workspace-v1 .j-tr-del,
+body.admin-dark .admin-website-workspace-v1 .j-select { white-space: nowrap; }
+body.admin-dark .admin-website-workspace-v1 #pages { padding: 13px 0; }
+body.admin-dark .admin-website-workspace-v1 .layui-laypage a,
+body.admin-dark .admin-website-workspace-v1 .layui-laypage span { border-color: var(--aw-line); background: var(--aw-surface-2); color: var(--aw-muted); }
+body.admin-dark .admin-website-workspace-v1 .layui-laypage .layui-laypage-curr .layui-laypage-em { background: var(--aw-cyan); }
+body.admin-dark .admin-website-workspace-v1 .layui-form-checkbox[lay-skin=primary] i { border-color: var(--aw-line); background: var(--aw-surface-2); }
+body.admin-dark .admin-website-workspace-v1 .layui-form-checkbox[lay-skin=primary].layui-form-checked i { border-color: var(--aw-cyan); background: var(--aw-cyan); color: #071421; }
+@media (max-width: 760px) {
+  body.admin-dark .admin-website-workspace-v1 { padding: 8px !important; }
+  body.admin-dark .admin-website-workspace-v1 .my-toolbar-box { padding: 10px; }
+  body.admin-dark .admin-website-workspace-v1 .my-toolbar-box form { align-items: stretch; }
+  body.admin-dark .admin-website-workspace-v1 .my-toolbar-box form > .layui-input-inline,
+  body.admin-dark .admin-website-workspace-v1 .my-toolbar-box form > .j-search { flex: 1 1 145px; }
+  body.admin-dark .admin-website-workspace-v1 .my-toolbar-box .layui-input-inline:last-of-type { flex-basis: 100%; }
+  body.admin-dark .admin-website-workspace-v1 .btn-primary-group { align-items: stretch; }
+  body.admin-dark .admin-website-workspace-v1 .btn-primary-group .btn { flex: 1 1 135px; }
+  body.admin-dark .admin-website-workspace-v1 #pageListForm .layui-table { min-width: 1020px; }
+}

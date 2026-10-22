@@ -1,0 +1,5 @@
+# Defense in depth: copy to upload/.htaccess, not the application root.
+Options -Indexes -ExecCGI
+<FilesMatch "(?i)\.(php[0-9]?|phtml|phar|cgi|pl|py|asp|aspx|jsp|sh)([.]|$)">
+    Require all denied
+</FilesMatch>

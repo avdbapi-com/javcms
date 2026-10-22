@@ -1,0 +1,176 @@
+/*
+ * This file is part of JavCMS - https://javcms.net
+ * Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+ * License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+ * See the LICENSE and NOTICE files that come with JavCMS.
+ * Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Telegram: https://t.me/avdb_api
+ */
+/* V9: private palette mapped to the kit tokens (admin_ux.css). */
+body.admin-studio.admin-dark .admin-javfilms-workspace { --jav-surface-raised: var(--ax-surface); --jav-surface-soft: var(--ax-raised); }
+/* Scoped dark workspace for the custom JAV Films collector. */
+body.admin-dark .admin-javfilms-workspace {
+    --jav-surface-raised: var(--admin-dark-surface);
+    --jav-surface-soft: var(--admin-dark-surface-alt);
+    --jav-surface-raised: color-mix(in srgb, var(--admin-dark-surface) 88%, #1a3a4d);
+    --jav-surface-soft: color-mix(in srgb, var(--admin-dark-surface-alt) 90%, #173445);
+    max-width: 1480px;
+    margin: 0 auto;
+    padding: clamp(14px, 2vw, 26px) !important;
+    color: var(--admin-dark-ink);
+}
+body.admin-dark .admin-javfilms-hero,
+body.admin-dark .admin-javfilms-card {
+    border: 1px solid var(--admin-dark-border);
+    border-radius: 16px;
+    background: linear-gradient(145deg, var(--jav-surface-raised), var(--admin-dark-surface));
+    box-shadow: 0 16px 36px rgba(0, 0, 0, .2);
+}
+body.admin-dark .admin-javfilms-hero {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+    padding: clamp(18px, 3vw, 30px);
+}
+body.admin-dark .admin-javfilms-kicker {
+    color: var(--admin-dark-accent-strong);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+}
+body.admin-dark .admin-javfilms-hero h1,
+body.admin-dark .admin-javfilms-card h2 {
+    margin: 6px 0 5px;
+    color: var(--admin-dark-ink);
+    font-weight: 700;
+}
+body.admin-dark .admin-javfilms-hero h1 { font-size: clamp(22px, 3vw, 32px); line-height: 1.2; }
+body.admin-dark .admin-javfilms-card h2 { font-size: 18px; }
+body.admin-dark .admin-javfilms-hero p,
+body.admin-dark .admin-javfilms-card-head p {
+    max-width: 70ch;
+    margin: 0;
+    color: var(--admin-dark-muted-strong);
+    line-height: 1.6;
+}
+body.admin-dark .admin-javfilms-back {
+    flex: 0 0 auto;
+    margin: 0;
+    border-radius: 8px;
+    white-space: nowrap;
+}
+body.admin-dark .admin-javfilms-status {
+    margin: 14px 0;
+    padding: 11px 14px;
+    border: 1px solid rgba(110, 231, 183, .26);
+    border-left: 3px solid var(--admin-dark-accent);
+    border-radius: 10px;
+    background: rgba(17, 40, 48, .72);
+    color: var(--admin-dark-muted-strong);
+    font-size: 13px;
+}
+body.admin-dark .admin-javfilms-card {
+    margin-top: 14px;
+    padding: clamp(14px, 2vw, 22px);
+}
+body.admin-dark .admin-javfilms-card-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 14px;
+}
+body.admin-dark .admin-javfilms-form {
+    margin: 0;
+    padding: 14px;
+    border: 1px solid var(--admin-dark-border);
+    border-radius: 12px;
+    background: var(--jav-surface-soft);
+}
+body.admin-dark .admin-javfilms-form .layui-form-item {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 10px;
+    margin: 0;
+}
+body.admin-dark .admin-javfilms-form .layui-form-label {
+    flex: 0 0 104px;
+    width: auto;
+    min-height: 38px;
+    box-sizing: border-box;
+    border-radius: 7px 0 0 7px;
+    text-align: left;
+}
+body.admin-dark .admin-javfilms-form .layui-input-inline {
+    float: none;
+    flex: 1 1 200px;
+    width: auto;
+    min-width: 0;
+    margin: 0;
+}
+body.admin-dark .admin-javfilms-form .layui-input-inline:last-child { flex: 0 0 auto; }
+body.admin-dark .admin-javfilms-form .layui-input {
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 0 7px 7px 0;
+}
+body.admin-dark .admin-javfilms-form tip {
+    display: block;
+    margin-top: 6px;
+    color: var(--admin-dark-muted);
+    font-size: 12px;
+    line-height: 1.4;
+}
+body.admin-dark .admin-javfilms-form #crawlBtn { min-width: 103px; border-radius: 8px; }
+body.admin-dark .admin-javfilms-table-wrap {
+    width: 100%;
+    min-height: 48px;
+    overflow-x: auto;
+    border: 1px solid var(--admin-dark-border);
+    border-radius: 12px;
+    background: var(--admin-dark-surface);
+}
+body.admin-dark .admin-javfilms-table-wrap .layui-table-view { margin: 0; min-width: 760px; }
+body.admin-dark .admin-javfilms-table-wrap .layui-table { margin: 0; background: transparent; }
+body.admin-dark .admin-javfilms-table-wrap .layui-table th {
+    color: var(--admin-dark-muted);
+    background: #152235;
+    font-size: 11px;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+}
+body.admin-dark .admin-javfilms-table-wrap .layui-table td,
+body.admin-dark .admin-javfilms-table-wrap .layui-table th { border-color: var(--admin-dark-border); }
+body.admin-dark .admin-javfilms-table-wrap .layui-table tbody tr:hover { background: #17263b; }
+@media (max-width: 640px) {
+    body.admin-dark .admin-javfilms-workspace { padding: 10px !important; }
+    body.admin-dark .admin-javfilms-hero { display: block; padding: 18px; }
+    body.admin-dark .admin-javfilms-back { display: inline-block; margin-top: 14px; }
+    body.admin-dark .admin-javfilms-card { padding: 12px; }
+    body.admin-dark .admin-javfilms-form { padding: 10px; }
+    body.admin-dark .admin-javfilms-form .layui-form-item { display: grid; grid-template-columns: 1fr; gap: 7px; }
+    body.admin-dark .admin-javfilms-form .layui-form-label,
+    body.admin-dark .admin-javfilms-form .layui-input-inline,
+    body.admin-dark .admin-javfilms-form .layui-input-inline:last-child {
+        width: 100%;
+        max-width: none;
+        flex: none;
+    }
+    body.admin-dark .admin-javfilms-form .layui-form-label {
+        min-height: 34px;
+        border-radius: 7px 7px 0 0;
+        padding: 8px 10px;
+    }
+    body.admin-dark .admin-javfilms-form .layui-input { border-radius: 0 0 7px 7px; }
+    body.admin-dark .admin-javfilms-form .layui-input-inline:last-child { margin-top: 4px; }
+    body.admin-dark .admin-javfilms-form #crawlBtn { width: 100%; }
+}
+
+/* Kit page (brief 7.e F37): the importer is switched off; header, notice and fields come from admin_ux.css. */
+body.admin-dark .admin-javfilms-workspace.admin-javfilms-workspace--kit { max-width: none; margin: 0; padding: var(--ax-pad, 24px) !important; color: var(--ax-text); }
+.admin-javfilms-workspace--kit .ax-notice { margin: 0 0 16px; }
+.admin-javfilms-workspace--kit .javfilms-row { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 16px; }
+.admin-javfilms-workspace--kit .javfilms-row .ax-field { margin: 0; }

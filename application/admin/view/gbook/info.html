@@ -1,0 +1,109 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Based on MacCMS 10 (Apache-2.0) by magicblack, changed by JavCMS.
+JavCMS changes: Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors,
+JavCMS Community License 1.0. The MacCMS parts stay under the Apache License 2.0.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{include file="../../../application/admin/view/public/head" /}
+<link rel="stylesheet" href="__STATIC__/css/admin_comment_editor_return_v1.css">
+<div class="page-container p10 admin-gbook-editor-page">
+    <div class="ax-editor-head">
+        <a href="{:url('data')}" class="ax-btn ax-btn--ghost" data-admin-editor-back title="{:lang('return')}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-arrow-left"/></svg>{:lang('admin/ux/kit/back')}</a>
+        <h1>{:lang('edit')}</h1>
+    </div>
+    <form class="layui-form layui-form-pane" method="post" action="" data-ax-dirty>
+        <input id="gbook_id" name="gbook_id" type="hidden" value="{$info.gbook_id}">
+        <input type="hidden" name="__token__" value="{:mac_admin_csrf_token()}">
+        <input id="gbook_rid" name="gbook_rid" type="hidden" value="{$info.gbook_rid}">
+        <div class="layui-form-item">
+            <label class="layui-form-label">{:lang('name')}</label>
+            <div class="layui-input-inline w80">
+                <input type="text" class="layui-input" value="{$info.gbook_name|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}" readonly="readonly" name="gbook_name" >
+            </div>
+            <label class="layui-form-label">{:lang('time')}</label>
+            <div class="layui-input-inline w130">
+                <input type="text" class="layui-input" value="{$info.gbook_time|date='Y-m-d H:i:s',###}" readonly="readonly">
+            </div>
+            <label class="layui-form-label">{:lang('admin/gbook/reply_time')}</label>
+            <div class="layui-input-inline w130">
+                <input type="text" class="layui-input" value="{$info.gbook_reply_time|date='Y-m-d H:i:s',###}" readonly="readonly">
+            </div>
+        </div>
+        
+        <div class="layui-form-item">
+            <label class="layui-form-label">{:lang('content')}</label>
+            <div class="layui-input-block">
+                <textarea type="text" class="layui-textarea" lay-verify="gbook_content" placeholder="{:lang('admin/gbook/message_placeholder')}" name="gbook_content">{$info.gbook_content|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}</textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">{:lang('reply')}</label>
+            <div class="layui-input-block">
+                <textarea type="text" class="layui-textarea" lay-verify="gbook_reply" placeholder="{:lang('admin/gbook/reply_placeholder')}" name="gbook_reply">{$info.gbook_reply|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}</textarea>
+            </div>
+        </div>
+        
+        <div class="ax-savebar">
+            <span class="ax-savebar__status" role="status"></span>
+            <div class="ax-savebar__end">
+                <button class="ax-btn" type="reset"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-rotate-ccw"/></svg>{:lang('admin/ux/content/ved_reset')}</button>
+                <button type="submit" class="ax-btn ax-btn--primary" lay-submit="" lay-filter="formSubmit" data-child="true"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-save"/></svg>{:lang('admin/ux/kit/save')}</button>
+            </div>
+        </div>        
+        </div>
+    </form>
+
+</div>
+{include file="../../../application/admin/view/public/foot" /}
+
+<script type="text/javascript">
+    layui.use(['form', 'layer'], function () {
+        // Get the form, dialog and jQuery modules.
+        var form = layui.form
+                , layer = layui.layer
+                , $ = layui.jquery;
+
+        // Require message content before saving.
+        form.verify({
+            gbook_content: function (value) {
+                if (value == "") {
+                    return "{:lang('content_empty')}";
+                }
+            }
+        });
+
+
+    });
+</script>
+
+
+<!-- admin-comment-editor-return-v1 -->
+<script type="text/javascript">
+(function ($) {
+    $(function () {
+        $(document).on('click', '[data-admin-editor-back]', function (event) {
+            event.preventDefault();
+            try {
+                if (window.parent && window.parent !== window && window.parent.layer) {
+                    var parentLayer = window.parent.layer;
+                    var frameIndex = typeof parentLayer.getFrameIndex === 'function' ? parentLayer.getFrameIndex(window.name) : null;
+                    var validFrameIndex = (typeof frameIndex === 'number' && isFinite(frameIndex) && frameIndex >= 0) || (typeof frameIndex === 'string' && /^(0|[1-9]\d*)$/.test(frameIndex));
+                    if (validFrameIndex && typeof parentLayer.close === 'function') {
+                        parentLayer.close(frameIndex);
+                        return false;
+                    }
+                }
+            } catch (error) {
+                // Workspace and inaccessible parent frames follow the existing Return URL.
+            }
+            window.location.href = $(this).attr('href');
+            return false;
+        });
+    });
+}(window.jQuery));
+</script>
+
+</body>
+</html>

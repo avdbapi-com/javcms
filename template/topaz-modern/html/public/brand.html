@@ -1,0 +1,40 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}
+if (!isset($tpBrand)) {
+$tpSite = trim(\app\common\util\AvdbLanguage::decodeEntities((string)($maccms['site_name'] ?? '')));
+$tpBrand = $tpSite;
+if (mb_strlen($tpBrand, 'UTF-8') > 18) {
+    $tpHost = strtolower(trim((string)($maccms['site_url'] ?? '')));
+    $tpHost = (string)preg_replace('~^[a-z][a-z0-9+.\-]*://~', '', $tpHost);
+    $tpHost = (string)preg_replace('~[/?#].*$~', '', $tpHost);
+    $tpHost = (string)preg_replace('~:\d+$~', '', $tpHost);
+    $tpHost = (string)preg_replace('~^www\.~', '', $tpHost);
+    $tpHostParts = explode('.', $tpHost);
+    $tpLabel = trim((string)($tpHostParts[0] ?? ''));
+    if ($tpLabel !== '' && !ctype_digit($tpLabel) && $tpLabel !== 'localhost') { $tpBrand = $tpLabel; }
+}
+if ($tpBrand === '') { $tpBrand = 'JAVCMS'; }
+$tpLogoRaw = trim((string)($maccms['site_logo'] ?? ''));
+$tpLogoPath = ltrim((string)preg_replace('~^(https?:)?//[^/]+~i', '', $tpLogoRaw), '/');
+$tpLogoCustom = ($tpLogoRaw !== '' && !in_array($tpLogoPath, ['upload/site/20240730-1/20819301b2e936fcc59a7cee9f4e4d4a.png', 'upload/site/20240730-1/0643d1703707a998e41b8813a97ed2e7.png'], true)) ? mac_safe_url(mac_url_img($tpLogoRaw)) : '';
+$tpLang = (string)($maccms['ui_lang'] ?? 'en');
+$tpFx = !in_array($tpLang, ['ja', 'zh', 'ko', 'th', 'ar', 'hi'], true);
+$tplNoPic = $maccms['path_tpl'] . 'assets/brand/ph-dark.svg';
+$tplIcons = $maccms['path_tpl'] . 'assets/icons.svg';
+$tplAid = (int)($maccms['aid'] ?? 0);
+$tpShortName = function ($n) { $n = trim((string)$n); if (!in_array((string)\app\common\util\TemplateText::locale(), ['ja', 'zh', 'ko'], true) && preg_match('/\p{Latin}/u', $n)) { $s = trim((string)preg_replace('/\s*[\p{Han}\p{Hiragana}\p{Katakana}\p{Hangul}].*$/us', '', $n)); if ($s !== '' && preg_match('/\p{Latin}/u', $s)) { $n = $s; } } return $n; };
+$tpMark = '<svg class="tp-mark" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><defs><linearGradient id="%s" x1="16" y1="12" x2="46" y2="52" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#e6f8ff"/><stop offset=".4" stop-color="#72d7ff"/><stop offset="1" stop-color="#1b7fb8"/></linearGradient></defs><path d="M15 25 L24 14 H40 L49 25 L32 53 Z" fill="url(#%s)"/><path d="M15 25 H49 M24 14 L29 25 L32 14 L35 25 L40 14 M29 25 L32 53 L35 25" fill="none" stroke="#04263a" stroke-width="1.3" stroke-linejoin="round" opacity=".55"/><path d="M15 25 L24 14 H40 L49 25 L32 53 Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M50 8 L51.6 12.4 L56 14 L51.6 15.6 L50 20 L48.4 15.6 L44 14 L48.4 12.4 Z" fill="#ffffff"/><path d="M12 46 L12.9 48.1 L15 49 L12.9 49.9 L12 52 L11.1 49.9 L9 49 L11.1 48.1 Z" fill="#ffd36b"/></svg>';
+$tpLogoHtml = function ($id, $shiny = false) use ($maccms, $tpSite, $tpBrand, $tpLogoCustom, $tpMark) {
+    $h = '<a class="tp-logo" href="' . htmlspecialchars((string)$maccms['path'], ENT_QUOTES, 'UTF-8') . '" aria-label="' . htmlspecialchars($tpSite, ENT_QUOTES, 'UTF-8') . '" title="' . htmlspecialchars($tpSite, ENT_QUOTES, 'UTF-8') . '">';
+    if ($tpLogoCustom !== '') { $h .= '<img class="tp-logo-img" src="' . $tpLogoCustom . '" alt="' . htmlspecialchars($tpSite, ENT_QUOTES, 'UTF-8') . '" width="160" height="40">'; }
+    else { $h .= sprintf($tpMark, 'tpIce-' . $id, 'tpIce-' . $id) . '<span class="tp-word" data-tp-fit' . ($shiny ? ' data-fx="shiny"' : '') . '>' . htmlspecialchars($tpBrand, ENT_QUOTES, 'UTF-8') . '</span>'; }
+    return $h . '</a>';
+};
+}
+{/php}

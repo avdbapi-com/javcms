@@ -1,0 +1,348 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Based on MacCMS 10 (Apache-2.0) by magicblack, changed by JavCMS.
+JavCMS changes: Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors,
+JavCMS Community License 1.0. The MacCMS parts stay under the Apache License 2.0.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{include file="../../../application/admin/view/public/head" /}
+<link rel="stylesheet" href="__STATIC__/css/admin_remaining_editor_return_v1.css?v={:filemtime(ROOT_PATH . 'static/css/admin_remaining_editor_return_v1.css')}">
+<script type="text/javascript" src="__STATIC__/js/admin_remaining_editor_return_v1.js?rev=20261006-return2"></script>
+<script type="text/javascript" src="__STATIC__/js/jquery.jscolor.js"></script>
+{include file="../../../application/admin/view/public/editor" flag="topic_editor"/}
+<div class="page-container p10 admin-remaining-editor-v1">
+    <div class="ax-editor-head">
+        <a href="{:url('data')}" class="ax-btn ax-btn--ghost" data-admin-remaining-editor-return title="{:lang('return')}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-arrow-left"/></svg>{:lang('admin/ux/kit/back')}</a>
+        <h1>{if condition="$info.topic_id gt 0"}{:lang('admin/topic/editor_edit')}{else /}{:lang('admin/topic/editor_add')}{/if}</h1>
+    </div>
+
+
+    <div class="showpic" style="display:none;"><img class="showpic_img" width="120" height="160" referrerPolicy="no-referrer"></div>
+
+    <form class="layui-form layui-form-pane" method="post" action="" data-ax-dirty>
+        <input type="hidden" name="topic_id" value="{$info.topic_id}">
+        <input type="hidden" name="__token__" value="{:mac_admin_csrf_token()}">
+
+        <div class="layui-tab">
+            <ul class="layui-tab-title ">
+                <li class="layui-this">{:lang('base_info')}</a></li>
+                <li>{:lang('other_info')}</li>
+            </ul>
+        <div class="layui-tab-content">
+
+            <div class="layui-tab-item layui-show">
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">{:lang('admin/ux/content/ved_status')}</label>
+                    <div class="layui-input-inline ">
+                        <select name="topic_status">
+                            <option value="1" >{:lang('admin/ux/content/visible')}</option>
+                            <option value="0" {if condition="$info.topic_status eq '0'"}selected{/if}>{:lang('admin/ux/content/hidden')}</option>
+                        </select>
+                    </div>
+                    <div class="layui-input-inline ">
+                        <select name="topic_level">
+                            <option value="0">{:lang('select_level')}</option>
+                            <option value="9" {if condition="$info['topic_level'] eq 9"}selected {/if}>{:lang('level')} 9-{:lang('slide')}</option>
+                            <option value="1" {if condition="$info['topic_level'] eq 1"}selected {/if}>{:lang('level')} 1</option>
+                            <option value="2" {if condition="$info['topic_level'] eq 2"}selected {/if}>{:lang('level')} 2</option>
+                            <option value="3" {if condition="$info['topic_level'] eq 3"}selected {/if}>{:lang('level')} 3</option>
+                            <option value="4" {if condition="$info['topic_level'] eq 4"}selected {/if}>{:lang('level')} 4</option>
+                            <option value="5" {if condition="$info['topic_level'] eq 5"}selected {/if}>{:lang('level')} 5</option>
+                            <option value="6" {if condition="$info['topic_level'] eq 6"}selected {/if}>{:lang('level')} 6</option>
+                            <option value="7" {if condition="$info['topic_level'] eq 7"}selected {/if}>{:lang('level')} 7</option>
+                            <option value="8" {if condition="$info['topic_level'] eq 8"}selected {/if}>{:lang('level')} 8</option>
+
+                        </select>
+                    </div>
+                    <div class="layui-input-inline w110">
+                        <input type="checkbox" name="uptime" title="{:lang('update_time')}" value="1" checked class="layui-checkbox checkbox-ids" lay-skin="primary">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">{:lang('name')}</label>
+                    <div class="layui-input-inline w500">
+                        <input type="text" class="layui-input" lay-verify="topic_name" value="{$info.topic_name|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}" placeholder="" name="topic_name">
+                    </div>
+                    <label class="layui-form-label">{:lang('sub')}</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" value="{$info.topic_sub|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}" placeholder="" name="topic_sub">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">{:lang('en')}</label>
+                    <div class="layui-input-inline w500">
+                        <input type="text" class="layui-input" lay-verify="topic_en" value="{$info.topic_en|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}" placeholder="" name="topic_en">
+                    </div>
+                    <label class="layui-form-label">{:lang('letter')}</label>
+                    <div class="layui-input-inline w70">
+                        <input type="text" class="layui-input" value="{$info.topic_letter|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}" placeholder="" name="topic_letter">
+                    </div>
+                    <label class="layui-form-label">{:lang('color')}</label>
+                    <div class="layui-input-inline w70">
+                        <input type="text" class="layui-input color" value="{$info.topic_color|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}" placeholder="" name="topic_color">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">{:lang('remarks')}</label>
+                    <div class="layui-input-inline w500">
+                        <input type="text" class="layui-input" value="{$info.topic_remarks|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}" placeholder="" name="topic_remarks">
+                    </div>
+                    <label class="layui-form-label">{:lang('sort')}</label>
+                    <div class="layui-input-inline ">
+                        <input type="text" class="layui-input" value="{$info.topic_sort}" placeholder="" name="topic_sort">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">{:lang('class')}</label>
+                    <div class="layui-input-inline w500">
+                        <input type="text" class="layui-input" value="{$info.topic_type}" placeholder="{:lang('multi_separate_tip')}" name="topic_type">
+                    </div>
+                    <label class="layui-form-label">{:lang('tpl')}</label>
+                    <div class="layui-input-inline ">
+                        <input type="text" class="layui-input" lay-verify="topic_tpl" value="{$info.topic_tpl|mac_default='detail.html'|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}" placeholder="" name="topic_tpl">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">{:lang('admin/editor_tags')}</label>
+                    <div class="layui-input-inline w500">
+                        <input type="text" class="layui-input" value="{$info.topic_tag|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}" placeholder="{:lang('multi_separate_tip')}" name="topic_tag">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">{:lang('admin/topic/vod_include')}</label>
+                    <div class="layui-input-inline w500">
+                        <input type="text" class="layui-input" value="{$info.topic_rel_vod|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}" placeholder="{:lang('vod')} IDs, {:lang('multi_separate_tip')}" name="topic_rel_vod">
+                    </div>
+                    <div class="layui-input-inline">
+                        <a class="ax-btn ax-btn--sm j-iframe" data-href="{:url('vod/data')}?select=1&input=topic_rel_vod" href="javascript:;" title="{:lang('search_data')}">{:lang('search_data')}</a>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">{:lang('admin/topic/art_include')}</label>
+                    <div class="layui-input-inline w500">
+                        <input type="text" class="layui-input" value="{$info.topic_rel_art|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}" placeholder="{:lang('art')} IDs, {:lang('multi_separate_tip')}" name="topic_rel_art">
+                    </div>
+                    <div class="layui-input-inline">
+                        <a class="ax-btn ax-btn--sm j-iframe" data-href="{:url('art/data')}?select=1&input=topic_rel_art" href="javascript:;" title="{:lang('search_data')}">{:lang('search_data')}</a>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">{:lang('pic')}</label>
+                    <div class="layui-input-inline w500 upload">
+                        <input type="text" class="layui-input upload-input" style="max-width:100%;" value="{$info.topic_pic|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}" placeholder="" id="topic_pic" name="topic_pic">
+                    </div>
+                    <div class="layui-input-inline ">
+                        <button type="button" class="ax-btn ax-btn--sm layui-upload" lay-data="{data:{thumb:1,thumb_class:'upload-thumb'}}" id="upload1">{:lang('upload_pic')}</button>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">{:lang('pic_thumb')}</label>
+                    <div class="layui-input-inline w500 upload">
+                        <input type="text" class="layui-input upload-input upload-thumb" style="max-width:100%;" value="{$info.topic_pic_thumb|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}" placeholder="" id="topic_pic_thumb" name="topic_pic_thumb">
+                    </div>
+                    <div class="layui-input-inline ">
+                        <button type="button" class="ax-btn ax-btn--sm layui-upload" lay-data="{data:{thumb:0,thumb_class:''}}" id="upload2">{:lang('upload_pic')}</button>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">{:lang('slide')}</label>
+                    <div class="layui-input-inline w500 upload">
+                        <input type="text" class="layui-input upload-input" style="max-width:100%;" value="{$info.topic_pic_slide|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}" placeholder="" id="topic_pic_slide" name="topic_pic_slide">
+                    </div>
+                    <div class="layui-input-inline ">
+                        <button type="button" class="ax-btn ax-btn--sm layui-upload" lay-data="{data:{thumb:0,thumb_class:''}}" id="upload3">{:lang('upload_pic')}</button>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">{:lang('blurb')}</label>
+                    <div class="layui-input-block">
+                        <textarea name="topic_blurb" cols="" rows="3" class="layui-textarea"  placeholder="{:lang('blurb_auto_tip')}" style="height:40px;">{$info.topic_blurb|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}</textarea>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">{:lang('content')}</label>
+                    <div class="layui-input-block">
+                        <textarea id="topic_content" name="topic_content" type="text/plain" style="width:99%;height:300px">{$info.topic_content|mac_url_content_img|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}</textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-tab-item">
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">{:lang('seo_key')}</label>
+                    <div class="layui-input-block w500">
+                        <input type="text" class="layui-input" value="{$info.topic_key|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}" placeholder="" name="topic_key">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">{:lang('seo_des')}</label>
+                    <div class="layui-input-block w500">
+                        <input type="text" class="layui-input" value="{$info.topic_des|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}" placeholder="" name="topic_des">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">{:lang('seo_title')}</label>
+                    <div class="layui-input-block w500">
+                        <input type="text" class="layui-input" value="{$info.topic_title|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}" placeholder="" name="topic_title">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">{:lang('up')}</label>
+                    <div class="layui-input-inline ">
+                        <input type="text" class="layui-input" value="{$info.topic_up}" placeholder="" id="topic_up" name="topic_up">
+                    </div>
+                    <label class="layui-form-label">{:lang('hate')}</label>
+                    <div class="layui-input-inline ">
+                        <input type="text" class="layui-input" value="{$info.topic_down}" placeholder="" id="topic_down" name="topic_down">
+                    </div>
+                    <button class="ax-btn ax-btn--sm" type="button" id="btn_rnd">{:lang('rnd_make')}</button>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">{:lang('hits')}</label>
+                    <div class="layui-input-inline ">
+                        <input type="text" class="layui-input" value="{$info.topic_hits}" placeholder="" id="topic_hits" name="topic_hits">
+                    </div>
+                    <label class="layui-form-label">{:lang('hits_month')}</label>
+                    <div class="layui-input-inline ">
+                        <input type="text" class="layui-input" value="{$info.topic_hits_month}" placeholder="" id="topic_hits_month" name="topic_hits_month" >
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">{:lang('hits_week')}</label>
+                    <div class="layui-input-inline ">
+                        <input type="text" class="layui-input" value="{$info.topic_hits_week}" placeholder="" id="topic_hits_week" name="topic_hits_week">
+                    </div>
+                    <label class="layui-form-label">{:lang('hits_day')}</label>
+                    <div class="layui-input-inline ">
+                        <input type="text" class="layui-input " value="{$info.topic_hits_day}" placeholder="" id="topic_hits_day" name="topic_hits_day">
+                    </div>
+                </div>
+
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">{:lang('score')}</label>
+                    <div class="layui-input-inline ">
+                        <input type="text" class="layui-input" value="{$info.topic_score}" placeholder="" id="topic_score" name="topic_score">
+                    </div>
+                    <label class="layui-form-label">{:lang('score_all')}</label>
+                    <div class="layui-input-inline ">
+                        <input type="text" class="layui-input" value="{$info.topic_score_all}" placeholder="" id="topic_score_all" name="topic_score_all">
+                    </div>
+                    <label class="layui-form-label">{:lang('score_num')}</label>
+                    <div class="layui-input-inline ">
+                        <input type="text" class="layui-input" value="{$info.topic_score_num}" placeholder="" id="topic_score_num" name="topic_score_num">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        </div>
+        <div class="ax-savebar">
+            <span class="ax-savebar__status" role="status"></span>
+            <div class="ax-savebar__end">
+                <button class="ax-btn" type="reset"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-rotate-ccw"/></svg>{:lang('admin/ux/content/ved_reset')}</button>
+                <button type="submit" class="ax-btn ax-btn--primary" lay-submit="" lay-filter="formSubmit" data-child="true"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-save"/></svg>{:lang('admin/ux/kit/save')}</button>
+            </div>
+        </div>
+    </form>
+
+</div>
+{include file="../../../application/admin/view/public/foot" /}
+
+
+<script type="text/javascript">
+
+    layui.use(['form','upload', 'layer'], function () {
+        // Initialize form, dialog and upload helpers.
+        var form = layui.form
+                , layer = layui.layer
+                , $ = layui.jquery
+                , upload = layui.upload;;
+
+        // Define the topic-name and template validators.
+        form.verify({
+            topic_name: function (value) {
+                if (value == "") {
+                    return "{:lang('name_empty')}";
+                }
+            },
+            topic_tpl: function (value) {
+                if (value == "") {
+                    return "{:lang('admin/topic/tpl_empty')}";
+                }
+            }
+        });
+
+        upload.render({
+            elem: '.layui-upload'
+            ,url: "{:url('upload/upload')}?flag=topic"
+            ,method: 'post'
+            ,before: function(input) {
+                layer.msg("{:lang('upload_ing')}", {time:3000000});
+            },done: function(res, index, upload) {
+                var obj = this.item;
+                if (res.code == 0) {
+                    layer.msg(res.msg);
+                    return false;
+                }
+                layer.closeAll();
+                var input = $(obj).parent().parent().find('.upload-input');
+                if ($(obj).attr('lay-type') == 'image') {
+                    input.siblings('img').attr('src', res.data.file).show();
+                }
+                input.val(res.data.file);
+
+                if (res.data.thumb_class && res.data.thumb && res.data.thumb[0] && res.data.thumb[0].file) {
+                    $('.'+ res.data.thumb_class).val(res.data.thumb[0].file);
+                }
+            }
+        });
+
+        $('.upload-input').hover(function (e){
+            var e = window.event || e;
+            var imgsrc = $(this).val();
+            if(imgsrc.trim()==""){ return; }
+            var left = e.clientX+document.body.scrollLeft+20;
+            var top = e.clientY+document.body.scrollTop+20;
+            $(".showpic").css({left:left,top:top,display:""});
+            if(imgsrc.indexOf('://')<0){ imgsrc = ROOT_PATH + '/' + imgsrc;	} else{ imgsrc = imgsrc.replace('mac:','http:'); }
+            $(".showpic_img").attr("src", imgsrc);
+        },function (e){
+            $(".showpic").css("display","none");
+        });
+
+        $("#btn_rnd").click(function(){
+            $("#topic_hits").val( rndNum(5000,9999) );
+            $("#topic_hits_month").val( rndNum(1000,4999) );
+            $("#topic_hits_week").val( rndNum(300,999) );
+            $("#topic_hits_day").val( rndNum(1,299) );
+            $("#topic_up").val( rndNum(1,999) );
+            $("#topic_down").val( rndNum(1,999) );
+            $("#topic_score").val( rndNum(10) );
+            $("#topic_score_all").val( rndNum(1000) );
+            $("#topic_score_num").val( rndNum(100) );
+        });
+
+
+        var ue = editor_getEditor('topic_content');
+
+    });
+
+</script>
+
+</body>
+</html>

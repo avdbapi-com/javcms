@@ -1,0 +1,27 @@
+JavCMS Community License 1.0
+
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors
+
+From JavCMS release 1.2.0, the JavCMS files in this directory are under the JavCMS Community License 1.0:
+free to use, copy, change and share, not for sale. The license text is Part A of
+the LICENSE file in the JavCMS root folder.
+Not covered (third-party parts that keep their own licenses; LICENSE Part C lists them):
+gallery-motion.js (three.js r186 and morphicons 1.7.1, MIT: GALLERY-THIRD-PARTY.txt,
+LICENSE-three.txt, LICENSE-morphicons.txt), the Lucide icon geometry in
+theme-switcher.js (ISC), the icon glyphs listed in auto-icon/THIRD-PARTY.txt and
+the parts listed in fx/THIRD-PARTY.txt.
+Copies of these files from JavCMS releases up to and including 1.1.0 were
+published under the MIT license and stay under it.
+
+This directory contains original project artwork and code, including raster
+derivatives generated from the original SVG favicon marks. Reference sites
+were consulted for interaction ideas; no reference-library source or icons
+were copied or bundled. This notice does not cover inherited theme/vendor
+assets outside static/template-ui.
+
+The auto-icon system (auto-icon.css, auto-icon.js and auto-icon/) is original
+JavCMS code under this licence. The glyphs inside auto-icon/sprite-*.svg come
+from the vendored Lucide (ISC), Phosphor (MIT), Tabler (MIT) and Remix Icon
+4.8.0 (Apache-2.0) sets; see auto-icon/THIRD-PARTY.txt.
+
+theme-switcher.js includes the Lucide `palette` icon path (ISC).

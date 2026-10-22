@@ -1,0 +1,29 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="topaz" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/auto"}
+{include file="public/include"}
+</head>
+<body class="tz-page-list">
+{include file="public/head"}
+{include file="public/vodvars"}
+<main id="main-content" class="tz-main tz-wrap tz-list">
+  <header class="tz-callout">
+    <nav class="tz-crumbs" aria-label="{:\\app\\common\\util\\TemplateText::get('topaz.breadcrumb')}"><a href="{$maccms.path}">{:\\app\\common\\util\\TemplateText::get('ui.home')}</a>{:\\app\\common\\util\\AutoIcon::ui('chevron-right', ['class'=>'tz-i tz-dir', 'tint'=>'none'])}<a href="{$tplDetailUrl|htmlspecialchars=ENT_QUOTES}">{$tplTitle|htmlspecialchars=ENT_QUOTES}</a></nav>
+    <span class="tz-eyebrow">{:\\app\\common\\util\\TemplateText::get('ui.downloads')}</span>
+    <h1>{:\\app\\common\\util\\TemplateText::get('download_links')}</h1>
+  </header>
+  {php}$tplDownCount = 0; if (!empty($obj['vod_down_list']) && is_array($obj['vod_down_list'])) { foreach ($obj['vod_down_list'] as $tplDl) { $tplDownCount += (isset($tplDl['urls']) && is_array($tplDl['urls'])) ? count($tplDl['urls']) : 0; } }{/php}
+  {if condition="$tplDownCount gt 0"}<section class="tz-panel">{maccms:foreach name="obj.vod_down_list" id="tplDl"}<div class="tz-server"><h2>{:\\app\\common\\util\\AutoIcon::ui('monitor-play', ['class'=>'tz-i', 'tint'=>'none'])}{$tplDl.player_info.show|htmlspecialchars=ENT_QUOTES}</h2><div class="tz-eplist">{maccms:foreach name="tplDl.urls" id="tplDu"}<a class="tz-ep" href="{:mac_url_vod_down($obj,['sid'=>$tplDl['sid'],'nid'=>$tplDu['nid']])}" rel="nofollow">{:\\app\\common\\util\\AutoIcon::ui('download', ['class'=>'tz-i', 'tint'=>'none'])}{$tplDu.name|htmlspecialchars=ENT_QUOTES}</a>{/maccms:foreach}</div></div>{/maccms:foreach}</section>
+  {else/}<div class="tz-empty"><span class="tz-empty-ico" aria-hidden="true">{:\\app\\common\\util\\AutoIcon::ui('download', ['class'=>'tz-i', 'tint'=>'none'])}</span><p>{:\\app\\common\\util\\TemplateText::get('ui.no_download_links_are_available_for_this_video')}</p>{if condition="$tplPlayUrl neq ''"}<a class="tz-btn tz-btn--gold" href="{$tplPlayUrl|htmlspecialchars=ENT_QUOTES}">{:\\app\\common\\util\\AutoIcon::ui('play', ['class'=>'tz-i', 'tint'=>'none'])}<span>{:\\app\\common\\util\\TemplateText::get('ui.watch_online')}</span></a>{/if}</div>{/if}
+</main>
+{include file="public/foot"}
+</body>
+</html>

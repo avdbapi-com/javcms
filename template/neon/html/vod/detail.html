@@ -1,0 +1,39 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="neon" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/vod_detail"}
+{include file="public/include"}
+</head>
+<body class="nx-page-detail">
+{include file="public/head"}
+{include file="public/metavars"}
+<main id="main-content" class="nx-main"><div class="nx-wrap">
+<div class="nx-detail{if condition="$nxDesc eq ''"} nx-detail--nodesc{/if}">
+<a class="nx-cover" href="{if condition="$nxPlayUrl neq ''"}{$nxPlayUrl|htmlspecialchars=ENT_QUOTES}{else/}#nx-desc-box{/if}" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.watch_online')}"><img data-lowres src="{$obj.vod_pic|mac_default=$tplNoPic|mac_url_img|htmlspecialchars=ENT_QUOTES}" alt="{$nxTitle|htmlspecialchars=ENT_QUOTES}" width="800" height="450" decoding="async">{if condition="$nxDuration neq ''"}<i class="nx-dur">{$nxDuration|htmlspecialchars=ENT_QUOTES}</i>{/if}<em class="nx-play" aria-hidden="true"></em></a>
+<div class="nx-dinfo">
+<h1{php}echo \app\common\util\AvdbLanguage::langAttr(isset($obj) && is_array($obj) ? $obj : []);{/php} dir="{$nxTitleDir}">{$nxTitle|htmlspecialchars=ENT_QUOTES}</h1>
+<div class="nx-stats">{if condition="$nxScore gt 0"}<span class="is-score" title="{:\\app\\common\\util\\TemplateText::get('ui.score')}">{:\\app\\common\\util\\AutoIcon::ui('star', ['size'=>'sm', 'tint'=>'none'])}<span class="nx-ltr">{$obj.vod_score|htmlspecialchars=ENT_QUOTES}</span></span>{/if}{if condition="$nxRelease neq ''"}<span>{:\\app\\common\\util\\AutoIcon::ui('calendar', ['size'=>'sm'])}<span class="nx-ltr">{$nxRelease|htmlspecialchars=ENT_QUOTES}</span></span>{/if}<span title="{:\\app\\common\\util\\TemplateText::get('ui.views')}">{:\\app\\common\\util\\AutoIcon::ui('eye', ['size'=>'sm'])}<span class="mac_hits nx-ltr" data-mid="1" data-id="{$obj.vod_id}" data-type="hits">{$obj.vod_hits|intval}</span><span class="nx-sr">{:\\app\\common\\util\\TemplateText::get('ui.views')}</span></span>{if condition="$nxDuration neq ''"}<span>{:\\app\\common\\util\\AutoIcon::ui('clock', ['size'=>'sm'])}<span class="nx-ltr">{$nxDuration|htmlspecialchars=ENT_QUOTES}</span></span>{/if}</div>
+{if condition="$nxPlayUrl neq ''"}<div class="nx-cta-row"><a class="nx-btn nx-btn-cta" href="{$nxPlayUrl|htmlspecialchars=ENT_QUOTES}">{:\\app\\common\\util\\AutoIcon::ui('play-circle', ['tint'=>'none'])}{:\\app\\common\\util\\TemplateText::get('ui.watch_online')}</a></div>{/if}
+<div class="nx-acts" data-ai-group>
+<button class="digg_link" type="button" data-id="{$obj.vod_id}" data-mid="1" data-type="up" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.like')}">{:\\app\\common\\util\\AutoIcon::ui('thumbs-up', ['class'=>'nx-act-ico', 'tint'=>'none'])}<span class="digg_num nx-ltr">{$obj.vod_up|intval}</span></button>
+<button class="digg_link" type="button" data-id="{$obj.vod_id}" data-mid="1" data-type="down" aria-label="{:\\app\\common\\util\\TemplateText::get('neon.dislike')}">{:\\app\\common\\util\\AutoIcon::ui('thumbs-down', ['class'=>'nx-act-ico', 'tint'=>'none'])}<span class="digg_num nx-ltr">{$obj.vod_down|intval}</span></button>
+<a class="mac_ulog" href="{:mac_url('user/favs')}" data-type="2" data-mid="1" data-id="{$obj.vod_id}">{:\\app\\common\\util\\AutoIcon::ui('heart', ['class'=>'nx-act-ico', 'tint'=>'none'])}<span>{:\\app\\common\\util\\TemplateText::get('favorites')}</span></a>
+<button type="button" data-nx-share data-url="{$nxShareUrl|htmlspecialchars=ENT_QUOTES}" data-title="{$nxTitle|htmlspecialchars=ENT_QUOTES}">{:\\app\\common\\util\\AutoIcon::ui('share', ['class'=>'nx-act-ico', 'tint'=>'none'])}<span>{:\\app\\common\\util\\TemplateText::get('share')}</span></button>
+</div>
+<div class="nx-panel" style="margin-top:4px">{include file="public/meta"}</div>
+</div>
+{if condition="$nxDesc neq ''"}<section class="nx-panel nx-ddesc" id="nx-desc-box" aria-labelledby="nx-h-desc"><div class="nx-cap"><h2 class="nx-cap-title" id="nx-h-desc"><span class="nx-cap-ico">{:\\app\\common\\util\\AutoIcon::ui('file-text', ['size'=>'lg', 'plate'=>true])}</span><span>{:\\app\\common\\util\\TemplateText::get('description')}</span></h2></div><p class="nx-desc" id="nx-desc" data-nx-clamp dir="{$nxDescDir}">{$nxDesc|htmlspecialchars=ENT_QUOTES}</p><button class="nx-desc-toggle" type="button" data-nx-more aria-controls="nx-desc" aria-expanded="false" data-more="{:\\app\\common\\util\\TemplateText::get('ui.view_more')}" data-less="{:\\app\\common\\util\\TemplateText::get('neon.show_less')}" hidden></button></section>{/if}
+</div>
+{include file="public/related"}
+{if condition="$nxCommentsOn"}<section class="nx-comments" id="nx-comments" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.comments')}"><div class="mac_comment" data-id="{$obj.vod_id}" data-mid="1"><p>{:\\app\\common\\util\\TemplateText::get('ui.loading_comments')}</p></div></section><script>MAC.Comment.Init();MAC.Comment.Show(1);</script>{/if}
+</div></main>
+{include file="public/foot"}
+</body>
+</html>

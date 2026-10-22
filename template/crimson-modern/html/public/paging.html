@@ -1,0 +1,18 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}/* shared pager (NOLIMIT D1, lane T): AvdbLanguage::pager() decides the links (first / prev / window / next / last, jumps, "Go to page", open mode); this skin is the theme's own markup. */
+$tplPgNarr = '<span class="ci-narr" aria-hidden="true">' . \app\common\util\AutoIcon::ui('book-open', ['size'=>'sm']) . \app\common\util\TemplateText::get('ink.page') . '</span>';
+$tplPgSkin = [
+    'nav' => 'ci-pager',
+    'prev' => '<a class="ci-pg-prev"%rel% href="%url%" aria-label="%aria%">' . \app\common\util\AutoIcon::ui('chevron-left') . '<span class="ci-pg-t">' . \app\common\util\TemplateText::get('ink.prev') . '</span></a>' . $tplPgNarr,
+    'prev_off' => $tplPgNarr,
+    'next' => '<a class="ci-pg-next"%rel% href="%url%" aria-label="%aria%"><span class="ci-pg-t">' . \app\common\util\TemplateText::get('ink.next') . '</span>' . \app\common\util\AutoIcon::ui('chevron-right') . '</a>',
+    'num' => '<a class="ci-pg-n" href="%url%"%attr%>%label%</a>',
+    'cur' => '<span class="ci-pg-n" aria-current="page">%label%</span>',
+];
+echo \app\common\util\AvdbLanguage::pagerHtml(isset($__PAGING__) && is_array($__PAGING__) ? $__PAGING__ : [], isset($__LIST__) && is_array($__LIST__) ? $__LIST__ : [], $tplPgSkin);{/php}

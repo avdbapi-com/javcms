@@ -1,0 +1,30 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="velvet-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}" data-fx="vt smooth" data-fx-lerp="0.09" data-fx-vt-style="velvet-modern">
+<head>
+<meta name="robots" content="noindex, follow" />
+<title>{:\\app\\common\\util\\TemplateText::get('ui.site_message')}</title>
+{include file="public/include"}
+</head>
+<body class="vp-page-state">
+{include file="public/head"}
+<main id="main-content" class="vp-main">
+  <div class="vp-wrap vp-center">
+    <div class="vp-intermission vp-state">
+      <span class="vp-state-icon" aria-hidden="true"><svg class="vp-i"><use href="{$maccms.path_tpl}assets/icons.svg?v=20261010-r1#info"></use></svg></span>
+      <p class="vp-eyebrow">{:\\app\\common\\util\\TemplateText::get('vp.intermission')}</p>
+      <h1>{:\\app\\common\\util\\TemplateText::get('ui.site_message')}</h1>
+      <div class="vp-state-msg">{$msg}</div>
+      <div class="vp-state-actions"><a class="vp-btn vp-btn-gold" href="{$maccms.path|htmlspecialchars=ENT_QUOTES}">{:\\app\\common\\util\\TemplateText::get('vp.back_to_foyer')}</a></div>
+    </div>
+  </div>
+</main>
+{include file="public/foot"}
+</body>
+</html>

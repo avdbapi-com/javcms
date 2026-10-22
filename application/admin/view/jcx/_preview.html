@@ -1,0 +1,37 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{if condition="$jx_cfg.can.preview"}
+<div class="jx-launch">
+    <button type="button" class="ax-btn" data-jx-act="preview" data-scope="onoff"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-eye"/></svg>{:$jxE(lang('admin/ux/jcx/see_all'))}</button>
+    <div class="ax-menu ax-menu--end">
+        <button type="button" class="ax-btn ax-btn--icon" aria-haspopup="menu" aria-expanded="false" aria-label="{:$jxE(lang('admin/ux/jcx/see_options'))}" title="{:$jxE(lang('admin/ux/jcx/see_options'))}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-sliders-horizontal"/></svg></button>
+        <div class="ax-menu__list jx-launch__list" role="menu" hidden>
+            <button type="button" class="ax-menu__item" role="menuitem" data-jx-act="preview" data-scope="ex"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-eye"/></svg>{:$jxE(lang('admin/ux/jcx/see_examples'))}</button>
+            <button type="button" class="ax-menu__item" role="menuitem" data-jx-act="preview" data-scope="onoff"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-eye"/></svg>{:$jxE(lang('admin/ux/jcx/see_all_onoff'))}</button>
+            <div class="ax-menu__sep" role="separator"></div>
+            <div class="ax-menu__label">{:$jxE(lang('admin/ux/jcx/see_options'))}</div>
+            <div class="jx-launch__opts">
+                <label>{:$jxE(lang('admin/ux/jcx/see_theme'))}
+                    <select class="layui-input" data-jx-pv="theme" lay-ignore>
+                        <option value="">{:$jxE(lang('admin/ux/jcx/see_theme_active'))}</option>
+                        {volist name="jx_cfg.themes" id="th"}<option value="{:$jxE($th)}">{:$jxE($th)}</option>{/volist}
+                    </select></label>
+                <label>{:$jxE(lang('admin/ux/jcx/see_page'))}
+                    <select class="layui-input" data-jx-pv="page" lay-ignore>
+                        <option value="home">{:$jxE(lang('admin/ux/jcx/pt_home'))}</option>
+                        <option value="list">{:$jxE(lang('admin/ux/jcx/pt_list'))}</option>
+                        <option value="detail">{:$jxE(lang('admin/ux/jcx/pt_detail'))}</option>
+                        <option value="play">{:$jxE(lang('admin/ux/jcx/pt_play'))}</option>
+                        <option value="search">{:$jxE(lang('admin/ux/jcx/pt_search'))}</option>
+                    </select></label>
+                <label class="jx-check"><input type="checkbox" data-jx-pv="phone" lay-ignore> {:$jxE(lang('admin/ux/jcx/see_phone'))}</label>
+            </div>
+        </div>
+    </div>
+</div>
+{/if}

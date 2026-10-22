@@ -1,0 +1,149 @@
+/*
+ * This file is part of JavCMS - https://javcms.net
+ * Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+ * License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+ * See the LICENSE and NOTICE files that come with JavCMS.
+ * Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Telegram: https://t.me/avdb_api
+ */
+/* Ten catalogue items: five on wide screens, fewer columns as space narrows. */
+html{--catalog-columns:2;--catalog-gap:16px}
+@media(min-width:640px){html{--catalog-columns:4;--catalog-gap:20px}}
+@media(min-width:1200px){html{--catalog-columns:5}}
+html[data-template-theme="jav"] .stui-vodlist{
+ display:flex;flex-wrap:wrap;
+ gap:var(--catalog-gap) 16px;width:100%;max-width:100%;margin-inline:0
+}
+html[data-template-theme="javcms"] .block-post:not(:has(.itemplay)){
+ display:flex;flex-wrap:wrap;
+ gap:var(--catalog-gap) 16px;width:100%;max-width:100%;margin-inline:0
+}
+html[data-template-theme="jav"] .stui-vodlist::before,
+html[data-template-theme="jav"] .stui-vodlist::after{content:none;display:none}
+html[data-template-theme="javcms"] .block-post:not(:has(.itemplay))::before,
+html[data-template-theme="javcms"] .block-post:not(:has(.itemplay))::after{content:none;display:none}
+html[data-template-theme="jav"] .stui-vodlist>li{
+ float:none;width:auto!important;min-width:0;max-width:100%;margin:0;padding:0;flex:1 1 220px
+}
+html[data-template-theme="javcms"] .block-post:not(:has(.itemplay))>.item{
+ float:none;width:auto!important;min-width:0;max-width:100%;margin:0;padding:0;flex:1 1 220px
+}
+html[data-template-theme="jav"] .stui-vodlist__detail,
+html[data-template-theme="javcms"] .block-post>.item .info-post{min-width:0;overflow-wrap:anywhere}
+html[data-template-theme="javcms"] .block-post>.item .stat{
+ display:flex;flex-wrap:wrap;gap:4px 10px;width:100%;margin-inline:0
+}
+html[data-template-theme="javcms"] .block-post>.item .stat span{margin-inline:0;max-width:100%}
+html[data-template-theme="jav"] .gallery-recommendations:not(:empty){margin-top:24px}
+html[data-template-theme="jav"] .gallery-recommendations:empty{display:none}
+html[data-template-theme="jav"] .stui-vodlist__detail.index .title{white-space:normal}
+html[data-template-theme="jav"] .stui-vodlist__detail.index .score{float:none;display:block;font-size:12px;margin-bottom:4px}
+html :is(.stui-content__detail,.stui-player__detail,.info-block,.model-info,.news-content){min-width:0;overflow-wrap:anywhere}
+html :is(.news-content,.contentart){min-width:0;overflow-wrap:anywhere}
+html :is(.news-content,.contentart) :is(table,pre){max-width:100%;overflow-x:auto}
+html :is(.news-content,.contentart) table{display:block}
+html :is(.news-content,.contentart) code{overflow-wrap:anywhere}
+html[data-template-variant="classic"][data-template-theme="javcms"] .model-info :is(.list-info li,.list-info li strong,.description p){color:var(--ink)}
+html[data-template-variant="classic"][data-template-theme="javcms"] .channel-rating a{background:var(--accent);color:#fff}
+html[data-template-variant="classic"][data-template-theme="jav"] body:has(.news-content) .stui-vodlist__text a{color:var(--readable-link)}
+html[data-template-variant="classic"][data-template-theme="jav"] :is(.gallery-updates,.gallery-download-page) a{color:var(--readable-link)}
+html[data-template-variant="classic"][data-template-theme="javcms"] .fed-text-gules{color:var(--error)!important}
+html[data-template-variant="classic"][data-template-theme="javcms"][data-color-mode="light"] :is(.fed-tabs-title,.fed-tabs-title span,.fed-user-input>span,.fed-more){color:var(--ink)!important}
+html[data-template-variant="classic"][data-template-theme="javcms"] body.fed-min-width :is([data-copy-target],.fed-subm-group.grade){
+ min-height:44px;min-width:44px;padding:8px;border-radius:6px;
+ background:var(--accent)!important;color:#fff!important
+}
+html[data-template-variant="modern"][data-template-theme="javcms"] .header-top a.account-link{color:var(--header-ink)!important}
+html :is(.stui-vodlist__detail .title,.heading .title,.gallery-heading>div,.gallery-intro h1,.list-info){min-width:0;overflow-wrap:anywhere}
+html :is(.stui-gbook__item .cont,.message-list article,.message-list .comment-head){overflow-wrap:anywhere}
+html .message-list .comment-head{flex-wrap:wrap}
+html :is(.fed-user-form,.gbook_form,.gallery-account form){min-width:0;max-width:100%}
+html :is(.fed-user-form,.gbook_form,.gallery-account form) :is(input,select,textarea){min-width:0;max-width:100%}
+html .stui-gbook-form>li:last-child{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+html .stui-gbook-form>li:last-child>*{float:none!important;margin-inline:0!important}
+html .stui-gbook-form>li:last-child>button{order:2}
+html .gbook_form .gbook_submit{min-height:44px;background:var(--accent,var(--coral-dark,#965000));color:#fff}
+html .fed-user-input{flex-wrap:wrap;min-width:0;max-width:100%}
+html .fed-user-input>span{min-width:0;max-width:100%;overflow-wrap:anywhere}
+html .fed-user-input>span:has(#btn_bind_send){flex:1 1 100%!important;width:100%;text-align:start!important;margin-block-start:8px}
+html #btn_bind_send{min-height:44px;max-width:100%;background:var(--accent,var(--coral-dark,#965000))!important;color:#fff!important}
+html .fed-user-input :is(#url,#url2){
+ box-sizing:border-box;min-height:44px;min-width:0;max-width:100%;padding:8px;
+ background:var(--surface,var(--paper));color:var(--ink);border:1px solid var(--line)
+}
+html[data-template-variant="classic"] body.fed-min-width .fed-user-login.fed-part-core{
+ position:static;inset:auto;transform:none;width:100%;max-width:540px;margin-inline:auto
+}
+html[data-template-variant="classic"] body.fed-min-width .fed-part-height{height:auto;min-height:0}
+html[data-template-variant="classic"][data-template-theme="javcms"] body.fed-min-width .fed-part-case{
+ width:100%!important;max-width:100%;min-width:0
+}
+@media(max-width:991px){
+ html[data-template-variant="classic"][data-template-theme="javcms"] body.fed-min-width :is(.fed-main-left,.fed-main-right){
+  display:block!important;width:100%;float:none;padding-inline:0
+ }
+}
+
+/* Keep search and actions usable before the tablet header becomes crowded. */
+@media(max-width:1100px){
+ html[data-template-variant="modern"] :is(.gallery-top,.header-top){flex-wrap:wrap}
+ html[data-template-variant="modern"] :is(.gallery-top,.header-top) .gallery-search{
+  order:3;flex-basis:100%;max-width:none;width:100%;margin-inline:0
+ }
+ html[data-template-variant="classic"][data-template-theme="javcms"] .header .nav{display:none}
+}
+@media(max-width:767px){
+ html[data-template-variant="classic"][data-template-theme="javcms"] .header .flex{display:flex;flex-wrap:nowrap;gap:8px}
+ html[data-template-variant="classic"][data-template-theme="javcms"] .header .left-block{min-width:0;flex:1;gap:4px}
+ html[data-template-variant="classic"][data-template-theme="javcms"] .header .logo{
+  position:static;inset:auto;transform:none;flex-shrink:1;min-width:0;width:90px
+ }
+ html[data-template-variant="classic"][data-template-theme="javcms"] .header .right-block{flex-shrink:0;gap:4px}
+ html[data-template-theme="jav"] .stui-content__side{max-width:100%}
+ html[data-template-variant="classic"][data-template-theme="jav"] .stui_header__user{position:relative}
+ html[data-template-variant="classic"][data-template-theme="jav"] .stui_header__user>li{position:static}
+ html[data-template-variant="classic"][data-template-theme="jav"] .stui_header__user .dropdown{
+  inset-inline:0;right:0;left:0;width:100%;max-width:100%
+ }
+}
+@media(max-width:639px){
+ html{--catalog-gap:16px}
+ html[data-template-variant="classic"][data-template-theme="javcms"] .header .language-menu summary{
+  font-size:0;inline-size:44px;min-inline-size:44px;padding:8px
+ }
+ html .heading{flex-wrap:wrap;align-items:start}
+ html .heading .title{min-width:0;flex:1}
+ html[data-template-variant="classic"][data-template-theme="javcms"] .heading>.title{flex:1 1 100%;width:100%}
+ html[data-template-variant="classic"][data-template-theme="javcms"] .heading>.sort{width:100%;margin-inline:0}
+ html .heading :is(h1,h2,h3){overflow-wrap:anywhere}
+ html .gallery-permission-actions{max-width:100%}
+}
+
+/* Contain the classic navigation while preserving its local scroll. */
+html[data-template-variant="classic"][data-template-theme="jav"] .stui-header__menu{max-width:calc(100% - 30px)}
+
+/* Keep the open language panel out of the short, vertically centered header row. */
+@media(max-width:767px){
+ html[data-template-variant="classic"][data-template-theme="javcms"] .header .right-block{position:relative}
+ html[data-template-variant="classic"][data-template-theme="javcms"] .header .language-menu{position:static}
+ html[data-template-variant="classic"][data-template-theme="javcms"] .header .language-menu>.language-links{
+  position:absolute;top:calc(100% + 8px);inset-inline-end:0;inset-inline-start:auto;
+  width:min(320px,calc(100vw - 32px));max-height:calc(100dvh - 96px);overflow-y:auto
+ }
+}
+/* Flex rows expand a short final row on desktop; mobile keeps a stable two-column grid. */
+@media(max-width:767px){
+ html[data-template-theme="jav"] .stui-vodlist,
+ html[data-template-theme="javcms"] .block-post:not(:has(.itemplay)){
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+ }
+}
+/* Stable catalogue columns: preserve original card styling while preventing sparse final rows. */
+@media(min-width:1200px){
+ html[data-template-theme="jav"] .stui-vodlist,
+ html[data-template-theme="javcms"] .block-post:not(:has(.itemplay)){display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:24px 16px}
+}
+@media(min-width:768px) and (max-width:1199px){
+ html[data-template-theme="jav"] .stui-vodlist,
+ html[data-template-theme="javcms"] .block-post:not(:has(.itemplay)){display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px 14px}
+}

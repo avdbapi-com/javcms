@@ -1,0 +1,187 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Based on MacCMS 10 (Apache-2.0) by magicblack, changed by JavCMS.
+JavCMS changes: Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors,
+JavCMS Community License 1.0. The MacCMS parts stay under the Apache License 2.0.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{include file="../../../application/install/view/index/head" /}
+<style type="text/css">
+.layui-table td, .layui-table th{text-align:left;}
+.layui-table tbody tr.no{background-color:#f00;color:#fff;}
+.install-catalog{text-align:left}
+.install-q{font-weight:600;margin:0 0 8px}
+.install-choice{display:flex;gap:10px;align-items:flex-start;padding:8px 10px;margin:0 0 6px;border:1px solid #e2e2e2;border-radius:6px;cursor:pointer}
+.install-box .install-choice input[type=radio]{flex:0 0 18px;width:18px;height:18px;min-width:0;margin:3px 0 0;padding:0;display:block}
+.install-choice-text{flex:1 1 auto;min-width:0;text-align:left;display:block}
+.install-choice:focus-within,.install-choice:hover{border-color:#1e9fff}
+.install-choice-text b{display:block}
+.install-choice-text span{display:block;color:#666;font-size:13px;line-height:1.5}
+.install-note{color:#666;font-size:13px;margin:6px 0 0}
+.install-select{height:38px;padding:0 10px}
+#parent_row[hidden]{display:none !important}
+</style>
+<div class="install-box">
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>{:lang('install/database_config')}</legend>
+    </fieldset>
+    <form class="layui-form layui-form-pane" action="?step=4" method="post">
+        <input type="hidden" name="install_token" value="{$install_token}">
+        <div class="layui-form-item">
+            <label class="layui-form-label">{:lang('install/server_address')}</label>
+            <div class="layui-input-inline w200">
+                <input type="text" class="layui-input" name="hostname" lay-verify="title" value="127.0.0.1">
+            </div>
+            <div class="layui-form-mid layui-word-aux">{:lang('install/server_address_tip')}</div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">{:lang('install/database_port')}</label>
+            <div class="layui-input-inline w200">
+                <input type="text" class="layui-input" name="hostport" lay-verify="title" value="3306">
+            </div>
+            <div class="layui-form-mid layui-word-aux">{:lang('install/database_port_tip')}</div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">{:lang('install/database_name')}</label>
+            <div class="layui-input-inline w200">
+                <input type="text" class="layui-input" name="database" lay-verify="title">
+            </div>
+            <div class="layui-form-mid layui-word-aux">{:lang('install/database_name_tip')}</div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">{:lang('install/database_username')}</label>
+            <div class="layui-input-inline w200">
+                <input type="text" class="layui-input" name="username" lay-verify="title">
+            </div>
+            <div class="layui-form-mid layui-word-aux">{:lang('install/database_username_tip')}</div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">{:lang('install/database_pass')}</label>
+            <div class="layui-input-inline w200">
+                <input type="password" class="layui-input" name="password" lay-verify="title">
+            </div>
+            <div class="layui-form-mid layui-word-aux">{:lang('install/database_pass_tip')}</div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">{:lang('install/database_pre')}</label>
+            <div class="layui-input-inline w200">
+                <input type="text" class="layui-input" name="prefix" lay-verify="title" value="javcms_">
+            </div>
+            <div class="layui-form-mid layui-word-aux">{:lang('install/database_pre_tip')}</div>
+        </div>
+<p>The database must already exist. Existing tables using this prefix will never be overwritten.</p>
+        <div class="layui-form-item">
+            <button type="submit" class="layui-btn fl" style="margin-left:120px;" lay-submit="" lay-filter="formTest">{:lang('install/test_connect')}</button>
+            <div class="layui-form-mid layui-word-aux">{:lang('install/test_connect_tip')}</div>
+        </div>
+    </form>
+    <form class="layui-form layui-form-pane" action="?step=5" method="post">
+        <input type="hidden" name="install_dir" value="{$install_dir}">
+        <input type="hidden" name="install_token" value="{$install_token}">
+        <fieldset class="layui-elem-field layui-field-title">
+            <legend>{:lang('install/site_config')}</legend>
+        </fieldset>
+        <div class="layui-form-item">
+            <label class="layui-form-label" for="site_name">{:lang('install/site_name')}</label>
+            <div class="layui-input-inline" style="width:320px"><input id="site_name" name="site_name" class="layui-input" required maxlength="100" value="{$site_name_default|htmlspecialchars}" autocomplete="organization"></div>
+            <div class="layui-form-mid layui-word-aux">{:lang('install/site_name_tip')}</div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" for="site_url">{:lang('install/site_url')}</label>
+            <div class="layui-input-inline" style="width:320px"><input id="site_url" name="site_url" type="url" class="layui-input" required maxlength="255" value="{$site_url_default|htmlspecialchars}" placeholder="https://example.com" autocomplete="url"></div>
+            <div class="layui-form-mid layui-word-aux">{:lang('install/site_url_tip')}</div>
+        </div>
+        <fieldset class="layui-elem-field layui-field-title">
+            <legend>{:lang('admin/ux/install/catalog_legend')}</legend>
+        </fieldset>
+        <div class="layui-form-item install-catalog" role="radiogroup" aria-labelledby="catalog_q">
+            <p id="catalog_q" class="install-q">{:lang('admin/ux/install/catalog_q')}</p>
+            {volist name="catalogs" id="cat"}
+            <label class="install-choice" for="catalog_{$cat}">
+                <input type="radio" id="catalog_{$cat}" name="catalog" value="{$cat}" lay-ignore {if condition="$cat eq 'later'"}checked{/if}>
+                <span class="install-choice-text"><b>{:lang('admin/ux/install/catalog_' . $cat)}</b><span>{:lang('admin/ux/install/catalog_' . $cat . '_tip')}</span></span>
+            </label>
+            {/volist}
+            <p class="install-note">{:lang('admin/ux/install/catalog_change')}</p>
+        </div>
+        <div class="layui-form-item" id="parent_row" hidden>
+            <label class="layui-form-label" for="parent_name">{:lang('admin/ux/install/parent_name')}</label>
+            <div class="layui-input-inline" style="width:320px">
+                <select id="parent_name" name="parent_name" lay-ignore class="layui-input install-select">
+                    <option value="International" selected>{:lang('admin/ux/install/parent_international')}</option>
+                    <option value="Western">{:lang('admin/ux/install/parent_western')}</option>
+                </select>
+            </div>
+            <div class="layui-form-mid layui-word-aux">{:lang('admin/ux/install/parent_name_tip')}</div>
+        </div>
+        <fieldset class="layui-elem-field layui-field-title">
+            <legend>{:lang('install/other_config')}</legend>
+        </fieldset>
+        
+        <div class="layui-form-item">
+            <label class="layui-form-label" for="admin_name">Admin account</label>
+            <div class="layui-input-inline w200"><input id="admin_name" name="admin_name" class="layui-input" required minlength="3" maxlength="30" autocomplete="username"></div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" for="admin_password">Password</label>
+            <div class="layui-input-inline w200"><input id="admin_password" type="password" name="admin_password" class="layui-input" required minlength="12" maxlength="72" autocomplete="new-password"></div>
+            <div class="layui-form-mid layui-word-aux">Use 12 to 72 bytes.</div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" for="admin_password_confirm">Confirm</label>
+            <div class="layui-input-inline w200"><input id="admin_password_confirm" type="password" name="admin_password_confirm" class="layui-input" required minlength="12" maxlength="72" autocomplete="new-password"></div>
+        </div>
+        <div class="step-btns">
+            <a href="?step=2" class="layui-btn layui-btn-big fl">{:lang('install/back_step')}</a>
+            <button type="submit" class="layui-btn layui-btn-big layui-btn-normal fr" lay-submit="" lay-filter="formSubmit" >{:lang('install/exec')}</button>
+        </div>
+    </form>
+</div>
+
+{include file="../../../application/install/view/index/foot" /}
+<script type="text/javascript">
+    var test=0;
+layui.define(['element', 'form'], function(exports) {
+    var $ = layui.jquery, layer = layui.layer, form = layui.form;
+    $('form[action="?step=4"] input').on('input change', function() { test=0; });
+    var syncParent = function() {
+        var v = $('input[name=catalog]:checked').val();
+        var on = v === 'xvid' || v === 'both';
+        $('#parent_row').prop('hidden', !on);
+    };
+    $('input[name=catalog]').on('change', syncParent);
+    syncParent();
+    form.on('submit(formTest)', function(data) {
+        test=0;
+        var _form = '';
+        if ($(this).attr('data-form')) {
+            _form = $($(this).attr('data-form'));
+        } else {
+            _form = $(this).parents('form');
+        }
+        
+        layer.msg("{:lang('wait_submit')}",{time:500000});
+        $.ajax({
+            type: "POST",
+            url: _form.attr('action'),
+            data: _form.serialize(),
+            dataType:'json',
+            success: function(res) {
+                if(res.code==1){
+                    test=1;
+                }
+                layer.msg(res.msg);
+            }
+        });
+        return false;
+    });
+    form.on('submit(formSubmit)', function(data) {
+        if(test==0){
+            layer.msg("{:lang('install/submit_tip')}");
+            return false;
+        }
+
+    });
+});
+</script>

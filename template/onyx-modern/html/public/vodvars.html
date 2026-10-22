@@ -1,0 +1,44 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}
+$tplPlain = function ($value) { $value = (string)$value; for ($tplPi = 0; $tplPi < 3; $tplPi++) { $tplPd = html_entity_decode($value, ENT_QUOTES | ENT_HTML5, 'UTF-8'); if ($tplPd === $value) { break; } $value = $tplPd; } return trim($value); };
+$tplSplit = function ($value) { return array_values(array_unique(array_filter(array_map('trim', explode(',', (string)$value)), 'strlen'))); };
+$tplCode = \app\common\util\AvdbLanguage::displayCode($obj); /* 2.11 rule 1: code only from vod_display_code */
+if ($tplCode === '' || stripos($tplCode, 'avdb-') === 0) { $tplCode = ''; }
+$tplName = $tplPlain($obj['vod_display_name'] ?? '');
+if ($tplName === '') { $tplName = $tplPlain($obj['vod_name'] ?? ''); }
+$tplActors = $tplSplit($obj['vod_display_actor'] ?? '');
+$tplGenres = $tplSplit($obj['vod_display_class'] ?? '');
+$tplTagList = $tplSplit($obj['vod_display_tag'] ?? '');
+$tplDirectors = $tplSplit($obj['vod_display_director'] ?? '');
+$tplStudio = $tplPlain($obj['vod_display_writer'] ?? '');
+$tplDate = trim((string)($obj['vod_pubdate'] ?? ''));
+if ($tplDate === '') { $tplDate = trim((string)($obj['vod_year'] ?? '')); }
+$tplDuration = trim((string)($obj['vod_duration'] ?? ''));
+$tplDesc = $tplPlain($obj['vod_display_content'] ?? '');
+if ($tplDesc === '') { $tplDesc = $tplPlain($obj['vod_display_blurb'] ?? ''); }
+$tplUp = (int)($obj['vod_up'] ?? 0);
+$tplDown = (int)($obj['vod_down'] ?? 0);
+$tplVotes = $tplUp + $tplDown;
+$tplLike = $tplVotes > 0 ? (int)round($tplUp * 100 / $tplVotes) : 0;
+$tplScore = trim((string)($obj['vod_score'] ?? ''));
+$tplType = (isset($obj['type']) && is_array($obj['type'])) ? $obj['type'] : [];
+$tplTypeName = (string)($tplType['type_name'] ?? '');
+$tplPlayUrl = ((!empty($obj['vod_play_list']) && is_array($obj['vod_play_list'])) ? mac_url_vod_play($obj, 'first') : '');
+$tplEpCount = 0;
+$tplSrcCount = 0;
+if (!empty($obj['vod_play_list']) && is_array($obj['vod_play_list'])) { foreach ($obj['vod_play_list'] as $tplSrcRow) { $tplSrcCount++; $tplEpCount += (isset($tplSrcRow['urls']) && is_array($tplSrcRow['urls'])) ? count($tplSrcRow['urls']) : 0; } }
+$tplRelClass = $tplGenres ? $tplGenres[0] : '';
+$tplRelIds = [(int)($obj['vod_id'] ?? 0)];
+$tplLbl = [];
+foreach (['code' => 'ui.id_code', 'studio' => 'ui.studio_label', 'date' => 'ui.release_date', 'duration' => 'ui.duration', 'actor' => 'ui.actor', 'director' => 'ui.director', 'genres' => 'genres', 'tags' => 'ui.tag', 'category' => 'category', 'score' => 'ui.score', 'views' => 'views'] as $tplLk => $tplLv) { $tplLbl[$tplLk] = preg_replace('/[\s:：]+$/u', '', \app\common\util\TemplateText::raw($tplLv)); }
+$oxScoreF = is_numeric($tplScore) ? max(0.0, min(10.0, (float)$tplScore)) : -1.0;
+$oxScoreBlocks = $oxScoreF >= 0 ? (int)round($oxScoreF) : 0;
+$oxScoreTxt = $oxScoreF >= 0 ? rtrim(rtrim(number_format($oxScoreF, 1, '.', ''), '0'), '.') . ' / 10' : '';
+$oxTypeName = \app\common\util\TemplateText::raw(\app\common\util\AvdbLanguage::decodeEntities($tplTypeName));
+{/php}

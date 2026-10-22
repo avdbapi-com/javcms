@@ -1,0 +1,45 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}$tuiFooterSitemap = ''; try { $tuiFooterSitemap = \app\common\util\Sitemap::indexUrl(); } catch (\Throwable $tuiFooterError) {} $ciFootMail = trim(\app\common\util\AvdbLanguage::decodeEntities((string)($maccms['site_email'] ?? '')));{/php}
+<footer class="ci-foot">
+	<a class="ci-tbc" href="{:mac_url('label/new')}"><span class="ci-tbc-t">{:\\app\\common\\util\\TemplateText::get('ink.to_be_continued')}</span><svg class="ci-i ci-flip" aria-hidden="true"><use href="{$ciIco|htmlspecialchars=ENT_QUOTES}#arrow-right"></use></svg></a>
+	<div class="ci-foot-in ci-wrap">
+		<div class="ci-foot-brand">
+			{include file="public/brand"}
+			<p class="ci-cap">{:\\app\\common\\util\\TemplateText::get('ui.find_your_next_watch')}</p>
+			<a class="ci-totop" href="#ci-hdr">{:\\app\\common\\util\\AutoIcon::ui('arrow-up')}<span>{:\\app\\common\\util\\TemplateText::get('ink.back_to_top')}</span></a>
+			{if condition="filter_var($ciFootMail, FILTER_VALIDATE_EMAIL)"}<p class="ci-cap"><a class="ci-ink" href="mailto:{$ciFootMail|rawurlencode}">{:\\app\\common\\util\\AutoIcon::ui('mail')}{$ciFootMail|htmlspecialchars=ENT_QUOTES}</a></p>{/if}
+		</div>
+		<nav class="ci-foot-col" aria-labelledby="ci-fh-1"><h2 class="ci-narr" id="ci-fh-1">{:\\app\\common\\util\\AutoIcon::ui('compass')}{:\\app\\common\\util\\TemplateText::get('ink.browse')}</h2><ul>
+			<li><a class="ci-ink" href="{$maccms.path}">{:\\app\\common\\util\\AutoIcon::navIcon('home')}<span>{:\\app\\common\\util\\TemplateText::get('ui.home')}</span></a></li>
+			<li><a class="ci-ink" href="{:mac_url('label/sort')}">{:\\app\\common\\util\\AutoIcon::navIcon('categories')}<span>{:\\app\\common\\util\\TemplateText::get('ui.categories')}</span></a></li>
+			<li><a class="ci-ink" href="{:mac_url('label/search')}">{:\\app\\common\\util\\AutoIcon::navIcon('search')}<span>{:\\app\\common\\util\\TemplateText::get('ui.search')}</span></a></li>
+			<li><a class="ci-ink" href="{:mac_url('map/index')}">{:\\app\\common\\util\\AutoIcon::navIcon('latest-100')}<span>{:\\app\\common\\util\\TemplateText::get('ui.latest_100_updates')}</span></a></li>
+			{if condition="!empty($ciHasActor)"}<li><a class="ci-ink" href="{:mac_url('actor/index')}">{:\\app\\common\\util\\AutoIcon::navIcon('actors')}<span>{:\\app\\common\\util\\TemplateText::get('ui.performers')}</span></a></li>{/if}
+			{if condition="!empty($ciHasTopic)"}<li><a class="ci-ink" href="{:mac_url_topic_index()}">{:\\app\\common\\util\\AutoIcon::navIcon('collections')}<span>{:\\app\\common\\util\\TemplateText::get('ui.collections')}</span></a></li>{/if}
+			{if condition="!empty($ciHasArt)"}<li><a class="ci-ink" href="{:mac_url('art/index')}">{:\\app\\common\\util\\AutoIcon::navIcon('articles')}<span>{:\\app\\common\\util\\TemplateText::get('ui.articles')}</span></a></li>{/if}
+		</ul></nav>
+		<nav class="ci-foot-col" aria-labelledby="ci-fh-2"><h2 class="ci-narr" id="ci-fh-2">{:\\app\\common\\util\\AutoIcon::ui('list')}{:\\app\\common\\util\\TemplateText::get('ink.lists')}</h2><ul>
+			<li><a class="ci-ink" href="{:mac_url('label/new')}">{:\\app\\common\\util\\AutoIcon::navIcon('latest')}<span>{:\\app\\common\\util\\TemplateText::get('ui.latest_videos')}</span></a></li>
+			<li><a class="ci-ink" href="{:mac_url('label/hot')}">{:\\app\\common\\util\\AutoIcon::navIcon('hot')}<span>{:\\app\\common\\util\\TemplateText::get('ui.popular_videos')}</span></a></li>
+			<li><a class="ci-ink" href="{:mac_url('label/score')}">{:\\app\\common\\util\\AutoIcon::navIcon('top')}<span>{:\\app\\common\\util\\TemplateText::get('top_rated')}</span></a></li>
+			<li><a class="ci-ink" href="{:mac_url('label/up')}">{:\\app\\common\\util\\AutoIcon::navIcon('liked')}<span>{:\\app\\common\\util\\TemplateText::get('most_liked')}</span></a></li>
+		</ul></nav>
+		<nav class="ci-foot-col" aria-labelledby="ci-fh-3"><h2 class="ci-narr" id="ci-fh-3">{:\\app\\common\\util\\AutoIcon::ui('sitemap')}{:\\app\\common\\util\\TemplateText::get('ink.site')}</h2><ul>
+			{if condition="$tuiFooterSitemap neq ''"}<li><a class="ci-ink" href="{$tuiFooterSitemap|htmlspecialchars=ENT_QUOTES}">{:\\app\\common\\util\\AutoIcon::navIcon('sitemap')}<span>{:\\app\\common\\util\\TemplateText::get('ui.sitemap')}</span></a></li>{/if}
+			<li><a class="ci-ink" href="{:mac_url('rss/index')}">{:\\app\\common\\util\\AutoIcon::navIcon('rss')}<span>{:\\app\\common\\util\\TemplateText::get('rss')}</span></a></li>
+			<li><a class="ci-ink" href="{:mac_url('gbook/index')}">{:\\app\\common\\util\\AutoIcon::navIcon('contact')}<span>{:\\app\\common\\util\\TemplateText::get('ui.contact_b37456')}</span></a></li>
+		</ul></nav>
+		<div class="ci-foot-col ci-foot-lang"><h2 class="ci-narr">{:\\app\\common\\util\\AutoIcon::ui('languages')}{:\\app\\common\\util\\TemplateText::get('ui.language')}</h2>
+			<details class="ci-flang"><summary class="ci-ink"><svg class="ci-i" aria-hidden="true"><use href="{$ciIco|htmlspecialchars=ENT_QUOTES}#globe"></use></svg>{volist name="galleryLanguages" id="galleryLanguage"}{if condition="strtoupper($key) eq $ciLangCode"}<span lang="{$key|htmlspecialchars=ENT_QUOTES}">{$galleryLanguage|htmlspecialchars=ENT_QUOTES}</span>{/if}{/volist}</summary><div class="ci-flangs">{volist name="galleryLanguages" id="galleryLanguage"}<a class="ci-ink" href="{:\\app\\common\\util\\TemplateText::languageUrl($key)}" lang="{$key|htmlspecialchars=ENT_QUOTES}" hreflang="{$key|htmlspecialchars=ENT_QUOTES}"{if condition="strtoupper($key) eq $ciLangCode"} aria-current="true"{/if}>{$galleryLanguage|htmlspecialchars=ENT_QUOTES}</a>{/volist}</div></details>
+		</div>
+	</div>
+	<div class="ci-foot-base"><div class="ci-wrap"><p>&copy; {:date('Y')} {$ciSiteName|htmlspecialchars=ENT_QUOTES}</p><p><span class="ci-18" aria-hidden="true">18+</span>{:\\app\\common\\util\\TemplateText::get('ui.for_adults_only_contact_the_site_for_content_or_copyright_concerns')}</p></div></div>
+</footer>
+{include file="public/style"}
+{$maccms.site_tj}

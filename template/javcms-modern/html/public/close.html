@@ -1,0 +1,27 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-variant="modern" data-template-theme="javcms" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+<meta charset="utf-8">{php}$jcCloseBase = rtrim(ROOT_PATH, '/' . DIRECTORY_SEPARATOR) . '/'; $jcCloseTheme = $jcCloseBase . ltrim(substr((string)MAC_PATH_TEMPLATE, strlen((string)MAC_PATH)), '/'); $jcCloseV = []; foreach (['theme' => $jcCloseBase . 'static/template-ui/theme.js', 'ui' => $jcCloseBase . 'static/template-ui/ui.css', 'core' => $jcCloseTheme . 'ksassets/css/jc-core.css', 'skin' => $jcCloseTheme . 'ksassets/css/jc-skin.css'] as $jcKey => $jcFile) $jcCloseV[$jcKey] = is_file($jcFile) ? (string)filemtime($jcFile) : '0';{/php}
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex, follow">
+<script src="{:MAC_PATH}static/template-ui/theme.js?v={$jcCloseV.theme}"></script>
+<title>{:\\app\\common\\util\\TemplateText::get('ui.website_maintenance')}</title>
+<link rel="stylesheet" href="{:MAC_PATH}static/template-ui/ui.css?v={$jcCloseV.ui}">
+<link rel="stylesheet" href="{:MAC_PATH_TEMPLATE}ksassets/css/jc-core.css?v={$jcCloseV.core}">
+<link rel="stylesheet" href="{:MAC_PATH_TEMPLATE}ksassets/css/jc-skin.css?v={$jcCloseV.skin}">
+</head>
+<body class="jc-maintenance" style="margin:0;min-height:100vh;display:grid;place-items:center;background:var(--jc-bg,#000);color:var(--jc-ink,#fff);font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif">
+<main class="jc-notfound" style="padding:24px">
+<p class="jc-notfound-code" aria-hidden="true">503</p>
+<h1>{:\\app\\common\\util\\TemplateText::get('ui.the_site_is_undergoing_maintenance')}</h1>
+<p>{$close_tip|htmlspecialchars=ENT_QUOTES}</p>
+</main>
+</body>
+</html>

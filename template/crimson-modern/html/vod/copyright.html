@@ -1,0 +1,30 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="crimson-modern" data-fx="vt" data-fx-vt-style="crimson-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+<title>{:\\app\\common\\util\\TemplateText::get('ui.copyright_video_unavailable', ['name'=>mac_default($obj['vod_display_name'] ?? '',$obj['vod_name'] ?? '')])}</title>
+<meta name="robots" content="noindex, follow" />
+{include file="public/include"}
+</head>
+<body class="ci-solo ci-copyright-page">
+<header class="ci-bar ci-solo-bar"><div class="ci-bar-in ci-wrap"><div class="ci-logo"><a href="{$maccms.path|default='/'}" title="{:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$maccms['site_name']), ENT_QUOTES, 'UTF-8')}">{if condition="$maccms.site_logo neq ''"}<img class="ci-logo-img" src="{:mac_safe_url(mac_url_img($maccms['site_logo']))}" width="191" height="60" alt="{:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$maccms['site_name']), ENT_QUOTES, 'UTF-8')}">{else/}<span class="ci-wordmark"><span>{:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$maccms['site_name']), ENT_QUOTES, 'UTF-8')}</span></span>{/if}</a></div></div></header>
+<main id="main-content" class="ci-wrap ci-solo-main">
+<section class="ci-msgbox"><span class="ci-empty-art"><img src="{$maccms.path_tpl|htmlspecialchars=ENT_QUOTES}assets/brand/avatar.svg" width="64" height="64" alt=""></span><p class="ci-kicker">{:\\app\\common\\util\\TemplateText::get('ui.video_access')}</p><h1 class="ci-h1">{:\\app\\common\\util\\TemplateText::get('ui.access_required')}</h1><p class="ci-msg-text">{:\\app\\common\\util\\TemplateText::get('ui.copyright_video_unavailable', ['name'=>mac_default($obj['vod_display_name'] ?? '',$obj['vod_name'] ?? '')])}</p><p class="ci-tip">{$GLOBALS['config']['app']['copyright_notice']|htmlspecialchars=ENT_QUOTES}</p>
+{if condition="$obj['vod_jumpurl'] neq ''"}{php}$ciWaitTpl = \app\common\util\TemplateText::raw('ink.redirect_in', ['seconds' => '__S__']);{/php}<p class="ci-tip" id="ci-wait-text" data-template="{$ciWaitTpl|htmlspecialchars=ENT_QUOTES}">{:\\app\\common\\util\\TemplateText::get('ink.redirect_in', ['seconds' => 3])}</p><b id="wait" hidden>3</b><div class="ci-row ci-row--center"><a class="ci-btn" id="href" href="<?php echo htmlspecialchars(mac_safe_url($obj['vod_jumpurl']), ENT_QUOTES); ?>">{:\\app\\common\\util\\TemplateText::get('ui.jump')}</a></div>{/if}
+<div class="ci-row ci-row--center"><a class="ci-pill" href="{:mac_url('index/index')}">{:\\app\\common\\util\\TemplateText::get('ui.back_to_home')}</a></div></section>
+{if condition="$obj['vod_jumpurl'] neq ''"}<script>
+(function () {
+  var wait = document.getElementById('wait'), text = document.getElementById('ci-wait-text'), link = document.getElementById('href');
+  var left = parseInt(wait.textContent, 10) || 0, tpl = text.getAttribute('data-template') || '';
+  var timer = setInterval(function () { left -= 1; if (tpl) text.textContent = tpl.replace('__S__',String(Math.max(left, 0))); if (left <= 0) { clearInterval(timer); window.location.href = link.href; } }, 1000);
+})();
+</script>{/if}
+</main>
+</body>
+</html>

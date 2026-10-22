@@ -1,0 +1,40 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}if (!isset($vpPlain)) { $vpPlain = function ($v) { $v = (string)$v; for ($i = 0; $i < 4; $i++) { $d = html_entity_decode($v, ENT_QUOTES | ENT_HTML5, 'UTF-8'); if ($d === $v) { break; } $v = $d; } return trim($v); }; } $vpTitle = $vpPlain(($obj['vod_display_name'] ?? '') !== '' ? $obj['vod_display_name'] : ($obj['vod_name'] ?? ''));{/php}<!DOCTYPE html>
+<html data-template-theme="velvet-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}" data-fx="vt smooth" data-fx-lerp="0.09" data-fx-vt-style="velvet-modern">
+<head>
+{include file="seo/auto"}
+{include file="public/include"}
+</head>
+<body class="vp-page-detail">
+{include file="public/head"}
+<main id="main-content" class="vp-main">
+  <div class="vp-wrap">
+    <header class="vp-bill" data-ai-group>
+      {:\\app\\common\\util\\AutoIcon::ui('download', ['size'=>'xl', 'plate'=>true, 'class'=>'vp-bill-ico'])}
+      <p class="vp-eyebrow">{:\\app\\common\\util\\TemplateText::get('ui.downloads')}</p>
+      <h1 class="vp-bill-title">{$vpTitle|htmlspecialchars=ENT_QUOTES}</h1>
+      <span class="vp-orn" aria-hidden="true"></span>
+      <div class="vp-bill-tools">
+        <nav class="vp-chips"><a class="vp-chip" href="{:htmlspecialchars(mac_url_vod_detail($obj), ENT_QUOTES)}">{:\\app\\common\\util\\TemplateText::get('ui.details')}</a><a class="vp-chip" href="{:htmlspecialchars(mac_url_vod_play($obj,['sid'=>1,'nid'=>1]), ENT_QUOTES)}">{:\\app\\common\\util\\TemplateText::get('ui.watch_online')}</a></nav>
+      </div>
+    </header>
+    {notempty name="obj.vod_down_list"}
+    {maccms:foreach name="obj.vod_down_list" id="vpSource"}
+    <section class="vp-panel">
+      <h2 class="vp-sub">{$vpSource.player_info.show|mac_default=$vpSource.from|htmlspecialchars=ENT_QUOTES}</h2>
+      <div class="vp-episodes">{maccms:foreach name="vpSource.urls" id="vpEpisode"}<a class="vp-ep" href="{:mac_safe_url($vpEpisode['url'])}" target="_blank" rel="nofollow noopener noreferrer">{$vpEpisode.name|htmlspecialchars=ENT_QUOTES}</a>{/maccms:foreach}</div>
+    </section>
+    {/maccms:foreach}
+    {else/}{php}$vpEmptyKey = 'vp.stage_is_set'; $vpEmptyTextKey = 'ui.no_download_links_are_available_for_this_video';{/php}{include file="public/empty"}{php}$vpEmptyKey = ''; $vpEmptyTextKey = '';{/php}
+    {/notempty}
+  </div>
+</main>
+{include file="public/foot"}
+</body>
+</html>

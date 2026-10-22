@@ -1,0 +1,16 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{if condition="$GLOBALS['config']['comment']['status'] eq 1"}<section class="vp-act vp-reviews" aria-labelledby="vp-reviews-h">
+  <header class="vp-act-head" data-ai-group>
+    {:\\app\\common\\util\\AutoIcon::ui('messages', ['size'=>'lg', 'plate'=>true, 'class'=>'vp-act-ico'])}
+    <p class="vp-eyebrow" aria-hidden="true">{:\\app\\common\\util\\TemplateText::get('vp.from_the_audience')}</p>
+    <h2 class="vp-act-title" id="vp-reviews-h">{:\\app\\common\\util\\TemplateText::get('vp.reviews')}</h2>
+    <span class="vp-orn" aria-hidden="true"></span>
+  </header>
+  <div class="mac_comment" data-id="{$obj.vod_id|intval}" data-mid="1"><p class="community-empty">{:\\app\\common\\util\\TemplateText::get('ui.loading_comments')}</p></div>
+</section><script>MAC.Comment.Init();MAC.Comment.Show(1);</script>{/if}

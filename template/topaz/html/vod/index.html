@@ -1,0 +1,32 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="topaz" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/auto"}
+{include file="public/include"}
+</head>
+<body class="tz-page-list">
+{include file="public/head"}
+{include file="public/labelsorts"}
+<main id="main-content" class="tz-main tz-wrap tz-list">
+  <header class="tz-callout">
+    <nav class="tz-crumbs" aria-label="{:\\app\\common\\util\\TemplateText::get('topaz.breadcrumb')}"><a href="{$maccms.path}">{:\\app\\common\\util\\TemplateText::get('ui.home')}</a>{:\\app\\common\\util\\AutoIcon::ui('chevron-right', ['class'=>'tz-i tz-dir', 'tint'=>'none'])}<span aria-current="page">{:\\app\\common\\util\\TemplateText::get('ui.all_videos')}</span></nav>
+    <span class="tz-eyebrow">{:\\app\\common\\util\\TemplateText::get('topaz.library')}</span>
+    <h1>{:\\app\\common\\util\\TemplateText::get('ui.all_videos')}</h1>
+    <p>{:\\app\\common\\util\\TemplateText::get('topaz.library_sub')}</p>
+  </header>
+  {include file="public/chipbar"}
+  {include file="public/sortmenu"}
+  <div class="tz-grid" data-grid-fill>{maccms:vod num="20" paging="no" type="all" order="desc" by="time" id="vo"}{include file="public/vodbox"}{/maccms:vod}</div>
+  {empty name="__LIST__"}{include file="public/empty"}{/empty}
+  <p class="tz-more"><a class="tz-btn tz-btn--goldline" href="{:mac_url('label/sort')}">{:\\app\\common\\util\\TemplateText::get('ui.browse_all_videos')}{:\\app\\common\\util\\AutoIcon::ui('arrow-right', ['class'=>'tz-i tz-dir', 'tint'=>'none'])}</a></p>
+</main>
+{include file="public/foot"}
+</body>
+</html>

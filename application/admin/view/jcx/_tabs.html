@@ -1,0 +1,19 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}$jxE = function ($v) { return htmlspecialchars((string)$v, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'); };
+$jxN = function ($key, $n) { return htmlspecialchars(str_replace('{' . 'n}', (string)$n, (string)lang($key)), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'); };
+$jxS = '__STATIC__/admin/icons/admin-icons.svg?v=' . $admin_icons_v;
+$jxJson = json_encode($jx_cfg, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);{/php}
+{if condition="isset($jcx_install_error) && $jcx_install_error neq ''"}
+<div class="ax-notice ax-notice--danger" role="alert"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-circle-alert"/></svg><div><p>{:$jxE(sprintf(lang('admin/ux/jcx/err_install'), $jcx_install_error))}</p></div></div>
+{/if}
+{if condition="count($jx_tabs) gt 1"}
+<nav class="ax-tabs jx-tabs" aria-label="{:$jxE(lang('admin/ux/jcx/title'))}">
+    {volist name="jx_tabs" id="t"}<a href="{:$jxE($t['url'])}"{if condition="$t.cur"} aria-current="page"{/if}>{:$jxE($t['label'])}</a>{/volist}
+</nav>
+{/if}

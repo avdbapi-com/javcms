@@ -1,0 +1,46 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Based on MacCMS 10 (Apache-2.0) by magicblack, changed by JavCMS.
+JavCMS changes: Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors,
+JavCMS Community License 1.0. The MacCMS parts stay under the Apache License 2.0.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{include file="../../../application/admin/view/public/head" /}
+<link rel="stylesheet" href="__STATIC__/css/admin_safety_workspace.css?{$MAC_VERSION}&rev=4">
+
+<main class="page-container safety-workspace safety-workspace--kit">
+    {include file="../../../application/admin/view/public/page_head" icon="ai-file-scan" title="admin/safety/file_inspect" /}
+
+    <section class="ax-section" aria-labelledby="file-scan-title">
+        <h2 id="file-scan-title">{:lang('admin/safety/file_inspect')}</h2>
+        <div class="ax-notice safety-notice" role="note" id="file-inspect-help">
+            <svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-info"/></svg>
+            <div>{:lang('admin/safety/file_inspect_tip')}</div>
+        </div>
+        <form class="layui-form" method="get" action="{:url('safety/file')}" target="_self">
+            <input name="ck" value="1" type="hidden">
+            <fieldset class="safety-options" aria-describedby="file-inspect-help">
+                <legend class="ax-sr-only">{:lang('admin/safety/file_inspect')}</legend>
+                <input type="checkbox" lay-skin="primary" name="ft[]" value="1" title="{:lang('admin/safety/file_msg3')}" checked>
+                <input type="checkbox" lay-skin="primary" name="ft[]" value="2" title="{:lang('admin/safety/file_msg4')}" checked>
+            </fieldset>
+            <button type="submit" class="ax-btn ax-btn--primary safety-run"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-play"/></svg>{:lang('admin/ux/tools/scan_run')}</button>
+        </form>
+    </section>
+
+    <section class="ax-section" aria-labelledby="content-scan-title">
+        <h2 id="content-scan-title">{:lang('admin/ux/tools/scan_content_title')}</h2>
+        <p class="ax-help">{:lang('admin/ux/tools/scan_content_help')}</p>
+        <a class="ax-btn" href="{:url('safety/data')}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-shield-alert"/></svg>{:lang('admin/ux/tools/scan_content_open')}</a>
+    </section>
+</main>
+
+{include file="../../../application/admin/view/public/foot" /}
+<script type="text/javascript">
+    $(function () {
+        $('.safety-run').on('click', function () { if (window.AxUX) { AxUX.toast({:json_encode(lang('admin/ux/kit/loading'))}, 'info'); } });
+    });
+</script>
+</body>
+</html>

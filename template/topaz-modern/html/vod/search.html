@@ -1,0 +1,53 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="topaz-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/vod_search"}
+{include file="public/include"}
+</head>
+<body class="tp-page-list tp-page-search">
+{include file="public/head"}
+{php}if (!isset($tpPlain)) { $tpPlain = function ($v) { $v = (string)$v; for ($i = 0; $i < 6; $i++) { $d = html_entity_decode($v, ENT_QUOTES | ENT_HTML5, 'UTF-8'); if ($d === $v) { break; } $v = $d; } return trim($v); }; }
+$tplQ = []; foreach (['wd', 'actor', 'class', 'tag', 'director'] as $tplQk) { $tplQ[$tplQk] = $tpPlain(isset($param[$tplQk]) ? $param[$tplQk] : ''); }
+$tplLbl = []; foreach (['actor' => 'ui.actor', 'class' => 'genres', 'tag' => 'ui.tag', 'director' => 'ui.director'] as $tplLk => $tplLv) { $tplLbl[$tplLk] = preg_replace('/[\s:：]+$/u', '', \app\common\util\TemplateText::raw($tplLv)); }
+$tplBy = isset($param['by']) ? (string)$param['by'] : '';
+$tplKeep = []; foreach (['wd', 'actor', 'class', 'tag', 'director', 'area', 'lang', 'year', 'letter'] as $tplKf) { if (isset($param[$tplKf]) && $param[$tplKf] !== '') { $tplKeep[$tplKf] = html_entity_decode((string)$param[$tplKf], ENT_QUOTES | ENT_HTML5, 'UTF-8'); } }
+$tplSortUrl = function ($by) use ($tplKeep) { $q = $tplKeep; if ($by !== '') { $q['by'] = $by; } return mac_url_search($q, 'vod'); };
+$tplSorts = [
+  ['label' => \app\common\util\TemplateText::raw('latest'), 'url' => $tplSortUrl('time'), 'on' => ($tplBy === '' || $tplBy === 'time'), 'icon' => 'bolt'],
+  ['label' => \app\common\util\TemplateText::raw('ui.popular'), 'url' => $tplSortUrl('hits'), 'on' => ($tplBy === 'hits'), 'icon' => 'fire'],
+  ['label' => \app\common\util\TemplateText::raw('top_rated'), 'url' => $tplSortUrl('score'), 'on' => ($tplBy === 'score'), 'icon' => 'star'],
+  ['label' => \app\common\util\TemplateText::raw('most_liked'), 'url' => $tplSortUrl('up'), 'on' => ($tplBy === 'up'), 'icon' => 'thumb-up'],
+];
+ob_start();
+{/php}
+  <div class="tp-tray-body"><div class="tp-grid" data-grid-fill data-tp-stagger>{maccms:vod num="20" paging="yes" type="all" order="desc" by="time" pageurl="vod/search" id="vo"}{include file="public/vodbox"}{/maccms:vod}</div>
+  {if condition="$__PAGING__.record_total eq 0"}{php}$tpEmptyTitle = \app\common\util\TemplateText::raw('tp.no_results'); $tpEmptyText = \app\common\util\TemplateText::raw('ui.no_results_found_try_another_category_or_search'); $tpEmptyIcon = 'search'; $tpEmptyScene = 'search-empty';{/php}{include file="public/empty"}{/if}</div>
+  {include file="public/list_note"}{include file="public/paging"}
+{php}
+$tpGridHtml = ob_get_clean();
+$tpCount = (int)\app\common\util\AvdbLanguage::resultCount($__PAGING__, isset($__LIST__) ? $__LIST__ : null)['n'];
+$tpEyebrow = \app\common\util\TemplateText::raw('search_results'); $tpCrumb = \app\common\util\TemplateText::raw('search_results'); $tpH1Plain = true;
+if ($tplQ['wd'] !== '') { $tpH1Html = '<q class="tp-q">' . htmlspecialchars($tplQ['wd'], ENT_QUOTES, 'UTF-8') . '</q>'; }
+elseif ($tplQ['actor'] !== '') { $tpH1 = $tplLbl['actor'] . ': ' . $tplQ['actor']; }
+elseif ($tplQ['class'] !== '') { $tpH1 = $tplLbl['class'] . ': ' . $tplQ['class']; }
+elseif ($tplQ['tag'] !== '') { $tpH1 = $tplLbl['tag'] . ': ' . $tplQ['tag']; }
+elseif ($tplQ['director'] !== '') { $tpH1 = $tplLbl['director'] . ': ' . $tplQ['director']; }
+elseif ($tplBy === 'hits') { $tpH1 = \app\common\util\TemplateText::raw('ui.popular_videos'); }
+elseif ($tplBy === 'score') { $tpH1 = \app\common\util\TemplateText::raw('ui.video_with_the_highest_score'); }
+else { $tpH1 = \app\common\util\TemplateText::raw('ui.all_videos'); }
+{/php}
+<main id="main-content" class="tp-main tp-wrap tp-list">
+  {include file="public/listhead"}
+  <div class="tp-filters">{include file="public/sortmenu"}{include file="public/catrail"}</div>
+  {$tpGridHtml}
+</main>
+{include file="public/foot"}
+</body>
+</html>

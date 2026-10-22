@@ -1,0 +1,31 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="ember-modern" data-fx="vt" data-fx-vt-style="ember-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/art_detail"}
+{include file="public/include"}
+</head>
+<body class="t-page-detail">
+{include file="public/head"}
+<main id="main-content" class="t-main" tabindex="-1">
+  {php}$emtObjName = $emtDe($obj['art_name'] ?? '');{/php}
+  <div class="t-wrap">
+    <nav class="t-crumb" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.main_navigation')}" style="margin-top:18px"><a href="{$maccms.path|htmlspecialchars=ENT_QUOTES}">{:\\app\\common\\util\\TemplateText::get('ui.home')}</a><svg class="t-i t-flip" aria-hidden="true"><use href="{$tplIcons}#chev-right"></use></svg><a href="{:mac_url('art/index')}">{:\\app\\common\\util\\TemplateText::get('ui.articles')}</a></nav>
+    <article class="t-article">
+      <h1 class="t-vh1">{$emtObjName|htmlspecialchars=ENT_QUOTES}</h1>
+      <p class="t-cm"><time datetime="{$obj.art_time|date='Y-m-d',###}">{$obj.art_time|date='Y-m-d',###}</time><span class="t-score"><svg class="t-i" aria-hidden="true"><use href="{$tplIcons}#eye"></use></svg>{$obj.art_hits|intval}</span></p>
+      <div class="t-article-body">{php}$jcxBody = \app\common\util\TemplateContent::html($obj['art_page_list'][$param['page']]['content'] ?? ''); $jcxCut = 0; $jcxAt = 0; for ($jcxN = 0; $jcxN < 3 && $jcxAt !== false; $jcxN++) { $jcxAt = stripos($jcxBody, '</p>', $jcxAt); if ($jcxAt !== false) { $jcxAt += 4; $jcxCut = $jcxN === 2 ? $jcxAt : 0; } } $jcxHead = strtolower(substr($jcxBody, 0, $jcxCut)); foreach (['div', 'blockquote', 'ul', 'ol', 'table', 'figure'] as $jcxTag) { if (substr_count($jcxHead, '<' . $jcxTag) !== substr_count($jcxHead, '</' . $jcxTag . '>')) { $jcxCut = 0; } } echo $jcxCut ? substr($jcxBody, 0, $jcxCut) . '<div data-jcx-at="P13"></div>' . substr($jcxBody, $jcxCut) : $jcxBody . '<div data-jcx-at="P13"></div>';{/php}</div>
+    </article>
+    {include file="public/paging"}
+    {if condition="$GLOBALS['config']['comment']['status'] eq 1"}<section class="t-comments"><div class="mac_comment" data-id="{$obj.art_id|intval}" data-mid="2"><h2>{:\\app\\common\\util\\TemplateText::get('ui.comments')}</h2><p>{:\\app\\common\\util\\TemplateText::get('ui.loading_comments')}</p></div></section><script>MAC.Comment.Init();MAC.Comment.Show(1);</script>{/if}
+  </div>
+</main>
+{include file="public/foot"}
+</body>
+</html>

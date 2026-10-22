@@ -1,0 +1,88 @@
+/*
+ * This file is part of JavCMS - https://javcms.net
+ * Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+ * License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+ * See the LICENSE and NOTICE files that come with JavCMS.
+ * Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Telegram: https://t.me/avdb_api
+ */
+/* Overview page (ADMIN-IA-BRIEF.md 4.7). Kit tokens only (--ax-*); components from admin_ux.css. */
+body.admin-studio .ov { max-width: 1200px; margin: 0 auto; padding: 24px; color: var(--ax-text); }
+body.admin-studio .ov h2 { margin: 0; color: var(--ax-text); font-size: 15px; font-weight: 650; line-height: 1.4; }
+body.admin-studio .ov .ax-section { margin: 0 0 16px; }
+body.admin-studio .ov .ax-section > h2 { margin-bottom: 12px; }
+body.admin-studio .ov-link { display: inline-flex; align-items: center; gap: 6px; padding: 0; border: 0; background: none; color: var(--ax-accent); font: inherit; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+body.admin-studio .ov-link .ax-ic { width: 14px; height: 14px; }
+
+/* block 2: status strip */
+body.admin-studio .ov-strip { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0 0 20px; padding: 0; list-style: none; }
+body.admin-studio .ov-strip li { display: inline-flex; align-items: center; gap: 8px; list-style: none; }
+/* repair r2 (beginner R2-1 / visual R2-3): the theme chip and its Change theme button wrap on phones instead of running off the screen */
+body.admin-studio .ov-strip li { flex-wrap: wrap; max-width: 100%; min-width: 0; }
+body.admin-studio .ov-strip .ax-chip { white-space: normal; max-width: 100%; }
+body.admin-studio .ov-strip .ax-chip--info { color: var(--ax-muted); }
+
+/* block 3: needs your attention */
+body.admin-studio .ov-attention { border-left: 3px solid var(--ax-warn); }
+body.admin-studio .ov-attention:focus { outline: 2px solid var(--ax-accent); outline-offset: 2px; }
+body.admin-studio .ov-rows { margin: 0; padding: 0; list-style: none; }
+body.admin-studio .ov-row { display: flex; align-items: center; gap: 12px; min-height: 48px; padding: 8px 0; border-top: 1px solid var(--ax-line); }
+body.admin-studio .ov-row:first-child { border-top: 0; }
+body.admin-studio .ov-row[hidden] { display: none; }
+body.admin-studio .ov-row__icon { flex: 0 0 auto; color: var(--ax-warn); }
+body.admin-studio .ov-row__text { flex: 1 1 auto; min-width: 0; }
+body.admin-studio .ov-more { margin-top: 8px; }
+
+/* block 4: getting started */
+body.admin-studio .ov-section-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
+body.admin-studio .ov-section-head .ax-help { margin: 2px 0 0; }
+body.admin-studio .ov-steps { margin: 0; padding: 0; list-style: none; counter-reset: none; }
+body.admin-studio .ov-step { display: flex; align-items: center; gap: 12px; min-height: 56px; padding: 10px 0; border-top: 1px solid var(--ax-line); }
+body.admin-studio .ov-step__state { flex: 0 0 20px; width: 20px; height: 20px; color: var(--ax-faint); }
+body.admin-studio .ov-step.is-done .ov-step__state { color: var(--ax-ok); }
+body.admin-studio .ov-step__text { display: flex; flex-direction: column; flex: 1 1 auto; min-width: 0; }
+body.admin-studio .ov-step__text strong { color: var(--ax-text); font-weight: 600; }
+body.admin-studio .ov-step.is-done .ov-step__text strong { color: var(--ax-muted); }
+body.admin-studio .ov-step__text span { color: var(--ax-faint); font-size: 12.5px; }
+body.admin-studio .ov-step__actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 6px; flex: 0 0 auto; }
+body.admin-studio .ov-gs-show { margin: -4px 0 16px; }
+body.admin-studio .ov-gs-show[hidden], body.admin-studio .ov-gs[hidden] { display: none; }
+
+/* block 5: your site today */
+body.admin-studio .ov-today { margin: 0 0 16px; }
+body.admin-studio .ov-today > h2 { margin-bottom: 12px; }
+body.admin-studio .ov-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 12px; }
+body.admin-studio .ov-card { display: grid; grid-template-columns: auto 1fr; grid-template-areas: "icon n" "label label" "sub sub"; align-items: center; gap: 4px 10px; min-height: 104px; padding: 16px; border: 1px solid var(--ax-line); border-radius: var(--ax-r-lg); background: var(--ax-surface); color: var(--ax-text); text-decoration: none; transition: border-color .16s ease-out, transform .16s ease-out; }
+body.admin-studio .ov-card:hover { border-color: var(--ax-field); transform: translateY(-1px); color: var(--ax-text); }
+body.admin-studio .ov-card__icon { grid-area: icon; width: 20px; height: 20px; color: var(--ax-accent); }
+body.admin-studio .ov-card__n { grid-area: n; font-size: 24px; font-weight: 650; font-variant-numeric: tabular-nums; line-height: 1.2; text-align: right; }
+body.admin-studio .ov-card__label { grid-area: label; color: var(--ax-muted); font-size: 13px; }
+body.admin-studio .ov-card__sub { grid-area: sub; color: var(--ax-ok); font-size: 12.5px; }
+body.admin-studio .ov-updated { display: flex; align-items: center; gap: 6px; margin: 10px 0 0; }
+
+/* blocks 6 + 7 */
+body.admin-studio .ov-split { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; margin-bottom: 16px; }
+body.admin-studio .ov-split .ax-section { margin: 0; }
+body.admin-studio .ov-import__text { margin: 0 0 12px; color: var(--ax-muted); }
+body.admin-studio .ov-quick__list { display: flex; flex-wrap: wrap; gap: 8px; }
+
+/* block 8 */
+body.admin-studio .ov-dl { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin: 0; }
+body.admin-studio .ov-dl dt { color: var(--ax-faint); font-size: 12.5px; font-weight: 400; }
+body.admin-studio .ov-dl dd { margin: 2px 0 0; color: var(--ax-text); overflow-wrap: anywhere; }
+body.admin-studio .ov-system { margin-top: 16px; }
+body.admin-studio .ov-system > summary { cursor: pointer; color: var(--ax-text); font-weight: 600; min-height: 32px; }
+body.admin-studio .ov-system > summary .ax-help { font-weight: 400; margin-left: 6px; }
+body.admin-studio .ov-system__table { margin-top: 8px; width: 100%; }
+body.admin-studio .ov-system__table th { width: 40%; color: var(--ax-muted); font-weight: 400; text-align: left; }
+
+@media (max-width: 767px) {
+    body.admin-studio .ov { padding: 16px 12px; }
+    body.admin-studio .ov-step, body.admin-studio .ov-row { display: grid; grid-template-columns: 20px minmax(0, 1fr); column-gap: 12px; row-gap: 8px; }
+    body.admin-studio .ov-step__actions { grid-column: 2; justify-content: flex-start; }
+    body.admin-studio .ov-row > .ax-btn { grid-column: 2; justify-self: start; }
+    body.admin-studio .ov-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+    body.admin-studio .ov-card { min-height: 92px; padding: 12px; }
+    body.admin-studio .ov-dl { grid-template-columns: 1fr; gap: 8px; }
+}
+@media (prefers-reduced-motion: reduce) { body.admin-studio .ov * { transition: none !important; animation: none !important; } }

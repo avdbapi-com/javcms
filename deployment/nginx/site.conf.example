@@ -1,0 +1,7 @@
+# Standalone vhost example; preserve panel TLS/certificate settings instead of replacing them.
+server {
+    listen 80;
+    server_name example.com;
+    root __WEBROOT__;
+    include __DEPLOYMENT_DIR__/nginx/locations.conf;
+}

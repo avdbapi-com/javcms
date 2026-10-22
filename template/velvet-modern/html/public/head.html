@@ -1,0 +1,101 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}$tplNoPic = $maccms['path_tpl'] . 'assets/brand/ph-dark.svg'; $vpIco = $maccms['path_tpl'] . 'assets/icons.svg?v=20261010-r1'; $vpRoman = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII', 'XIII', 'XIV', 'XV']; $vpAid = intval($maccms['aid'] ?? 0); $vpLangs = \app\common\util\TemplateText::languages(); $vpLangNow = (string)($maccms['ui_lang'] ?? 'en');{/php}
+<a class="vp-skip" href="#main-content">{:\\app\\common\\util\\TemplateText::get('ui.skip_to_content')}</a>
+<header class="vp-header" id="vp-header">
+  <div class="vp-bar">
+    <div class="vp-wrap vp-bar-in">
+      <div class="vp-bar-start">
+        <button class="vp-iconbtn vp-menu-btn" type="button" aria-controls="vp-drawer" aria-expanded="false" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.menu')}" data-vp-drawer-open data-fx="morph" data-fx-icons="menu close"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 5h16M4 12h16M4 19h16"/></svg></button>
+        <nav class="vp-nav" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.main_navigation')}">
+          <ul>
+            <li><a href="{$maccms.path|htmlspecialchars=ENT_QUOTES}"{if condition="$vpAid eq 1"} class="is-active" aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::navIcon('home', '', ['i'=>0])}{:\\app\\common\\util\\TemplateText::get('ui.home')}</a></li>
+            <li><a href="{:mac_url('label/new')}"{if condition="$vpAid eq 9999"} class="is-active" aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::navIcon('latest', '', ['i'=>1])}{:\\app\\common\\util\\TemplateText::get('ui.latest')}</a></li>
+            <li><a href="{:mac_url('label/hot')}"{if condition="$vpAid eq 9998"} class="is-active" aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::navIcon('hot', '', ['i'=>2])}{:\\app\\common\\util\\TemplateText::get('ui.popular')}</a></li>
+            <li><a href="{:mac_url('label/score')}"{if condition="$vpAid eq 9997"} class="is-active" aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::navIcon('top', '', ['i'=>3])}{:\\app\\common\\util\\TemplateText::get('top_rated')}</a></li>
+          </ul>
+        </nav>
+      </div>
+      {include file="public/brand"}
+      <div class="vp-bar-end">
+        <div class="vp-cats">
+          <button class="vp-cats-btn" type="button" aria-expanded="false" aria-controls="vp-cats-card" data-vp-cats>{:\\app\\common\\util\\AutoIcon::navIcon('categories', '', ['i'=>4])}{:\\app\\common\\util\\TemplateText::get('ui.categories')}<svg class="vp-i" aria-hidden="true"><use href="{$vpIco}#chevron-down"></use></svg></button>
+          <div class="vp-cats-card" id="vp-cats-card" hidden>
+            <p class="vp-cats-title">{:\\app\\common\\util\\TemplateText::get('vp.programme')}</p>
+            <ol class="vp-leaders" data-ai-group>
+              {maccms:type ids="parent" flag="vod" order="asc" by="sort" id="vpNavCat" key="vpNavKey" hide_empty="1"}{php}$vpN = $vpRoman[$vpNavKey - 1] ?? (string)$vpNavKey;{/php}<li style="--i:{$vpNavKey|intval}"><a href="{:mac_url_type($vpNavCat)}"{if condition="$vpNavCat.type_id eq $GLOBALS['type_id'] || $vpNavCat.type_id eq $GLOBALS['type_pid']"} aria-current="page"{/if}><span class="vp-num" aria-hidden="true">{$vpN}</span>{:\\app\\common\\util\\AutoIcon::icon('category', $vpNavCat['type_name'] ?? '', ['size'=>'lg', 'plate'=>true, 'i'=>$vpNavKey, 'class'=>'vp-lico'])}<span class="vp-lname">{:\\app\\common\\util\\TemplateText::get(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)($vpNavCat['type_name'] ?? '')))}</span><span class="vp-dots" aria-hidden="true"></span><span class="vp-lcount">{:number_format((float)mac_data_count($vpNavCat['type_id'],'all'))}</span></a></li>{/maccms:type}
+            </ol>
+          </div>
+        </div>
+        <button class="vp-iconbtn vp-search-btn" type="button" aria-controls="vp-search" aria-expanded="false" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.search')}" title="{:\\app\\common\\util\\TemplateText::get('ui.search')}" data-vp-search-open>{:\\app\\common\\util\\AutoIcon::ui('search', ['class'=>'vp-i'])}</button>
+        {include file="public/languages"}
+        <button class="vp-iconbtn vp-mode" type="button" data-color-toggle data-light-label="{:\\app\\common\\util\\TemplateText::get('ui.light_mode')}" data-dark-label="{:\\app\\common\\util\\TemplateText::get('ui.dark_mode')}" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.light_mode')}" title="{:\\app\\common\\util\\TemplateText::get('ui.light_mode')}" data-fx="morph theme-reveal" data-fx-morph-map="dark:sun light:moon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg><span class="vp-sr" data-color-label>{:\\app\\common\\util\\TemplateText::get('ui.light_mode')}</span></button>
+        <div class="vp-account" data-vp-account>
+          <a class="vp-iconbtn vp-user-link" href="{:mac_url('user/login')}" data-vp-user data-center="{:mac_url('user/index')}" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.member_center')}" title="{:\\app\\common\\util\\TemplateText::get('ui.member_center')}">{:\\app\\common\\util\\AutoIcon::ui('user-circle', ['class'=>'vp-i'])}</a>
+          <div class="vp-pop-panel vp-user-menu" hidden>
+            <p class="vp-user-head" data-vp-user-name></p>
+            <a href="{:mac_url('user/index')}">{:\\app\\common\\util\\AutoIcon::ui('user-circle', ['class'=>'vp-i'])}{:\\app\\common\\util\\TemplateText::get('ui.my_account')}</a>
+            <a href="{:mac_url('user/favs')}">{:\\app\\common\\util\\AutoIcon::ui('heart', ['class'=>'vp-i'])}{:\\app\\common\\util\\TemplateText::get('favorites')}</a>
+            <a href="{:mac_url('user/plays')}">{:\\app\\common\\util\\AutoIcon::ui('history', ['class'=>'vp-i'])}{:\\app\\common\\util\\TemplateText::get('ui.play_record')}</a>
+            <button type="button" data-vp-logout>{:\\app\\common\\util\\AutoIcon::ui('log-out', ['class'=>'vp-i'])}{:\\app\\common\\util\\TemplateText::get('log_out')}</button>
+            <p class="vp-history-h">{:\\app\\common\\util\\TemplateText::get('vp.history_title')}</p>
+            <ul class="vp-history-list" data-vp-history></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="vp-searchdrop" id="vp-search" hidden>
+    <div class="vp-wrap">
+      <form class="vp-search" action="{:mac_url('vod/search')}" method="get" role="search">
+        {:\\app\\common\\util\\AutoIcon::ui('search', ['class'=>'vp-i'])}
+        <input type="search" name="wd" value="{$param.wd|htmlspecialchars=ENT_QUOTES,'UTF-8',false}" placeholder="{:\\app\\common\\util\\TemplateText::get('ui.search_videos_or_performers')}" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.search')}" autocomplete="off" maxlength="60" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="vp-suggest-list" data-vp-suggest>
+        <button class="vp-btn vp-btn-gold" type="submit">{:\\app\\common\\util\\TemplateText::get('ui.search')}</button>
+        <div class="vp-suggest" id="vp-suggest-list" data-lenis-prevent role="listbox" aria-label="{:\\app\\common\\util\\TemplateText::get('vp.suggestions')}" hidden></div>
+      </form>
+      {include file="public/hotwords"}
+    </div>
+  </div>
+</header>
+<div class="vp-drawer" id="vp-drawer" role="dialog" aria-modal="true" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.menu')}" hidden>
+  <div class="vp-drawer-shade" data-vp-drawer-close></div>
+  <div class="vp-drawer-curtain">
+    <div class="vp-drawer-scroll">
+    <div class="vp-drawer-head">
+      <span></span>
+      {include file="public/brand"}
+      <button class="vp-iconbtn vp-drawer-close" type="button" aria-label="{:\\app\\common\\util\\TemplateText::get('template_ui_close')}" data-vp-drawer-close><svg class="vp-i" aria-hidden="true"><use href="{$vpIco}#close"></use></svg></button>
+    </div>
+    <div class="vp-drawer-body">
+      <nav aria-label="{:\\app\\common\\util\\TemplateText::get('ui.main_navigation')}">
+        <ol class="vp-drawer-list" data-ai-group>
+          <li><a href="{$maccms.path|htmlspecialchars=ENT_QUOTES}"{if condition="$vpAid eq 1"} aria-current="page"{/if}><span class="vp-num" aria-hidden="true">I</span>{:\\app\\common\\util\\AutoIcon::navIcon('home', '', ['size'=>'lg', 'plate'=>true, 'i'=>0, 'class'=>'vp-dico'])}<span class="vp-dname">{:\\app\\common\\util\\TemplateText::get('ui.home')}</span></a></li>
+          <li><a href="{:mac_url('label/new')}"{if condition="$vpAid eq 9999"} aria-current="page"{/if}><span class="vp-num" aria-hidden="true">II</span>{:\\app\\common\\util\\AutoIcon::navIcon('latest', '', ['size'=>'lg', 'plate'=>true, 'i'=>1, 'class'=>'vp-dico'])}<span class="vp-dname">{:\\app\\common\\util\\TemplateText::get('ui.latest')}</span></a></li>
+          <li><a href="{:mac_url('label/hot')}"{if condition="$vpAid eq 9998"} aria-current="page"{/if}><span class="vp-num" aria-hidden="true">III</span>{:\\app\\common\\util\\AutoIcon::navIcon('hot', '', ['size'=>'lg', 'plate'=>true, 'i'=>2, 'class'=>'vp-dico'])}<span class="vp-dname">{:\\app\\common\\util\\TemplateText::get('ui.popular')}</span></a></li>
+          <li><a href="{:mac_url('label/score')}"{if condition="$vpAid eq 9997"} aria-current="page"{/if}><span class="vp-num" aria-hidden="true">IV</span>{:\\app\\common\\util\\AutoIcon::navIcon('top', '', ['size'=>'lg', 'plate'=>true, 'i'=>3, 'class'=>'vp-dico'])}<span class="vp-dname">{:\\app\\common\\util\\TemplateText::get('top_rated')}</span></a></li>
+          <li><a href="{:mac_url('label/sort')}"{if condition="$vpAid eq 9995"} aria-current="page"{/if}><span class="vp-num" aria-hidden="true">V</span>{:\\app\\common\\util\\AutoIcon::navIcon('all', '', ['size'=>'lg', 'plate'=>true, 'i'=>4, 'class'=>'vp-dico'])}<span class="vp-dname">{:\\app\\common\\util\\TemplateText::get('ui.all_videos_59a0c0')}</span></a></li>
+          {maccms:actor num="1" order="desc" by="time" id="vpHasActor"}<li><a href="{:mac_url('actor/index')}"><span class="vp-num" aria-hidden="true">&#10022;</span>{:\\app\\common\\util\\AutoIcon::navIcon('actors', '', ['size'=>'lg', 'plate'=>true, 'i'=>5, 'class'=>'vp-dico'])}<span class="vp-dname">{:\\app\\common\\util\\TemplateText::get('ui.performers')}</span></a></li>{/maccms:actor}
+          {maccms:topic num="1" order="desc" by="time" id="vpHasTopic"}<li><a href="{:mac_url('topic/index')}"><span class="vp-num" aria-hidden="true">&#10022;</span>{:\\app\\common\\util\\AutoIcon::navIcon('topics', '', ['size'=>'lg', 'plate'=>true, 'i'=>6, 'class'=>'vp-dico'])}<span class="vp-dname">{:\\app\\common\\util\\TemplateText::get('ui.collections')}</span></a></li>{/maccms:topic}
+          {maccms:art num="1" order="desc" by="time" id="vpHasArt"}<li><a href="{:mac_url('art/index')}"><span class="vp-num" aria-hidden="true">&#10022;</span>{:\\app\\common\\util\\AutoIcon::navIcon('articles', '', ['size'=>'lg', 'plate'=>true, 'i'=>7, 'class'=>'vp-dico'])}<span class="vp-dname">{:\\app\\common\\util\\TemplateText::get('ui.articles')}</span></a></li>{/maccms:art}
+        </ol>
+      </nav>
+      <p class="vp-drawer-sub" id="vp-drawer-cats">{:\\app\\common\\util\\AutoIcon::navIcon('categories', '', ['size'=>'sm'])}<span>{:\\app\\common\\util\\TemplateText::get('ui.categories')}</span></p>
+      <ol class="vp-drawer-list" data-ai-group>
+        {maccms:type ids="parent" flag="vod" order="asc" by="sort" id="vpDrCat" key="vpDrKey" hide_empty="1"}{php}$vpN = $vpRoman[$vpDrKey - 1] ?? (string)$vpDrKey;{/php}<li><a href="{:mac_url_type($vpDrCat)}"{if condition="$vpDrCat.type_id eq $GLOBALS['type_id'] || $vpDrCat.type_id eq $GLOBALS['type_pid']"} aria-current="page"{/if}><span class="vp-num" aria-hidden="true">{$vpN}</span>{:\\app\\common\\util\\AutoIcon::icon('category', $vpDrCat['type_name'] ?? '', ['size'=>'lg', 'plate'=>true, 'i'=>$vpDrKey, 'class'=>'vp-dico'])}<span class="vp-dname">{:\\app\\common\\util\\TemplateText::get(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)($vpDrCat['type_name'] ?? '')))}</span></a></li>{/maccms:type}
+      </ol>
+      <p class="vp-drawer-sub">{:\\app\\common\\util\\AutoIcon::ui('languages', ['size'=>'sm'])}<span>{:\\app\\common\\util\\TemplateText::get('ui.language')}</span></p>
+      <div class="vp-drawer-langs">{volist name="vpLangs" id="vpLangName"}<a href="{:\\app\\common\\util\\TemplateText::languageUrl($key)}" lang="{$key|htmlspecialchars=ENT_QUOTES}" hreflang="{$key|htmlspecialchars=ENT_QUOTES}"{if condition="$key eq $vpLangNow"} aria-current="true"{/if}>{$vpLangName|htmlspecialchars=ENT_QUOTES}</a>{/volist}</div>
+      <div class="vp-drawer-tools">
+        <button class="vp-btn vp-btn-ghost" type="button" data-color-toggle data-light-label="{:\\app\\common\\util\\TemplateText::get('ui.light_mode')}" data-dark-label="{:\\app\\common\\util\\TemplateText::get('ui.dark_mode')}" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.light_mode')}"><svg class="vp-i vp-sun-i" aria-hidden="true"><use href="{$vpIco}#sun"></use></svg><svg class="vp-i vp-moon-i" aria-hidden="true"><use href="{$vpIco}#moon"></use></svg><span data-color-label>{:\\app\\common\\util\\TemplateText::get('ui.light_mode')}</span></button>
+        <a class="vp-btn vp-btn-gold" href="{:mac_url('user/login')}" data-vp-user data-center="{:mac_url('user/index')}">{:\\app\\common\\util\\AutoIcon::ui('user-circle', ['class'=>'vp-i'])}<span data-vp-user-label>{:\\app\\common\\util\\TemplateText::get('ui.member_center')}</span></a>
+      </div>
+    </div>
+    </div>
+    <span class="vp-fringe" aria-hidden="true"></span>
+  </div>
+</div>

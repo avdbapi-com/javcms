@@ -1,0 +1,22 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<h2 class="tz-sr">{:\\app\\common\\util\\TemplateText::get('ui.comments')}</h2>
+<form class="comment_form tz-cform" method="post" action="{:mac_url('comment/saveData')}" onsubmit="return false">
+  <input name="comment_pid" type="hidden" value="0">{:token()}
+  <label class="tz-sr" for="comment-content">{:\\app\\common\\util\\TemplateText::get('ui.your_comment')}</label>
+  <textarea id="comment-content" class="comment_content tz-input tz-textarea" name="comment_content" maxlength="200" required placeholder="{:\\app\\common\\util\\TemplateText::get('ui.enter_comment')}"></textarea>
+  <div class="tz-cform-row">
+    {if condition="$comment.verify eq 1"}<div class="tz-cform-verify"><label class="tz-sr" for="comment-verify">{:\\app\\common\\util\\TemplateText::get('ui.verification_code')}</label><input id="comment-verify" name="verify" class="tz-input mac_verify" maxlength="4" autocomplete="off" placeholder="{:\\app\\common\\util\\TemplateText::get('ui.verification_code')}"></div>{/if}
+    <span class="tz-note comment_remaining"></span>
+    <button type="button" class="tz-btn tz-btn--gold comment_submit">{:\\app\\common\\util\\AutoIcon::ui('message', ['class'=>'tz-i', 'tint'=>'none'])}<span>{:\\app\\common\\util\\TemplateText::get('ui.post_comment')}</span></button>
+  </div>
+</form>
+<div class="tz-msgs">{maccms:comment num="10" paging="yes" pageurl="comment/ajax" rid="$param.rid" mid="$param.mid" order="desc" by="id"}<article class="tz-msg"><div class="tz-msg-head"><strong>{$vo.comment_name|htmlspecialchars=ENT_QUOTES}</strong><time>{$vo.comment_time|mac_day}</time></div><p>{$vo.comment_content|htmlspecialchars=ENT_QUOTES}</p>{volist name="vo.sub" id="reply"}<div class="tz-msg-reply"><div class="tz-msg-head"><strong>{$reply.comment_name|htmlspecialchars=ENT_QUOTES}</strong><time>{$reply.comment_time|mac_day}</time></div><p>{$reply.comment_content|htmlspecialchars=ENT_QUOTES}</p></div>{/volist}<div class="tz-msg-act"><button type="button" class="tz-linkbtn comment_reply" data-id="{$vo.comment_id}">{:\\app\\common\\util\\TemplateText::get('ui.reply')}</button><button type="button" class="tz-linkbtn comment_report" data-id="{$vo.comment_id}">{:\\app\\common\\util\\TemplateText::get('ui.report')}</button></div></article>{/maccms:comment}</div>
+{if condition="$__PAGING__.record_total eq 0"}<p class="tz-note tz-note--center tz-note--ico">{:\\app\\common\\util\\AutoIcon::ui('message', ['class'=>'tz-i'])}{:\\app\\common\\util\\TemplateText::get('ui.no_comments_yet_start_the_conversation')}</p>{/if}
+<div class="tz-cpages">{if condition="$__PAGING__.page_current gt 1"}<button type="button" class="tz-btn tz-btn--line tz-btn--sm" onclick="MAC.Comment.Show({$__PAGING__.page_prev|intval})">{:\\app\\common\\util\\TemplateText::get('ui.previous_page')}</button>{/if}{if condition="$__PAGING__.page_current lt $__PAGING__.page_total"}<button type="button" class="tz-btn tz-btn--line tz-btn--sm" onclick="MAC.Comment.Show({$__PAGING__.page_next|intval})">{:\\app\\common\\util\\TemplateText::get('ui.next_page')}</button>{/if}</div>
+<script>MAC.Comment.Login={$comment.login|intval};MAC.Comment.Verify={$comment.verify|intval};MAC.Verify.Init();</script>

@@ -1,0 +1,65 @@
+{
+ "about": "Original JavCMS Lottie animations (JavCMS Community License 1.0). Placeholder colours: accent rgb(255,61,129), accent2 rgb(124,92,255), ink rgb(230,232,240), muted rgb(138,144,166), surface rgb(30,34,51) - recolour with CSS on the rendered SVG.",
+ "animations": [
+  {
+   "file": "lottie-anims/search-empty.json",
+   "svg": "svg-anims/search-empty.svg",
+   "use": "no search results",
+   "loop": true,
+   "frames": 180,
+   "fps": 60,
+   "seconds": 3.0,
+   "bytes": 8179
+  },
+  {
+   "file": "lottie-anims/empty-library.json",
+   "svg": "svg-anims/empty-library.svg",
+   "use": "empty list / collection / performers / articles",
+   "loop": true,
+   "frames": 240,
+   "fps": 60,
+   "seconds": 4.0,
+   "bytes": 23604
+  },
+  {
+   "file": "lottie-anims/not-found.json",
+   "svg": "svg-anims/not-found.svg",
+   "use": "404 page",
+   "loop": true,
+   "frames": 180,
+   "fps": 60,
+   "seconds": 3.0,
+   "bytes": 11301
+  },
+  {
+   "file": "lottie-anims/loading-orbit.json",
+   "svg": "svg-anims/loading-orbit.svg",
+   "use": "loading / spinner",
+   "loop": true,
+   "frames": 90,
+   "fps": 60,
+   "seconds": 1.5,
+   "bytes": 3666
+  },
+  {
+   "file": "lottie-anims/success-check.json",
+   "svg": "svg-anims/success-check.svg",
+   "use": "success, copied, saved (play once)",
+   "loop": false,
+   "frames": 90,
+   "fps": 60,
+   "seconds": 1.5,
+   "bytes": 3409
+  },
+  {
+   "file": "lottie-anims/heart-burst.json",
+   "svg": "svg-anims/heart-burst.svg",
+   "use": "favourite added (play once)",
+   "loop": false,
+   "frames": 54,
+   "fps": 60,
+   "seconds": 0.9,
+   "bytes": 10664
+  }
+ ]
+}

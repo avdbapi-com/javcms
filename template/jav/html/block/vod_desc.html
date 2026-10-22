@@ -1,0 +1,8 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{if condition="$tplDesc neq ''"}<section class="film-desc reveal" aria-labelledby="film-desc-title"><h2 id="film-desc-title">{:\\app\\common\\util\\AutoIcon::ui('file-text', ['size'=>'sm'])}{$tplL.description}</h2><div class="film-desc__body" data-clamp><p>{$tplDesc|htmlspecialchars=ENT_QUOTES}</p></div><button class="desc-toggle" type="button" aria-expanded="false" hidden>{:\\app\\common\\util\\TemplateText::get('jav.show_more')}</button></section>{/if}

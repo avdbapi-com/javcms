@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Help center
+    url: https://help.avdbapi.com
+    about: Guides with screenshots for installing, importing, ads and SEO.
+  - name: Questions and setup help (Telegram support)
+    url: https://t.me/avdbapi_support
+    about: Ask the team in a private Telegram chat.
+  - name: Report a security problem privately
+    url: https://github.com/avdbapi-com/javcms/security/advisories/new
+    about: Please do not open a public issue for security problems.

@@ -1,0 +1,26 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="ember" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/actor_index"}
+{include file="public/include"}
+</head>
+<body class="e-page-list">
+{include file="public/head"}
+<main id="main-content" class="e-main container">
+  <div class="e-head h_x" data-ai-group>
+    <h1 class="e-title">{:\\app\\common\\util\\AutoIcon::ui('user', ['class'=>'e-ico'])}{:\\app\\common\\util\\TemplateText::get('ui.performers')}</h1>
+  </div>
+  <ul class="e-grid is-portrait e-actor-grid" data-grid-fill data-ai-group>{maccms:actor num="24" paging="yes" pageurl="actor/index" order="desc" by="time" id="vo"}{include file="public/actorcard"}{/maccms:actor}</ul>
+  {if condition="$__PAGING__.record_total eq 0"}<div class="e-empty">{:\\app\\common\\util\\AutoIcon::scene('empty-library')}{:\\app\\common\\util\\TemplateText::get('ui.no_results_found_try_another_category_or_search')}<br><a href="{:mac_url('label/new')}">{:\\app\\common\\util\\TemplateText::get('ui.latest_videos')}</a></div>{/if}
+  {include file="public/paging"}
+</main>
+{include file="public/foot"}
+</body>
+</html>

@@ -1,0 +1,11 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}$nnRecIds = []; $nnRecShown = 0; $nnRecPick = $nnPickIds('vod_score desc', 8, [intval($obj['vod_id'] ?? 0)]);{/php}
+<aside class="nn-side" aria-labelledby="nn-h-rec"><div class="nn-cap"><h2 class="nn-cap-title" id="nn-h-rec">{:\\app\\common\\util\\AutoIcon::ui('sparkles', ['class'=>'nn-cap-ai'])}<span>{:\\app\\common\\util\\TemplateText::get('nn.recommended')}</span></h2></div>
+<div class="nn-rlist" data-grid-fill>{if condition="$nnRecPick neq ''"}{maccms:vod num="8" ids="'.$nnRecPick.'" order="desc" by="score" paging="no" id="vo"}{php}$nnRecIds[] = intval($vo['vod_id']); $nnRecShown++;{/php}{include file="public/rcard"}{/maccms:vod}{/if}{if condition="$nnRecShown lt 8"}{php}$nnRecNeed = 8 - $nnRecShown; $nnRecNot = implode(',', array_merge([intval($obj['vod_id'] ?? 0)], $nnRecIds));{/php}{maccms:vod num="'.$nnRecNeed.'" not="'.$nnRecNot.'" type="current" order="desc" by="score" paging="no" id="vo"}{php}$nnRecIds[] = intval($vo['vod_id']); $nnRecShown++;{/php}{include file="public/rcard"}{/maccms:vod}{/if}</div>
+</aside>

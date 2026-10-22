@@ -1,0 +1,30 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="onyx-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+<script src="{:MAC_PATH}static/template-ui/theme.js?v=20261007-theme1"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex, follow">
+<meta name="theme-color" content="#0a0a0a">
+<title>{:\\app\\common\\util\\TemplateText::get('ui.maintenance')}</title>
+<link rel="icon" href="{:MAC_PATH_TEMPLATE}assets/brand/favicon.svg?v=20261010-om10" type="image/svg+xml">
+<link rel="stylesheet" href="{:MAC_PATH_TEMPLATE}assets/css/onyx-modern.css?v=20261014-wf1">
+</head>
+<body class="page-state">
+<main class="ox-main" id="main-content">
+  <section class="ox-msg" aria-labelledby="ox-close-h">
+    <svg class="ox-mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false" style="width:56px;height:56px"><path class="ox-mark-slab" fill-rule="evenodd" d="M6 6h21v21H6zM13.5 11.5v10l8.5-5z"/><path class="ox-mark-x" d="M5 1.5v7M1.5 5h7"/></svg>
+    <p class="ox-mono-l" style="margin-top:22px"><span aria-hidden="true">[503] &mdash; </span>{:\\app\\common\\util\\TemplateText::get('ui.maintenance')}</p>
+    <h1 id="ox-close-h">{:\\app\\common\\util\\TemplateText::get('ui.the_site_is_undergoing_maintenance')}</h1>
+    <p>{$close_tip|htmlspecialchars=ENT_QUOTES}</p>
+  </section>
+</main>
+</body>
+</html>

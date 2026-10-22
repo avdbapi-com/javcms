@@ -1,0 +1,47 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{if condition="!empty($obj['vod_pwd_down']) && session('1-5-'.$obj['vod_id']) != '1'"}{include file="vod/downer_pwd"}{else/}
+<!DOCTYPE html>
+<html data-template-theme="jav-modern" data-template-variant="modern" lang="{$maccms.ui_lang|htmlspecialchars=ENT_QUOTES}"{if condition="$maccms.ui_lang eq 'ar'"} dir="rtl"{/if}>
+<head>{include file="seo/auto"}
+    
+    
+    {include file="block/include"}
+</head>
+<body class="gallery-page">
+{include file="block/head"}
+    
+    <main id="main-content" class="container down-page">
+        <div class="down-card">
+            <h1 class="film-title down-title">{$obj.vod_display_name|mac_default=$obj.vod_name|htmlspecialchars=ENT_QUOTES}</h1>
+            <div class="watch-actions down-actions">
+                <a class="btn-watch" href="{:htmlspecialchars(mac_url_vod_play($obj,['sid'=>1,'nid'=>1]), ENT_QUOTES)}" data-magnet><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg>{:\\app\\common\\util\\TemplateText::get('jav.watch_now')}</a>
+                <a class="btn-ghost" href="{:htmlspecialchars(mac_url_vod_detail($obj), ENT_QUOTES)}">{:\\app\\common\\util\\TemplateText::get('details')}</a>
+            </div>
+            {notempty name="obj.vod_down_list"}
+            <h2 class="down-head">{:\\app\\common\\util\\TemplateText::get('download_links')}</h2>
+            {maccms:foreach name="obj.vod_down_list" id="source"}
+            <section class="down-source">
+                <h3>{$source.player_info.show|mac_default=$source.from|htmlspecialchars=ENT_QUOTES}</h3>
+                <ul class="stui-play__list clearfix">
+                    {maccms:foreach name="source.urls" id="episode"}
+                    <li><a href="{:mac_safe_url($episode['url'])}" rel="nofollow noopener noreferrer" target="_blank">{$episode.name|htmlspecialchars=ENT_QUOTES}</a></li>
+                    {/maccms:foreach}
+                </ul>
+            </section>
+            {/maccms:foreach}
+            {else/}
+            <div class="empty-state">{:\\app\\common\\util\\AutoIcon::scene('empty-library')}<p>{:\\app\\common\\util\\TemplateText::get('no_download_links_are_available_for_this_video')}</p></div>
+            {/notempty}
+        </div>
+    </main>
+    {include file="block/copy"}
+{include file="block/foot"}
+</body>
+</html>
+{/if}

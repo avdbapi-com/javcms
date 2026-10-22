@@ -1,0 +1,21 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<nav class="nx-umenu{if condition="$nxUAct neq 'index'"} is-strip{/if}" aria-label="{:\\app\\common\\util\\TemplateText::get('account_navigation')}">
+<a href="{:mac_url('user/index')}"{if condition="$nxUAct eq 'index'"} aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::ui('user-circle', ['class'=>'nx-ico', 'i'=>1])}{:\\app\\common\\util\\TemplateText::get('ui.my_information')}</a>
+<a href="{:mac_url('user/info')}"{if condition="$nxUAct eq 'info'"} aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::ui('edit', ['class'=>'nx-ico', 'i'=>2])}{:\\app\\common\\util\\TemplateText::get('ui.modify_the_information')}</a>
+<a href="{:mac_url('user/favs')}"{if condition="$nxUAct eq 'favs'"} aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::ui('heart', ['class'=>'nx-ico', 'i'=>3])}{:\\app\\common\\util\\TemplateText::get('ui.my_collection')}</a>
+<a href="{:mac_url('user/plays')}"{if condition="$nxUAct eq 'plays'"} aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::ui('history', ['class'=>'nx-ico', 'i'=>4])}{:\\app\\common\\util\\TemplateText::get('ui.play_record')}</a>
+<a href="{:mac_url('user/upgrade')}"{if condition="$nxUAct eq 'upgrade'"} aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::ui('crown', ['class'=>'nx-ico', 'i'=>5])}{:\\app\\common\\util\\TemplateText::get('ui.upgrade_member')}</a>
+<a href="{:mac_url('user/popedom')}"{if condition="$nxUAct eq 'popedom'"} aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::ui('lock', ['class'=>'nx-ico', 'i'=>6])}{:\\app\\common\\util\\TemplateText::get('ui.my_authority')}</a>
+<a href="{:mac_url('user/buy')}"{if condition="$nxUAct eq 'buy'"} aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::ui('ticket', ['class'=>'nx-ico', 'i'=>7])}{:\\app\\common\\util\\TemplateText::get('ui.recharge_center')}</a>
+<a href="{:mac_url('user/orders')}"{if condition="$nxUAct eq 'orders' || $nxUAct eq 'cards'"} aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::ui('file-text', ['class'=>'nx-ico', 'i'=>8])}{:\\app\\common\\util\\TemplateText::get('ui.recharge_record')}</a>
+<a href="{:mac_url('user/plog')}"{if condition="$nxUAct eq 'plog'"} aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::ui('coins', ['class'=>'nx-ico', 'i'=>9])}{:\\app\\common\\util\\TemplateText::get('ui.points_record')}</a>
+<a href="{:mac_url('user/comment')}"{if condition="$nxUAct eq 'comment'"} aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::ui('message', ['class'=>'nx-ico', 'i'=>10])}{:\\app\\common\\util\\TemplateText::get('ui.comments')}</a>
+<a href="{:mac_url('user/gbook')}"{if condition="$nxUAct eq 'gbook'"} aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::ui('messages', ['class'=>'nx-ico', 'i'=>11])}{:\\app\\common\\util\\TemplateText::get('ui.recent_messages')}</a>
+<a href="{:mac_url('user/logout')}">{:\\app\\common\\util\\AutoIcon::ui('log-out', ['class'=>'nx-ico', 'i'=>12])}{:\\app\\common\\util\\TemplateText::get('ui.quit')}</a>
+</nav>

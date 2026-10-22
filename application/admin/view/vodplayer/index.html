@@ -1,0 +1,131 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Based on MacCMS 10 (Apache-2.0) by magicblack, changed by JavCMS.
+JavCMS changes: Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors,
+JavCMS Community License 1.0. The MacCMS parts stay under the Apache License 2.0.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{include file="../../../application/admin/view/public/head" /}
+<link rel="stylesheet" href="__STATIC__/css/admin_content_workspace_v1.css?v={:filemtime(ROOT_PATH . 'static/css/admin_content_workspace_v1.css')}">
+<link rel="stylesheet" href="__STATIC__/css/admin_player_workspace_v1.css?v={:filemtime(ROOT_PATH . 'static/css/admin_player_workspace_v1.css')}">
+{php}$axSprite = '__STATIC__/admin/icons/admin-icons.svg?v=' . $admin_icons_v;{/php}
+<div class="page-container p10 admin-player-workspace-v1 ax-list">
+    {include file="../../../application/admin/view/public/page_head" icon="ai-play" title="admin/ux/menu/player_sources" help="admin/ux/help/player_sources" /}
+
+    <div class="ax-toolbar">
+        <a href="javascript:void(0)" data-href="{:url('info')}" data-title="{:lang('add')}" class="ax-btn ax-btn--primary j-iframe"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axSprite}#ai-plus"/></svg>{:lang('add')}</a>
+        <a href="{:url('import')}" class="ax-btn"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axSprite}#ai-upload"/></svg>{:lang('import')}</a>
+        <span class="ax-toolbar__spacer"></span>
+        <span class="ax-toolbar__count" id="axSelCount" aria-live="polite"></span>
+        <div class="ax-menu ax-menu--end">
+            <button type="button" class="ax-btn" aria-haspopup="menu" aria-expanded="false">{:lang('admin/ux/kit/bulk')}<svg class="ax-ic ax-ic--chevron" aria-hidden="true" focusable="false"><use href="{$axSprite}#ai-chevron-down"/></svg></button>
+            <div class="ax-menu__list" role="menu" hidden>
+                <button type="button" class="ax-menu__item j-select" role="menuitem" data-href="{:url('index/select')}?tab=vod&col=status&tpl=select_state&url=vodplayer/field" data-title="{:lang('select_status')}" data-width="270" data-height="100" data-checkbox="1"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axSprite}#ai-toggle-right"/></svg>{:lang('status')}</button>
+                <button type="button" class="ax-menu__item j-select" role="menuitem" data-href="{:url('index/select')}?tab=vod&col=ps&tpl=select_state&url=vodplayer/field" data-title="{:lang('status_parse')}" data-width="270" data-height="100" data-checkbox="1"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axSprite}#ai-toggle-left"/></svg>{:lang('status_parse')}</button>
+            </div>
+        </div>
+    </div>
+
+    <form class="layui-form" method="post" id="pageListForm" aria-label="{:lang('admin/ux/menu/player_sources')}">
+        <input type="hidden" name="__token__" value="{:mac_admin_csrf_token()}">
+        {if condition="empty($list)"}
+        {include file="../../../application/admin/view/public/empty_state" icon="ai-play" text="admin/ux/content/empty_generic" /}
+        {else/}
+        <div class="ax-table-wrap">
+        <table class="ax-table ax-table--cards">
+            <thead>
+            <tr>
+                <th class="ax-col-check"><input type="checkbox" lay-skin="primary" lay-filter="allChoose" aria-label="{:lang('admin/ux/content/select_all')}"></th>
+                <th class="ax-num">{:lang('sort')}</th>
+                <th>{:lang('name')}</th>
+                <th>{:lang('status')}</th>
+                <th class="ax-hide-md">{:lang('status_parse')}</th>
+                <th class="ax-hide-md">{:lang('target')}</th>
+                <th class="ax-hide-md">{:lang('admin/ux/content/api_url')}</th>
+                <th class="ax-hide-md">{:lang('remarks')}</th>
+                <th class="ax-row-actions"><span class="ax-sr-only">{:lang('opt')}</span></th>
+            </tr>
+            </thead>
+            <tbody>
+            {volist name="list" id="vo"}
+            <tr>
+                <td class="ax-col-check" data-label=""><input type="checkbox" name="ids[]" value="{$vo.from|htmlspecialchars}" class="layui-checkbox checkbox-ids" lay-skin="primary" aria-label="{$vo.show|htmlspecialchars}"></td>
+                <td class="ax-num" data-label="{:lang('sort')}">{$vo.sort}</td>
+                <td class="ax-cell-title" data-label="{:lang('name')}"><span>{$vo.show|htmlspecialchars}</span><span class="ax-cell-title__meta"><code>{$vo.from|htmlspecialchars}</code></span></td>
+                <td data-label="{:lang('status')}">{if condition="$vo.status eq 1"}<span class="ax-chip ax-chip--ok">{:lang('admin/ux/content/enabled')}</span>{else/}<span class="ax-chip ax-chip--off">{:lang('admin/ux/content/disabled')}</span>{/if}</td>
+                <td class="ax-hide-md" data-label="{:lang('status_parse')}">{if condition="$vo.ps eq 1"}<span class="ax-chip ax-chip--ok">{:lang('admin/ux/content/enabled')}</span>{else/}<span class="ax-chip ax-chip--off">{:lang('admin/ux/content/disabled')}</span>{/if}</td>
+                <td class="ax-hide-md" data-label="{:lang('target')}">{if condition="$vo.target neq '_blank'"}{:lang('current')}{else/}{:lang('blank')}{/if}</td>
+                <td class="ax-hide-md ax-cell-clip" data-label="{:lang('admin/ux/content/api_url')}"><span title="{$vo.parse|htmlspecialchars}">{$vo.parse|htmlspecialchars}</span></td>
+                <td class="ax-hide-md ax-cell-wrap" data-label="{:lang('remarks')}">{$vo.des|htmlspecialchars}{if condition="!empty($vo['tip'])"}<span class="ax-cell-sub">{$vo.tip|htmlspecialchars}</span>{/if}</td>
+                <td class="ax-row-actions">
+                    <a class="ax-btn ax-btn--sm j-iframe" data-title="{:htmlspecialchars(lang('edit').' '.htmlspecialchars((string)$vo['from'],ENT_QUOTES,'UTF-8'),ENT_QUOTES,'UTF-8')}" data-href="{:url('info?id='.$vo['from'])}" href="javascript:void(0)"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axSprite}#ai-pencil"/></svg>{:lang('edit')}</a>
+                    <a class="ax-btn ax-btn--sm ax-btn--icon ax-btn--ghost" href="{:url('export?id='.$vo['from'])}" aria-label="{:lang('export')}" title="{:lang('export')}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axSprite}#ai-download"/></svg></a>
+                    <button type="button" class="ax-btn ax-btn--sm ax-btn--icon ax-btn--ghost ax-danger-text j-ax-del" data-href="{:url('del')}" data-ids="{$vo.from|htmlspecialchars}" aria-label="{:lang('del')}" title="{:lang('del')}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axSprite}#ai-trash-2"/></svg></button>
+                </td>
+            </tr>
+            {/volist}
+            </tbody>
+        </table>
+        </div>
+        {/if}
+    </form>
+</div>
+
+{include file="../../../application/admin/view/public/foot" /}
+<script type="application/json" id="axListLang">{:json_encode([
+    'selected'=>lang('admin/ux/kit/selected'), 'select_first'=>lang('admin/ux/kit/select_first'), 'failed'=>lang('admin/ux/kit/request_failed'),
+    'del_title'=>lang('del'), 'del_msg'=>lang('admin/ux/content/confirm_delete_n'), 'del_one'=>lang('admin/ux/content/confirm_delete_one'), 'delall_ok'=>lang('del')
+], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP)}</script>
+<script type="text/javascript">
+    var curUrl = "{:url('vodplayer/index')}";
+    layui.use(['laypage', 'layer', 'form'], function () {
+        var laypage = layui.laypage, form = layui.form, $ = layui.jquery;
+        var L = JSON.parse(document.getElementById('axListLang').textContent);
+        if (document.getElementById('pages')) {
+            laypage.render({
+                elem: 'pages', count: {$total|default=0|intval}, limit: {$limit|default=20|intval}, limits: [10, 20, 50, 100, 200, 500, 1000], curr: {$page|default=1|intval},
+                layout: ['count', 'prev', 'page', 'next', 'limit', 'skip'],
+                jump: function (obj, first) { if (!first) { location.href = curUrl.replace('%7Bpage%7D', obj.curr).replace('%7Blimit%7D', obj.limit); } }
+            });
+        }
+        function selIds() { return $('#pageListForm .checkbox-ids:checked').map(function () { return this.value; }).get(); }
+        function syncCount() { var n = selIds().length; $('#axSelCount').text(n ? AxUX.format(L.selected, { n: n }) : ''); }
+        form.on('checkbox', function () { setTimeout(syncCount, 0); });
+        $(document).on('change', '#pageListForm input[type="checkbox"]', syncCount);
+        function idsFor(btn) { return btn.attr('data-ids') ? [btn.attr('data-ids')] : selIds(); }
+        function post(url, data) {
+            data.__token__ = $('#pageListForm input[name="__token__"]').val();
+            return $.ajax({ url: url, type: 'POST', dataType: 'json', data: data });
+        }
+        function done(res) {
+            var ok = res && res.code == 1;
+            AxUX.toast(res && res.msg ? res.msg : L.failed, ok ? 'ok' : 'error');
+            if (ok) { setTimeout(function () { location.reload(); }, 600); }
+        }
+        function fail() { AxUX.toast(L.failed, 'error'); }
+        // One-click row / bulk field change (Approve, Hide, Show, Turn on / off): nothing is lost, no confirm.
+        $(document).on('click', '.j-ax-field', function () {
+            var btn = $(this), ids = idsFor(btn);
+            if (!ids.length) { AxUX.toast(L.select_first, 'warn'); return; }
+            post(btn.attr('data-href'), { ids: ids.join(','), col: btn.attr('data-col'), val: btn.attr('data-val') }).done(done).fail(fail);
+        });
+        // Delete the row / the ticked rows: confirm names how many.
+        $(document).on('click', '.j-ax-del', function () {
+            var btn = $(this), ids = idsFor(btn);
+            if (!ids.length) { AxUX.toast(L.select_first, 'warn'); return; }
+            AxUX.confirm({ title: btn.attr('data-ax-title') || L.del_title, message: btn.attr('data-ax-msg') || L.del_msg, messageOne: btn.attr('data-ax-msg-one') || L.del_one, count: ids.length, confirmLabel: L.del_title }).then(function (yes) {
+                if (yes) { post(btn.attr('data-href'), { ids: ids.join(',') }).done(done).fail(fail); }
+            });
+        });
+        // FD7: delete everything = typed DELETE, the message names the total.
+        $(document).on('click', '.j-ax-delall', function () {
+            var btn = $(this), n = parseInt(btn.attr('data-count'), 10) || 0;
+            AxUX.confirm({ title: btn.attr('data-ax-title'), message: btn.attr('data-ax-msg'), count: n, typed: 'DELETE', confirmLabel: L.delall_ok }).then(function (yes) {
+                if (yes) { post(btn.attr('data-href'), { all: 1, confirm: 1 }).done(done).fail(fail); }
+            });
+        });
+    });
+</script>
+</body>
+</html>

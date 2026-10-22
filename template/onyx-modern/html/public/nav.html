@@ -1,0 +1,51 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<div class="ox-index" id="ox-index" role="dialog" aria-modal="true" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.menu')}" hidden data-ox-index>
+  <div class="ox-index-top">
+    <a class="ox-cell ox-logo" href="{$maccms.path}" aria-label="{$oxSite|htmlspecialchars=ENT_QUOTES}" tabindex="-1">{if condition="$oxLogoCustom neq ''"}<img class="ox-logo-img" src="{$oxLogoCustom}" alt="" width="160" height="40">{else/}<svg class="ox-mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><path class="ox-mark-slab" fill-rule="evenodd" d="M6 6h21v21H6zM13.5 11.5v10l8.5-5z"/><path class="ox-mark-xu" d="M5 1.5v7M1.5 5h7"/><path class="ox-mark-x" d="M5 1.5v7M1.5 5h7"/></svg><span class="ox-word"><span class="ox-word-t">{$oxBrand|htmlspecialchars=ENT_QUOTES}</span></span>{/if}</a>
+    <button class="ox-cell ox-index-close" type="button" data-ox-close><span class="ox-menu-t" data-ox-close-t{if condition="$oxFx"} data-fx="scramble" data-fx-trigger="hover" data-fx-duration="0.45"{/if}>{:\\app\\common\\util\\TemplateText::get('template_ui_close')}</span><svg class="ox-i" aria-hidden="true"><use href="{$tplIcons}#i-close"/></svg></button>
+  </div>
+  <div class="ox-index-body">
+    <nav class="ox-index-nav" data-ai-group aria-label="{:\\app\\common\\util\\TemplateText::get('ui.main_navigation')}">
+      <a href="{$maccms.path}" {if condition="$oxAid eq 1"}aria-current="page"{/if}><span class="ox-idx" aria-hidden="true">01</span><span class="ox-ib">{:\\app\\common\\util\\AutoIcon::navIcon('home', '', ['i'=>0])}</span><span class="ox-index-t"{if condition="$oxFx"} data-fx="scramble" data-fx-trigger="hover" data-fx-duration="0.45"{/if}>{:\\app\\common\\util\\TemplateText::get('ui.home')}</span></a>
+      <a href="{:mac_url('label/new')}" {if condition="$oxAid eq 9999"}aria-current="page"{/if}><span class="ox-idx" aria-hidden="true">02</span><span class="ox-ib">{:\\app\\common\\util\\AutoIcon::navIcon('latest', '', ['i'=>1])}</span><span class="ox-index-t"{if condition="$oxFx"} data-fx="scramble" data-fx-trigger="hover" data-fx-duration="0.45"{/if}>{:\\app\\common\\util\\TemplateText::get('latest')}</span></a>
+      <a href="{:mac_url('label/hot')}" {if condition="$oxAid eq 9998"}aria-current="page"{/if}><span class="ox-idx" aria-hidden="true">03</span><span class="ox-ib">{:\\app\\common\\util\\AutoIcon::navIcon('hot', '', ['i'=>2])}</span><span class="ox-index-t"{if condition="$oxFx"} data-fx="scramble" data-fx-trigger="hover" data-fx-duration="0.45"{/if}>{:\\app\\common\\util\\TemplateText::get('ui.popular')}</span></a>
+      <a href="{:mac_url('label/score')}" {if condition="$oxAid eq 9997"}aria-current="page"{/if}><span class="ox-idx" aria-hidden="true">04</span><span class="ox-ib">{:\\app\\common\\util\\AutoIcon::navIcon('top', '', ['i'=>3])}</span><span class="ox-index-t"{if condition="$oxFx"} data-fx="scramble" data-fx-trigger="hover" data-fx-duration="0.45"{/if}>{:\\app\\common\\util\\TemplateText::get('top_rated')}</span></a>
+      <a href="{:mac_url('label/up')}" {if condition="$oxAid eq 9996"}aria-current="page"{/if}><span class="ox-idx" aria-hidden="true">05</span><span class="ox-ib">{:\\app\\common\\util\\AutoIcon::navIcon('liked', '', ['i'=>4])}</span><span class="ox-index-t"{if condition="$oxFx"} data-fx="scramble" data-fx-trigger="hover" data-fx-duration="0.45"{/if}>{:\\app\\common\\util\\TemplateText::get('most_liked')}</span></a>
+      {if condition="$tplHasActor eq 1"}<a href="{:mac_url('actor/index')}"><span class="ox-idx" aria-hidden="true">06</span><span class="ox-ib">{:\\app\\common\\util\\AutoIcon::navIcon('actors', '', ['i'=>5])}</span><span class="ox-index-t"{if condition="$oxFx"} data-fx="scramble" data-fx-trigger="hover" data-fx-duration="0.45"{/if}>{:\\app\\common\\util\\TemplateText::get('ui.performers')}</span></a>{/if}{if condition="$tplHasTopic eq 1"}<a href="{:mac_url('topic/index')}"><span class="ox-idx" aria-hidden="true">07</span><span class="ox-ib">{:\\app\\common\\util\\AutoIcon::navIcon('topics', '', ['i'=>6])}</span><span class="ox-index-t"{if condition="$oxFx"} data-fx="scramble" data-fx-trigger="hover" data-fx-duration="0.45"{/if}>{:\\app\\common\\util\\TemplateText::get('ui.collections')}</span></a>{/if}{if condition="$tplHasArt eq 1"}<a href="{:mac_url('art/index')}"><span class="ox-idx" aria-hidden="true">08</span><span class="ox-ib">{:\\app\\common\\util\\AutoIcon::navIcon('articles', '', ['i'=>7])}</span><span class="ox-index-t"{if condition="$oxFx"} data-fx="scramble" data-fx-trigger="hover" data-fx-duration="0.45"{/if}>{:\\app\\common\\util\\TemplateText::get('ui.articles')}</span></a>{/if}
+    </nav>
+    <section class="ox-index-sec" aria-labelledby="ox-index-cats">
+      <h2 class="ox-index-h" id="ox-index-cats">{:\\app\\common\\util\\AutoIcon::navIcon('categories', '', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ui.categories')}</h2>
+      <div class="ox-index-cats" data-ai-group>
+        {maccms:type ids="parent" flag="vod" order="asc" by="sort" id="tplNav" key="tplNavK" hide_empty="1"}<a href="{:mac_url_type($tplNav)}" {if condition="$tplNav.type_id eq $oxTypeNow || $tplNav.type_id eq $oxTypePid"}aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::icon('category', $tplNav['type_name'] ?? '', ['i'=>(int)$tplNavK])}<span class="ox-index-t"{if condition="$oxFx"} data-fx="scramble" data-fx-trigger="hover" data-fx-duration="0.45"{/if}>{:\\app\\common\\util\\TemplateText::get(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)($tplNav['type_name'] ?? '')))}</span><span class="ox-ct-c">{:number_format((float)mac_data_count($tplNav['type_id'],'all'))}</span></a>{/maccms:type}
+        <a href="{:mac_url('label/sort')}" {if condition="$oxAid eq 9995"}aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::navIcon('all-videos')}<span class="ox-index-t"{if condition="$oxFx"} data-fx="scramble" data-fx-trigger="hover" data-fx-duration="0.45"{/if}>{:\\app\\common\\util\\TemplateText::get('ui.all_videos')}</span><span class="ox-ct-c">{:number_format((float)mac_data_count(0,'all'))}</span></a>
+      </div>
+    </section>
+    <section class="ox-index-sec" aria-labelledby="ox-index-acct">
+      <h2 class="ox-index-h" id="ox-index-acct">{:\\app\\common\\util\\AutoIcon::ui('user-circle', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ui.account')}</h2>
+      <div class="ox-index-row hd-guest">
+        <a class="ox-btn" href="{:mac_url('user/login')}" rel="nofollow">{:\\app\\common\\util\\AutoIcon::ui('log-in')}{:\\app\\common\\util\\TemplateText::get('ui.log_in')}</a>
+        <a class="ox-btn ox-btn-inv" href="{:mac_url('user/reg')}" rel="nofollow">{:\\app\\common\\util\\AutoIcon::ui('user-plus')}{:\\app\\common\\util\\TemplateText::get('ui.register')}</a>
+      </div>
+      <div class="ox-index-links hd-member" data-ai-group hidden>
+        <a href="{:mac_url('user/index')}" rel="nofollow">{:\\app\\common\\util\\AutoIcon::ui('user')}<span data-user-name>{:\\app\\common\\util\\TemplateText::get('ui.member_center')}</span></a>
+        <a href="{:mac_url('user/favs')}" rel="nofollow">{:\\app\\common\\util\\AutoIcon::ui('heart')}{:\\app\\common\\util\\TemplateText::get('ui.my_collection')}</a>
+        <a href="{:mac_url('user/plays')}" rel="nofollow">{:\\app\\common\\util\\AutoIcon::ui('history')}{:\\app\\common\\util\\TemplateText::get('ui.play_record')}</a>
+        <a href="{:mac_url('user/info')}" rel="nofollow">{:\\app\\common\\util\\AutoIcon::ui('key')}{:\\app\\common\\util\\TemplateText::get('ui.my_information')}</a>
+        <a href="{:mac_url('user/index')}" data-logout rel="nofollow">{:\\app\\common\\util\\AutoIcon::ui('log-out')}{:\\app\\common\\util\\TemplateText::get('log_out')}</a>
+      </div>
+      <p class="ox-index-sub">{:\\app\\common\\util\\AutoIcon::ui('history', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('viewing_history')}</p>
+      <div class="ox-hist-list" data-history-list></div>
+    </section>
+    <section class="ox-index-sec" aria-labelledby="ox-index-lang">
+      <h2 class="ox-index-h" id="ox-index-lang">{:\\app\\common\\util\\AutoIcon::ui('languages', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ui.language')}</h2>
+      {php}$oxLangs = \app\common\util\TemplateText::languages();{/php}<div class="ox-index-langs">{volist name="oxLangs" id="oxLangName"}<a href="{:\\app\\common\\util\\TemplateText::languageUrl($key)}" lang="{$key|htmlspecialchars=ENT_QUOTES}" hreflang="{$key|htmlspecialchars=ENT_QUOTES}" {if condition="$key eq $maccms['ui_lang']"}aria-current="true"{/if}><span class="ox-lang-code" aria-hidden="true">{$key|strtoupper}</span>{$oxLangName|htmlspecialchars=ENT_QUOTES}</a>{/volist}</div>
+      <button class="ox-index-mode" type="button" data-color-toggle data-fx="morph" data-fx-morph-map="dark:sun light:moon" data-light-label="{:\\app\\common\\util\\TemplateText::get('ui.light_mode')}" data-dark-label="{:\\app\\common\\util\\TemplateText::get('ui.dark_mode')}"><span data-color-label>{:\\app\\common\\util\\TemplateText::get('ui.light_mode')}</span><svg class="ox-morph" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg></button>
+    </section>
+  </div>
+</div>

@@ -1,0 +1,56 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}
+$nnFeat = []; $nnFeatIds = [];
+if (!isset($nnSeen) || !is_array($nnSeen)) { $nnSeen = []; }
+{/php}{maccms:vod num="8" level="9" type="all" order="desc" by="time" paging="no" id="vo"}{php}$nnFeat[] = $vo; $nnFeatIds[] = intval($vo['vod_id']);{/php}{/maccms:vod}{if condition="count($nnFeat) lt 8"}{php}$nnFeatNeed = 8 - count($nnFeat); $nnFeatNot = implode(',', $nnFeatIds);{/php}{maccms:vod num="'.$nnFeatNeed.'" not="'.$nnFeatNot.'" type="all" order="desc" by="hits_week" paging="no" id="vo"}{php}$nnFeat[] = $vo; $nnFeatIds[] = intval($vo['vod_id']);{/php}{/maccms:vod}{/if}{php}
+$nnSeen = array_merge($nnSeen, $nnFeatIds);
+$nnFeatN = count($nnFeat);
+$nnHeroName = isset($nnSiteName) ? $nnSiteName : trim(\app\common\util\AvdbLanguage::decodeEntities((string)($maccms['site_name'] ?? '')));
+{/php}
+<section class="nn-hero" data-fx="shader" data-fx-shader="{$maccms.path_tpl|htmlspecialchars=ENT_QUOTES}assets/js/gl-rain.js?v=20261011-n3" aria-labelledby="nn-h1">
+  <span class="nn-hero-drops" aria-hidden="true"></span>
+  <span class="nn-hero-haze" aria-hidden="true"></span>
+  <div class="nn-wrap nn-hero-in">
+    <div class="nn-hero-sign-wrap">
+      <h1 class="nn-hero-sign nn-sign nn-tube nn-flick" id="nn-h1" data-nn-tilt>{$nnHeroName|htmlspecialchars=ENT_QUOTES}</h1>
+      <div class="nn-puddle" aria-hidden="true"><span class="nn-sign nn-tube">{$nnHeroName|htmlspecialchars=ENT_QUOTES}</span></div>
+      <p class="nn-hero-tag">{:\\app\\common\\util\\TemplateText::get('nn.hero_tagline')}</p>
+    </div>
+    {if condition="$nnFeatN gt 0"}
+    <div class="nn-windows" data-nn-windows aria-roledescription="carousel" aria-label="{:\\app\\common\\util\\TemplateText::get('nn.featured')}">
+      <div class="nn-embla" data-nn-embla-viewport tabindex="0" aria-label="{:\\app\\common\\util\\TemplateText::get('nn.featured')}">
+        <div class="nn-embla-c">
+        {volist name="nnFeat" id="vo" key="nnFk"}{php}
+        $nnWT = trim((string)($vo['vod_display_name'] ?? '')); if ($nnWT === '') { $nnWT = trim(\app\common\util\AvdbLanguage::decodeEntities(strip_tags((string)($vo['vod_name'] ?? '')))); }
+        $nnWC = \app\common\util\AvdbLanguage::displayCode($vo); if ($nnWC === '' || stripos($nnWC, 'avdb-') === 0 || strlen($nnWC) > 26 || preg_match('/\s{2,}|[<>]/', $nnWC)) { $nnWC = ''; }
+        $nnWV = $nnWT; if ($nnWC !== '' && stripos($nnWT, $nnWC . ' ') === 0) { $nnWV = trim(substr($nnWT, strlen($nnWC))); if ($nnWV === '') { $nnWV = $nnWT; } }
+        $nnWImg = trim((string)($vo['vod_pic'] ?? '')); $nnWImg = $nnWImg !== '' ? (string)mac_url_img($nnWImg) : $tplNoPic;
+        $nnWImgCss = str_replace(['"', "'", '(', ')', '\\', ' ', "\n", "\r", "\t"], ['%22', '%27', '%28', '%29', '%5C', '%20', '', '', ''], $nnWImg);
+        $nnWDir = preg_match('/[\x{0590}-\x{08FF}\x{FB1D}-\x{FDFF}\x{FE70}-\x{FEFF}]/u', $nnWT) ? 'rtl' : 'ltr';
+        $nnWDur = trim((string)($vo['vod_duration'] ?? '')); $nnWHits = number_format(intval($vo['vod_hits'] ?? 0));
+        $nnWPlay = mac_url_vod_play($vo); $nnWDetail = mac_url_vod_detail($vo);
+        {/php}<article class="nn-win" style="--img:url('{$nnWImgCss|htmlspecialchars=ENT_QUOTES}');--i:{$nnFk}" aria-roledescription="slide" aria-label="{$nnFk} / {$nnFeatN}">
+          <a class="nn-win-link" href="{$nnWPlay|htmlspecialchars=ENT_QUOTES}">
+            <span class="nn-win-shot" data-fx="skeleton"><img data-lowres src="{$nnWImg|htmlspecialchars=ENT_QUOTES}" alt="" width="640" height="360" decoding="async"{if condition="$nnFk eq 1"} fetchpriority="high"{else/} loading="lazy"{/if}><span class="nn-ghost" aria-hidden="true"></span>{if condition="$nnWC neq ''"}<span class="nn-tag" aria-hidden="true">{$nnWC|htmlspecialchars=ENT_QUOTES}</span>{/if}{if condition="$nnWDur neq ''"}<span class="nn-dur">{$nnWDur|htmlspecialchars=ENT_QUOTES}</span>{/if}</span>
+            <span class="nn-win-body"><span class="nn-win-title" dir="{$nnWDir}">{if condition="$nnWC neq '' && $nnWV neq $nnWT"}<span class="nn-sr">{$nnWC|htmlspecialchars=ENT_QUOTES} </span>{/if}{$nnWV|htmlspecialchars=ENT_QUOTES}</span><span class="nn-win-meta"><svg class="nn-ico" aria-hidden="true"><use href="{$nnSvg|htmlspecialchars=ENT_QUOTES}#eye"></use></svg><span class="nn-ltr">{$nnWHits}</span><span class="nn-sr"> {:\\app\\common\\util\\TemplateText::get('ui.views')}</span></span></span>
+          </a>
+          <span class="nn-win-ctas"><a class="nn-btn nn-btn-primary nn-breathe" href="{$nnWPlay|htmlspecialchars=ENT_QUOTES}"><svg class="nn-ico" aria-hidden="true"><use href="{$nnSvg|htmlspecialchars=ENT_QUOTES}#play"></use></svg>{:\\app\\common\\util\\TemplateText::get('nn.watch_now')}</a><a class="nn-btn nn-btn-outline" href="{$nnWDetail|htmlspecialchars=ENT_QUOTES}">{:\\app\\common\\util\\TemplateText::get('ui.details')}</a></span>
+        </article>{/volist}
+        </div>
+      </div>
+      {if condition="$nnFeatN gt 1"}<div class="nn-win-nav">
+        <button class="nn-iconbtn nn-win-btn" type="button" data-nn-win-prev aria-label="{:\\app\\common\\util\\TemplateText::get('nn.previous')}" title="{:\\app\\common\\util\\TemplateText::get('nn.previous')}"><svg class="nn-ico nn-chev-flip" aria-hidden="true"><use href="{$nnSvg|htmlspecialchars=ENT_QUOTES}#chevl"></use></svg></button>
+        <button class="nn-iconbtn nn-win-btn nn-win-pause" type="button" data-nn-win-pause aria-pressed="false" aria-label="{:\\app\\common\\util\\TemplateText::get('nn.pause')}" title="{:\\app\\common\\util\\TemplateText::get('nn.pause')}" data-fx="morph" data-fx-icons="pause play"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="14" y="3" width="5" height="18" rx="1"/><rect x="5" y="3" width="5" height="18" rx="1"/></svg></button>
+        <button class="nn-iconbtn nn-win-btn" type="button" data-nn-win-next aria-label="{:\\app\\common\\util\\TemplateText::get('nn.next')}" title="{:\\app\\common\\util\\TemplateText::get('nn.next')}"><svg class="nn-ico nn-chev-flip" aria-hidden="true"><use href="{$nnSvg|htmlspecialchars=ENT_QUOTES}#chev"></use></svg></button>
+      </div>{/if}
+    </div>
+    {/if}
+  </div>
+  <svg class="nn-svgdefs" width="0" height="0" aria-hidden="true" focusable="false"><filter id="nn-ripple" x="-5%" y="-20%" width="110%" height="140%"><feTurbulence type="fractalNoise" baseFrequency="0.012 0.09" numOctaves="2" seed="4" result="n"><animate attributeName="baseFrequency" dur="11s" values="0.012 0.09;0.018 0.12;0.012 0.09" repeatCount="indefinite"/></feTurbulence><feDisplacementMap in="SourceGraphic" in2="n" scale="16" xChannelSelector="R" yChannelSelector="G"/></filter></svg>
+</section>

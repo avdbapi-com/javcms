@@ -1,0 +1,28 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!doctype html>
+<html data-template-theme="jav-modern" data-template-variant="modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head><title>{:\\app\\common\\util\\TemplateText::get('ui.video_access')}</title><meta name="robots" content="noindex, follow">{include file="block/include"}</head>
+<body class="gallery-player-frame">
+<main id="main-content" class="gallery-native-player">{$player_data}{$player_js}</main>
+{if condition="($popedom['code'] ?? 1) gt 1"}
+{php}$previewPoints=(string)($GLOBALS['config']['user']['vod_points_type'] ?? '0')==='1'?intval($obj['vod_points'] ?? 0):intval($obj['vod_points_play'] ?? 0);{/php}
+<template id="gallery-preview-permission"><section class="gallery-permission-card">
+<h1>{:\\app\\common\\util\\TemplateText::get('ui.access_required')}</h1>
+<p>{$popedom.msg|htmlspecialchars=ENT_QUOTES}</p>
+{if condition="$previewPoints gt 0"}
+<p>{:\\app\\common\\util\\TemplateText::get('ui.preview_points_limit', ['minutes'=>intval($popedom['trysee'] ?? 0),'points'=>$previewPoints])}</p>
+{else/}
+<p>{:\\app\\common\\util\\TemplateText::get('ui.preview_membership_limit', ['minutes'=>intval($popedom['trysee'] ?? 0)])}</p>
+{/if}
+{php}$permissionMid=1;$permissionId=intval($obj['vod_id']);$permissionType=4;$permissionSid=max(1,intval($param['sid'] ?? 1));$permissionNid=max(1,intval($param['nid'] ?? 1));{/php}
+{include file="block/permission_actions"}
+</section></template>
+<script>window.setTimeout(function(){var target=document.querySelector('.MacPlayer')||document.querySelector('.gallery-native-player');var content=document.getElementById('gallery-preview-permission');if(target&&content)target.replaceChildren(content.content.cloneNode(true));},Math.max(0,{:intval($popedom['trysee'] ?? 0)})*60000);</script>
+{/if}
+</body></html>

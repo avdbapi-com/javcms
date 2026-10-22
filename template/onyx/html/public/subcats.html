@@ -1,0 +1,8 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}/* shared partial "subcats" (xvid scale build 2.11 rule 5, lane T): visible child categories as one scrolling chip row; nothing when there are none. Optional before the include: $jvSubOpt = ['nav' => 'theme-classes', 'chip' => 'theme-chip-classes']; */ echo \app\common\util\AvdbLanguage::subcatsHtml(isset($obj) && is_array($obj) ? $obj : [], isset($jvSubOpt) && is_array($jvSubOpt) ? $jvSubOpt : []);{/php}

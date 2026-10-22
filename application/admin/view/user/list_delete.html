@@ -1,0 +1,43 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!-- System lists (members, admins, member levels, cards, orders, points log, member log, withdrawals): deletes are POST + admin token.
+     a.j-sys-del: data-href (delete URL), data-ids (one row; empty = the ticked rows), data-all="1" + data-count (delete everything),
+     data-ax-confirm-title, data-ax-confirm (message, {n} = rows), data-ax-msg-one (message for one row), data-ax-typed (word to type).
+     The page needs <input type="hidden" name="__token__"> in #pageListForm. -->
+<script type="application/json" id="axSysDelLang">{:json_encode(['del'=>lang('del'), 'one'=>lang('admin/ux/content/confirm_delete_one'), 'many'=>lang('admin/ux/content/confirm_delete_n')], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP)}</script>
+<script type="text/javascript">
+layui.use(['jquery'], function () {
+    var $ = layui.jquery, L = JSON.parse(document.getElementById('axSysDelLang').textContent);
+    var t = function (key) { return window.AxUX ? AxUX.t(key) : key; };
+    var toast = function (text, kind) { if (window.AxUX) { AxUX.toast(text, kind); } else { window.alert(text); } };
+    $(document).on('click', '.j-sys-del', function (e) {
+        e.preventDefault();
+        var btn = $(this), all = btn.attr('data-all') === '1', ids = btn.attr('data-ids') || '';
+        if (!ids) {
+            ids = $('.checkbox-ids:checked').map(function () { return this.value; }).get().join(',');
+        }
+        if (!ids) { toast(t('select_first'), 'warn'); return false; }
+        var n = all ? (parseInt(btn.attr('data-count'), 10) || 0) : ids.split(',').length;
+        var msg = all ? btn.attr('data-ax-confirm') : (n === 1 ? (btn.attr('data-ax-msg-one') || L.one) : (btn.attr('data-ax-confirm') || L.many));
+        var ask = window.AxUX ? AxUX.confirm({ title: btn.attr('data-ax-confirm-title') || undefined, message: msg, count: n, typed: btn.attr('data-ax-typed') || undefined, danger: true, confirmLabel: L.del })
+            : Promise.resolve(window.confirm(String(msg).replace('{n}', n)));
+        ask.then(function (yes) {
+            if (!yes) { return; }
+            var data = { ids: ids, __token__: $('#pageListForm input[name="__token__"]').val() || '' };
+            if (all) { data.all = 1; }
+            $.ajax({ url: btn.attr('data-href'), type: 'POST', dataType: 'json', data: data, timeout: 15000 }).done(function (res) {
+                toast(res.msg, res.code == 1 ? 'ok' : 'error');
+                if (res.code == 1) { setTimeout(function () { location.reload(); }, 900); }
+            }).fail(function (xhr) {
+                toast(t('request_failed') + (xhr && xhr.status ? ' (HTTP ' + xhr.status + ')' : ''), 'error');
+            });
+        });
+        return false;
+    });
+});
+</script>

@@ -1,0 +1,14 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<nav class="vp-tabs" aria-label="{:\\app\\common\\util\\TemplateText::get('sort_by')}">
+  <a class="vp-tab" href="{:mac_url('label/new')}"{if condition="$maccms.aid eq 9999"} aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::ui('clock', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ui.latest')}</a>
+  <a class="vp-tab" href="{:mac_url('label/hot')}"{if condition="$maccms.aid eq 9998"} aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::ui('flame', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ui.popular')}</a>
+  <a class="vp-tab" href="{:mac_url('label/score')}"{if condition="$maccms.aid eq 9997"} aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::ui('star', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('highest_rated')}</a>
+  <a class="vp-tab" href="{:mac_url('label/up')}"{if condition="$maccms.aid eq 9996"} aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::ui('thumbs-up', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('most_liked')}</a>
+  <a class="vp-tab" href="{:mac_url('label/sort')}"{if condition="$maccms.aid eq 9995"} aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::ui('grid', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ui.all_videos_59a0c0')}</a>
+</nav>

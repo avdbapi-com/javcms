@@ -1,0 +1,97 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="ember-modern" data-fx="vt" data-fx-vt-style="ember-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+<meta name="robots" content="noindex, follow" />
+<meta charset="utf-8"/>
+<title>{:\\app\\common\\util\\TemplateText::get('ui.reset_password')} - {:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$maccms['site_name']), ENT_QUOTES, 'UTF-8')}</title>
+{include file="public/include"}
+{include file="user/include"}
+</head>
+<body class="t-page-auth">
+{include file="public/head"}
+<main id="main-content" class="t-main t-auth" tabindex="-1">
+  <div class="t-auth-card t-hud">
+    <div class="t-auth-mark" aria-hidden="true"><svg viewBox="0 0 32 32" focusable="false"><path d="M10.5 8.6c0-1.7 1.8-2.7 3.2-1.8l10.6 6.6c1.4.9 1.4 2.9 0 3.7l-10.6 6.6c-1.4.9-3.2-.1-3.2-1.8z" fill="url(#t-ramp-mark)"/><circle cx="24" cy="8.5" r="2.3" fill="#fff3c4"/></svg></div>
+    <h1>{:\\app\\common\\util\\TemplateText::get('ui.reset_password')}</h1>
+    <p class="t-auth-sub">{:\\app\\common\\util\\TemplateText::get('emt.recover_access')}</p>
+    {php}$tplByPhone = (isset($param['ac']) && $param['ac'] === 'phone'); $tplByMail = !$tplByPhone; $tplAc = $tplByPhone ? 'phone' : 'email'; $tplFindMode = $tplAc;{/php}
+    <form action="" class="t-form" id="fm" method="post">
+      <input name="ac" type="hidden" value="{$tplAc}" />
+      <div class="t-field"><label for="to">{if condition="$tplByPhone"}{:\\app\\common\\util\\TemplateText::get('ui.contact_the_phone')}{else/}{:\\app\\common\\util\\TemplateText::get('ui.email_address')}{/if}</label><input class="t-input" id="to" name="to" {if condition="$tplByPhone"}type="tel" autocomplete="tel"{else/}type="email" autocomplete="email"{/if} /></div>
+      <div class="verification-field"><label for="verify">{:\\app\\common\\util\\AutoIcon::ui('shield', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ui.verification_code')}</label><input class="t-input" id="verify" maxlength="4" name="verify" type="text" autocomplete="off" inputmode="text" /><img class="fed-user-code t-verify" height="48" width="120" id="verify_img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="{:mac_url('verify/index')}" title="{:\\app\\common\\util\\TemplateText::get('click_to_refresh')}" role="button" tabindex="0" aria-label="{:\\app\\common\\util\\TemplateText::get('click_to_refresh')}" alt="" /></div>
+      <span class="fed-user-tips" role="status"></span>
+      <input class="t-btn is-big t-submit" id="btn_send" type="button" value="{:\\app\\common\\util\\TemplateText::get('ui.send_the_verification_code')}" />
+    </form>
+    <h2>{:\\app\\common\\util\\TemplateText::get('ui.verification_information')}</h2>
+    <form action="" class="t-form" id="fm2" method="post">
+      <input name="ac" type="hidden" value="{$tplAc}" />
+      <div class="t-field"><label for="code">{:\\app\\common\\util\\AutoIcon::ui('key', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ui.please_enter_the_verification_code')}</label><input class="t-input" id="code" name="code" type="text" autocomplete="one-time-code" /></div>
+      <div class="t-field"><label for="user_pwd">{:\\app\\common\\util\\AutoIcon::ui('lock', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ui.new_password_d850ee')}</label><div class="t-pwd"><input class="t-input" id="user_pwd" name="user_pwd" type="password" autocomplete="new-password" maxlength="20" /><button class="t-pwd-eye" type="button" data-t-pwd aria-controls="user_pwd" aria-pressed="false" aria-label="{:\\app\\common\\util\\TemplateText::get('emt.show_password')}"><svg class="t-i t-on" aria-hidden="true"><use href="{$tplIcons}#eye-o"></use></svg><svg class="t-i t-off" aria-hidden="true"><use href="{$tplIcons}#eye-off"></use></svg></button></div></div>
+      <div class="t-field"><label for="user_pwd2">{:\\app\\common\\util\\AutoIcon::ui('lock', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ui.confirm_password')}</label><div class="t-pwd"><input class="t-input" id="user_pwd2" name="user_pwd2" type="password" autocomplete="new-password" maxlength="20" /><button class="t-pwd-eye" type="button" data-t-pwd aria-controls="user_pwd2" aria-pressed="false" aria-label="{:\\app\\common\\util\\TemplateText::get('emt.show_password')}"><svg class="t-i t-on" aria-hidden="true"><use href="{$tplIcons}#eye-o"></use></svg><svg class="t-i t-off" aria-hidden="true"><use href="{$tplIcons}#eye-off"></use></svg></button></div></div>
+      <input class="t-btn is-molten is-big t-submit" id="btn_submit" type="button" value="{:\\app\\common\\util\\TemplateText::get('ui.reset_password')}" />
+      <div class="t-auth-links"><a href="{:mac_url('user/login')}">{:\\app\\common\\util\\TemplateText::get('ui.log_in_now')}</a><a href="{:mac_url('user/findpass')}"{if condition="$tplFindMode eq 'q'"} aria-current="page"{/if}>{:\\app\\common\\util\\TemplateText::get('issue')}</a><a href="{:mac_url('user/findpass_msg')}?ac=email"{if condition="$tplFindMode eq 'email'"} aria-current="page"{/if}>{:\\app\\common\\util\\TemplateText::get('retrieve_the_mailbox')}</a><a href="{:mac_url('user/findpass_msg')}?ac=phone"{if condition="$tplFindMode eq 'phone'"} aria-current="page"{/if}>{:\\app\\common\\util\\TemplateText::get('recovery')}</a></div>
+    </form>
+  </div>
+</main>
+{include file="public/foot"}
+<script>
+   $(function(){
+		$("body").bind('keyup',function(event) {
+			if(event.keyCode==13){ $('#btn_submit').click(); }
+		});
+		$('#btn_send').click(function() {
+			if ($('#to').val()  == '') { TemplateUI.message(window.TemplateMessages['ui.enter_email_or_phone']); $("#to").focus(); return false; }
+
+			$.ajax({
+				url: "{:mac_url('user/findpass_msg')}",
+				type: "post",
+				dataType: "json",
+				data: $('#fm').serialize(),
+				beforeSend: function () {
+					$("#btn_send").val(window.TemplateMessages['ui.loading']);
+				},
+				success: function (r) {
+					TemplateUI.message(r.msg);
+				},
+				complete: function () {
+					$('#verify_img').click();
+					$("#btn_send").val(window.TemplateMessages['ui.send_mail']);
+				}
+			});
+		});
+
+		$('#btn_submit').click(function() {
+			if ($('#to').val()  == '') { TemplateUI.message(window.TemplateMessages['ui.enter_email_or_phone']); $("#to").focus(); return false; }
+			if ($('#code').val()  == '') { TemplateUI.message(window.TemplateMessages['ui.please_enter_the_verification_code_0d14a4']); $("#code").focus(); return false; }
+			if ($('#user_pwd').val()  == '') { TemplateUI.message(window.TemplateMessages['ui.please_enter_the_new_password_ec0b3e']); $("#user_pwd").focus(); return false; }
+			if ($('#user_pwd2').val()  == '') { TemplateUI.message(window.TemplateMessages['please_enter_the_confirmation_password']); $("#user_pwd2").focus(); return false; }
+			if ($('#user_pwd').val()  != $('#user_pwd2').val() ) { TemplateUI.message(window.TemplateMessages['the_second_password_is_inconsistent']); $("#user_pwd2").focus(); return false; }
+
+			var data= {ac:'{$tplAc}',to:$('#to').val(),code:$('#code').val(),user_pwd:$('#user_pwd').val(),user_pwd2:$('#user_pwd2').val()};
+			$.ajax({
+				url: "{:mac_url('user/findpass_reset')}",
+				type: "post",
+				dataType: "json",
+				data: data,
+				beforeSend: function () {
+					$("#btn_submit").val(window.TemplateMessages['ui.loading']);
+				},
+				success: function (r) {
+					TemplateUI.message(r.msg);
+				},
+				complete: function () {
+					$("#btn_submit").val(window.TemplateMessages['ui.reset_password']);
+				}
+			});
+		});
+	});
+  </script>
+</body>
+</html>

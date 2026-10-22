@@ -1,0 +1,230 @@
+/*
+ * This file is part of JavCMS - https://javcms.net
+ * Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+ * License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+ * See the LICENSE and NOTICE files that come with JavCMS.
+ * Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Telegram: https://t.me/avdb_api
+ */
+/* admin-user-workspace-v1: scoped user-management workspace.
+ * Visual language follows pinned maccms10 view_new/user/index.html while retaining
+ * the customized legacy template, routes, status switch, and related-data hooks.
+ */
+/* V9: private colours map to kit tokens. */
+body.admin-studio.admin-dark .admin-user-index { --user-surface-raised: var(--ax-raised); --user-surface-soft: var(--ax-surface); --user-ring: var(--ax-accent-soft); }
+body.admin-dark .admin-user-index {
+    --user-surface-raised: color-mix(in srgb, var(--admin-dark-surface) 86%, #1d3a4e);
+    --user-surface-soft: color-mix(in srgb, var(--admin-dark-surface-alt) 88%, #1c3446);
+    --user-ring: rgba(110, 231, 183, .18);
+    padding: clamp(10px, 1.8vw, 20px) !important;
+}
+
+body.admin-dark .admin-user-index .my-toolbar-box {
+    margin: 0 0 14px;
+    padding: clamp(12px, 1.8vw, 18px);
+    border: 1px solid var(--admin-dark-border);
+    border-radius: 14px;
+    background: linear-gradient(145deg, var(--user-surface-raised), var(--admin-dark-surface));
+    box-shadow: 0 12px 28px rgba(0, 0, 0, .18);
+}
+
+body.admin-dark .admin-user-index .my-toolbar-box > .center.mb10 {
+    display: block;
+    margin: 0 0 14px !important;
+}
+
+body.admin-dark .admin-user-index .my-toolbar-box > .center.mb10 > form {
+    display: grid;
+    width: 100%;
+    grid-template-columns: minmax(150px, 1fr) minmax(150px, 1fr) minmax(180px, 1.25fr) auto;
+    gap: 8px;
+    align-items: center;
+}
+
+body.admin-dark .admin-user-index .my-toolbar-box form .layui-input-inline {
+    float: none;
+    width: auto !important;
+    min-width: 0;
+    margin: 0 !important;
+}
+
+body.admin-dark .admin-user-index .my-toolbar-box form .layui-input-inline .layui-input,
+body.admin-dark .admin-user-index .my-toolbar-box form .layui-form-select {
+    width: 100%;
+}
+
+body.admin-dark .admin-user-index .my-toolbar-box form .j-search {
+    min-height: 38px;
+    margin: 0 !important;
+    border-radius: 8px;
+    box-shadow: 0 0 0 3px var(--user-ring);
+}
+
+body.admin-dark .admin-user-index .my-toolbar-box > .btn-primary-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin: 0;
+    padding-top: 14px;
+    border-top: 1px dashed var(--admin-dark-border);
+}
+
+body.admin-dark .admin-user-index .my-toolbar-box > .btn-primary-group .btn {
+    margin: 0 !important;
+    border-radius: 8px;
+    transition: transform .16s ease, border-color .16s ease, background .16s ease;
+}
+
+body.admin-dark .admin-user-index .my-toolbar-box > .btn-primary-group .btn:hover {
+    transform: translateY(-1px);
+}
+
+body.admin-dark .admin-user-index > #pageListForm {
+    margin: 0;
+    padding: 8px;
+    overflow-x: auto;
+    border: 1px solid var(--admin-dark-border);
+    border-radius: 14px;
+    background: linear-gradient(145deg, var(--admin-dark-surface), var(--user-surface-soft));
+    box-shadow: 0 12px 28px rgba(0, 0, 0, .14);
+}
+
+body.admin-dark .admin-user-index > #pageListForm .layui-table {
+    min-width: 1280px;
+    margin: 0;
+    background: transparent;
+}
+
+body.admin-dark .admin-user-index > #pageListForm .layui-table thead th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    color: var(--admin-dark-muted);
+    background: #152235;
+    font-size: 11px;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+}
+
+body.admin-dark .admin-user-index > #pageListForm .layui-table tbody tr {
+    transition: background .16s ease, box-shadow .16s ease;
+}
+
+body.admin-dark .admin-user-index > #pageListForm .layui-table tbody tr:hover {
+    box-shadow: inset 3px 0 0 var(--admin-dark-accent);
+}
+
+body.admin-dark .admin-user-index > #pageListForm .layui-table td {
+    vertical-align: middle;
+}
+
+body.admin-dark .admin-user-index > #pageListForm .layui-table td:nth-child(3),
+body.admin-dark .admin-user-index > #pageListForm .layui-table td:nth-child(4) {
+    font-weight: 600;
+}
+
+body.admin-dark .admin-user-index > #pageListForm .layui-table td:nth-child(10),
+body.admin-dark .admin-user-index > #pageListForm .layui-table td:nth-child(11) {
+    color: var(--admin-dark-muted);
+    font-variant-numeric: tabular-nums;
+}
+
+body.admin-dark .admin-user-index > #pageListForm .layui-table td.w200,
+body.admin-dark .admin-user-index > #pageListForm .layui-table td:nth-child(10) {
+    white-space: normal;
+}
+
+body.admin-dark .admin-user-index > #pageListForm .layui-table td.w200 .badge {
+    display: inline-flex;
+    align-items: center;
+    min-height: 24px;
+    margin: 2px 3px 2px 0;
+    white-space: nowrap;
+}
+
+body.admin-dark .admin-user-index > #pageListForm .layui-table td:last-child {
+    white-space: nowrap;
+}
+
+body.admin-dark .admin-user-index > #pageListForm #pages {
+    padding: 12px 4px 4px;
+}
+
+body.admin-dark .admin-user-index a:focus-visible,
+body.admin-dark .admin-user-index button:focus-visible,
+body.admin-dark .admin-user-index input:focus-visible,
+body.admin-dark .admin-user-index select:focus-visible {
+    outline: 2px solid var(--admin-dark-accent-strong);
+    outline-offset: 2px;
+}
+
+@media (max-width: 760px) {
+    body.admin-dark .admin-user-index .my-toolbar-box > .center.mb10 > form {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    body.admin-dark .admin-user-index .my-toolbar-box form .layui-input-inline:nth-child(3),
+    body.admin-dark .admin-user-index .my-toolbar-box form .j-search {
+        grid-column: 1 / -1;
+    }
+
+    body.admin-dark .admin-user-index .my-toolbar-box > .btn-primary-group .btn {
+        flex: 1 1 calc(50% - 7px);
+        text-align: center;
+    }
+
+    body.admin-dark .admin-user-index > #pageListForm {
+        padding: 5px;
+    }
+}
+
+/* Repair (beginner 8 / visual P2-5): the "Related data" buttons wrap inside the cell and the phone card. */
+.admin-user-index .user-related { white-space: normal; }
+.admin-user-index .user-related__list { display: inline-flex; flex-wrap: wrap; gap: 6px; max-width: 100%; }
+.admin-user-index .user-related__list .ax-btn { margin: 0; }
+@media (max-width: 640px) {
+    body.admin-studio .admin-user-index .ax-table--cards td.user-related { display: block !important; width: 100% !important; height: auto !important; max-height: none !important; text-align: left; }
+    body.admin-studio .admin-user-index .ax-table--cards td.user-related::before { display: block; max-width: none; margin: 0 0 6px; }
+    .admin-user-index .user-related__list { display: flex; width: 100%; }
+    .admin-user-index .user-related__list .ax-btn { white-space: normal; height: auto; min-height: 36px; max-width: 100%; }
+}
+
+/* Repair round 2 (visual R2-5 / R2-11): kit card table. The frame comes from .ax-table-wrap (as on the comment
+ * and video lists), so the old form frame is dropped; actions use the kit td.ax-row-actions card rule.
+ * "Related data" is one framed button that opens the 6 record links in place (no sideways scroll, no clipping). */
+body.admin-studio.admin-dark .page-container.admin-user-index:has(> #pageListForm) > #pageListForm,
+body.admin-studio.admin-dark .admin-user-index > #pageListForm { padding: 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; overflow: visible; }
+body.admin-studio .admin-user-index > #pageListForm > #pages { padding: 12px 4px 4px; }
+.admin-user-index .user-related__box { display: block; max-width: 100%; }
+.admin-user-index .user-related__box > summary { list-style: none; cursor: pointer; user-select: none; }
+.admin-user-index .user-related__box > summary::-webkit-details-marker { display: none; }
+.admin-user-index .user-related__box > summary .ax-ic--chevron { transition: transform .15s ease; }
+.admin-user-index .user-related__box[open] > summary .ax-ic--chevron { transform: rotate(180deg); }
+.admin-user-index .user-related__box > .user-related__list { margin-top: 8px; }
+@media (min-width: 640.02px) {
+    .admin-user-index .user-related__box { display: inline-block; vertical-align: middle; }
+    body.admin-studio .admin-user-index .ax-table td.user-name { min-width: 96px; overflow-wrap: anywhere; }
+    .admin-user-index .user-related__box > .user-related__list { display: flex; flex-direction: column; align-items: stretch; gap: 4px; }
+    .admin-user-index .user-related__box > .user-related__list .ax-btn { justify-content: flex-start; }
+}
+/* Laptop widths: IP and sign-in count wait for wider screens or the phone card; in the 752 px page frame beside the open
+ * sidebar (1024 px window) points and last sign-in wait too. All of them stay in the member editor and the phone card. */
+@media (min-width: 640.02px) and (max-width: 1365px) {
+    body.admin-studio .admin-user-index .ax-table .user-hide-md { display: none; }
+}
+@media (min-width: 640.02px) and (max-width: 900px) {
+    body.admin-studio .admin-user-index .ax-table .user-hide-sm { display: none; }
+}
+@media (max-width: 640px) {
+    body.admin-studio .admin-user-index .ax-table--cards td.user-related::before { display: none; }
+    .admin-user-index .user-related__box > summary { width: 100%; justify-content: center; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .admin-user-index .user-related__box > summary .ax-ic--chevron { transition: none; }
+}
+/* VIS r3 R3-2: the global dashlite ".user-name" rule (#526484, 12px) made member names 2.83:1; use the normal text colour. */
+body.admin-studio .admin-user-index .ax-table td.user-name { color: var(--ax-text); font-size: inherit; line-height: inherit; font-weight: 600; }
+/* VIS r3 R3-5: 44 px tap target for Search on phones. */
+@media (max-width: 767.98px) {
+    body.admin-dark .admin-user-index .my-toolbar-box form .j-search { min-height: 44px; }
+}

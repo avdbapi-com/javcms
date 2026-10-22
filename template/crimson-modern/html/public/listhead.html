@@ -1,0 +1,27 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}
+/* List header panel: narration crumb, SFX H1 (popping letters), count balloon, parallelogram sort tabs, balloon chips.
+   Input: $ciHeadTitle (plain text), $ciHeadCrumb (escaped label), $ciTotal, $ciSortMode/$ciSortActive, $ciHeadCats (1 = category chips). */
+$ciSfxText = isset($ciHeadTitle) ? (string)$ciHeadTitle : ''; $ciSfxTag = 'h1'; $ciSfxId = 'ci-h1'; $ciSfxCls = 'ci-h1sfx';
+$ciHeadCats = isset($ciHeadCats) ? intval($ciHeadCats) : 0;
+$ciHeadCountTxt = (isset($ciTotal) && $ciTotal > 0) ? \app\common\util\TemplateText::get('ink.n_videos', ['count' => number_format($ciTotal)]) : '';
+/* Title emblem (splash-plated auto-icon): the category concept on category pages, a search-term concept on tag/genre searches,
+   else the page's nav key ($ciHeadIco overrides). */
+$ciHeadAiO = ['size' => 'xl', 'plate' => true, 'class' => 'ci-phead-ai']; $ciHeadAi = '';
+$ciHeadKeys = ['label/hot' => 'hot', 'label/new' => 'latest', 'label/score' => 'top', 'label/up' => 'liked', 'label/sort' => 'categories', 'label/search' => 'search', 'search/index' => 'search', 'vod/search' => 'search', 'vod/index' => 'all-videos', 'map/index' => 'sitemap', 'gbook/index' => 'guestbook'];
+if (in_array($ciAct, ['vod/type', 'vod/show'], true) && !empty($obj['type_name'])) { $ciHeadAi = \app\common\util\AutoIcon::icon('category', (string)$obj['type_name'], $ciHeadAiO); }
+elseif ($ciAct === 'vod/search' && isset($param) && is_array($param) && (trim((string)($param['class'] ?? '')) !== '' || trim((string)($param['tag'] ?? '')) !== '')) { $ciHeadAiT = trim((string)($param['class'] ?? '')) !== '' ? (string)$param['class'] : (string)$param['tag']; $ciHeadAi = \app\common\util\AutoIcon::icon('tag', $ciHeadAiT, $ciHeadAiO); }
+elseif ($ciAct === 'vod/search' && isset($param) && is_array($param) && trim((string)($param['actor'] ?? '')) !== '') { $ciHeadAi = \app\common\util\AutoIcon::navIcon('actors', '', $ciHeadAiO); }
+else { $ciHeadK = !empty($ciHeadIco) ? (string)$ciHeadIco : (isset($ciHeadKeys[$ciAct]) ? $ciHeadKeys[$ciAct] : (strpos($ciAct, 'actor/') === 0 ? 'actors' : (strpos($ciAct, 'topic/') === 0 ? 'topics' : (strpos($ciAct, 'art/') === 0 ? 'articles' : '')))); if ($ciHeadK !== '') { $ciHeadAi = \app\common\util\AutoIcon::navIcon($ciHeadK, '', $ciHeadAiO); } }
+$ciHeadIco = '';
+{/php}<header class="ci-phead">
+	<nav class="ci-crumbs" aria-label="{:\\app\\common\\util\\TemplateText::get('ink.breadcrumb')}"><a class="ci-ink" href="{$maccms.path}">{:\\app\\common\\util\\AutoIcon::navIcon('home', '', ['size'=>'sm'])}<span>{:\\app\\common\\util\\TemplateText::get('ui.home')}</span></a><span class="ci-narr" aria-current="page">{$ciHeadCrumb}</span></nav>
+	<div class="ci-phead-main">{$ciHeadAi}{include file="public/sfx"}{if condition="$ciHeadCountTxt neq ''"}<span class="ci-count">{$ciHeadCountTxt}</span>{/if}</div>
+	{if condition="!empty($ciSortMode) && $ciSortMode neq 'none'"}<div class="ci-phead-tools">{include file="public/sortmenu"}{if condition="$ciHeadCats eq 1"}<nav class="ci-chips ci-chips--scroll" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.categories')}">{volist name="ciCats" id="ciC"}<a class="ci-chip" href="{$ciC.url|htmlspecialchars=ENT_QUOTES}"{if condition="$ciC.on eq 1"} aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::icon('category', $ciC['raw'], ['size'=>'sm', 'i'=>$key])}<span>{$ciC.name}</span></a>{/volist}</nav>{/if}</div>{/if}
+</header>

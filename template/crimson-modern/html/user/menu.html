@@ -1,0 +1,19 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}
+$ciUAct = strtolower((string)request()->action());
+$ciUAlias = ['cards' => 'orders', 'order_info' => 'orders', 'pay' => 'orders', 'payment_weixin' => 'orders', 'bind' => 'info', 'unbind' => 'info', 'portrait' => 'info', 'ajax_info' => 'index', 'ulog' => 'plays'];
+$ciUOn = isset($ciUAlias[$ciUAct]) ? $ciUAlias[$ciUAct] : $ciUAct;
+$ciUMenu = [];
+foreach ([['index','user-circle','ui.account_overview_c42e0c'], ['info','edit','edit_profile'], ['favs','heart','favorites'], ['plays','history','ink.watch_history'], ['downs','download','ui.download_record'], ['plog','coin','ui.points_record'], ['upgrade','crown','ui.upgrade_member'], ['buy','card','ui.recharge_center'], ['orders','list','ink.orders'], ['popedom','lock','ui.my_authority'], ['comment','chat','ui.comments'], ['gbook','mail','ui.recent_messages']] as $ciUItem) { $ciUMenu[] = ['href' => mac_url('user/' . $ciUItem[0]), 'icon' => $ciUItem[1], 'text' => \app\common\util\TemplateText::get($ciUItem[2]), 'on' => $ciUOn === $ciUItem[0] ? 1 : 0]; }
+$ciUFace = trim((string)($obj['user_portrait'] ?? '')); $ciUFace = $ciUFace === '' ? $maccms['path_tpl'] . 'assets/brand/avatar.svg' : mac_url_img($ciUFace);
+{/php}<aside class="ci-umenu" aria-label="{:\\app\\common\\util\\TemplateText::get('account_navigation')}">
+<nav class="ci-chips ci-umenu-chips" aria-label="{:\\app\\common\\util\\TemplateText::get('account_navigation')}">{volist name="ciUMenu" id="ciU"}<a class="ci-chip" href="{$ciU.href|htmlspecialchars=ENT_QUOTES}"{if condition="$ciU.on eq 1"} aria-current="page"{/if}><svg class="ci-i" aria-hidden="true"><use href="{$maccms.path_tpl|htmlspecialchars=ENT_QUOTES}assets/icons.svg#{$ciU.icon}"></use></svg>{$ciU.text}</a>{/volist}<a class="ci-chip" href="{:mac_url('user/logout')}"><svg class="ci-i" aria-hidden="true"><use href="{$maccms.path_tpl|htmlspecialchars=ENT_QUOTES}assets/icons.svg#logout"></use></svg>{:\\app\\common\\util\\TemplateText::get('ui.quit')}</a></nav>
+<div class="ci-umenu-card"><div class="ci-panel ci-umini"><img class="ci-umini-face" src="{$ciUFace|htmlspecialchars=ENT_QUOTES}" width="52" height="52" alt=""><div class="ci-umini-text"><strong dir="auto">{$obj.user_name|htmlspecialchars=ENT_QUOTES}</strong><span>{$obj.group.group_name|htmlspecialchars=ENT_QUOTES} &middot; <span dir="ltr">{$obj.user_points|intval}</span> {:\\app\\common\\util\\TemplateText::get('ui.integral')}</span></div></div>
+<ul class="ci-ulist">{volist name="ciUMenu" id="ciU"}<li><a class="ci-uitem" href="{$ciU.href|htmlspecialchars=ENT_QUOTES}"{if condition="$ciU.on eq 1"} aria-current="page"{/if}><svg class="ci-i" aria-hidden="true"><use href="{$maccms.path_tpl|htmlspecialchars=ENT_QUOTES}assets/icons.svg#{$ciU.icon}"></use></svg>{$ciU.text}<svg class="ci-i ci-chev-r" aria-hidden="true"><use href="{$maccms.path_tpl|htmlspecialchars=ENT_QUOTES}assets/icons.svg#chev-r"></use></svg></a></li>{/volist}<li><a class="ci-uitem" href="{:mac_url('user/logout')}"><svg class="ci-i" aria-hidden="true"><use href="{$maccms.path_tpl|htmlspecialchars=ENT_QUOTES}assets/icons.svg#logout"></use></svg>{:\\app\\common\\util\\TemplateText::get('ui.quit')}</a></li></ul></div>
+</aside>

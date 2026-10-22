@@ -1,0 +1,36 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="onyx-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/topic_detail"}
+{include file="public/include"}
+</head>
+<body class="page-detail page-topic">
+{include file="public/head"}
+{php}$oxTName = trim(\app\common\util\AvdbLanguage::decodeEntities((string)($obj['topic_name'] ?? ''))); $oxTBlurb = trim(\app\common\util\AvdbLanguage::decodeEntities((string)($obj['topic_blurb'] ?? '')));{/php}
+<main id="main-content" class="ox-main">
+  <nav class="ox-crumbs ox-crumbs-bar" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.main_navigation')}"><a href="{$maccms.path}">{:\\app\\common\\util\\TemplateText::get('ox.index')}</a><span aria-hidden="true">/</span><a href="{:mac_url('topic/index')}">{:\\app\\common\\util\\TemplateText::get('ui.collections')}</a><span aria-hidden="true">/</span><span aria-current="page">{$oxTName|htmlspecialchars=ENT_QUOTES}</span></nav>
+  <article class="ox-sheet">
+    <div class="ox-sheet-l"><div class="ox-cover" data-fx="skeleton"><img src="{$obj.topic_pic|mac_default=$tplNoPic|mac_url_img|htmlspecialchars=ENT_QUOTES}" alt="{$oxTName|htmlspecialchars=ENT_QUOTES}" width="800" height="450"><span class="ox-crop on" aria-hidden="true"></span></div></div>
+    <div class="ox-sheet-r">
+      <p class="ox-label">{:\\app\\common\\util\\TemplateText::get('ui.collections')}</p>
+      <h1 class="ox-vh1">{$oxTName|htmlspecialchars=ENT_QUOTES}</h1>
+      <dl class="ox-specs"><div class="ox-spec-row"><dt><span class="ox-eng" aria-hidden="true">01</span>{:\\app\\common\\util\\TemplateText::get('ui.score')}</dt><dd class="ox-mono-v">{$obj.topic_score|htmlspecialchars=ENT_QUOTES}</dd></div></dl>
+      {if condition="$oxTBlurb neq ''"}<p class="ox-desc-b">{$oxTBlurb|htmlspecialchars=ENT_QUOTES}</p>{/if}
+    </div>
+  </article>
+  {php}$oxSecNum = '01'; $oxSecId = 'sec-topic-v'; $oxSecTitle = \app\common\util\TemplateText::raw('ui.collections'); $oxSecSub = \app\common\util\TemplateText::raw('ox.sort_date'); $oxSecUrl = ''; $tplIdxBase = 0; $key = 0;{/php}
+  <section class="ox-sec" aria-labelledby="sec-topic-v">
+    {include file="index/sechead"}
+    <div class="ox-grid" data-grid-fill data-ox-stagger>{maccms:foreach name="$obj.vod_list" id="vo"}{php}$key++;{/php}{include file="public/vodbox"}{/maccms:foreach}</div>
+  </section>
+</main>
+{include file="public/foot"}
+</body>
+</html>

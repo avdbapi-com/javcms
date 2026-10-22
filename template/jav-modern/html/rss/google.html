@@ -1,0 +1,25 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Based on MacCMS 10 (Apache-2.0) by magicblack, changed by JavCMS.
+JavCMS changes: Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors,
+JavCMS Community License 1.0. The MacCMS parts stay under the Apache License 2.0.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<?xml version="1.0" encoding="UTF-8" ?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<url>
+{php}$sitemapHome = \app\common\util\Sitemap::absolute(MAC_PATH);{/php}
+<loc>{$sitemapHome|htmlspecialchars}</loc>
+<changefreq>hourly</changefreq>
+<priority>1.0</priority>
+</url>
+{maccms:vod num="1000" paging="yes" order="desc" by="time"}
+<url>
+{php}$sitemapVideo = \app\common\util\Sitemap::absolute(mac_url_vod_detail($vo));{/php}
+<loc>{$sitemapVideo|htmlspecialchars}</loc>
+<changefreq>daily</changefreq>
+<priority>0.8</priority>
+</url>
+{/maccms:vod}
+</urlset>

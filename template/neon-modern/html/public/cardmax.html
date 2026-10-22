@@ -1,0 +1,15 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}
+// Label-page card: the same shop window with page-specific decorations (hot: neon rank numerals on the top 10 of page 1; new: a mint "New" tube tag; score: a big score; up: likes).
+$nnRankNo = isset($nnRankNo) ? $nnRankNo + 1 : 1;
+$nnRankShow = !empty($nnLabelMode) && $nnLabelMode === 'hot' && $nnRankNo <= 10 && (int)($__PAGING__['page_current'] ?? 1) === 1;
+$nnNewTag = !empty($nnLabelMode) && $nnLabelMode === 'new' && $nnRankNo <= 10 && (int)($__PAGING__['page_current'] ?? 1) === 1;
+$nnShowUp = !empty($nnLabelMode) && $nnLabelMode === 'up';
+$nnShowScore = !empty($nnLabelMode) && $nnLabelMode === 'score';
+{/php}{include file="public/vodbox"}{php}$nnRankShow = false; $nnNewTag = false; $nnShowUp = false; $nnShowScore = false;{/php}

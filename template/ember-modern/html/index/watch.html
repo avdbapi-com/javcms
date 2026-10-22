@@ -1,0 +1,71 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}$emtFeat = array(); $emtSeen = array();{/php}{maccms:vod num="5" type="all" level="9" order="desc" by="time" paging="no" id="tplF"}{php}if (!isset($emtSeen[$tplF['vod_id']])) { $emtSeen[$tplF['vod_id']] = 1; $emtFeat[] = $tplF; }{/php}{/maccms:vod}{if condition="count($emtFeat) lt 5"}{maccms:vod num="8" type="all" order="desc" by="hits_week" paging="no" id="tplG"}{php}if (count($emtFeat) < 5 && !isset($emtSeen[$tplG['vod_id']])) { $emtSeen[$tplG['vod_id']] = 1; $emtFeat[] = $tplG; }{/php}{/maccms:vod}{/if}{php}
+$emtFeat = \app\common\util\AvdbLanguage::heroOrder($emtFeat);
+$emtCh = array();
+foreach ($emtFeat as $emtI => $emtV) {
+    $emtNm = trim(strip_tags(\app\common\util\AvdbLanguage::decodeEntities(!empty($emtV['vod_display_name']) ? $emtV['vod_display_name'] : ($emtV['vod_name'] ?? ''))));
+    $emtHits = intval($emtV['vod_hits'] ?? 0);
+    $emtCode = \app\common\util\AvdbLanguage::displayCode($emtV);
+    if ($emtCode === '' || stripos($emtCode, 'avdb-') === 0 || strlen($emtCode) > 16) { $emtCode = ''; }
+    $emtCh[] = array(
+        'n' => sprintf('%02d', $emtI + 1),
+        'title' => $emtNm,
+        'code' => $emtCode,
+        'dur' => trim((string)($emtV['vod_duration'] ?? '')),
+        'views' => number_format($emtHits),
+        'tier' => $emtHits >= 5000 ? 5 : ($emtHits >= 1000 ? 4 : ($emtHits >= 250 ? 3 : ($emtHits >= 50 ? 2 : ($emtHits >= 5 ? 1 : 0)))),
+        'play' => (string)mac_url_vod_play($emtV),
+        'detail' => (string)mac_url_vod_detail($emtV),
+        'pic' => (string)mac_url_img(mac_default($emtV['vod_pic'] ?? '', $maccms['path_tpl'] . 'assets/brand/ph-dark.svg')),
+    );
+}
+$emtC0 = $emtCh ? $emtCh[0] : array('n' => '01', 'title' => '', 'code' => '', 'dur' => '', 'views' => '0', 'tier' => 0, 'play' => mac_url('label/hot'), 'detail' => mac_url('label/hot'), 'pic' => $maccms['path_tpl'] . 'assets/brand/ph-dark.svg');
+$emtTotal = intval(mac_data_count(0, 'all'));
+$emtToday = intval(mac_data_count(0, 'today'));
+$emtReadout = \app\common\util\TemplateText::raw('emt.readout', array(
+    'total' => '<b data-fx="count" data-fx-to="' . $emtTotal . '">' . number_format($emtTotal) . '</b>',
+    'today' => '<b data-fx="count" data-fx-to="' . $emtToday . '">' . number_format($emtToday) . '</b>',
+));
+$emtSiteH1 = trim(strip_tags(\app\common\util\AvdbLanguage::decodeEntities((string)($maccms['site_name'] ?? ''))));
+{/php}
+<section class="t-hero" id="t-hero" data-fx="shader" data-fx-shader="{$maccms.path_tpl|htmlspecialchars=ENT_QUOTES}assets/js/gl-thermal.js?v=20261010-2" aria-labelledby="t-hero-h1">
+  <div class="t-wrap t-hero-in">
+    <div class="t-hero-top">
+      <h1 class="t-eyebrow" id="t-hero-h1"><i class="t-pulse" aria-hidden="true"></i><span>{$emtSiteH1|htmlspecialchars=ENT_QUOTES}</span></h1>
+      <p class="t-kw" aria-hidden="true"><span class="t-kw-g" data-fx="rotate gradient" data-fx-words="{:\\app\\common\\util\\TemplateText::get('emt.kw_1')}|{:\\app\\common\\util\\TemplateText::get('emt.kw_2')}|{:\\app\\common\\util\\TemplateText::get('emt.kw_3')}" data-fx-interval="2800">{:\\app\\common\\util\\TemplateText::get('emt.kw_1')}</span></p>
+    </div>
+    <div class="t-monitor">
+      <div class="t-mon-head t-status"><span class="t-live">{:\\app\\common\\util\\TemplateText::get('emt.live')}</span><span>{:\\app\\common\\util\\TemplateText::get('emt.ch')} <b data-ch-num>{$emtC0.n}</b></span><span>{:\\app\\common\\util\\TemplateText::get('emt.live_heat')} <b data-ch-views>{$emtC0.views}</b></span></div>
+      <div class="t-hud"><a class="t-screen is-ir" href="{$emtC0.play|htmlspecialchars=ENT_QUOTES}" data-t-haze data-sr-prefix="{:\\app\\common\\util\\TemplateText::get('play_now')}" aria-label="{:\\app\\common\\util\\TemplateText::get('play_now')}: {$emtC0.title|htmlspecialchars=ENT_QUOTES}"><img data-lowres class="t-true" src="{$emtC0.pic|htmlspecialchars=ENT_QUOTES}" alt="" width="800" height="450" fetchpriority="high" decoding="async"><img class="t-ir" src="{$emtC0.pic|htmlspecialchars=ENT_QUOTES}" alt="" width="800" height="450" decoding="async"><span class="t-play" aria-hidden="true"><svg class="t-i"><use href="{$tplIcons}#play"></use></svg></span></a></div>
+      <p class="t-mon-read">{$emtReadout}</p>
+      {if condition="count($emtCh) gt 1"}
+      <div class="t-channels" data-t-channels role="group" aria-label="{:\\app\\common\\util\\TemplateText::get('emt.channels')}">
+        <div class="t-ch-list">{volist name="emtCh" id="emtC" key="emtK"}<button class="t-ch" type="button" aria-pressed="{if condition="$emtK eq 1"}true{else/}false{/if}" data-num="{$emtC.n}" data-title="{$emtC.title|htmlspecialchars=ENT_QUOTES}" data-code="{$emtC.code|htmlspecialchars=ENT_QUOTES}" data-dur="{$emtC.dur|htmlspecialchars=ENT_QUOTES}" data-views="{$emtC.views}" data-tier="{$emtC.tier}" data-play="{$emtC.play|htmlspecialchars=ENT_QUOTES}" data-detail="{$emtC.detail|htmlspecialchars=ENT_QUOTES}" data-pic="{$emtC.pic|htmlspecialchars=ENT_QUOTES}"><img src="{$emtC.pic|htmlspecialchars=ENT_QUOTES}" alt="" width="160" height="90" loading="lazy" decoding="async"><span class="t-ch-l" aria-hidden="true">{:\\app\\common\\util\\TemplateText::get('emt.ch')} </span><span class="t-ch-n" aria-hidden="true">{$emtC.n}</span><span class="sr-only">{:\\app\\common\\util\\TemplateText::get('emt.ch')} {$emtC.n}: {$emtC.title|htmlspecialchars=ENT_QUOTES}</span><span class="t-ch-bar" aria-hidden="true"><i></i></span></button>{/volist}</div>
+        <div class="t-ch-ctl">
+          <button class="t-ibtn" type="button" data-t-prev aria-label="{:\\app\\common\\util\\TemplateText::get('emt.prev_channel')}"><svg class="t-i t-flip" aria-hidden="true"><use href="{$tplIcons}#chev-left"></use></svg></button>
+          <button class="t-ibtn" type="button" data-t-pause aria-pressed="false" aria-label="{:\\app\\common\\util\\TemplateText::get('emt.pause')}" data-fx="morph" data-fx-icons="pause play" data-fx-morph-state="aria-pressed"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="14" y="4" width="4" height="16" rx="1"/><rect x="6" y="4" width="4" height="16" rx="1"/></svg></button>
+          <button class="t-ibtn" type="button" data-t-next aria-label="{:\\app\\common\\util\\TemplateText::get('emt.next_channel')}"><svg class="t-i t-flip" aria-hidden="true"><use href="{$tplIcons}#chev-right"></use></svg></button>
+        </div>
+      </div>
+      {/if}
+    </div>
+    <div class="t-hero-bot">
+      <h2 class="t-feat-t"><a href="{$emtC0.detail|htmlspecialchars=ENT_QUOTES}" data-ch-detail><span data-ch-title>{$emtC0.title|htmlspecialchars=ENT_QUOTES}</span></a></h2>
+      <div class="t-meta-chips">
+        <span data-ch-opt {if condition="$emtC0.code eq ''"}hidden{/if}><svg class="t-i" aria-hidden="true"><use href="{$tplIcons}#tag"></use></svg><span data-ch-code>{$emtC0.code|htmlspecialchars=ENT_QUOTES}</span></span>
+        <span data-ch-opt {if condition="$emtC0.dur eq ''"}hidden{/if}><svg class="t-i" aria-hidden="true"><use href="{$tplIcons}#clock"></use></svg><span data-ch-dur>{$emtC0.dur|htmlspecialchars=ENT_QUOTES}</span></span>
+        <span class="is-heat heat-{$emtC0.tier}" data-ch-heat><svg class="t-i" aria-hidden="true"><use href="{$tplIcons}#temperature"></use></svg><span><span data-ch-views>{$emtC0.views}</span>&deg;</span></span>
+      </div>
+      <div class="t-cta">
+        <a class="t-btn is-molten is-big" href="{$emtC0.play|htmlspecialchars=ENT_QUOTES}" data-ch-watch><svg class="t-i" aria-hidden="true"><use href="{$tplIcons}#play"></use></svg>{:\\app\\common\\util\\TemplateText::get('emt.watch_now')}</a>
+        <a class="t-btn is-ghost is-big" href="{$emtC0.detail|htmlspecialchars=ENT_QUOTES}" data-ch-detail><svg class="t-i" aria-hidden="true"><use href="{$tplIcons}#info"></use></svg>{:\\app\\common\\util\\TemplateText::get('ui.details')}</a>
+      </div>
+    </div>
+  </div>
+</section>

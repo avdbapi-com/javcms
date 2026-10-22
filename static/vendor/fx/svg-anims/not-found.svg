@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" class="fxsvg fxsvg-404" aria-hidden="true" focusable="false">
+<!-- JavCMS fx | original animation, JavCMS Community License 1.0 | colours: CSS custom properties fx-accent, fx-accent-2, fx-ink, fx-muted (two leading hyphens; fallbacks in the style rules) -->
+<style>
+.fxsvg-404 .body{fill:var(--fx-ink,#e6e8f0);fill-opacity:.06;stroke:var(--fx-ink,#e6e8f0);stroke-width:6}
+.fxsvg-404 .screen{fill:var(--fx-accent-2,#7c5cff);fill-opacity:.18}
+.fxsvg-404 .legs{stroke:var(--fx-muted,#8a90a6);stroke-width:6;stroke-linecap:round}
+.fxsvg-404 .tv{transform-origin:120px 128px;animation:fxsvg-404-wobble 3s ease-in-out infinite}
+.fxsvg-404 .ant{stroke:var(--fx-ink,#e6e8f0);stroke-width:5;stroke-linecap:round;fill:none}
+.fxsvg-404 .antenna{transform-origin:120px 78px;animation:fxsvg-404-ant 2s ease-in-out infinite}
+.fxsvg-404 .tipA{fill:var(--fx-accent,#ff3d81)}.fxsvg-404 .tipB{fill:var(--fx-accent-2,#7c5cff)}
+.fxsvg-404 .face{stroke:var(--fx-ink,#e6e8f0);stroke-width:6;stroke-linecap:round;stroke-linejoin:round;fill:none;transform-origin:120px 122px;animation:fxsvg-404-blink 3s ease-in-out infinite}
+.fxsvg-404 .bar{opacity:0;animation:fxsvg-404-glitch 3s steps(1,end) infinite}
+.fxsvg-404 .b1{fill:var(--fx-accent,#ff3d81)}.fxsvg-404 .b2{fill:var(--fx-accent-2,#7c5cff);animation-delay:.35s}.fxsvg-404 .b3{fill:var(--fx-muted,#8a90a6);animation-delay:.7s}
+@keyframes fxsvg-404-wobble{0%,100%{transform:rotate(0)}25%{transform:rotate(1.5deg)}50%{transform:rotate(-1deg)}}
+@keyframes fxsvg-404-ant{0%,100%{transform:rotate(-6deg)}25%{transform:rotate(7deg)}50%{transform:rotate(-4deg)}75%{transform:rotate(5deg)}}
+@keyframes fxsvg-404-blink{0%,54%,64%,100%{transform:scaleY(1)}59%{transform:scaleY(.12)}}
+@keyframes fxsvg-404-glitch{0%{opacity:0;transform:translateX(0)}12%{opacity:.75;transform:translateX(-8px)}18%{opacity:.75;transform:translateX(6px)}24%{opacity:0}}
+@media (prefers-reduced-motion:reduce){.fxsvg-404 .tv,.fxsvg-404 .antenna,.fxsvg-404 .face,.fxsvg-404 .bar{animation:none}}
+</style>
+<g class="tv">
+<path class="legs" d="M86 180l-10 14M154 180l10 14"/>
+<rect class="body" x="45" y="72" width="150" height="112" rx="26"/>
+<rect class="screen" x="61" y="87" width="118" height="82" rx="16"/>
+<rect class="bar b1" x="75" y="97" width="90" height="6" rx="3"/><rect class="bar b2" x="85" y="131" width="70" height="6" rx="3"/><rect class="bar b3" x="72" y="155" width="96" height="6" rx="3"/>
+<g class="face"><path d="M96 110l12 12M108 110l-12 12M132 110l12 12M144 110l-12 12"/><path d="M108 144l8-5 8 5 8-5"/></g>
+</g>
+<g class="antenna"><path class="ant" d="M120 78l-22-34M120 78l24-30"/><circle class="tipA" cx="98" cy="44" r="5"/><circle class="tipB" cx="144" cy="48" r="5"/></g>
+</svg>

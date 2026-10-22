@@ -1,0 +1,84 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<section class="ax-section jx-stepsec" data-step="2" aria-labelledby="jxS2T" hidden>
+    <h2 id="jxS2T" data-jx-s2t>{:$jxE(lang('admin/ux/jcx/step_where'))}</h2>
+
+    <div data-g="where">
+        <p class="ax-help">{:$jxE(lang('admin/ux/jcx/help_place'))}</p>
+        <div class="jx-pickbar">
+            <label>{:$jxE(lang('admin/ux/jcx/picker_page'))}
+                <select class="layui-input" data-jx-pick="page" lay-ignore>
+                    <option value="home">{:$jxE(lang('admin/ux/jcx/pt_home'))}</option><option value="list">{:$jxE(lang('admin/ux/jcx/pt_list'))}</option>
+                    <option value="detail">{:$jxE(lang('admin/ux/jcx/pt_detail'))}</option><option value="play">{:$jxE(lang('admin/ux/jcx/pt_play'))}</option>
+                    <option value="search">{:$jxE(lang('admin/ux/jcx/pt_search'))}</option></select></label>
+            <div class="jx-seg" role="radiogroup" aria-label="{:$jxE(lang('admin/ux/jcx/picker_view'))}">
+                <label class="jx-check"><input type="radio" name="jxPickDev" value="1" lay-ignore checked> {:$jxE(lang('admin/ux/jcx/computers'))}</label>
+                <label class="jx-check"><input type="radio" name="jxPickDev" value="2" lay-ignore> {:$jxE(lang('admin/ux/jcx/phones'))}</label>
+            </div>
+        </div>
+        <div class="jx-pickwrap" data-jx-pickwrap>
+            <p class="jx-pickmsg" data-jx-pickmsg>{:$jxE(lang('admin/ux/jcx/picker_loading'))}</p>
+            <iframe class="jx-pickframe" data-jx-pickframe title="{:$jxE(lang('admin/ux/jcx/help_place'))}"></iframe>
+        </div>
+        <p class="jx-picked" data-jx-picked role="status">{:$jxE(lang('admin/ux/jcx/pick_none'))}</p>
+        <p class="ax-help ax-danger-text jx-err" data-err="item_place" hidden></p>
+        <p class="jx-density" data-jx-density aria-live="polite"></p>
+        <details class="jx-more" data-jx-picklist>
+            <summary>{:$jxE(lang('admin/ux/jcx/picker_list'))}</summary>
+            <div class="jx-placelist" role="radiogroup" aria-label="{:$jxE(lang('admin/ux/jcx/picker_list'))}">
+                {volist name="all_places" id="pc"}
+                <label class="jx-check" data-place="{$pc}"><input type="radio" name="jxPlace" value="{$pc}" lay-ignore> <span>{:$jxE(lang('admin/ux/jcx/pl_' . $pc))}</span> <small class="ax-faint" data-why></small></label>
+                {/volist}
+            </div>
+        </details>
+        <div class="jx-row" data-g="feedopts">
+            <div class="ax-field ax-field--sm"><label for="jxFeedE">{:$jxE(lang('admin/ux/jcx/feed_every'))}</label><input id="jxFeedE" type="number" min="2" max="50" class="layui-input" data-o="every" value="8" aria-describedby="jxFeedEH"><p class="ax-help" id="jxFeedEH">{:$jxE(lang('admin/ux/jcx/help_feed_every'))}</p></div>
+            <div class="ax-field ax-field--sm"><label for="jxFeedM">{:$jxE(lang('admin/ux/jcx/feed_max'))}</label><input id="jxFeedM" type="number" min="1" max="10" class="layui-input" data-o="max" value="2" aria-describedby="jxFeedMH"><p class="ax-help" id="jxFeedMH">{:$jxE(lang('admin/ux/jcx/help_feed_max'))}</p></div>
+        </div>
+    </div>
+
+    <div data-g="fixed"><p class="ax-help" data-jx-fixed></p></div>
+
+    <div data-g="when">
+        <div class="ax-field" data-g="trig" role="radiogroup" aria-labelledby="jxTrigL"><label id="jxTrigL">{:$jxE(lang('admin/ux/jcx/trigger'))}</label>
+            <div class="jx-radios">
+                <label class="jx-check" data-trig="delay"><input type="radio" name="jxTrig" value="delay" data-o="trigger" lay-ignore> {:$jxE(lang('admin/ux/jcx/trig_delay'))}</label>
+                <label class="jx-check" data-trig="scroll"><input type="radio" name="jxTrig" value="scroll" data-o="trigger" lay-ignore> {:$jxE(lang('admin/ux/jcx/trig_scroll'))}</label>
+                <label class="jx-check" data-trig="exit"><input type="radio" name="jxTrig" value="exit" data-o="trigger" lay-ignore> {:$jxE(lang('admin/ux/jcx/trig_exit'))}</label>
+                <label class="jx-check" data-trig="link"><input type="radio" name="jxTrig" value="link" data-o="trigger" lay-ignore> {:$jxE(lang('admin/ux/jcx/u08_trigger_link'))}</label>
+                <label class="jx-check" data-trig="load"><input type="radio" name="jxTrig" value="load" data-o="trigger" lay-ignore> {:$jxE(lang('admin/ux/jcx/u08_trigger_load'))}</label>
+                <label class="jx-check" data-trig="welcome"><input type="radio" name="jxTrig" value="welcome" data-o="trigger" lay-ignore> {:$jxE(lang('admin/ux/jcx/u08_welcome'))}</label>
+            </div>
+            <p class="ax-help">{:$jxE(lang('admin/ux/jcx/help_trigger'))}</p>
+            <p class="ax-help ax-danger-text jx-err" data-err="opts.trigger" hidden></p><p class="ax-help ax-danger-text jx-err" data-err="opts.welcome" hidden></p>
+        </div>
+        <div class="jx-row">
+            <div class="ax-field ax-field--sm" data-g="delay"><label for="jxDelay">{:$jxE(lang('admin/ux/jcx/delay'))}</label><input id="jxDelay" type="number" min="0" max="600" class="layui-input" data-f="item_delay" aria-describedby="jxDelayH"><p class="ax-help" id="jxDelayH">{:$jxE(lang('admin/ux/jcx/help_delay'))}</p></div>
+            <div class="ax-field ax-field--sm" data-g="scroll"><label for="jxScroll">{:$jxE(lang('admin/ux/jcx/scroll_pct'))}</label><input id="jxScroll" type="number" min="10" max="90" class="layui-input" data-o="scroll_pct" value="50"></div>
+        </div>
+        <div class="ax-notice" data-g="u09" role="note"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-info"/></svg><div><p>{:$jxE(lang('admin/ux/jcx/u09_panel_help'))}</p></div></div>
+        <div class="ax-field" data-g="closemem" role="radiogroup" aria-labelledby="jxCmL"><label id="jxCmL">{:$jxE(lang('admin/ux/jcx/close_mem'))}</label>
+            <div class="jx-radios"><label class="jx-check"><input type="radio" name="jxCm" value="session" data-o="close_mem" lay-ignore checked> {:$jxE(lang('admin/ux/jcx/close_session'))}</label>
+            <label class="jx-check"><input type="radio" name="jxCm" value="24h" data-o="close_mem" lay-ignore> {:$jxE(lang('admin/ux/jcx/close_24h'))}</label></div>
+            <p class="ax-help">{:$jxE(lang('admin/ux/jcx/help_close_mem'))}</p></div>
+        <div class="ax-field" data-g="often" role="radiogroup" aria-labelledby="jxOftenL"><label id="jxOftenL">{:$jxE(lang('admin/ux/jcx/often'))}</label>
+            <div class="jx-radios">
+                <label class="jx-check" data-g="oftennet"><input type="radio" name="jxOften" value="net" lay-ignore> {:$jxE(lang('admin/ux/jcx/often_network'))}</label>
+                <label class="jx-check" data-g="oftendef"><input type="radio" name="jxOften" value="def" lay-ignore> <span data-jx-oftendef></span></label>
+                <label class="jx-check"><input type="radio" name="jxOften" value="own" lay-ignore> {:$jxE(lang('admin/ux/jcx/often_own'))}</label>
+            </div>
+            <div class="jx-row" data-g="oftenown">
+                <div class="ax-field ax-field--sm"><label for="jxCapN">{:$jxE(lang('admin/ux/jcx/often_times'))}</label><input id="jxCapN" type="number" min="1" max="1000" class="layui-input" data-f="item_cap_n"></div>
+                <div class="ax-field ax-field--sm"><label for="jxCapH">{:$jxE(lang('admin/ux/jcx/often_hours'))}</label><input id="jxCapH" type="number" min="1" max="8760" class="layui-input" data-f="item_cap_h"></div>
+                <div class="ax-field ax-field--sm"><label for="jxCapG">{:$jxE(lang('admin/ux/jcx/often_gap_min'))}</label><input id="jxCapG" type="number" min="0" max="10080" class="layui-input" data-f="item_cap_gap"></div>
+            </div>
+            <label class="jx-check"><input type="checkbox" data-f="item_skip_first" value="1" lay-ignore> {:$jxE(lang('admin/ux/jcx/often_first'))}</label>
+            <p class="ax-help">{:$jxE(lang('admin/ux/jcx/help_often'))}</p>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,51 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="jav" data-template-variant="classic" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/vod_show"}
+{include file="block/include"}
+</head>
+<body class="gallery-page page-list">
+{include file="block/head"}
+{include file="block/filters"}
+{php}ob_start();{/php}{maccms:vod num="20" paging="yes" pageurl="vod/show" type="current" order="desc" by="time"}<li>{include file="block/vod_box"}</li>{/maccms:vod}{php}$tplGridHtml = ob_get_clean(); $tplTotal = isset($__PAGING__['record_total']) ? (int)$__PAGING__['record_total'] : 0;{/php}
+<main id="main-content" class="container list-page">
+  <div class="list-head">
+    <div class="list-title">
+      <h1>{:\\app\\common\\util\\AutoIcon::icon('category', $obj['type_name'], ['size'=>'xl', 'plate'=>true])}<span>{:\\app\\common\\util\\TemplateText::get(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$obj['type_name']))}</span></h1>
+      <p class="list-count"><strong>{$tplTotal|number_format}</strong> {:\\app\\common\\util\\TemplateText::get('videos')}</p>
+    </div>
+    <nav class="sort-tabs" aria-label="{:\\app\\common\\util\\TemplateText::get('jav.sort_order')}">{volist name="tplSorts" id="tplS"}<a href="{$tplS.url}"{if condition="$tplS.active"} class="active" aria-current="true"{/if}>{$tplS.ico}{$tplS.label}</a>{/volist}</nav>
+  </div>
+  {notempty name="tplRows"}
+  <details class="film-filter"{if condition="$tplAnyFilter"} open{/if}>
+    <summary>{:\\app\\common\\util\\AutoIcon::ui('filter')}<span>{:\\app\\common\\util\\TemplateText::get('jav.filters')}</span>{if condition="$tplAnyFilter"} <a class="filter-clear" href="{$tplClearUrl}">{:\\app\\common\\util\\AutoIcon::ui('close', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('jav.clear_filters')}</a>{/if}</summary>
+    <div class="filter-rows">
+      {volist name="tplRows" id="tplRow"}
+      <div class="filter-row{if condition="$tplRow.more"} is-collapsed{/if}" data-filter-row>
+        <span class="filter-label">{$tplRow.ico}{$tplRow.label}</span>
+        <ul class="filter-chips">{volist name="tplRow.items" id="tplIt"}<li{if condition="$tplIt.extra"} class="extra"{/if}><a href="{$tplIt.url}"{if condition="$tplIt.active"} class="active" aria-current="true"{/if}>{$tplIt.ico}{$tplIt.label}</a></li>{/volist}</ul>
+        {if condition="$tplRow.more"}<button class="filter-more" type="button" aria-expanded="false" data-filter-more>{:\\app\\common\\util\\AutoIcon::ui('chevron-down', ['size'=>'sm', 'class'=>'filter-more__ico'])}{:\\app\\common\\util\\TemplateText::get('jav.show_more')}</button>{/if}
+      </div>
+      {/volist}
+    </div>
+  </details>
+  {/notempty}
+  {if condition="$tplTotal gt 0"}
+  {include file="public/subcats"}<ul class="stui-vodlist" data-grid-fill>{$tplGridHtml}</ul>
+  {else /}
+  <div class="empty-state">{:\\app\\common\\util\\AutoIcon::scene('search-empty')}<p>{:\\app\\common\\util\\TemplateText::get('jav.no_videos_filters')}</p>{if condition="$tplAnyFilter"}<a class="btn-ghost" href="{$tplClearUrl}">{:\\app\\common\\util\\AutoIcon::ui('close', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('jav.clear_filters')}</a>{/if}</div>
+  {/if}
+  {include file="public/list_note"}{include file="block/page"}
+</main>
+{include file="block/page_all"}
+{include file="block/copy"}
+{include file="block/foot"}
+</body>
+</html>

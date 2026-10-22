@@ -1,0 +1,97 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Based on MacCMS 10 (Apache-2.0) by magicblack, changed by JavCMS.
+JavCMS changes: Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors,
+JavCMS Community License 1.0. The MacCMS parts stay under the Apache License 2.0.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{include file="../../../application/admin/view/public/head" /}
+<div class="page-container p10">
+    <div class="ax-editor-head">
+        <a class="ax-btn ax-btn--ghost" href="{:url('index')}" data-ax-back data-ax-back-msg="{:lang('admin/ux/system/leave_unsaved')}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-arrow-left"/></svg>{:lang('admin/ux/kit/back')}</a>
+        <h1>{:lang('admin/ux/system/add_cards')}</h1>
+    </div>
+    <form data-ax-dirty class="layui-form layui-form-pane" method="post" action="">
+        <input type="hidden" name="__token__" value="{:mac_admin_csrf_token()}">
+        <input id="link_id" name="link_id" type="hidden" value="{$info.link_id}">
+        <div class="layui-form-item">
+            <label class="layui-form-label">{:lang('admin/card/make_num')}</label>
+            <div class="layui-input-block">
+                <input type="text" class="layui-input" value="10" lay-verify="num" placeholder="" name="num">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">{:lang('money')}</label>
+            <div class="layui-input-block">
+                <input type="text" class="layui-input" value="" lay-verify="money" placeholder="" name="money">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">{:lang('points')}</label>
+            <div class="layui-input-block">
+                <input type="text" class="layui-input" value="" lay-verify="point" placeholder="" name="point">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">{:lang('card_no')}{:lang('rule')}</label>
+            <div class="layui-input-block">
+                <input type="radio" name="role_no" value="" title="{:lang('mixing')}" checked>
+                <input type="radio" name="role_no" value="letter" title="{:lang('abc')}" >
+                <input type="radio" name="role_no" value="num" title="{:lang('number')}" >
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">{:lang('pass')}{:lang('rule')}</label>
+            <div class="layui-input-block">
+                <input type="radio" name="role_pwd" value="" title="{:lang('mixing')}" checked>
+                <input type="radio" name="role_pwd" value="letter" title="{:lang('abc')}" >
+                <input type="radio" name="role_pwd" value="num" title="{:lang('number')}" >
+            </div>
+        </div>
+
+        <div class="layui-form-item center">
+            <div class="layui-input-block">
+                <button type="submit" class="ax-btn ax-btn--primary" lay-submit="" lay-filter="formSubmit" data-child="true"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-save"/></svg>{:lang('admin/ux/kit/save')}</button>
+                <button class="ax-btn" type="reset"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-rotate-ccw"/></svg>{:lang('admin/ux/system/undo_changes')}</button>
+            </div>
+        </div>
+    </form>
+
+</div>
+{include file="../../../application/admin/view/public/foot" /}
+
+<script type="text/javascript">
+    layui.use(['form', 'layer'], function () {
+        // Layui modules
+        var form = layui.form
+                , layer = layui.layer
+                , $ = layui.jquery;
+
+        // Validate required fields
+        form.verify({
+            num: function (value) {
+                if (value == "") {
+                    return "{:lang('admin/card/please_input_make_num')}";
+                }
+            },
+            money: function (value) {
+                if (value == "") {
+                    return "{:lang('admin/card/please_input_money')}";
+                }
+            },
+            point: function (value) {
+                if (value == "") {
+                    return "{:lang('admin/card/please_input_points')}";
+                }
+            }
+        });
+
+
+    });
+</script>
+
+<script>document.addEventListener('click', function (e) { var b = e.target.closest('[data-ax-back]'); if (!b) { return; } var idx; try { idx = window.parent !== window && parent.layer ? parent.layer.getFrameIndex(window.name) : undefined; } catch (err) { idx = undefined; } if (idx === undefined || idx === null) { return; } e.preventDefault(); var go = function () { parent.layer.close(idx); }; if (window.AxUX && AxUX.isDirty()) { AxUX.confirm({ message: b.getAttribute('data-ax-back-msg'), count: 1 }).then(function (yes) { if (yes) { AxUX.markClean(); go(); } }); } else { go(); } });</script>
+</body>
+</html>

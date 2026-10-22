@@ -1,0 +1,33 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="topaz-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/auto"}
+{include file="public/include"}
+</head>
+<body class="tp-page-list tp-page-search">
+{include file="public/head"}
+{php}$tpH1 = \app\common\util\TemplateText::raw('ui.search'); $tpSub = \app\common\util\TemplateText::raw('tp.type_to_search'); $tpEyebrow = \app\common\util\TemplateText::raw('tp.the_collection');{/php}
+<main id="main-content" class="tp-main tp-wrap tp-list">
+  {include file="public/listhead"}
+  <form class="tp-bigsearch" action="{:mac_url('vod/search')}" method="get" role="search">
+    <label class="tp-sr" for="tp-bigq">{:\\app\\common\\util\\TemplateText::get('ui.search')}</label>
+    {:\\app\\common\\util\\AutoIcon::ui('search')}
+    <input id="tp-bigq" class="tp-input" type="search" name="wd" maxlength="60" autocomplete="off" placeholder="{:\\app\\common\\util\\TemplateText::get('ui.search_videos_or_performers')}">
+    <button class="tp-btn tp-btn--ice" type="submit">{:\\app\\common\\util\\AutoIcon::ui('arrow-right', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ui.search')}</button>
+  </form>
+  <div class="tp-filters" style="margin-top:20px">{include file="public/catrail"}</div>
+  <section class="tp-tray" aria-labelledby="tp-s-new">
+    <header class="tp-tray-head" data-ai-group><h2 class="tp-tray-title" id="tp-s-new">{:\\app\\common\\util\\AutoIcon::navIcon('latest', '', ['size'=>'lg', 'plate'=>true])}{:\\app\\common\\util\\TemplateText::get('latest')}</h2><span class="tp-tray-line" aria-hidden="true"></span><a class="tp-tray-more" href="{:mac_url('label/new')}"><span>{:\\app\\common\\util\\TemplateText::get('tp.view_collection')}</span><i class="tp-dia" aria-hidden="true"></i>{:\\app\\common\\util\\AutoIcon::ui('arrow-right', ['size'=>'sm', 'class'=>'tp-more-ai'])}</a></header>
+    <div class="tp-tray-body"><div class="tp-grid" data-grid-fill data-tp-stagger>{maccms:vod num="10" type="all" order="desc" by="time" paging="no" id="vo"}{include file="public/vodbox"}{/maccms:vod}</div></div>
+  </section>
+</main>
+{include file="public/foot"}
+</body>
+</html>

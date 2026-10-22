@@ -1,0 +1,8 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}$galleryLanguages = \app\common\util\TemplateText::languages(); $galleryLanguageName = (string)($galleryLanguages[\app\common\util\TemplateText::locale()] ?? '');{/php}<details class="e-lang language-menu"><summary class="e-top-item" title="{:\\app\\common\\util\\TemplateText::get('ui.language')}">{:\\app\\common\\util\\AutoIcon::ui('languages', ['class'=>'e-ai-top'])}<span class="e-lang-name">{if condition="$galleryLanguageName neq ''"}{$galleryLanguageName|htmlspecialchars=ENT_QUOTES}{else/}{:\\app\\common\\util\\TemplateText::get('ui.language')}{/if}</span>{:\\app\\common\\util\\AutoIcon::ui('chevron-down', ['class'=>'e-chev', 'tint'=>'none'])}</summary><div class="e-lang-list language-links">{volist name="galleryLanguages" id="galleryLanguage" key="galleryLanguageIndex"}<a href="{:\\app\\common\\util\\TemplateText::languageUrl($key)}" lang="{$key|htmlspecialchars=ENT_QUOTES}" hreflang="{$key|htmlspecialchars=ENT_QUOTES}" {if condition="$key eq $maccms.ui_lang"}aria-current="true"{/if} style="--e-i:{$galleryLanguageIndex}">{$galleryLanguage|htmlspecialchars=ENT_QUOTES}</a>{/volist}</div></details>

@@ -1,0 +1,40 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="crimson" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+<title>{:\\app\\common\\util\\TemplateText::get('ui.reset_password')} - {:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$maccms['site_name']), ENT_QUOTES, 'UTF-8')}</title>
+<meta name="robots" content="noindex, follow" />
+{include file="public/include"}
+{include file="user/include"}
+</head>
+<body class="ct-auth-page ct-findpass-page">
+{include file="public/head"}
+<main id="main-content" class="ct-wrap"><section class="ct-auth"><div class="ct-auth-card"><div class="ct-auth-hero"><img src="{$maccms.path_tpl|htmlspecialchars=ENT_QUOTES}assets/img/mascot.svg" width="74" height="74" alt=""><h1 class="ct-h1">{:\\app\\common\\util\\TemplateText::get('ui.reset_password')}</h1></div><div class="ct-auth-body"><form class="ct-form" id="fm" method="post" action="" novalidate><p class="ct-tip">{:\\app\\common\\util\\TemplateText::get('crimson.reset_question_tip')}</p><div class="ct-field"><label for="user_name">{:\\app\\common\\util\\AutoIcon::ui('user', ['class'=>'ct-ico'])}{:\\app\\common\\util\\TemplateText::get('ui.username')}</label><input class="ct-input" id="user_name" name="user_name" type="text" maxlength="30" autocomplete="username" autocapitalize="off"></div><div class="ct-field"><label for="user_question">{:\\app\\common\\util\\AutoIcon::ui('help', ['class'=>'ct-ico'])}{:\\app\\common\\util\\TemplateText::get('ui.security_question')}</label><input class="ct-input" id="user_question" name="user_question" type="text"></div><div class="ct-field"><label for="user_answer">{:\\app\\common\\util\\AutoIcon::ui('key', ['class'=>'ct-ico'])}{:\\app\\common\\util\\TemplateText::get('ui.security_answer')}</label><input class="ct-input" id="user_answer" name="user_answer" type="text"></div><div class="ct-field"><label for="user_pwd">{:\\app\\common\\util\\AutoIcon::ui('lock', ['class'=>'ct-ico'])}{:\\app\\common\\util\\TemplateText::get('ui.new_password')}</label><input class="ct-input" id="user_pwd" name="user_pwd" type="password" maxlength="20" autocomplete="new-password"></div><div class="ct-field"><label for="user_pwd2">{:\\app\\common\\util\\AutoIcon::ui('lock', ['class'=>'ct-ico'])}{:\\app\\common\\util\\TemplateText::get('ui.confirm_password')}</label><input class="ct-input" id="user_pwd2" name="user_pwd2" type="password" maxlength="20" autocomplete="new-password"></div><div class="ct-field"><label for="verify">{:\\app\\common\\util\\AutoIcon::ui('shield', ['class'=>'ct-ico'])}{:\\app\\common\\util\\TemplateText::get('ui.verification_code')}</label><div class="ct-captcha"><input class="ct-input" id="verify" name="verify" maxlength="6" autocomplete="off" inputmode="text"><img id="verify_img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-captcha-src="{:mac_url('verify/index')}" width="128" height="40" alt="{:\\app\\common\\util\\TemplateText::get('ui.verification_code')}" title="{:\\app\\common\\util\\TemplateText::get('not_to_see_change_one')}" role="button" tabindex="0"></div></div><button class="ct-btn ct-btn--block" id="btn_submit" type="button">{:\\app\\common\\util\\TemplateText::get('ui.reset_password')}</button><div class="ct-row ct-auth-alt"><a class="ct-link" href="{:mac_url('user/login')}">{:\\app\\common\\util\\TemplateText::get('ui.log_in_now')}</a><a class="ct-link" href="{:mac_url('user/findpass')}">{:\\app\\common\\util\\TemplateText::get('crimson.reset_by_question')}</a><a class="ct-link" href="{:mac_url('user/findpass_msg')}?ac=email">{:\\app\\common\\util\\TemplateText::get('crimson.reset_by_email')}</a><a class="ct-link" href="{:mac_url('user/findpass_msg')}?ac=phone">{:\\app\\common\\util\\TemplateText::get('crimson.reset_by_phone')}</a></div></form></div></div></section></main>
+{include file="public/foot"}
+<script>
+$(function () {
+  var label = $('#btn_submit').text();
+  $('#fm').on('keydown', 'input', function (e) { if (e.key === 'Enter') { e.preventDefault(); $('#btn_submit').trigger('click'); } });
+  $('#btn_submit').on('click', function () {
+    if ($('#user_name').val() === '') { TemplateUI.message(window.TemplateMessages['ui.please_enter_the_user']); $('#user_name').focus(); return false; }
+    if ($('#user_pwd').val() === '') { TemplateUI.message(window.TemplateMessages['ui.please_enter_the_new_password_ec0b3e']); $('#user_pwd').focus(); return false; }
+    if ($('#user_pwd').val() !== $('#user_pwd2').val()) { TemplateUI.message(window.TemplateMessages['ui.the_second_password_is_inconsistent']); $('#user_pwd2').focus(); return false; }
+    if ($('#verify').val() === '') { TemplateUI.message(window.TemplateMessages['ui.please_enter_the_verification_code_0d14a4']); $('#verify').focus(); return false; }
+    $.ajax({
+      url: "{:mac_url('user/findpass')}", type: 'post', dataType: 'json', data: $('#fm').serialize(),
+      beforeSend: function () { $('#btn_submit').prop('disabled', true).text(window.TemplateMessages['ui.loading']); },
+      success: function (r) { if (r.code == 1) { location.href = "{:mac_url('user/index')}"; return; } TemplateUI.message(r.msg, { kind: 'error' }); $('#verify_img').trigger('click'); },
+      error: function () { TemplateUI.message(window.TemplateMessages['ui.connection_failed_try_again'], { kind: 'error' }); },
+      complete: function () { $('#btn_submit').prop('disabled', false).text(label); }
+    });
+  });
+});
+</script>
+</body>
+</html>

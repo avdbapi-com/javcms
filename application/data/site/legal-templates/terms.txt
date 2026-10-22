@@ -1,0 +1,35 @@
+These terms apply to every visitor of {site_name} ({site_url}). The site is run by {operator}. By using the site you accept these terms. If you do not accept them, please leave the site.
+
+## Adults only
+This site contains sexually explicit material. You may use it only if you are at least 18 years old, or the age of majority where you live if that is higher, and only if viewing such material is legal where you are. Do not let minors use your device to view this site.
+
+## What the site offers
+{site_name} lists videos and information about them. Many videos are played from other providers' servers through embedded players. We do not check every video before it is listed and we do not promise that a video stays available.
+
+## Your use of the site
+- Use the site only for your own personal, non-commercial viewing.
+- Do not copy, scrape or republish the site or large parts of it without our written permission.
+- Do not try to break, overload or get around the security of the site.
+- Do not post or upload anything illegal, anything that shows minors, or anything that shows people who did not agree to it.
+- Comments and other content you post must respect the law and other people. We may remove any content and close any account at any time.
+
+## Accounts
+If you create an account, keep your password secret. You are responsible for what happens under your account. You can ask us to delete your account at any time.
+
+## Copyright
+The videos, names and marks shown on the site belong to their owners. If you think something on the site infringes your rights, read our copyright (DMCA) page and send us a notice.
+
+## Links and advertising
+The site contains links to other websites and advertising. We do not control those websites and are not responsible for their content, offers or privacy practices.
+
+## No warranty
+The site is provided "as is" and "as available". We do not promise that it is always online, free of errors or suitable for any purpose.
+
+## Limitation of liability
+To the extent the law allows, {operator} is not liable for any indirect or consequential loss or damage that comes from using or not being able to use the site.
+
+## Changes
+We may change these terms at any time. The current version is always on this page. These terms were last updated on {date}.
+
+## Contact
+Questions about these terms: {email}.

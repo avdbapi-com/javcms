@@ -1,0 +1,101 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="jav-modern" data-template-variant="modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/vod_play"}
+{include file="block/include"}
+<script src="{$maccms.path_tpl|htmlspecialchars=ENT_QUOTES}statics/js/history.js?v=20261009-r2"></script>
+<?php
+$javPlayerJsonFlags = JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_INVALID_UTF8_SUBSTITUTE;
+$javVodFull = isset($obj['vod_display_name']) ? html_entity_decode((string)$obj['vod_display_name'], ENT_QUOTES | ENT_HTML5, 'UTF-8') : '';
+$javVodName = mac_substring($javVodFull, 46);
+if ($javVodName !== $javVodFull) { $javVodName = rtrim($javVodName) . '…'; }
+$javVodPart = isset($param['sid'], $param['nid']) && isset($obj['vod_play_list'][$param['sid']]['urls'][$param['nid']]['name']) ? (string)$obj['vod_play_list'][$param['sid']]['urls'][$param['nid']]['name'] : '';
+?>
+<script>var vod_id=<?php echo (int)$obj['vod_id']; ?>,vod_name=<?php echo json_encode($javVodName, $javPlayerJsonFlags); ?>,vod_url=window.location.href,vod_part=<?php echo json_encode($javVodPart, $javPlayerJsonFlags); ?>;</script>
+</head>
+<body class="gallery-page page-watch">
+{include file="block/head"}
+{include file="block/vod_meta"}
+{php}
+$tplMoreTitle = \app\common\util\TemplateText::get('ui.more_to_watch');
+$tplPlayList = (isset($obj['vod_play_list']) && is_array($obj['vod_play_list'])) ? $obj['vod_play_list'] : [];
+$tplDownList = (isset($obj['vod_down_list']) && is_array($obj['vod_down_list'])) ? $obj['vod_down_list'] : [];
+$tplEpTotal = 0;
+foreach ($tplPlayList as $tplSrc) { $tplEpTotal += (isset($tplSrc['urls']) && is_array($tplSrc['urls'])) ? count($tplSrc['urls']) : 0; }
+$tplHasSide = count($tplPlayList) > 1 || $tplEpTotal > 1 || count($tplDownList) > 0;
+$tplHere = mac_url_vod_play($obj, ['sid' => (int)($param['sid'] ?? 1), 'nid' => (int)($param['nid'] ?? 1)]);
+$tplPrev = (string)($obj['player_info']['link_pre'] ?? '');
+$tplNext = (string)($obj['player_info']['link_next'] ?? '');
+if ($tplPrev === $tplHere) { $tplPrev = ''; }
+if ($tplNext === $tplHere) { $tplNext = ''; }
+$tplSourceName = (string)($obj['vod_play_list'][$param['sid'] ?? 1]['player_info']['show'] ?? '');
+$tplEpName = (string)($obj['vod_play_list'][$param['sid'] ?? 1]['urls'][$param['nid'] ?? 1]['name'] ?? '');
+{/php}
+<main id="main-content" class="container watch-page">
+  <div class="watch-stage{if condition="$tplHasSide"} has-side{/if}">
+    <div class="watch-main">
+      <div class="player-box">{$player_data}{$player_js}</div>
+    </div>
+    {if condition="$tplHasSide"}
+    <aside class="stui-player__side" aria-label="{:\\app\\common\\util\\TemplateText::get('playback_sources')}">
+      <ul class="tab clearfix">
+        <li class="active"><a href="#play-box">{:\\app\\common\\util\\AutoIcon::ui('play-circle', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('playback')}</a></li>
+        {notempty name="tplDownList"}<li><a href="#play-box">{:\\app\\common\\util\\AutoIcon::ui('download', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('downloads')}</a></li>{/notempty}
+      </ul>
+      <div class="tab-content" id="play-box">
+        <div class="item active">
+          {if condition="count($tplPlayList) gt 1"}<ul class="tab-top play-tab clearfix">{maccms:foreach name="tplPlayList" id="vo2" key="key2"}<li{if condition="$param.sid eq $vo2.sid"} class="active"{/if}><a href="#play-box">{$vo2.player_info.show|htmlspecialchars=ENT_QUOTES}</a></li>{/maccms:foreach}</ul>{/if}
+          <div class="play-content">
+            {maccms:foreach name="tplPlayList" id="vo" key="key"}
+            <div class="play-item cont{if condition="$param.sid eq $vo.sid"} active{/if}">
+              <h3 class="play-source">{$vo.player_info.show|htmlspecialchars=ENT_QUOTES}</h3>
+              <ul class="stui-play__list clearfix">{maccms:foreach name="vo.urls" id="vo2"}<li{if condition="$param.sid eq $vo.sid && $param.nid eq $vo2.nid"} class="active"{/if}><a href="{:mac_url_vod_play($obj,['sid'=>$vo.sid,'nid'=>$vo2.nid])}"{if condition="$param.sid eq $vo.sid && $param.nid eq $vo2.nid"} aria-current="page"{/if}>{$vo2.name|htmlspecialchars=ENT_QUOTES}</a></li>{/maccms:foreach}</ul>
+            </div>
+            {/maccms:foreach}
+          </div>
+        </div>
+        {notempty name="tplDownList"}
+        <div class="item">
+          <div class="down-content">
+            {maccms:foreach name="tplDownList" id="vo" key="key"}
+            <div class="down-item cont{if condition="$key eq 1"} active{/if}">
+              <h3 class="play-source">{$vo.player_info.show|htmlspecialchars=ENT_QUOTES}</h3>
+              <ul class="stui-play__list clearfix">{maccms:foreach name="vo.urls" id="vo2"}<li class="down"><a href="{:mac_safe_url($vo2.url)}" rel="nofollow">{$vo2.name|htmlspecialchars=ENT_QUOTES}</a></li>{/maccms:foreach}</ul>
+            </div>
+            {/maccms:foreach}
+          </div>
+        </div>
+        {/notempty}
+      </div>
+    </aside>
+    {/if}
+  </div>
+  <section class="watch-info">
+    <h1{php}echo \app\common\util\AvdbLanguage::langAttr(isset($obj) && is_array($obj) ? $obj : []);{/php} class="film-title watch-title">{$tplName|htmlspecialchars=ENT_QUOTES}</h1>
+    <div class="watch-bar">
+      <p class="film-quick">{if condition="$tplCode neq ''"}<span class="q-code">{$tplCode|htmlspecialchars=ENT_QUOTES}</span>{/if}{if condition="$tplScore gt 0"}<span class="q-score" title="{$tplL.score}">{:$tplIco('star')}{$tplScore|number_format=1}</span>{/if}<span class="q-views">{:$tplIco('eye')}<span class="mac_hits" data-mid="1" data-id="{$obj.vod_id}" data-type="hits">{$tplHits}</span> {$tplL.views}</span>{if condition="$tplDuration neq ''"}<span class="q-dur">{:$tplIco('clock')}{$tplDuration|htmlspecialchars=ENT_QUOTES}</span>{/if}{if condition="!$tplHasSide && $tplSourceName neq ''"}<span class="q-src">{:$tplIco('monitor-play')}{$tplSourceName|htmlspecialchars=ENT_QUOTES}{if condition="$tplEpName neq ''"} &middot; {$tplEpName|htmlspecialchars=ENT_QUOTES}{/if}</span>{/if}</p>
+      <div class="watch-actions">
+        {if condition="$tplPrev neq ''"}<a class="btn-ghost ep-prev" href="{:mac_safe_url($tplPrev)}" rel="prev">{:\\app\\common\\util\\AutoIcon::ui('skip-back', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('previous_episode')}</a>{/if}
+        {if condition="$tplNext neq ''"}<a class="btn-ghost ep-next" href="{:mac_safe_url($tplNext)}" rel="next">{:\\app\\common\\util\\TemplateText::get('next_episode')}{:\\app\\common\\util\\AutoIcon::ui('skip-forward', ['size'=>'sm'])}</a>{/if}
+        <a class="btn-ghost" href="{$tplDetailUrl|htmlspecialchars=ENT_QUOTES}">{:\\app\\common\\util\\AutoIcon::ui('info', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('details')}</a>
+      </div>
+    </div>
+    {include file="block/vod_facts"}
+  </section>
+  {include file="block/vod_desc"}
+  {include file="block/vod_more"}
+  {include file="block/comments"}
+</main>
+<div class="play-bg" aria-hidden="true"></div>
+<span class="mac_ulog_set hide" data-type="4" data-mid="{$maccms.mid}" data-id="{$obj.vod_id}" data-sid="{$param.sid|default='1'}" data-nid="{$param.nid|default='1'}"></span>
+{include file="block/copy"}
+{include file="block/foot"}
+</body>
+</html>

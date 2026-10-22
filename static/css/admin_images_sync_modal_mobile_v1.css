@@ -1,0 +1,200 @@
+/*
+ * This file is part of JavCMS - https://javcms.net
+ * Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+ * License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+ * See the LICENSE and NOTICE files that come with JavCMS.
+ * Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Telegram: https://t.me/avdb_api
+ */
+.admin-images-sync-modal-mobile-v1 .admin-images-sync-toolbar {
+    display: none;
+}
+
+.admin-images-sync-modal-mobile-v1 .admin-images-sync-close {
+    display: none;
+}
+
+@media (max-width: 900px) {
+    html,
+    body {
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+    .admin-images-sync-modal-mobile-v1,
+    .admin-images-sync-modal-mobile-v1 * {
+        box-sizing: border-box;
+    }
+
+    .admin-images-sync-modal-mobile-v1 {
+        width: 100%;
+        max-width: 100%;
+        padding: 10px !important;
+    }
+
+    .admin-images-sync-modal-mobile-v1 .admin-images-sync-form {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+        width: 100%;
+        min-width: 0;
+        margin: 0;
+    }
+
+    .admin-images-sync-modal-mobile-v1 .admin-images-sync-toolbar {
+        display: flex;
+        grid-column: 1 / -1;
+        grid-row: 1;
+        align-items: center;
+        min-width: 0;
+        min-height: 52px;
+        padding: 9px 12px;
+        border: 1px solid rgba(148, 163, 184, 0.24);
+        border-radius: 10px;
+        background: rgba(15, 23, 42, 0.72);
+    }
+
+    .admin-images-sync-modal-mobile-v1 .admin-images-sync-toolbar > div {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+    }
+
+    .admin-images-sync-modal-mobile-v1 .admin-images-sync-kicker {
+        color: #94a3b8;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        line-height: 1.25;
+    }
+
+    .admin-images-sync-modal-mobile-v1 #admin-images-sync-title {
+        color: #f8fafc;
+        font-size: 17px;
+        line-height: 1.35;
+    }
+
+    .admin-images-sync-modal-mobile-v1 .admin-images-sync-actions {
+        display: flex;
+        grid-column: 1 / -1;
+        grid-row: 2;
+        align-items: center;
+        gap: 8px;
+        min-width: 0;
+        margin: 0 !important;
+        padding: 0;
+    }
+
+    .admin-images-sync-modal-mobile-v1 .admin-images-sync-actions .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 0;
+        min-height: 40px;
+        margin: 0 !important;
+        padding: 8px 14px;
+    }
+
+    .admin-images-sync-modal-mobile-v1 .admin-images-sync-close:not([hidden]) {
+        display: inline-flex;
+    }
+
+    .admin-images-sync-modal-mobile-v1 .layui-elem-field {
+        width: 100%;
+        min-width: 0;
+        margin: 0 !important;
+        padding: 0;
+    }
+
+    .admin-images-sync-modal-mobile-v1 .layui-elem-field legend {
+        max-width: calc(100% - 16px);
+        padding: 0 6px;
+        line-height: 1.35;
+        white-space: normal;
+    }
+
+    .admin-images-sync-modal-mobile-v1 .layui-field-box {
+        min-width: 0;
+        padding: 9px !important;
+    }
+
+    .admin-images-sync-modal-mobile-v1 .layui-form-item {
+        margin-bottom: 0;
+    }
+
+    .admin-images-sync-modal-mobile-v1 .layui-field-box > .layui-form-item {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 7px 10px;
+        min-width: 0;
+    }
+
+    .admin-images-sync-modal-mobile-v1 .layui-field-box .layui-input-inline {
+        float: none;
+        flex: 1 1 112px;
+        width: auto !important;
+        min-width: 0;
+        margin: 0 !important;
+    }
+
+    .admin-images-sync-modal-mobile-v1 .layui-elem-field:nth-of-type(2) .layui-input-inline {
+        flex-basis: 138px;
+    }
+
+    .admin-images-sync-modal-mobile-v1 .layui-elem-field:nth-of-type(4) .layui-input-inline {
+        flex-basis: 100%;
+    }
+
+    .admin-images-sync-modal-mobile-v1 .layui-input,
+    .admin-images-sync-modal-mobile-v1 input[type="text"] {
+        width: 100%;
+        min-width: 0;
+        min-height: 40px;
+    }
+
+    .admin-images-sync-modal-mobile-v1 .layui-form-radio {
+        display: flex;
+        align-items: flex-start;
+        min-height: 32px;
+        margin: 0 !important;
+        padding-right: 0 !important;
+        line-height: 1.35;
+        white-space: normal;
+    }
+
+    .admin-images-sync-modal-mobile-v1 .layui-form-radio > div {
+        min-width: 0;
+        white-space: normal;
+        overflow-wrap: anywhere;
+    }
+
+    .admin-images-sync-modal-mobile-v1 .btn:focus-visible {
+        outline: 3px solid rgba(45, 212, 191, 0.5);
+        outline-offset: 2px;
+    }
+}
+
+@media (max-width: 520px) {
+    .admin-images-sync-modal-mobile-v1 .admin-images-sync-form {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .admin-images-sync-modal-mobile-v1 .admin-images-sync-toolbar,
+    .admin-images-sync-modal-mobile-v1 .admin-images-sync-actions {
+        grid-column: 1;
+    }
+
+    .admin-images-sync-modal-mobile-v1 .admin-images-sync-actions .btn {
+        flex: 1 1 0;
+    }
+
+    .admin-images-sync-modal-mobile-v1 .layui-field-box .layui-input-inline {
+        flex-basis: calc(50% - 5px);
+    }
+
+    .admin-images-sync-modal-mobile-v1 .layui-elem-field:nth-of-type(2) .layui-input-inline,
+    .admin-images-sync-modal-mobile-v1 .layui-elem-field:nth-of-type(4) .layui-input-inline {
+        flex-basis: 100%;
+    }
+}

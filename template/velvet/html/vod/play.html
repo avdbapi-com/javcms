@@ -1,0 +1,70 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="velvet" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/vod_play"}
+{include file="public/include"}
+</head>
+<body class="vv-page-watch">
+{php}
+if (!isset($vvPlain)) { $vvPlain = function ($v) { $v = (string)$v; for ($i = 0; $i < 4; $i++) { $d = html_entity_decode($v, ENT_QUOTES | ENT_HTML5, 'UTF-8'); if ($d === $v) { break; } $v = $d; } return trim($v); }; }
+$vvTitle = $vvPlain(($obj['vod_display_name'] ?? '') !== '' ? $obj['vod_display_name'] : ($obj['vod_name'] ?? ''));
+$vvDesc = $vvPlain($obj['vod_display_content'] ?? '');
+if ($vvDesc === '') { $vvDesc = $vvPlain($obj['vod_display_blurb'] ?? ''); }
+$vvEpCount = 0;
+foreach ((array)($obj['vod_play_list'] ?? []) as $vvPlayList) { $vvEpCount += is_array($vvPlayList['urls'] ?? null) ? count($vvPlayList['urls']) : 0; }
+$vvShare = '';
+try { $vvShare = \app\common\util\Sitemap::absolute(mac_url_vod_play($obj)); } catch (\Throwable $vvShareError) { $vvShare = ''; }
+$vvPre = (string)($obj['player_info']['link_pre'] ?? '');
+$vvNext = (string)($obj['player_info']['link_next'] ?? '');
+{/php}
+{include file="public/head"}
+<span class="vv-history-entry" hidden data-name="{$vvTitle|htmlspecialchars=ENT_QUOTES}" data-link="{:mac_url_vod_detail($obj)}" data-pic="{$obj.vod_pic|mac_default=$tplNoPic|mac_url_img|htmlspecialchars=ENT_QUOTES}"></span>
+<main id="main-content">
+  <section class="vv-stage" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.iframeplayer')}">
+    <div class="vv-wrap">
+      <div class="vv-player">{$player_data}{$player_js}</div>
+      {if condition="$vvEpCount gt 1 || $vvPre neq '' || $vvNext neq ''"}
+      <div class="vv-episodes">
+        {if condition="$vvPre neq ''"}<a class="vv-ep" href="{$vvPre|htmlspecialchars=ENT_QUOTES}" rel="prev">{:\\app\\common\\util\\AutoIcon::ui('chevron-left', ['class'=>'vv-i'])}{:\\app\\common\\util\\TemplateText::get('previous_episode')}</a>{/if}
+        {maccms:foreach name="obj.vod_play_list" id="vvSource" key="vvSid"}{maccms:foreach name="vvSource.urls" id="vvEp" key="vvNid"}<a class="vv-ep{if condition="$param.sid eq $vvSource.sid && $param.nid eq $vvEp.nid"} is-active{/if}" href="{:mac_url_vod_play($obj,['sid'=>$vvSource['sid'],'nid'=>$vvEp['nid']])}"{if condition="$param.sid eq $vvSource.sid && $param.nid eq $vvEp.nid"} aria-current="page"{/if}>{$vvEp.name|htmlspecialchars=ENT_QUOTES}</a>{/maccms:foreach}{/maccms:foreach}
+        {if condition="$vvNext neq ''"}<a class="vv-ep" href="{$vvNext|htmlspecialchars=ENT_QUOTES}" rel="next">{:\\app\\common\\util\\TemplateText::get('next_episode')}{:\\app\\common\\util\\AutoIcon::ui('chevron-right', ['class'=>'vv-i'])}</a>{/if}
+      </div>
+      {/if}
+    </div>
+  </section>
+  <div class="vv-wrap vv-main">
+    <div class="vv-watch-head">
+      <h1{php}echo \app\common\util\AvdbLanguage::langAttr(isset($obj) && is_array($obj) ? $obj : []);{/php}>{$vvTitle|htmlspecialchars=ENT_QUOTES}</h1>
+      <div class="vv-head-tools">
+        <button class="vv-round" type="button" data-vv-fav data-mid="1" data-id="{$obj.vod_id|intval}" aria-pressed="false" aria-label="{:\\app\\common\\util\\TemplateText::get('favorites')}" title="{:\\app\\common\\util\\TemplateText::get('favorites')}">{:\\app\\common\\util\\AutoIcon::ui('heart', ['class'=>'vv-i'])}</button>
+        <a class="vv-round" href="{:mac_url_vod_detail($obj)}" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.details')}" title="{:\\app\\common\\util\\TemplateText::get('ui.details')}">{:\\app\\common\\util\\AutoIcon::ui('info', ['class'=>'vv-i'])}</a>
+      </div>
+    </div>
+    <div class="vv-watch-sub" data-ai-group>
+      <span>{:\\app\\common\\util\\AutoIcon::ui('eye', ['class'=>'vv-i'])}<span class="mac_hits" data-vv-count data-mid="1" data-id="{$obj.vod_id|intval}" data-type="hits">{$obj.vod_hits|intval}</span></span>
+      <span>{:\\app\\common\\util\\AutoIcon::ui('calendar', ['class'=>'vv-i'])}<time datetime="{$obj.vod_time|date='Y-m-d',###}">{$obj.vod_time|date='Y-m-d',###}</time></span>
+      {if condition="$obj.vod_score gt 0"}<span>{:\\app\\common\\util\\AutoIcon::ui('star', ['class'=>'vv-i'])}<bdi dir="ltr"><span data-vv-count>{$obj.vod_score|htmlspecialchars=ENT_QUOTES}</span> / 10</bdi></span>{/if}
+    </div>
+    <div class="vv-info-grid">
+      {include file="public/meta"}
+      <aside class="vv-panel-card">
+        {if condition="$vvDesc neq ''"}<h2>{:\\app\\common\\util\\AutoIcon::ui('info', ['class'=>'vv-i'])}{:\\app\\common\\util\\TemplateText::get('description')}</h2>
+        <p class="vv-desc" data-vv-clamp>{$vvDesc|htmlspecialchars=ENT_QUOTES}</p>{/if}
+        <h2{if condition="$vvDesc neq ''"} style="margin-top:18px"{/if}>{:\\app\\common\\util\\AutoIcon::ui('share', ['class'=>'vv-i'])}{:\\app\\common\\util\\TemplateText::get('share')}</h2>
+        <div class="vv-share"><input id="vv-share-link" dir="ltr" type="text" value="{$vvShare|htmlspecialchars=ENT_QUOTES}" readonly aria-label="{:\\app\\common\\util\\TemplateText::get('ui.page_address')}"><button class="vv-btn vv-btn-go" type="button" data-copy-target="vv-share-link">{:\\app\\common\\util\\TemplateText::get('ui.copy_link')}</button></div>
+      </aside>
+    </div>
+    {include file="public/related"}
+    {if condition="$GLOBALS['config']['comment']['status'] eq 1"}<section class="vv-comments"><div class="mac_comment" data-id="{$obj.vod_id|intval}" data-mid="1"><p class="vv-muted-note">{:\\app\\common\\util\\TemplateText::get('ui.loading_comments')}</p></div></section><script>MAC.Comment.Init();MAC.Comment.Show(1);</script>{/if}
+  </div>
+</main>
+{include file="public/foot"}
+</body>
+</html>

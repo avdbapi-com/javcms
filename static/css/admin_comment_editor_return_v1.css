@@ -1,0 +1,123 @@
+/*
+ * This file is part of JavCMS - https://javcms.net
+ * Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+ * License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+ * See the LICENSE and NOTICE files that come with JavCMS.
+ * Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Telegram: https://t.me/avdb_api
+ */
+/* admin-comment-editor-return-v1 */
+.admin-comment-editor-page,
+.admin-gbook-editor-page {
+    max-width: 1120px;
+    margin: 0 auto;
+}
+
+.admin-comment-editor-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin: 0 0 14px;
+    padding: 14px 16px;
+    border: 1px solid rgba(111, 143, 190, .35);
+    border-radius: 14px;
+    background: linear-gradient(135deg, rgba(27, 43, 70, .98), rgba(13, 24, 43, .98));
+    box-shadow: 0 14px 30px rgba(0, 0, 0, .2);
+}
+
+.admin-comment-editor-toolbar__identity {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    min-width: 0;
+}
+
+.admin-comment-editor-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    flex: 0 0 auto;
+    min-height: 36px;
+    padding: 7px 12px;
+    border: 1px solid rgba(73, 213, 174, .55);
+    border-radius: 9px;
+    color: #b8ffe8 !important;
+    background: rgba(20, 130, 105, .28);
+    font-weight: 700;
+    text-decoration: none !important;
+    transition: background-color .18s ease, transform .18s ease;
+}
+
+.admin-comment-editor-back:hover,
+.admin-comment-editor-back:focus-visible {
+    color: #fff !important;
+    background: rgba(20, 158, 127, .55);
+    transform: translateY(-1px);
+}
+
+.admin-comment-editor-back__icon {
+    font-size: 18px;
+    line-height: 1;
+}
+
+.admin-comment-editor-titleline {
+    display: grid;
+    gap: 3px;
+    min-width: 0;
+}
+
+.admin-comment-editor-kicker {
+    color: #8ca4c8;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: .12em;
+    line-height: 1.2;
+    text-transform: uppercase;
+}
+
+.admin-comment-editor-title {
+    overflow: hidden;
+    color: #f2f7ff;
+    font-size: 18px;
+    line-height: 1.25;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.admin-comment-editor-page > form,
+.admin-gbook-editor-page > form {
+    border: 1px solid rgba(111, 143, 190, .28);
+    border-radius: 14px;
+    background: rgba(17, 30, 51, .74);
+    box-shadow: 0 14px 28px rgba(0, 0, 0, .16);
+}
+
+@media (max-width: 640px) {
+    .admin-comment-editor-toolbar {
+        align-items: stretch;
+        flex-direction: column;
+        gap: 11px;
+        padding: 12px;
+    }
+
+    .admin-comment-editor-toolbar__identity {
+        align-items: stretch;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .admin-comment-editor-back {
+        justify-content: center;
+        width: 100%;
+    }
+
+    .admin-comment-editor-titleline {
+        padding: 0 2px;
+    }
+
+    .admin-comment-editor-title {
+        font-size: 16px;
+        white-space: normal;
+    }
+}

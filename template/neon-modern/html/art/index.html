@@ -1,0 +1,27 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="neon-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/auto"}
+{include file="public/include"}
+</head>
+<body class="nn-page-art">
+{include file="public/head"}
+<main id="main-content" class="nn-main"><div class="nn-wrap">
+{php}$nnPH = \app\common\util\TemplateText::raw('articles'); $nnPHIcon = 'list';{/php}{include file="public/pagehead"}
+<section class="nn-section" aria-label="{:\\app\\common\\util\\TemplateText::get('articles')}">
+<div class="nn-arts">{maccms:art num="20" paging="yes" type="all" order="desc" by="time" id="vo"}{include file="art/item"}{/maccms:art}</div>
+{if condition="$__PAGING__.record_total eq 0"}{php}$nnEmptyKey = 'nn.no_articles';{/php}{include file="public/empty"}{/if}
+{include file="public/paging"}
+</section>
+{if condition="$__PAGING__.record_total eq 0"}{include file="public/hotgrid"}{/if}
+</div></main>
+{include file="public/foot"}
+</body>
+</html>

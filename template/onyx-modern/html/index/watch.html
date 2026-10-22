@@ -1,0 +1,13 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}$oxBandWord = \app\common\util\TemplateText::raw('ox.hot_week'); $oxSecNum = '02'; $oxSecId = 'sec-hot'; $oxSecTitle = \app\common\util\TemplateText::raw('ox.hot_week'); $oxSecSub = \app\common\util\TemplateText::raw('ox.sort_week'); $oxSecUrl = mac_url_search(['by' => 'hits_week']); $tplIdxBase = 0;{/php}
+{include file="public/band"}
+<section class="ox-sec" aria-labelledby="sec-hot">
+  {include file="index/sechead"}
+  <div class="ox-grid" data-grid-fill data-ox-stagger>{if condition="isset($oxFeatFallback) && $oxFeatFallback eq 1"}{maccms:vod num="10" start="6" type="all" order="desc" by="hits_week" paging="no" id="vo"}{php}$tplHomeSeen[] = (int)$vo['vod_id'];{/php}{include file="public/vodbox"}{/maccms:vod}{else/}{maccms:vod num="10" type="all" order="desc" by="hits_week" paging="no" id="vo"}{php}$tplHomeSeen[] = (int)$vo['vod_id'];{/php}{include file="public/vodbox"}{/maccms:vod}{/if}</div>
+</section>

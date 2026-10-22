@@ -1,0 +1,23 @@
+{
+  "schema": "javcms.reviewed-themes.v1",
+  "themes": [
+    "crimson",
+    "crimson-modern",
+    "ember",
+    "ember-modern",
+    "honey",
+    "honey-modern",
+    "jav",
+    "jav-modern",
+    "javcms",
+    "javcms-modern",
+    "neon",
+    "neon-modern",
+    "onyx",
+    "onyx-modern",
+    "topaz",
+    "topaz-modern",
+    "velvet",
+    "velvet-modern"
+  ]
+}

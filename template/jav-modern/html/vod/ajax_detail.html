@@ -1,0 +1,53 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}header('X-Robots-Tag: noindex, follow');{/php}
+{if condition="(!empty($obj['vod_pwd']) && session('1-1-'.$obj['vod_id']) != '1') || (!empty($obj['vod_copyright']) && ($GLOBALS['config']['app']['copyright_status'] ?? 0) == 4)"}<p>{:\\app\\common\\util\\TemplateText::get('ui.access_required')}</p>{else/}<div data-native-fragment="true" role="main" class="container">
+        <div class="row">      
+			<div class="stui-pannel clearfix">
+				<div class="stui-pannel-box">
+					<div class="stui-pannel__bd">
+						<div class="stui-content">
+							<div class="stui-content__thumb">											
+								<a class="pic" href="{:mac_url_vod_play($obj,['sid'=>1,'nid'=>1])}" title="{$obj.vod_display_name|htmlspecialchars}">
+									<img class="lazyload" data-original="{:mac_url_img($obj.vod_pic)}" src="{$maccms.path_tpl}statics/img/poster-placeholder.svg" />
+								</a>												
+							</div>
+							<div class="stui-content__detail">
+								<h1 class="title">{$obj.vod_display_name|htmlspecialchars}</h1>	
+								<p class="data">{:\\app\\common\\util\\TemplateText::get('genres')}: {$obj.vod_display_class|htmlspecialchars} / {:\\app\\common\\util\\TemplateText::get('region')}: {$obj.vod_display_area|htmlspecialchars} / {:\\app\\common\\util\\TemplateText::get('year')}: {$obj.vod_year}</p>
+								<p class="data">{:\\app\\common\\util\\TemplateText::get('actors')}: {$obj.vod_display_actor|mac_substring=200|htmlspecialchars}</p>	
+								<p class="data">{:\\app\\common\\util\\TemplateText::get('updated')}: {$obj.vod_time|date='Y-m-d',###}</p>
+								<p class="desc detail">
+									<span class="left">{:\\app\\common\\util\\TemplateText::get('description')}: </span>
+									<span class="detail-sketch">{$obj.vod_display_content|mac_filter_html|mac_substring=200|htmlspecialchars}</span>
+									<span class="detail-content" style="display: none;">{$obj.vod_display_content|mac_filter_html|htmlspecialchars}</span>
+									<a class="detail-more" href="javascript:;"> {:\\app\\common\\util\\TemplateText::get('full_description')} <svg class="tui-icon" aria-hidden="true"><use href="__ROOT__/static/template-ui/icons.svg#chevron-down"></use></svg></a>
+								</p>							    
+								<div class="play-btn">
+									<a href="{:mac_url_vod_play($obj,['sid'=>1,'nid'=>1])}">{:\\app\\common\\util\\TemplateText::get('play_now')}</a>{notempty name="obj.vod_down_list"}<a class="gallery-secondary" href="{:mac_url_vod_down($obj,['sid'=>1,'nid'=>1])}">{:\\app\\common\\util\\TemplateText::get('downloads')}</a>{/notempty}
+								</div>
+							</div>	
+							<div class="stui-content__side">
+								{:\\app\\common\\util\\TemplateText::get('scan_the_qr_code_to_watch_this_movie_on_your_mobile_phone')}
+							</div>
+						</div>
+						<div class="stui-vodlist__head">						
+							<h3><span><svg class="tui-icon" aria-hidden="true"><use href="__ROOT__/static/template-ui/icons.svg#star"></use></svg> {:\\app\\common\\util\\TemplateText::get('you_may_also_like')}</span></h3>						
+						</div>
+						<ul class="stui-vodlist clearfix" data-grid-fill>
+							{maccms:vod paging="no" num="10" type="current" order="desc" by="time"}
+							<li>
+								{include file="block/vod_box"}														
+							</li>			
+							{/maccms:vod}
+						</ul>						
+					</div>			
+				</div>						
+			</div>
+        </div>
+    </div>{/if}

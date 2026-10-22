@@ -1,0 +1,73 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Based on MacCMS 10 (Apache-2.0) by magicblack, changed by JavCMS.
+JavCMS changes: Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors,
+JavCMS Community License 1.0. The MacCMS parts stay under the Apache License 2.0.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{include file="../../../application/admin/view/public/head" /}
+<link rel="stylesheet" href="__STATIC__/css/admin_interface_settings.css?v=20261007-1">
+<div class="page-container interface-settings">
+    {include file="../../../application/admin/view/public/page_head" icon="ai-webhook" title="admin/ux/menu/submission_api" help="admin/ux/help/submission_api" /}<div class="ax-page-intro ax-muted"><div><p>{:lang('admin/interface/intro')}</p></div></div>
+    <form data-ax-dirty class="layui-form layui-form-pane" action="" data-interface-form>
+        <input type="hidden" name="__token__" value="{$Request.token}" />
+        <section class="interface-card" aria-labelledby="interface-access-title">
+            <h2 id="interface-access-title">{:lang('admin/interface/access')}</h2>
+            <p>{:lang('admin/interface/access_help')}</p>
+            <div class="layui-form-item"><label class="layui-form-label">{:lang('admin/system/configinterface/status')}</label><div class="layui-input-block">
+                <input type="radio" name="interface[status]" value="0" title="{:lang('admin/ux/system/off')}" {if condition="$config['interface']['status'] neq 1"}checked {/if}>
+                <input type="radio" name="interface[status]" value="1" title="{:lang('admin/ux/system/on')}" {if condition="$config['interface']['status'] eq 1"}checked {/if}>
+            </div></div>
+            <div class="interface-field"><label for="interface-password">{:lang('admin/system/configinterface/pass')}</label>
+                <input id="interface-password" type="password" name="interface[pass]" value="{:htmlspecialchars((string)($config['interface']['pass'] ?? ''), ENT_QUOTES, 'UTF-8')}" autocomplete="new-password" class="layui-input" aria-describedby="interface-password-help">
+                <p id="interface-password-help">{:lang('admin/interface/password_help')}</p>
+            </div>
+        </section>
+        <section class="interface-card" aria-labelledby="interface-maps-title">
+            <h2 id="interface-maps-title">{:lang('admin/interface/mappings')}</h2><p>{:lang('admin/interface/mapping_help')}</p>
+            <p>{:lang('admin/interface/hash_help')}</p>
+            <div class="interface-status" role="status" aria-live="polite" data-interface-status>
+                {volist name="interface_warnings" id="warning"}<p>{:htmlspecialchars($warning, ENT_QUOTES, 'UTF-8')}</p>{/volist}
+            </div>
+            <div class="interface-grid">
+                {php}$interfaceLabels=['vodtype'=>'vod_type','arttype'=>'art_type','actortype'=>'actor_type','websitetype'=>'website_type'];{/php}
+                {foreach name="interfaceLabels" item="label" key="field"}
+                <div class="interface-map" data-interface-map>
+                    <label for="interface-{$field}">{:lang('admin/system/configinterface/'.$label)}</label>
+                    <textarea id="interface-{$field}" name="interface[{$field}]" rows="9" class="layui-textarea" spellcheck="false" aria-describedby="interface-{$field}-format">{:htmlspecialchars($interface_maps[$field], ENT_QUOTES, 'UTF-8')}</textarea>
+                    <p class="interface-format-help" id="interface-{$field}-format">{:lang('admin/ux/system/iface_format_help')}</p>
+                    <details><summary>{:lang('admin/interface/add_mapping')}</summary>
+                        <label for="interface-category-{$field}">{:lang('admin/interface/local_category')}</label>
+                        <select id="interface-category-{$field}" data-interface-category lay-ignore class="layui-input">
+                            <option value="">{:lang('select')}</option>
+                            {foreach name="interface_categories[$field]" item="category"}
+                            <option value="{:htmlspecialchars((string)$category['type_name'], ENT_QUOTES, 'UTF-8')}">{:htmlspecialchars((string)$category['type_name'], ENT_QUOTES, 'UTF-8')} (ID {$category.type_id})</option>
+                            {/foreach}
+                        </select>
+                        <label for="interface-remote-{$field}">{:lang('admin/interface/remote_category')}</label>
+                        <input id="interface-remote-{$field}" type="text" data-interface-remote class="layui-input" autocomplete="off">
+                        <button type="button" data-interface-append class="ax-btn ax-btn--sm"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-plus"/></svg>{:lang('admin/interface/add_mapping')}</button>
+                        <p>{:lang('admin/interface/suggestion_help')}</p>
+                    </details>
+                </div>
+                {/foreach}
+            </div>
+        </section>
+        <details class="interface-card"><summary>{:lang('admin/interface/endpoints')}</summary>
+            <p>{:lang('admin/interface/endpoint_help')}</p>
+            <ul><li><code>api.php/receive/vod</code></li><li><code>api.php/receive/art</code></li><li><code>api.php/receive/actor</code></li><li><code>api.php/receive/role</code></li><li><code>api.php/receive/website</code></li></ul>
+        </details>
+        <div class="ax-savebar">
+            <span class="ax-savebar__status" role="status"></span>
+            <div class="ax-savebar__end">
+                <button type="reset" class="ax-btn"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-rotate-ccw"/></svg>{:lang('admin/ux/system/undo_changes')}</button>
+                <button type="submit" class="ax-btn ax-btn--primary" lay-submit="" lay-filter="formSubmit"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-save"/></svg>{:lang('admin/ux/kit/save')}</button>
+            </div>
+        </div>
+    </form>
+</div>
+{include file="../../../application/admin/view/public/foot" /}
+<script>window.adminInterfaceStrings={:json_encode(['required'=>lang('admin/interface/append_required'),'added'=>lang('admin/interface/append_added')],JSON_HEX_TAG|JSON_HEX_AMP|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE)};</script>
+<script src="__STATIC__/js/admin_interface_settings.js?v=20261007-1"></script>
+</body></html>

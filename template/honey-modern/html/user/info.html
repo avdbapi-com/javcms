@@ -1,0 +1,244 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+Partly based on a third-party theme. This license covers the JavCMS changes only.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="honey-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}" data-fx="vt" data-fx-vt-style="honey">
+<head>
+<meta name="robots" content="noindex, follow" />
+
+<title>{:\\app\\common\\util\\TemplateText::get('ui.modify_the_information')} - {:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$maccms['site_name']), ENT_QUOTES, 'UTF-8')}</title>
+
+
+  {include file="public/include"}
+  {include file="user/include"}
+ </head>
+<body class="nc-page-user nc-fed">
+
+  {include file="public/head"}
+  
+<main id="main-content" class="nc-main nc-user nc-fedmain">
+    
+    <div>
+<div class="fed-part-case">
+<div class="fed-user-head fed-margin-top fed-back-whits">
+<div class="fed-list-pics fed-lazy fed-part-5by2 fed-part-rows" style="background:url({$maccms.path_tpl}assets/brand/avatar.svg);">
+<div class="fed-part-core fed-text-center">
+<div class="fed-user-image" data-role="{:mac_url('user/portrait')}">
+<img class="face fed-user-avat fed-part-roun" src="{$obj.user_portrait|mac_default=$ncNoFace|mac_url_img}?v={:time()}" alt="" />
+{if condition="$GLOBALS['config']['user']['portrait_status'] eq 1"}<form class="gallery-avatar-form" method="post" enctype="multipart/form-data" action="{:url('user/portrait')}">{:token()}<label for="gallery-avatar-file">{:\\app\\common\\util\\TemplateText::get('choose_avatar')}</label><input id="gallery-avatar-file" name="file" type="file" accept="image/jpeg,image/png,image/gif,image/webp" required /><button type="submit">{:\\app\\common\\util\\TemplateText::get('upload_avatar')}</button><p class="gallery-avatar-status" role="status" aria-live="polite"></p></form>{/if}</div>
+<span class="fed-visible fed-text-white fed-padding">
+          {$obj.user_name|htmlspecialchars=ENT_QUOTES}
+         </span>
+</div>
+</div>
+
+</div>
+<div class="fed-part-rows">
+<div class="fed-main-left fed-col-xs12 fed-col-md4 fed-col-lg3 fed-hide-xs fed-hide-sm fed-show-md-block">
+        {include file="user/menu"}
+       </div>
+<div class="fed-main-right fed-col-xs12 fed-col-md8 fed-col-lg9">
+<div class="fed-part-layout fed-back-whits">
+<div class="fed-user-title fed-list-head fed-part-rows fed-padding fed-line-bottom">
+<h1 class="fed-font-xvi fed-padding">
+           {:\\app\\common\\util\\TemplateText::get('ui.modify_the_information')}
+          </h1>
+<ul class="fed-part-tips fed-padding">
+<li class="fed-padding">
+<a class="fed-more" href="{:mac_url('user/index')}">
+             {:\\app\\common\\util\\TemplateText::get('ui.return')}
+            </a>
+</li>
+</ul>
+</div>
+<form action="" class="fed-user-form fed-user-info fed-part-rows" id="fm" method="post" name="fm">
+<ul class="fed-user-list fed-part-rows fed-back-whits">
+<li class="fed-padding-x fed-part-rows fed-line-bottom">
+<div class="fed-user-input fed-visible fed-font-xvi fed-part-rows">
+<span class="fed-col-xs4 fed-col-sm3 fed-part-eone">
+              {:\\app\\common\\util\\TemplateText::get('ui.username_249ba3')}
+             </span>
+<span class="fed-col-xs7 fed-col-sm6 fed-part-eone">
+              {$obj.user_name|htmlspecialchars=ENT_QUOTES}
+             </span>
+
+</div>
+</li>
+<li class="fed-padding-x fed-part-rows fed-line-bottom">
+<div class="fed-user-input fed-visible fed-font-xvi fed-part-rows">
+<span class="fed-col-xs4 fed-col-sm3 fed-part-eone">
+              {:\\app\\common\\util\\TemplateText::get('ui.original_password')}
+             </span>
+<span class="fed-col-xs4 fed-col-sm6 fed-part-eone">
+<input maxlength="20" name="user_pwd" placeholder="{:\\app\\common\\util\\TemplateText::get('ui.original_password')}" type="password" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.password')}" />
+</span>
+<span class="fed-col-xs4 fed-col-sm3 fed-part-eone fed-text-right">
+<span class="fed-user-tips fed-text-gules">
+               *
+              </span>
+</span>
+</div>
+</li>
+<li class="fed-padding-x fed-part-rows fed-line-bottom">
+<div class="fed-user-input fed-visible fed-font-xvi fed-part-rows">
+<span class="fed-col-xs4 fed-col-sm3 fed-part-eone">
+              {:\\app\\common\\util\\TemplateText::get('ui.new_password')}
+             </span>
+<span class="fed-col-xs7 fed-col-sm6 fed-part-eone">
+<input maxlength="20" name="user_pwd1" placeholder="{:\\app\\common\\util\\TemplateText::get('ui.new_password')}" type="password" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.new_password_d850ee')}" />
+</span>
+
+</div>
+</li>
+<li class="fed-padding-x fed-part-rows fed-line-bottom">
+<div class="fed-user-input fed-visible fed-font-xvi fed-part-rows">
+<span class="fed-col-xs4 fed-col-sm3 fed-part-eone">
+              {:\\app\\common\\util\\TemplateText::get('ui.duplicate_password')}
+             </span>
+<span class="fed-col-xs7 fed-col-sm6 fed-part-eone">
+<input maxlength="20" name="user_pwd2" placeholder="{:\\app\\common\\util\\TemplateText::get('ui.duplicate_password')}" type="password" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.confirm_password')}" />
+</span>
+
+</div>
+</li>
+
+<li class="fed-padding-x fed-part-rows fed-line-bottom">
+<div class="fed-user-input fed-visible fed-font-xvi fed-part-rows">
+<span class="fed-col-xs4 fed-col-sm3 fed-part-eone">
+              {:\\app\\common\\util\\TemplateText::get('ui.email_address')}
+             </span>
+<span class="fed-col-xs6 fed-col-sm6 fed-part-eone">
+<input name="user_email" placeholder="{:\\app\\common\\util\\TemplateText::get('ui.email_address')}" type="email" value="{$obj.user_email|htmlspecialchars=ENT_QUOTES}" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.email')}" />
+</span>
+<span class="fed-col-xs2 fed-col-sm3 fed-part-eone fed-text-right">
+              {if$obj.user_email==''}
+              <a href="{:mac_url('user/bind')}?ac=email">
+               {:\\app\\common\\util\\TemplateText::get('ui.bind')}
+              </a>
+              {else}
+              <a ac="email" class="fed-user-unnd btn_unbind" href="javascript:;">
+               {:\\app\\common\\util\\TemplateText::get('ui.unbind')}
+              </a>
+              {/if}
+             </span>
+</div>
+</li>
+<li class="fed-padding-x fed-part-rows fed-line-bottom">
+<div class="fed-user-input fed-visible fed-font-xvi fed-part-rows">
+<span class="fed-col-xs4 fed-col-sm3 fed-part-eone">
+              {:\\app\\common\\util\\TemplateText::get('ui.contact_the_phone')}
+             </span>
+<span class="fed-col-xs6 fed-col-sm6 fed-part-eone">
+<input name="user_phone" placeholder="{:\\app\\common\\util\\TemplateText::get('ui.contact_the_phone')}" type="tel" value="{$obj.user_phone|htmlspecialchars=ENT_QUOTES}" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.phone')}" />
+</span>
+<span class="fed-col-xs2 fed-col-sm3 fed-part-eone fed-text-right">
+              {if$obj.user_phone==''}
+              <a href="{:mac_url('user/bind')}?ac=phone">
+               {:\\app\\common\\util\\TemplateText::get('ui.bind')}
+              </a>
+              {else}
+              <a ac="phone" class="fed-user-unnd btn_unbind" href="javascript:;">
+               {:\\app\\common\\util\\TemplateText::get('ui.unbind')}
+              </a>
+              {/if}
+             </span>
+</div>
+</li>
+<li class="fed-padding-x fed-part-rows fed-line-bottom">
+<div class="fed-user-input fed-visible fed-font-xvi fed-part-rows">
+<span class="fed-col-xs4 fed-col-sm3 fed-part-eone">
+              {:\\app\\common\\util\\TemplateText::get('ui.password_problem')}
+             </span>
+<span class="fed-col-xs7 fed-col-sm6 fed-part-eone">
+<input name="user_question" placeholder="{:\\app\\common\\util\\TemplateText::get('ui.retrieve_the_password_problem')}" type="text" value="{$obj.user_question|htmlspecialchars=ENT_QUOTES}" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.security_question')}" />
+</span>
+
+</div>
+</li>
+<li class="fed-padding-x fed-part-rows fed-line-bottom">
+<div class="fed-user-input fed-visible fed-font-xvi fed-part-rows">
+<span class="fed-col-xs4 fed-col-sm3 fed-part-eone">
+              {:\\app\\common\\util\\TemplateText::get('ui.password_answer')}
+             </span>
+<span class="fed-col-xs7 fed-col-sm6 fed-part-eone">
+<input name="user_answer" placeholder="{:\\app\\common\\util\\TemplateText::get('ui.retrieve_the_password_answer')}" size="40" type="text" value="{$obj.user_answer|htmlspecialchars=ENT_QUOTES}" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.security_answer')}" />
+</span>
+
+</div>
+</li>
+<li class="fed-padding-x fed-part-rows">
+<span class="fed-col-xs4 fed-col-sm3 fed-part-eone fed-hide-xs">
+</span>
+<input class="fed-subm-infos fed-col-xs7 fed-col-sm6 fed-rims-info fed-btns-info fed-btns-green fed-col-xs12" id="btn_submit" type="button" value="{:\\app\\common\\util\\TemplateText::get('ui.save')}" />
+</li>
+</ul>
+</form>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+   {include file="public/foot"}
+  
+<script>
+   $('.btn_unbind').click(async function(){
+		var ac = $(this).attr('ac');
+		if(ac!='email' && ac!='phone'){
+			TemplateUI.message(window.TemplateMessages['ui.parameter_error']);
+		}
+		if(await TemplateUI.confirm(window.TemplateMessages['ui.confirm_the_lifting_binding_this_operation_cannot_be_restored'])) {
+			$.ajax({
+				url: "{:url('user/unbind')}",
+				type: "post",
+				dataType: "json",
+				data: {ac: ac},
+				beforeSend: function () {
+					//Openloading
+				},
+				success: function (r) {
+					TemplateUI.message(r.msg);
+					if(r.code==1){
+						location.href="{:url('user/info')}";
+					}
+				},
+				complete: function () {
+					//Finishloading
+				}
+			});
+		}
+	});
+
+	$("#btn_submit").click(async function() {
+		var data = $("#fm").serialize();
+		$.ajax({
+			url: "{:url('user/info')}",
+			type: "post",
+			dataType: "json",
+			data: data,
+			beforeSend: function () {
+				//Openloading
+				//$(".loading_box").css("display","block");
+				$("#btn_submit").val(window.TemplateMessages['ui.loading']);
+			},
+			success: function (r) {
+				TemplateUI.message(r.msg);
+				if(r.code==1){
+					location.href="{:url('user/info')}";
+				}
+			},
+			complete: function () {
+				//Finishloading
+				//$(".loading_box").css("display","none");
+				$("#btn_submit").val(window.TemplateMessages['ui.submit']);
+			}
+		});
+	});
+  </script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+# Nginx/OpenResty FRONT PROXY server-level guards, before all static regex locations.
+# Add to BOTH HTTP and HTTPS vhosts. Backend Apache/OLS still needs its full profile.
+# No location / or PHP pool directives here: preserve panel backend proxy transport.
+location ~* ^__URL_PREFIX__/(?:application|runtime|vendor|thinkphp|extend|deployment|backup|backups)(?:/|$) { return 403; }
+location ~* ^__URL_PREFIX__/template/[^/]+/html(?:/|$) { return 403; }
+location ~ (^|/)\.(?!well-known(?:/|$)) { return 403; }
+location ~* ^__URL_PREFIX__/\.well-known/(?!acme-challenge/) { return 403; }
+location ~* \.(?:ini|log|sql|sqlite|bak|conf|ya?ml)(?:/|$) { return 403; }
+location ~* ^__URL_PREFIX__/(?:composer\.(?:json|lock)|package(?:-lock)?\.json|(?:README|INSTALL|UPGRADE|CHANGELOG)(?:\.(?:md|txt))?|docs/[^/]*\.md|LICENSE(?:\.[^/]+)?|NOTICE(?:\.[^/]+)?|[^/]+\.(?:zip|gz|7z|tar))(?:/|$) { return 403; }
+location ~* ^__URL_PREFIX__/upload/.*\.(?:php[0-9]?|phtml|phar|cgi|pl|py|asp|aspx|jsp|sh)(?:[./]|$) { return 403; }

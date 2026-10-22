@@ -1,0 +1,46 @@
+/*
+ * This file is part of JavCMS - https://javcms.net
+ * Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+ * License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+ * See the LICENSE and NOTICE files that come with JavCMS.
+ * Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Telegram: https://t.me/avdb_api
+ */
+/* Task lists and task editor frames only. */
+body.admin-studio .admin-scheduled-tasks,
+body.admin-studio .admin-scheduled-editor { max-width: 1200px; margin-inline: auto; }
+body.admin-studio :is(.admin-scheduled-tasks,.admin-scheduled-editor) .studio-page-header { align-items: flex-start; flex-wrap: wrap; }
+body.admin-studio :is(.admin-scheduled-tasks,.admin-scheduled-editor) .studio-page-header p { flex-basis: 100%; margin: 0; }
+.admin-scheduled-tasks .admin-task-toolbar { display: flex; flex-wrap: wrap; gap: 10px; margin: 20px 0 14px; }
+:is(.admin-scheduled-tasks,.admin-scheduled-editor) .admin-task-guide { color: var(--studio-muted,#606d80); line-height: 1.65; margin: 14px 0; }
+.admin-scheduled-tasks .admin-task-result { min-height: 1.5em; color: var(--studio-text,#263247); overflow-wrap: anywhere; }
+.admin-scheduled-tasks .admin-task-table-scroll { width: 100%; overflow-x: auto; }
+.admin-scheduled-tasks table { min-width: 760px; }
+.admin-scheduled-tasks .admin-task-row-actions { min-width: 230px; }
+.admin-scheduled-tasks .admin-task-row-actions :is(a,button) { margin: 3px; }
+:is(.admin-scheduled-tasks,.admin-scheduled-editor) .admin-task-advanced { margin: 20px 0; padding: 16px; border: 1px solid var(--studio-line,#ccd4df); border-radius: 8px; background: var(--studio-surface,#fff); }
+:is(.admin-scheduled-tasks,.admin-scheduled-editor) .admin-task-advanced summary { cursor: pointer; color: var(--studio-text,#263247); font-weight: 600; }
+:is(.admin-scheduled-tasks,.admin-scheduled-editor) .admin-task-advanced > p { margin: 14px 0; color: var(--studio-muted,#606d80); }
+.admin-scheduled-editor .layui-form-item { margin-bottom: 20px; }
+.admin-scheduled-editor .role-list-form { display: flex; flex-wrap: wrap; gap: 10px 12px; }
+.admin-scheduled-editor .role-list-form .layui-form-checkbox { margin: 0; }
+.admin-scheduled-editor .layui-input-inline.w500 { width: min(500px,calc(100% - 140px)); }
+.admin-scheduled-editor .admin-timming-form-actions .layui-input-block { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+:is(.admin-scheduled-tasks,.admin-scheduled-editor) :is(input,button,a,summary):focus-visible { outline: 2px solid var(--studio-accent,#2563ad); outline-offset: 3px; }
+.admin-scheduled-tasks[aria-busy="true"] [data-task-bulk],
+.admin-scheduled-tasks[aria-busy="true"] [data-task-delete],
+.admin-scheduled-tasks[aria-busy="true"] [data-task-test] { opacity: .55; cursor: wait; }
+@media(max-width:600px) {
+    .admin-scheduled-editor .layui-form-label { float: none; display: block; width: auto; text-align: left; padding: 0 0 8px; }
+    .admin-scheduled-editor .layui-input-inline.w500,
+    .admin-scheduled-editor .layui-input-inline { width: 100%; float: none; margin: 0; }
+    .admin-scheduled-editor .layui-input-block { margin-left: 0; }
+    .admin-scheduled-editor .layui-form-mid { float: none; overflow-wrap: anywhere; }
+    .admin-scheduled-tasks .admin-task-toolbar .btn { flex: 1 1 auto; }
+}
+
+/* Repair (visual P3-4): the empty state fills the phone card list. */
+@media (max-width: 640px) {
+    body.admin-studio .admin-scheduled-tasks .ax-table--cards td[colspan] { display: block !important; width: 100% !important; height: auto !important; padding: 0 !important; }
+    body.admin-studio .admin-scheduled-tasks .ax-table--cards td[colspan] > .ax-empty { width: 100%; box-sizing: border-box; }
+}

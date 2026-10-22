@@ -1,0 +1,45 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}if (!isset($emtHot)) { $emtHot = array(); } $emtSheetLanguages = \app\common\util\TemplateText::languages(); $emtSheetLang = \app\common\util\TemplateText::locale();{/php}
+<div class="t-sheet" id="t-cat-sheet" role="dialog" aria-modal="true" aria-labelledby="t-cat-sheet-title" hidden>
+  <div class="t-sheet-scrim" data-t-close></div>
+  <div class="t-sheet-panel">
+    <div class="t-sheet-grip" aria-hidden="true"></div>
+    <div class="t-sheet-head">
+      <h2 id="t-cat-sheet-title"><svg class="t-i" aria-hidden="true"><use href="{$tplIcons}#temperature"></use></svg>{:\\app\\common\\util\\TemplateText::get('ui.categories')}</h2>
+      <button class="t-ibtn" type="button" data-t-close aria-label="{:\\app\\common\\util\\TemplateText::get('template_ui_close')}"><svg class="t-i" aria-hidden="true"><use href="{$tplIcons}#close"></use></svg></button>
+    </div>
+    {php}$emtHeatCtx = 'sheet';{/php}{include file="public/heatmap"}
+    <div class="t-sheet-links" data-ai-group>
+      <a href="{:mac_url('label/score')}">{:\\app\\common\\util\\AutoIcon::navIcon('top-rated', '', ['i'=>0])}{:\\app\\common\\util\\TemplateText::get('top_rated')}</a>
+      <a href="{:mac_url('label/up')}">{:\\app\\common\\util\\AutoIcon::navIcon('liked', '', ['i'=>1])}{:\\app\\common\\util\\TemplateText::get('most_liked')}</a>
+      {maccms:actor num="1" order="desc" by="time" id="tplHasActor"}<a href="{:mac_url('actor/index')}">{:\\app\\common\\util\\AutoIcon::navIcon('actors', '', ['i'=>2])}{:\\app\\common\\util\\TemplateText::get('ui.performers')}</a>{/maccms:actor}
+      {maccms:topic num="1" order="desc" by="time" id="tplHasTopic"}<a href="{:mac_url('topic/index')}">{:\\app\\common\\util\\AutoIcon::navIcon('topics', '', ['i'=>3])}{:\\app\\common\\util\\TemplateText::get('ui.collections')}</a>{/maccms:topic}
+      {maccms:art num="1" order="desc" by="time" id="tplHasArt"}<a href="{:mac_url('art/index')}">{:\\app\\common\\util\\AutoIcon::navIcon('articles', '', ['i'=>4])}{:\\app\\common\\util\\TemplateText::get('ui.articles')}</a>{/maccms:art}
+    </div>
+    <h3 class="t-sheet-k"><svg class="t-i" aria-hidden="true"><use href="{$tplIcons}#globe"></use></svg>{:\\app\\common\\util\\TemplateText::get('ui.language')}</h3>
+    <div class="t-langrow" data-ai-group>{volist name="emtSheetLanguages" id="emtSheetLanguage"}<a href="{:\\app\\common\\util\\TemplateText::languageUrl($key)}" lang="{$key|htmlspecialchars=ENT_QUOTES}" hreflang="{$key|htmlspecialchars=ENT_QUOTES}" {if condition="$key eq $emtSheetLang"}aria-current="true"{/if}><span class="t-lc" aria-hidden="true">{$key|strtoupper|htmlspecialchars=ENT_QUOTES}</span>{$emtSheetLanguage|htmlspecialchars=ENT_QUOTES}</a>{/volist}</div>
+  </div>
+</div>
+<div class="t-sheet is-top" id="t-search-sheet" role="dialog" aria-modal="true" aria-labelledby="t-search-sheet-title" hidden>
+  <div class="t-sheet-scrim" data-t-close></div>
+  <div class="t-sheet-panel">
+    <div class="t-sheet-head">
+      <h2 id="t-search-sheet-title"><svg class="t-i" aria-hidden="true"><use href="{$tplIcons}#crosshair"></use></svg>{:\\app\\common\\util\\TemplateText::get('ui.search')}</h2>
+      <button class="t-ibtn" type="button" data-t-close aria-label="{:\\app\\common\\util\\TemplateText::get('template_ui_close')}"><svg class="t-i" aria-hidden="true"><use href="{$tplIcons}#close"></use></svg></button>
+    </div>
+    <form class="t-scan" action="{:mac_url('vod/search')}" method="get" role="search" data-t-search>
+      <label class="sr-only" for="t-q2">{:\\app\\common\\util\\TemplateText::get('ui.search')}</label>
+      <div class="t-scan-ring"><svg class="t-i" aria-hidden="true"><use href="{$tplIcons}#search"></use></svg><input id="t-q2" class="t-scan-in" type="search" name="wd" placeholder="{:\\app\\common\\util\\TemplateText::get('ui.search_videos_or_performers')}" maxlength="60" autocomplete="off" enterkeyhint="search" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="t-sugg2"><button class="t-scan-go" type="submit" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.search')}"><svg class="t-i" aria-hidden="true"><use href="{$tplIcons}#arrow-right"></use></svg></button></div>
+      <div class="t-sugg" id="t-sugg2" role="listbox" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.search')}" hidden></div>
+    </form>
+    <div class="t-recent" data-t-recent hidden><h3 class="t-sheet-k"><svg class="t-i" aria-hidden="true"><use href="{$tplIcons}#history"></use></svg>{:\\app\\common\\util\\TemplateText::get('emt.recent_searches')}</h3><div class="t-chips"></div></div>
+    <h3 class="t-sheet-k"><svg class="t-i" aria-hidden="true"><use href="{$tplIcons}#flame"></use></svg>{:\\app\\common\\util\\TemplateText::get('emt.hot_searches')}</h3>
+    {include file="public/catrail"}
+  </div>
+</div>

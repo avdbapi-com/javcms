@@ -1,0 +1,17 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<section class="vp-act vp-encore" aria-labelledby="vp-encore-h">
+  <header class="vp-act-head" data-ai-group>
+    {:\\app\\common\\util\\AutoIcon::ui('film', ['size'=>'lg', 'plate'=>true, 'class'=>'vp-act-ico'])}
+    <p class="vp-eyebrow" aria-hidden="true">{:\\app\\common\\util\\TemplateText::get('vp.encore')}</p>
+    <h2 class="vp-act-title" id="vp-encore-h" data-fx="split" data-fx-style="blur" data-fx-by="words">{:\\app\\common\\util\\TemplateText::get('ui.more_to_watch')}</h2>
+    <span class="vp-orn" data-fx="reveal" data-fx-style="fade" aria-hidden="true"></span>
+  </header>
+  <div class="vp-grid" data-grid-fill data-fx="stagger">{maccms:vod num="10" type="current" not="'.$obj['vod_id'].'" order="desc" by="time" paging="no" id="vo"}{include file="public/vodbox"}{/maccms:vod}</div>
+  {empty name="__LIST__"}{include file="public/empty"}{/empty}
+</section>

@@ -1,0 +1,18 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}$vpFk++; $vpSeen[] = intval($vo['vod_id'] ?? 0); $vpFTitle = $vpPlain(($vo['vod_display_name'] ?? '') !== '' ? $vo['vod_display_name'] : ($vo['vod_name'] ?? '')); $vpFeat[] = $vpFTitle; $vpFScore = (float)($vo['vod_score'] ?? 0);{/php}
+<article class="vp-feature{if condition="$vpFk eq 1"} is-active{/if}" id="vp-feature-{$vpFk}"{if condition="$vpFk gt 1"} role="tabpanel" aria-labelledby="vp-ftab-{$vpFk}" hidden{/if} data-vp-feature>
+  <a class="vp-screen" href="{:mac_url_vod_play($vo)}" tabindex="-1" aria-hidden="true"><img data-lowres src="{$vo.vod_pic|mac_default=$tplNoPic|mac_url_img|htmlspecialchars=ENT_QUOTES}" onerror="vpImg(this)" alt="" width="800" height="450" decoding="async"{if condition="$vpFk eq 1"} fetchpriority="high"{else/} loading="lazy"{/if}></a>
+  <span class="vp-pool" aria-hidden="true"></span>
+  <div class="vp-feature-info">
+    <p class="vp-eyebrow">{:\\app\\common\\util\\TemplateText::get('vp.tonight')}</p>
+    <h2 class="vp-feature-title">{$vpFTitle|htmlspecialchars=ENT_QUOTES}</h2>
+    <p class="vp-meta-line">{if condition="$vo.vod_hits gt 0"}<span><svg class="vp-i" aria-hidden="true"><use href="{$maccms.path_tpl}assets/icons.svg?v=20261010-r1#eye"></use></svg><span class="vp-sr">{:\\app\\common\\util\\TemplateText::get('views')}</span>{:number_format(intval($vo['vod_hits']))}</span><i aria-hidden="true">&#10022;</i>{/if}{notempty name="vo.vod_duration"}<span><svg class="vp-i" aria-hidden="true"><use href="{$maccms.path_tpl}assets/icons.svg?v=20261010-r1#clock"></use></svg><span class="vp-sr">{:\\app\\common\\util\\TemplateText::get('ui.duration')}</span><bdi dir="ltr">{$vo.vod_duration|htmlspecialchars=ENT_QUOTES}</bdi></span>{/notempty}{if condition="$vpFScore gt 0"}<i aria-hidden="true">&#10022;</i><span><svg class="vp-i" aria-hidden="true"><use href="{$maccms.path_tpl}assets/icons.svg?v=20261010-r1#star"></use></svg><span class="vp-sr">{:\\app\\common\\util\\TemplateText::get('ui.score')}</span><bdi dir="ltr">{$vo.vod_score|htmlspecialchars=ENT_QUOTES}</bdi></span>{/if}</p>
+    <div class="vp-cta"><a class="vp-btn vp-btn-gold" href="{:mac_url_vod_play($vo)}"><svg class="vp-i" aria-hidden="true"><use href="{$maccms.path_tpl}assets/icons.svg?v=20261010-r1#play"></use></svg>{:\\app\\common\\util\\TemplateText::get('vp.watch_now')}</a><a class="vp-btn vp-btn-ghost" href="{:mac_url_vod_detail($vo)}">{:\\app\\common\\util\\TemplateText::get('ui.details')}</a></div>
+  </div>
+</article>

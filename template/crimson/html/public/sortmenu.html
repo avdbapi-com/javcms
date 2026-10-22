@@ -1,0 +1,31 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}
+$ctSortKeys = ['time' => 'ui.latest', 'hits' => 'ui.popular', 'score' => 'top_rated', 'up' => 'most_liked'];
+$ctSortIcons = ['time' => 'clock', 'hits' => 'flame', 'score' => 'star', 'up' => 'thumbs-up'];
+$ctSortPages = ['time' => 'new', 'hits' => 'hot', 'score' => 'score', 'up' => 'up'];
+$ctSortMode = isset($ctSortMode) ? (string)$ctSortMode : 'label';
+$ctSortActive = (isset($ctSortActive) && isset($ctSortKeys[$ctSortActive])) ? $ctSortActive : 'time';
+$ctSortParam = (isset($param) && is_array($param)) ? $param : [];
+$ctSortItems = [];
+foreach ($ctSortKeys as $ctSortBy => $ctSortKey) {
+    if ($ctSortMode === 'type' && isset($obj['type_id'])) {
+        $ctSortHref = mac_url_type($obj, ['by' => $ctSortBy], 'show');
+    } elseif ($ctSortMode === 'search') {
+        $ctSortQuery = ['by' => $ctSortBy];
+        foreach (['wd', 'area', 'lang', 'year', 'level', 'letter', 'state', 'tag', 'class', 'actor', 'director', 'order'] as $ctSortField) {
+            if (isset($ctSortParam[$ctSortField]) && $ctSortParam[$ctSortField] !== '') { $ctSortQuery[$ctSortField] = $ctSortParam[$ctSortField]; }
+        }
+        $ctSortHref = mac_url_search($ctSortQuery, 'vod');
+    } else {
+        $ctSortHref = mac_url('label/' . $ctSortPages[$ctSortBy]);
+    }
+    $ctSortItems[] = ['href' => $ctSortHref, 'text' => \app\common\util\TemplateText::get($ctSortKey), 'icon' => $ctSortIcons[$ctSortBy], 'on' => $ctSortBy === $ctSortActive ? 1 : 0];
+}
+$ctIco = isset($ctIco) ? $ctIco : $maccms['path_tpl'] . 'assets/img/ct-icons.svg';
+{/php}<nav class="ct-chips ct-chips--scroll ct-sortchips" aria-label="{:\\app\\common\\util\\TemplateText::get('crimson.sort')}">{volist name="ctSortItems" id="ctSortItem"}<a class="ct-chip" href="{$ctSortItem.href|htmlspecialchars=ENT_QUOTES}"{if condition="$ctSortItem.on eq 1"} aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::ui($ctSortItem['icon'], ['class'=>'ct-ico'])}{$ctSortItem.text}</a>{/volist}</nav>

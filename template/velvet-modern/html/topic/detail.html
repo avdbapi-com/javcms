@@ -1,0 +1,39 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="velvet-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}" data-fx="vt smooth" data-fx-lerp="0.09" data-fx-vt-style="velvet-modern">
+<head>
+{include file="seo/topic_detail"}
+{include file="public/include"}
+</head>
+<body class="vp-page-detail">
+{include file="public/head"}
+<main id="main-content" class="vp-main">
+  <div class="vp-wrap">
+    <article class="vp-spread">
+      <div class="vp-page-cover"><figure class="vp-cover"><span class="vp-co vp-co--tl" aria-hidden="true"></span><span class="vp-co vp-co--tr" aria-hidden="true"></span><span class="vp-co vp-co--bl" aria-hidden="true"></span><span class="vp-co vp-co--br" aria-hidden="true"></span><span class="vp-cover-link"><img src="{$obj.topic_pic|mac_default=$tplNoPic|mac_url_img|htmlspecialchars=ENT_QUOTES}" onerror="vpImg(this)" alt="{:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)($obj['topic_name'] ?? '')), ENT_QUOTES, 'UTF-8')}" width="800" height="450"></span></figure></div>
+      <div class="vp-page-text">
+        <p class="vp-eyebrow">{:\\app\\common\\util\\TemplateText::get('ui.collections')}</p>
+        <h1 class="vp-film-title">{:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)($obj['topic_name'] ?? '')), ENT_QUOTES, 'UTF-8')}</h1>
+        <p class="vp-meta-line vp-film-meta"><span><svg class="vp-i" aria-hidden="true"><use href="{$maccms.path_tpl}assets/icons.svg?v=20261010-r1#star"></use></svg>{$obj.topic_score|htmlspecialchars=ENT_QUOTES}</span><i aria-hidden="true">&#10022;</i><span><svg class="vp-i" aria-hidden="true"><use href="{$maccms.path_tpl}assets/icons.svg?v=20261010-r1#eye"></use></svg>{$obj.topic_hits|intval}</span><i aria-hidden="true">&#10022;</i><span><svg class="vp-i" aria-hidden="true"><use href="{$maccms.path_tpl}assets/icons.svg?v=20261010-r1#calendar"></use></svg>{$obj.topic_time|date='Y-m-d',###}</span></p>
+        <div class="vp-prose vp-synopsis">{:\\app\\common\\util\\TemplateContent::html($obj['topic_content'] ?? '')}</div>
+      </div>
+    </article>
+    <section class="vp-act" aria-labelledby="vp-topic-v">
+      <header class="vp-act-head" data-ai-group>{:\\app\\common\\util\\AutoIcon::ui('film', ['size'=>'lg', 'plate'=>true, 'class'=>'vp-act-ico'])}<p class="vp-eyebrow" aria-hidden="true">{:\\app\\common\\util\\TemplateText::get('vp.encore')}</p><h2 class="vp-act-title" id="vp-topic-v">{:\\app\\common\\util\\TemplateText::get('videos_in_this_collection')}</h2><span class="vp-orn" aria-hidden="true"></span></header>
+      {notempty name="obj.topic_rel_vod"}<div class="vp-grid" data-grid-fill data-fx="stagger">{maccms:vod num="40" ids="'.$obj['topic_rel_vod'].'" order="desc" by="time" paging="no" id="vo"}{include file="public/vodbox"}{/maccms:vod}</div>{else/}{php}$vpEmptyKey = 'vp.stage_is_set'; $vpEmptyTextKey = 'vp.empty_text';{/php}{include file="public/empty"}{php}$vpEmptyKey = ''; $vpEmptyTextKey = '';{/php}{/notempty}
+    </section>
+    {if condition="$GLOBALS['config']['comment']['status'] eq 1"}<section class="vp-act vp-reviews" aria-labelledby="vp-reviews-h">
+      <header class="vp-act-head" data-ai-group>{:\\app\\common\\util\\AutoIcon::ui('messages', ['size'=>'lg', 'plate'=>true, 'class'=>'vp-act-ico'])}<p class="vp-eyebrow" aria-hidden="true">{:\\app\\common\\util\\TemplateText::get('vp.from_the_audience')}</p><h2 class="vp-act-title" id="vp-reviews-h">{:\\app\\common\\util\\TemplateText::get('vp.reviews')}</h2><span class="vp-orn" aria-hidden="true"></span></header>
+      <div class="mac_comment" data-id="{$obj.topic_id|intval}" data-mid="3"><p class="community-empty">{:\\app\\common\\util\\TemplateText::get('ui.loading_comments')}</p></div>
+    </section><script>MAC.Comment.Init();MAC.Comment.Show(1);</script>{/if}
+  </div>
+</main>
+{include file="public/foot"}
+</body>
+</html>

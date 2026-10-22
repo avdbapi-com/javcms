@@ -1,0 +1,48 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}
+$tplPlain = function ($value) { $value = (string)$value; for ($tplPi = 0; $tplPi < 3; $tplPi++) { $tplPd = html_entity_decode($value, ENT_QUOTES | ENT_HTML5, 'UTF-8'); if ($tplPd === $value) { break; } $value = $tplPd; } return trim($value); };
+$tplSplit = function ($value) { return array_values(array_unique(array_filter(array_map('trim', explode(',', (string)$value)), 'strlen'))); };
+$tplHref = function ($value) { return html_entity_decode((string)$value, ENT_QUOTES | ENT_HTML5, 'UTF-8'); };
+$tplPair = function ($raw, $display) use ($tplSplit, $tplHref, $tplPlain) { $tplPr = $tplSplit($raw); $tplPd = $tplSplit($display); $tplPo = []; foreach ($tplPr as $tplPi => $tplPv) { $tplPo[] = ['q' => $tplHref($tplPv), 'l' => $tplPlain((count($tplPd) === count($tplPr)) ? $tplPd[$tplPi] : $tplPv)]; } return $tplPo; };
+$tplCode = \app\common\util\AvdbLanguage::displayCode($obj); /* 2.11 rule 1: code only from vod_display_code */
+if ($tplCode === '' || stripos($tplCode, 'avdb-') === 0) { $tplCode = ''; }
+$tplName = $tplPlain($obj['vod_display_name'] ?? '');
+if ($tplName === '') { $tplName = $tplPlain($obj['vod_name'] ?? ''); }
+$tplActors = $tplSplit($obj['vod_display_actor'] ?? '');
+$tplGenres = $tplSplit($obj['vod_display_class'] ?? '');
+$tplTagList = $tplSplit($obj['vod_display_tag'] ?? '');
+$tplDirectors = $tplSplit($obj['vod_display_director'] ?? '');
+$tplActorsQ = $tplPair(\app\common\util\AvdbLanguage::dropPlaceholders($obj['vod_actor'] ?? ''), $obj['vod_display_actor'] ?? ''); $tplGenresQ = $tplPair($obj['vod_class'] ?? '', $obj['vod_display_class'] ?? ''); $tplTagListQ = $tplPair($obj['vod_tag'] ?? '', $obj['vod_display_tag'] ?? ''); $tplDirectorsQ = $tplPair(\app\common\util\AvdbLanguage::dropPlaceholders($obj['vod_director'] ?? ''), $obj['vod_display_director'] ?? '');
+$tplAiTag = function ($rows) { $tplAo = []; foreach ($rows as $tplAr) { if (!\app\common\util\AutoIcon::keepTag($tplAr['l'])) { continue; } $tplAr['ico'] = \app\common\util\AutoIcon::icon('tag', $tplAr['l'], ['size' => 'sm', 'i' => count($tplAo)]); $tplAo[] = $tplAr; } return $tplAo; };
+$tplAiPerson = function ($rows) { foreach ($rows as $tplAi => $tplAr) { $rows[$tplAi]['av'] = \app\common\util\AutoIcon::avatar($tplAr['l'], '', ['size' => 'xs', 'decorative' => true]); } return $rows; };
+$tplGenresQ = $tplAiTag($tplGenresQ); $tplTagListQ = $tplAiTag($tplTagListQ); $tplActorsQ = $tplAiPerson($tplActorsQ); $tplDirectorsQ = $tplAiPerson($tplDirectorsQ);
+$tplStudio = $tplPlain($obj['vod_display_writer'] ?? '');
+$tplStudioIco = $tplStudio !== '' ? \app\common\util\AutoIcon::icon('tag', $tplStudio, ['size' => 'sm']) : '';
+$tplDate = trim((string)($obj['vod_pubdate'] ?? ''));
+if ($tplDate === '') { $tplDate = trim((string)($obj['vod_year'] ?? '')); }
+$tplDuration = trim((string)($obj['vod_duration'] ?? ''));
+$tplDesc = $tplPlain($obj['vod_display_content'] ?? '');
+if ($tplDesc === '') { $tplDesc = $tplPlain($obj['vod_display_blurb'] ?? ''); }
+$tplUp = (int)($obj['vod_up'] ?? 0);
+$tplDown = (int)($obj['vod_down'] ?? 0);
+$tplVotes = $tplUp + $tplDown;
+$tplLike = $tplVotes > 0 ? (int)round($tplUp * 100 / $tplVotes) : 0;
+$tplScore = trim((string)($obj['vod_score'] ?? ''));
+$tplType = (isset($obj['type']) && is_array($obj['type'])) ? $obj['type'] : [];
+$tplTypeName = trim(\app\common\util\TemplateText::raw(\app\common\util\AvdbLanguage::decodeEntities((string)($tplType['type_name'] ?? ''))));
+$tplTypeIco = $tplTypeName !== '' ? \app\common\util\AutoIcon::icon('category', (string)($tplType['type_name'] ?? ''), ['size' => 'sm', 'tint' => 'none']) : '';
+$tplPlayUrl = ((!empty($obj['vod_play_list']) && is_array($obj['vod_play_list'])) ? mac_url_vod_play($obj, 'first') : '');
+$tplEpCount = 0;
+$tplSrcCount = 0;
+if (!empty($obj['vod_play_list']) && is_array($obj['vod_play_list'])) { foreach ($obj['vod_play_list'] as $tplSrcRow) { $tplSrcCount++; $tplEpCount += (isset($tplSrcRow['urls']) && is_array($tplSrcRow['urls'])) ? count($tplSrcRow['urls']) : 0; } }
+$tplRelClass = $tplGenres ? $tplGenres[0] : '';
+$tplRelIds = [(int)($obj['vod_id'] ?? 0)];
+$tplLbl = [];
+foreach (['code' => 'ui.id_code', 'studio' => 'ui.studio_label', 'date' => 'ui.release_date', 'duration' => 'ui.duration', 'actor' => 'ui.actor', 'director' => 'ui.director', 'genres' => 'genres', 'tags' => 'ui.tag', 'category' => 'category'] as $tplLk => $tplLv) { $tplLbl[$tplLk] = preg_replace('/[\s:：]+$/u', '', \app\common\util\TemplateText::raw($tplLv)); }
+{/php}

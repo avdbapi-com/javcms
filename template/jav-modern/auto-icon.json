@@ -1,0 +1,16 @@
+{
+ "$schema": "javcms.auto-icon.v1",
+ "family": "phosphor-duotone",
+ "motion": "orbit",
+ "enter": "blur",
+ "plate": "blob",
+ "plateMotion": "drift",
+ "avatar": "squircle glass",
+ "tint": "slot",
+ "hue": [
+  215,
+  70
+ ],
+ "map": {},
+ "nav": {}
+}

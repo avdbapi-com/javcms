@@ -1,0 +1,24 @@
+{site_name} ({site_url}) respects the rights of copyright owners. If you believe that material on this site infringes your copyright, send us a notice as described below and we will remove or disable access to it.
+
+## How to send a notice
+Your notice must include:
+- Your name, address, telephone number and e-mail address.
+- A description of the copyrighted work that you say is infringed.
+- The exact address (URL) of each page on this site that shows the material.
+- A statement that you believe in good faith that the use is not authorised by the copyright owner, its agent or the law.
+- A statement that the information in your notice is accurate and, under penalty of perjury, that you are the copyright owner or are authorised to act for the owner.
+- Your physical or electronic signature.
+
+## Where to send it
+Our designated copyright agent is {dmca_agent}. Postal address of our copyright agent: {dmca_address}. You can also send your notice by e-mail to {email}.
+
+## What happens next
+We review every complete notice and remove or disable access to the material we find. We may forward your notice to the person who posted the material. Many videos on this site are played from other providers' servers; we remove our page and links, and you may also want to contact the provider that hosts the video file.
+
+## Counter-notice
+If your material was removed by mistake, you can send us a counter-notice with your name, address, telephone number, the removed material and its former address, a statement under penalty of perjury that it was removed by mistake, your consent to the jurisdiction of the competent court, and your signature.
+
+## Repeat infringers
+We close the accounts of users who repeatedly post infringing material.
+
+This page was last updated on {date}.

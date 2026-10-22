@@ -1,0 +1,11 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{notempty name="tplRelated"}<section class="film-more reveal" aria-labelledby="film-more-title">
+<div class="stui-vodlist__head"><h2 id="film-more-title">{$tplCatIco}<span>{$tplMoreTitle}</span></h2>{if condition="$tplCatUrl neq ''"}<a class="pull-right more-link" href="{$tplCatUrl|htmlspecialchars=ENT_QUOTES}"><span>{:\\app\\common\\util\\TemplateText::get('ui.view_more')}</span>{:\\app\\common\\util\\AutoIcon::ui('arrow-right', ['size'=>'sm','tint'=>'none'])}</a>{/if}</div>
+<ul class="stui-vodlist" data-grid-fill>{volist name="tplRelated" id="vo"}<li>{include file="block/vod_box"}</li>{/volist}</ul>
+</section>{/notempty}

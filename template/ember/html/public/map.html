@@ -1,0 +1,27 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="ember" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/auto"}
+{include file="public/include"}
+</head>
+<body class="e-page-list">
+{include file="public/head"}
+<main id="main-content" class="e-main container">
+  <div class="e-head h_x" data-ai-group>
+    <h1 class="e-title">{:\\app\\common\\util\\AutoIcon::ui('map', ['class'=>'e-ico'])}{:\\app\\common\\util\\TemplateText::get('ui.latest_100_updates')}</h1>
+    <nav class="e-tabs" data-ai-group aria-label="{:\\app\\common\\util\\TemplateText::get('ui.categories')}">
+      {maccms:type ids="parent" flag="vod" order="asc" by="sort" id="tplSib" key="tplSibKey" hide_empty="1"}<a href="{:mac_url_type($tplSib)}">{:\\app\\common\\util\\AutoIcon::icon('category', $tplSib['type_name'], ['size'=>'sm', 'i'=>$tplSibKey])}{:\\app\\common\\util\\TemplateText::get(htmlspecialchars_decode((string)$tplSib['type_name'], ENT_QUOTES))}</a>{/maccms:type}
+    </nav>
+  </div>
+  <ul class="e-grid" data-grid-fill>{maccms:vod num="100" type="all" order="desc" by="time" paging="no" id="vo"}{include file="public/vodbox"}{/maccms:vod}</ul>
+</main>
+{include file="public/foot"}
+</body>
+</html>

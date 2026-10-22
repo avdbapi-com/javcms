@@ -1,0 +1,40 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="neon-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+<meta name="robots" content="noindex, follow" />
+<title>{:\\app\\common\\util\\TemplateText::get('ui.modify_the_information')} - {:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$maccms['site_name']), ENT_QUOTES, 'UTF-8')}</title>
+{include file="public/include"}
+{include file="user/include"}
+</head>
+<body class="nn-page-user">
+{include file="public/head"}
+<main id="main-content" class="nn-main"><div class="nn-wrap">
+{include file="user/hero"}
+<div class="nn-ulayout">
+<aside>{include file="user/menu"}</aside>
+<section class="nn-upanel" aria-labelledby="nn-h-user"><div class="nn-upanel-head"><h1 id="nn-h-user">{:\\app\\common\\util\\TemplateText::get('ui.modify_the_information')}</h1><a class="nn-mini" href="{:mac_url('user/index')}">{:\\app\\common\\util\\TemplateText::get('ui.return')}</a></div>
+{if condition="$GLOBALS['config']['user']['portrait_status'] eq 1"}<form class="nn-avatar-form nn-form" action="{:url('user/portrait')}" method="post" enctype="multipart/form-data" style="margin:0 0 18px">{:token()}<div class="nn-avatar-row"><img src="{$obj.user_portrait|mac_default=$nnNoFace|mac_url_img|htmlspecialchars=ENT_QUOTES}" alt="" width="56" height="56" style="width:56px;height:56px;border-radius:50%" data-nn-face><label class="nn-btn"><input class="nn-sr" type="file" name="file" accept="image/jpeg,image/png,image/gif,image/webp">{:\\app\\common\\util\\TemplateText::get('choose_avatar')}</label><span class="nn-form-note" data-nn-file-name></span><button class="nn-btn nn-btn-primary" type="submit">{:\\app\\common\\util\\TemplateText::get('upload_avatar')}</button></div></form>{/if}
+<form class="nn-form" id="fm" name="fm" method="post" action="{:url('user/info')}" data-nn-form data-url="{:url('user/info')}" style="margin-top:0">
+<label class="nn-field"><span class="nn-field-label">{:\\app\\common\\util\\TemplateText::get('ui.username_249ba3')}</span><input class="nn-input" type="text" value="{$obj.user_name|htmlspecialchars=ENT_QUOTES}" readonly></label>
+<label class="nn-field"><span class="nn-field-label">{:\\app\\common\\util\\TemplateText::get('ui.original_password')}</span><input class="nn-input" type="password" name="user_pwd" autocomplete="current-password" placeholder="{:\\app\\common\\util\\TemplateText::get('ui.original_password')}"></label>
+<label class="nn-field"><span class="nn-field-label">{:\\app\\common\\util\\TemplateText::get('ui.new_password')}</span><input class="nn-input" type="password" name="user_pwd1" autocomplete="new-password" placeholder="{:\\app\\common\\util\\TemplateText::get('ui.new_password')}"></label>
+<label class="nn-field"><span class="nn-field-label">{:\\app\\common\\util\\TemplateText::get('ui.duplicate_password')}</span><input class="nn-input" type="password" name="user_pwd2" autocomplete="new-password" placeholder="{:\\app\\common\\util\\TemplateText::get('ui.confirm_password')}"></label>
+<div class="nn-field"><span class="nn-field-label">{:\\app\\common\\util\\TemplateText::get('ui.email_address')}</span><span class="nn-verify"><input class="nn-input" type="email" name="user_email" value="{$obj.user_email|htmlspecialchars=ENT_QUOTES}" placeholder="{:\\app\\common\\util\\TemplateText::get('ui.email_address')}" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.email')}"><a class="nn-btn" href="{:mac_url('user/bind',['ac'=>'email'])}">{:\\app\\common\\util\\TemplateText::get('ui.bind')}</a><button class="nn-btn" type="button" data-nn-unbind="email" data-url="{:url('user/unbind')}">{:\\app\\common\\util\\TemplateText::get('ui.unbind')}</button></span></div>
+<div class="nn-field"><span class="nn-field-label">{:\\app\\common\\util\\TemplateText::get('ui.contact_the_phone')}</span><span class="nn-verify"><input class="nn-input" type="tel" name="user_phone" value="{$obj.user_phone|htmlspecialchars=ENT_QUOTES}" placeholder="{:\\app\\common\\util\\TemplateText::get('ui.contact_the_phone')}" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.phone')}"><a class="nn-btn" href="{:mac_url('user/bind',['ac'=>'phone'])}">{:\\app\\common\\util\\TemplateText::get('ui.bind')}</a><button class="nn-btn" type="button" data-nn-unbind="phone" data-url="{:url('user/unbind')}">{:\\app\\common\\util\\TemplateText::get('ui.unbind')}</button></span></div>
+<label class="nn-field"><span class="nn-field-label">{:\\app\\common\\util\\TemplateText::get('ui.security_question')}</span><input class="nn-input" type="text" name="user_question" value="{$obj.user_question|htmlspecialchars=ENT_QUOTES}" placeholder="{:\\app\\common\\util\\TemplateText::get('ui.security_question')}"></label>
+<label class="nn-field"><span class="nn-field-label">{:\\app\\common\\util\\TemplateText::get('ui.security_answer')}</span><input class="nn-input" type="text" name="user_answer" value="{$obj.user_answer|htmlspecialchars=ENT_QUOTES}" placeholder="{:\\app\\common\\util\\TemplateText::get('ui.security_answer')}"></label>
+<button class="nn-submit" type="submit" data-nn-submit="info">{:\\app\\common\\util\\TemplateText::get('ui.save')}</button>
+</form>
+</section>
+</div>
+</div></main>
+{include file="public/foot"}
+</body>
+</html>

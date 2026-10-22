@@ -1,0 +1,104 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{include file="../../../application/admin/view/public/head" /}
+<div class="page-container p10 jx-page" data-jx-page="index">
+    {include file="../../../application/admin/view/public/page_head" icon="ai-megaphone" title="admin/ux/jcx/title" help="admin/ux/jcx/help" action_url="jcx/info" action_label="admin/ux/jcx/add" action_icon="ai-plus" /}
+    {include file="../../../application/admin/view/jcx/_tabs" /}
+
+    {if condition="$jx_ready"}
+    <div class="ax-toolbar">
+        <nav class="ax-chips" aria-label="{:$jxE(lang('admin/ux/jcx/tab_overview'))}">
+            <a class="ax-chip {if condition="$jx_conf.on"}ax-chip--ok{else /}ax-chip--off{/if}" href="{:url('jcx/settings')}">{if condition="$jx_conf.on"}{:$jxE(lang('admin/ux/jcx/master_on'))}{else /}{:$jxE(lang('admin/ux/jcx/master_off'))}{/if}</a>
+            <a class="ax-chip" href="{:url('jcx/lists', ['chip' => 'on'])}">{:$jxN('admin/ux/jcx/count_on', $counts['on'])}</a>
+            <a class="ax-chip" href="{:url('jcx/lists', ['chip' => 'examples'])}">{:$jxN('admin/ux/jcx/count_examples', $counts['ex'])}</a>
+            {if condition="$counts.risk gt 0"}<a class="ax-chip ax-chip--warn" href="{:url('jcx/lists', ['chip' => 'risk'])}">{:$jxN('admin/ux/jcx/count_risk', $counts['risk'])}</a>{/if}
+        </nav>
+        <span class="ax-toolbar__spacer"></span>
+        {include file="../../../application/admin/view/jcx/_preview" /}
+    </div>
+
+    {if condition="$video_on"}
+    <div class="ax-notice" role="note"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-info"/></svg><div><p>{:$jxE(lang('admin/ux/jcx/provider_ad'))}</p></div></div>
+    {/if}
+    {if condition="$old_files gt 0"}
+    <div class="ax-notice ax-notice--warn" role="note"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-triangle-alert"/></svg>
+        <div><p>{:$jxE(sprintf(lang('admin/ux/jcx/old_files'), $old_files))}</p>
+        {if condition="$jx_cfg.can.save && $jx_cfg.can.code"}<p><button type="button" class="ax-btn ax-btn--sm" data-jx-act="import-old"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-download"/></svg>{:$jxE(lang('admin/ux/jcx/old_import'))}</button></p>{/if}</div></div>
+    {/if}
+
+    <section class="ax-section" aria-labelledby="jxChkT">
+        <h2 id="jxChkT">{:$jxE(lang('admin/ux/jcx/chk_title'))}</h2>
+        <ol class="jx-steps">
+            {volist name="chk" id="s"}
+            <li class="jx-step{if condition="$s.done"} is-done{/if}">
+                <svg class="ax-ic jx-step__state" role="img" aria-label="{if condition="$s.done"}{:$jxE(lang('admin/ux/jcx/chk_done'))}{else /}{:$jxE(lang('admin/ux/jcx/chk_' . $s['n']))}{/if}" focusable="false"><use href="{$jxS}#{if condition="$s.done"}ai-circle-check{else /}ai-circle{/if}"/></svg>
+                <div class="jx-step__text"><strong>{$s.n}. {:$jxE(lang('admin/ux/jcx/chk_' . $s['n']))}</strong><p class="ax-help">{:$jxE(lang('admin/ux/jcx/chk_' . $s['n'] . '_help'))}</p></div>
+                <div class="jx-step__act">
+                    {if condition="$s.n eq 1"}{if condition="$jx_cfg.can.examples"}<button type="button" class="ax-btn ax-btn--sm" data-jx-act="examples" data-op="install"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-download"/></svg>{:$jxE(lang('admin/ux/jcx/install_examples'))}</button>{/if}{/if}
+                    {if condition="$s.n eq 2"}{if condition="$jx_cfg.can.preview"}<button type="button" class="ax-btn ax-btn--sm" data-jx-act="preview" data-scope="ex" data-chk="2"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-eye"/></svg>{:$jxE(lang('admin/ux/jcx/see_examples'))}</button>{/if}{/if}
+                    {if condition="$s.n eq 3"}<a class="ax-btn ax-btn--sm" href="{:url('jcx/info')}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-plus"/></svg>{:$jxE(lang('admin/ux/jcx/add'))}</a>{/if}
+                    {if condition="$s.n eq 4"}<a class="ax-btn ax-btn--sm" href="{:url('jcx/lists', ['chip' => 'off'])}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-toggle-right"/></svg>{:$jxE(lang('admin/ux/jcx/chk_open'))}</a>{/if}
+                    {if condition="$s.n eq 5"}{if condition="$jx_cfg.can.preview"}<button type="button" class="ax-btn ax-btn--sm" data-jx-act="preview" data-scope="onoff" data-phone="1" data-chk="5"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-monitor-play"/></svg>{:$jxE(lang('admin/ux/jcx/chk_5'))}</button>{/if}{/if}
+                </div>
+            </li>
+            {/volist}
+        </ol>
+        <p class="ax-help"><a href="{:url('jcx/info')}#jxNotWeb">{:$jxE(lang('admin/ux/jcx/fmt_which'))}</a> {:$jxE(lang('admin/ux/jcx/fmt_which_help'))}</p>
+    </section>
+
+    <section class="ax-section" aria-labelledby="jxHealthT" id="jxHealth">
+        <div class="jx-head-row"><h2 id="jxHealthT">{:$jxE(lang('admin/ux/jcx/health_title'))}</h2>
+            <button type="button" class="ax-btn ax-btn--sm" data-jx-act="health"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-refresh-cw"/></svg>{:$jxE(lang('admin/ux/jcx/h_run'))}</button></div>
+        <ul class="jx-checks" aria-live="polite">
+            <li data-h="runtime" class="is-wait">{:$jxE(lang('admin/ux/jcx/h_checking'))}</li>
+            <li data-h="cfg" class="is-wait">{:$jxE(lang('admin/ux/jcx/h_checking'))}</li>
+            {if condition="$health.cfg_fallback"}<li class="is-warn">{:$jxE(lang('admin/ux/jcx/h_cfg_fallback'))}</li>{/if}
+            {if condition="$health.err neq ''"}<li class="is-bad">{:$jxE(sprintf(lang('admin/ux/jcx/h_build_err'), $health['err']))}</li>{/if}
+            {if condition="$health.examples_public gt 0"}<li class="is-bad">{:$jxE(lang('admin/ux/jcx/h_examples'))}</li>{/if}
+            {volist name="health.miss" id="m"}<li class="is-warn">{:$jxE(sprintf(lang('admin/ux/jcx/h_anchor'), lang('admin/ux/jcx/pl_' . $m['place'])))}</li>{/volist}
+            {if condition="!empty($health['push_on']) && empty($health['https'])"}<li class="is-warn">{:$jxE(lang('admin/ux/jcx/need_https'))}</li>{/if}
+            {if condition="$health.subfolder"}<li class="is-warn">{:$jxE(lang('admin/ux/jcx/subfolder'))}</li>{/if}
+            {volist name="health.conflicts" id="c"}<li class="is-warn">{:$jxE(sprintf(lang('admin/ux/jcx/h_conflict'), $c['name'] . ' · ' . $c['with'][0]['text']))}</li>{/volist}
+            {if condition="!empty($risk_items)"}<li class="is-warn">{:$jxE(lang('admin/ux/jcx/h_risk'))} ({:$jxE(implode(', ', $risk_items))}) <a href="https://support.google.com/webtools/answer/7308033" target="_blank" rel="noopener">{:$jxE(lang('admin/ux/jcx/h_risk_link'))}</a></li>{/if}
+            {volist name="cbig" id="cb"}<li class="is-warn">{:$jxE(str_replace('%s', $cb, lang('admin/ux/jcx/h_cbig')))}</li>{/volist}
+            {if condition="$health.built gt 0"}<li class="is-info">{:$jxE(sprintf(lang('admin/ux/jcx/h_last_build'), date('Y-m-d H:i', $health['built'])))}</li>{/if}
+        </ul>
+    </section>
+
+    <section class="ax-section" aria-labelledby="jxStatT">
+        <div class="jx-head-row"><h2 id="jxStatT">{:$jxE(lang('admin/ux/jcx/days7'))}</h2><a class="ax-btn ax-btn--sm ax-btn--ghost" href="{:url('jcx/stats')}">{:$jxE(lang('admin/ux/jcx/tab_stats'))}<svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-chevron-right"/></svg></a></div>
+        <div class="jx-tiles">
+            <div class="jx-tile"><span>{:$jxE(lang('admin/ux/jcx/stats_views'))}</span><b>{:number_format($stat7['views'])}</b></div>
+            <div class="jx-tile"><span>{:$jxE(lang('admin/ux/jcx/stats_clicks'))}</span><b>{:number_format($stat7['clicks'])}</b></div>
+            <div class="jx-tile"><span>{:$jxE(lang('admin/ux/jcx/stats_ctr'))}</span><b>{:$jxE($stat7['ctr'])}</b></div>
+            <div class="jx-tile"><span>{:$jxE(lang('admin/ux/jcx/stats_starts'))}</span><b>{:number_format($stat7['starts'])}</b></div>
+        </div>
+        <div class="jx-bars" role="img" aria-label="{:$jxE(lang('admin/ux/jcx/stats_by_day'))}">
+            {volist name="bars" id="b"}<div class="jx-bar"><i style="height:{$b.pct}%" title="{$b.n}"></i><span>{:$jxE($b['day'])}</span></div>{/volist}
+        </div>
+        <h3 class="jx-h3">{:$jxE(lang('admin/ux/jcx/top_ads'))}</h3>
+        {if condition="empty($top)"}<p class="ax-help">{:$jxE(lang('admin/ux/jcx/stats_none'))}</p>{else /}
+        <div class="ax-table-wrap"><table class="ax-table ax-table--cards">
+            <thead><tr><th>{:$jxE(lang('admin/ux/jcx/col_name'))}</th><th class="ax-num">{:$jxE(lang('admin/ux/jcx/stats_views'))}</th><th class="ax-num">{:$jxE(lang('admin/ux/jcx/stats_clicks'))}</th><th class="ax-num">{:$jxE(lang('admin/ux/jcx/stats_ctr'))}</th></tr></thead>
+            <tbody>{volist name="top" id="t"}<tr><td data-label="{:$jxE(lang('admin/ux/jcx/col_name'))}"><a href="{:url('jcx/info', ['id' => $t['id']])}">{:$jxE($t['name'])}</a></td><td class="ax-num" data-label="{:$jxE(lang('admin/ux/jcx/stats_views'))}">{:number_format($t['views'])}</td><td class="ax-num" data-label="{:$jxE(lang('admin/ux/jcx/stats_clicks'))}">{:number_format($t['clicks'])}</td><td class="ax-num" data-label="{:$jxE(lang('admin/ux/jcx/stats_ctr'))}">{:$jxE($t['ctr'])}</td></tr>{/volist}</tbody>
+        </table></div>
+        {/if}
+    </section>
+
+    <section class="ax-section" aria-labelledby="jxAnaT">
+        <h2 id="jxAnaT">{:$jxE(lang('admin/ux/system/analytics_code'))}</h2>
+        <p class="ax-help">{:$jxE(lang('admin/ux/system/analytics_code_help'))}</p>
+        <p><a class="ax-btn" href="{:url('system/config')}?section=analytics" data-tab="n21"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-activity"/></svg>{:$jxE(lang('admin/ux/overview/gs7_analytics'))}</a></p>
+    </section>
+    {/if}
+</div>
+{include file="../../../application/admin/view/public/foot" /}
+<script type="application/json" id="jxCfg">{$jxJson}</script>
+<script src="__STATIC__/js/admin_jcx.js?v={:filemtime(ROOT_PATH . 'static/js/admin_jcx.js')}"></script>
+</body>
+</html>

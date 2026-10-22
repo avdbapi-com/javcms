@@ -1,0 +1,821 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Based on MacCMS 10 (Apache-2.0) by magicblack, changed by JavCMS.
+JavCMS changes: Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors,
+JavCMS Community License 1.0. The MacCMS parts stay under the Apache License 2.0.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{include file="../../../application/admin/view/public/head" /}
+
+<div class="page-container">
+    {include file="../../../application/admin/view/public/page_head" icon="ai-id-card" title="admin/ux/menu/site_identity" help="admin/ux/help/site_identity" /}
+    <link rel="stylesheet" href="__STATIC__/css/admin_seo.css?v={:filemtime(ROOT_PATH . 'static/css/admin_seo.css')}">
+    <style>details.ax-advanced{margin:8px 0 0}details.ax-advanced>summary{cursor:pointer;padding:10px 0;color:var(--ax-text);font:650 14px/1.3 var(--ax-font)}.ax-logo-preview{display:inline-block;width:48px;height:48px;object-fit:contain;border:1px solid var(--ax-line);border-radius:var(--ax-r-sm);background:var(--ax-raised);vertical-align:middle}.ax-logo-preview[src=""]{visibility:hidden}</style>
+
+    <div class="showpic" style="display:none;"><img class="showpic_img" width="120" height="160" referrerPolicy="no-referrer"></div>
+
+    <form data-ax-dirty class="layui-form layui-form-pane" action="">
+        <input type="hidden" name="__token__" value="{$Request.token}" />
+
+        <div class="layui-tab" lay-filter="tb1">
+            <ul class="layui-tab-title">
+                <li class="layui-this" lay-id="config_1">{:lang('admin/system/config/base')}</li>
+                <li lay-id="config_code">{:lang('admin/ux/seo/tab_code')}</li>
+                <li lay-id="config_2">{:lang('admin/ux/system/tab_speed')}</li>
+                <li lay-id="config_3">{:lang('admin/ux/system/tab_lists')}</li>
+                <li lay-id="config_4">{:lang('admin/ux/system/tab_admin')}</li>
+            </ul>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show studio-form-panel">
+                    <section class="ax-section seo-card" aria-labelledby="seo-card-name">
+                        <h2 id="seo-card-name">{:lang('admin/ux/seo/card_name')}</h2>
+                        <div class="ax-field ax-field--md">
+                            <label for="site-name">{:lang('admin/ux/seo/site_name')}</label>
+                            <input id="site-name" type="text" name="site[site_name]" value="{$seo.site_name|htmlspecialchars=ENT_QUOTES,'UTF-8'}" class="layui-input" maxlength="120" data-seo-count="40" data-seo-amber="30" aria-describedby="site-name-help site-name-count">
+                            <p class="ax-help" id="site-name-help">{:lang('admin/ux/seo/site_name_help')}</p>
+                            <p class="ax-help seo-count" id="site-name-count" aria-live="polite"></p>
+                            <div class="ax-notice ax-notice--warn seo-long" data-seo-long hidden><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-triangle-alert"/></svg><div><p>{:lang('admin/ux/seo/site_name_long')}</p><p><button type="button" class="ax-btn ax-btn--sm" data-seo-move><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-arrow-right"/></svg>{:lang('admin/ux/seo/move_to_home')}</button></p></div></div>
+                        </div>
+                        <div class="ax-field ax-field--md">
+                            <label for="site-home-title">{:lang('admin/ux/seo/home_title')}</label>
+                            <input id="site-home-title" type="text" name="site[site_home_title]" value="{$seo.home_title|htmlspecialchars=ENT_QUOTES,'UTF-8'}" class="layui-input" maxlength="70" data-seo-count="70" data-seo-amber="60" aria-describedby="site-home-title-help site-home-title-count"{if condition="$seo.home_prefill"} data-seo-prefill="1"{/if}>
+                            <p class="ax-help" id="site-home-title-help">{:lang('admin/ux/seo/home_title_help')}</p>
+                            <p class="ax-help seo-count" id="site-home-title-count" aria-live="polite"></p>
+                        </div>
+                        <div class="ax-field ax-field--md">
+                            <label for="site-description">{:lang('admin/ux/seo/home_desc')}</label>
+                            <textarea id="site-description" name="site[site_description]" class="layui-textarea seo-desc" rows="2" maxlength="300" data-seo-count="300" data-seo-green="70-160" aria-describedby="site-description-help site-description-count">{$seo.site_description|htmlspecialchars=ENT_QUOTES,'UTF-8'}</textarea>
+                            <p class="ax-help" id="site-description-help">{:lang('admin/ux/seo/home_desc_help')}</p>
+                            <p class="ax-help seo-count" id="site-description-count" aria-live="polite"></p>
+                        </div>
+                        <div class="ax-serp" data-seo-serp data-title-for="site-home-title" data-fallback-for="site-name" data-desc-for="site-description">
+                            <p class="ax-help">{:lang('admin/ux/seo/serp_preview')}</p>
+                            <div class="ax-serp__box" aria-hidden="true">
+                                <div class="ax-serp__site"><img class="ax-serp__icon" alt="" src="{if condition="$seo.icon_mode eq 'custom'"}{$seo.icon_custom.tab|htmlspecialchars}{else /}{$seo.icon_default.tab|htmlspecialchars}{/if}" data-seo-serp-icon><span><span data-serp-name>{$seo.site_name|htmlspecialchars=ENT_QUOTES,'UTF-8'}</span><cite>{$seo.canonical|htmlspecialchars=ENT_QUOTES,'UTF-8'}</cite></span></div>
+                                <div class="ax-serp__title" data-serp-title></div>
+                                <div class="ax-serp__desc" data-serp-desc></div>
+                            </div>
+                        </div>
+                        <div class="ax-field ax-field--md">
+                            <label for="site-url">{:lang('admin/ux/seo/site_url')}</label>
+                            <input id="site-url" type="text" name="site[site_url]" placeholder="javhub.com" value="{$seo.site_url|htmlspecialchars=ENT_QUOTES,'UTF-8'}" class="layui-input" aria-describedby="site-url-help">
+                            <p class="ax-help" id="site-url-help">{:lang('admin/ux/seo/site_url_help')}</p>
+                        </div>
+                        <div class="ax-field ax-field--md">
+                            <label for="site-email">{:lang('admin/ux/seo/contact_email')}</label>
+                            <input id="site-email" type="email" name="site[site_email]" value="{$seo.site_email|htmlspecialchars=ENT_QUOTES,'UTF-8'}" class="layui-input" aria-describedby="site-email-help">
+                            <p class="ax-help" id="site-email-help">{:lang('admin/ux/seo/contact_email_help')}</p>
+                        </div>
+                    </section>
+
+                    <section class="ax-section seo-card" aria-labelledby="seo-card-logo">
+                        <h2 id="seo-card-logo">{:lang('admin/ux/seo/card_logo')}</h2>
+                        <div class="layui-form-item studio-field-row studio-field-wide">
+                            <label class="layui-form-label">{:lang('admin/ux/seo/logo')}</label>
+                            <div class="layui-input-inline w600">
+                                <input type="text" name="site[site_logo]" placeholder="{:lang('admin/system/config/site_logo_tip')}" value="{$config['site']['site_logo']|html_entity_decode=ENT_QUOTES,'UTF-8'|htmlspecialchars=ENT_QUOTES,'UTF-8'}" class="layui-input upload-input" aria-describedby="site-logo-help">
+                            </div>
+                            <div class="layui-input-inline ">
+                                <img class="ax-logo-preview" alt="" onerror="this.style.visibility='hidden'" data-logo-for="site_logo" src="{if condition="$config['site']['site_logo'] neq ''"}{:mac_url_img($config['site']['site_logo'])}{/if}">
+                                <button type="button" class="ax-btn layui-upload" lay-data="{data:{thumb:0,thumb_class:'site[site_logo]'}}" id="upload1"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-upload"/></svg>{:lang('upload_pic')}</button>
+                            </div>
+                            <div class="layui-form-mid layui-word-aux" id="site-logo-help">{:lang('admin/ux/seo/logo_help')}</div>
+                        </div>
+                        {if condition="$seo.is_ember"}
+                        <div class="layui-form-item studio-field-row studio-field-wide">
+                            <label class="layui-form-label">{:lang('admin/ux/seo/logo_mobile')}</label>
+                            <div class="layui-input-inline w600">
+                                <input type="text" name="site[site_waplogo]" placeholder="{:lang('admin/system/config/site_logo_tip')}" value="{$config['site']['site_waplogo']|html_entity_decode=ENT_QUOTES,'UTF-8'|htmlspecialchars=ENT_QUOTES,'UTF-8'}" class="layui-input upload-input">
+                            </div>
+                            <div class="layui-input-inline ">
+                                <img class="ax-logo-preview" alt="" onerror="this.style.visibility='hidden'" data-logo-for="site_waplogo" src="{if condition="$config['site']['site_waplogo'] neq ''"}{:mac_url_img($config['site']['site_waplogo'])}{/if}">
+                                <button type="button" class="ax-btn layui-upload" lay-data="{data:{thumb:0,thumb_class:'upload-thumb'}}" id="upload2"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-upload"/></svg>{:lang('upload_pic')}</button>
+                            </div>
+                            <div class="layui-form-mid layui-word-aux">{:lang('admin/ux/system/logo_mobile_help')}</div>
+                        </div>
+                        {/if}
+
+                        <div class="ax-field seo-icon" role="radiogroup" aria-labelledby="seo-icon-title" data-seo-icon data-upload-url="{$seo.upload_url|htmlspecialchars}" data-default-tab="{$seo.icon_default.tab|htmlspecialchars}" data-default-phone="{$seo.icon_default.phone|htmlspecialchars}">
+                            <label id="seo-icon-title">{:lang('admin/ux/seo/icon_title')}</label>
+                            <div>
+                                <input type="radio" name="site[site_icon_mode]" value="default" lay-filter="seoIconMode" title="{:lang('admin/ux/seo/icon_mode_default')}" {if condition="$seo.icon_mode eq 'default'"}checked {/if}>
+                                <input type="radio" name="site[site_icon_mode]" value="custom" lay-filter="seoIconMode" title="{:lang('admin/ux/seo/icon_mode_custom')}" {if condition="$seo.icon_mode eq 'custom'"}checked {/if}>
+                                <input type="radio" name="site[site_icon_mode]" value="theme" lay-filter="seoIconMode" title="{:lang('admin/ux/seo/icon_mode_theme')}" {if condition="$seo.icon_mode eq 'theme'"}checked {/if}>
+                            </div>
+                            <input type="hidden" name="site[site_icon]" value="{$seo.icon_dir|htmlspecialchars}" data-seo-icon-dir>
+                            <div class="seo-icon__previews">
+                                <figure class="seo-tile seo-tile--dark"><img src="{$seo.icon_custom.tab|htmlspecialchars}" width="16" height="16" alt="" data-seo-icon-img="tab"><img src="{$seo.icon_custom.tab|htmlspecialchars}" width="32" height="32" alt="" data-seo-icon-img="tab"><figcaption>{:lang('admin/ux/seo/icon_preview_tab')}</figcaption></figure>
+                                <figure class="seo-tile seo-tile--light"><img src="{$seo.icon_custom.tab|htmlspecialchars}" width="16" height="16" alt="" data-seo-icon-img="tab"><img src="{$seo.icon_custom.tab|htmlspecialchars}" width="32" height="32" alt="" data-seo-icon-img="tab"><figcaption>{:lang('admin/ux/seo/icon_preview_tab')}</figcaption></figure>
+                                <figure class="seo-tile seo-tile--dark"><img src="{$seo.icon_custom.phone|htmlspecialchars}" width="60" height="60" alt="" class="seo-tile__phone" data-seo-icon-img="phone"><figcaption>{:lang('admin/ux/seo/icon_preview_phone')}</figcaption></figure>
+                                <figure class="seo-tile seo-tile--light"><img src="{$seo.icon_custom.phone|htmlspecialchars}" width="60" height="60" alt="" class="seo-tile__phone" data-seo-icon-img="phone"><figcaption>{:lang('admin/ux/seo/icon_preview_phone')}</figcaption></figure>
+                            </div>
+                            <p class="ax-help">{:lang('admin/ux/seo/icon_short_name')} <strong data-seo-short-name>{$seo.short_name|htmlspecialchars=ENT_QUOTES,'UTF-8'}</strong>. {:lang('admin/ux/seo/icon_short_name_help')}</p>
+                            <div class="seo-actions">
+                                <input type="file" accept="image/png,image/jpeg,image/webp" hidden data-seo-file="icon" aria-label="{:lang('admin/ux/seo/icon_upload')}">
+                                <button type="button" class="ax-btn" data-seo-pick="icon"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-upload"/></svg>{:lang('admin/ux/seo/icon_upload')}</button>
+                                <button type="button" class="ax-btn ax-btn--ghost" data-seo-remove="icon" {if condition="$seo.icon_dir eq ''"}hidden{/if}><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-x"/></svg>{:lang('admin/ux/seo/icon_remove')}</button>
+                                <span class="ax-help" role="status" data-seo-status="icon"></span>
+                            </div>
+                            <p class="ax-help">{:lang('admin/ux/seo/icon_help')}</p>
+                            {if condition="!$seo.icon_gd"}
+                            <div class="ax-notice ax-notice--warn"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-triangle-alert"/></svg><div><p>{:lang('admin/ux/seo/icon_nogd')}</p></div></div>
+                            {/if}
+                            {if condition="$seo.root_ico_url neq ''"}<p class="ax-help"><a href="{$seo.root_ico_url|htmlspecialchars}" download="favicon.ico">{:lang('admin/ux/seo/icon_root_download')}</a></p>{/if}
+                        </div>
+                        <div class="ax-field ax-field--md">
+                            <label for="site-theme-color">{:lang('admin/ux/seo/theme_color')}</label>
+                            <div class="seo-color">
+                                <input type="color" value="{if condition="$seo.theme_color neq ''"}{$seo.theme_color|htmlspecialchars}{else /}#111111{/if}" data-seo-color-pick aria-label="{:lang('admin/ux/seo/theme_color')}" {if condition="$seo.theme_color eq ''"}hidden{/if}>
+                                <input id="site-theme-color" type="text" name="site[site_theme_color]" value="{$seo.theme_color|htmlspecialchars}" class="layui-input ax-mono" maxlength="7" placeholder="{:lang('admin/ux/seo/theme_color_ph')}" data-seo-color-text aria-describedby="site-theme-color-help">
+                                <button type="button" class="ax-btn ax-btn--sm" data-seo-color-start {if condition="$seo.theme_color neq ''"}hidden{/if}><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-palette"/></svg>{:lang('admin/ux/seo/theme_color_pick')}</button>
+                                <button type="button" class="ax-btn ax-btn--ghost ax-btn--sm" data-seo-color-clear {if condition="$seo.theme_color eq ''"}hidden{/if}>{:lang('admin/ux/seo/theme_color_clear')}</button>
+                            </div>
+                            <p class="ax-help" id="site-theme-color-help">{:lang('admin/ux/seo/theme_color_help')}</p>
+                        </div>
+                    </section>
+
+                    <section class="ax-section seo-card" aria-labelledby="seo-card-share">
+                        <h2 id="seo-card-share">{:lang('admin/ux/seo/card_share')}</h2>
+                        <div class="ax-field" data-seo-share>
+                            <label>{:lang('admin/ux/seo/share_image')}</label>
+                            <img class="seo-share" alt="" src="{$seo.share_url|htmlspecialchars}" data-seo-share-img {if condition="$seo.share_url eq ''"}hidden{/if}>
+                            <input type="hidden" name="site[site_share_image]" value="{$seo.share_image|htmlspecialchars}" data-seo-share-path>
+                            <input type="hidden" name="site[site_share_w]" value="{$seo.share_w}" data-seo-share-w>
+                            <input type="hidden" name="site[site_share_h]" value="{$seo.share_h}" data-seo-share-h>
+                            <div class="seo-actions">
+                                <input type="file" accept="image/png,image/jpeg,image/webp" hidden data-seo-file="share" aria-label="{:lang('admin/ux/seo/share_upload')}">
+                                <button type="button" class="ax-btn" data-seo-pick="share"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-image-up"/></svg>{:lang('admin/ux/seo/share_upload')}</button>
+                                <button type="button" class="ax-btn ax-btn--ghost" data-seo-remove="share" {if condition="$seo.share_image eq ''"}hidden{/if}><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-x"/></svg>{:lang('admin/ux/seo/icon_remove')}</button>
+                                <span class="ax-help" role="status" data-seo-status="share"></span>
+                            </div>
+                            <p class="ax-help">{:lang('admin/ux/seo/share_help')}</p>
+                        </div>
+                        <div class="ax-field ax-field--md">
+                            <label for="site-social">{:lang('admin/ux/seo/social')}</label>
+                            <textarea id="site-social" name="site[site_social]" class="layui-textarea ax-mono" rows="3" placeholder="https://x.com/..." aria-describedby="site-social-help">{$seo.social|htmlspecialchars=ENT_QUOTES,'UTF-8'}</textarea>
+                            <p class="ax-help" id="site-social-help">{:lang('admin/ux/seo/social_help')}</p>
+                        </div>
+                    </section>
+
+                    <section class="ax-section seo-card" aria-labelledby="seo-card-theme">
+                        <h2 id="seo-card-theme">{:lang('admin/ux/menu/themes')}</h2>
+                    <div class="layui-form-item studio-field-paired studio-field-wide" style="--studio-field-count:1">
+                        <label class="layui-form-label" style="grid-column:1;grid-row:1">{:lang('admin/system/config/template_dir')}</label>
+                        <div class="layui-input-inline"  style="grid-column:1;grid-row:2">
+                                <select class="w150" name="site[template_dir]" id="site-template-dir">
+                                    {volist name="templates" id="vo"}
+                                    <option value="{$vo.dir|htmlspecialchars}" {if condition="$config['site']['template_dir'] eq $vo['dir']"}selected {/if}>{$vo.name|htmlspecialchars} ({$vo.dir|htmlspecialchars}){if condition="$vo['note'] neq ''"} - {:lang('admin/system/config/template_state_' . $vo['note'])}{/if}</option>
+                                    {/volist}
+                                </select>
+                        </div>
+                        {if condition="!empty($hidden_templates)"}
+                        <div class="layui-form-mid layui-word-aux" style="grid-column:1 / -1;grid-row:4">{:lang('admin/system/config/template_hidden')}: {volist name="hidden_templates" id="ht"}<span title="{:htmlspecialchars(implode(' | ', $ht['findings']), ENT_QUOTES, 'UTF-8')}">{$ht.name|htmlspecialchars} ({$ht.dir|htmlspecialchars}) - {:lang('admin/system/config/template_state_' . $ht['reason'])}</span>{if condition="$key lt count($hidden_templates) - 1"}; {/if}{/volist}</div>
+                        {/if}
+                    </div>
+
+                    <!-- Visitor theme switcher (application/common/util/ThemeSwitcher.php). -->
+                    <div class="layui-form-item studio-field-row">
+                        <label class="layui-form-label">{:lang('admin/system/config/theme_switcher')}</label>
+                        <div class="layui-input-block">
+                            <input type="radio" name="site[theme_switcher]" value="1" title="{:lang('open')}" {if condition="(string)($config['site']['theme_switcher'] ?? '0') eq '1'"}checked {/if}>
+                            <input type="radio" name="site[theme_switcher]" value="0" title="{:lang('close')}" {if condition="(string)($config['site']['theme_switcher'] ?? '0') neq '1'"}checked {/if}>
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">{:lang('admin/system/config/theme_switcher_tip')}{if condition="$switcher_static"} <strong>{:lang('admin/system/config/theme_switcher_static_warning')}</strong>{/if}</div>
+                    </div>
+                    <div class="layui-form-item studio-field-row">
+                        <label class="layui-form-label">{:lang('admin/system/config/theme_switcher_pos')}</label>
+                        <div class="layui-input-block">
+                            <input type="radio" name="site[theme_switcher_pos]" value="bottom-end" title="{:lang('admin/system/config/theme_switcher_pos_end')}" {if condition="($config['site']['theme_switcher_pos'] ?? 'bottom-end') neq 'bottom-start'"}checked {/if}>
+                            <input type="radio" name="site[theme_switcher_pos]" value="bottom-start" title="{:lang('admin/system/config/theme_switcher_pos_start')}" {if condition="($config['site']['theme_switcher_pos'] ?? '') eq 'bottom-start'"}checked {/if}>
+                        </div>
+                    </div>
+                    <div class="layui-form-item studio-field-row studio-field-wide">
+                        <label class="layui-form-label">{:lang('admin/system/config/theme_switcher_themes')}</label>
+                        <div class="layui-input-block">
+                            {volist name="templates" id="vo"}{if condition="$vo['note'] eq ''"}
+                            {/* layui form.js prints a checkbox title as HTML ("<span>"+title+"</span>" from the decoded attribute), so the */}
+                            {/* name from a theme's info.ini is escaped twice on purpose: the attribute decodes once, layui shows plain text. */}
+                            <input type="checkbox" lay-skin="primary" name="site[theme_switcher_themes][]" value="{$vo.dir|htmlspecialchars}" title="{:htmlspecialchars(htmlspecialchars($vo['name'] . ' (' . $vo['dir'] . ')', ENT_QUOTES, 'UTF-8'), ENT_QUOTES, 'UTF-8')}" {if condition="in_array($vo['dir'], $switcher_themes, true)"}checked {/if}>
+                            {/if}{/volist}
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">{:lang('admin/system/config/theme_switcher_themes_tip')}</div>
+                    </div>
+                    <!-- [icon-merge] insertion point: icon-system settings rows go here. -->
+
+                    <!-- <div class="layui-form-item">
+                        <label class="layui-form-label w200">{:lang('admin/system/config/mob_status')}</label>
+                        <div class="layui-input-inline w600">
+                            <input type="radio" name="site[mob_status]" value="0" title="{:lang('admin/ux/system/off')}" {if condition="$config['site']['mob_status'] neq 1"}checked {/if}>
+                            <input type="radio" name="site[mob_status]" value="1" title="{:lang('admin/system/config/mob_multiple')}" {if condition="$config['site']['mob_status'] eq 1"}checked {/if}>
+                            <input type="radio" name="site[mob_status]" value="2" title="{:lang('admin/system/config/mob_one')}" {if condition="$config['site']['mob_status'] eq 2"}checked {/if}>
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">{:lang('admin/system/config/mob_status_tip')}</div>
+                    </div> -->
+                    </section>
+
+                    <section class="ax-section seo-card" aria-labelledby="seo-card-status">
+                        <h2 id="seo-card-status">{:lang('admin/ux/seo/card_status')}</h2>
+                        <div class="layui-form-item studio-field-row">
+                            <label class="layui-form-label">{:lang('admin/system/config/site_status')}</label>
+                            <div class="layui-input-block">
+                                <input type="radio" name="site[site_status]" value="0" title="{:lang('admin/ux/system/off')}" {if condition="$config['site']['site_status'] eq 0"}checked {/if}>
+                                <input type="radio" name="site[site_status]" value="1" title="{:lang('admin/ux/system/on')}" {if condition="$config['site']['site_status'] eq 1"}checked {/if}>
+                            </div>
+                        </div>
+                        <div class="layui-form-item studio-field-row studio-field-wide">
+                            <label class="layui-form-label w200">{:lang('admin/system/config/site_close_tip')}</label>
+                            <div class="layui-input-inline w600">
+                                <textarea name="site[site_close_tip]" class="layui-textarea"  placeholder="">{$config['site']['site_close_tip']|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}</textarea>
+                            </div>
+                        </div>
+                    </section>
+                    <details class="ax-advanced">
+                        <summary>{:lang('admin/ux/system/advanced_block')}</summary>
+                    <div class="layui-form-item studio-field-row">
+                        <label class="layui-form-label">{:lang('admin/system/config/install_dir')}</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="site[install_dir]" placeholder="{:lang('admin/system/config/install_dir_tip')}" value="{$config['site']['install_dir']|html_entity_decode=ENT_QUOTES,'UTF-8'|htmlspecialchars=ENT_QUOTES,'UTF-8'}" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item studio-field-row">
+                        <label class="layui-form-label" for="site-html-dir">{:lang('admin/system/config/html_dir')}</label>
+                        <div class="layui-input-block">
+                            <input id="site-html-dir" type="text" name="site[html_dir]" placeholder="" value="{$config['site']['html_dir']|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}" class="layui-input w150" aria-describedby="html-dir-help">
+                        </div>
+                        <div class="layui-form-mid layui-word-aux" id="html-dir-help">{:lang('admin/ux/system/html_dir_help')}</div>
+                    </div>
+                    </details>
+                </div>
+
+                <div class="layui-tab-item studio-form-panel">
+                    {if condition="!$seo.can_code"}
+                    <div class="ax-notice ax-notice--warn"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-lock"/></svg><div><p>{:lang('admin/ux/seo/code_right')}</p></div></div>
+                    {/if}
+                    <section class="ax-section seo-card" aria-labelledby="seo-card-ga">
+                        <h2 id="seo-card-ga">{:lang('admin/ux/seo/code_analytics')}</h2>
+                        <div class="ax-field ax-field--md">
+                            <label for="site-ga4">{:lang('admin/ux/seo/ga4')}</label>
+                            <input id="site-ga4" type="text" name="site[site_ga4]" value="{$seo.ga4|htmlspecialchars}" class="layui-input ax-mono" maxlength="14" placeholder="G-XXXXXXXXXX" aria-describedby="site-ga4-help" {if condition="!$seo.can_code"}readonly{/if}>
+                            <p class="ax-help" id="site-ga4-help">{:lang('admin/ux/seo/ga4_help')}</p>
+                        </div>
+                        <div class="ax-field">
+                            <label>{:lang('admin/ux/seo/code_consent')}</label>
+                            <div><input type="hidden" name="site[site_code_consent]" value="0"><input type="checkbox" name="site[site_code_consent]" value="1" lay-skin="switch" lay-text="{:lang('admin/ux/system/on')}|{:lang('admin/ux/system/off')}" {if condition="$seo.code_consent eq 1"}checked {/if}></div>
+                            <p class="ax-help">{:lang('admin/ux/seo/code_consent_help')}</p>
+                        </div>
+                    </section>
+                    <section class="ax-section seo-card" aria-labelledby="seo-card-code">
+                        <h2 id="seo-card-code">{:lang('admin/ux/seo/code_own')}</h2>
+                        <div class="ax-field">
+                            <label for="site-head-code">{:htmlspecialchars(lang('admin/ux/seo/head_code'))}</label>
+                            <textarea id="site-head-code" name="site[site_head_code]" class="layui-textarea ax-mono seo-code" rows="6" spellcheck="false" aria-describedby="site-head-code-help" {if condition="!$seo.can_code"}readonly{/if}>{$seo.head_code|htmlspecialchars=ENT_QUOTES,'UTF-8'}</textarea>
+                            <p class="ax-help" id="site-head-code-help">{:htmlspecialchars(lang('admin/ux/seo/head_code_help'))}</p>
+                        </div>
+                        <div class="ax-field">
+                            <label for="site-tj">{:lang('admin/ux/seo/foot_code')}</label>
+                            <textarea id="site-tj" name="site[site_tj]" class="layui-textarea ax-mono seo-code" rows="6" spellcheck="false" aria-describedby="site-tj-help" {if condition="!$seo.can_code"}readonly{/if}>{$seo.site_tj|htmlspecialchars=ENT_QUOTES,'UTF-8'}</textarea>
+                            <p class="ax-help" id="site-tj-help">{:lang('admin/ux/system/site_tj_help')}</p>
+                        </div>
+                    </section>
+                    <div class="ax-notice" role="note"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-megaphone"/></svg><div><p>{:lang('admin/ux/seo/ads_link')}{if condition="$seo.can_ads"} <a href="{:url('jcx/index')}" data-tab="n214">{:lang('admin/ux/seo/ads_open')}</a>{/if}</p></div></div>
+                </div>
+
+                <div class="layui-tab-item studio-form-panel">
+
+                    <div class="layui-form-item studio-field-row">
+                        <label class="layui-form-label w200">{:lang('admin/system/config/popedom_filter')}</label>
+                        <div class="layui-input-inline">
+                            <input type="radio" name="app[popedom_filter]" value="0" title="{:lang('admin/ux/system/off')}" {if condition="$config['app']['popedom_filter'] neq 1"}checked {/if}>
+                            <input type="radio" name="app[popedom_filter]" value="1" title="{:lang('admin/ux/system/on')}" {if condition="$config['app']['popedom_filter'] eq 1"}checked {/if}>
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">{:lang('admin/system/config/popedom_filter_tip')}</div>
+                    </div>
+
+
+                    <div class="layui-form-item studio-field-row studio-field-wide">
+                        <label class="layui-form-label">{:lang('admin/system/config/cache_type')}</label>
+                        <div class="layui-input-block">
+                            <input type="radio" name="app[cache_type]" lay-filter="cache_type" value="file" title="file" {if condition="$config['app']['cache_type'] eq '0' || $config['app']['cache_type'] eq 'file' "}checked {/if}>
+                            <input type="radio" name="app[cache_type]" lay-filter="cache_type" value="memcache" title="memcache" {if condition="$config['app']['cache_type'] eq '1' || $config['app']['cache_type'] eq 'memcache'"}checked {/if}>
+                            <input type="radio" name="app[cache_type]" lay-filter="cache_type" value="redis" title="redis" {if condition="$config['app']['cache_type'] eq '2' || $config['app']['cache_type'] eq 'redis'"}checked {/if}>
+                            <input type="radio" name="app[cache_type]" lay-filter="cache_type" value="memcached" title="memcached" {if condition="$config['app']['cache_type'] eq '3' || $config['app']['cache_type'] eq 'memcached'"}checked {/if}>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item row_cache_server  studio-field-paired studio-field-wide" {if condition="$config['app']['cache_type'] eq '0' || $config['app']['cache_type'] eq 'file'"} style="display:none;--studio-field-count:4" {/if}>
+                        <label class="layui-form-label" style="grid-column:1;grid-row:1">{:lang('admin/system/config/cache_host')}</label>
+                        <div class="layui-input-inline w150" style="grid-column:1;grid-row:2">
+                            <input type="text" name="app[cache_host]" placeholder="{:lang('admin/system/config/cache_host_tip')}" value="{$config['app']['cache_host']|html_entity_decode=ENT_QUOTES,'UTF-8'|htmlspecialchars=ENT_QUOTES,'UTF-8'}" class="layui-input" >
+                        </div>
+                        <label class="layui-form-label" style="grid-column:2;grid-row:1">{:lang('admin/system/config/cache_port')}</label>
+                        <div class="layui-input-inline w150" style="grid-column:2;grid-row:2">
+                            <input type="text" name="app[cache_port]" placeholder="{:lang('admin/system/config/cache_port_tip')}" value="{$config['app']['cache_port']|html_entity_decode=ENT_QUOTES,'UTF-8'|htmlspecialchars=ENT_QUOTES,'UTF-8'}" class="layui-input" >
+                        </div>
+                        <label class="layui-form-label" style="grid-column:3;grid-row:1">{:lang('admin/system/config/cache_username')}</label>
+                        <div class="layui-input-inline" style="grid-column:3;grid-row:2">
+                            <input type="text" name="app[cache_username]" placeholder="{:lang('admin/system/config/cache_username_tip')}" value="{$config['app']['cache_username']|html_entity_decode=ENT_QUOTES,'UTF-8'|htmlspecialchars=ENT_QUOTES,'UTF-8'}" class="layui-input" >
+                        </div>
+                        <label class="layui-form-label" style="grid-column:4;grid-row:1">{:lang('admin/system/config/cache_password')}</label>
+                        <div class="layui-input-inline" style="grid-column:4;grid-row:2">
+                            <input type="text" name="app[cache_password]" placeholder="{:lang('admin/system/config/cache_password_tip')}" value="{$config['app']['cache_password']|html_entity_decode=ENT_QUOTES,'UTF-8'|htmlspecialchars=ENT_QUOTES,'UTF-8'}" class="layui-input" >
+                        </div>
+                        <button type="button" class="ax-btn" onclick="test_cache()">{:lang('admin/system/config/cache_test')}</button>
+                    </div>
+
+
+                    <div class="layui-form-item studio-field-row">
+                        <label class="layui-form-label">{:lang('admin/system/config/cache_core')}</label>
+                        <div class="layui-input-block">
+                            <input type="radio" name="app[cache_core]" value="0" title="{:lang('admin/ux/system/off')}" {if condition="$config['app']['cache_core'] neq 1"}checked {/if}>
+                            <input type="radio" name="app[cache_core]" value="1" title="{:lang('admin/ux/system/on')}" {if condition="$config['app']['cache_core'] eq 1"}checked {/if}>
+                        </div>
+                    </div>
+                    <div class="layui-form-item studio-field-row">
+                        <label class="layui-form-label w200">{:lang('admin/system/config/cache_time')}</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="app[cache_time]" placeholder="" value="{$config['app']['cache_time']|html_entity_decode=ENT_QUOTES,'UTF-8'|htmlspecialchars=ENT_QUOTES,'UTF-8'}" class="layui-input w150" >
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">{:lang('admin/system/config/cache_time_tip')}</div>
+                    </div>
+
+                    <div class="layui-form-item studio-field-row">
+                        <label class="layui-form-label">{:lang('admin/system/config/cache_page')}</label>
+                        <div class="layui-input-block">
+                            <input type="radio" name="app[cache_page]" value="0" title="{:lang('admin/ux/system/off')}" {if condition="$config['app']['cache_page'] neq 1"}checked {/if}>
+                            <input type="radio" name="app[cache_page]" value="1" title="{:lang('admin/ux/system/on')}" {if condition="$config['app']['cache_page'] eq 1"}checked {/if}>
+                        </div>
+                    </div>
+                    <div class="layui-form-item studio-field-row">
+                        <label class="layui-form-label">{:lang('admin/system/config/cache_time_page')}</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="app[cache_time_page]" placeholder="" value="{$config['app']['cache_time_page']|html_entity_decode=ENT_QUOTES,'UTF-8'|htmlspecialchars=ENT_QUOTES,'UTF-8'}" class="layui-input w150" >
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">{:lang('admin/system/config/cache_time_tip')}</div>
+                    </div>
+
+                        <div class="layui-form-item studio-field-row">
+                            <label class="layui-form-label">{:lang('admin/system/config/compress')}</label>
+                            <div class="layui-input-block">
+                                <input type="radio" name="app[compress]" value="0" title="{:lang('admin/ux/system/off')}" {if condition="$config['app']['compress'] neq 1"}checked {/if}>
+                                <input type="radio" name="app[compress]" value="1" title="{:lang('admin/ux/system/on')}" {if condition="$config['app']['compress'] eq 1"}checked {/if}>
+                            </div>
+                        </div>
+                    <!-- <div class="layui-form-item">
+                        <label class="layui-form-label">{:lang('admin/system/config/wall_filter')}</label>
+                        <div class="layui-input-inline w600">
+                            <input type="radio" name="app[wall_filter]" value="0" title="{:lang('admin/ux/system/off')}" {if condition="$config['app']['wall_filter'] neq 1 && $config['app']['wall_filter'] neq 2"}checked {/if}>
+                            <input type="radio" name="app[wall_filter]" value="1" title="{:lang('admin/system/config/wall_unicode')}" {if condition="$config['app']['wall_filter'] eq 1"}checked {/if}>
+                            <input type="radio" name="app[wall_filter]" value="2" title="{:lang('admin/system/config/wall_blank')}" {if condition="$config['app']['wall_filter'] eq 2"}checked {/if}>
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">{:lang('admin/system/config/wall_filter_tip')}</div>
+                    </div> -->
+                    <div class="layui-form-item studio-field-row">
+                        <label class="layui-form-label">{:lang('admin/system/config/show')}</label>
+                        <div class="layui-input-block">
+                            <input type="radio" name="app[show]" value="0" title="{:lang('admin/ux/system/off')}" {if condition="$config['app']['show'] neq 1"}checked {/if}>
+                            <input type="radio" name="app[show]" value="1" title="{:lang('admin/ux/system/on')}" {if condition="$config['app']['show'] eq 1"}checked {/if}>
+                        </div>
+                    </div>
+                    <div class="layui-form-item studio-field-row">
+                        <label class="layui-form-label">{:lang('admin/system/config/show_verify')}</label>
+                        <div class="layui-input-block">
+                            <input type="radio" name="app[show_verify]" value="0" title="{:lang('admin/ux/system/off')}" {if condition="$config['app']['show_verify'] neq 1"}checked {/if}>
+                            <input type="radio" name="app[show_verify]" value="1" title="{:lang('admin/ux/system/on')}" {if condition="$config['app']['show_verify'] eq 1"}checked {/if}>
+                        </div>
+                    </div>
+                    <div class="layui-form-item studio-field-row">
+                        <label class="layui-form-label">{:lang('admin/system/config/search')}</label>
+                        <div class="layui-input-block">
+                            <input type="radio" name="app[search]" value="0" title="{:lang('admin/ux/system/off')}" {if condition="$config['app']['search'] neq 1"}checked {/if}>
+                            <input type="radio" name="app[search]" value="1" title="{:lang('admin/ux/system/on')}" {if condition="$config['app']['search'] eq 1"}checked {/if}>
+                        </div>
+                    </div>
+                    <div class="layui-form-item studio-field-row">
+                        <label class="layui-form-label">{:lang('admin/system/config/search_verify')}</label>
+                        <div class="layui-input-block">
+                            <input type="radio" name="app[search_verify]" value="0" title="{:lang('admin/ux/system/off')}" {if condition="$config['app']['search_verify'] neq 1"}checked {/if}>
+                            <input type="radio" name="app[search_verify]" value="1" title="{:lang('admin/ux/system/on')}" {if condition="$config['app']['search_verify'] eq 1"}checked {/if}>
+                        </div>
+                    </div>
+                    <div class="layui-form-item studio-field-row">
+                        <label class="layui-form-label">{:lang('admin/system/config/search_len')}</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="app[search_len]" placeholder="" value="{$config['app']['search_len']|html_entity_decode=ENT_QUOTES,'UTF-8'|htmlspecialchars=ENT_QUOTES,'UTF-8'}" class="layui-input w150">
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">{:lang('admin/system/config/search_len_tip')}</div>
+                    </div>
+                    <div class="layui-form-item studio-field-row">
+                        <label class="layui-form-label w300">{:lang('admin/system/config/search_timespan')}</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="app[search_timespan]" placeholder="" value="{$config['app']['search_timespan']|html_entity_decode=ENT_QUOTES,'UTF-8'|htmlspecialchars=ENT_QUOTES,'UTF-8'}" class="layui-input w150">
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">{:lang('admin/system/config/search_timespan_tip')}</div>
+                    </div>
+
+                    <div class="layui-form-item studio-field-row studio-field-wide">
+                        <label class="layui-form-label">{:lang('admin/system/config/search_vod_rule')}</label>
+                        <div class="layui-input-inline w900">
+                            <input type="checkbox" lay-skin="primary" name="app[search_vod_rule][]" value="vod_name" title="{:lang('name')}" checked disabled>
+                            <input type="checkbox" lay-skin="primary" name="app[search_vod_rule][]" value="vod_en" title="{:lang('en')}" {if condition="strpos($config['app']['search_vod_rule'],'vod_en') !==false"}checked {/if}>
+                            <input type="checkbox" lay-skin="primary" name="app[search_vod_rule][]" value="vod_sub" title="{:lang('sub')}" {if condition="strpos($config['app']['search_vod_rule'],'vod_sub') !==false"}checked {/if}>
+                            <input type="checkbox" lay-skin="primary" name="app[search_vod_rule][]" value="vod_tag" title="Tags" {if condition="strpos($config['app']['search_vod_rule'],'vod_tag') !==false"}checked {/if}>
+                            <input type="checkbox" lay-skin="primary" name="app[search_vod_rule][]" value="vod_actor" title="{:lang('actor')}" {if condition="strpos($config['app']['search_vod_rule'],'vod_actor') !==false"}checked {/if}>
+                            <input type="checkbox" lay-skin="primary" name="app[search_vod_rule][]" value="vod_director" title="{:lang('director')}" {if condition="strpos($config['app']['search_vod_rule'],'vod_director') !==false"}checked {/if}>
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">{:lang('admin/ux/system/search_rule_help')}</div>
+                    </div>
+
+                    <div class="layui-form-item studio-field-row studio-field-wide">
+                        <label class="layui-form-label">{:lang('admin/system/config/search_art_rule')}</label>
+                        <div class="layui-input-inline w600">
+                            <input type="checkbox" lay-skin="primary" name="app[search_art_rule][]" value="art_name" title="{:lang('name')}" checked disabled>
+                            <input type="checkbox" lay-skin="primary" name="app[search_art_rule][]" value="art_en" title="{:lang('en')}" {if condition="strpos($config['app']['search_art_rule'],'art_en') !==false"}checked {/if}>
+                            <input type="checkbox" lay-skin="primary" name="app[search_art_rule][]" value="art_sub" title="{:lang('sub')}" {if condition="strpos($config['app']['search_art_rule'],'art_sub') !==false"}checked {/if}>
+                            <input type="checkbox" lay-skin="primary" name="app[search_art_rule][]" value="art_tag" title="Tags" {if condition="strpos($config['app']['search_art_rule'],'art_tag') !==false"}checked {/if}>
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">{:lang('admin/ux/system/search_rule_help')}</div>
+                    </div>
+
+                    <div class="layui-form-item studio-field-row">
+                        <label class="layui-form-label">{:lang('admin/system/config/vod_search_optimise')}</label>
+                        <div class="layui-input-inline w600">
+                            <input type="checkbox" lay-skin="primary" name="app[vod_search_optimise][]" value="frontend" title="{:lang('admin/system/config/vod_search_optimise/frontend')}" {if condition="strpos($config['app']['vod_search_optimise'],'frontend') !==false"}checked {/if}>
+                            <input type="checkbox" lay-skin="primary" name="app[vod_search_optimise][]" value="collect" title="{:lang('admin/system/config/vod_search_optimise/collect')}" {if condition="strpos($config['app']['vod_search_optimise'],'collect') !==false"}checked {/if}>
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">{:lang('admin/system/config/vod_search_optimise_tip')}</div>
+                    </div>
+                    <div class="layui-form-item studio-field-row">
+                        <label class="layui-form-label">{:lang('admin/system/config/vod_search_optimise_cache_minutes')}</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="app[vod_search_optimise_cache_minutes]" placeholder="" value="{$config['app']['vod_search_optimise_cache_minutes']|html_entity_decode=ENT_QUOTES,'UTF-8'|htmlspecialchars=ENT_QUOTES,'UTF-8'}" class="layui-input w150">
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">{:lang('admin/system/config/vod_search_optimise_cache_minutes_tip')}</div>
+                    </div>
+
+                    <div class="layui-form-item studio-field-row studio-field-wide">
+                        <label class="layui-form-label">{:lang('admin/system/config/copyright_status')}</label>
+                        <div class="layui-input-block">
+                            <input type="radio" name="app[copyright_status]" value="0" title="{:lang('admin/ux/system/off')}" {if condition="$config['app']['copyright_status'] eq 0"}checked {/if}>
+                            <input type="radio" name="app[copyright_status]" value="1" title="{:lang('admin/system/config/copyright_msg')}" {if condition="$config['app']['copyright_status'] eq 1"}checked {/if}>
+                            <input type="radio" name="app[copyright_status]" value="2" title="{:lang('admin/system/config/copyright_jump_detail')}" {if condition="$config['app']['copyright_status'] eq 2"}checked {/if}>
+                            <input type="radio" name="app[copyright_status]" value="3" title="{:lang('admin/system/config/copyright_jump_play')}" {if condition="$config['app']['copyright_status'] eq 3"}checked {/if}>
+                            <input type="radio" name="app[copyright_status]" value="4" title="{:lang('admin/system/config/copyright_jump_iframe')}" {if condition="$config['app']['copyright_status'] eq 4"}checked {/if}>
+                        </div>
+                    </div>
+                    <div class="layui-form-item studio-field-row">
+                        <label class="layui-form-label w200">{:lang('admin/system/config/copyright_notice')}</label>
+                        <div class="layui-input-inline w500">
+                            <input type="text" name="app[copyright_notice]" placeholder="" value="{$config['app']['copyright_notice']|html_entity_decode=ENT_QUOTES,'UTF-8'|htmlspecialchars=ENT_QUOTES,'UTF-8'}" class="layui-input">
+                        </div>
+                    </div>
+
+                    <!-- <div class="layui-form-item">
+                        <label class="layui-form-label">{:lang('admin/system/config/browser_junmp')}</label>
+                        <div class="layui-input-inline">
+                            <input type="radio" name="app[browser_junmp]" value="0" title="{:lang('admin/ux/system/off')}" {if condition="$config['app']['browser_junmp'] eq 0"}checked {/if}>
+                            <input type="radio" name="app[browser_junmp]" value="1" title="{:lang('admin/ux/system/on')}" {if condition="$config['app']['browser_junmp'] eq 1"}checked {/if}>
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">{:lang('admin/system/config/browser_junmp_tip')}</div>
+                    </div> -->
+                    <div class="layui-form-item studio-field-row">
+                        <label class="layui-form-label">{:lang('admin/system/config/404')}</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="app[page_404]" placeholder="" value="{$config['app']['page_404']|html_entity_decode=ENT_QUOTES,'UTF-8'|htmlspecialchars=ENT_QUOTES,'UTF-8'}" class="layui-input w150">
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">{:lang('admin/system/config/404_tip')}</div>
+                    </div>
+                    <details class="ax-advanced">
+                        <summary>{:lang('admin/ux/system/advanced_block')}</summary>
+                    <div class="layui-form-item studio-field-row">
+                        <label class="layui-form-label">{:lang('admin/system/config/pathinfo_depr')}</label>
+                        <div class="layui-input-inline w150">
+                            <select class="w150" name="app[pathinfo_depr]">
+                                <option value="/" {if condition="$config['app']['pathinfo_depr'] eq '/'"}selected {/if}>{:lang('admin/system/config/xg')}</option>
+                                <option value="-" {if condition="$config['app']['pathinfo_depr'] eq '-'"}selected {/if}>{:lang('admin/system/config/zhx')}</option>
+                                <option value="_" {if condition="$config['app']['pathinfo_depr'] eq '_'"}selected {/if}>{:lang('admin/system/config/xhx')}</option>
+                            </select>
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">{:lang('admin/system/config/pathinfo_depr_tip')}</div>
+                    </div>
+                    <div class="layui-form-item studio-field-row">
+                        <label class="layui-form-label">{:lang('admin/system/config/cache_flag')}</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="app[cache_flag]" placeholder="{:lang('admin/system/config/cache_flag_auto')}" value="{$config['app']['cache_flag']|html_entity_decode=ENT_QUOTES,'UTF-8'|htmlspecialchars=ENT_QUOTES,'UTF-8'}" class="layui-input w150" >
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">{:lang('admin/system/config/cache_flag_tip')}</div>
+                    </div>
+                    <div class="layui-form-item studio-field-row">
+                        <label class="layui-form-label">{:lang('admin/system/config/ajax_page')}</label>
+                        <div class="layui-input-inline w600">
+                            <input type="radio" name="app[ajax_page]" value="0" title="{:lang('admin/ux/system/off')}" {if condition="$config['app']['ajax_page'] neq 1"}checked {/if}>
+                            <input type="radio" name="app[ajax_page]" value="1" title="{:lang('admin/ux/system/on')}" {if condition="$config['app']['ajax_page'] eq 1"}checked {/if}>
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">{:lang('admin/system/config/ajax_page_tip')}</div>
+                    </div>
+                    </details>
+                </div>
+
+                <div class="layui-tab-item studio-form-panel">
+                    <div class="layui-form-item studio-field-row">
+                        <label class="layui-form-label">{:lang('admin/system/config/player_sort')}</label>
+                        <div class="layui-input-inline">
+                            <input type="radio" name="app[player_sort]" value="0" title="{:lang('add')}" {if condition="$config['app']['player_sort'] eq 0"}checked {/if}>
+                            <input type="radio" name="app[player_sort]" value="1" title="{:lang('admin/system/config/global')}" {if condition="$config['app']['player_sort'] eq 1"}checked {/if}>
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">{:lang('admin/system/config/player_sort_tip')}</div>
+                    </div>
+                    <div class="layui-form-item studio-field-row">
+                        <label class="layui-form-label">{:lang('admin/system/config/encrypt')}</label>
+                        <div class="layui-input-inline">
+                            <select style="width:150px;" name="app[encrypt]">
+                                <option value="0">{:lang('admin/system/config/encrypt_not')}</option>
+                                <option value="1" {if condition="$config['app']['encrypt'] eq 1"}selected {/if}>escape</option>
+                                <option value="2" {if condition="$config['app']['encrypt'] eq 2"}selected {/if}>base64</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item studio-field-row">
+                        <label class="layui-form-label">{:lang('admin/system/config/search_hot')}</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="app[search_hot]" placeholder="{:lang('multi_separate_tip')}" value="{$config['app']['search_hot']|html_entity_decode=ENT_QUOTES,'UTF-8'|htmlspecialchars=ENT_QUOTES,'UTF-8'}" class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item studio-field-row">
+                        <label class="layui-form-label w200">{:lang('admin/system/config/art_extend_class')}</label>
+                        <div class="layui-input-block pl50">
+                            <input type="text" name="app[art_extend_class]" placeholder="" value="{$config['app']['art_extend_class']|html_entity_decode=ENT_QUOTES,'UTF-8'|htmlspecialchars=ENT_QUOTES,'UTF-8'}" class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item studio-field-row">
+                        <label class="layui-form-label w200">{:lang('admin/system/config/vod_extend_class')}</label>
+                        <div class="layui-input-block pl50">
+                            <input type="text" name="app[vod_extend_class]" placeholder="" value="{$config['app']['vod_extend_class']|html_entity_decode=ENT_QUOTES,'UTF-8'|htmlspecialchars=ENT_QUOTES,'UTF-8'}" class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item studio-field-row">
+                        <label class="layui-form-label">{:lang('admin/system/config/vod_extend_state')}</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="app[vod_extend_state]" placeholder="" value="{$config['app']['vod_extend_state']|html_entity_decode=ENT_QUOTES,'UTF-8'|htmlspecialchars=ENT_QUOTES,'UTF-8'}" class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item studio-field-row">
+                        <label class="layui-form-label">{:lang('admin/system/config/vod_extend_version')}</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="app[vod_extend_version]" placeholder="" value="{$config['app']['vod_extend_version']|html_entity_decode=ENT_QUOTES,'UTF-8'|htmlspecialchars=ENT_QUOTES,'UTF-8'}" class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item studio-field-row">
+                        <label class="layui-form-label">{:lang('admin/system/config/vod_extend_area')}</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="app[vod_extend_area]" placeholder="" value="{$config['app']['vod_extend_area']|html_entity_decode=ENT_QUOTES,'UTF-8'|htmlspecialchars=ENT_QUOTES,'UTF-8'}" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item studio-field-row">
+                        <label class="layui-form-label">{:lang('admin/system/config/vod_extend_lang')}</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="app[vod_extend_lang]" placeholder="" value="{$config['app']['vod_extend_lang']|html_entity_decode=ENT_QUOTES,'UTF-8'|htmlspecialchars=ENT_QUOTES,'UTF-8'}" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item studio-field-row">
+                        <label class="layui-form-label">{:lang('admin/system/config/vod_extend_year')}</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="app[vod_extend_year]" placeholder="" value="{$config['app']['vod_extend_year']|html_entity_decode=ENT_QUOTES,'UTF-8'|htmlspecialchars=ENT_QUOTES,'UTF-8'}" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item studio-field-row">
+                        <label class="layui-form-label">{:lang('admin/system/config/vod_extend_weekday')}</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="app[vod_extend_weekday]" placeholder="" value="{$config['app']['vod_extend_weekday']|html_entity_decode=ENT_QUOTES,'UTF-8'|htmlspecialchars=ENT_QUOTES,'UTF-8'}" class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item studio-field-row">
+                        <label class="layui-form-label">{:lang('admin/system/config/actor_extend_area')}</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="app[actor_extend_area]" placeholder="" value="{$config['app']['actor_extend_area']|html_entity_decode=ENT_QUOTES,'UTF-8'|htmlspecialchars=ENT_QUOTES,'UTF-8'}" class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item studio-field-row studio-field-wide">
+                        <label class="layui-form-label">{:lang('admin/system/config/filter_words')}</label>
+                        <div class="layui-input-block">
+                            <textarea name="app[filter_words]" class="layui-textarea" placeholder="{:lang('admin/system/config/filter_words_tip')}">{$config['app']['filter_words']|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}</textarea>
+                        </div>
+                    </div>
+                    <div class="layui-form-item studio-field-row studio-field-wide">
+                        <label class="layui-form-label">{:lang('admin/system/config/extra_var')}</label>
+                        <div class="layui-input-block">
+                            <textarea name="app[extra_var]" class="layui-textarea" placeholder="{:lang('admin/system/config/extra_var_tip')}">{$config['app']['extra_var']|html_entity_decode=(string)###,ENT_QUOTES,'UTF-8'|htmlspecialchars=###,ENT_QUOTES,'UTF-8'}</textarea>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="layui-tab-item studio-form-panel">
+                    <div class="layui-form-item studio-field-row">
+                        <label class="layui-form-label">{:lang('admin/system/config/collect_timespan')}</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="app[collect_timespan]" placeholder="" value="{$config['app']['collect_timespan']|html_entity_decode=ENT_QUOTES,'UTF-8'|htmlspecialchars=ENT_QUOTES,'UTF-8'}" class="layui-input w150">
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">{:lang('admin/system/config/collect_timespan_tip')}</div>
+                    </div>
+
+
+                    <div class="layui-form-item studio-field-row">
+                        <label class="layui-form-label">{:lang('admin/system/config/pagesize')}</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="app[pagesize]" placeholder="{:lang('admin/system/config/pagesize_tip')}" value="{$config['app']['pagesize']|html_entity_decode=ENT_QUOTES,'UTF-8'|htmlspecialchars=ENT_QUOTES,'UTF-8'}" class="layui-input w150">
+                        </div>
+                    </div>
+                    <div class="layui-form-item studio-field-row">
+                        <label class="layui-form-label">{:lang('admin/system/config/makesize')}</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="app[makesize]" placeholder="{:lang('admin/system/config/makesize_tip')}" value="{$config['app']['makesize']|html_entity_decode=ENT_QUOTES,'UTF-8'|htmlspecialchars=ENT_QUOTES,'UTF-8'}" class="layui-input w150">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item studio-field-row">
+                        <label class="layui-form-label">{:lang('admin/system/config/admin_login_verify')}</label>
+                        <div class="layui-input-block">
+                            <input type="radio" name="app[admin_login_verify]" value="0" title="{:lang('admin/ux/system/off')}" {if condition="$config['app']['admin_login_verify'] eq '0'"}checked {/if}>
+                            <input type="radio" name="app[admin_login_verify]" value="1" title="{:lang('admin/ux/system/on')}" {if condition="$config['app']['admin_login_verify'] neq '0'"}checked {/if}>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item studio-field-row">
+                        <label class="layui-form-label">{:lang('admin/system/config/editor')}</label>
+                        <div class="layui-input-inline">
+                            <select style="width:150px;" name="app[editor]">
+                                {volist name="$editors['ext_list']" id="vo"}
+                                <option value="{$key}" {if condition="$config['app']['editor'] eq $key"}selected {/if}>{$vo}</option>
+                                {/volist}
+                            </select>
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">{:lang('admin/system/config/editor_tip')}</div>
+                    </div>
+                    <div class="layui-form-item studio-field-row">
+                        <label class="layui-form-label">{:lang('admin/system/config/lang')}</label>
+                        <div class="layui-input-inline" >
+                            <select class="w150" name="app[lang]">
+                                {volist name="langs" id="vo"}
+                                <option value="{$vo}" {if condition="$config['app']['lang'] eq $vo"}selected {/if}>{$vo}</option>
+                                {/volist}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-form-item studio-field-row">
+                        <label class="layui-form-label" for="app-timezone">{:lang('admin/ux/system/timezone')}</label>
+                        <div class="layui-input-inline">
+                            <select class="w150" name="app[timezone]" id="app-timezone" lay-search aria-describedby="app-timezone-help">
+                                {volist name="timezones" id="tz"}
+                                <option value="{$tz}" {if condition="$config['app']['timezone'] eq $tz"}selected {/if}>{$tz}</option>
+                                {/volist}
+                            </select>
+                        </div>
+                        <div class="layui-form-mid layui-word-aux" id="app-timezone-help">{:lang('admin/ux/system/timezone_help')}</div>
+                    </div>
+                </div>
+
+                <div class="ax-savebar">
+                    <span class="ax-savebar__status" role="status"></span>
+                    <div class="ax-savebar__end">
+                        <button class="ax-btn" type="reset"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-rotate-ccw"/></svg>{:lang('admin/ux/system/undo_changes')}</button>
+                        <button type="submit" class="ax-btn ax-btn--primary" lay-submit="" lay-filter="formSubmit"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-save"/></svg>{:lang('admin/ux/kit/save')}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+{include file="../../../application/admin/view/public/foot" /}
+<script type="text/javascript" src="__STATIC__/js/jquery.cookie.js"></script>
+<script type="application/json" id="seo-strings">{$seo_js}</script>
+<script defer src="__STATIC__/js/admin_seo.js?v={:filemtime(ROOT_PATH . 'static/js/admin_seo.js')}"></script>
+<script type="text/javascript">
+    layui.use(['form','upload', 'layer'], function(){
+        // Use the loaded Layui modules.
+        var element = layui.element
+            ,form = layui.form
+            , layer = layui.layer
+            , upload = layui.upload;
+
+        form.on('radio(cache_type)',function(data){
+            $('.row_cache_server').hide();
+           if(data.value=='memcache' || data.value=='redis' || data.value=='memcached'){
+               $('.row_cache_server').show();
+           }
+        });
+
+        element.on('tab(tb1)', function(){
+            $.cookie('config_tab', this.getAttribute('lay-id'));
+        });
+
+        if( $.cookie('config_tab') !=null && location.search.indexOf('section=code') < 0 && location.search.indexOf('section=analytics') < 0 && location.search.indexOf('section=home') < 0 && location.search.indexOf('section=timezone') < 0 && location.search.indexOf('section=search') < 0 ) {
+            element.tabChange('tb1', $.cookie('config_tab'));
+        }
+        if (/[?&]section=search(&|$)/.test(location.search)) {
+            // A.5.4 checklist "Search is off": open the Speed tab at the search switch.
+            element.tabChange('tb1', 'config_2');
+            setTimeout(function () {
+                var row = $('input[name="app[search]"]').first().closest('.layui-form-item');
+                var skin = row.find('.layui-form-radio').first();
+                try { row[0].scrollIntoView({ block: 'center' }); } catch (e) { /* old browser */ }
+                skin.trigger('focus');
+            }, 150);
+        }
+        if (/[?&]section=timezone(&|$)/.test(location.search)) {
+            element.tabChange('tb1', 'config_4');
+            setTimeout(function () {
+                var tz = $('#app-timezone'), shown = tz.next('.layui-form-select').find('input').first();
+                var target = shown.length ? shown : tz;
+                try { target[0].scrollIntoView({ block: 'center' }); } catch (e) { /* old browser */ }
+                target.trigger('focus');
+            }, 150);
+        }
+
+        upload.render({
+            elem: '.layui-upload'
+            ,url: "{:url('upload/upload')}?flag=site"
+            ,method: 'post'
+            ,before: function(input) {
+                layer.msg("{:lang('upload_ing')}", {time:3000000});
+            },done: function(res, index, upload) {
+                var obj = this.item;
+                if (res.code == 0) {
+                    layer.msg(res.msg);
+                    return false;
+                }
+                layer.closeAll();
+                var input = $(obj).parent().parent().find('.upload-input');
+                var preview = $(obj).siblings('.ax-logo-preview');
+                if (preview.length) { preview.attr('src', res.data.file.indexOf('://') < 0 ? ROOT_PATH + '/' + res.data.file : res.data.file); }
+                if (window.AxUX) { AxUX.toast(res.msg, 'ok'); AxUX.markDirty(); }
+                if ($(obj).attr('lay-type') == 'image') {
+                    input.siblings('img').attr('src', res.data.file).show();
+                }
+                input.val(res.data.file);
+
+                if (res.data.thumb_class && res.data.thumb && res.data.thumb[0] && res.data.thumb[0].file) {
+                    $('.'+ res.data.thumb_class).val(res.data.thumb[0].file);
+                }
+            }
+        });
+
+        $('.upload-input').hover(function (e){
+            var e = window.event || e;
+            var imgsrc = $(this).val();
+            if(imgsrc.trim()==""){ return; }
+            var left = e.clientX+document.body.scrollLeft+20;
+            var top = e.clientY+document.body.scrollTop+20;
+            $(".showpic").css({left:left,top:top,display:""});
+            if(imgsrc.indexOf('://')<0){ imgsrc = ROOT_PATH + '/' + imgsrc; } else{ imgsrc = imgsrc.replace('mac:','http:'); }
+            $(".showpic_img").attr("src", imgsrc);
+        },function (e){
+            $(".showpic").css("display","none");
+        });
+
+
+    });
+
+    function test_cache(){
+        var type = $("input[name='app[cache_type]']:checked").val();
+        var host = $("input[name='app[cache_host]']").val();
+        var port = $("input[name='app[cache_port]']").val();
+        var user_name =  $("input[name='app[cache_username]']").val();
+        var password = $("input[name='app[cache_password]']").val();
+        layer.msg("{:lang('wait_submit')}",{time:500000});
+        $.ajax({
+            url: "{:url('system/test_cache')}",
+            type: "post",
+            dataType: "json",
+            timeout: 10000,
+            data: {type:type,host:host,port:port,username:user_name,password:password,__token__: $("input[name='__token__']").val()},
+            beforeSend: function () {
+            },
+            error:function(r){
+                layer.msg("{:lang('admin/system/config/test_err')}",{time:1800});
+            },
+            success: function (r) {
+                if (r.__token__) {
+                    $("input[name='__token__']").val(r.__token__).prop("defaultValue", r.__token__);
+                }
+                layer.msg(r.msg,{time:1800});
+            },
+            complete: function () {
+            }
+        });
+    }
+
+
+</script>
+
+</body>
+</html>

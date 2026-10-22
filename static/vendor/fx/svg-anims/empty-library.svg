@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" class="fxsvg fxsvg-lib" aria-hidden="true" focusable="false">
+<!-- JavCMS fx | original animation, JavCMS Community License 1.0 | colours: CSS custom properties fx-accent, fx-accent-2, fx-ink, fx-muted, fx-surface (two leading hyphens; fallbacks in the style rules) -->
+<style>
+.fxsvg-lib .card{fill:var(--fx-surface,#1e2233);stroke-width:4}
+.fxsvg-lib .k0 .card{stroke:var(--fx-ink,#e6e8f0)}.fxsvg-lib .k0 .perf{fill:var(--fx-ink,#e6e8f0)}
+.fxsvg-lib .k1 .card{stroke:var(--fx-accent-2,#7c5cff)}.fxsvg-lib .k1 .perf{fill:var(--fx-accent-2,#7c5cff)}
+.fxsvg-lib .k2 .card{stroke:var(--fx-muted,#8a90a6)}.fxsvg-lib .k2 .perf{fill:var(--fx-muted,#8a90a6)}
+.fxsvg-lib .perf{opacity:.55}
+.fxsvg-lib .bob{animation:fxsvg-lib-bob 4s ease-in-out infinite}
+.fxsvg-lib .k1 .bob{animation-delay:-.5s}.fxsvg-lib .k2 .bob{animation-delay:-1s}
+.fxsvg-lib .btn{fill:var(--fx-accent,#ff3d81)}.fxsvg-lib .tri{fill:var(--fx-ink,#e6e8f0)}
+.fxsvg-lib .play{transform-box:fill-box;transform-origin:center;animation:fxsvg-lib-pulse 4s ease-in-out infinite}
+.fxsvg-lib .ring{fill:none;stroke:var(--fx-accent,#ff3d81);stroke-width:3;transform-box:fill-box;transform-origin:center;animation:fxsvg-lib-ring 4s ease-out infinite}
+.fxsvg-lib .spark{stroke:var(--fx-accent,#ff3d81);stroke-width:3;stroke-linecap:round;transform-box:fill-box;transform-origin:center;transform:scale(0);animation:fxsvg-lib-spark 4s ease-in-out infinite}
+.fxsvg-lib .spark:nth-of-type(2){animation-delay:.8s}.fxsvg-lib .spark:nth-of-type(3){animation-delay:1.6s}
+@keyframes fxsvg-lib-bob{0%,100%{transform:translateY(4px) rotate(0deg)}40%{transform:translateY(-6px) rotate(2deg)}}
+@keyframes fxsvg-lib-pulse{0%,30%,100%{transform:scale(1)}15%{transform:scale(1.12)}}
+@keyframes fxsvg-lib-ring{0%{transform:scale(1);opacity:.8}25%,100%{transform:scale(1.9);opacity:0}}
+@keyframes fxsvg-lib-spark{0%,100%{transform:scale(0)}12%{transform:scale(1.15)}22%{transform:scale(1)}30%{transform:scale(0)}}
+@media (prefers-reduced-motion:reduce){.fxsvg-lib .bob,.fxsvg-lib .play,.fxsvg-lib .ring,.fxsvg-lib .spark{animation:none}.fxsvg-lib .ring{opacity:0}}
+</style>
+<g class="k2" transform="translate(146 110) rotate(9)"><g class="bob"><rect class="card" x="-48" y="-35" width="96" height="70" rx="14"/><path class="perf" d="M-34-28h8v6h-8zM-19-28h8v6h-8zM-4-28h8v6h-8zM11-28h8v6h-8zM26-28h8v6h-8zM-34 22h8v6h-8zM-19 22h8v6h-8zM-4 22h8v6h-8zM11 22h8v6h-8zM26 22h8v6h-8z"/></g></g>
+<g class="k1" transform="translate(96 112) rotate(-10)"><g class="bob"><rect class="card" x="-48" y="-35" width="96" height="70" rx="14"/><path class="perf" d="M-34-28h8v6h-8zM-19-28h8v6h-8zM-4-28h8v6h-8zM11-28h8v6h-8zM26-28h8v6h-8zM-34 22h8v6h-8zM-19 22h8v6h-8zM-4 22h8v6h-8zM11 22h8v6h-8zM26 22h8v6h-8z"/></g></g>
+<g class="k0" transform="translate(120 122)"><g class="bob"><rect class="card" x="-48" y="-35" width="96" height="70" rx="14"/><path class="perf" d="M-34-28h8v6h-8zM-19-28h8v6h-8zM-4-28h8v6h-8zM11-28h8v6h-8zM26-28h8v6h-8zM-34 22h8v6h-8zM-19 22h8v6h-8zM-4 22h8v6h-8zM11 22h8v6h-8zM26 22h8v6h-8z"/>
+<circle class="ring" r="20"/><g class="play"><circle class="btn" r="20"/><path class="tri" d="M-7-11L12 0L-7 11Z"/></g></g></g>
+<g><path class="spark" d="M62 53v18M53 62h18"/><path class="spark" d="M180 64l12 12M192 64l-12 12"/><path class="spark" d="M176 169v18M167 178h18"/></g>
+</svg>

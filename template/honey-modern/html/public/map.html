@@ -1,0 +1,19 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="honey-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}" data-fx="vt smooth" data-fx-lerp="0.07" data-fx-vt-style="honey">
+<head>
+{include file="seo/auto"}
+{include file="public/include"}
+</head>
+<body class="nc-page-list nc-page-map">
+{include file="public/head"}
+<main id="main-content" class="nc-main nc-list"><div class="nc-wrap"><header class="nc-phead"><p class="nc-phead-eye"><span class="nc-eyebrow"><svg class="nc-i" aria-hidden="true"><use href="{$ncIco}calendar"></use></svg>{:\\app\\common\\util\\TemplateText::get('nc.eye_new')}</span></p><h1 class="nc-ptitle" data-nc-melt="load">{:\\app\\common\\util\\TemplateText::get('ui.latest_100_updates')}</h1><p class="nc-pcount">{:\\app\\common\\util\\TemplateText::get('nc.foot_updates')}</p></header>{php}$ncMapDays = [];{/php}{maccms:vod num="100" type="all" order="desc" by="time" paging="no" id="vo"}{php}$ncMt = trim((string)($vo['vod_display_name'] ?? '')); if ($ncMt === '') { $ncMt = (string)($vo['vod_name'] ?? ''); } $ncMd = date('Y-m-d', (int)$vo['vod_time']); $ncMc = \app\common\util\AvdbLanguage::displayCode($vo); if ($ncMc === '' || stripos($ncMc, 'avdb-') === 0 || mb_strlen($ncMc) > 18) { $ncMc = ''; } $ncMapDays[$ncMd][] = ['t' => trim(\app\common\util\AvdbLanguage::decodeEntities($ncMt)), 'u' => (string)mac_url_vod_play($vo), 'c' => $ncMc, 'd' => trim((string)($vo['vod_duration'] ?? ''))];{/php}{/maccms:vod}<div class="nc-map">{volist name="ncMapDays" id="ncDay" key="ncDk"}{php}$ncDayTs = strtotime($key);{/php}<section class="nc-mapday" aria-label="{$key|htmlspecialchars=ENT_QUOTES}"><div class="nc-maphex" aria-hidden="true"><b class="nc-ltr">{:date('d', $ncDayTs)}</b><small class="nc-ltr">{:date('m', $ncDayTs)}</small></div><div class="nc-mapbody"><h2 class="nc-mapdate"><time class="nc-ltr" datetime="{$key|htmlspecialchars=ENT_QUOTES}">{$key|htmlspecialchars=ENT_QUOTES}</time><span class="nc-mapn nc-ltr">{:count($ncDay)}</span></h2><ol class="nc-maplist">{volist name="ncDay" id="ncMv"}<li><a href="{$ncMv.u|htmlspecialchars=ENT_QUOTES}"><span class="nc-hexdot" aria-hidden="true"></span>{if condition="$ncMv.c neq ''"}<span class="nc-codechip nc-ltr">{$ncMv.c|htmlspecialchars=ENT_QUOTES}</span>{/if}<span class="nc-maptitle" dir="auto">{$ncMv.t|htmlspecialchars=ENT_QUOTES}</span>{if condition="$ncMv.d neq ''"}<span class="nc-mapdur nc-ltr">{$ncMv.d|htmlspecialchars=ENT_QUOTES}</span>{/if}</a></li>{/volist}</ol></div></section>{/volist}</div></div></main>
+{include file="public/foot"}
+</body>
+</html>

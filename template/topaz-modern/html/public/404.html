@@ -1,0 +1,41 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="topaz-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="public/include"}
+<title>{:\\app\\common\\util\\TemplateText::get('ui.page_not_found_bc3023')} - {:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$maccms['site_name']), ENT_QUOTES, 'UTF-8')}</title>
+<meta name="robots" content="noindex">
+</head>
+<body class="tp-page-state tp-page-404">
+{include file="public/head"}
+{php}if (!isset($tpPlain)) { $tpPlain = function ($v) { $v = (string)$v; for ($i = 0; $i < 6; $i++) { $d = html_entity_decode($v, ENT_QUOTES | ENT_HTML5, 'UTF-8'); if ($d === $v) { break; } $v = $d; } return trim($v); }; }{/php}
+<main id="main-content" class="tp-main tp-wrap tp-404">
+  <div class="tp-404-scene" aria-hidden="true">
+    <svg class="tp-404-ring" viewBox="0 0 200 90" focusable="false"><path d="M20 70 C20 34 180 34 180 70"/><path d="M28 78 C28 48 172 48 172 78"/><path d="M62 42 L56 20 M138 42 L144 20 M84 36 L80 14 M116 36 L120 14"/><circle cx="56" cy="19" r="2.5" fill="currentColor"/><circle cx="144" cy="19" r="2.5" fill="currentColor"/><circle cx="80" cy="13" r="2.5" fill="currentColor"/><circle cx="120" cy="13" r="2.5" fill="currentColor"/></svg>
+    <div class="tp-zdog" data-tp-zdog><span class="tp-zdog-static"><svg class="tp-i"><use href="{$tplIcons}#diamond"/></svg></span><span class="tp-zdog-sparks" data-tp-sparks></span></div>
+  </div>
+  <span class="tp-404-big" aria-hidden="true">404</span>
+  <h1>{:\\app\\common\\util\\TemplateText::get('ui.page_not_found_bc3023')}</h1>
+  <p>{:\\app\\common\\util\\TemplateText::get('tp.lost_stone')} {:\\app\\common\\util\\TemplateText::get('ui.this_page_may_have_moved_browse_the_latest_videos_or_try_a_search')}</p>
+  <div class="tp-404-act">
+    <button class="tp-btn tp-btn--ice tp-btn--lg" type="button" data-tp-pal-open aria-haspopup="dialog" aria-controls="tp-pal" aria-expanded="false">{:\\app\\common\\util\\AutoIcon::ui('search')}<span>{:\\app\\common\\util\\TemplateText::get('ui.search')}</span></button>
+    <a class="tp-btn tp-btn--ghost tp-btn--lg" href="{$maccms.path}">{:\\app\\common\\util\\AutoIcon::navIcon('home')}<span>{:\\app\\common\\util\\TemplateText::get('ui.back_to_home')}</span></a>
+  </div>
+  <section class="tp-tray" aria-labelledby="tp-404-latest">
+    <header class="tp-tray-head" data-ai-group>
+      <h2 class="tp-tray-title" id="tp-404-latest">{:\\app\\common\\util\\AutoIcon::navIcon('latest', '', ['size'=>'lg', 'plate'=>true])}{:\\app\\common\\util\\TemplateText::get('latest')}</h2>
+      <span class="tp-tray-line" aria-hidden="true"></span>
+      <a class="tp-tray-more" href="{:mac_url('label/new')}"><span>{:\\app\\common\\util\\TemplateText::get('tp.view_collection')}</span><i class="tp-dia" aria-hidden="true"></i>{:\\app\\common\\util\\AutoIcon::ui('arrow-right', ['size'=>'sm', 'class'=>'tp-more-ai'])}</a>
+    </header>
+    <div class="tp-tray-body"><div class="tp-grid" data-grid-fill>{maccms:vod num="5" type="all" order="desc" by="time" paging="no" id="vo"}{include file="public/vodbox"}{/maccms:vod}</div></div>
+  </section>
+</main>
+{include file="public/foot"}
+</body>
+</html>

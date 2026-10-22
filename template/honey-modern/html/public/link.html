@@ -1,0 +1,8 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}$ncLinks = [];{/php}{maccms:link type="all" order="desc" by="id" id="ncLk"}{php}$ncLinks[] = ['url' => mac_safe_url($ncLk['link_url']), 'name' => trim(\app\common\util\AvdbLanguage::decodeEntities((string)$ncLk['link_name']))];{/php}{/maccms:link}{notempty name="ncLinks"}{include file="public/drips"}<section class="nc-sec nc-links-sec" aria-labelledby="nc-links-title"><div class="nc-sec-head"><span class="nc-hexbadge" aria-hidden="true"><svg class="nc-i"><use href="{$ncIco}link"></use></svg></span><div class="nc-sec-titles"><h2 class="nc-sec-title" id="nc-links-title">{:\\app\\common\\util\\TemplateText::get('ui.friendly_link')}</h2></div></div><div class="nc-links">{volist name="ncLinks" id="ncLk"}<a class="nc-tag" href="{$ncLk.url|htmlspecialchars=ENT_QUOTES}" target="_blank" rel="nofollow noopener noreferrer" dir="auto">{$ncLk.name|htmlspecialchars=ENT_QUOTES}</a>{/volist}</div></section>{/notempty}

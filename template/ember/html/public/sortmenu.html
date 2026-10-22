@@ -1,0 +1,22 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}
+$tplSortItems = array('time' => array('ui.latest', 'latest'), 'hits' => array('ui.popular', 'hot'), 'score' => array('top_rated', 'top'), 'up' => array('most_liked', 'liked'));
+$tplSortBy = (string)($param['by'] ?? '');
+if (!isset($tplSortItems[$tplSortBy])) { $tplSortBy = 'time'; }
+$tplSortLinks = array();
+foreach ($tplSortItems as $tplSortKey => $tplSortItem) {
+    if (($tplSortMode ?? 'search') === 'type') {
+        $tplSortUrl = $tplSortKey === 'time' ? mac_url_type($obj) : mac_url_type($obj, array('by' => $tplSortKey), 'show');
+    } else {
+        $tplSortUrl = mac_url_search(array('wd' => $param['wd'] ?? '', 'actor' => $param['actor'] ?? '', 'class' => $param['class'] ?? '', 'tag' => $param['tag'] ?? '', 'director' => $param['director'] ?? '', 'by' => $tplSortKey), 'vod');
+    }
+    $tplSortLinks[] = array('url' => (string)$tplSortUrl, 'label' => \app\common\util\TemplateText::get($tplSortItem[0]), 'icon' => \app\common\util\AutoIcon::navIcon($tplSortItem[1], '', array('size' => 'sm', 'tint' => 'none')), 'on' => $tplSortKey === $tplSortBy);
+}
+{/php}
+<nav class="e-sorts" aria-label="{:\\app\\common\\util\\TemplateText::get('sort_by')}"><span class="e-sorts-lbl" aria-hidden="true">{:\\app\\common\\util\\AutoIcon::ui('sort', ['size'=>'sm'])}</span>{volist name="tplSortLinks" id="tplSortLink"}<a href="{$tplSortLink.url|htmlspecialchars=ENT_QUOTES,'UTF-8',false}" {if condition="$tplSortLink.on"}aria-current="page"{/if}>{$tplSortLink.icon}{$tplSortLink.label}</a>{/volist}</nav>

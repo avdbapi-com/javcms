@@ -1,0 +1,67 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="topaz-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/vod_play"}
+{include file="public/include"}
+</head>
+<body class="tp-page-watch">
+{include file="public/head"}
+{include file="public/vodvars"}
+{php}$tplPre = (string)($obj['player_info']['link_pre'] ?? ''); $tplNext = (string)($obj['player_info']['link_next'] ?? ''); $tpTypeGem = isset($tpTypeById[(int)($tplType['type_id'] ?? 0)]) ? $tpTypeById[(int)($tplType['type_id'] ?? 0)]['gem'] : 4;{/php}
+<main id="main-content" class="tp-main tp-watch tp-gem-i-{$tpTypeGem}">
+  <div class="tp-wrap">
+    <section class="tp-bezel" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.iframeplayer')}">
+      <span class="tp-bezel-sweep" aria-hidden="true"></span>
+      <div class="tp-player">{$player_data}{$player_js}</div>
+    </section>
+    {if condition="$tplEpCount gt 1 || $tplPre neq '' || $tplNext neq ''"}<nav class="tp-epnav" aria-label="{:\\app\\common\\util\\TemplateText::get('tp.episodes')}">
+      {if condition="$tplPre neq ''"}<a class="tp-ep" href="{$tplPre|htmlspecialchars=ENT_QUOTES}" rel="prev">{:\\app\\common\\util\\AutoIcon::ui('chevron-left', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('previous_episode')}</a>{/if}
+      {maccms:foreach name="obj.vod_play_list" id="tplSource" key="tplSid"}{maccms:foreach name="tplSource.urls" id="tplEp" key="tplNid"}<a class="tp-ep{if condition="$param.sid eq $tplSource.sid && $param.nid eq $tplEp.nid"} is-on{/if}" href="{:mac_url_vod_play($obj,['sid'=>$tplSource['sid'],'nid'=>$tplEp['nid']])}"{if condition="$param.sid eq $tplSource.sid && $param.nid eq $tplEp.nid"} aria-current="page"{/if}>{$tplEp.name|htmlspecialchars=ENT_QUOTES}</a>{/maccms:foreach}{/maccms:foreach}
+      {if condition="$tplNext neq ''"}<a class="tp-ep" href="{$tplNext|htmlspecialchars=ENT_QUOTES}" rel="next">{:\\app\\common\\util\\TemplateText::get('next_episode')}{:\\app\\common\\util\\AutoIcon::ui('chevron-right', ['size'=>'sm'])}</a>{/if}
+    </nav>{/if}
+    <div class="tp-watch-grid">
+      <section class="tp-wcard" aria-labelledby="tp-wtitle">
+        <p class="tp-eyebrow">{:\\app\\common\\util\\AutoIcon::ui('play-circle', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('tp.now_playing')}</p>
+        <h1{php}echo \app\common\util\AvdbLanguage::langAttr(isset($obj) && is_array($obj) ? $obj : []);{/php} class="tp-wtitle{php}if (mb_strlen((string)$tplTitle) > 80) { echo ' tp-h1-long'; }{/php}" id="tp-wtitle">{$tplTitle|htmlspecialchars=ENT_QUOTES}</h1>
+        <div class="tp-wmeta">
+          <span class="tp-meta-chip">{:\\app\\common\\util\\AutoIcon::ui('eye', ['size'=>'sm'])}<span class="mac_hits" data-mid="1" data-id="{$obj.vod_id|intval}" data-type="hits">{:number_format($tplHits)}</span><span class="tp-sr"> {:\\app\\common\\util\\TemplateText::get('ui.views')}</span></span>
+          {if condition="$tplScore neq ''"}<span class="tp-meta-chip">{:\\app\\common\\util\\AutoIcon::ui('star', ['size'=>'sm'])}<bdi dir="ltr">{$tplScore|htmlspecialchars=ENT_QUOTES}</bdi></span>{/if}
+          {if condition="$tplDuration neq ''"}<span class="tp-meta-chip">{:\\app\\common\\util\\AutoIcon::ui('clock', ['size'=>'sm'])}<bdi dir="ltr">{$tplDuration|htmlspecialchars=ENT_QUOTES}</bdi></span>{/if}
+          <span class="tp-meta-chip">{:\\app\\common\\util\\AutoIcon::ui('calendar', ['size'=>'sm'])}<time datetime="{$obj.vod_time|date='Y-m-d',###}">{$obj.vod_time|date='Y-m-d',###}</time></span>
+          {if condition="$tplEpCount gt 1"}<span class="tp-meta-chip">{:\\app\\common\\util\\AutoIcon::ui('list', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('tp.episodes')}: {$tplEpCount}</span>{/if}
+        </div>
+        <div class="tp-acts">
+          <button class="tp-act digg_link" type="button" data-id="{$obj.vod_id|intval}" data-mid="1" data-type="up" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.like')}" title="{:\\app\\common\\util\\TemplateText::get('ui.like')}"><svg class="tp-i" aria-hidden="true"><use href="{$tplIcons}#thumb-up"/></svg><span class="digg_num">{$tplUp}</span></button>
+          <button class="tp-act digg_link" type="button" data-id="{$obj.vod_id|intval}" data-mid="1" data-type="down" aria-label="{:\\app\\common\\util\\TemplateText::get('tp.dislike')}" title="{:\\app\\common\\util\\TemplateText::get('tp.dislike')}"><svg class="tp-i" aria-hidden="true"><use href="{$tplIcons}#thumb-down"/></svg><span class="digg_num">{$tplDown}</span></button>
+          <span class="tp-act-gap" aria-hidden="true"></span>
+          <button class="tp-act tp-act--fav" type="button" data-tp-fav data-mid="1" data-id="{$obj.vod_id|intval}" aria-pressed="false"><svg class="tp-i" aria-hidden="true"><use href="{$tplIcons}#star"/></svg><span>{:\\app\\common\\util\\TemplateText::get('favorites')}</span></button>
+          <button class="tp-act" type="button" data-tp-share data-url="{$tplShare|htmlspecialchars=ENT_QUOTES}"><svg class="tp-i" aria-hidden="true"><use href="{$tplIcons}#share"/></svg><span>{:\\app\\common\\util\\TemplateText::get('share')}</span></button>
+          <a class="tp-act" href="{$tplReportUrl|htmlspecialchars=ENT_QUOTES}" rel="nofollow"><svg class="tp-i" aria-hidden="true"><use href="{$tplIcons}#flag"/></svg><span>{:\\app\\common\\util\\TemplateText::get('ui.report')}</span></a>
+          <a class="tp-act" href="{$tplDetailUrl|htmlspecialchars=ENT_QUOTES}"><svg class="tp-i" aria-hidden="true"><use href="{$tplIcons}#seal"/></svg><span>{:\\app\\common\\util\\TemplateText::get('ui.details')}</span></a>
+        </div>
+        <p class="tp-eyebrow" style="margin-top:4px"><svg class="tp-i" aria-hidden="true"><use href="{$tplIcons}#r-seal"/></svg>{:\\app\\common\\util\\TemplateText::get('tp.certificate')}</p>
+        {include file="public/meta"}
+        {if condition="$tplDesc neq ''"}<div class="tp-desc" data-tp-desc>
+          <div class="tp-desc-body" id="tp-desc-body"><p>{$tplDesc|htmlspecialchars=ENT_QUOTES}</p></div>
+          <button class="tp-desc-btn" type="button" aria-expanded="false" aria-controls="tp-desc-body" data-tp-desc-btn hidden><span data-tp-desc-lbl>{:\\app\\common\\util\\TemplateText::get('tp.show_more')}</span><svg class="tp-i" aria-hidden="true"><use href="{$tplIcons}#r-chev-down"/></svg></button>
+        </div>{/if}
+      </section>
+      {include file="public/upnext"}
+    </div>
+    {include file="public/related"}
+    {if condition="$GLOBALS['config']['comment']['status'] eq 1"}<section class="tp-comments" aria-labelledby="tp-com-h" data-ai-group>
+      <h2 class="tp-tray-title" id="tp-com-h">{:\\app\\common\\util\\AutoIcon::ui('messages', ['size'=>'lg', 'plate'=>true])}{:\\app\\common\\util\\TemplateText::get('ui.comments')}</h2>
+      <div class="mac_comment" data-id="{$obj.vod_id|intval}" data-mid="1" data-tp-comments>{include file="public/comment_wait"}</div>
+    </section>{/if}
+  </div>
+</main>
+{include file="public/foot"}
+</body>
+</html>

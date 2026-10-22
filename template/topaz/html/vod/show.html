@@ -1,0 +1,36 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="topaz" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/vod_search"}
+{include file="public/include"}
+</head>
+<body class="tz-page-list">
+{include file="public/head"}
+{php}$tplBy = isset($param['by']) ? (string)$param['by'] : ''; $tplReset = ($tplBy !== '' && $tplBy !== 'time') ? mac_url_type($obj) : ''; $tplSorts = [
+  ['label' => \app\common\util\TemplateText::raw('ui.latest'), 'url' => mac_url_type($obj, ['by' => 'time'], 'show'), 'on' => ($tplBy === '' || $tplBy === 'time'), 'icon' => 'sort'],
+  ['label' => \app\common\util\TemplateText::raw('topaz.most_viewed'), 'url' => mac_url_type($obj, ['by' => 'hits'], 'show'), 'on' => ($tplBy === 'hits'), 'icon' => 'eye'],
+  ['label' => \app\common\util\TemplateText::raw('top_rated'), 'url' => mac_url_type($obj, ['by' => 'score'], 'show'), 'on' => ($tplBy === 'score'), 'icon' => 'star'],
+];{/php}
+<main id="main-content" class="tz-main tz-wrap tz-list">
+  <header class="tz-callout tz-callout--cat" data-ai-hot>
+    <nav class="tz-crumbs" aria-label="{:\\app\\common\\util\\TemplateText::get('topaz.breadcrumb')}"><a href="{$maccms.path}">{:\\app\\common\\util\\TemplateText::get('ui.home')}</a>{:\\app\\common\\util\\AutoIcon::ui('chevron-right', ['class'=>'tz-i tz-dir', 'tint'=>'none'])}<a href="{:mac_url_type($obj)}">{:\\app\\common\\util\\AutoIcon::icon('category', $obj['type_name'], ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get(html_entity_decode((string)$obj['type_name'], ENT_QUOTES | ENT_HTML5, 'UTF-8'))}</a></nav>
+    <span class="tz-eyebrow">{:\\app\\common\\util\\TemplateText::get('topaz.library')}</span>
+    <h1 class="tz-cat-h1">{:\\app\\common\\util\\AutoIcon::icon('category', $obj['type_name'], ['size'=>'xl', 'plate'=>true])}<span>{:\\app\\common\\util\\TemplateText::get(html_entity_decode((string)$obj['type_name'], ENT_QUOTES | ENT_HTML5, 'UTF-8'))}</span></h1>
+    <p>{:\\app\\common\\util\\TemplateText::get('topaz.videos_count', ['count'=>number_format((float)mac_data_count($obj['type_id'],'all'))])}</p>
+  </header>
+  {include file="public/chipbar"}
+  {include file="public/sortmenu"}
+  {include file="public/subcats"}<div class="tz-grid" data-grid-fill>{maccms:vod num="20" paging="yes" type="current" order="desc" by="time" pageurl="vod/show" id="vo"}{include file="public/vodbox"}{/maccms:vod}</div>
+  {if condition="$__PAGING__.record_total eq 0"}{include file="public/empty"}{/if}
+  {include file="public/list_note"}{include file="public/paging"}
+</main>
+{include file="public/foot"}
+</body>
+</html>

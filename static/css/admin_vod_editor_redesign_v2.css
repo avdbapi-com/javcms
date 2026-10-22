@@ -1,0 +1,205 @@
+/*
+ * This file is part of JavCMS - https://javcms.net
+ * Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+ * License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+ * See the LICENSE and NOTICE files that come with JavCMS.
+ * Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Telegram: https://t.me/avdb_api
+ */
+/* Structural VOD editor candidate. Shared palette follows the admin studio shell. */
+/* V9 palette -> kit tokens (admin-content builder) */
+html .studio-vod-editor { --vod-surface: var(--ax-surface); --vod-surface-soft: var(--ax-raised); --vod-border: var(--ax-line); --vod-text: var(--ax-text); --vod-muted: var(--ax-muted); --vod-accent: var(--ax-accent); }
+.studio-vod-editor {
+    --vod-surface: var(--studio-surface, #1d2026);
+    --vod-surface-soft: var(--studio-raised, #262a32);
+    --vod-border: var(--studio-line, #363c47);
+    --vod-text: var(--studio-text, #edf0f5);
+    --vod-muted: var(--studio-muted, #a4acb9);
+    --vod-accent: var(--studio-accent, #82b1ff);
+    color: var(--vod-text);
+    max-width: 1600px;
+    margin: 0 auto;
+}
+body.admin-studio .studio-vod-editor,
+body.admin-dark .studio-vod-editor { padding: 16px 24px 24px; }
+.studio-vod-editor > form.layui-form-pane { overflow: visible; padding: 0; background: transparent; border: 0; }
+body.admin-studio .studio-vod-editor .admin-vod-editor-toolbar,
+body.admin-dark .studio-vod-editor .admin-vod-editor-toolbar {
+    position: sticky; top: 0; z-index: 40;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    min-height: 64px; margin: 0 0 16px; padding: 12px 0;
+    border: 0; border-bottom: 1px solid var(--vod-border); border-radius: 0;
+    background: var(--vod-surface); box-shadow: none; backdrop-filter: none;
+}
+.studio-vod-editor .admin-vod-editor-toolbar__identity,
+.studio-vod-editor .admin-vod-editor-toolbar__actions { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.studio-vod-editor .admin-vod-editor-toolbar__identity { flex: 1; }
+body.admin-studio .studio-vod-editor .admin-vod-editor-back,
+body.admin-dark .studio-vod-editor .admin-vod-editor-back {
+    border: 0; padding: 0 12px 0 0; background: transparent; border-radius: 4px;
+    color: var(--vod-muted); box-shadow: none; font-size: 14px; font-weight: 500;
+}
+.studio-vod-editor .admin-vod-editor-titleline { min-width: 0; }
+body.admin-studio .studio-vod-editor .admin-vod-editor-title,
+body.admin-dark .studio-vod-editor .admin-vod-editor-title { color: var(--vod-text); font-size: 20px; font-weight: 600; }
+body.admin-studio .studio-vod-editor .admin-vod-editor-kicker,
+body.admin-dark .studio-vod-editor .admin-vod-editor-kicker { display: none; }
+.studio-vod-editor .admin-vod-editor-meta { color: var(--vod-muted); font-size: 12px; }
+body.admin-studio .studio-vod-editor .admin-vod-editor-meta__id,
+body.admin-dark .studio-vod-editor .admin-vod-editor-meta__id { border: 0; background: transparent; padding: 0; }
+body.admin-studio .studio-vod-editor .admin-vod-editor-toolbar__actions .btn,
+body.admin-dark .studio-vod-editor .admin-vod-editor-toolbar__actions .btn { min-height: 40px; padding: 0 16px; border-radius: 5px; transform: none; font-size: 14px; font-weight: 600; }
+body.admin-studio .studio-vod-editor .admin-vod-editor-save,
+body.admin-dark .studio-vod-editor .admin-vod-editor-save { order: 2; color: #101b2b; border: 1px solid var(--vod-accent); background: var(--vod-accent); }
+body.admin-studio .studio-vod-editor .admin-vod-editor-reset,
+body.admin-dark .studio-vod-editor .admin-vod-editor-reset { order: 1; color: var(--vod-muted); border: 1px solid var(--vod-border); background: transparent; }
+.studio-vod-editor .admin-vod-editor-hint { display: none; }
+.studio-vod-workspace { display: grid; grid-template-columns: 176px minmax(0,1fr); gap: 32px; align-items: start; scroll-margin-top: 88px; }
+.studio-vod-sections { display: flex; flex-direction: column; gap: 4px; position: sticky; top: 88px; }
+.studio-vod-section-link { display: block; width: 100%; min-height: 44px; padding: 0 14px; border: 0; border-left: 2px solid transparent; border-radius: 0 4px 4px 0; background: transparent; color: var(--vod-muted); text-align: left; font: inherit; font-size: 14px; cursor: pointer; }
+.studio-vod-section-link:hover { color: var(--vod-text); background: var(--vod-surface-soft); }
+.studio-vod-section-link[aria-selected="true"] { color: var(--vod-accent); border-left-color: var(--vod-accent); background: var(--vod-surface-soft); font-weight: 600; }
+.studio-vod-panels, .studio-vod-panel { min-width: 0; }
+.studio-vod-editor [hidden] { display: none !important; }
+.studio-vod-panel-heading { display: flex; align-items: baseline; flex-wrap: wrap; gap: 8px 16px; margin: 0 0 24px; }
+.studio-vod-panel-heading h2 { margin: 0; color: var(--vod-text); font-size: 18px; font-weight: 600; line-height: 1.4; }
+.studio-vod-panel-heading p { margin: 0; color: var(--vod-muted); font-size: 13px; line-height: 1.5; }
+.studio-vod-field-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 20px 24px; }
+.studio-vod-editor .studio-vod-field { display: flex; flex-direction: column; gap: 8px; min-width: 0; margin: 0; padding: 0; border: 0; background: transparent; }
+.studio-vod-field-wide { grid-column: 1 / -1; }
+body.admin-studio .studio-vod-editor .studio-vod-field > .layui-form-label,
+body.admin-dark .studio-vod-editor .studio-vod-field > .layui-form-label {
+    float: none; display: block; width: auto; height: auto; min-height: 0; padding: 0;
+    margin: 0; border: 0; background: transparent; color: var(--vod-muted);
+    font-size: 14px; font-weight: 500; text-align: left; line-height: 1.4; white-space: normal;
+}
+body.admin-studio .studio-vod-editor .studio-vod-field > .layui-input-inline,
+body.admin-studio .studio-vod-editor .studio-vod-field > .layui-input-block,
+body.admin-dark .studio-vod-editor .studio-vod-field > .layui-input-inline,
+body.admin-dark .studio-vod-editor .studio-vod-field > .layui-input-block {
+    float: none; display: block; width: 100% !important; min-width: 0; margin: 0; padding: 0;
+}
+/* Legacy pane offsets have higher specificity than the new cell rules. Reset
+   them explicitly for moved fields, complete playback rows and the old footer. */
+body.admin-dark .page-container.admin-vod-info.studio-vod-editor > form.layui-form-pane .studio-vod-field > .layui-input-block,
+body.admin-studio .page-container.admin-vod-info.studio-vod-editor > form.layui-form-pane .studio-vod-field > .layui-input-block,
+body.admin-dark .page-container.admin-vod-info.studio-vod-editor > form.layui-form-pane .studio-vod-playback-group .layui-input-block,
+body.admin-studio .page-container.admin-vod-info.studio-vod-editor > form.layui-form-pane .studio-vod-playback-group .layui-input-block,
+body.admin-dark .page-container.admin-vod-info.studio-vod-editor > form.layui-form-pane > .layui-form-item.center .layui-input-block,
+body.admin-studio .page-container.admin-vod-info.studio-vod-editor > form.layui-form-pane > .layui-form-item.center .layui-input-block {
+    box-sizing: border-box; min-width: 0; max-width: 100%; margin: 0 !important;
+}
+.studio-vod-editor .studio-vod-field[data-vod-field="vod_content"] .edui-container,
+.studio-vod-editor .studio-vod-field[data-vod-field="vod_content"] .edui-editor,
+.studio-vod-editor .studio-vod-field[data-vod-field="vod_content"] .edui-editor-iframeholder {
+    box-sizing: border-box; max-width: 100% !important;
+}
+.studio-vod-editor .studio-vod-field .layui-input,
+.studio-vod-editor .studio-vod-field .layui-textarea,
+.studio-vod-editor .studio-vod-field select {
+    box-sizing: border-box; width: 100%; max-width: 100%; min-height: 40px;
+    border: 1px solid var(--vod-border); border-radius: 4px; background: var(--vod-surface-soft);
+    color: var(--vod-text); font-size: 14px;
+}
+.studio-vod-editor .studio-vod-field .layui-form-select .layui-input { height: 40px; }
+.studio-vod-editor .studio-vod-field textarea { min-height: 104px; resize: vertical; line-height: 1.6; }
+.studio-vod-editor .studio-vod-field[data-vod-field="vod_blurb"] textarea { height: 104px !important; }
+.studio-vod-editor .studio-vod-field .layui-form-checkbox { margin-top: 0; }
+.studio-vod-editor .studio-vod-field .btn { min-height: 36px; border-radius: 4px; font-size: 13px; }
+.studio-vod-editor .studio-vod-field .extend { display: inline-block; margin-bottom: 4px; }
+.studio-vod-editor .studio-vod-upload-row { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 8px 12px; align-items: start; }
+.studio-vod-editor .studio-vod-upload-row > .layui-form-label { grid-column: 1 / -1; }
+.studio-vod-editor .studio-vod-upload-row > .layui-input-inline { width: auto !important; }
+.studio-vod-editor .studio-vod-upload-row > .layui-input-block { grid-column: 1 / -1; }
+.studio-vod-editor .screenshot_list { display: flex; flex-wrap: wrap; gap: 12px; }
+.studio-vod-editor .screenshot_list > div { position: relative; margin: 0; }
+.studio-vod-editor .screenshot-img { max-width: 160px; height: 100px; object-fit: cover; }
+.studio-vod-playback-group { grid-column: 1 / -1; min-width: 0; }
+.studio-vod-playback-group + .studio-vod-playback-group { margin-top: 12px; padding-top: 24px; border-top: 1px solid var(--vod-border); }
+.studio-vod-playback-group h3 { margin: 0 0 16px; color: var(--vod-text); font-size: 15px; font-weight: 600; }
+.studio-vod-playback-label { display: block; margin: 0 0 8px; color: var(--vod-muted); font-size: 13px; font-weight: 500; line-height: 1.4; }
+.studio-vod-editor .studio-vod-playback-group .contents > .layui-form-item { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 12px; margin: 0 0 20px; padding: 16px; border: 1px solid var(--vod-border); border-radius: 5px; background: transparent; }
+.studio-vod-editor .studio-vod-playback-group .contents > .layui-form-item > .layui-form-label { grid-column: 1 / -1; width: auto; height: auto; padding: 0; border: 0; background: transparent; color: var(--vod-text); font-size: 14px; text-align: left; }
+.studio-vod-editor .studio-vod-playback-group .contents > .layui-form-item > .layui-input-inline { float: none; width: 100% !important; margin: 0; min-width: 0; }
+.studio-vod-editor .studio-vod-playback-group .contents > .layui-form-item > .w400,
+.studio-vod-editor .studio-vod-playback-group .contents > .layui-form-item > .layui-input-block { grid-column: 1 / -1; width: 100% !important; margin: 0; }
+.studio-vod-editor .studio-vod-playback-group .contents > .layui-form-item > .p10 { display: none; }
+.studio-vod-editor .studio-vod-playback-group textarea { box-sizing: border-box; width: 100% !important; min-height: 160px; border-radius: 4px; font-size: 14px; line-height: 1.6; resize: vertical; }
+.studio-vod-editor .studio-vod-playback-group .layui-input { height: 40px; font-size: 14px; }
+.studio-vod-editor .studio-vod-playback-group .badge { display: inline-block; margin-bottom: 4px; padding: 6px 8px; border: 1px solid var(--vod-border); border-radius: 4px; color: var(--vod-muted); background: transparent !important; font-size: 12px; }
+.studio-vod-editor .studio-vod-playback-group .badge:hover { color: var(--vod-text); border-color: var(--vod-accent); }
+body.admin-studio .studio-vod-editor > form > .layui-form-item.center,
+body.admin-dark .studio-vod-editor > form > .layui-form-item.center { position: static; display: flex; justify-content: flex-end; margin: 24px 0 0; padding: 16px 0 0; border: 0; border-top: 1px solid var(--vod-border); border-radius: 0; background: transparent; box-shadow: none; }
+.studio-vod-editor :is(button,a,input,textarea,select):focus-visible { outline: 2px solid var(--vod-accent); outline-offset: 3px; }
+.studio-vod-panel:focus-visible { outline: none; }
+@media (min-width: 1240px) {
+    #studio-vod-panel-overview .studio-vod-field-grid { grid-template-columns: repeat(4,minmax(0,1fr)); }
+    #studio-vod-panel-overview .studio-vod-field[data-vod-field="vod_name"],
+    #studio-vod-panel-overview .studio-vod-field[data-vod-field="vod_sub"] { grid-column: span 2; }
+    #studio-vod-panel-overview .studio-vod-field[data-vod-field="vod_remarks"] { grid-column: span 2; }
+    #studio-vod-panel-access .studio-vod-field-grid,
+    #studio-vod-panel-advanced .studio-vod-field-grid { grid-template-columns: repeat(3,minmax(0,1fr)); }
+}
+@media (max-width: 900px) {
+    body.admin-studio .studio-vod-editor, body.admin-dark .studio-vod-editor { padding: 12px 16px 20px; }
+    .studio-vod-workspace { grid-template-columns: minmax(0,1fr); gap: 20px; }
+    .studio-vod-sections { position: sticky; top: 88px; z-index: 30; flex-direction: row; overflow-x: auto; padding: 4px 0; border-bottom: 1px solid var(--vod-border); background: var(--vod-surface); }
+    .studio-vod-section-link { width: auto; flex: 0 0 auto; border-left: 0; border-bottom: 2px solid transparent; border-radius: 0; }
+    .studio-vod-section-link[aria-selected="true"] { border-bottom-color: var(--vod-accent); }
+}
+@media (max-width: 600px) {
+    body.admin-studio .studio-vod-editor, body.admin-dark .studio-vod-editor { padding: 8px 12px 16px; }
+    body.admin-studio .studio-vod-editor .admin-vod-editor-toolbar,
+    body.admin-dark .studio-vod-editor .admin-vod-editor-toolbar { flex-direction: row; flex-wrap: wrap; gap: 8px; padding: 10px 0; }
+    .studio-vod-editor .admin-vod-editor-toolbar__identity { flex-basis: 100%; }
+    .studio-vod-editor .admin-vod-editor-toolbar__actions { justify-content: flex-end; width: 100%; }
+    body.admin-studio .studio-vod-editor .admin-vod-editor-title,
+    body.admin-dark .studio-vod-editor .admin-vod-editor-title { font-size: 17px; }
+    .studio-vod-editor .admin-vod-editor-meta { display: none; }
+    .studio-vod-sections { top: 120px; }
+    .studio-vod-workspace { scroll-margin-top: 180px; }
+    .studio-vod-field-grid { grid-template-columns: minmax(0,1fr); gap: 20px; }
+    .studio-vod-panel-heading { margin-bottom: 20px; }
+    .studio-vod-editor .studio-vod-field .layui-input,
+    .studio-vod-editor .studio-vod-field .layui-form-select .layui-input,
+    .studio-vod-editor .studio-vod-field select { min-height: 44px; height: 44px; font-size: 16px; }
+    .studio-vod-editor .studio-vod-upload-row { grid-template-columns: minmax(0,1fr); }
+    .studio-vod-editor .studio-vod-playback-group .contents > .layui-form-item { grid-template-columns: minmax(0,1fr); padding: 12px; }
+    .studio-vod-editor .studio-vod-playback-group .layui-input { height: 44px; font-size: 16px; }
+}
+@media (prefers-reduced-motion: reduce) { .studio-vod-editor * { scroll-behavior: auto; transition: none !important; } }
+
+/* v3 action copy and narrow-screen content wrapping. */
+body.admin-dark .studio-vod-editor .admin-vod-editor-titleline,
+body.admin-studio .studio-vod-editor .admin-vod-editor-titleline { flex-direction: column; align-items: flex-start; gap: 2px; }
+.studio-vod-editor .admin-vod-editor-record-name { display: block; max-width: 100%; overflow: hidden; color: var(--vod-muted); font-size: 12px; line-height: 1.4; text-overflow: ellipsis; white-space: nowrap; }
+.studio-vod-editor .admin-vod-editor-record-name:empty { display: none; }
+@media (max-width: 600px) {
+    /* Dashlite .badge uses nowrap; arbitrary classification labels must wrap. */
+    .studio-vod-editor .studio-vod-field .extend { max-width: 100%; white-space: normal; overflow-wrap: anywhere; }
+}
+
+/* v4: Reset legacy mobile label minimum heights and margins. */
+body.admin-dark .page-container.admin-vod-info.studio-vod-editor > form.layui-form-pane .studio-vod-field > .layui-form-label,
+body.admin-studio .page-container.admin-vod-info.studio-vod-editor > form.layui-form-pane .studio-vod-field > .layui-form-label,
+body.admin-dark .page-container.admin-vod-info.studio-vod-editor > form.layui-form-pane .studio-vod-playback-group .contents > .layui-form-item > .layui-form-label,
+body.admin-studio .page-container.admin-vod-info.studio-vod-editor > form.layui-form-pane .studio-vod-playback-group .contents > .layui-form-item > .layui-form-label {
+    box-sizing: border-box; width: auto !important; max-width: 100%; height: auto !important; min-height: 0 !important;
+    padding: 0 !important; margin: 0 !important; line-height: 1.4 !important;
+    font-size: 14px !important;
+}
+body.admin-dark .page-container.admin-vod-info.studio-vod-editor > form.layui-form-pane .studio-vod-field,
+body.admin-studio .page-container.admin-vod-info.studio-vod-editor > form.layui-form-pane .studio-vod-field { gap: 7px; }
+
+/* v5: Override the legacy !important .btn styles for the Save button. */
+body.admin-dark .page-container.admin-vod-info.studio-vod-editor > form.layui-form-pane .admin-vod-editor-toolbar .admin-vod-editor-save,
+body.admin-studio .page-container.admin-vod-info.studio-vod-editor > form.layui-form-pane .admin-vod-editor-toolbar .admin-vod-editor-save {
+    color: #101b2b !important;
+    border: 1px solid var(--vod-accent) !important;
+    background: var(--vod-accent) !important;
+}
+
+/* Beginner r3 P3-7: "Series" note above the series fields at the end of Advanced. */
+.studio-vod-series-note { margin-top: 4px; padding-top: 20px; border-top: 1px solid var(--vod-border); }
+.studio-vod-series-note h3 { margin: 0 0 4px; color: var(--vod-text); font-size: 15px; font-weight: 600; line-height: 1.4; }
+.studio-vod-series-note p { margin: 0; color: var(--vod-muted); font-size: 13px; line-height: 1.5; }

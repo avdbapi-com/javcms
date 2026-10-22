@@ -1,0 +1,67 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="velvet" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/vod_detail"}
+{include file="public/include"}
+</head>
+<body class="vv-page-detail">
+{php}
+if (!isset($vvPlain)) { $vvPlain = function ($v) { $v = (string)$v; for ($i = 0; $i < 4; $i++) { $d = html_entity_decode($v, ENT_QUOTES | ENT_HTML5, 'UTF-8'); if ($d === $v) { break; } $v = $d; } return trim($v); }; }
+$vvTitle = $vvPlain(($obj['vod_display_name'] ?? '') !== '' ? $obj['vod_display_name'] : ($obj['vod_name'] ?? ''));
+$vvDesc = $vvPlain($obj['vod_display_content'] ?? '');
+if ($vvDesc === '') { $vvDesc = $vvPlain($obj['vod_display_blurb'] ?? ''); }
+$vvPlayUrl = ((!empty($obj['vod_play_list']) && is_array($obj['vod_play_list'])) ? mac_url_vod_play($obj, 'first') : '');
+$vvEpCount = 0;
+foreach ((array)($obj['vod_play_list'] ?? []) as $vvPlayList) { $vvEpCount += is_array($vvPlayList['urls'] ?? null) ? count($vvPlayList['urls']) : 0; }
+{/php}
+{include file="public/head"}
+<span class="vv-history-entry" hidden data-name="{$vvTitle|htmlspecialchars=ENT_QUOTES}" data-link="{:mac_url_vod_detail($obj)}" data-pic="{$obj.vod_pic|mac_default=$tplNoPic|mac_url_img|htmlspecialchars=ENT_QUOTES}"></span>
+<main id="main-content" class="vv-main">
+  <div class="vv-wrap">
+    <div class="vv-detail">
+      <div class="vv-detail-media">
+      {if condition="$vvPlayUrl neq ''"}<a class="vv-cover" href="{$vvPlayUrl|htmlspecialchars=ENT_QUOTES}" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.watch_online')}">{else/}<div class="vv-cover">{/if}<img data-lowres src="{$obj.vod_pic|mac_default=$tplNoPic|mac_url_img|htmlspecialchars=ENT_QUOTES}" onerror="vvImg(this)" alt="{$vvTitle|htmlspecialchars=ENT_QUOTES}" width="800" height="450" decoding="async">{if condition="$vvPlayUrl neq ''"}<span class="vv-play" aria-hidden="true"><span class="vv-play-disc"><svg class="vv-i"><use href="{$maccms.path_tpl}assets/img/icons.svg#play"></use></svg></span></span></a>{else/}</div>{/if}
+        {if condition="$vvDesc neq ''"}
+    <section class="vv-panel-card" style="margin-top:24px">
+      <h2>{:\\app\\common\\util\\AutoIcon::ui('info', ['class'=>'vv-i'])}{:\\app\\common\\util\\TemplateText::get('description')}</h2>
+      <p class="vv-desc" data-vv-clamp>{$vvDesc|htmlspecialchars=ENT_QUOTES}</p>
+    </section>
+    {/if}
+      </div>
+      <div class="vv-detail-info">
+        <h1{php}echo \app\common\util\AvdbLanguage::langAttr(isset($obj) && is_array($obj) ? $obj : []);{/php}>{$vvTitle|htmlspecialchars=ENT_QUOTES}</h1>
+        <div class="vv-watch-sub" data-ai-group>
+          <span>{:\\app\\common\\util\\AutoIcon::ui('eye', ['class'=>'vv-i'])}<span class="mac_hits" data-vv-count data-mid="1" data-id="{$obj.vod_id|intval}" data-type="hits">{$obj.vod_hits|intval}</span></span>
+          <span>{:\\app\\common\\util\\AutoIcon::ui('calendar', ['class'=>'vv-i'])}<time datetime="{$obj.vod_time|date='Y-m-d',###}">{$obj.vod_time|date='Y-m-d',###}</time></span>
+          {if condition="$obj.vod_score gt 0"}<span>{:\\app\\common\\util\\AutoIcon::ui('star', ['class'=>'vv-i'])}<bdi dir="ltr"><span data-vv-count>{$obj.vod_score|htmlspecialchars=ENT_QUOTES}</span> / 10</bdi></span>{/if}
+        </div>
+        <div class="vv-detail-cta">
+          {if condition="$vvPlayUrl neq ''"}<a class="vv-btn vv-btn-primary vv-btn-lg" data-vv-magnet href="{$vvPlayUrl|htmlspecialchars=ENT_QUOTES}"><svg class="vv-i" aria-hidden="true"><use href="{$maccms.path_tpl}assets/img/icons.svg#play"></use></svg>{:\\app\\common\\util\\TemplateText::get('ui.watch_online')}</a>{/if}
+          {notempty name="obj.vod_down_list"}<a class="vv-btn vv-btn-ghost vv-btn-lg" href="{:mac_url_vod_down($obj)}">{:\\app\\common\\util\\TemplateText::get('ui.downloads')}</a>{/notempty}
+          <button class="vv-round" type="button" data-vv-fav data-mid="1" data-id="{$obj.vod_id|intval}" aria-pressed="false" aria-label="{:\\app\\common\\util\\TemplateText::get('favorites')}" title="{:\\app\\common\\util\\TemplateText::get('favorites')}">{:\\app\\common\\util\\AutoIcon::ui('heart', ['class'=>'vv-i'])}</button>
+        </div>
+        {include file="public/meta"}
+      </div>
+    </div>
+    {if condition="$vvEpCount gt 1"}
+    <section class="vv-panel-card" style="margin-top:24px">
+      <h2>{:\\app\\common\\util\\AutoIcon::ui('list', ['class'=>'vv-i'])}{:\\app\\common\\util\\TemplateText::get('playback_sources')}</h2>
+      {maccms:foreach name="obj.vod_play_list" id="vvSource" key="vvSid"}
+      <div class="vv-episodes"><span class="vv-episodes-label">{$vvSource.player_info.show|mac_default=$vvSource.from|htmlspecialchars=ENT_QUOTES}</span>{maccms:foreach name="vvSource.urls" id="vvEp" key="vvNid"}<a class="vv-ep" href="{:mac_url_vod_play($obj,['sid'=>$vvSource['sid'],'nid'=>$vvEp['nid']])}">{$vvEp.name|htmlspecialchars=ENT_QUOTES}</a>{/maccms:foreach}</div>
+      {/maccms:foreach}
+    </section>
+    {/if}
+    <div style="margin-top:44px">{include file="public/related"}</div>
+    {if condition="$GLOBALS['config']['comment']['status'] eq 1"}<section class="vv-comments"><div class="mac_comment" data-id="{$obj.vod_id|intval}" data-mid="1"><p class="vv-muted-note">{:\\app\\common\\util\\TemplateText::get('ui.loading_comments')}</p></div></section><script>MAC.Comment.Init();MAC.Comment.Show(1);</script>{/if}
+  </div>
+</main>
+{include file="public/foot"}
+</body>
+</html>

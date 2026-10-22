@@ -1,0 +1,52 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}$tpFeat = [];{/php}{maccms:vod num="5" type="all" level="9" order="desc" by="time" paging="no" id="vo"}{php}$tpFeat[] = $vo;{/php}{/maccms:vod}{if condition="count($tpFeat) eq 0"}{maccms:vod num="5" type="all" order="desc" by="hits_week" paging="no" id="vo"}{php}$tpFeat[] = $vo;{/php}{/maccms:vod}{/if}
+{php}
+$tpFeatRows = [];
+foreach ($tpFeat as $tpFi => $tpFv) {
+    $tpSeen[] = (int)($tpFv['vod_id'] ?? 0);
+    $tpFc = \app\common\util\AvdbLanguage::displayCode($tpFv); $tpFc = (string)preg_replace('/-(UNCENSORED-LEAK(?:ED)?|ENGLISH-SUBTITLES?)$/i', '', $tpFc); if ($tpFc === '' || stripos($tpFc, 'avdb-') === 0 || strlen($tpFc) > 24) { $tpFc = ''; }
+    $tpFs = trim((string)($tpFv['vod_score'] ?? '')); if ($tpFs === '0' || $tpFs === '0.0') { $tpFs = ''; }
+    $tpFt = (isset($tpFv['type']) && is_array($tpFv['type'])) ? $tpFv['type'] : [];
+    $tpFtn = trim((string)\app\common\util\TemplateText::raw($tpPlain($tpFt['type_name'] ?? '')));
+    $tpFeatRows[] = ['n' => $tpFi + 1, 'title' => $tpPlain(($tpFv['vod_display_name'] ?? '') !== '' ? $tpFv['vod_display_name'] : ($tpFv['vod_name'] ?? '')), 'code' => $tpFc, 'score' => $tpFs, 'hits' => (int)($tpFv['vod_hits'] ?? 0), 'dur' => trim((string)($tpFv['vod_duration'] ?? '')), 'pic' => mac_url_img((string)($tpFv['vod_pic'] ?? '')), 'play' => mac_url_vod_play($tpFv), 'detail' => mac_url_vod_detail($tpFv), 'type' => $tpFtn, 'typeurl' => $tpFtn !== '' ? mac_url_type($tpFt) : '', 'gem' => isset($tpTypeById[(int)($tpFt['type_id'] ?? 0)]) ? $tpTypeById[(int)($tpFt['type_id'] ?? 0)]['gem'] : 4, 'tn' => (string)($tpFt['type_name'] ?? ''), 'cast' => trim((string)(explode(',', (string)\app\common\util\AvdbLanguage::displayList($tpFv, 'actor'))[0] ?? ''))];
+}
+$tpFeatN = count($tpFeatRows);
+$tpAll = (int)($tpDc['vod_all'] ?? 0); $tpToday = (int)($tpDc['vod_today'] ?? 0);
+$tpPieces = htmlspecialchars(\app\common\util\TemplateText::raw('tp.pieces', ['count' => '%%N%%']), ENT_QUOTES, 'UTF-8');
+$tpPieces = str_replace('%%N%%', '<b class="tp-num" data-tp-nf="' . $tpAll . '">' . number_format($tpAll) . '</b>', $tpPieces);
+$tpNewToday = htmlspecialchars(\app\common\util\TemplateText::raw('tp.new_today', ['count' => '%%N%%']), ENT_QUOTES, 'UTF-8');
+$tpNewToday = str_replace('%%N%%', '<b class="tp-num" data-tp-nf="' . $tpToday . '">' . number_format($tpToday) . '</b>', $tpNewToday);
+{/php}
+<section class="tp-vit" data-fx="shader" data-fx-shader="{$maccms.path_tpl|htmlspecialchars=ENT_QUOTES}assets/js/gl-caustics.js?v=20261013-tp11" data-fx-speed="1" data-fx-intensity=".7" aria-labelledby="tp-home-h1" data-tp-vit>
+  <div class="tp-vit-in">
+    <h1 class="tp-placard" id="tp-home-h1"><span data-fx="shiny" style="--fx-shiny-speed:9s">{$tpSite|htmlspecialchars=ENT_QUOTES}</span></h1>
+    {notempty name="tpFeatRows"}
+    <div class="tp-frame atropos" data-fx="ring" data-tp-frame>
+      <div class="atropos-scale"><div class="atropos-rotate"><div class="atropos-inner">
+        <div class="tp-frame-in">
+          {volist name="tpFeatRows" id="tpF"}<img data-lowres class="tp-frame-img{if condition="$tpF.n eq 1"} is-on{/if}" src="{$tpF.pic|htmlspecialchars=ENT_QUOTES}" alt="" width="1280" height="720" decoding="async"{if condition="$tpF.n eq 1"} fetchpriority="high"{else/} loading="lazy"{/if} data-atropos-offset="-4" data-tp-feat-img="{$tpF.n}">{/volist}
+          <span class="tp-frame-glass" data-atropos-offset="2" aria-hidden="true"></span>
+          <span class="tp-frame-sparks" data-atropos-offset="6" data-tp-sparks aria-hidden="true"></span>
+          <span class="tp-frame-plate" data-atropos-offset="3" aria-hidden="true"><svg class="tp-i" aria-hidden="true"><use href="{$tplIcons}#r-sparkle"/></svg>{:\\app\\common\\util\\TemplateText::get('tp.featured')}</span>
+          <a class="tp-frame-play" href="{$tpFeatRows.0.play|htmlspecialchars=ENT_QUOTES}" data-tp-feat-play aria-label="{:\\app\\common\\util\\TemplateText::get('tp.watch_now')}: {$tpFeatRows.0.title|htmlspecialchars=ENT_QUOTES}"><span><svg class="tp-i" aria-hidden="true"><use href="{$tplIcons}#play"/></svg></span></a>
+        </div>
+      </div></div></div>
+    </div>
+    <div class="tp-feat" data-tp-feats>
+      {volist name="tpFeatRows" id="tpF"}<div class="tp-feat-item{if condition="$tpF.n eq 1"} is-on{/if}" data-tp-feat="{$tpF.n}">
+        <h2 class="tp-feat-title"><a href="{$tpF.play|htmlspecialchars=ENT_QUOTES}"><span class="tp-conv" data-tp-conv><span class="tp-conv-t">{$tpF.title|htmlspecialchars=ENT_QUOTES}</span><span class="tp-conv-c tp-conv-c--a" aria-hidden="true">{$tpF.title|htmlspecialchars=ENT_QUOTES}</span><span class="tp-conv-c tp-conv-c--b" aria-hidden="true">{$tpF.title|htmlspecialchars=ENT_QUOTES}</span></span></a></h2>
+        <div class="tp-feat-meta">{if condition="$tpF.code neq ''"}<span class="tp-meta-chip tp-meta-chip--ice">{:\\app\\common\\util\\AutoIcon::ui('hash', ['size'=>'sm'])}{$tpF.code|htmlspecialchars=ENT_QUOTES}</span>{/if}{if condition="$tpF.type neq ''"}<a class="tp-meta-chip tp-gem-i-{$tpF.gem}" href="{$tpF.typeurl|htmlspecialchars=ENT_QUOTES}" style="color:var(--cat)">{:\\app\\common\\util\\AutoIcon::icon('category', $tpF['tn'], ['size'=>'sm', 'tint'=>'none'])}{$tpF.type|htmlspecialchars=ENT_QUOTES}</a>{/if}{if condition="$tpF.cast neq ''"}<a class="tp-meta-chip tp-cast" href="{:mac_url_search(['actor'=>$tpF['cast']])}">{:\\app\\common\\util\\AutoIcon::avatar($tpF['cast'], '', ['size'=>'xs', 'decorative'=>true])}<bdi>{:htmlspecialchars($tpShortName($tpPlain($tpF['cast'])), ENT_QUOTES, 'UTF-8')}</bdi></a>{/if}{if condition="$tpF.dur neq ''"}<span class="tp-meta-chip"><svg class="tp-i" aria-hidden="true"><use href="{$tplIcons}#r-clock"/></svg>{$tpF.dur|htmlspecialchars=ENT_QUOTES}</span>{/if}{if condition="$tpF.hits gt 0"}<span class="tp-meta-chip"><svg class="tp-i" aria-hidden="true"><use href="{$tplIcons}#r-eye"/></svg>{:number_format($tpF['hits'])}</span>{/if}{if condition="$tpF.score neq ''"}<span class="tp-meta-chip"><svg class="tp-i" aria-hidden="true"><use href="{$tplIcons}#r-star"/></svg>{$tpF.score|htmlspecialchars=ENT_QUOTES}</span>{/if}</div>
+        <div class="tp-feat-act"><a class="tp-btn tp-btn--ice tp-btn--lg" data-fx="ring" href="{$tpF.play|htmlspecialchars=ENT_QUOTES}"><svg class="tp-i" aria-hidden="true"><use href="{$tplIcons}#play"/></svg><span>{:\\app\\common\\util\\TemplateText::get('tp.watch_now')}</span></a><a class="tp-btn tp-btn--ghost tp-btn--lg" href="{$tpF.detail|htmlspecialchars=ENT_QUOTES}"><svg class="tp-i" aria-hidden="true"><use href="{$tplIcons}#seal"/></svg><span>{:\\app\\common\\util\\TemplateText::get('ui.details')}</span></a></div>
+      </div>{/volist}
+    </div>
+    {if condition="$tpFeatN gt 1"}<div class="tp-dots" role="group" aria-label="{:\\app\\common\\util\\TemplateText::get('tp.featured')}" data-tp-dots><button class="tp-dot tp-dot--nav" type="button" data-tp-feat-prev aria-label="{:\\app\\common\\util\\TemplateText::get('tp.prev_feature')}" title="{:\\app\\common\\util\\TemplateText::get('tp.prev_feature')}"><svg class="tp-i" aria-hidden="true"><use href="{$tplIcons}#r-arrow-left"/></svg></button>{volist name="tpFeatRows" id="tpF"}<button class="tp-dot" type="button" data-tp-dot="{$tpF.n}" aria-label="{:\\app\\common\\util\\TemplateText::get('tp.feature_n', ['n' => $tpF['n']])}"{if condition="$tpF.n eq 1"} aria-current="true"{/if}><i aria-hidden="true"></i></button>{/volist}<button class="tp-dot tp-dot--nav" type="button" data-tp-feat-next aria-label="{:\\app\\common\\util\\TemplateText::get('tp.next_feature')}" title="{:\\app\\common\\util\\TemplateText::get('tp.next_feature')}"><svg class="tp-i" aria-hidden="true"><use href="{$tplIcons}#r-arrow-right"/></svg></button><button class="tp-pause" type="button" data-tp-pause data-fx="morph" data-fx-icons="pause play" data-fx-spring="snappy" aria-pressed="false" aria-label="{:\\app\\common\\util\\TemplateText::get('tp.pause_features')}" title="{:\\app\\common\\util\\TemplateText::get('tp.pause_features')}"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" style="--fx-icon-stroke:1.5"><rect x="14" y="3" width="5" height="18" rx="1"/><rect x="5" y="3" width="5" height="18" rx="1"/></svg></button></div>{/if}
+    {/notempty}
+    <p class="tp-libcard"><span>{:\\app\\common\\util\\TemplateText::get('tp.the_collection')}</span><i class="tp-dia" aria-hidden="true"></i><span>{$tpPieces}</span><i class="tp-dia" aria-hidden="true"></i><span>{$tpNewToday}</span></p>
+  </div>
+</section>

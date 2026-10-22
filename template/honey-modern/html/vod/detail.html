@@ -1,0 +1,46 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="honey-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}" data-fx="vt smooth" data-fx-lerp="0.07" data-fx-vt-style="honey">
+<head>
+{include file="seo/vod_detail"}
+{include file="public/include"}
+</head>
+<body class="nc-page-detail">
+{include file="public/metavars"}
+{php}
+$ncPlayUrl = ((!empty($obj['vod_play_list']) && is_array($obj['vod_play_list'])) ? mac_url_vod_play($obj, 'first') : '');
+$ncShareUrl = '';
+try { $ncShareUrl = \app\common\util\Sitemap::absolute(mac_url_vod_detail($obj)); } catch (\Throwable $ncShareError) { $ncShareUrl = ''; }
+{/php}
+{include file="public/head"}
+<span hidden data-nc-history-set data-name="{$ncName|htmlspecialchars=ENT_QUOTES}" data-link="{:mac_url_vod_detail($obj)}" data-pic="{$ncPicCover|htmlspecialchars=ENT_QUOTES}"></span>
+<main id="main-content" class="nc-main nc-detail"><div class="nc-wrap">
+<nav class="nc-crumbs" aria-label="{:\\app\\common\\util\\TemplateText::get('nc.breadcrumb')}"><a href="{$maccms.path|htmlspecialchars=ENT_QUOTES}">{:\\app\\common\\util\\TemplateText::get('ui.home')}</a><svg class="nc-i nc-flip" aria-hidden="true"><use href="{$ncIco}chevron-right"></use></svg>{if condition="$ncTypeName neq ''"}<a href="{:mac_url_type($obj['type'])}">{:\\app\\common\\util\\AutoIcon::icon('category', $obj['type']['type_name'], ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get($ncTypeName)}</a><svg class="nc-i nc-flip" aria-hidden="true"><use href="{$ncIco}chevron-right"></use></svg>{/if}<span aria-current="page" dir="auto">{$ncName|htmlspecialchars=ENT_QUOTES}</span></nav>
+<article class="nc-jar">
+<div class="nc-jar-cover">
+<div class="nc-cover-frame">{if condition="$ncPlayUrl neq ''"}<a class="nc-cover" href="{$ncPlayUrl|htmlspecialchars=ENT_QUOTES}" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.watch_online')}">{else/}<div class="nc-cover">{/if}<img data-lowres src="{$ncPicCover|htmlspecialchars=ENT_QUOTES}" alt="{$ncName|htmlspecialchars=ENT_QUOTES}" width="800" height="450" decoding="async" fetchpriority="high">{if condition="$ncPlayUrl neq ''"}<span class="nc-play nc-play-lg" aria-hidden="true"><svg class="nc-i"><use href="{$ncIco}play"></use></svg></span></a>{else/}</div>{/if}</div>
+<div class="nc-drips nc-drips-cover" aria-hidden="true">{include file="public/drip-cover"}</div>
+</div>
+<div class="nc-jar-info">
+{if condition="$ncTypeName neq ''"}<p class="nc-jar-eye"><a class="nc-eyebrow nc-eyebrow-soft" href="{:mac_url_type($obj['type'])}">{:\\app\\common\\util\\AutoIcon::icon('category', $obj['type']['type_name'], ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get($ncTypeName)}</a></p>{/if}
+<h1{php}echo \app\common\util\AvdbLanguage::langAttr(isset($obj) && is_array($obj) ? $obj : []);{/php} class="nc-vtitle" dir="auto" data-nc-melt="load">{$ncName|htmlspecialchars=ENT_QUOTES}</h1>
+<ul class="nc-vmeta">{if condition="$ncScoreTxt neq ''"}<li class="nc-vmeta-score" title="{:\\app\\common\\util\\TemplateText::get('ui.score')}"><svg class="nc-i" aria-hidden="true"><use href="{$ncIco}star"></use></svg><span class="nc-ltr"><b>{$ncScoreTxt}</b> <span class="nc-muted">/ 10</span></span></li>{/if}<li title="{:\\app\\common\\util\\TemplateText::get('ui.views')}"><svg class="nc-i" aria-hidden="true"><use href="{$ncIco}eye"></use></svg><span class="nc-ltr">{$ncHitsNum}</span><span class="nc-sr">{:\\app\\common\\util\\TemplateText::get('ui.views')}</span></li>{if condition="$ncRelease neq ''"}<li><svg class="nc-i" aria-hidden="true"><use href="{$ncIco}calendar"></use></svg><span class="nc-ltr">{$ncRelease|htmlspecialchars=ENT_QUOTES}</span></li>{/if}{if condition="$ncDuration neq ''"}<li><svg class="nc-i" aria-hidden="true"><use href="{$ncIco}clock"></use></svg><span class="nc-ltr">{$ncDuration|htmlspecialchars=ENT_QUOTES}</span></li>{/if}</ul>
+<div class="nc-vactions">{if condition="$ncPlayUrl neq ''"}<a class="nc-btn nc-btn-honey nc-btn-xl" href="{$ncPlayUrl|htmlspecialchars=ENT_QUOTES}"><svg class="nc-i" aria-hidden="true"><use href="{$ncIco}play"></use></svg>{:\\app\\common\\util\\TemplateText::get('nc.watch_now')}</a>{/if}<a class="nc-btn nc-btn-soft mac_ulog" href="{:mac_url('user/favs')}" role="button" data-type="2" data-mid="1" data-id="{$obj.vod_id}" data-nc-fav><svg class="nc-i" aria-hidden="true"><use href="{$ncIco}heart"></use></svg>{:\\app\\common\\util\\TemplateText::get('favorites')}</a><button class="nc-btn nc-btn-soft" type="button" data-fx="copy" data-fx-copy="{$ncShareUrl|htmlspecialchars=ENT_QUOTES}" data-fx-copied="{:\\app\\common\\util\\TemplateText::get('ui.link_copied')}" data-nc-share data-url="{$ncShareUrl|htmlspecialchars=ENT_QUOTES}" data-title="{$ncName|htmlspecialchars=ENT_QUOTES}"><svg class="nc-i" aria-hidden="true"><use href="{$ncIco}share"></use></svg><span data-fx-copy-label>{:\\app\\common\\util\\TemplateText::get('share')}</span></button>{notempty name="obj.vod_down_list"}<a class="nc-btn nc-btn-soft" href="{:mac_url_vod_down($obj)}"><svg class="nc-i" aria-hidden="true"><use href="{$ncIco}download"></use></svg>{:\\app\\common\\util\\TemplateText::get('ui.downloads')}</a>{/notempty}</div>
+{include file="public/meta"}
+</div>
+</article>
+{if condition="$ncDesc neq ''"}<section class="nc-panel nc-synopsis is-clamp" data-nc-clamp aria-labelledby="nc-desc-title"><h2 class="nc-panel-title" id="nc-desc-title">{:\\app\\common\\util\\AutoIcon::ui('file-text')}{:\\app\\common\\util\\TemplateText::get('description')}</h2><p dir="auto">{$ncDesc|htmlspecialchars=ENT_QUOTES}</p></section>{/if}
+{if condition="$ncShowEpisodes eq 1"}<section class="nc-panel nc-episodes" aria-labelledby="nc-ep-title"><h2 class="nc-panel-title" id="nc-ep-title">{:\\app\\common\\util\\AutoIcon::ui('list')}{:\\app\\common\\util\\TemplateText::get('playback_sources')}</h2>{maccms:foreach name="obj.vod_play_list" id="ncSrc" key="ncSid"}<h3 class="nc-ep-src">{$ncSrc.player_info.show|htmlspecialchars=ENT_QUOTES}</h3><div class="nc-ep-list">{maccms:foreach name="ncSrc.urls" id="ncEp" key="ncNid"}<a class="nc-tag" href="{:mac_url_vod_play($obj,['sid'=>$ncSrc['sid'],'nid'=>$ncEp['nid']])}">{$ncEp.name|htmlspecialchars=ENT_QUOTES}</a>{/maccms:foreach}</div>{/maccms:foreach}</section>{/if}
+{include file="public/drips"}
+{include file="public/related"}
+{if condition="$GLOBALS['config']['comment']['status'] eq 1"}<section class="nc-sec nc-comments" id="comments" aria-labelledby="nc-comments-title" data-ai-group><div class="nc-sec-head"><span class="nc-hexbadge" aria-hidden="true">{:\\app\\common\\util\\AutoIcon::ui('messages')}</span><div class="nc-sec-titles"><h2 class="nc-sec-title" id="nc-comments-title">{:\\app\\common\\util\\TemplateText::get('ui.comments')}</h2></div></div><div class="mac_comment" data-id="{$obj.vod_id}" data-mid="1"><p class="nc-muted">{:\\app\\common\\util\\TemplateText::get('ui.loading_comments')}</p></div></section><script>MAC.Comment.Init();MAC.Comment.Show(1);</script>{/if}
+</div></main>
+{include file="public/foot"}
+</body>
+</html>

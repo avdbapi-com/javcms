@@ -1,0 +1,39 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="ember-modern" data-fx="vt" data-fx-vt-style="ember-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/vod_type"}
+{include file="public/include"}
+</head>
+<body class="t-page-list">
+{include file="public/head"}
+{php}$emtTypeTotal = intval(mac_data_count(intval($obj['type_id'] ?? 0), 'all', 'vod')); $emtTotalHtml = '<b data-fx="count" data-fx-to="' . $emtTypeTotal . '">' . number_format($emtTypeTotal) . '</b>'; $tplCardEager = 5; $tplCardN = 0;{/php}
+<main id="main-content" class="t-main" tabindex="-1">
+  <section class="t-band" data-fx="shader" data-fx-shader="{$maccms.path_tpl|htmlspecialchars=ENT_QUOTES}assets/js/gl-thermal.js?v=20261010-2">
+    <div class="t-wrap">
+      <nav class="t-crumb" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.main_navigation')}"><a href="{$maccms.path|htmlspecialchars=ENT_QUOTES}">{:\\app\\common\\util\\TemplateText::get('ui.home')}</a><svg class="t-i t-flip" aria-hidden="true"><use href="{$tplIcons}#chev-right"></use></svg><span aria-current="page">{:\\app\\common\\util\\AutoIcon::icon('category', $obj['type_name'], ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get(htmlspecialchars_decode((string)$obj['type_name'], ENT_QUOTES))}</span></nav>
+      <div class="t-band-in"><span class="t-band-ic">{:\\app\\common\\util\\AutoIcon::icon('category', $obj['type_name'], ['size'=>'xl', 'plate'=>true])}</span>
+        <h1 data-t-expand>{:\\app\\common\\util\\TemplateText::get(htmlspecialchars_decode((string)$obj['type_name'], ENT_QUOTES))}</h1>
+        <p class="t-band-total">{:\\app\\common\\util\\TemplateText::raw('emt.titles_count', ['count'=>$emtTotalHtml])}</p>
+      </div>
+    </div>
+  </section>
+  <div class="t-wrap">
+    <div class="t-filters">
+      {php}$tplSortMode = 'type';{/php}{include file="public/sortmenu"}
+      <nav class="t-sibs" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.categories')}">{volist name="emtHeatRows" id="emtRow"}<a href="{$emtRow.url|htmlspecialchars=ENT_QUOTES}" {if condition="$emtRow.id eq $obj.type_id || $emtRow.id eq $obj.type_pid"}aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::icon('category', $emtRow['tn'], ['size'=>'sm', 'class'=>'t-hb' . $emtRow['b']])}{$emtRow.name|htmlspecialchars=ENT_QUOTES}</a>{/volist}</nav>
+    </div>
+    {include file="public/subcats"}<ul class="t-grid" data-grid-fill data-fx="glow">{maccms:vod num="20" paging="yes" type="current" order="desc" by="time" pageurl="vod/type" id="vo"}{include file="public/vodbox"}{/maccms:vod}</ul>
+    {if condition="$__PAGING__.record_total eq 0"}{include file="public/empty"}{/if}
+    {include file="public/list_note"}{include file="public/paging"}
+  </div>
+</main>
+{include file="public/foot"}
+</body>
+</html>

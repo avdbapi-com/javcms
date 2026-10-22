@@ -1,0 +1,46 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}$tuiFooterSitemap = ''; try { $tuiFooterSitemap = \app\common\util\Sitemap::indexUrl(); } catch (\Throwable $tuiFooterError) {} if (!isset($oxBrand)) { $oxBrand = trim(\app\common\util\AvdbLanguage::decodeEntities((string)($maccms['site_name'] ?? ''))); } if (!isset($oxSite)) { $oxSite = $oxBrand; } $oxFootLangs = \app\common\util\TemplateText::languages(); $oxCopy = \app\common\util\TemplateText::raw('ox.copyright', ['year' => date('Y'), 'site' => $oxSite]);{/php}
+<footer class="ox-ft" data-template-footer>
+  <div class="ox-ft-grid" data-ox-stagger>
+    <nav class="ox-ft-col" data-ai-group aria-labelledby="ox-ft-1">
+      <h2 class="ox-ft-h" id="ox-ft-1"><span class="ox-idx" aria-hidden="true">01</span>{:\\app\\common\\util\\AutoIcon::navIcon('home', '', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ox.browse')}</h2>
+      <a href="{$maccms.path|htmlspecialchars=ENT_QUOTES}">{:\\app\\common\\util\\AutoIcon::navIcon('home', '', ['i'=>0])}{:\\app\\common\\util\\TemplateText::get('ui.home')}</a>
+      <a href="{:mac_url('label/new')}">{:\\app\\common\\util\\AutoIcon::navIcon('latest', '', ['i'=>1])}{:\\app\\common\\util\\TemplateText::get('ui.latest_videos')}</a>
+      <a href="{:mac_url('label/hot')}">{:\\app\\common\\util\\AutoIcon::navIcon('hot', '', ['i'=>2])}{:\\app\\common\\util\\TemplateText::get('ui.popular_videos')}</a>
+      <a href="{:mac_url('label/score')}">{:\\app\\common\\util\\AutoIcon::navIcon('top', '', ['i'=>3])}{:\\app\\common\\util\\TemplateText::get('top_rated')}</a>
+      <a href="{:mac_url('label/up')}">{:\\app\\common\\util\\AutoIcon::navIcon('liked', '', ['i'=>4])}{:\\app\\common\\util\\TemplateText::get('most_liked')}</a>
+      <a href="{:mac_url('label/sort')}">{:\\app\\common\\util\\AutoIcon::navIcon('all-videos', '', ['i'=>5])}{:\\app\\common\\util\\TemplateText::get('ui.all_videos')}</a>
+    </nav>
+    <nav class="ox-ft-col" data-ai-group aria-labelledby="ox-ft-2">
+      <h2 class="ox-ft-h" id="ox-ft-2"><span class="ox-idx" aria-hidden="true">02</span>{:\\app\\common\\util\\AutoIcon::navIcon('categories', '', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ox.lists')}</h2>
+      {maccms:type ids="parent" flag="vod" order="asc" by="sort" id="tplFt" key="tplFtK" hide_empty="1"}<a href="{:mac_url_type($tplFt)}">{:\\app\\common\\util\\AutoIcon::icon('category', $tplFt['type_name'] ?? '', ['i'=>(int)$tplFtK])}{:\\app\\common\\util\\TemplateText::get(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)($tplFt['type_name'] ?? '')))}</a>{/maccms:type}
+    </nav>
+    <nav class="ox-ft-col" data-ai-group aria-labelledby="ox-ft-3">
+      <h2 class="ox-ft-h" id="ox-ft-3"><span class="ox-idx" aria-hidden="true">03</span>{:\\app\\common\\util\\AutoIcon::navIcon('sitemap', '', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ox.site')}</h2>
+      {if condition="$tuiFooterSitemap neq ''"}<a href="{$tuiFooterSitemap|htmlspecialchars=ENT_QUOTES}">{:\\app\\common\\util\\AutoIcon::navIcon('sitemap', '', ['i'=>0])}{:\\app\\common\\util\\TemplateText::get('ui.sitemap')}<span class="ox-ft-k" aria-hidden="true">.xml</span></a>{/if}
+      <a href="{:mac_safe_url(mac_url('rss/index'))}">{:\\app\\common\\util\\AutoIcon::navIcon('rss', '', ['i'=>1])}{:\\app\\common\\util\\TemplateText::get('rss')}<span class="ox-ft-k" aria-hidden="true">.xml</span></a>
+      <a href="{:mac_safe_url(mac_url('gbook/index'))}">{:\\app\\common\\util\\AutoIcon::navIcon('guestbook', '', ['i'=>2])}{:\\app\\common\\util\\TemplateText::get('guestbook')}</a>
+      <a href="{:mac_safe_url(mac_url('map/index'))}">{:\\app\\common\\util\\AutoIcon::navIcon('latest-100', '', ['i'=>3])}{:\\app\\common\\util\\TemplateText::get('ui.latest_updates')}</a>
+      <a href="{:mac_safe_url(mac_url('gbook/index'))}">{:\\app\\common\\util\\AutoIcon::ui('mail', ['i'=>4])}{:\\app\\common\\util\\TemplateText::get('ui.contact_b37456')}</a>
+    </nav>
+    <div class="ox-ft-col ox-ft-langs" data-ai-group>
+      <h2 class="ox-ft-h"><span class="ox-idx" aria-hidden="true">04</span>{:\\app\\common\\util\\AutoIcon::ui('languages', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ui.language')}</h2>
+      <div class="ox-ft-langgrid">{volist name="oxFootLangs" id="oxFl"}<a href="{:\\app\\common\\util\\TemplateText::languageUrl($key)}" lang="{$key|htmlspecialchars=ENT_QUOTES}" hreflang="{$key|htmlspecialchars=ENT_QUOTES}" title="{$oxFl|htmlspecialchars=ENT_QUOTES}" {if condition="$key eq $maccms['ui_lang']"}aria-current="true"{/if}>{$oxFl|htmlspecialchars=ENT_QUOTES}</a>{/volist}</div>
+    </div>
+  </div>
+  <div class="ox-ft-note">
+    <p>{:\\app\\common\\util\\TemplateText::get('ui.for_adults_only_contact_the_site_for_content_or_copyright_concerns')}{php}$oxSiteEmail = trim(\app\common\util\AvdbLanguage::decodeEntities((string)($maccms['site_email'] ?? '')));{/php}{if condition="filter_var($oxSiteEmail, FILTER_VALIDATE_EMAIL)"} <a href="mailto:{$oxSiteEmail|rawurlencode}">{$oxSiteEmail|htmlspecialchars=ENT_QUOTES}</a>{/if}</p>
+    <p class="ox-ft-copy">{$oxCopy|htmlspecialchars=ENT_QUOTES}</p>
+    <a class="ox-ft-top" href="#main-content" data-ox-top>{:\\app\\common\\util\\AutoIcon::ui('arrow-up', ['class'=>'ox-i'])}{:\\app\\common\\util\\TemplateText::get('onyx.back_to_top')}</a>
+  </div>
+  <div class="ox-ft-giant" aria-hidden="true"><span>{$oxBrand|htmlspecialchars=ENT_QUOTES}</span></div>
+</footer>
+{include file="public/runtime"}
+{include file="public/style"}
+{$maccms.site_tj}

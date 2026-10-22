@@ -1,0 +1,50 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}$oxFeat = []; $oxFeatFallback = 0; $oxLatestTime = 0; $oxTotal = (int)mac_data_count(0, 'all'); $oxToday = (int)mac_data_count(0, 'today'); $oxIdxParts = explode('%%N%%', \app\common\util\TemplateText::raw('ox.index_of', ['count' => '%%N%%']), 2); if (count($oxIdxParts) < 2) { $oxIdxParts[] = ''; } $oxIdxA = (string)$oxIdxParts[0]; $oxIdxB = (string)$oxIdxParts[1];{/php}
+{maccms:vod num="5" type="all" level="9" order="desc" by="time" paging="no" id="vo"}{php}$oxFeat[] = $vo;{/php}{/maccms:vod}
+{empty name="oxFeat"}{php}$oxFeatFallback = 1;{/php}{maccms:vod num="5" type="all" order="desc" by="hits_week" paging="no" id="vo"}{php}$oxFeat[] = $vo;{/php}{/maccms:vod}{/empty}{php}$oxFeat = \app\common\util\AvdbLanguage::heroOrder($oxFeat);{/php}
+{maccms:vod num="1" type="all" order="desc" by="time" paging="no" id="tplNewest"}{php}$oxLatestTime = (int)($tplNewest['vod_time'] ?? 0);{/php}{/maccms:vod}
+{php}$oxFeatN = count($oxFeat); $oxUpdated = \app\common\util\TemplateText::raw('ox.updated_at', ['time' => ($oxLatestTime > 0 ? date('H:i', $oxLatestTime) : '--:--')]);{/php}
+<section class="ox-bento" aria-labelledby="ox-h1" data-ox-lines>
+  <div class="ox-b ox-b-a" data-ox-feature aria-roledescription="carousel" aria-label="{:\\app\\common\\util\\TemplateText::get('onyx.featured')}">
+    {volist name="oxFeat" id="vo" key="oxFk"}{php}$oxFCode = \app\common\util\AvdbLanguage::displayCode($vo); if ($oxFCode !== '' && stripos($oxFCode, 'avdb-') === 0) { $oxFCode = ''; } $oxFDur = trim((string)($vo['vod_duration'] ?? '')); $oxFName = trim(\app\common\util\AvdbLanguage::decodeEntities((string)($vo['vod_display_name'] ?? ''))); if ($oxFName === '') { $oxFName = trim(\app\common\util\AvdbLanguage::decodeEntities((string)($vo['vod_name'] ?? ''))); } $oxFUrl = mac_url_vod_play($vo);{/php}
+    <article class="ox-feat{if condition="$oxFk eq 1"} is-active{/if}" data-ox-slide aria-roledescription="slide" aria-label="{$oxFk} / {$oxFeatN}"{if condition="$oxFk gt 1"} hidden{/if}>
+      <a class="ox-feat-media" href="{$oxFUrl|htmlspecialchars=ENT_QUOTES}" tabindex="-1" aria-hidden="true" data-fx="skeleton"><img data-lowres src="{$vo.vod_pic|mac_default=$tplNoPic|mac_url_img|htmlspecialchars=ENT_QUOTES}" alt="" width="816" height="459" decoding="async"{if condition="$oxFk eq 1"} fetchpriority="high"{else/} loading="lazy"{/if}></a>
+      <p class="ox-feat-tags"><span class="ox-tag ox-tag-inv">{:\\app\\common\\util\\TemplateText::get('ox.featured_tag')}</span>{if condition="$oxFCode neq ''"}<span class="ox-tag">{$oxFCode|htmlspecialchars=ENT_QUOTES}</span>{/if}{if condition="$oxFDur neq ''"}<span class="ox-tag">{$oxFDur|htmlspecialchars=ENT_QUOTES}</span>{/if}</p>
+      <div class="ox-feat-cap">
+        <h2 class="ox-feat-t"><a href="{$oxFUrl|htmlspecialchars=ENT_QUOTES}">{$oxFName|htmlspecialchars=ENT_QUOTES}</a></h2>
+        <a class="ox-feat-watch" href="{$oxFUrl|htmlspecialchars=ENT_QUOTES}" tabindex="-1" aria-hidden="true"><svg class="ox-i"><use href="{$tplIcons}#i-play"/></svg>{:\\app\\common\\util\\TemplateText::get('ox.watch')}</a>
+      </div>
+    </article>
+    {/volist}
+    {if condition="$oxFeatN gt 1"}<div class="ox-feat-nav">
+      <button class="ox-cell ox-feat-prev" type="button" aria-label="{:\\app\\common\\util\\TemplateText::get('onyx.previous')}"><svg class="ox-i ox-dir" aria-hidden="true"><use href="{$tplIcons}#i-prev"/></svg></button>
+      <span class="ox-cell ox-feat-count" aria-live="polite"><b data-ox-slide-now>01</b>/{$oxFeatN|sprintf='%02d',###}</span>
+      <button class="ox-cell ox-feat-next" type="button" aria-label="{:\\app\\common\\util\\TemplateText::get('onyx.next')}"><svg class="ox-i ox-dir" aria-hidden="true"><use href="{$tplIcons}#i-next"/></svg></button>
+    </div>{/if}
+  </div>
+  <div class="ox-b ox-b-b">
+    <h1 class="ox-h1-site" id="ox-h1" data-ox-desk-scramble>{$oxSite|htmlspecialchars=ENT_QUOTES}</h1>
+    <p class="ox-b-count">{$oxIdxA|htmlspecialchars=ENT_QUOTES}<b class="ox-odo" data-ox-odo="{$oxTotal}">{:number_format($oxTotal)}</b>{$oxIdxB|htmlspecialchars=ENT_QUOTES}</p>
+  </div>
+  <figure class="ox-b ox-b-c" data-fx="shader" data-fx-shader="{$maccms.path_tpl}assets/js/gl-dither.js?v=20261010-om10" data-fx-fps="20">
+    <figcaption class="ox-fig">{:\\app\\common\\util\\TemplateText::get('ox.fig_caption')}</figcaption>
+  </figure>
+  <div class="ox-b ox-b-d">
+    {if condition="$oxToday gt 0"}<span class="ox-mono-l">{:\\app\\common\\util\\TemplateText::get('ox.today')}</span>
+    <b class="ox-huge"><bdi dir="ltr">+<span class="ox-odo" data-ox-odo="{$oxToday}">{:number_format($oxToday)}</span></bdi></b>
+    <span class="ox-mono-l">{$oxUpdated|htmlspecialchars=ENT_QUOTES}</span>{else/}<span class="ox-mono-l">{:\\app\\common\\util\\TemplateText::get('ox.last_update')}</span>
+    <b class="ox-huge">{if condition="$oxLatestTime gt 0"}{$oxLatestTime|date='H:i',###}{else/}--:--{/if}</b>
+    <span class="ox-mono-l">{if condition="$oxLatestTime gt 0"}{$oxLatestTime|date='Y-m-d',###}{/if}</span>{/if}
+  </div>
+  <ol class="ox-b ox-b-e" aria-label="{:\\app\\common\\util\\TemplateText::get('onyx.featured')}">
+    {volist name="oxFeat" id="vo" key="oxFe" offset="1" length="3"}{php}$oxEName = trim(\app\common\util\AvdbLanguage::decodeEntities((string)($vo['vod_display_name'] ?? ''))); if ($oxEName === '') { $oxEName = trim(\app\common\util\AvdbLanguage::decodeEntities((string)($vo['vod_name'] ?? ''))); } $oxEDir = preg_match('/[\x{0590}-\x{08FF}\x{FB1D}-\x{FDFF}\x{FE70}-\x{FEFF}]/u', $oxEName) ? 'rtl' : 'ltr';{/php}
+    <li><a class="ox-mini" href="{:mac_url_vod_play($vo)}"><span class="ox-mini-i" aria-hidden="true">{:sprintf('%02d', $oxFe + 1)}</span><span class="ox-mini-th"><img src="{$vo.vod_pic|mac_default=$tplNoPic|mac_url_img|htmlspecialchars=ENT_QUOTES}" alt="" width="96" height="54" loading="lazy" decoding="async"></span><span class="ox-mini-t" dir="{$oxEDir}">{$oxEName|htmlspecialchars=ENT_QUOTES}</span></a></li>
+    {/volist}
+  </ol>
+</section>

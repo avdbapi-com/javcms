@@ -1,0 +1,60 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="topaz" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/vod_detail"}
+{include file="public/include"}
+</head>
+<body class="tz-page-detail">
+{include file="public/head"}
+{include file="public/vodvars"}
+<main id="main-content" class="tz-main tz-detail">
+  <section class="tz-dhero">
+    <div class="tz-dhero-bg" aria-hidden="true"><img src="{$obj.vod_pic|mac_default=$tplNoPic|mac_url_img|htmlspecialchars=ENT_QUOTES}" alt="" width="800" height="450" decoding="async"></div>
+    <div class="tz-dhero-shade" aria-hidden="true"></div>
+    <div class="tz-dhero-in tz-wrap">
+      <a class="tz-poster" href="{if condition="$tplPlayUrl neq ''"}{$tplPlayUrl|htmlspecialchars=ENT_QUOTES}{else/}{$tplDetailUrl|htmlspecialchars=ENT_QUOTES}{/if}" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.watch_online')}"><img data-lowres src="{$obj.vod_pic|mac_default=$tplNoPic|mac_url_img|htmlspecialchars=ENT_QUOTES}" alt="{$tplTitle|htmlspecialchars=ENT_QUOTES}" width="800" height="450" fetchpriority="high" decoding="async"><span class="tz-play tz-play--lg" aria-hidden="true"><svg class="tz-i"><use href="{$tplIcons}#play"/></svg></span></a>
+      <div class="tz-dhero-txt">
+        <nav class="tz-crumbs" aria-label="{:\\app\\common\\util\\TemplateText::get('topaz.breadcrumb')}"><a href="{$maccms.path}">{:\\app\\common\\util\\TemplateText::get('ui.home')}</a>{if condition="$tplTypeName neq ''"}{:\\app\\common\\util\\AutoIcon::ui('chevron-right', ['class'=>'tz-i tz-dir', 'tint'=>'none'])}<a href="{$tplTypeUrl|htmlspecialchars=ENT_QUOTES}">{:\\app\\common\\util\\AutoIcon::icon('category', $tplTypeRaw, ['size'=>'sm'])}{$tplTypeName|htmlspecialchars=ENT_QUOTES}</a>{/if}</nav>
+        <span class="tz-eyebrow">{:\\app\\common\\util\\TemplateText::get('topaz.video_details')}</span>
+        <h1{php}echo \app\common\util\AvdbLanguage::langAttr(isset($obj) && is_array($obj) ? $obj : []);{/php} class="tz-dtitle">{$tplTitle|htmlspecialchars=ENT_QUOTES}</h1>
+        <div class="tz-stats">
+          <span>{:\\app\\common\\util\\AutoIcon::ui('eye', ['class'=>'tz-i', 'tint'=>'none'])}<span class="mac_hits" data-mid="1" data-id="{$obj.vod_id|intval}" data-type="hits">{:number_format($tplHits)}</span><span class="tz-sr"> {:\\app\\common\\util\\TemplateText::get('ui.views')}</span></span>
+          {if condition="$tplScore neq ''"}<span>{:\\app\\common\\util\\AutoIcon::ui('star', ['class'=>'tz-i', 'tint'=>'none'])}<bdi dir="ltr">{$tplScore|htmlspecialchars=ENT_QUOTES}</bdi></span>{/if}
+          {if condition="$tplCode neq ''"}<span class="tz-stat-code">{$tplCode|htmlspecialchars=ENT_QUOTES,'UTF-8',false}</span>{/if}
+          {if condition="$tplDuration neq ''"}<span>{:\\app\\common\\util\\AutoIcon::ui('clock', ['class'=>'tz-i', 'tint'=>'none'])}<bdi dir="ltr">{$tplDuration|htmlspecialchars=ENT_QUOTES}</bdi></span>{/if}
+        </div>
+        {if condition="$tplDesc neq ''"}<p class="tz-summary">{$tplDesc|htmlspecialchars=ENT_QUOTES}</p>{/if}
+        <div class="tz-actions">
+          {if condition="$tplPlayUrl neq ''"}<a class="tz-btn tz-btn--gold tz-btn--lg" href="{$tplPlayUrl|htmlspecialchars=ENT_QUOTES}">{:\\app\\common\\util\\AutoIcon::ui('play', ['class'=>'tz-i', 'tint'=>'none'])}<span>{:\\app\\common\\util\\TemplateText::get('ui.watch_online')}</span></a>{/if}
+          <button class="tz-btn tz-btn--glass tz-btn--lg" type="button" data-tz-fav data-mid="1" data-id="{$obj.vod_id|intval}" aria-pressed="false">{:\\app\\common\\util\\AutoIcon::ui('heart', ['class'=>'tz-i', 'tint'=>'none'])}<span>{:\\app\\common\\util\\TemplateText::get('favorites')}</span></button>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="tz-wrap tz-dbody">
+    <section class="tz-panel" aria-labelledby="tz-info-h" data-tz-reveal>
+      <div class="tz-panel-head"><span class="tz-eyebrow">{:\\app\\common\\util\\TemplateText::get('topaz.video_details')}</span><h2 id="tz-info-h">{:\\app\\common\\util\\TemplateText::get('topaz.information')}</h2></div>
+      {include file="public/meta"}
+    </section>
+    {include file="public/episodes"}
+    {if condition="$tplDesc neq ''"}<section class="tz-panel" aria-labelledby="tz-story-h" data-tz-reveal>
+      <div class="tz-panel-head"><span class="tz-eyebrow">{:\\app\\common\\util\\TemplateText::get('topaz.about_video')}</span><h2 id="tz-story-h">{:\\app\\common\\util\\TemplateText::get('topaz.storyline')}</h2></div>
+      <div class="tz-prose"><p>{$tplDesc|htmlspecialchars=ENT_QUOTES}</p></div>
+    </section>{/if}
+    {include file="public/related"}
+    {if condition="$GLOBALS['config']['comment']['status'] eq 1"}<section class="tz-panel tz-comments" aria-labelledby="tz-com-h" data-tz-reveal>
+      <div class="tz-panel-head"><h2 id="tz-com-h">{:\\app\\common\\util\\TemplateText::get('ui.comments')}</h2></div>
+      <div class="mac_comment" data-id="{$obj.vod_id|intval}" data-mid="1" data-tz-comments>{include file="public/comment_wait"}</div>
+    </section>{/if}
+  </div>
+</main>
+{include file="public/foot"}
+</body>
+</html>

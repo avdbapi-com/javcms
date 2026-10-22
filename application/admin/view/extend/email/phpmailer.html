@@ -1,0 +1,46 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Based on MacCMS 10 (Apache-2.0) by magicblack, changed by JavCMS.
+JavCMS changes: Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors,
+JavCMS Community License 1.0. The MacCMS parts stay under the Apache License 2.0.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<section class="ax-section admin-email-smtp">
+    <h2>{:lang('admin/emailsetup/smtp_title')}</h2>
+    <p class="ax-help">{:lang('admin/ux/system/smtp_help')}</p>
+    <div class="ax-field ax-field--md">
+        <label for="host">{:lang('admin/emailsetup/host')}</label>
+        <input type="text" id="host" name="email[phpmailer][host]" value="{$config['email']['phpmailer']['host']|htmlspecialchars}" class="layui-input" autocomplete="off" spellcheck="false" aria-describedby="host-help">
+        <p class="ax-help" id="host-help">{:lang('admin/emailsetup/host_help')}</p>
+    </div>
+    <div class="ax-field ax-field--sm">
+        <label for="port">{:lang('admin/emailsetup/port')}</label>
+        <input type="number" id="port" name="email[phpmailer][port]" min="1" max="65535" step="1" value="{$config['email']['phpmailer']['port']|htmlspecialchars}" class="layui-input" inputmode="numeric" aria-describedby="port-help">
+        <p class="ax-help" id="port-help">{:lang('admin/emailsetup/port_help')}</p>
+    </div>
+    <div class="ax-field ax-field--sm">
+        <label for="email-secure">{:lang('admin/emailsetup/encryption')}</label>
+        <select id="email-secure" name="email[phpmailer][secure]">
+            <option value="" {if condition="$config['email']['phpmailer']['secure'] eq ''"}selected{/if}>{:lang('admin/emailsetup/automatic')}</option>
+            <option value="tls" {if condition="in_array($config['email']['phpmailer']['secure'], ['tls','tsl'])"}selected{/if}>{:lang('admin/emailsetup/starttls')}</option>
+            <option value="ssl" {if condition="$config['email']['phpmailer']['secure'] eq 'ssl'"}selected{/if}>{:lang('admin/emailsetup/implicit_tls')}</option>
+        </select>
+        <p class="ax-help">{:lang('admin/emailsetup/encryption_help')}</p>
+    </div>
+    <div class="ax-field ax-field--md">
+        <label for="username">{:lang('admin/emailsetup/account')}</label>
+        <input type="text" id="username" name="email[phpmailer][username]" value="{$config['email']['phpmailer']['username']|htmlspecialchars}" class="layui-input" autocomplete="off" spellcheck="false">
+        <p class="ax-help">{:lang('admin/emailsetup/account_help')}</p>
+    </div>
+    <div class="ax-field ax-field--md">
+        <label for="password">{:lang('admin/emailsetup/password')}</label>
+        <input type="password" id="password" name="email[phpmailer][password]" value="{$config['email']['phpmailer']['password']|htmlspecialchars}" class="layui-input" autocomplete="new-password">
+        <p class="ax-help">{:lang('admin/emailsetup/password_help')}</p>
+    </div>
+    <div class="ax-field ax-field--md">
+        <label for="email-from">{:lang('admin/emailsetup/from')}</label>
+        <input type="email" id="email-from" name="email[phpmailer][from]" value="{$config['email']['phpmailer']['from']|default=''|htmlspecialchars}" class="layui-input" autocomplete="off">
+        <p class="ax-help">{:lang('admin/emailsetup/from_help')}</p>
+    </div>
+</section>

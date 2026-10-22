@@ -1,0 +1,61 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{include file="../../../application/admin/view/public/head" /}
+{php}$axLockS = '__STATIC__/admin/icons/admin-icons.svg?v=' . (int) @filemtime(ROOT_PATH . 'static/admin/icons/admin-icons.svg');{/php}
+<style>
+    body.admin-studio.lock-page { min-height: 100vh; min-height: 100dvh; display: flex; align-items: center; justify-content: center; padding: 16px; background: var(--ax-bg); }
+    .lock-card { width: min(100%, 380px); padding: 28px 24px 24px; border: 1px solid var(--ax-line); border-radius: var(--ax-r-lg); background: var(--ax-surface); }
+    .lock-card__icon { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; margin-bottom: 12px; border-radius: 12px; background: var(--ax-accent-soft); color: var(--ax-accent); }
+    .lock-card h1 { margin: 0 0 4px; color: var(--ax-text); font-size: 20px; font-weight: 650; }
+    .lock-card__prompt { margin: 0 0 16px; color: var(--ax-muted); }
+    .lock-card .ax-field input { width: 100%; }
+    .lock-card__error { min-height: 20px; margin: 8px 0; font-size: 13px; }
+    .lock-card__actions { display: flex; flex-wrap: wrap; gap: 8px; }
+</style>
+<main class="lock-card" role="main">
+    <form id="lockForm" method="post" action="{:url('index/unlocked')}" autocomplete="off" novalidate>
+        <span class="lock-card__icon" aria-hidden="true"><svg class="ax-ic ax-ic--lg" aria-hidden="true" focusable="false"><use href="{$axLockS}#ai-lock"/></svg></span>
+        <h1>{:lang('admin/ux/lock/title')}</h1>
+        <p class="lock-card__prompt">{:lang('admin/ux/lock/prompt')}</p>
+        <div class="ax-field"><label for="lockPwd">{:lang('pass')}</label><input id="lockPwd" name="password" type="password" class="layui-input" autocomplete="current-password" maxlength="72" autofocus></div>
+        <p class="lock-card__error ax-danger-text" id="lockErr" role="alert"></p>
+        <div class="lock-card__actions">
+            <button type="submit" class="ax-btn ax-btn--primary"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axLockS}#ai-lock-open"/></svg>{:lang('admin/ux/lock/unlock')}</button>
+            <a class="ax-btn ax-btn--ghost" href="{:url('index/logout')}" target="_top"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axLockS}#ai-log-out"/></svg>{:lang('admin/ux/lock/signout')}</a>
+        </div>
+    </form>
+</main>
+<script>
+(function () {
+    'use strict';
+    document.body.classList.add('lock-page');
+    // Inside the admin shell the shell shows its own lock overlay.
+    try { if (window.parent !== window) window.parent.postMessage({ ax: 'locked' }, location.origin); } catch (e) { /* alone */ }
+    var form = document.getElementById('lockForm');
+    var pwd = document.getElementById('lockPwd');
+    var err = document.getElementById('lockErr');
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        if (!pwd.value) { pwd.focus(); return; }
+        var body = new URLSearchParams();
+        body.append('password', pwd.value);
+        fetch(form.getAttribute('action'), { method: 'POST', body: body, credentials: 'same-origin',
+            headers: { 'X-Requested-With': 'XMLHttpRequest', 'Accept': 'application/json' } })
+            .then(function (r) { return r.json(); })
+            .then(function (res) {
+                if (res && Number(res.code) === 1) { window.location.reload(); return; }
+                err.textContent = (res && res.msg) || '';
+                // Too many wrong passwords: the server signed the session out (security r3 P3-2).
+                if (res && res.logout && res.url) { setTimeout(function () { window.top.location.href = res.url; }, 1500); return; }
+                pwd.select();
+            }).catch(function () { err.textContent = window.AxUX ? window.AxUX.t('request_failed') : ''; });
+    });
+}());
+</script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="ember-modern" data-fx="vt" data-fx-vt-style="ember-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/auto"}
+{include file="public/include"}
+</head>
+<body class="t-page-detail">
+{include file="public/metavars"}
+{include file="public/head"}
+<main id="main-content" class="t-main t-wrap" tabindex="-1">
+  <nav class="t-crumb" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.main_navigation')}" style="margin-top:18px"><a href="{$maccms.path|htmlspecialchars=ENT_QUOTES}">{:\\app\\common\\util\\TemplateText::get('ui.home')}</a><svg class="t-i t-flip" aria-hidden="true"><use href="{$tplIcons}#chev-right"></use></svg><a href="{:mac_url_vod_detail($obj)}">{if condition="$tplCode neq ''"}{$tplCode|htmlspecialchars=ENT_QUOTES}{else/}{:\\app\\common\\util\\TemplateText::get('ui.details')}{/if}</a></nav>
+  <h1 class="t-vh1" style="margin-top:8px">{$tplTitle|htmlspecialchars=ENT_QUOTES}</h1>
+  <div class="t-actbar">
+    <a class="t-btn" href="{:mac_url_vod_detail($obj)}"><svg class="t-i" aria-hidden="true"><use href="{$tplIcons}#info"></use></svg>{:\\app\\common\\util\\TemplateText::get('ui.details')}</a>
+    {if condition="$tplPlayUrl neq ''"}<a class="t-btn is-molten" href="{$tplPlayUrl|htmlspecialchars=ENT_QUOTES}"><svg class="t-i" aria-hidden="true"><use href="{$tplIcons}#play"></use></svg>{:\\app\\common\\util\\TemplateText::get('emt.watch_now')}</a>{/if}
+  </div>
+  {notempty name="obj.vod_down_list"}
+  {maccms:foreach name="obj.vod_down_list" id="source"}
+  <section class="t-eps"><h2>{$source.player_info.show|mac_default=$source.from|htmlspecialchars=ENT_QUOTES}</h2>
+    <div class="t-chips">{maccms:foreach name="source.urls" id="episode"}<a href="{:mac_safe_url($episode['url'])}" target="_blank" rel="nofollow noopener noreferrer"><svg class="t-i" aria-hidden="true"><use href="{$tplIcons}#download"></use></svg>{$episode.name|htmlspecialchars=ENT_QUOTES}</a>{/maccms:foreach}</div>
+  </section>
+  {/maccms:foreach}
+  {else/}{php}$emtEmptyKey = 'ui.no_download_links_are_available_for_this_video';{/php}{include file="public/empty"}{/notempty}
+</main>
+{include file="public/foot"}
+</body>
+</html>

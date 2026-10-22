@@ -1,0 +1,66 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="onyx-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/vod_play"}
+{include file="public/include"}
+</head>
+<body class="page-play">
+{include file="public/head"}
+{include file="public/vodvars"}
+{php}$tplShareUrl = \app\common\util\Sitemap::absolute(mac_url_vod_play($obj)); $tplReportUrl = mac_url('gbook/index') . (strpos(mac_url('gbook/index'), '?') === false ? '?' : '&') . 'id=' . (int)$obj['vod_id'] . '&name=' . rawurlencode(($tplCode !== '' && stripos($tplName, $tplCode) !== 0 ? '[' . $tplCode . '] ' : '') . $tplName); $tplLinkPre = (string)($obj['player_info']['link_pre'] ?? ''); $tplLinkNext = (string)($obj['player_info']['link_next'] ?? '');{/php}
+<main id="main-content" class="ox-main ox-watch">
+  <div class="ox-wgrid">
+    <div class="ox-player"><div class="ox-player-box">{$player_data}{$player_js}</div></div>
+    <aside class="ox-queue" aria-labelledby="ox-queue-h">
+      <h2 class="ox-label ox-queue-h" id="ox-queue-h"><span>{:\\app\\common\\util\\AutoIcon::ui('list', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ox.queue')}</span><span class="ox-queue-k" aria-hidden="true">{:\\app\\common\\util\\TemplateText::get('ox.sort_week')}</span></h2>
+      <ol class="ox-queue-list">{maccms:vod num="6" type="current" not="'.$obj['vod_id'].'" order="desc" by="hits_week" paging="no" id="tplQv" key="tplQk"}{php}$oxQName = trim(\app\common\util\AvdbLanguage::decodeEntities((string)($tplQv['vod_display_name'] ?? ''))); if ($oxQName === '') { $oxQName = trim(\app\common\util\AvdbLanguage::decodeEntities((string)($tplQv['vod_name'] ?? ''))); } $oxQDur = trim((string)($tplQv['vod_duration'] ?? '')); $oxQDir = preg_match('/[\x{0590}-\x{08FF}\x{FB1D}-\x{FDFF}\x{FE70}-\x{FEFF}]/u', $oxQName) ? 'rtl' : 'ltr';{/php}<li><a class="ox-mini" href="{:mac_url_vod_play($tplQv)}"><span class="ox-mini-i" aria-hidden="true">{$tplQk|sprintf='%02d',###}</span><span class="ox-mini-th"><img src="{$tplQv.vod_pic|mac_default=$tplNoPic|mac_url_img|htmlspecialchars=ENT_QUOTES}" alt="" width="112" height="63" loading="lazy" decoding="async"></span><span class="ox-mini-tx"><span class="ox-mini-t" dir="{$oxQDir}">{$oxQName|htmlspecialchars=ENT_QUOTES}</span>{if condition="$oxQDur neq ''"}<span class="ox-mini-m">{$oxQDur|htmlspecialchars=ENT_QUOTES}</span>{/if}</span></a></li>{/maccms:vod}</ol>
+    </aside>
+  </div>
+  <div class="ox-wmeta">
+    <section class="ox-wtitle" aria-labelledby="play-title">
+      <nav class="ox-crumbs" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.main_navigation')}"><a href="{$maccms.path}">{:\\app\\common\\util\\TemplateText::get('ox.index')}</a>{if condition="$tplTypeName neq ''"}<span aria-hidden="true">/</span><a href="{:mac_url_type($tplType)}">{:\\app\\common\\util\\AutoIcon::icon('category', $tplTypeName, ['size'=>'sm'])}{$oxTypeName|htmlspecialchars=ENT_QUOTES}</a>{/if}<span aria-hidden="true">/</span><span aria-current="page">{if condition="$tplCode neq ''"}{$tplCode|htmlspecialchars=ENT_QUOTES}{else/}{:\\app\\common\\util\\TemplateText::get('ui.details')}{/if}</span></nav>
+      <h1{php}echo \app\common\util\AvdbLanguage::langAttr(isset($obj) && is_array($obj) ? $obj : []);{/php} class="ox-vh1 ox-wh1" id="play-title">{$tplName|htmlspecialchars=ENT_QUOTES}</h1>
+      <div class="ox-actions" role="group" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.details')}">
+        {include file="public/votes"}
+        <button class="ox-act" type="button" aria-expanded="false" aria-controls="ox-share" data-ox-share>{:\\app\\common\\util\\AutoIcon::ui('share', ['class'=>'ox-i'])}<span class="ox-act-l">{:\\app\\common\\util\\TemplateText::get('share')}</span></button>
+        <a class="ox-act" href="{$tplReportUrl|htmlspecialchars=ENT_QUOTES}" rel="nofollow">{:\\app\\common\\util\\AutoIcon::ui('flag', ['class'=>'ox-i'])}<span class="ox-act-l">{:\\app\\common\\util\\TemplateText::get('ui.report')}</span></a>
+        <a class="ox-act" href="{:mac_url_vod_detail($obj)}">{:\\app\\common\\util\\AutoIcon::ui('info', ['class'=>'ox-i'])}<span class="ox-act-l">{:\\app\\common\\util\\TemplateText::get('ui.details')}</span></a>
+      </div>
+      <div class="ox-share" id="ox-share" hidden>
+        <label class="ox-label" for="share-link">{:\\app\\common\\util\\TemplateText::get('onyx.share_video')}</label>
+        <div class="ox-share-row"><input id="share-link" class="ox-share-i" type="text" readonly value="{$tplShareUrl|htmlspecialchars=ENT_QUOTES}"><button class="ox-btn ox-btn-inv ox-copy" type="button" data-fx="copy" data-fx-copy-target="#share-link" data-fx-copied="{:\\app\\common\\util\\TemplateText::get('ox.copied')}" data-fx-copy-failed="{:\\app\\common\\util\\TemplateText::get('copy_manually')}">{:\\app\\common\\util\\AutoIcon::ui('copy', ['class'=>'ox-i'])}<span data-fx-copy-label>{:\\app\\common\\util\\TemplateText::get('ui.copy_link')}</span></button></div>
+      </div>
+      {if condition="$tplLinkPre neq '' || $tplLinkNext neq ''"}<div class="ox-epnav">
+        {if condition="$tplLinkPre neq ''"}<a class="ox-btn" href="{$tplLinkPre|htmlspecialchars=ENT_QUOTES}">{:\\app\\common\\util\\AutoIcon::ui('skip-back', ['class'=>'ox-i'])}{:\\app\\common\\util\\TemplateText::get('previous_episode')}</a>{/if}
+        {if condition="$tplLinkNext neq ''"}<a class="ox-btn" href="{$tplLinkNext|htmlspecialchars=ENT_QUOTES}">{:\\app\\common\\util\\TemplateText::get('next_episode')}{:\\app\\common\\util\\AutoIcon::ui('skip-forward', ['class'=>'ox-i'])}</a>{/if}
+      </div>{/if}
+      {if condition="$tplDesc neq ''"}<div class="ox-desc ox-desc-w" data-clamp><div class="ox-desc-b desc-body">{$tplDesc|htmlspecialchars=ENT_QUOTES}</div><button class="ox-more desc-toggle" type="button" hidden aria-expanded="false" data-more="{:\\app\\common\\util\\TemplateText::get('onyx.show_more')}" data-less="{:\\app\\common\\util\\TemplateText::get('onyx.show_less')}">{:\\app\\common\\util\\TemplateText::get('onyx.show_more')}</button></div>{/if}
+    </section>
+    <section class="ox-wspec" aria-label="{:\\app\\common\\util\\TemplateText::get('ox.spec_sheet')}">
+      <p class="ox-label">{:\\app\\common\\util\\TemplateText::get('ox.spec_sheet')}</p>
+      {include file="public/meta"}
+    </section>
+  </div>
+  {include file="public/episodes"}
+  {php}$oxSecNum = '01'; $oxSecId = 'sec-more'; $oxSecTitle = \app\common\util\TemplateText::raw('ui.more_to_watch'); $oxSecSub = \app\common\util\TemplateText::raw('ox.items_n', ['count' => 10]); $oxSecUrl = $tplTypeName !== '' ? mac_url_type($tplType) : mac_url('label/new');{/php}
+  <section class="ox-sec" aria-labelledby="sec-more">
+    {include file="index/sechead"}
+    {include file="public/related"}
+  </section>
+  {if condition="$GLOBALS['config']['comment']['status'] eq 1"}<section class="ox-sec ox-log" aria-labelledby="sec-log" id="comments">
+    <header class="ox-sec-hd" data-ai-hot><span class="ox-num" aria-hidden="true">02</span><div class="ox-sec-tt"><p class="ox-sec-sub">{:\\app\\common\\util\\TemplateText::get('ox.log_sub')}</p><h2 class="ox-h2" id="sec-log">{:\\app\\common\\util\\AutoIcon::ui('messages', ['size'=>'lg', 'plate'=>true, 'class'=>'ox-sec-ai'])}{:\\app\\common\\util\\TemplateText::get('ui.comments')}</h2></div><span class="ox-sec-rule" aria-hidden="true"></span></header>
+    <div class="mac_comment ox-log-body" data-id="{$obj.vod_id}" data-mid="1" data-ox-lazy-comments><p class="ox-log-wait">{:\\app\\common\\util\\TemplateText::get('ui.loading_comments')}</p></div>
+  </section>{/if}
+  <span hidden data-history-entry data-name="{$tplName|htmlspecialchars=ENT_QUOTES}" data-link="{:mac_url_vod_play($obj)}" data-pic="{$obj.vod_pic|mac_default=$tplNoPic|mac_url_img|htmlspecialchars=ENT_QUOTES}"></span>
+</main>
+{include file="public/foot"}
+{if condition="$GLOBALS['config']['comment']['status'] eq 1"}<script>MAC.Comment.Init();</script>{/if}
+</body>
+</html>

@@ -1,0 +1,74 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}
+/* Network presets (ADS-BRIEF 4.5): what the network gave you, the network (adult line), the code boxes and shape check.
+   Presets ads.txt and Site verification (file) live in Network & files > Root files. */
+$jxPresetCard = ['any' => 'code', 'slot' => 'code', 'pop' => 'pop', 'ipp' => 'code', 'push' => 'webpush', 'multi' => 'code', 'exo' => 'code', 'inter' => 'code',
+    'vast' => 'preroll', 'link' => 'link', 'native' => 'code', 'sticky' => 'sticky', 'adstxt' => '', 'verify' => 'code', 'house' => 'image'];
+{/php}
+<div data-g="preset">
+    <div class="ax-field" data-g="presetlist" role="radiogroup" aria-labelledby="jxPresetL">
+        <label id="jxPresetL">{:$jxE(lang('admin/ux/jcx/net_preset'))}</label>
+        <p class="ax-help">{:$jxE(lang('admin/ux/jcx/help_preset'))}</p>
+        <div class="jx-presets">
+            {volist name="presets" id="p"}
+            <label class="jx-preset"><input type="radio" name="jxPreset" value="{$p}" data-card="{$jxPresetCard[$p]}" lay-ignore aria-describedby="jxPh-{$p}">
+                <span class="jx-preset__t">{:$jxE(lang('admin/ux/jcx/preset_' . $p))}</span>
+                <span class="jx-preset__h" id="jxPh-{$p}">{:$jxE(lang('admin/ux/jcx/ph_' . $p))}</span></label>
+            {/volist}
+        </div>
+    </div>
+    <div class="ax-notice" data-g="presetnote" role="note" hidden><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-info"/></svg><div><p data-jx-ph></p>
+        <p data-g="rootlink" hidden><a class="ax-btn ax-btn--sm" href="{:url('jcx/network')}#jxRoots"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-file-code"/></svg>{:$jxE(lang('admin/ux/jcx/root_title'))}</a></p></div></div>
+    <div class="ax-field ax-field--md" data-g="network">
+        <label for="jxNet">{:$jxE(lang('admin/ux/jcx/net_network'))}</label>
+        <select id="jxNet" class="layui-input" data-f="item_network" lay-ignore aria-describedby="jxNetH jxNetA">
+            <option value="">—</option>
+            {foreach name="nets" item="n" key="nk"}<option value="{$nk}" data-adult="{$n[1]}">{if condition="$nk eq 'other'"}{:$jxE(lang('admin/ux/jcx/net_other'))}{else /}{:$jxE($n[0])}{/if}</option>{/foreach}
+        </select>
+        <p class="ax-help" id="jxNetH">{:$jxE(lang('admin/ux/jcx/help_network'))}</p>
+        <p class="jx-adult" id="jxNetA" aria-live="polite"></p>
+        <p class="ax-help">{:$jxE(lang('admin/ux/jcx/net_review'))}</p>
+    </div>
+    <div data-g="exo">
+        <div class="ax-field ax-field--md"><label for="jxZt">{:$jxE(lang('admin/ux/jcx/zone_type'))}</label>
+            <select id="jxZt" class="layui-input" data-jx-zone="type" lay-ignore>
+                <option value="banner">{:$jxE(lang('admin/ux/jcx/zt_banner'))}</option><option value="native">{:$jxE(lang('admin/ux/jcx/zt_native'))}</option>
+                <option value="sticky">{:$jxE(lang('admin/ux/jcx/zt_sticky'))}</option><option value="fullpage">{:$jxE(lang('admin/ux/jcx/zt_fullpage'))}</option>
+                <option value="ipp">{:$jxE(lang('admin/ux/jcx/zt_ipp'))}</option><option value="outstream">{:$jxE(lang('admin/ux/jcx/zt_outstream'))}</option></select></div>
+        <div class="ax-field ax-field--sm"><label for="jxZid">{:$jxE(lang('admin/ux/jcx/zone_id'))}</label><input id="jxZid" class="layui-input" data-jx-zone="id" inputmode="numeric" aria-describedby="jxZidH"><p class="ax-help" id="jxZidH">{:$jxE(lang('admin/ux/jcx/help_zone_id'))}</p></div>
+        <div class="ax-field ax-field--sm"><label for="jxZcl">{:$jxE(lang('admin/ux/jcx/zone_class'))}</label><input id="jxZcl" class="layui-input" data-jx-zone="class" aria-describedby="jxZclH"><p class="ax-help" id="jxZclH">{:$jxE(lang('admin/ux/jcx/help_zone_class'))}</p></div>
+    </div>
+</div>
+<div data-g="code">
+    {if condition="!$can_code"}<div class="ax-notice ax-notice--warn" role="note"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-lock"/></svg><div><p>{:$jxE(lang('admin/ux/jcx/code_no_right'))}</p></div></div>{/if}
+    <div class="ax-field" data-g="codewhere" role="radiogroup" aria-labelledby="jxWhereL"><label id="jxWhereL">{:$jxE(lang('admin/ux/jcx/where_code'))}</label>
+        <div class="jx-radios"><label class="jx-check"><input type="radio" name="jxWhere" value="P15h" lay-ignore> {:$jxE(lang('admin/ux/jcx/where_head'))}</label>
+        <label class="jx-check"><input type="radio" name="jxWhere" value="P15b" lay-ignore checked> {:$jxE(lang('admin/ux/jcx/where_end'))}</label>
+        <label class="jx-check" data-g="whereplace"><input type="radio" name="jxWhere" value="place" lay-ignore> {:$jxE(lang('admin/ux/jcx/where_place'))}</label></div>
+        <p class="ax-help">{:$jxE(lang('admin/ux/jcx/help_where_code'))}</p></div>
+    <div class="ax-field">
+        <label for="jxCode">{:$jxE(lang('admin/ux/jcx/code_label'))}</label>
+        <textarea id="jxCode" class="layui-textarea jx-code" rows="6" spellcheck="false" data-f="item_code" aria-describedby="jxCodeH jxShape" {if condition="!$can_code"}readonly{/if}></textarea>
+        <p class="ax-help" id="jxCodeH">{:$jxE(lang('admin/ux/jcx/paste_code'))}</p>
+        <p class="jx-shape" id="jxShape" aria-live="polite"></p>
+        <p class="ax-help ax-danger-text jx-err" data-err="item_code" hidden></p>
+    </div>
+    <div class="ax-field" data-g="codem">
+        <label for="jxCodeM">{:$jxE(lang('admin/ux/jcx/code_label_phone'))}</label>
+        <textarea id="jxCodeM" class="layui-textarea jx-code" rows="4" spellcheck="false" data-f="item_code_m" aria-describedby="jxCodeMH" {if condition="!$can_code"}readonly{/if}></textarea>
+        <p class="ax-help" id="jxCodeMH">{:$jxE(lang('admin/ux/jcx/paste_code_phone'))}</p>
+    </div>
+    <div class="ax-notice ax-notice--warn" data-jx-docwrite role="note" hidden><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$jxS}#ai-triangle-alert"/></svg><div><p>{:$jxE(lang('admin/ux/jcx/code_docwrite'))}</p></div></div>
+    <div data-g="sw">
+        {:$jxIn('root.rf_name', 'worker_name', 'help_root_name', 'text', 'placeholder="sw.js" maxlength="64"', 'sm')}
+        {:$jxIn('root.rf_body', 'worker_body', 'help_root_body', 'textarea', 'spellcheck="false"')}
+    </div>
+    <p class="ax-help">{:$jxE(lang('admin/ux/jcx/code_privacy'))}</p>
+    <p class="ax-help" data-jx-compress hidden>{:$jxE(lang('admin/ux/jcx/code_compress'))}</p>
+</div>

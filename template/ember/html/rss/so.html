@@ -1,0 +1,17 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Based on MacCMS 10 (Apache-2.0) by magicblack, changed by JavCMS.
+JavCMS changes: Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors,
+JavCMS Community License 1.0. The MacCMS parts stay under the Apache License 2.0.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+{maccms:vod num="30" paging="no" type="all" order="desc" by="time" id="vo"}
+<url>
+<loc>{:\\app\\common\\util\\Sitemap::xmlEscape(\\app\\common\\util\\Sitemap::absolute(mac_url_vod_detail($vo)))}</loc>
+<lastmod>{$vo.vod_time|date='Y-m-d',###}</lastmod>
+</url>
+{/maccms:vod}
+</urlset>

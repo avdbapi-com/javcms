@@ -1,0 +1,14 @@
+{
+ "$schema": "javcms.auto-icon.v1",
+ "family": "lucide",
+ "stroke": 2,
+ "motion": "jelly",
+ "enter": "pop",
+ "plate": "hex",
+ "plateMotion": "snap60",
+ "avatar": "circle gradient",
+ "tint": "slot",
+ "hue": [25, 40],
+ "map": {},
+ "nav": {}
+}

@@ -1,0 +1,296 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Based on MacCMS 10 (Apache-2.0) by magicblack, changed by JavCMS.
+JavCMS changes: Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors,
+JavCMS Community License 1.0. The MacCMS parts stay under the Apache License 2.0.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{include file="../../../application/admin/view/public/head" /}
+<link rel="stylesheet" href="__STATIC__/css/admin_seo.css?v={:filemtime(ROOT_PATH . 'static/css/admin_seo.css')}">
+{php}
+$tDec = function ($v) { return htmlspecialchars(html_entity_decode(is_scalar($v) ? (string)$v : '', ENT_QUOTES, 'UTF-8'), ENT_QUOTES, 'UTF-8'); };
+$tv = function ($k, $d = '') use ($info) { return isset($info[$k]) ? $info[$k] : $d; };
+$tx = function ($k) use ($tv) { $e = $tv('type_extend', []); if (is_string($e)) { $e = json_decode($e, true); } return is_array($e) && isset($e[$k]) ? $e[$k] : ''; };
+$tId = (int)$tv('type_id', 0);
+$tIsNew = $tId < 1;
+$tPid = $tIsNew ? (int)$pid : (int)$tv('type_pid', 0);
+$tMid = !$tIsNew ? (string)$tv('type_mid', '1') : (isset($infop['type_mid']) && (string)$infop['type_mid'] !== '' ? (string)$infop['type_mid'] : '1');
+$tVisible = $tIsNew || (string)$tv('type_status', '0') === '1';
+{/php}
+<!-- r5 repair (beginner r5 P2-4): the category editor in kit sections: Basics, Search engines (with a Google preview),
+     and Advanced (closed). Field names are unchanged, so Type::info() saves exactly as before. -->
+<div class="page-container type-editor">
+    <div class="ax-editor-head">
+        <a href="{:url('index')}" class="ax-btn ax-btn--ghost" data-ax-back data-ax-back-msg="{:lang('admin/ux/system/leave_unsaved')}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-arrow-left"/></svg>{:lang('admin/ux/kit/back')}</a>
+        <h1>{if condition="$tIsNew"}{:lang('admin/type/editor_add')}{else /}{:lang('admin/ux/content/type_edit_title', [$tDec($tv('type_name'))])}{/if}</h1>
+    </div>
+
+    <form class="ax-form layui-form" method="post" action="" data-ax-dirty>
+        <input type="hidden" name="type_id" value="{if condition="!$tIsNew"}{$tId}{/if}">
+        <input type="hidden" name="__token__" value="{$Request.token}" />
+        <input type="hidden" value="{:$tDec($tv('type_key'))}" name="type_key">
+        {if condition="$tIsNew"}
+        <div class="ax-notice" role="note"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-info"/></svg><div><p>{:lang('admin/ux/content/type_tip')}</p></div></div>
+        {/if}
+
+        <section class="ax-section" aria-labelledby="type-basics-title">
+            <h2 id="type-basics-title">{:lang('admin/ux/content/type_basics')}</h2>
+            <div class="ax-field ax-field--md">
+                <label for="type_name">{:lang('name')}</label>
+                <input type="text" class="layui-input" lay-verify="type_name" value="{:$tDec($tv('type_name'))}" id="type_name" name="type_name" maxlength="60" data-type-pv>
+            </div>
+            <div class="ax-field ax-field--md">
+                <label for="type_en">{:lang('admin/ux/content/url_name')}</label>
+                <input type="text" class="layui-input ax-mono" value="{:$tDec($tv('type_en'))}" id="type_en" name="type_en" maxlength="100" aria-describedby="type-en-help" spellcheck="false">
+                <p class="ax-help" id="type-en-help">{:lang('admin/ux/content/type_url_help')}</p>
+            </div>
+            <div class="ax-field ax-field--md">
+                <label for="type_pid">{:lang('admin/type/parent_type')}</label>
+                <select id="type_pid" name="type_pid">
+                    <option value="0">{:lang('admin/type/top_type')}</option>
+                    {volist name="parent" id="vo"}
+                    {if condition="$vo.type_id neq $tId"}<option value="{$vo.type_id|intval}" {if condition="$tPid eq $vo.type_id"}selected {/if}>{:$tDec($vo['type_name'])}</option>{/if}
+                    {/volist}
+                </select>
+            </div>
+            <div class="ax-field">
+                <label id="type-status-label">{:lang('admin/ux/content/type_visible')}</label>
+                <div><input type="hidden" name="type_status" value="0"><input type="checkbox" name="type_status" value="1" lay-skin="switch" lay-text="{:lang('admin/ux/content/visible')}|{:lang('admin/ux/content/hidden')}" aria-labelledby="type-status-label" aria-describedby="type-status-help" {if condition="$tVisible"}checked{/if}></div>
+                <p class="ax-help" id="type-status-help">{:lang('admin/ux/content/type_visible_help')}</p>
+            </div>
+            <div class="ax-field ax-field--sm">
+                <label for="type_sort">{:lang('sort')}</label>
+                <input type="number" class="layui-input" value="{:intval($tv('type_sort', 0))}" id="type_sort" name="type_sort" aria-describedby="type-sort-help">
+                <p class="ax-help" id="type-sort-help">{:lang('admin/ux/content/type_sort_help')}</p>
+            </div>
+        </section>
+
+        <section class="ax-section" aria-labelledby="type-seo-title">
+            <h2 id="type-seo-title">{:lang('admin/ux/content/type_seo')}</h2>
+            <p class="ax-help">{:lang('admin/ux/content/type_seo_intro')}</p>
+            <div class="ax-field ax-field--md">
+                <label for="type_title">{:lang('seo_title')}</label>
+                <input type="text" class="layui-input" value="{:$tDec($tv('type_title'))}" id="type_title" name="type_title" maxlength="70" aria-describedby="type-seo-help" data-type-pv>
+                <p class="ax-help" id="type-seo-help">{:lang('admin/ux/seo/type_seo_help')}</p>
+            </div>
+            <div class="ax-field ax-field--md">
+                <label for="type_des">{:lang('seo_des')}</label>
+                <textarea class="layui-textarea" id="type_des" name="type_des" maxlength="300" rows="3" aria-describedby="type-des-help" data-type-pv>{:$tDec($tv('type_des'))}</textarea>
+                <p class="ax-help" id="type-des-help">{:lang('admin/ux/content/type_des_help')}</p>
+            </div>
+            <div class="ax-serp" data-type-serp data-url="{:url('info')}?preview=1&amp;id={$tId}">
+                <p class="ax-help">{:lang('admin/ux/content/type_preview')}</p>
+                <div class="ax-serp__box">
+                    <div class="ax-serp__site"><span><span>{$type_domain|htmlspecialchars}</span></span></div>
+                    <div class="ax-serp__title" data-type-serp-title>{$type_serp.title|htmlspecialchars}</div>
+                    <div class="ax-serp__desc" data-type-serp-desc>{$type_serp.description|htmlspecialchars}</div>
+                </div>
+            </div>
+        </section>
+
+        <details class="ax-section ax-advanced">
+            <summary>{:lang('admin/ux/content/type_advanced')}</summary>
+            <div class="ax-field ax-field--sm">
+                <label for="type_mid">{:lang('admin/ux/content/type_kind')}</label>
+                <select id="type_mid" name="type_mid" lay-filter="type_mid" aria-describedby="type-mid-help">
+                    <option value="1" {if condition="$tMid eq '1'"}selected {/if}>{:lang('vod')}</option>
+                    <option value="2" {if condition="$tMid eq '2'"}selected {/if}>{:lang('art')}</option>
+                    <option value="8" {if condition="$tMid eq '8'"}selected {/if}>{:lang('actor')}</option>
+                    <option value="11" {if condition="$tMid eq '11'"}selected {/if}>{:lang('website')}</option>
+                </select>
+                <p class="ax-help" id="type-mid-help">{:lang('admin/ux/content/type_kind_help')}</p>
+            </div>
+            <h3 class="type-sub">{:lang('admin/ux/content/type_templates')}</h3>
+            <p class="ax-help">{:lang('admin/ux/content/type_tpl_help')}</p>
+            <div class="ax-field ax-field--md">
+                <label for="type_tpl">{:lang('admin/type/type_tpl')}</label>
+                <input type="text" class="layui-input ax-mono" lay-verify="type_tpl" value="{:$tDec($tv('type_tpl') ?: 'type.html')}" id="type_tpl" name="type_tpl">
+            </div>
+            <div class="ax-field ax-field--md">
+                <label for="type_tpl_list">{:lang('admin/type/show_tpl')}</label>
+                <input type="text" class="layui-input ax-mono" value="{:$tDec($tv('type_tpl_list') ?: 'show.html')}" id="type_tpl_list" name="type_tpl_list">
+            </div>
+            <div class="ax-field ax-field--md">
+                <label for="type_tpl_detail">{:lang('admin/type/detail_tpl')}</label>
+                <input type="text" class="layui-input ax-mono" value="{:$tDec($tv('type_tpl_detail') ?: 'detail.html')}" id="type_tpl_detail" name="type_tpl_detail">
+            </div>
+            <div class="ax-field ax-field--md vod-list">
+                <label for="type_tpl_play">{:lang('admin/type/play_tpl')}</label>
+                <input type="text" class="layui-input ax-mono" value="{:$tDec($tv('type_tpl_play'))}" id="type_tpl_play" name="type_tpl_play">
+            </div>
+            <div class="ax-field ax-field--md vod-list">
+                <label for="type_tpl_down">{:lang('admin/type/down_tpl')}</label>
+                <input type="text" class="layui-input ax-mono" value="{:$tDec($tv('type_tpl_down'))}" id="type_tpl_down" name="type_tpl_down">
+            </div>
+
+            <h3 class="type-sub">{:lang('admin/ux/content/type_filters')}</h3>
+            <p class="ax-help">{:lang('admin/ux/content/type_filters_help')}</p>
+            <div class="ax-field ax-field--md">
+                <label for="type_ext_class">{:lang('class')}</label>
+                <input type="text" class="layui-input" value="{:$tDec($tx('class'))}" placeholder="{:lang('multi_separate_tip')}" id="type_ext_class" name="type_extend[class]">
+            </div>
+            <div class="ax-field ax-field--md vod-list">
+                <label for="type_ext_area">{:lang('extend_area')}</label>
+                <input type="text" class="layui-input" value="{:$tDec($tx('area'))}" placeholder="{:lang('multi_separate_tip')}" id="type_ext_area" name="type_extend[area]">
+            </div>
+            <div class="ax-field ax-field--md vod-list">
+                <label for="type_ext_lang">{:lang('extend_lang')}</label>
+                <input type="text" class="layui-input" value="{:$tDec($tx('lang'))}" placeholder="{:lang('multi_separate_tip')}" id="type_ext_lang" name="type_extend[lang]">
+            </div>
+            <div class="ax-field ax-field--md vod-list">
+                <label for="type_ext_year">{:lang('extend_year')}</label>
+                <input type="text" class="layui-input" value="{:$tDec($tx('year'))}" placeholder="{:lang('multi_separate_tip')}" id="type_ext_year" name="type_extend[year]">
+            </div>
+            <div class="ax-field ax-field--md vod-list">
+                <label for="type_ext_star">{:lang('admin/type/extend_star')}</label>
+                <input type="text" class="layui-input" value="{:$tDec($tx('star'))}" placeholder="{:lang('multi_separate_tip')}" id="type_ext_star" name="type_extend[star]">
+            </div>
+            <div class="ax-field ax-field--md vod-list">
+                <label for="type_ext_director">{:lang('admin/type/extend_director')}</label>
+                <input type="text" class="layui-input" value="{:$tDec($tx('director'))}" placeholder="{:lang('multi_separate_tip')}" id="type_ext_director" name="type_extend[director]">
+            </div>
+            <div class="ax-field ax-field--md vod-list">
+                <label for="type_ext_state">{:lang('admin/type/extend_state')}</label>
+                <input type="text" class="layui-input" value="{:$tDec($tx('state'))}" placeholder="{:lang('multi_separate_tip')}" id="type_ext_state" name="type_extend[state]">
+            </div>
+            <div class="ax-field ax-field--md vod-list">
+                <label for="type_ext_version">{:lang('admin/type/extend_version')}</label>
+                <input type="text" class="layui-input" value="{:$tDec($tx('version'))}" placeholder="{:lang('multi_separate_tip')}" id="type_ext_version" name="type_extend[version]">
+            </div>
+
+            <h3 class="type-sub">{:lang('admin/ux/content/type_more')}</h3>
+            <div class="ax-field ax-field--md">
+                <label for="type_jumpurl">{:lang('jumpurl')}</label>
+                <input type="text" class="layui-input ax-mono" value="{:$tDec($tv('type_jumpurl'))}" id="type_jumpurl" name="type_jumpurl" aria-describedby="type-jump-help" spellcheck="false">
+                <p class="ax-help" id="type-jump-help">{:lang('admin/ux/content/type_jump_help')}</p>
+            </div>
+            <div class="ax-field ax-field--md">
+                <label for="type_logo">{:lang('admin/type/logo')}</label>
+                <div class="type-upload-row">
+                    <input type="text" id="type_logo" name="type_logo" value="{:$tDec($tv('type_logo'))}" class="layui-input upload-input">
+                    <button type="button" class="ax-btn ax-btn--sm layui-upload" lay-data="{data:{thumb:0,thumb_class:'type_logo'}}" aria-label="{:lang('upload_pic')}: {:lang('admin/type/logo')}">{:lang('upload_pic')}</button>
+                </div>
+            </div>
+            <div class="ax-field ax-field--md">
+                <label for="type_pic">{:lang('admin/type/pic')}</label>
+                <div class="type-upload-row">
+                    <input type="text" id="type_pic" name="type_pic" value="{:$tDec($tv('type_pic'))}" class="layui-input upload-input">
+                    <button type="button" class="ax-btn ax-btn--sm layui-upload" lay-data="{data:{thumb:0,thumb_class:'type_pic'}}" aria-label="{:lang('upload_pic')}: {:lang('admin/type/pic')}">{:lang('upload_pic')}</button>
+                </div>
+            </div>
+        </details>
+
+        <div class="ax-savebar">
+            <span class="ax-savebar__status" role="status"></span>
+            <div class="ax-savebar__end">
+                <button class="ax-btn" type="reset"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-rotate-ccw"/></svg>{:lang('admin/ux/content/ved_reset')}</button>
+                <button type="submit" class="ax-btn ax-btn--primary" lay-submit="" lay-filter="formSubmit" data-child="true"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-save"/></svg>{:lang('admin/ux/kit/save')}</button>
+            </div>
+        </div>
+    </form>
+</div>
+<style>
+.type-editor .type-sub { margin: 18px 0 4px; font-size: 14px; font-weight: 600; color: var(--ax-text); }
+.type-editor .type-upload-row { display: flex; gap: 8px; align-items: center; }
+.type-editor .type-upload-row .layui-input { flex: 1 1 auto; min-width: 0; }
+.type-editor .ax-serp { max-width: 600px; margin-top: 8px; }
+.type-editor .ax-field--md .layui-form-select { max-width: 420px; }
+.type-editor .ax-field--sm .layui-form-select { max-width: 220px; }
+</style>
+{include file="../../../application/admin/view/public/foot" /}
+<script type="text/javascript">
+    function selectOnChange(id)
+    {
+        var flag = String(id);
+        var type_tpl = 'type.html';
+        var type_tpl_list = 'show.html';
+        var type_tpl_detail = 'detail.html';
+        var type_tpl_play = 'play.html';
+        var type_tpl_down = 'down.html';
+
+        if (flag !== '1') {
+            $(".vod-list").hide();
+            type_tpl_play = '';
+            type_tpl_down = '';
+        }
+        else {
+            $(".vod-list").show();
+        }
+        if ($('input[name="type_id"]').val() == '' || $('input[name="type_id"]').val() == '0') {
+            $('input[name="type_tpl"]').val(type_tpl);
+            $('input[name="type_tpl_list"]').val(type_tpl_list);
+            $('input[name="type_tpl_detail"]').val(type_tpl_detail);
+            $('input[name="type_tpl_play"]').val(type_tpl_play);
+            $('input[name="type_tpl_down"]').val(type_tpl_down);
+        }
+    }
+    layui.use(['form','upload', 'layer'], function () {
+        var form = layui.form
+                , layer = layui.layer
+                , upload = layui.upload
+                , $ = layui.jquery;
+
+        upload.render({
+            elem: '.layui-upload'
+            ,url: "{:url('upload/upload')}?flag=type"
+            ,method: 'post'
+            ,before: function(input) {
+                layer.msg("{:lang('upload_ing')}", {time:3000000});
+            },done: function(res, index, upload) {
+                var obj = this.item;
+                if (res.code == 0) {
+                    layer.msg(res.msg);
+                    return false;
+                }
+                layer.closeAll();
+                var input = $(obj).closest('.type-upload-row').find('.upload-input');
+                input.val(res.data.file).trigger('input');
+                if (window.AxUX) { AxUX.markDirty(); }
+            }
+        });
+
+        form.verify({
+            type_name: function (value) {
+                if (value == "") {
+                    return "{:lang('name_empty')}";
+                }
+            },
+            type_tpl: function (value, item) {
+                if (value == "") {
+                    // r7 repair (function r6 P3-4): the field sits in the closed "Advanced" section: open it so the
+                    // message points at a field the admin can see (layui then focuses it).
+                    var adv = item && item.closest ? item.closest('details') : null;
+                    if (adv) { adv.open = true; }
+                    return "{:lang('admin/type/tpl_empty')}";
+                }
+            }
+        });
+
+        form.on('select(type_mid)', function(data){
+            selectOnChange(data.value);
+        });
+
+        selectOnChange({:json_encode((string)(int)$tMid)});
+
+        // Google preview: the server builds it with the site's own title rules (Type::info ?preview=1, read-only).
+        var serp = $('[data-type-serp]'), timer = null, seq = 0;
+        function refreshSerp() {
+            var mine = ++seq;
+            $.get(serp.attr('data-url'), {
+                type_name: $('#type_name').val(), type_title: $('#type_title').val(), type_des: $('#type_des').val()
+            }, function (res) {
+                if (mine !== seq || !res || res.code != 1 || !res.data) { return; }
+                serp.find('[data-type-serp-title]').text(res.data.title || '');
+                serp.find('[data-type-serp-desc]').text(res.data.description || '');
+            });
+        }
+        $(document).on('input', '[data-type-pv]', function () {
+            clearTimeout(timer);
+            timer = setTimeout(refreshSerp, 400);
+        });
+    });
+</script>
+<script>document.addEventListener('click', function (e) { var b = e.target.closest('[data-ax-back]'); if (!b) { return; } var idx; try { idx = window.parent !== window && parent.layer ? parent.layer.getFrameIndex(window.name) : undefined; } catch (err) { idx = undefined; } if (idx === undefined || idx === null) { return; } e.preventDefault(); var go = function () { parent.layer.close(idx); }; if (window.AxUX && AxUX.isDirty()) { AxUX.confirm({ message: b.getAttribute('data-ax-back-msg'), count: 1 }).then(function (yes) { if (yes) { AxUX.markClean(); go(); } }); } else { go(); } });</script>
+</body>
+</html>

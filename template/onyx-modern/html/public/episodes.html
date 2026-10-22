@@ -1,0 +1,13 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{if condition="$tplEpCount gt 1 || $tplSrcCount gt 1"}<section class="ox-eps" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.details')}">
+  {maccms:foreach name="obj.vod_play_list" id="tplSource" key="tplSid"}
+  <h2 class="ox-label">{:\\app\\common\\util\\AutoIcon::ui('monitor-play', ['size'=>'sm'])}{$tplSource.player_info.show|htmlspecialchars=ENT_QUOTES}</h2>
+  <div class="ox-eps-list">{maccms:foreach name="tplSource.urls" id="tplEp" key="tplNid"}<a class="ox-seg" href="{:mac_url_vod_play($obj,['sid'=>$tplSource['sid'],'nid'=>$tplEp['nid']])}" {if condition="$param.sid eq $tplSource.sid && $param.nid eq $tplEp.nid"}aria-current="page"{/if}>{$tplEp.name|htmlspecialchars=ENT_QUOTES}</a>{/maccms:foreach}</div>
+  {/maccms:foreach}
+</section>{/if}

@@ -1,0 +1,25 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="neon-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/actor_detail"}
+{include file="public/include"}
+</head>
+<body class="nn-page-actor">
+{include file="public/head"}
+<main id="main-content" class="nn-main"><div class="nn-wrap">
+<section class="nn-uhero" style="margin-top:12px;border-radius:18px"><div class="nn-uhero-in"><span class="nn-person-pic nn-person-pic--xl">{:\\app\\common\\util\\AutoIcon::avatar($obj['actor_name'], (string)($obj['actor_pic'] ?? ''), ['size'=>'lg', 'decorative'=>true])}</span><div><h1>{:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)($obj['actor_name'] ?? '')), ENT_QUOTES, 'UTF-8')}</h1><p>{:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)($obj['actor_area'] ?? '')), ENT_QUOTES, 'UTF-8')} {:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)($obj['actor_birthday'] ?? '')), ENT_QUOTES, 'UTF-8')} {:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)($obj['actor_height'] ?? '')), ENT_QUOTES, 'UTF-8')}</p></div></div></section>
+{if condition="$obj.actor_content neq ''"}<section class="nn-panel"><p class="nn-desc">{:\\app\\common\\util\\TemplateContent::html($obj['actor_content'] ?? '')}</p></section>{/if}
+<section class="nn-section" aria-labelledby="nn-h-av"><div class="nn-cap"><h2 class="nn-cap-title" id="nn-h-av">{:\\app\\common\\util\\AutoIcon::ui('video', ['class'=>'nn-cap-ai'])}<span>{:\\app\\common\\util\\TemplateText::get('ui.videos')}</span></h2></div>
+<div class="nn-grid" data-grid-fill>{maccms:vod num="20" actor="'.$obj['actor_name'].'" order="desc" by="time" paging="no" id="vo"}{include file="public/vodbox"}{/maccms:vod}</div></section>
+{if condition="$GLOBALS['config']['comment']['status'] eq 1"}<section class="nn-comments" id="nn-comments"><div class="mac_comment" data-id="{$obj.actor_id}" data-mid="8"><p>{:\\app\\common\\util\\TemplateText::get('ui.loading_comments')}</p></div></section><script>MAC.Comment.Init();MAC.Comment.Show(1);</script>{/if}
+</div></main>
+{include file="public/foot"}
+</body>
+</html>

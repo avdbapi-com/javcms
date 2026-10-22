@@ -1,0 +1,13 @@
+hls.js 1.7.3 (light build)
+https://github.com/video-dev/hls.js
+Copyright (c) 2017 Dailymotion (http://www.dailymotion.com)
+Licensed under the Apache License, Version 2.0 (see hls-1.7.3.LICENSE.txt).
+
+Portions (src/remux/mp4-generator.js, src/demux/exp-golomb.ts) are derived from the HLS library for
+video.js (https://github.com/videojs/videojs-contrib-hls), Copyright (c) 2013-2015 Brightcove,
+also under the Apache License 2.0.
+
+JavCMS ships two unmodified copies of dist/hls.light.min.js from the npm package hls.js@1.7.3
+(integrity sha512-MsPlx6yVW4Qv4C7mEVou4/gk/5cN2dVxOTnrNjPSmyH2f0Ln+/UkG10Ax1PE6OvrmTVPKgQYozTtBaPOuCzq7A==):
+  static/jcx/lib/hls-1.7.3.light.min.js   (video ads: m3u8 creatives in browsers without native HLS)
+  static/player/artplayer/hls.min.js      (the ArtPlayer page: direct m3u8 sources without native HLS)

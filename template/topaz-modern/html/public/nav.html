@@ -1,0 +1,60 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}$tpHotRaw = array_values(array_filter(array_map('trim', explode(',', (string)($maccms['search_hot'] ?? ''))))); $tpHot = []; foreach ($tpHotRaw as $tpHotW) { if (mb_strlen($tpHotW, 'UTF-8') >= 2) { $tpHot[] = ['w' => $tpHotW, 'ico' => \app\common\util\AutoIcon::keepTag($tpHotW) ? \app\common\util\AutoIcon::icon('tag', $tpHotW, ['size' => 'sm']) : \app\common\util\AutoIcon::ui('trending-up', ['size' => 'sm'])]; } if (count($tpHot) >= 10) { break; } } $tpPalLangs = \app\common\util\TemplateText::languages();{/php}
+<div class="tp-pal" id="tp-pal" role="dialog" aria-modal="true" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.search')}" hidden data-tp-pal data-lenis-prevent>
+  <div class="tp-pal-scrim" data-tp-pal-close></div>
+  <div class="tp-pal-box">
+    <div class="tp-pal-handle" aria-hidden="true"></div>
+    <form class="tp-pal-head" action="{:mac_url('vod/search')}" method="get" role="search" data-tp-pal-form data-suggest="{$maccms.path|htmlspecialchars=ENT_QUOTES}index.php/ajax/suggest" data-results="{:mac_url('vod/search')}">
+      {:\\app\\common\\util\\AutoIcon::ui('search', ['class'=>'tp-pal-lens'])}
+      <label class="tp-sr" for="tp-pal-q">{:\\app\\common\\util\\TemplateText::get('ui.search')}</label>
+      <input class="tp-pal-q" id="tp-pal-q" type="search" name="wd" placeholder="{:\\app\\common\\util\\TemplateText::get('tp.search_or_jump')}" autocomplete="off" maxlength="60" enterkeyhint="search" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="tp-pal-list" data-tp-pal-q>
+      <button class="tp-pal-x" type="button" data-tp-pal-close aria-label="{:\\app\\common\\util\\TemplateText::get('template_ui_close')}">{:\\app\\common\\util\\AutoIcon::ui('close')}</button>
+    </form>
+    <div class="tp-pal-body" data-tp-pal-body>
+      <p class="tp-pal-status" role="status" aria-live="polite" data-tp-pal-status></p>
+      <div class="tp-pal-list" id="tp-pal-list" role="listbox" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.search')}" data-tp-pal-list hidden><a class="tp-pal-all" href="{:mac_url('vod/search')}" role="option" aria-selected="false" data-tp-pal-all hidden>{:\\app\\common\\util\\AutoIcon::ui('arrow-right', ['size'=>'sm'])}<span>{:\\app\\common\\util\\TemplateText::get('tp.view_all_results')}</span></a></div>
+      <div data-tp-pal-home>
+        <section class="tp-pal-sec" data-tp-recent hidden><p class="tp-pal-label"><span>{:\\app\\common\\util\\AutoIcon::ui('history', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('tp.recent_searches')}</span><button type="button" data-tp-recent-clear>{:\\app\\common\\util\\AutoIcon::ui('trash', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('tp.clear')}</button></p><div class="tp-chips" data-tp-recent-list></div><template data-tp-recent-ico>{:\\app\\common\\util\\AutoIcon::ui('history', ['size'=>'sm'])}</template></section>
+        {notempty name="tpHot"}<section class="tp-pal-sec"><p class="tp-pal-label"><span>{:\\app\\common\\util\\AutoIcon::ui('trending-up', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('tp.hot_searches')}</span></p><div class="tp-chips">{volist name="tpHot" id="tpHotW" key="tpHotK"}<a class="tp-chip tp-chip--hot" href="{:mac_url('vod/search', ['wd' => $tpHotW['w']])}" style="--tp-i:{$tpHotK}">{$tpHotW.ico}<bdi>{$tpHotW.w|htmlspecialchars=ENT_QUOTES}</bdi></a>{/volist}</div></section>{/notempty}
+        <section class="tp-pal-sec"><p class="tp-pal-label"><span>{:\\app\\common\\util\\AutoIcon::navIcon('categories', '', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ui.categories')}</span></p>
+          <div class="tp-facets">{foreach name="tpTypes" item="tpT" key="tpTk"}<a class="tp-cat-tile tp-gem-i-{$tpT.gem}" href="{$tpT.url|htmlspecialchars=ENT_QUOTES}" style="--tp-i:{$tpTk}" {if condition="$tpT.id eq $tpTypeNow || $tpT.id eq $tpTypePid"}aria-current="page"{/if}>{:$tpCutIco($tpT, $tpTk)}<span><b>{$tpT.name|htmlspecialchars=ENT_QUOTES}</b><small>{$tpT.count}</small></span></a>{/foreach}</div>
+        </section>
+        <section class="tp-pal-sec"><p class="tp-pal-label"><span>{:\\app\\common\\util\\AutoIcon::ui('compass', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('tp.jump_to')}</span></p>
+          <div class="tp-pal-links">
+            <a href="{:mac_url('label/new')}" style="--tp-i:0" {if condition="$tplAid eq 9999"}aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::navIcon('latest')}{:\\app\\common\\util\\TemplateText::get('latest')}</a>
+            <a href="{:mac_url('label/hot')}" style="--tp-i:1" {if condition="$tplAid eq 9998"}aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::navIcon('hot')}{:\\app\\common\\util\\TemplateText::get('ui.popular')}</a>
+            <a href="{:mac_url('label/score')}" style="--tp-i:2" {if condition="$tplAid eq 9997"}aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::navIcon('top')}{:\\app\\common\\util\\TemplateText::get('top_rated')}</a>
+            <a href="{:mac_url('label/up')}" style="--tp-i:3" {if condition="$tplAid eq 9996"}aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::navIcon('liked')}{:\\app\\common\\util\\TemplateText::get('most_liked')}</a>
+            <a href="{:mac_url('label/sort')}" style="--tp-i:4" {if condition="$tplAid eq 9995"}aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::navIcon('all-videos')}{:\\app\\common\\util\\TemplateText::get('ui.all_videos')}</a>
+            <a href="{:mac_url('user/plays')}" rel="nofollow" style="--tp-i:5">{:\\app\\common\\util\\AutoIcon::navIcon('history')}{:\\app\\common\\util\\TemplateText::get('history')}</a>
+            {if condition="$tplHasActor eq 1"}<a href="{:mac_url('actor/index')}" style="--tp-i:6">{:\\app\\common\\util\\AutoIcon::navIcon('actors')}{:\\app\\common\\util\\TemplateText::get('ui.performers')}</a>{/if}
+            {if condition="$tplHasTopic eq 1"}<a href="{:mac_url('topic/index')}" style="--tp-i:7">{:\\app\\common\\util\\AutoIcon::navIcon('topics')}{:\\app\\common\\util\\TemplateText::get('ui.collections')}</a>{/if}
+            {if condition="$tplHasArt eq 1"}<a href="{:mac_url('art/index')}" style="--tp-i:8">{:\\app\\common\\util\\AutoIcon::navIcon('articles')}{:\\app\\common\\util\\TemplateText::get('ui.articles')}</a>{/if}
+            <a href="{:mac_url('gbook/index')}" style="--tp-i:9">{:\\app\\common\\util\\AutoIcon::navIcon('contact')}{:\\app\\common\\util\\TemplateText::get('ui.contact_the_site')}</a>
+          </div>
+        </section>
+        <section class="tp-pal-sec tp-pal-mobile"><p class="tp-pal-label"><span>{:\\app\\common\\util\\AutoIcon::ui('user-circle', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ui.account')}</span></p>
+          <div class="tp-pal-row" data-tp-guest>
+            <a href="{:mac_url('user/login')}" rel="nofollow">{:\\app\\common\\util\\AutoIcon::navIcon('login')}{:\\app\\common\\util\\TemplateText::get('ui.log_in')}</a>
+            <a href="{:mac_url('user/reg')}" rel="nofollow">{:\\app\\common\\util\\AutoIcon::navIcon('register')}{:\\app\\common\\util\\TemplateText::get('ui.register')}</a>
+          </div>
+          <div class="tp-pal-row" data-tp-member hidden>
+            <a href="{:mac_url('user/index')}" rel="nofollow">{:\\app\\common\\util\\AutoIcon::navIcon('account')}<span data-tp-user-name>{:\\app\\common\\util\\TemplateText::get('ui.member_center')}</span></a>
+            <a href="{:mac_url('user/favs')}" rel="nofollow">{:\\app\\common\\util\\AutoIcon::navIcon('favourites')}{:\\app\\common\\util\\TemplateText::get('ui.my_collection')}</a>
+            <a href="{:mac_url('user/logout')}" rel="nofollow">{:\\app\\common\\util\\AutoIcon::navIcon('logout')}{:\\app\\common\\util\\TemplateText::get('log_out')}</a>
+          </div>
+        </section>
+        <section class="tp-pal-sec tp-pal-mobile"><p class="tp-pal-label"><span>{:\\app\\common\\util\\AutoIcon::ui('languages', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ui.language')}</span></p>
+          <div class="tp-pal-langs">{volist name="tpPalLangs" id="tpPalLang" key="tpPalLangK"}<a href="{:\\app\\common\\util\\TemplateText::languageUrl($key)}" lang="{$key|htmlspecialchars=ENT_QUOTES}" hreflang="{$key|htmlspecialchars=ENT_QUOTES}" style="--tp-i:{$tpPalLangK}" {if condition="$key eq $maccms['ui_lang']"}aria-current="true"{/if}>{if condition="$key eq $maccms['ui_lang']"}{:\\app\\common\\util\\AutoIcon::ui('check', ['size'=>'sm', 'class'=>'tp-lang-ok'])}{/if}<span>{$tpPalLang|htmlspecialchars=ENT_QUOTES}</span><small>{$key|strtoupper|htmlspecialchars=ENT_QUOTES}</small></a>{/volist}</div>
+        </section>
+      </div>
+    </div>
+    <div class="tp-pal-kbd" aria-hidden="true"><span><kbd>&uarr;</kbd><kbd>&darr;</kbd>{:\\app\\common\\util\\TemplateText::get('tp.navigate')}</span><span><kbd>&crarr;</kbd>{:\\app\\common\\util\\TemplateText::get('tp.open')}</span><span><kbd>Esc</kbd>{:\\app\\common\\util\\TemplateText::get('template_ui_close')}</span></div>
+  </div>
+</div>

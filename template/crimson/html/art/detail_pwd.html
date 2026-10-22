@@ -1,0 +1,23 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="crimson" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+<title>{:\\app\\common\\util\\TemplateText::get('ui.access_required')}</title>
+<meta name="robots" content="noindex, follow" />
+{include file="public/include"}
+</head>
+<body class="ct-solo ct-access-page">
+<header class="ct-bar ct-solo-bar"><div class="ct-bar-in ct-wrap"><div class="ct-logo"><a href="{$maccms.path|default='/'}" title="{:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$maccms['site_name']), ENT_QUOTES, 'UTF-8')}">{if condition="$maccms.site_logo neq ''"}<img class="ct-logo-img" src="{:mac_safe_url(mac_url_img($maccms['site_logo']))}" width="191" height="60" alt="{:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$maccms['site_name']), ENT_QUOTES, 'UTF-8')}">{else/}<span class="ct-wordmark"><span>{:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$maccms['site_name']), ENT_QUOTES, 'UTF-8')}</span></span>{/if}</a></div></div></header>
+<main id="main-content" class="ct-wrap ct-solo-main">
+<section class="ct-msgbox ct-access"><span class="ct-msg-icon" aria-hidden="true">{:\\app\\common\\util\\AutoIcon::ui('lock', ['class'=>'ct-ico'])}</span><p class="ct-kicker">{:\\app\\common\\util\\TemplateText::get('ui.articles')}</p><h1 class="ct-h1">{:\\app\\common\\util\\TemplateText::get('ui.access_required')}</h1><p class="ct-access-name" dir="auto">{:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)($obj['art_name'] ?? '')), ENT_QUOTES, 'UTF-8')}</p><p>{:\\app\\common\\util\\TemplateText::get('ui.enter_the_password_to_view_this_video')}</p>
+<form id="form1" name="form1" class="ct-form" action="{:mac_url('ajax/pwd')}" method="post" onsubmit="MAC.Pwd.Check(this.querySelector('[data-mid]'));return false;">{:token()}<input type="hidden" name="id" value="{$obj.art_id|intval}"><input type="hidden" name="mid" value="2"><input type="hidden" name="type" value="1"><div class="ct-field"><label for="video-access-password">{:\\app\\common\\util\\AutoIcon::ui('lock', ['class'=>'ct-ico'])}{:\\app\\common\\util\\TemplateText::get('ui.access_password')}</label><input class="ct-input" id="video-access-password" name="pwd" type="password" autocomplete="current-password" required maxlength="255"></div><button class="ct-btn ct-btn--block submit_btn" type="submit" data-id="{$obj.art_id|intval}" data-mid="2" data-type="1">{:\\app\\common\\util\\TemplateText::get('ui.click_to_confirm')}</button></form>
+<div class="ct-row ct-row--center">{if condition="!empty($obj['art_pwd_url']) AND in_array(strtolower((string)parse_url($obj['art_pwd_url'],PHP_URL_SCHEME)),array('http','https'))"}<a class="ct-link" href="{$obj.art_pwd_url|htmlspecialchars=ENT_QUOTES}" target="_blank" rel="noopener noreferrer">{:\\app\\common\\util\\TemplateText::get('ui.click_to_get_the_password')}</a>{/if}<a class="ct-link" href="{$maccms.path|htmlspecialchars=ENT_QUOTES}">{:\\app\\common\\util\\TemplateText::get('ui.back_to_home')}</a></div></section>
+</main>
+</body>
+</html>

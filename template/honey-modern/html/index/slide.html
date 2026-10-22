@@ -1,0 +1,47 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}$ncFeat = []; $ncFeatN = 0;{/php}{maccms:vod num="5" level="9" type="all" order="desc" by="time" paging="no" id="ncFv"}{php}$ncFeat[] = $ncFv; $ncFeatN++;{/php}{/maccms:vod}{if condition="$ncFeatN eq 0"}{maccms:vod num="5" type="all" order="desc" by="hits_week" paging="no" id="ncFv"}{php}$ncFeat[] = $ncFv; $ncFeatN++;{/php}{/maccms:vod}{/if}
+{php}
+$ncSlides = [];
+foreach ($ncFeat as $ncFi => $ncFr) {
+    $ncFt = trim((string)($ncFr['vod_display_name'] ?? '')); if ($ncFt === '') { $ncFt = (string)($ncFr['vod_name'] ?? ''); }
+    $ncFt = trim(\app\common\util\AvdbLanguage::decodeEntities($ncFt));
+    $ncFp = trim((string)($ncFr['vod_pic_slide'] ?? '')); if ($ncFp === '') { $ncFp = trim((string)($ncFr['vod_pic'] ?? '')); }
+    $ncFp = $ncFp === '' ? $maccms['path_tpl'] . 'assets/brand/ph-dark.svg' : mac_url_img($ncFp);
+    $ncFc = \app\common\util\AvdbLanguage::displayCode($ncFr); if ($ncFc === '' || stripos($ncFc, 'avdb-') === 0 || mb_strlen($ncFc) > 18) { $ncFc = ''; }
+    $ncFs = (float)($ncFr['vod_score'] ?? 0);
+    $ncFh = (int)($ncFr['vod_hits'] ?? 0);
+    $ncSlides[] = [
+        'title' => $ncFt, 'pic' => $ncFp, 'watch' => (string)mac_url_vod_play($ncFr), 'detail' => (string)mac_url_vod_detail($ncFr),
+        'code' => $ncFc, 'dur' => trim((string)($ncFr['vod_duration'] ?? '')), 'score' => $ncFs > 0 ? number_format($ncFs, 1) : '',
+        'hits' => $ncFh >= 1000000 ? round($ncFh / 1000000, 1) . 'M' : ($ncFh >= 10000 ? round($ncFh / 1000, 1) . 'K' : number_format($ncFh)),
+        'n' => $ncFi + 1, 'tilt' => [-3, 2.5, -1.5, 3.5, -2][$ncFi % 5],
+    ];
+}
+$ncS0 = $ncSlides ? $ncSlides[0] : ['title' => '', 'pic' => '', 'watch' => '', 'detail' => '', 'code' => '', 'dur' => '', 'score' => '', 'hits' => '0', 'n' => 1, 'tilt' => 0];
+$ncSlideTotal = count($ncSlides);
+$ncMastName = isset($ncSiteAttr) ? $ncSiteAttr : htmlspecialchars(\app\common\util\AvdbLanguage::decodeEntities((string)($maccms['site_name'] ?? '')), ENT_QUOTES, 'UTF-8');
+{/php}
+<section class="nc-hero" data-fx="shader" data-fx-shader="{$maccms.path_tpl|htmlspecialchars=ENT_QUOTES}assets/js/gl-honey.js?v=20261012c" data-fx-fps="30" aria-labelledby="nc-feature-title">
+<div class="nc-leaks" aria-hidden="true"><i class="nc-leak nc-leak-a"></i><i class="nc-leak nc-leak-b"></i><i class="nc-leak nc-leak-c"></i></div>
+<div class="nc-wrap nc-hero-in">
+<h1 class="nc-mast"><span class="nc-hexdot" aria-hidden="true"></span><span>{$ncMastName}</span></h1>
+<div class="nc-hero-grid">
+<div class="nc-hero-copy" data-nc-copy>
+<p class="nc-eyebrow"><svg class="nc-i" aria-hidden="true"><use href="{$ncIco}sparkles"></use></svg>{:\\app\\common\\util\\TemplateText::get('nc.featured')}</p>
+<h2 class="nc-feature" id="nc-feature-title" data-nc-melt="hero"><span class="nc-feature-txt" dir="auto" data-nc-f="title">{$ncS0.title|htmlspecialchars=ENT_QUOTES}</span></h2>
+<ul class="nc-hero-meta" data-nc-f="meta">{if condition="$ncS0.code neq ''"}<li class="nc-hm-code nc-ltr">{$ncS0.code|htmlspecialchars=ENT_QUOTES}</li>{/if}{if condition="$ncS0.dur neq ''"}<li><svg class="nc-i" aria-hidden="true"><use href="{$ncIco}clock"></use></svg><span class="nc-ltr">{$ncS0.dur|htmlspecialchars=ENT_QUOTES}</span></li>{/if}<li><svg class="nc-i" aria-hidden="true"><use href="{$ncIco}eye"></use></svg><span class="nc-ltr">{$ncS0.hits}</span><span class="nc-sr"> {:\\app\\common\\util\\TemplateText::get('ui.views')}</span></li>{if condition="$ncS0.score neq ''"}<li><svg class="nc-i" aria-hidden="true"><use href="{$ncIco}star"></use></svg><span class="nc-ltr">{$ncS0.score}</span></li>{/if}</ul>
+</div>
+<div class="nc-hero-cta" data-nc-cta><a class="nc-btn nc-btn-honey" href="{$ncS0.watch|htmlspecialchars=ENT_QUOTES}" data-nc-f="watch"><svg class="nc-i" aria-hidden="true"><use href="{$ncIco}play"></use></svg>{:\\app\\common\\util\\TemplateText::get('nc.watch_now')}</a><a class="nc-btn nc-btn-ghost" href="{$ncS0.detail|htmlspecialchars=ENT_QUOTES}" data-nc-f="detail"><svg class="nc-i" aria-hidden="true"><use href="{$ncIco}info"></use></svg>{:\\app\\common\\util\\TemplateText::get('ui.details')}</a></div>
+{if condition="$ncSlideTotal gt 0"}<div class="nc-stack" data-nc-stack data-label-prev="{:\\app\\common\\util\\TemplateText::get('nc.prev_slide')}" data-label-next="{:\\app\\common\\util\\TemplateText::get('nc.next_slide')}" data-label-slide="{:\\app\\common\\util\\TemplateText::get('nc.slide_of')}">
+<div class="swiper nc-stack-sw" aria-roledescription="carousel" aria-label="{:\\app\\common\\util\\TemplateText::get('nc.featured')}"><div class="swiper-wrapper">{volist name="ncSlides" id="ncSl"}<div class="swiper-slide nc-slide" role="group" aria-roledescription="slide" aria-label="{$ncSl.n} / {$ncSlideTotal}" style="--tilt:{$ncSl.tilt}deg;--n:{$ncSl.n}" data-title="{$ncSl.title|htmlspecialchars=ENT_QUOTES}" data-watch="{$ncSl.watch|htmlspecialchars=ENT_QUOTES}" data-detail="{$ncSl.detail|htmlspecialchars=ENT_QUOTES}" data-code="{$ncSl.code|htmlspecialchars=ENT_QUOTES}" data-dur="{$ncSl.dur|htmlspecialchars=ENT_QUOTES}" data-hits="{$ncSl.hits}" data-score="{$ncSl.score}"><a class="nc-slide-card" href="{$ncSl.watch|htmlspecialchars=ENT_QUOTES}" aria-label="{$ncSl.title|htmlspecialchars=ENT_QUOTES}"{if condition="$ncSl.n gt 1"} tabindex="-1"{/if}><span class="nc-slide-img"><img data-lowres src="{$ncSl.pic|htmlspecialchars=ENT_QUOTES}" alt="" width="640" height="360" decoding="async"{if condition="$ncSl.n eq 1"} fetchpriority="high"{else/} loading="lazy"{/if}></span><span class="nc-slide-label" aria-hidden="true"><span class="nc-slide-no nc-ltr">{$ncSl.n|str_pad=2,'0',STR_PAD_LEFT}</span>{if condition="$ncSl.code neq ''"}<span class="nc-slide-code nc-ltr">{$ncSl.code|htmlspecialchars=ENT_QUOTES}</span>{/if}{if condition="$ncSl.dur neq ''"}<span class="nc-slide-dur nc-ltr">{$ncSl.dur|htmlspecialchars=ENT_QUOTES}</span>{/if}</span></a></div>{/volist}</div></div>
+{if condition="$ncSlideTotal gt 1"}<div class="nc-stack-ctrl"><button class="nc-ibtn nc-stack-btn" type="button" data-nc-stack-prev aria-label="{:\\app\\common\\util\\TemplateText::get('nc.prev_slide')}"><svg class="nc-i nc-flip" aria-hidden="true"><use href="{$ncIco}chevron-left"></use></svg></button><span class="nc-stack-count nc-ltr" aria-hidden="true" data-nc-stack-count>1 / {$ncSlideTotal}</span><button class="nc-ibtn nc-stack-btn" type="button" data-nc-stack-next aria-label="{:\\app\\common\\util\\TemplateText::get('nc.next_slide')}"><svg class="nc-i nc-flip" aria-hidden="true"><use href="{$ncIco}chevron-right"></use></svg></button><button class="nc-ibtn nc-stack-btn nc-stack-pause" type="button" hidden data-nc-stack-pause aria-pressed="false" data-fx="morph" data-fx-icons="pause play" data-label-pause="{:\\app\\common\\util\\TemplateText::get('nc.pause')}" data-label-play="{:\\app\\common\\util\\TemplateText::get('nc.play')}" aria-label="{:\\app\\common\\util\\TemplateText::get('nc.pause')}"><svg class="nc-morph" viewBox="0 0 24 24" aria-hidden="true"><rect x="14" y="4" width="4" height="16" rx="1"/><rect x="6" y="4" width="4" height="16" rx="1"/></svg></button></div>{/if}
+</div>{/if}
+</div>
+</div>
+</section>

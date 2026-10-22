@@ -1,0 +1,19 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}$vvSlides = 0;{/php}
+<section class="vv-banner" data-vv-banner aria-roledescription="carousel" aria-label="{:\\app\\common\\util\\TemplateText::get('velvet.featured')}">
+  <div class="vv-banner-track">
+    {maccms:vod num="5" type="all" level="9" order="desc" by="time" paging="no" id="vo" key="vvSlideKey"}{php}$vvSlides++;{/php}{include file="public/slide"}{/maccms:vod}
+    {if condition="$vvSlides eq 0"}{maccms:vod num="5" type="all" order="desc" by="hits" paging="no" id="vo" key="vvSlideKey"}{php}$vvSlides++;{/php}{include file="public/slide"}{/maccms:vod}{/if}
+  </div>
+  {if condition="$vvSlides gt 1"}
+  <button class="vv-banner-arrow vv-banner-prev" type="button" data-vv-prev aria-label="{:\\app\\common\\util\\TemplateText::get('velvet.previous_slide')}">{:\\app\\common\\util\\AutoIcon::ui('chevron-left', ['class'=>'vv-i'])}</button>
+  <button class="vv-banner-arrow vv-banner-next" type="button" data-vv-next aria-label="{:\\app\\common\\util\\TemplateText::get('velvet.next_slide')}">{:\\app\\common\\util\\AutoIcon::ui('chevron-right', ['class'=>'vv-i'])}</button>
+  <div class="vv-dots" data-vv-dots></div>
+  {/if}
+</section>

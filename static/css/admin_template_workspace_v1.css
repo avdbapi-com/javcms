@@ -1,0 +1,83 @@
+/*
+ * This file is part of JavCMS - https://javcms.net
+ * Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+ * License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+ * See the LICENSE and NOTICE files that come with JavCMS.
+ * Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Telegram: https://t.me/avdb_api
+ */
+/* Template and ad listings. Keep native routes, modal handlers and clipboard targets. */
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .admin-template-workspace { min-width:0; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .admin-template-workspace .admin-template-toolbar {
+    display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap;
+    gap:16px; height:auto; min-height:40px; margin:0 0 18px; padding:0;
+    border:0; background:transparent; box-shadow:none; overflow:visible;
+}
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .admin-template-workspace .admin-template-location { min-width:0; flex:1 1 240px; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .admin-template-workspace .admin-template-location > span { display:block; margin-bottom:3px; color:var(--studio-muted); font-size:12px; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .admin-template-workspace .admin-template-location code { color:var(--studio-text); font-size:13px; overflow-wrap:anywhere; white-space:normal; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .admin-template-workspace .admin-template-tools { display:flex; align-items:center; gap:8px; flex:0 0 auto; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .admin-template-workspace .admin-template-tools > .btn { display:inline-flex; align-items:center; gap:7px; margin:0; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .admin-template-workspace > form { min-width:0; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .admin-template-workspace .admin-template-table-scroll { width:100%; max-width:100%; overflow-x:auto; -webkit-overflow-scrolling:touch; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .admin-template-workspace .admin-template-table { width:100%; min-width:700px; margin:0!important; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .admin-template-workspace.admin-template-ads .admin-template-table { min-width:960px; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .admin-template-workspace .admin-template-table thead th { white-space:nowrap; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .admin-template-workspace .admin-template-table .admin-template-name { min-width:160px; font-weight:500; color:var(--studio-text)!important; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .admin-template-workspace .admin-template-name > :is(a,span),
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .admin-template-workspace .admin-template-parent a { display:inline-flex; align-items:center; gap:10px; overflow-wrap:anywhere; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .admin-template-workspace .admin-template-name a,
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .admin-template-workspace .admin-template-parent a { color:var(--studio-accent)!important; text-decoration:none; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .admin-template-workspace .admin-template-name a:hover,
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .admin-template-workspace .admin-template-parent a:hover { text-decoration:underline; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .admin-template-workspace .admin-template-icon { display:block; width:18px; height:18px; flex:0 0 18px; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .admin-template-workspace .admin-template-time { white-space:nowrap; color:var(--studio-muted); }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .admin-template-workspace .admin-template-actions { white-space:nowrap; text-align:right; width:1%; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .admin-template-workspace .admin-template-actions .btn { display:inline-flex; align-items:center; justify-content:center; min-height:36px!important; margin:0 0 0 4px; padding:5px 9px; cursor:pointer; border:1px solid var(--studio-line)!important; background:var(--studio-raised)!important; color:var(--studio-text)!important; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .admin-template-workspace .admin-template-actions .btn-danger { color:var(--studio-danger)!important; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .admin-template-workspace .admin-template-call .layui-textarea { min-height:60px; min-width:240px; width:100%; font:12px/1.5 ui-monospace,Consolas,monospace; resize:vertical; padding:8px; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .admin-template-workspace .admin-template-summary { display:flex; flex-wrap:wrap; gap:8px 20px; padding:4px 0; color:var(--studio-muted); font-size:12px; }
+body.admin-studio:is(.admin-dark,:not(.admin-dark)) .admin-template-workspace .admin-template-summary b { font-weight:600; color:var(--studio-text); }
+@media(max-width:700px) {
+    body.admin-studio:is(.admin-dark,:not(.admin-dark)) .admin-template-workspace .admin-template-toolbar { gap:12px; }
+    body.admin-studio:is(.admin-dark,:not(.admin-dark)) .admin-template-workspace .admin-template-table-scroll { overflow:visible; }
+    body.admin-studio:is(.admin-dark,:not(.admin-dark)) .admin-template-workspace.admin-template-ads .admin-template-table { min-width:0; }
+    body.admin-studio:is(.admin-dark,:not(.admin-dark)) .admin-template-workspace .admin-template-table { display:block; min-width:0; width:100%; }
+    body.admin-studio:is(.admin-dark,:not(.admin-dark)) .admin-template-workspace .admin-template-table thead { display:none; }
+    body.admin-studio:is(.admin-dark,:not(.admin-dark)) .admin-template-workspace .admin-template-table :is(tbody,tfoot) { display:block; }
+    body.admin-studio:is(.admin-dark,:not(.admin-dark)) .admin-template-workspace .admin-template-entry { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px 16px; padding:16px 0; border-bottom:1px solid var(--studio-line)!important; }
+    body.admin-studio:is(.admin-dark,:not(.admin-dark)) .admin-template-workspace .admin-template-entry > :is(th,td) { min-width:0; width:auto; padding:0!important; border:0!important; background:transparent!important; overflow-wrap:anywhere; white-space:normal; }
+    body.admin-studio:is(.admin-dark,:not(.admin-dark)) .admin-template-workspace .admin-template-entry > .admin-template-name { grid-column:1/-1; font-size:14px!important; }
+    body.admin-studio:is(.admin-dark,:not(.admin-dark)) .admin-template-workspace .admin-template-entry > .admin-template-kind { grid-column:1/-1; color:var(--studio-muted); }
+    body.admin-studio:is(.admin-dark,:not(.admin-dark)) .admin-template-workspace .admin-template-entry > .admin-template-time { text-align:right; }
+    body.admin-studio:is(.admin-dark,:not(.admin-dark)) .admin-template-workspace .admin-template-entry > .admin-template-call { grid-column:1/-1; }
+    body.admin-studio:is(.admin-dark,:not(.admin-dark)) .admin-template-workspace .admin-template-call::before { content:attr(data-label); display:block; margin-bottom:6px; color:var(--studio-muted); font-size:12px; }
+    body.admin-studio:is(.admin-dark,:not(.admin-dark)) .admin-template-workspace .admin-template-call .layui-textarea { min-width:0; }
+    body.admin-studio:is(.admin-dark,:not(.admin-dark)) .admin-template-workspace .admin-template-entry > .admin-template-actions { grid-column:1/-1; display:flex; flex-wrap:wrap; gap:8px; }
+    body.admin-studio:is(.admin-dark,:not(.admin-dark)) .admin-template-workspace .admin-template-actions .btn { margin:0; min-height:44px!important; padding:10px 12px; }
+    body.admin-studio:is(.admin-dark,:not(.admin-dark)) .admin-template-workspace .admin-template-actions:empty { display:none; }
+    body.admin-studio:is(.admin-dark,:not(.admin-dark)) .admin-template-workspace :is(.admin-template-parent,.admin-template-empty) { display:block; }
+    body.admin-studio:is(.admin-dark,:not(.admin-dark)) .admin-template-workspace :is(.admin-template-parent,.admin-template-empty) td { display:block; min-width:0; width:auto; overflow-wrap:anywhere; padding:12px 0!important; }
+    body.admin-studio:is(.admin-dark,:not(.admin-dark)) .admin-template-workspace .admin-template-table tfoot :is(tr,td) { display:block; width:auto; padding:8px 0!important; }
+}
+
+/* O24 theme gallery (system/theme.html): kit tokens only. */
+.ax-theme-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:16px; margin:0; padding:0; list-style:none; }
+.ax-theme-card { display:flex; flex-direction:column; min-width:0; overflow:hidden; border:1px solid var(--ax-line); border-radius:var(--ax-r-lg); background:var(--ax-surface); }
+.ax-theme-card.is-current { border-color:var(--ax-accent); }
+.ax-theme-card__shot { aspect-ratio:16 / 10; background:var(--ax-raised); overflow:hidden; }
+.ax-theme-card__shot img { display:block; width:100%; height:100%; object-fit:cover; object-position:top center; }
+.ax-theme-card__body { display:grid; gap:6px; padding:12px 14px 14px; }
+.ax-theme-card__title { display:flex; align-items:center; justify-content:space-between; gap:8px; min-width:0; }
+body.admin-studio .ax-theme-card__title h2, .ax-theme-card__title h2 { margin:0; color:var(--ax-text); font:650 15px/1.3 var(--ax-font); overflow-wrap:anywhere; }
+.ax-theme-card__body > p { margin:0; font-size:12.5px; }
+.ax-theme-card__actions { display:flex; flex-wrap:wrap; gap:8px; margin-top:4px; }
+@media (max-width: 640px) { .ax-theme-grid { grid-template-columns:1fr; } }
+
+/* Repair round 2 (beginner r2 #10): on a phone the "Theme files (advanced)" link goes under the title and help,
+ * so the title and help keep the full width (before: "Giao / diện" and a 5-7 line help in a 66-103 px column). */
+@media (max-width: 640px) {
+    body.admin-studio .ax-theme-page > .ax-page-head { flex-wrap: wrap; }
+    body.admin-studio .ax-theme-page > .ax-page-head > .ax-page-head__text { flex: 1 1 calc(100% - 48px); }
+    body.admin-studio .ax-theme-page > .ax-page-head > .ax-page-head__actions { flex: 1 1 100%; padding-left: 48px; }
+}

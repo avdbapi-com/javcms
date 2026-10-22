@@ -1,0 +1,16 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}/* shared pager (NOLIMIT D1, lane T): AvdbLanguage::pager() decides the links (first / prev / window / next / last, jumps, "Go to page", open mode); this skin is the theme's own markup. */
+$tplPgSkin = [
+    'nav' => 'ct-pager',
+    'prev' => '<a class="ct-pg"%rel% href="%url%" aria-label="%aria%">' . \app\common\util\AutoIcon::ui('chevron-left', ['class'=>'ct-ico']) . '<span class="ct-pg-txt">%text%</span></a>',
+    'next' => '<a class="ct-pg"%rel% href="%url%" aria-label="%aria%"><span class="ct-pg-txt">%text%</span>' . \app\common\util\AutoIcon::ui('chevron-right', ['class'=>'ct-ico']) . '</a>',
+    'num' => '<a class="ct-pg" href="%url%"%attr%>%label%</a>',
+    'cur' => '<span class="ct-pg is-on" aria-current="page">%label%</span>',
+];
+echo \app\common\util\AvdbLanguage::pagerHtml(isset($__PAGING__) && is_array($__PAGING__) ? $__PAGING__ : [], isset($__LIST__) && is_array($__LIST__) ? $__LIST__ : [], $tplPgSkin);{/php}

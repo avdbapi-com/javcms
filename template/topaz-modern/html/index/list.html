@@ -1,0 +1,16 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<section class="tp-tray tp-wrap" id="tp-cuts" aria-labelledby="tp-cuts-h">
+  <header class="tp-tray-head" data-ai-group>
+    <h2 class="tp-tray-title" id="tp-cuts-h">{:\\app\\common\\util\\AutoIcon::navIcon('categories', '', ['size'=>'lg', 'plate'=>true])}{:\\app\\common\\util\\TemplateText::get('tp.the_cuts')}</h2>
+    <span class="tp-tray-line" aria-hidden="true"></span>
+    <span class="tp-tray-count">{:\\app\\common\\util\\TemplateText::get('ui.categories')}</span>
+    <a class="tp-tray-more" href="{:mac_url('label/sort')}"><span>{:\\app\\common\\util\\TemplateText::get('ui.all_videos')}</span><i class="tp-dia" aria-hidden="true"></i>{:\\app\\common\\util\\AutoIcon::ui('arrow-right', ['size'=>'sm', 'class'=>'tp-more-ai'])}</a>
+  </header>
+  <div class="tp-cuts" data-tp-stagger data-ai-group>{foreach name="tpTypes" item="tpT" key="tpTk"}<a class="tp-cut tp-gem-i-{$tpT.gem}" data-fx="ring" href="{$tpT.url|htmlspecialchars=ENT_QUOTES}"><span class="tp-cut-ico" aria-hidden="true">{:$tpCutIco($tpT, $tpTk, 'md')}</span><b>{$tpT.name|htmlspecialchars=ENT_QUOTES}</b><small>{:\\app\\common\\util\\TemplateText::get('tp.pieces', ['count' => $tpT['count']])}</small><i class="tp-cut-line" aria-hidden="true"></i></a>{/foreach}<a class="tp-cut tp-cut--all" data-fx="ring" href="{:mac_url('label/sort')}"><span class="tp-cut-ico" aria-hidden="true"><svg class="tp-i"><use href="{$tplIcons}#diamonds"/></svg></span><b>{:\\app\\common\\util\\TemplateText::get('ui.all_videos')}</b><small>{:\\app\\common\\util\\TemplateText::get('tp.pieces', ['count' => number_format((float)($tpDc['vod_all'] ?? 0))])}</small><i class="tp-cut-line" aria-hidden="true" style="background:var(--platinum)"></i></a></div>
+</section>

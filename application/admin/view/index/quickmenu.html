@@ -1,0 +1,33 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Based on MacCMS 10 (Apache-2.0) by magicblack, changed by JavCMS.
+JavCMS changes: Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors,
+JavCMS Community License 1.0. The MacCMS parts stay under the Apache License 2.0.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{include file="../../../application/admin/view/public/head" /}
+{php}$axS = '__STATIC__/admin/icons/admin-icons.svg?v=' . $admin_icons_v;{/php}
+<div class="page-container admin-quickmenu-workspace">
+    {include file="../../../application/admin/view/public/page_head" icon="ai-list-plus" title="admin/ux/menu/menu_shortcuts" help="admin/ux/help/menu_shortcuts" /}
+    {if condition="$quickmenu_empty"}
+    {include file="../../../application/admin/view/public/empty_state" icon="ai-list-plus" text="admin/ux/kit/empty_default" /}
+    {/if}
+    <form class="layui-form ax-form" action="" data-ax-dirty>
+        <input type="hidden" name="__token__" value="{$Request.token}" />
+        <section class="ax-section">
+            <div class="ax-field">
+                <label for="quickmenuText">{:lang('admin/ux/menu/menu_shortcuts')}</label>
+                <textarea id="quickmenuText" name="quickmenu" class="layui-textarea" rows="14" aria-describedby="quickmenuHelp" spellcheck="false" placeholder="AVDB import,avdbimport/index" style="font-family: var(--ax-mono); min-height: 280px; resize: vertical">{$quickmenu|htmlspecialchars}</textarea>
+                <p class="ax-help" id="quickmenuHelp">{:lang('admin/ux/shell/quickmenu_help')}</p>
+            </div>
+        </section>
+        <div class="ax-savebar">
+            <span class="ax-savebar__status" role="status"></span>
+            <button type="submit" class="ax-btn ax-btn--primary" lay-submit="" lay-filter="formSubmit"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axS}#ai-save"/></svg>{:lang('admin/ux/kit/save')}</button>
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin_common.js?v={:filemtime(ROOT_PATH . 'static/js/admin_common.js')}"></script>{/* public/foot.html loads this file with a fixed ?v=; the shell pages use the file time until hand-over HO-shell-1 is applied */}
+</body>
+</html>

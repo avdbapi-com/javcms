@@ -1,0 +1,61 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="crimson-modern" data-fx="vt" data-fx-vt-style="crimson-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/vod_detail"}
+{include file="public/include"}
+</head>
+<body class="ci-detail-page">
+{include file="public/head"}
+<main id="main-content" class="ci-wrap">
+{include file="public/metavars"}
+{php}
+$ciPlayUrl = ((!empty($obj['vod_play_list']) && is_array($obj['vod_play_list'])) ? mac_url_vod_play($obj, 'first') : '');
+$ciShareUrl = '';
+try { $ciShareUrl = \app\common\util\Sitemap::absolute(mac_url_vod_detail($obj)); } catch (\Throwable $ciShareError) { $ciShareUrl = ''; }
+$ciSourceTotal = 0; $ciEpisodeTotal = 0;
+if (!empty($obj['vod_play_list']) && is_array($obj['vod_play_list'])) { foreach ($obj['vod_play_list'] as $ciSrcItem) { $ciSourceTotal++; $ciEpisodeTotal += (isset($ciSrcItem['urls']) && is_array($ciSrcItem['urls'])) ? count($ciSrcItem['urls']) : 0; } }
+$ciShowEpisodes = ($ciSourceTotal > 1 || $ciEpisodeTotal > 1) ? 1 : 0;
+$ciPosterReal = trim((string)($obj['vod_pic'] ?? '')); $ciPosterReal = $ciPosterReal === '' ? '' : (string)mac_url_img($ciPosterReal);
+$ciCmtOn = ($GLOBALS['config']['comment']['status'] ?? 0) == 1 ? 1 : 0;
+{/php}
+<article class="ci-detail">
+<nav class="ci-crumbs" aria-label="{:\\app\\common\\util\\TemplateText::get('ink.breadcrumb')}"><a class="ci-ink" href="{$maccms.path}">{:\\app\\common\\util\\AutoIcon::navIcon('home', '', ['size'=>'sm'])}<span>{:\\app\\common\\util\\TemplateText::get('ui.home')}</span></a>{if condition="$ciTypeName neq ''"}<a class="ci-ink" href="{:mac_url_type($obj['type'])}">{:\\app\\common\\util\\AutoIcon::icon('category', $obj['type']['type_name'], ['size'=>'sm'])}<span>{:\\app\\common\\util\\TemplateText::get($ciTypeName)}</span></a>{/if}<span class="ci-narr">{:\\app\\common\\util\\TemplateText::get('ui.details')}</span></nav>
+<div class="ci-dtop">
+	<div class="ci-dcover" data-slam="hero">
+		{if condition="$ciPlayUrl neq ''"}<a class="ci-cover" href="{$ciPlayUrl|htmlspecialchars=ENT_QUOTES}" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.watch_online')}">{else/}<div class="ci-cover">{/if}<span class="ci-cut ci-cut--big"><span class="ci-cut-in ci-thumb ci-inkmask"{if condition="$ciPosterReal neq ''"} data-fx="skeleton"{/if}>{if condition="$ciPosterReal neq ''"}<img data-lowres src="{$ciPosterReal|htmlspecialchars=ENT_QUOTES}" alt="{$ciTitle|htmlspecialchars=ENT_QUOTES}" width="800" height="450" fetchpriority="high" decoding="async">{/if}<span class="ci-tone-edge" aria-hidden="true"></span></span></span>{if condition="$ciPlayUrl neq ''"}<span class="ci-cover-play" aria-hidden="true"><svg class="ci-i"><use href="{$ciIco|htmlspecialchars=ENT_QUOTES}#play"></use></svg></span></a>{else/}</div>{/if}
+	</div>
+	<div class="ci-dinfo">
+		<h1{php}echo \app\common\util\AvdbLanguage::langAttr(isset($obj) && is_array($obj) ? $obj : []);{/php} class="ci-vh1" dir="auto">{$ciTitle|htmlspecialchars=ENT_QUOTES}</h1>
+		<ul class="ci-stats">
+			<li title="{:\\app\\common\\util\\TemplateText::get('ui.views')}"><svg class="ci-i" aria-hidden="true"><use href="{$ciIco|htmlspecialchars=ENT_QUOTES}#eye"></use></svg><span dir="ltr">{$obj.vod_hits|number_format}</span><span class="ci-sr">{:\\app\\common\\util\\TemplateText::get('ui.views')}</span></li>
+			{if condition="$ciRelease neq ''"}<li><svg class="ci-i" aria-hidden="true"><use href="{$ciIco|htmlspecialchars=ENT_QUOTES}#calendar"></use></svg><span dir="ltr">{$ciRelease|htmlspecialchars=ENT_QUOTES}</span></li>{/if}
+			{if condition="$ciDuration neq ''"}<li><svg class="ci-i" aria-hidden="true"><use href="{$ciIco|htmlspecialchars=ENT_QUOTES}#clock"></use></svg><span dir="ltr">{$ciDuration|htmlspecialchars=ENT_QUOTES}</span></li>{/if}
+			{if condition="$ciScore gt 0"}<li title="{:\\app\\common\\util\\TemplateText::get('ui.score')}"><svg class="ci-i" aria-hidden="true"><use href="{$ciIco|htmlspecialchars=ENT_QUOTES}#star"></use></svg><span dir="ltr">{$obj.vod_score|htmlspecialchars=ENT_QUOTES} / 10</span></li>{/if}
+		</ul>
+		<div class="ci-dbtns">{if condition="$ciPlayUrl neq ''"}<a class="ci-watch-btn" href="{$ciPlayUrl|htmlspecialchars=ENT_QUOTES}"><svg class="ci-i" aria-hidden="true"><use href="{$ciIco|htmlspecialchars=ENT_QUOTES}#play"></use></svg><span>{:\\app\\common\\util\\TemplateText::get('ink.watch_bang')}</span></a>{/if}{notempty name="obj.vod_down_list"}<a class="ci-pill" href="{:mac_url_vod_down($obj)}"><svg class="ci-i" aria-hidden="true"><use href="{$ciIco|htmlspecialchars=ENT_QUOTES}#download"></use></svg>{:\\app\\common\\util\\TemplateText::get('ui.downloads')}</a>{/notempty}</div>
+		<div class="ci-actions">
+			<button class="ci-act" type="button" data-ci-fav data-mid="1" data-id="{$obj.vod_id}" aria-pressed="false"><svg class="ci-i" aria-hidden="true"><use href="{$ciIco|htmlspecialchars=ENT_QUOTES}#heart"></use></svg><span>{:\\app\\common\\util\\TemplateText::get('favorites')}</span></button>
+			<button class="ci-act" type="button" data-ci-share data-url="{$ciShareUrl|htmlspecialchars=ENT_QUOTES}" aria-expanded="false" aria-controls="ci-share"><svg class="ci-i" aria-hidden="true"><use href="{$ciIco|htmlspecialchars=ENT_QUOTES}#share"></use></svg><span>{:\\app\\common\\util\\TemplateText::get('share')}</span></button>
+			<a class="ci-act" href="{$ciReportUrl|htmlspecialchars=ENT_QUOTES}" rel="nofollow"><svg class="ci-i" aria-hidden="true"><use href="{$ciIco|htmlspecialchars=ENT_QUOTES}#flag"></use></svg><span>{:\\app\\common\\util\\TemplateText::get('ui.report')}</span></a>
+		</div>
+		<div class="ci-share" id="ci-share"><label class="ci-sr" for="ci-share-url">{:\\app\\common\\util\\TemplateText::get('ui.sharing_address')}</label><input id="ci-share-url" type="text" readonly value="{$ciShareUrl|htmlspecialchars=ENT_QUOTES}"><button class="ci-btn" type="button" data-ci-copy="ci-share-url"><svg class="ci-i" aria-hidden="true"><use href="{$ciIco|htmlspecialchars=ENT_QUOTES}#copy"></use></svg>{:\\app\\common\\util\\TemplateText::get('ui.copy_link')}</button></div>
+		{include file="public/meta"}
+	</div>
+</div>
+<nav class="ci-dtabs" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.details')}"><a class="ci-ink" href="#ci-info" aria-current="true">{:\\app\\common\\util\\AutoIcon::ui('info', ['size'=>'sm'])}<span>{:\\app\\common\\util\\TemplateText::get('ink.info')}</span></a>{if condition="$ciCmtOn eq 1"}<a class="ci-ink" href="#ci-cmt">{:\\app\\common\\util\\AutoIcon::ui('messages', ['size'=>'sm'])}<span>{:\\app\\common\\util\\TemplateText::get('ui.comments')}</span></a>{/if}</nav>
+<section class="ci-panel ci-desc" id="ci-info" data-ci-desc aria-labelledby="ci-desc-h"><h2 class="ci-panel-h" id="ci-desc-h"><svg class="ci-i" aria-hidden="true"><use href="{$ciIco|htmlspecialchars=ENT_QUOTES}#quote"></use></svg>{:\\app\\common\\util\\TemplateText::get('description')}</h2>{if condition="$ciDesc neq ''"}<p dir="auto">{$ciDesc|htmlspecialchars=ENT_QUOTES}</p><button class="ci-pill ci-pill--sm ci-desc-toggle" type="button" hidden aria-expanded="false" data-more="{:\\app\\common\\util\\TemplateText::get('ink.show_more')}" data-less="{:\\app\\common\\util\\TemplateText::get('ink.show_less')}">{:\\app\\common\\util\\TemplateText::get('ink.show_more')}</button>{else/}<p class="ci-tip">{:\\app\\common\\util\\TemplateText::get('ink.no_description')}</p>{/if}</section>
+{if condition="$ciShowEpisodes eq 1"}<section class="ci-panel ci-eps" aria-labelledby="ci-eps-h"><h2 class="ci-panel-h" id="ci-eps-h"><svg class="ci-i" aria-hidden="true"><use href="{$ciIco|htmlspecialchars=ENT_QUOTES}#list"></use></svg>{:\\app\\common\\util\\TemplateText::get('playback_sources')}</h2>{maccms:foreach name="obj.vod_play_list" id="ciSrc" key="ciSid"}<h3 class="ci-label">{$ciSrc.player_info.show|htmlspecialchars=ENT_QUOTES}</h3><div class="ci-chips">{maccms:foreach name="ciSrc.urls" id="ciEp" key="ciNid"}<a class="ci-chip" href="{:mac_url_vod_play($obj,['sid'=>$ciSrc['sid'],'nid'=>$ciEp['nid']])}">{$ciEp.name|htmlspecialchars=ENT_QUOTES}</a>{/maccms:foreach}</div>{/maccms:foreach}</section>{/if}
+{include file="public/related"}
+{if condition="$ciCmtOn eq 1"}<section class="ci-comments" id="ci-cmt" aria-labelledby="ci-cmt-h"><header class="ci-chap-head"><h2 class="ci-h2" id="ci-cmt-h">{:\\app\\common\\util\\AutoIcon::ui('messages')}{:\\app\\common\\util\\TemplateText::get('ui.comments')}</h2></header><div class="mac_comment" data-id="{$obj.vod_id}" data-mid="1"><p class="ci-tip">{:\\app\\common\\util\\TemplateText::get('ui.loading_comments')}</p></div></section><script>MAC.Comment.Init();MAC.Comment.Show(1);</script>{/if}
+</article>
+</main>
+{include file="public/foot"}
+</body>
+</html>

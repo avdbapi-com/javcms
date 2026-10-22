@@ -1,0 +1,32 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="honey" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/vod_search"}
+{include file="public/include"}
+</head>
+<body class="hn-page-list hn-page-search">
+{include file="public/head"}
+<main id="main-content" class="hn-main"><div class="hn-wrap">
+{php}$hnShowQ = function ($hnV) { $hnV = (string)$hnV; for ($hnK = 0; $hnK < 3 && strpos($hnV, '&') !== false; $hnK++) { $hnKd = html_entity_decode($hnV, ENT_QUOTES | ENT_HTML5, 'UTF-8'); if ($hnKd === $hnV) { break; } $hnV = $hnKd; } return htmlspecialchars(trim($hnV), ENT_QUOTES, 'UTF-8'); };{/php}{php}$hnSortMode = 'search'; $hnSortActive = isset($param['by']) ? (string)$param['by'] : 'time'; $hnSortNames = ['time' => 'ui.latest_videos', 'hits' => 'ui.popular_videos', 'score' => 'top_rated', 'up' => 'most_liked']; $hnSearchTitle = \app\common\util\TemplateText::get(isset($hnSortNames[$hnSortActive]) ? $hnSortNames[$hnSortActive] : 'ui.latest_videos'); ob_start();{/php}<div class="hn-grid" data-grid-fill>{maccms:vod num="20" paging="yes" type="all" order="desc" by="time" pageurl="vod/search"}{include file="public/vodbox"}{/maccms:vod}</div>{php}$hnGridHtml = ob_get_clean(); $hnTotal = intval($__PAGING__['record_total'] ?? 0); $hnListN = is_array($__LIST__) ? ((isset($__LIST__['list']) && is_array($__LIST__['list'])) ? count($__LIST__['list']) : count($__LIST__)) : 0;{/php}
+<div class="hn-page-head" data-ai-group><div>
+{if condition="$param.wd neq ''"}<h1 class="hn-page-title" data-ai-hot>{:\\app\\common\\util\\AutoIcon::ui('search', ['size'=>'lg', 'plate'=>true, 'class'=>'hn-cell'])}<span dir="auto">{:\\app\\common\\util\\TemplateText::raw('ui.search_for_query', ['query'=>$param['wd']])}</span></h1>
+{elseif condition="$param.actor neq ''"/}<h1 class="hn-page-title" data-ai-hot>{:\\app\\common\\util\\AutoIcon::ui('user', ['size'=>'lg', 'plate'=>true, 'class'=>'hn-cell'])}<span dir="auto">{:\\app\\common\\util\\TemplateText::get('ui.performers')}: {:$hnShowQ($param['actor'])}</span></h1>
+{elseif condition="$param.class neq ''"/}<h1 class="hn-page-title" data-ai-hot>{:\\app\\common\\util\\AutoIcon::ui('list', ['size'=>'lg', 'plate'=>true, 'class'=>'hn-cell'])}<span dir="auto">{:\\app\\common\\util\\TemplateText::get('genres')}: {:$hnShowQ($param['class'])}</span></h1>
+{elseif condition="$param.tag neq ''"/}<h1 class="hn-page-title" data-ai-hot>{:\\app\\common\\util\\AutoIcon::ui('tag', ['size'=>'lg', 'plate'=>true, 'class'=>'hn-cell'])}<span dir="auto">{:\\app\\common\\util\\TemplateText::get('ui.tag')} {:$hnShowQ($param['tag'])}</span></h1>
+{elseif condition="$param.director neq ''"/}<h1 class="hn-page-title" data-ai-hot>{:\\app\\common\\util\\AutoIcon::ui('film', ['size'=>'lg', 'plate'=>true, 'class'=>'hn-cell'])}<span dir="auto">{:\\app\\common\\util\\TemplateText::get('ui.director')} {:$hnShowQ($param['director'])}</span></h1>
+{else/}<h1 class="hn-page-title" data-ai-hot>{:\\app\\common\\util\\AutoIcon::ui('grid', ['size'=>'lg', 'plate'=>true, 'class'=>'hn-cell'])}<span>{$hnSearchTitle}</span></h1>{/if}
+<span class="hn-count">{:\\app\\common\\util\\TemplateText::get('total_videos')} <span class="hn-ltr">{:\\app\\common\\util\\AvdbLanguage::resultCount($__PAGING__, isset($__LIST__) ? $__LIST__ : null)['short']}</span></span></div>{if condition="$hnTotal gt 0"}{include file="public/sortmenu"}{/if}</div>
+{$hnGridHtml}
+{include file="public/list_note"}{include file="public/listend"}
+</div></main>
+{include file="public/foot"}
+</body>
+</html>
+

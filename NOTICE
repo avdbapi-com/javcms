@@ -1,0 +1,342 @@
+JavCMS
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+
+Official sources of JavCMS:
+  https://javcms.net
+  https://avdbapi.com
+  https://xvidapi.com
+  https://upload18.org
+  Telegram group: https://t.me/avdb_api
+
+The JavCMS work in this package (see LICENSE, Part A) is under the
+JavCMS Community License 1.0: free, source-available software that anyone may
+use, copy, change and share, but nobody may sell. Charging other people for
+installing, setting up, running, supporting, changing or handing over JavCMS,
+or for hosting plans that come with JavCMS installed, also counts as selling;
+running your own website with it (also with ads) is allowed. Shared copies
+stay free and carry no money-making code or links of the person who shares
+them. Third-party parts keep their own licenses (LICENSE, Parts B and C).
+Releases up to and including 1.1.0 stay under the Apache License 2.0 (files
+in them that said MIT stay MIT for those copies).
+
+JavCMS PHP, template, CSS and JavaScript files start with a short comment that
+names JavCMS, the license and these sources, except a few generated or data
+files (the minified ad engine files built from deployment/jcx-src, whose
+sources carry the comment; ad creatives; configuration data that the admin
+rewrites; empty files) and the two readable rewrites of third-party jQuery
+plugins, static/js/jquery.cookie.js and static/js/jquery.imageupload.js,
+which keep the plugins' MIT license (named below). The comment is an ordinary
+code comment: it is never sent to visitors as part of a page. A JavCMS file that
+contains third-party code says so in that comment, and the section "Third-party
+code inside JavCMS files" below names the code. JavCMS files that said "MIT" in
+earlier releases are under the Community License from 1.2.0 (LICENSE, Part A,
+section 7).
+
+
+Attributions (Apache License 2.0)
+---------------------------------
+
+This product includes MacCMS 10 (https://github.com/magicblack/maccms10),
+Copyright 2014-2021 magicblack, licensed under the Apache License 2.0.
+JavCMS is based on MacCMS release v2023.1000.3051 and has changed many of its
+files. A few image files come from the later MacCMS releases v2024.1000.4046
+and v2026.1000.4056 (same license; LICENSE, Part B names them). A changed
+MacCMS file either starts with a JavCMS notice that says
+"Based on MacCMS 10 (Apache-2.0) by magicblack, changed by JavCMS", or it is
+listed in NOTICE.CHANGED-FILES.txt (see "Changes made by JavCMS" below).
+
+The original MacCMS notice begins as follows (the full text, kept word for
+word, is in LICENSE, Part B, and in extend/login/LICENSE):
+
+  苹果CMS(maccms)遵循Apache2开源协议发布，并提供免费使用。
+  版权所有Copyright © 2014-2021 by magicblack (https://github.com/magicblack)
+  All rights reserved。
+
+This product includes ThinkPHP 5.0.24 (https://www.thinkphp.cn),
+Copyright 2006-2018 ThinkPHP and liu21st, licensed under the Apache License 2.0.
+Its own license file is thinkphp/LICENSE.txt.
+
+This product includes topthink/think-captcha 1.0.7, think-helper 1.0.6,
+think-image 1.0.7, think-installer 1.0.12 and think-queue 1.1.4 (ThinkPHP team)
+and karsonzhang/fastadmin-addons 1.1.3, licensed under the Apache License 2.0.
+The six captcha fonts that the MacCMS release ships with think-captcha are
+freeware fonts of other authors and are not included: the captcha uses a copy
+of the Droid Sans Mono font named below
+(vendor/topthink/think-captcha/assets/ttfs/DroidSansMono.ttf), and the unused
+captcha background photos of unknown origin are left out.
+
+This product includes hls.js 1.7.3 (https://github.com/video-dev/hls.js),
+Copyright (c) 2017 Dailymotion, licensed under the Apache License 2.0. Portions
+are derived from videojs-contrib-hls, Copyright (c) 2013-2015 Brightcove. Its
+NOTICE text is in static/jcx/lib/hls-1.7.3.NOTICE.txt.
+
+This product includes hls.js 0.9.1, flv.js 1.4.2 (Copyright (C) 2016 Bilibili)
+and Video.js 7.4.1 with vtt.js (Brightcove and contributors), licensed under the
+Apache License 2.0.
+
+Remix Icon 4.8.0 glyphs (https://remixicon.com, Apache License 2.0) are used
+inside the JavCMS icon sprites (static/template-ui/auto-icon/, see its
+THIRD-PARTY.txt) and in the sprites of crimson-modern and onyx-modern
+(template/crimson-modern/assets/icons.svg, template/onyx-modern/assets/icons.svg).
+
+The topaz icon sprite (template/topaz/assets/img/icons.svg) is built from
+Material Icons path data (Google, https://github.com/google/material-design-icons),
+licensed under the Apache License 2.0.
+
+This product includes the Droid Sans Mono font (static/font/test.ttf, the
+default font of the text watermark, shipped by MacCMS; a copy of it is the
+captcha font vendor/topthink/think-captcha/assets/ttfs/DroidSansMono.ttf). Its
+name table says
+"Digitized data copyright © 2007, Google Corporation.", "Licensed under the
+Apache License, Version 2.0" and "Droid is a trademark of Google and may be
+registered in certain jurisdictions.".
+
+The Flash video player static/player/play.swf of the MacCMS release (Vcastr
+3.0, with TweenLite / TweenFilterLite and a pixel font inside whose licenses
+the file does not state) and its player stub static/player/flv.js are not
+included: browsers no longer run Flash, and nothing else used them.
+
+This product includes changes to MacCMS files from RamCMS
+(https://github.com/cinohub/ramcms, formerly github.com/brevisnguyen/ramcms),
+a Vietnamese edition of MacCMS 10 by Brevis Nguyen, published under the same
+Apache License 2.0 notice as MacCMS (its license file is the MacCMS notice
+above; it adds no copyright line of its own).
+
+The other third-party components and their licenses are listed in LICENSE,
+Part C. The origin of the themes is described in LICENSE, Part D.
+
+
+Attributions (MIT): ApiiCMS
+---------------------------
+
+This product includes changes to MacCMS files from ApiiCMS
+(https://github.com/apiiphim/apiicms-dev): MIT License, Copyright (c) 2024
+apiiphim (MIT text below). The license file of ApiiCMS itself is an
+unresolved merge of two texts, the MacCMS notice (Apache License 2.0) and
+that MIT license; JavCMS meets both (the MacCMS notice is kept word for word
+in LICENSE, Part B). The ApiiCMS changes are mostly in the admin video, article and
+collection pages, the content collector and common helpers. The JavCMS files
+with a measurable share of RamCMS / ApiiCMS changes start with a notice that
+says "with changes from the MacCMS editions RamCMS (Apache-2.0) and/or ApiiCMS
+(MIT, Copyright (c) 2024 apiiphim)": application/common.php,
+application/common/util/Pinyin.php,
+application/common/model/Collect.php, application/admin/controller/Collect.php,
+application/api/controller/Providedown.php, the admin views vod/info.html,
+vod/iplot.html, art/info.html, cj/info.html and make/opt.html, the admin
+stylesheet static/css/admin_style.css, and the Vietnamese admin language file
+application/admin/lang/vi-vn/10-core.php (256 of its texts are those of the
+ApiiCMS translation). Smaller traces may be in other
+changed MacCMS files. Those changes keep their own licenses; the JavCMS
+Community License covers only the JavCMS changes. The editor libraries
+(TinyMCE, KindEditor, CKEditor, UMeditor) also came to JavCMS through
+ApiiCMS.
+
+Some ApiiCMS files are in JavCMS unchanged (apart from spaces and line
+endings), so they carry no JavCMS notice: five RSS and sitemap templates of
+jav and five of jav-modern (baidu.html, bing.html, sm.html, so.html and
+sogou.html in template/jav/html/rss/ and template/jav-modern/html/rss/; in
+ApiiCMS template/mrphim/html/rss/), the player stubs kkphim.js,
+kkphimm3u8.js, nguon.js, nguonc.js, nguoncm3u8.js, ophim.js, ophimm3u8.js,
+thuong1.js, thuong2.js, thuongduphong1.js, thuongduphong2.js, thuyetminh.js,
+thuyetminhm3u8.js, vipapii.js, vipapiim3u8.js and javcms.js in static/player/
+(copies of the ApiiCMS player stub static/player/embed1.js under other names),
+and application/admin/view/extend/editor/tinymce.html (the ApiiCMS version of
+the MacCMS file, listed in NOTICE.CHANGED-FILES.txt). static/player/123kum3u8.js
+is an unchanged copy of the MacCMS player stub static/player/dplayer.js.
+
+
+Third-party code inside JavCMS files, and components without their own license file
+-----------------------------------------------------------------------------------
+
+- static/css/admin_base.css, the JavCMS admin base layer, contains rules of
+  Bootstrap 5.3.3 (its reset, heading sizes, badge, buttons and spacing
+  utilities): Copyright (c) 2011-2024 The Bootstrap Authors. MIT license. Its
+  colours are those of the JavCMS admin, and its generic resets are written by
+  JavCMS. It replaces the DashLite admin stylesheet (Softnio) of earlier JavCMS
+  releases; from release 1.2.0 it contains no DashLite rule, and the DashLite
+  stylesheet itself is not part of this package.
+- The javcms-modern templates whose notice says "Partly based on a third-party
+  theme" keep the page markup of a third-party tube theme made for KVS (Kernel
+  Video Sharing) that had been adapted to MacCMS; its author and license are not
+  known, and JavCMS claims no rights in it (LICENSE, Part D). The theme JAVCMS
+  Classic (template/javcms), which loaded that theme's base stylesheet, its
+  IcoMoon icon font and the 8X default_pc stylesheet orang.css, is not part of
+  this package.
+- template/crimson-modern/assets/js/gl-screentone.js and
+  template/onyx-modern/assets/js/gl-dither.js contain the 2D simplex noise of
+  webgl-noise (https://github.com/ashima/webgl-noise,
+  https://github.com/stegu/webgl-noise) by Ian McEwan, Ashima Arts, maintained
+  by Stefan Gustavson: Copyright (C) 2011 Ashima Arts. All rights reserved.
+  Distributed under the MIT License.
+- template/crimson-modern/assets/js/gl-screentone.js and
+  template/topaz-modern/assets/js/gl-caustics.js contain "Hash without Sine"
+  by Dave Hoskins: Copyright (c) 2014 David Hoskins. MIT license.
+- static/template-ui/theme-switcher.js (the palette icon) and
+  static/template-ui/fx/morph.js (22 icons) contain icon geometry of Lucide
+  1.48.0: Copyright (c) 2026 Lucide Icons and Contributors, ISC license. Some of
+  those icons derive from Feather: Copyright (c) 2013-present Cole Bemis, MIT
+  license. Full texts: static/vendor/fx/lucide@1.48.0/LICENSE.txt and
+  static/template-ui/fx/THIRD-PARTY.txt.
+- static/js/jquery.cookie.js is a readable rewrite (JavCMS, 2026) of the
+  jquery.cookie plugin: Copyright 2006, 2014 Klaus Hartl. MIT license.
+- static/js/jquery.imageupload.js is a readable rewrite (JavCMS, 2026) of
+  jQuery-image-upload: Copyright (c) 2013-15 jillix. MIT license.
+- template/jav/statics/js/jquery.cookie.min.js and
+  template/jav-modern/statics/js/jquery.cookie.min.js are jquery.cookie 1.4.1:
+  Copyright 2006, 2014 Klaus Hartl. MIT license.
+- Layui (static/layui/ and static/vendor/layui/): Copyright (c) 2016 layui.
+  MIT license. static/layui/css/layui.css and the stylesheets in
+  static/layui/css/modules/ come from Layui 2.7.6, which ships them without a
+  license banner, so this notice stands for one. modules/code.css and
+  modules/layer/default/layer.css are the unchanged Layui 2.7.6 files;
+  layui.css (rules added, reformatted) and modules/laydate/default/laydate.css
+  (the holiday labels translated, one position changed) were changed by
+  JavCMS.
+- ArtPlayer 5.4.0 (static/player/artplayer/artplayer.js): (c) 2017-2026
+  Harvey Zhao. MIT license. The same folder holds JavCMS's player page
+  index.html; its two images ploading.gif and indicator.svg were made by
+  JavCMS for release 1.2.0 (the earlier ones came from the ArtPlayer demo
+  pages through ApiiCMS and showed Bilibili's "TV" character and logo).
+- DPlayer 1.27.1 (static/player/dplayer/): Copyright (c) DIYgod. MIT license.
+- WebTorrent 0.98.18 (static/player/dplayer/): Copyright (c) Feross
+  Aboukhadijeh and WebTorrent, LLC. MIT license.
+- dash.js 2.6.7 (static/player/dplayer/): Copyright (c) 2015, Dash Industry
+  Forum. All rights reserved. BSD-3-Clause license (text below).
+- Fonts in static/vendor/fonts/, SIL Open Font License 1.1 (the license text
+  and these copyright lines are also in LICENSE.OFL-1.1.txt):
+  Inter (font-00 to font-06): Copyright 2016 The Inter Project Authors
+  (https://github.com/rsms/inter).
+  JetBrains Mono (font-07 to font-12): Copyright 2020 The JetBrains Mono
+  Project Authors (https://github.com/JetBrains/JetBrainsMono).
+  Poppins (font-13 to font-21): Copyright 2020 The Poppins Project Authors
+  (https://github.com/itfoundry/Poppins).
+  Rubik (font-22 to font-27): Copyright 2015 The Rubik Project Authors
+  (https://github.com/googlefonts/rubik).
+  Quicksand (quicksand-*.woff2): Copyright 2019 The Quicksand Project Authors
+  (https://github.com/andrew-paglinawan/QuicksandFamily.git), with Reserved
+  Font Name "Quicksand".
+- MathQuill v0.xa (static/editor/umeditor/third-party/mathquill/, part of
+  UMeditor 1.2.2): "Copyleft 2010-2011 Jay and Han (laughinghan@gmail.com)
+  under the GNU Lesser General Public License" (http://mathquill.com). The LGPL
+  text is in LICENSE.LGPL-3.0.txt (with LICENSE.GPL-3.0.txt). Its Symbola font
+  (font/Symbola.*, "Unicode Fonts for Ancient Scripts; George Douros; 2009")
+  states in its font data: "Fonts in ‘Unicode Fonts for Ancient Scripts’ are
+  offered free for any use; they may be opened, edited, modified, regenerated,
+  posted, packaged and redistributed." Its STIX fonts
+  (font/stixgeneral-bundle/) come with their own license file,
+  STIXFontLicense2010.txt.
+- CKEditor 4.11.1 (static/editor/ckeditor/): Copyright (c) 2003-2018,
+  CKSource - Frederico Knabben, under the GPL, the LGPL or the MPL (your
+  choice). Its own license file static/editor/ckeditor/LICENSE.md, which every
+  CKEditor file header names, comes from the original CKEditor 4.11.1 release.
+- static/admin/icons/admin-icons.svg is a subset of Lucide 1.48.0 (ISC; some
+  icons derive from Feather, MIT); both license texts are inside the file.
+- static/js/jquery.lazyload.js (shipped by MacCMS without a header) is the
+  Lazy Load jQuery plugin by Mika Tuupola (https://appelsiini.net/projects/lazyload):
+  Copyright (c) Mika Tuupola. MIT license.
+- static/js/jquery.jscolor.js (shipped by MacCMS without a header) is jscolor
+  1.x by Jan Odvarko (http://jscolor.com), released under the GNU Lesser
+  General Public License.
+
+The MIT license, which applies to each MIT component named above together with
+its own copyright line:
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+  THE SOFTWARE.
+
+The BSD-3-Clause license of dash.js:
+
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions are met:
+  * Redistributions of source code must retain the above copyright notice,
+    this list of conditions and the following disclaimer.
+  * Redistributions in binary form must reproduce the above copyright notice,
+    this list of conditions and the following disclaimer in the documentation
+    and/or other materials provided with the distribution.
+  * Neither the name of the Dash Industry Forum nor the names of its
+    contributors may be used to endorse or promote products derived from this
+    software without specific prior written permission.
+
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+  LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+  SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  POSSIBILITY OF SUCH DAMAGE.
+
+
+Changes made by JavCMS to third-party files
+-------------------------------------------
+
+The Apache License 2.0 and the LGPL ask that changed files say that they were
+changed. JavCMS files with a JavCMS notice say so at the top. Third-party files
+carry no JavCMS notice (JavCMS adds nothing to them), so their changes are
+listed in NOTICE.CHANGED-FILES.txt, which comes with every copy and is the
+change notice for those files. That file is generated for each release. It names every file of the MacCMS
+v2023.1000.3051 release (which also ships ThinkPHP 5.0.24, the vendor/
+packages and the bundled static libraries) and of the libraries that JavCMS
+bundles in addition (TinyMCE 5.4.0, KindEditor 4.1.12, CKEditor 4.11.1,
+UMeditor 1.2.2, CodeMirror 5.42.2, Layui 2.9.13 and 2.7.6) that is different
+in this package from its original release, with the kind of change (code,
+messages, comments, formatting, content or configuration), who made it
+(changes that were already in the copy JavCMS received from ApiiCMS are
+marked "as received (ApiiCMS)") and its date.
+
+- PclZip 2.8.2 (application/common/util/PclZip.php, LGPL-2.1) was changed by
+  JavCMS in 2026: a PHP 8 constructor was added, error messages were reworded
+  and comments were rewritten in plain English.
+- PHP QR Code 1.1.4 (application/common/util/Qrcode.php, LGPL-3.0) was changed
+  by JavCMS in 2026: error messages were reworded and comments were rewritten
+  in plain English.
+  The date of the last change of both files is in NOTICE.CHANGED-FILES.txt.
+  Their copyright and license notices are kept as their authors published them.
+- TinyMCE 5.4.0 (static/editor/tinymce/, LGPL-2.1) and KindEditor 4.1.12
+  (static/editor/kindeditor/, LGPL-2.1) came to JavCMS through ApiiCMS, which
+  had added the TinyMCE language files langs/vi-vn.js and langs/zh_CN.js and
+  changed kindeditor-all-min.js (2024). JavCMS changed them in 2026: some error
+  and status messages were reworded, Chinese and Vietnamese language files were
+  translated to English and comments were reworded. CKEditor 4.11.1 (the custom
+  build that ApiiCMS shipped) and UMeditor 1.2.2 were changed by ApiiCMS and by
+  JavCMS in the same way. NOTICE.CHANGED-FILES.txt names each changed file with
+  the kind of change, who made it and its date.
+- The license notices of third-party files that an earlier translation or
+  formatting pass had altered were restored to their original text: the MacCMS
+  headers (also in javcms.php, the renamed MacCMS admin.php), the ThinkPHP
+  author lines and LICENSE.txt, the translated README and CONTRIBUTING files of
+  ThinkPHP and its packages, the Layui banners, clipboard.js and other jQuery
+  plugins, the PclZip and PHP QR Code headers, the headers of the TinyMCE,
+  KindEditor, CKEditor, UMeditor and CodeMirror files. NOTICE.CHANGED-FILES.txt
+  marks such files "notice restored".
+- Third-party components that JavCMS added itself are described in their
+  folders (for example static/vendor/fx/THIRD-PARTY.md) and above.
+- Files of the MacCMS release and of the bundled libraries that this package
+  leaves out or replaces because their author or license is not confirmed as
+  free for every use have their own section in NOTICE.CHANGED-FILES.txt: the
+  think-captcha fonts and background photos, the emoticon images of KindEditor
+  (the QQ faces of Tencent), UEditor and UMeditor (Baidu Hi preview sprites),
+  Layui (the Sina Weibo set) and MacCMS (Baidu Tieba faces), the application
+  icons of the UEditor attachment list (replaced by file signs that JavCMS
+  made), the Flash player play.swf with flv.js and jquery.lang.js. The
+  emoticon buttons of KindEditor (application/admin/view/extend/editor/
+  kindeditor.html) and UEditor (static/ueditor/ueditor.config.js) are switched
+  off; every other editor button stays.

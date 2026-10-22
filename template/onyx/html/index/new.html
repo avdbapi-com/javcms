@@ -1,0 +1,11 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<section class="sec sec-home" data-ai-group aria-labelledby="sec-new">
+  <div class="sec-head"><h2 class="sec-title" id="sec-new"><span class="sec-ico">{:\\app\\common\\util\\AutoIcon::navIcon('latest')}</span>{:\\app\\common\\util\\TemplateText::get('ui.latest_videos')}</h2><a class="sec-more" href="{:mac_url('label/new')}">{:\\app\\common\\util\\TemplateText::get('ui.view_more')}{:\\app\\common\\util\\AutoIcon::ui('chevron-right', ['size'=>'sm', 'tint'=>'none'])}</a></div>
+  <div class="grid" data-grid-fill>{maccms:vod num="10" type="all" order="desc" by="time" paging="no" id="vo"}{php}$tplHomeSeen[] = (int)$vo['vod_id'];{/php}{include file="public/vodbox"}{/maccms:vod}</div>
+</section>

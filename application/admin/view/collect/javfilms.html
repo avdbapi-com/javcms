@@ -1,0 +1,36 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{include file="../../../application/admin/view/public/head" /}
+<link rel="stylesheet" href="__STATIC__/css/admin_javfilms_workspace_v1.css?{$MAC_VERSION}&rev=2">
+<div class="page-container admin-javfilms-workspace admin-javfilms-workspace--kit">
+    {include file="../../../application/admin/view/public/page_head" icon="ai-cloud-download" title="admin/ux/tools/javfilms_title" action_url="avdbimport/index" action_label="admin/ux/tools/avdb_open" action_icon="ai-download" /}
+
+    <div class="ax-notice ax-notice--warn" role="alert">
+        <svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-triangle-alert"/></svg>
+        <div><p>{:lang('admin/ux/tools/javfilms_off')}</p></div>
+    </div>
+
+    <section class="ax-section" aria-labelledby="javfilms-range-title">
+        <h2 id="javfilms-range-title">{:lang('admin/ux/tools/javfilms_range')}</h2>
+        <div class="javfilms-row">
+            <div class="ax-field ax-field--sm">
+                <label for="pageFrom">{:lang('admin/ux/tools/javfilms_from')}</label>
+                <input type="number" id="pageFrom" class="layui-input" min="1" disabled>
+            </div>
+            <div class="ax-field ax-field--sm">
+                <label for="pageTo">{:lang('admin/ux/tools/javfilms_to')}</label>
+                <input type="number" id="pageTo" class="layui-input" min="1" disabled>
+            </div>
+            <button type="button" class="ax-btn" id="crawlBtn" disabled aria-disabled="true"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-play"/></svg>{:lang('admin/ux/tools/javfilms_collect')}</button>
+        </div>
+        <p class="ax-help"><a href="{:url('collect/index')}">{:lang('admin/ux/kit/back')}</a></p>
+    </section>
+</div>
+{include file="../../../application/admin/view/public/foot" /}
+</body>
+</html>

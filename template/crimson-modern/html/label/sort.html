@@ -1,0 +1,31 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="crimson-modern" data-fx="vt" data-fx-vt-style="crimson-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/sort"}
+{assign name="$maccms.aid" value="9995" /}
+{include file="public/include"}
+</head>
+<body class="ci-list ci-hubpage">
+{include file="public/head"}
+<main id="main-content" class="ci-wrap">
+{php}ob_start();{/php}{maccms:vod num="20" paging="yes" type="all" order="desc" by="time" pageurl="label/sort" id="vo"}{include file="public/vodbox"}{/maccms:vod}{php}$ciGridHtml = ob_get_clean(); $ciTotal = isset($__PAGING__['record_total']) ? intval($__PAGING__['record_total']) : 0;
+$ciHeadTitle = $ciDec(\app\common\util\TemplateText::raw('ink.sfx_all_volumes')); $ciHeadCrumb = \app\common\util\TemplateText::get('ui.categories'); $ciSortMode = 'none'; $ciHub = []; $ciHubMax = 1;{/php}
+{include file="public/listhead"}
+{maccms:type ids="parent" flag="vod" order="asc" by="sort" id="ciCat" hide_empty="1"}{php}$ciHc = intval(mac_data_count($ciCat['type_id'], 'all')); $ciHubMax = max($ciHubMax, $ciHc); $ciHub[] = ['url' => mac_url_type($ciCat, [], 'type'), 'name' => \app\common\util\TemplateText::raw(htmlspecialchars_decode((string)$ciCat['type_name'], ENT_QUOTES)), 'raw' => (string)$ciCat['type_name'], 'count' => $ciHc];{/php}{/maccms:type}{php}foreach ($ciHub as $ciHk => $ciHv) { $ciHub[$ciHk]['d'] = number_format(0.35 + 0.65 * (log10(max(1, $ciHv['count'])) / max(1, log10($ciHubMax))), 2, '.', ''); $ciHub[$ciHk]['words'] = preg_split('/\s+/u', trim($ciHv['name'])); $ciHub[$ciHk]['n'] = max(1, max(array_map('mb_strlen', $ciHub[$ciHk]['words']))); $ciHub[$ciHk]['vol'] = \app\common\util\TemplateText::get('ink.vol_n', ['n' => sprintf('%02d', $ciHk + 1)]); }{/php}
+<section class="ci-sec" aria-labelledby="ci-h-vols" data-ai-group><div class="ci-sec-head"><span class="ci-narr">{:\\app\\common\\util\\AutoIcon::navIcon('categories')}{:\\app\\common\\util\\TemplateText::get('ink.browse_categories')}</span><h2 class="ci-sr" id="ci-h-vols">{:\\app\\common\\util\\TemplateText::get('ink.browse_categories')}</h2></div>
+<ul class="ci-hub ci-vols">{volist name="ciHub" id="ciH"}<li class="ci-char" style="--d:{$ciH.d};--n:{$ciH.n}"><a class="ci-char-a" href="{$ciH.url|htmlspecialchars=ENT_QUOTES}"><span class="ci-char-in"><span class="ci-vol-no" aria-hidden="true">{$ciH.vol}</span><span class="ci-char-name" dir="auto">{volist name="ciH.words" id="ciW"}<span>{$ciW|htmlspecialchars=ENT_QUOTES}</span>{/volist}</span><span class="ci-char-ft"><span class="ci-char-n" dir="ltr"><span aria-hidden="true">&times;</span>{$ciH.count|number_format}</span>{:\\app\\common\\util\\AutoIcon::icon('category', $ciH['raw'], ['size'=>'lg', 'plate'=>true, 'i'=>$key, 'class'=>'ci-char-ai'])}</span></span></a></li>{/volist}</ul></section>
+<section class="ci-sec" aria-labelledby="ci-h-all"><div class="ci-sec-head"><h2 class="ci-h2" id="ci-h-all">{:\\app\\common\\util\\AutoIcon::navIcon('all-videos')}{:\\app\\common\\util\\TemplateText::get('ui.all_videos_59a0c0')}</h2>{if condition="$ciTotal gt 0"}<span class="ci-count">{:\\app\\common\\util\\TemplateText::get('ink.n_videos', ['count' => number_format($ciTotal)])}</span>{/if}</div>
+<div class="ci-grid" data-grid-fill data-ci-list>{$ciGridHtml}</div>
+{if condition="$ciTotal eq 0"}{include file="public/empty"}{/if}
+{include file="public/listfoot"}</section>
+</main>
+{include file="public/foot"}
+</body>
+</html>

@@ -1,0 +1,131 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Based on MacCMS 10 (Apache-2.0) by magicblack, changed by JavCMS.
+JavCMS changes: Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors,
+JavCMS Community License 1.0. The MacCMS parts stay under the Apache License 2.0.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{include file="../../../application/admin/view/public/head" /}
+<link rel="stylesheet" href="__STATIC__/css/admin_database_workspace_v1.css?{$MAC_VERSION}&rev=3">
+<div class="page-container admin-database-workspace-v1 db-kit">
+    {include file="../../../application/admin/view/public/page_head" icon="ai-database-backup" title="admin/database/title" /}
+
+    <nav class="ax-tabs" aria-label="{:lang('admin/database/title')}">
+        <a href="{:url('index')}" aria-current="page">{:lang('admin/database/backup_db')}</a>
+        <a href="{:url('index')}?group=import">{:lang('admin/database/import_db')}</a>
+    </nav>
+
+    <section class="ax-section db-backup-all" aria-labelledby="db-backup-all-title">
+        <h2 id="db-backup-all-title">{:lang('admin/ux/tools/backup_all')}</h2>
+        <p class="ax-help">{:lang('admin/ux/tools/backup_all_help')} {:lang('admin/ux/tools/backup_saved_in', [$backup_folder])}</p>
+        <div class="ax-toolbar">
+            <button type="button" class="ax-btn ax-btn--primary" id="db-backup-all" data-href="{:url('export')}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-database-backup"/></svg>{:lang('admin/ux/tools/backup_all')}</button>
+            <button type="button" class="ax-btn" id="db-backup-selected" data-href="{:url('export')}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-download"/></svg>{:lang('admin/ux/tools/backup_selected')}</button>
+            <span class="ax-toolbar__spacer"></span>
+            <span class="ax-toolbar__count" id="db-selected-count" aria-live="polite"></span>
+            <div class="ax-menu">
+                <button type="button" class="ax-btn" aria-haspopup="menu" aria-expanded="false">{:lang('admin/ux/tools/backup_more')}<svg class="ax-ic ax-ic--chevron" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-chevron-down"/></svg></button>
+                <div class="ax-menu__list" role="menu" hidden>
+                    <button type="button" class="ax-menu__item j-page-btns" role="menuitem" data-href="{:url('optimize')}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-database-zap"/></svg>{:lang('admin/database/optimize_db')}</button>
+                    <button type="button" class="ax-menu__item j-page-btns" role="menuitem" data-href="{:url('repair')}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-wrench"/></svg>{:lang('admin/database/repair_db')}</button>
+                </div>
+            </div>
+        </div>
+        <div class="db-backup-done" id="db-backup-done" role="status" aria-live="polite" hidden></div>
+    </section>
+
+    <form id="pageListForm" class="layui-form db-list-form">
+        <input type="hidden" name="__token__" id="db-token" value="{:mac_admin_csrf_token()}">
+        <div class="ax-table-wrap">
+        <table class="ax-table ax-table--cards">
+            <thead>
+            <tr>
+                <th class="db-check"><input type="checkbox" lay-skin="primary" lay-filter="allChoose" title="" aria-label="{:lang('admin/ux/tools/select_all_tables')}"></th>
+                <th>{:lang('admin/database/table')}</th>
+                <th class="ax-num">{:lang('admin/database/count')}</th>
+                <th class="ax-num">{:lang('admin/database/size')}</th>
+                <th class="ax-num">{:lang('admin/database/redundancy')}</th>
+                <th>{:lang('remarks')}</th>
+                <th class="ax-row-actions"><span class="ax-sr-only">{:lang('opt')}</span></th>
+            </tr>
+            </thead>
+            <tbody>
+            {volist name="list" id="vo"}
+            <tr>
+                <td class="db-check"><input type="checkbox" name="ids[]" class="layui-checkbox checkbox-ids" value="{$vo['Name']|htmlspecialchars}" lay-skin="primary" title="" aria-label="{$vo['Name']|htmlspecialchars}"></td>
+                <td data-label="{:lang('admin/database/table')}">{$vo['Name']|htmlspecialchars}</td>
+                <td class="ax-num" data-label="{:lang('admin/database/count')}">{$vo['Rows']}</td>
+                <td class="ax-num" data-label="{:lang('admin/database/size')}">{$vo['Data_length']/1024|round=###,2} KB</td>
+                <td class="ax-num" data-label="{:lang('admin/database/redundancy')}">{$vo['Data_free']/1024|round=###,2} KB</td>
+                <td data-label="{:lang('remarks')}">{$vo['Comment']|htmlspecialchars}</td>
+                <td class="ax-row-actions">
+                    <div class="ax-menu">
+                        <button type="button" class="ax-btn ax-btn--sm ax-btn--icon ax-btn--ghost" aria-haspopup="menu" aria-expanded="false" aria-label="{:lang('admin/ux/kit/more')}" title="{:lang('admin/ux/kit/more')}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-ellipsis"/></svg></button>
+                        <div class="ax-menu__list" role="menu" hidden>
+                            <button type="button" class="ax-menu__item db-row-act" role="menuitem" data-href="{:url('optimize')}" data-table="{$vo['Name']|htmlspecialchars}">{:lang('admin/database/optimize')}</button>
+                            <button type="button" class="ax-menu__item db-row-act" role="menuitem" data-href="{:url('repair')}" data-table="{$vo['Name']|htmlspecialchars}">{:lang('admin/database/repair')}</button>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            {/volist}
+            </tbody>
+        </table>
+        </div>
+    </form>
+
+</div>
+{include file="../../../application/admin/view/public/foot" /}
+
+<script type="text/javascript">
+    layui.use(['form', 'layer'], function () {
+        var form = layui.form, $ = layui.jquery;
+        var T = {$db_js};
+        var done = $('#db-backup-done');
+        function selected() { return $('.checkbox-ids:checked').map(function () { return this.value; }).get(); }
+        function syncCount() {
+            var n = selected().length;
+            $('#db-selected-count').text(n ? AxUX.t('selected', { n: n }) : '');
+        }
+        form.on('checkbox', syncCount);
+        $(document).on('change', '.checkbox-ids', syncCount);
+        function fmtSize(b) { return b > 1048576 ? (b / 1048576).toFixed(1) + ' MB' : (b / 1024).toFixed(1) + ' KB'; }
+        function backup(ids, btn) {
+            if (!ids.length) { AxUX.toast(AxUX.t('select_first'), 'warn'); return; }
+            $('#db-backup-all, #db-backup-selected').prop('disabled', true);
+            btn.attr('aria-busy', 'true');
+            done.prop('hidden', false).removeClass('is-error').text(T.running);
+            $.ajax({ type: 'POST', url: btn.attr('data-href'), data: { ids: ids, __token__: $('#db-token').val() }, dataType: 'json', timeout: 900000 }).then(function (res) {
+                if (!res || res.code != 1) { done.addClass('is-error').text((res && res.msg) || T.failed); return; }
+                done.empty();
+                $('<p class="db-backup-done__title"></p>').text(res.msg + ' ' + T.saved_in.replace('%s', res.data.path)).appendTo(done);
+                var list = $('<ul class="db-backup-files"></ul>').appendTo(done);
+                $.each(res.data.files || [], function (i, f) {
+                    var li = $('<li></li>').appendTo(list);
+                    $('<code></code>').text(f.name).appendTo(li);
+                    $('<span class="ax-faint"></span>').text(' ' + fmtSize(f.size) + ' ').appendTo(li);
+                    $('<a class="ax-btn ax-btn--sm"></a>').attr('href', T.download_url + (T.download_url.indexOf('?') < 0 ? '?' : '&') + 'download=' + encodeURIComponent(f.name)).text(T.download).prepend(AxUX.icon('download')).appendTo(li);
+                });
+                AxUX.toast(res.msg, 'ok');
+            }, function () { done.addClass('is-error').text(T.failed); }).always(function () {
+                $('#db-backup-all, #db-backup-selected').prop('disabled', false);
+                btn.removeAttr('aria-busy');
+            });
+        }
+        $('#db-backup-all').on('click', function () {
+            backup($('.checkbox-ids').map(function () { return this.value; }).get(), $(this));
+        });
+        $('#db-backup-selected').on('click', function () { backup(selected(), $(this)); });
+        // Hardening: the row Optimize / Repair are POSTs with the admin token (no GET link changes the database).
+        $(document).on('click', '.db-row-act', function () {
+            var btn = $(this);
+            btn.prop('disabled', true);
+            $.ajax({ type: 'POST', url: btn.attr('data-href'), data: { ids: [btn.attr('data-table')], __token__: $('#db-token').val() }, dataType: 'json', timeout: 300000 }).then(function (res) {
+                AxUX.toast((res && res.msg) || T.failed, res && res.code == 1 ? 'ok' : 'error');
+            }, function () { AxUX.toast(T.failed, 'error'); }).always(function () { btn.prop('disabled', false); });
+        });
+    });
+</script>
+</body>
+</html>

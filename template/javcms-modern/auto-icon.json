@@ -1,0 +1,13 @@
+{
+ "$schema": "javcms.auto-icon.v1",
+ "family": "tabler-outline",
+ "stroke": 1.75,
+ "motion": "draw tilt",
+ "enter": "pop",
+ "plate": "squircle",
+ "plateMotion": "pulse",
+ "avatar": "tile duotone",
+ "tint": "slot",
+ "map": {},
+ "nav": {}
+}

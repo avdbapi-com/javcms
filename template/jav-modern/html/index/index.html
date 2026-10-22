@@ -1,0 +1,49 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="jav-modern" data-template-variant="modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/index"}
+{include file="block/include"}
+</head>
+<body class="page-home">
+{include file="block/head"}
+<main id="main-content" class="container home-page">
+  <section class="gallery-hero" aria-labelledby="home-hero-title">
+    <div class="hero-aurora" aria-hidden="true"><span></span><span></span><span></span></div>
+    <div class="hero-copy">
+      <h1 id="home-hero-title"><span class="sr-only">{:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$maccms['site_name']), ENT_QUOTES, 'UTF-8')} - </span><span data-split>{:\\app\\common\\util\\TemplateText::get('discover_your_next_favorite')}</span></h1>
+      <p>{:\\app\\common\\util\\TemplateText::get('jav.hero_tagline')}</p>
+      <nav class="hero-cats" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.categories')}" data-ai-in="">{maccms:type ids="parent" order="asc" by="sort" flag="vod" id="tplCat" key="tplCatK" hide_empty="1"}<a href="{:mac_url_type($tplCat)}">{:\\app\\common\\util\\AutoIcon::icon('category', $tplCat['type_name'], ['i'=>$tplCatK])}<span>{:\\app\\common\\util\\TemplateText::get(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$tplCat['type_name']))}</span></a>{/maccms:type}</nav>
+    </div>
+    <div class="gallery-stat" data-ai-in=""><p>{:\\app\\common\\util\\AutoIcon::ui('film', ['size'=>'lg','plate'=>true])}<strong data-jm-count>{:mac_data_count(0,'all','vod')}</strong><span>{:\\app\\common\\util\\TemplateText::get('videos')}</span></p><p>{:\\app\\common\\util\\AutoIcon::ui('sparkles', ['size'=>'lg','plate'=>true])}<strong data-jm-count>{:mac_data_count(0,'today','vod')}</strong><span>{:\\app\\common\\util\\TemplateText::get('updated_today')}</span></p></div>
+  </section>
+  {php}$jvPbOpt = ['section' => 'stui-pannel home-section', 'head' => 'stui-vodlist__head', 'grid' => 'stui-vodlist', 'tag' => 'ul', 'item' => 'li'];{/php}{include file="public/provider_block"}
+  <section class="stui-pannel home-section reveal" aria-labelledby="home-latest" data-ai-in="">
+    <div class="stui-vodlist__head">
+      <h2 id="home-latest">{:\\app\\common\\util\\AutoIcon::navIcon('latest', '', ['size'=>'lg','plate'=>true])}<span>{:\\app\\common\\util\\TemplateText::get('recently_added')}</span></h2>
+      <a class="more-link" href="{:mac_url('label/new')}"><span>{:\\app\\common\\util\\TemplateText::get('view_all')}</span>{:\\app\\common\\util\\AutoIcon::ui('arrow-right', ['size'=>'sm','tint'=>'none'])}</a>
+    </div>
+    <ul class="stui-vodlist" data-grid-fill>{maccms:vod num="10" type="all" order="desc" by="time" paging="no"}<li>{include file="block/vod_box"}</li>{/maccms:vod}</ul>
+  </section>
+  {maccms:type ids="parent" order="asc" by="sort" id="vo1" key="key1" flag="vod" hide_empty="1" not="'.intval($GLOBALS['jvPbShown'] ?? 0).'"}{if condition="mac_data_count($vo1['type_id'],'all','vod') gt 0"}
+  <section class="stui-pannel home-section reveal" aria-labelledby="home-cat-{$vo1.type_id}" data-ai-group>
+    <div class="stui-vodlist__head">
+      <h2 id="home-cat-{$vo1.type_id}"><a href="{:mac_url_type($vo1)}">{:\\app\\common\\util\\AutoIcon::icon('category', $vo1['type_name'], ['size'=>'lg','plate'=>true])}<span>{:\\app\\common\\util\\TemplateText::get(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$vo1['type_name']))}</span></a></h2>
+      <a class="more-link" href="{:mac_url_type($vo1)}"><span>{:\\app\\common\\util\\TemplateText::get('view_all')}</span>{:\\app\\common\\util\\AutoIcon::ui('arrow-right', ['size'=>'sm','tint'=>'none'])}</a>
+    </div>
+    <ul class="stui-vodlist" data-grid-fill>{maccms:vod num="10" type="'.$vo1['type_id'].'" order="desc" by="time" paging="no"}<li>{include file="block/vod_box"}</li>{/maccms:vod}</ul>
+  </section>
+  {/if}{/maccms:type}
+  {php}$tplLinks = [];{/php}{maccms:link num="all" type="font" id="tplLk"}{php}$tplLinks[] = $tplLk;{/php}{/maccms:link}
+  {notempty name="tplLinks"}<nav class="partner-links" aria-label="{:\\app\\common\\util\\TemplateText::get('jav.partner_sites')}"><span>{:\\app\\common\\util\\AutoIcon::ui('link', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('jav.partner_sites')}</span>{volist name="tplLinks" id="tplLk"}<a href="{:mac_safe_url($tplLk['link_url'])}" target="_blank" rel="nofollow noopener noreferrer">{:\\app\\common\\util\\AutoIcon::ui('external-link', ['size'=>'sm'])}{$tplLk.link_name|htmlspecialchars=ENT_QUOTES}</a>{/volist}</nav>{/notempty}
+</main>
+{include file="block/copy"}
+{include file="block/foot"}
+</body>
+</html>

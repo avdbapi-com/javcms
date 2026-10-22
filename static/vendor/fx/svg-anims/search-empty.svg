@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" class="fxsvg fxsvg-search" aria-hidden="true" focusable="false">
+<!-- JavCMS fx | original animation, JavCMS Community License 1.0 | colours: CSS custom properties fx-accent, fx-accent-2, fx-ink, fx-muted (two leading hyphens; fallbacks in the style rules) -->
+<style>
+.fxsvg-search .c-a{fill:var(--fx-accent,#ff3d81)}.fxsvg-search .c-a2{fill:var(--fx-accent-2,#7c5cff)}.fxsvg-search .c-mu{fill:var(--fx-muted,#8a90a6);opacity:.55}
+.fxsvg-search .card{fill:var(--fx-ink,#e6e8f0);fill-opacity:.06;stroke:var(--fx-muted,#8a90a6);stroke-opacity:.6;stroke-width:5}
+.fxsvg-search .lens{animation:fxsvg-search-sweep 3s ease-in-out infinite}
+.fxsvg-search .glass{fill:none;stroke:var(--fx-accent,#ff3d81);stroke-width:8}
+.fxsvg-search .handle{stroke:var(--fx-ink,#e6e8f0);stroke-width:9;stroke-linecap:round}
+.fxsvg-search .shine{stroke:var(--fx-ink,#e6e8f0);stroke-width:4;stroke-linecap:round;opacity:.7}
+.fxsvg-search .dot{fill:var(--fx-accent,#ff3d81);opacity:.25;transform-box:fill-box;transform-origin:center;animation:fxsvg-search-blink 3s ease-in-out infinite}
+.fxsvg-search .dot:nth-of-type(2){animation-delay:.3s}.fxsvg-search .dot:nth-of-type(3){animation-delay:.6s}
+@keyframes fxsvg-search-sweep{0%,100%{transform:translate(96px,104px) rotate(-8deg)}33%{transform:translate(146px,92px) rotate(10deg)}66%{transform:translate(118px,128px) rotate(-2deg)}}
+@keyframes fxsvg-search-blink{0%,10%,45%,100%{opacity:.25;transform:scale(.8)}22%{opacity:1;transform:scale(1.2)}}
+@media (prefers-reduced-motion:reduce){.fxsvg-search .lens,.fxsvg-search .dot{animation:none}.fxsvg-search .lens{transform:translate(118px,112px)}}
+</style>
+<rect class="card" x="58" y="66" width="124" height="92" rx="18"/>
+<rect class="c-a2" x="77" y="95" width="70" height="10" rx="5"/>
+<rect class="c-mu" x="77" y="114" width="86" height="8" rx="4"/>
+<rect class="c-mu" x="77" y="130" width="58" height="8" rx="4"/>
+<g><circle class="dot" cx="98" cy="186" r="5"/><circle class="dot" cx="120" cy="186" r="5"/><circle class="dot" cx="142" cy="186" r="5"/></g>
+<g class="lens"><path class="handle" d="M17 17L34 34"/><circle class="glass" r="22"/><path class="shine" d="M-12-4L-4-13"/></g>
+</svg>

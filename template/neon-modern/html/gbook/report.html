@@ -1,0 +1,24 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<div class="mac_report nn-panel">
+<form class="gbook_form nn-form">
+<input type="hidden" name="gbook_rid" value="{:intval($param['id'] ?? 0)}">
+<p class="nn-form-note">{:\\app\\common\\util\\TemplateText::get('ui.please_enter_the_error_content')}</p>
+<textarea class="gbook_content nn-input" name="gbook_content" style="min-height:150px" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.your_message')}">{$param.name}</textarea>
+{if condition="$gbook.verify eq 1"}<label class="nn-field"><span class="nn-field-label">{:\\app\\common\\util\\TemplateText::get('ui.verification_code_4e450d')}</span><input type="text" name="verify" class="nn-input mac_verify" maxlength="4" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.verification_code')}"></label>{/if}
+<p class="nn-form-note">{:\\app\\common\\util\\TemplateText::get('ui.you_can_also_enter')} <span class="gbook_remaining remaining"></span></p>
+<button type="button" class="gbook_submit nn-submit">{:\\app\\common\\util\\TemplateText::get('ui.submit_a_message')}</button>
+</form>
+</div>
+<script>
+$(function(){
+MAC.Gbook.Login = {$gbook.login|intval};
+MAC.Gbook.Verify = {$gbook.verify|intval};
+MAC.Gbook.Init();
+});
+</script>

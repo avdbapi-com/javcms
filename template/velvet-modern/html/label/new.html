@@ -1,0 +1,36 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="velvet-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}" data-fx="vt smooth" data-fx-lerp="0.09" data-fx-vt-style="velvet-modern">
+<head>
+{include file="seo/new"}
+{assign name="$maccms.aid" value="9999" /}
+{include file="public/include"}
+</head>
+<body class="vp-page-list vp-page-label">
+{include file="public/head"}
+<main id="main-content" class="vp-main">
+  <div class="vp-wrap">
+    <header class="vp-bill" data-ai-group>
+      {:\\app\\common\\util\\AutoIcon::navIcon('latest', '', ['size'=>'xl', 'plate'=>true, 'class'=>'vp-bill-ico'])}
+      <p class="vp-eyebrow">{:\\app\\common\\util\\TemplateText::get('vp.premieres')}</p>
+      <h1 class="vp-bill-title">{:\\app\\common\\util\\TemplateText::get('ui.latest_videos')}</h1>
+      <p class="vp-bill-count">{:\\app\\common\\util\\TemplateText::get('vp.titles_count', ['count'=>number_format((float)mac_data_count(0,'all','vod'))])}</p>
+      <span class="vp-orn" aria-hidden="true"></span>
+      <div class="vp-bill-tools">
+        {include file="public/labelchips"}
+      </div>
+    </header>
+    <div class="vp-grid" data-grid-fill data-fx="stagger">{php}$vpRibbon = 0;{/php}{maccms:vod num="20" paging="yes" type="all" order="desc" by="time" pageurl="label/new" key="vpK"}{if condition="$vpK eq 1"}{php}$vpRibbon = intval($__PAGING__['page_current'] ?? 1) === 1 ? 1 : 0;{/php}{/if}{if condition="$vpK eq 6"}{php}$vpRibbon = 0;{/php}{/if}{include file="public/vodbox"}{/maccms:vod}{php}$vpRibbon = 0;{/php}</div>
+    {if condition="$__PAGING__.record_total eq 0"}{include file="public/empty"}{/if}
+    {include file="public/paging"}
+  </div>
+</main>
+{include file="public/foot"}
+</body>
+</html>

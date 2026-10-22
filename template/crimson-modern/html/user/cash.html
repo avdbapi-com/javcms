@@ -1,0 +1,48 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="crimson-modern" data-fx="vt" data-fx-vt-style="crimson-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+<title>{:\\app\\common\\util\\TemplateText::get('ui.withdrawal_record')} - {:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$maccms['site_name']), ENT_QUOTES, 'UTF-8')}</title>
+<meta name="robots" content="noindex, follow" />
+{include file="public/include"}
+{include file="user/include"}
+</head>
+<body class="ci-user-page ci-ucash">
+{include file="public/head"}
+<main id="main-content" class="ci-wrap"><div class="ci-ulayout">{include file="user/menu"}<section class="ci-ucontent"><div class="ci-phead"><div class="ci-phead-main"><h1 class="ci-h1">{:\\app\\common\\util\\TemplateText::get('ui.withdrawal_record')}</h1></div></div>
+{php}$ciCashRatio = max(1, intval($GLOBALS['config']['user']['cash_ratio'] ?? 1)); $ciCashPoints = intval($GLOBALS['user']['user_points'] ?? 0); $ciCashMin = $GLOBALS['config']['user']['cash_min'] ?? 0;{/php}<p class="ci-notice">{:\\app\\common\\util\\TemplateText::get('ink.cash_note', ['points' => $ciCashPoints, 'amount' => floor($ciCashPoints / $ciCashRatio), 'ratio' => $ciCashRatio, 'min' => $ciCashMin])}</p>
+<form class="ci-panel ci-form" id="fm" name="fm" method="post" action="" novalidate>
+<div class="ci-field"><label for="cash_bank_name">{:\\app\\common\\util\\AutoIcon::ui('library', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ui.bank_name')}</label><input class="ci-input" id="cash_bank_name" name="cash_bank_name" type="text"></div>
+<div class="ci-field"><label for="cash_bank_no">{:\\app\\common\\util\\AutoIcon::ui('id-card', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ui.bank_account')}</label><input class="ci-input" id="cash_bank_no" name="cash_bank_no" type="text"></div>
+<div class="ci-field"><label for="cash_payee_name">{:\\app\\common\\util\\AutoIcon::ui('user', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ui.payee_name')}</label><input class="ci-input" id="cash_payee_name" name="cash_payee_name" type="text"></div>
+<div class="ci-field"><label for="cash_money">{:\\app\\common\\util\\AutoIcon::ui('coins', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ui.withdrawal_amount')}</label><input class="ci-input" id="cash_money" name="cash_money" type="number" min="0" inputmode="decimal"></div>
+<button class="ci-btn" id="btn_submit" type="button">{:\\app\\common\\util\\TemplateText::get('ui.submit')}</button></form>
+<div class="ci-table-wrap"><table class="ci-table"><thead><tr><th scope="col">{:\\app\\common\\util\\TemplateText::get('ui.state')}</th><th scope="col">{:\\app\\common\\util\\TemplateText::get('ui.withdrawal_points')}</th><th scope="col">{:\\app\\common\\util\\TemplateText::get('ui.withdrawal_amount')}</th><th scope="col">{:\\app\\common\\util\\TemplateText::get('ui.time')}</th><th scope="col">{:\\app\\common\\util\\TemplateText::get('ui.operate')}</th></tr></thead><tbody>{volist name="list" id="vo"}<tr><td>{if condition="$vo.cash_status eq '1'"}{:\\app\\common\\util\\TemplateText::get('ui.review')}{else/}{:\\app\\common\\util\\TemplateText::get('ui.not_reviewed')}{/if}</td><td dir="ltr">{$vo.cash_points}</td><td dir="ltr">{$vo.cash_money}</td><td dir="ltr">{$vo.cash_time|mac_day}</td><td><button class="ci-pill ci-pill--sm" type="button" onclick="ciCashDel({$vo.cash_id})">{:\\app\\common\\util\\TemplateText::get('ui.delete')}</button></td></tr>{/volist}</tbody></table></div>
+{if condition="empty($list)"}{php}$ciEmptyKey = 'ink.list_empty';{/php}{include file="public/empty"}{/if}{include file="public/paging"}
+</section></div></main>
+{include file="public/foot"}
+<script>
+async function ciCashDel(id) {
+  if (await TemplateUI.confirm(window.TemplateMessages['ui.confirm_delete_selected_records'])) {
+    $.post("{:url('user/cash_del')}", { ids: id, all: 0 }, function (data) {
+      if (data.code == '1') { TemplateUI.message(window.TemplateMessages['ui.records_deleted']); location.reload(); }
+      else { TemplateUI.message(window.galleryMessage('ui.delete_failed_reason', { reason: data.msg }), { kind: 'error' }); }
+    }, 'json');
+  }
+}
+$(function () {
+  $('#btn_submit').on('click', function () {
+    var need = [['cash_bank_name', 'ui.please_enter_the_bank_name'], ['cash_bank_no', 'ui.please_enter_the_bank_account'], ['cash_payee_name', 'ui.enter_payee_name'], ['cash_money', 'ui.please_enter_the_withdrawal_amount']];
+    for (var i = 0; i < need.length; i++) { if ($.trim($('#' + need[i][0]).val()) === '') { TemplateUI.message(window.TemplateMessages[need[i][1]]); $('#' + need[i][0]).focus(); return; } }
+    $.ajax({ url: "{:url('user/cash')}", type: 'post', dataType: 'json', data: $('#fm').serialize(), success: function (r) { TemplateUI.message(r.msg); if (r.code == 1) { location.href = "{:url('user/cash')}"; } } });
+  });
+});
+</script>
+</body>
+</html>

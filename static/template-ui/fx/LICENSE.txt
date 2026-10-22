@@ -1,0 +1,19 @@
+JavCMS Community License 1.0
+
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors
+
+From JavCMS release 1.2.0, the JavCMS files in this directory (static/template-ui/fx) are under the JavCMS Community License 1.0:
+free to use, copy, change and share, not for sale. The license text is Part A of
+the LICENSE file in the JavCMS root folder.
+Not covered: the embedded third-party parts listed in THIRD-PARTY.txt (the Lucide
+icon geometry in morph.js, ISC; some of those icons derive from Feather, MIT).
+They keep their own licenses; LICENSE Part C lists all third-party parts.
+Copies of these files from JavCMS releases up to and including 1.1.0 were
+published under the MIT license and stay under it.
+
+This directory (static/template-ui/fx) contains original JavCMS code: the effect
+modules, the stylesheets and all GLSL shaders were written for this project.
+React Bits (reactbits.dev, MIT + Commons Clause) was used only as a visual
+reference for which effects are popular; none of its code was copied or ported.
+Third-party code used at runtime is imported from static/vendor/fx (each folder
+there carries its own licence); see THIRD-PARTY.txt for what is embedded here.

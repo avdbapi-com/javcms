@@ -1,0 +1,3018 @@
+{
+ "schema": 1,
+ "name": "JavCMS example ads",
+ "brief": "ADS-BRIEF 9 / 12.d",
+ "made": "2026-10-14",
+ "count": 58,
+ "doc": {
+  "install": "JcxBuild::installExamples() upserts one jcx_item row per item by item_ex_code = x, with item_example = 1 and item_status = 0. Examples never go into live.php or c.json.",
+  "columns": "x -> item_ex_code; name -> item_name; unit -> item_unit; kind -> item_kind; place -> item_place; dev -> item_dev; pages -> item_pages; size.w/h/wm/hm -> item_w/h/wm/hm; media -> item_media (JSON); texts.url/alt/title/text/brand/cta -> item_url/alt/title/text/brand/cta; code.code/code_m/mode -> item_code/item_code_m/item_code_mode; opts -> item_opts (JSON); note -> item_note. Store text fields with the same input filter as an admin save (CONTRACT-FIELDS: decode once, escape once).",
+  "pv": "pv = the preview place(s) of ADS-BRIEF 9.3 verbatim (the brackets). place = the single item_place stored (first place of pv that table 1.1 allows for the unit).",
+  "tokens": "Replace before storing: {b} = install directory (MAC_PATH, ends with /); {abs} = absolute base URL (scheme + host + MAC_PATH); {home} = absolute home page URL; {newest_vod_id} = vod_id of the newest video (integer, 0 when none). In the VAST template, replacements go inside CDATA.",
+  "vast": "Write vast.xml (tokens replaced) to vast.file at install time; when static/jcx/x/ is not writable use vast.fallback and put that URL into X48 media.vast.",
+  "paths": "Every media path is relative to the install directory (prefix MAC_PATH when printing). Names are 8 hex of sha1 (first window without \"ad\").",
+  "new_keys": "Keys this manifest adds to the 3.3 lists: media.webm (second source), media.pod (X59 two-ad list), media.cards for the X23 rails (start, end), opts.roll (pre | reward; UD4: no mid / post, every video plays in the provider's iframe player), opts.layout (grid | carousel | collection), opts.every / opts.max on U16 in-feed (X50).",
+  "remote": "Test videos by URL (video / vast items accept http(s) media): X41, X49 and X59 ad 1 = https://vjs.zencdn.net/v/oceans.mp4 (46.6 s); X44, X60 and X59 ad 2 = https://www.w3schools.com/html/mov_bbb.mp4 (10 s); X43 and X52 = https://content.jwplatform.com/manifests/yp34SRmf.m3u8 (HLS, 25.5 s, 180p-1080p); the X48 VAST MediaFiles = the two MP4s. They load from those hosts only in the admin preview (examples never reach visitors); they are not in the files table and do not count toward the media budget."
+ },
+ "vast": {
+  "file": "static/jcx/x/61ea1af3.xml",
+  "fallback": "upload/jcx/61ea1af3.xml",
+  "xml": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<!-- JavCMS example VAST 4.2 tag (pod of 2). The two MediaFiles are public test videos by URL (vjs.zencdn.net, w3schools.com); the ad titles name fictional advertisers. Replace it with your ad network's VAST URL. -->\n<VAST version=\"4.2\" xmlns=\"http://www.iab.com/VAST\">\n  <Ad id=\"jcx-example-a\" sequence=\"1\">\n    <InLine>\n      <AdSystem version=\"1\">JavCMS example</AdSystem>\n      <AdServingId>jcx-example-a</AdServingId>\n      <AdTitle>Ostrelle: Wake up to the sea (example)</AdTitle>\n      <Advertiser>Ostrelle</Advertiser>\n      <Impression id=\"jcx\"><![CDATA[{abs}static/jcx/x/d5fceb65.gif?e=i1&x=48]]></Impression>\n      <Error><![CDATA[{abs}static/jcx/x/d5fceb65.gif?e=err&c=[ERRORCODE]&x=48]]></Error>\n      <Creatives>\n        <Creative id=\"jcx-example-a-c\" sequence=\"1\">\n          <UniversalAdId idRegistry=\"unknown\">unknown</UniversalAdId>\n          <Linear skipoffset=\"00:00:05\">\n            <Duration>00:00:46.613</Duration>\n            <TrackingEvents>\n              <Tracking event=\"start\"><![CDATA[{abs}static/jcx/x/d5fceb65.gif?e=s1&x=48]]></Tracking>\n              <Tracking event=\"firstQuartile\"><![CDATA[{abs}static/jcx/x/d5fceb65.gif?e=q11&x=48]]></Tracking>\n              <Tracking event=\"midpoint\"><![CDATA[{abs}static/jcx/x/d5fceb65.gif?e=q21&x=48]]></Tracking>\n              <Tracking event=\"thirdQuartile\"><![CDATA[{abs}static/jcx/x/d5fceb65.gif?e=q31&x=48]]></Tracking>\n              <Tracking event=\"complete\"><![CDATA[{abs}static/jcx/x/d5fceb65.gif?e=c1&x=48]]></Tracking>\n              <Tracking event=\"skip\"><![CDATA[{abs}static/jcx/x/d5fceb65.gif?e=k1&x=48]]></Tracking>\n              <Tracking event=\"unmute\"><![CDATA[{abs}static/jcx/x/d5fceb65.gif?e=u1&x=48]]></Tracking>\n            </TrackingEvents>\n            <VideoClicks>\n              <ClickThrough id=\"jcx\"><![CDATA[{home}]]></ClickThrough>\n              <ClickTracking><![CDATA[{abs}static/jcx/x/d5fceb65.gif?e=l1&x=48]]></ClickTracking>\n            </VideoClicks>\n            <MediaFiles>\n              <MediaFile delivery=\"progressive\" type=\"video/mp4\" width=\"960\" height=\"400\" bitrate=\"3950\"><![CDATA[https://vjs.zencdn.net/v/oceans.mp4]]></MediaFile>\n            </MediaFiles>\n          </Linear>\n        </Creative>\n        <Creative id=\"jcx-example-a-cmp\" sequence=\"1\">\n          <CompanionAds>\n            <Companion width=\"300\" height=\"250\">\n              <StaticResource creativeType=\"image/webp\"><![CDATA[{abs}static/jcx/x/b709bcf1.webp]]></StaticResource>\n              <AltText>Ostrelle: Stay for the sunset. See stays.</AltText>\n              <CompanionClickThrough><![CDATA[{home}]]></CompanionClickThrough>\n            </Companion>\n          </CompanionAds>\n        </Creative>\n      </Creatives>\n    </InLine>\n  </Ad>\n  <Ad id=\"jcx-example-b\" sequence=\"2\">\n    <InLine>\n      <AdSystem version=\"1\">JavCMS example</AdSystem>\n      <AdServingId>jcx-example-b</AdServingId>\n      <AdTitle>Halcyra+: Animation night (example)</AdTitle>\n      <Advertiser>Halcyra+</Advertiser>\n      <Impression id=\"jcx\"><![CDATA[{abs}static/jcx/x/d5fceb65.gif?e=i2&x=48]]></Impression>\n      <Error><![CDATA[{abs}static/jcx/x/d5fceb65.gif?e=err&c=[ERRORCODE]&x=48]]></Error>\n      <Creatives>\n        <Creative id=\"jcx-example-b-c\" sequence=\"1\">\n          <UniversalAdId idRegistry=\"unknown\">unknown</UniversalAdId>\n          <Linear>\n            <Duration>00:00:10.027</Duration>\n            <TrackingEvents>\n              <Tracking event=\"start\"><![CDATA[{abs}static/jcx/x/d5fceb65.gif?e=s2&x=48]]></Tracking>\n              <Tracking event=\"firstQuartile\"><![CDATA[{abs}static/jcx/x/d5fceb65.gif?e=q12&x=48]]></Tracking>\n              <Tracking event=\"midpoint\"><![CDATA[{abs}static/jcx/x/d5fceb65.gif?e=q22&x=48]]></Tracking>\n              <Tracking event=\"thirdQuartile\"><![CDATA[{abs}static/jcx/x/d5fceb65.gif?e=q32&x=48]]></Tracking>\n              <Tracking event=\"complete\"><![CDATA[{abs}static/jcx/x/d5fceb65.gif?e=c2&x=48]]></Tracking>\n              <Tracking event=\"unmute\"><![CDATA[{abs}static/jcx/x/d5fceb65.gif?e=u2&x=48]]></Tracking>\n            </TrackingEvents>\n            <VideoClicks>\n              <ClickThrough id=\"jcx\"><![CDATA[{home}]]></ClickThrough>\n              <ClickTracking><![CDATA[{abs}static/jcx/x/d5fceb65.gif?e=l2&x=48]]></ClickTracking>\n            </VideoClicks>\n            <MediaFiles>\n              <MediaFile delivery=\"progressive\" type=\"video/mp4\" width=\"320\" height=\"176\" bitrate=\"630\"><![CDATA[https://www.w3schools.com/html/mov_bbb.mp4]]></MediaFile>\n            </MediaFiles>\n          </Linear>\n        </Creative>\n      </Creatives>\n    </InLine>\n  </Ad>\n</VAST>\n"
+ },
+ "files": [
+  {
+   "path": "static/jcx/x/d5fceb65.gif",
+   "bytes": 42,
+   "sha1": "d5fceb6532643d0d84ffe09c40c481ecdf59e15a",
+   "type": "image/gif",
+   "used_by": [
+    "X48"
+   ]
+  },
+  {
+   "path": "static/jcx/x/6bb31f1f.webp",
+   "bytes": 32568,
+   "sha1": "6bb31f1fd64d3433eddeef82df3846e0dd2a8d2c",
+   "type": "image/webp",
+   "used_by": [
+    "X01"
+   ]
+  },
+  {
+   "path": "static/jcx/x/6287b26c.webp",
+   "bytes": 34232,
+   "sha1": "6287b26c630393b57a55e5f780e7d8b59c60fe5e",
+   "type": "image/webp",
+   "used_by": [
+    "X02"
+   ]
+  },
+  {
+   "path": "static/jcx/x/17c7370e.webp",
+   "bytes": 26104,
+   "sha1": "17c7370ec3daa61b0f75d319cec5204001abc42e",
+   "type": "image/webp",
+   "used_by": [
+    "X03",
+    "X20"
+   ]
+  },
+  {
+   "path": "static/jcx/x/16274b37.webp",
+   "bytes": 39256,
+   "sha1": "16274b37c3da8f9f1449930ee75d4bde3d107953",
+   "type": "image/webp",
+   "used_by": [
+    "X04",
+    "X57"
+   ]
+  },
+  {
+   "path": "static/jcx/x/4d9a7f26.webp",
+   "bytes": 29072,
+   "sha1": "4d9a7f26526e56a4ead5e2cc547457096b5dcebf",
+   "type": "image/webp",
+   "used_by": [
+    "X05"
+   ]
+  },
+  {
+   "path": "static/jcx/x/34780441.webp",
+   "bytes": 38858,
+   "sha1": "34780441c5a647a13993b3bcd20c2767c748050d",
+   "type": "image/webp",
+   "used_by": [
+    "X06"
+   ]
+  },
+  {
+   "path": "static/jcx/x/a1011e91.webp",
+   "bytes": 39706,
+   "sha1": "a1011e9165d49c61bfd720da662f87c37b7e8fe5",
+   "type": "image/webp",
+   "used_by": [
+    "X07"
+   ]
+  },
+  {
+   "path": "static/jcx/x/4f64977c.webp",
+   "bytes": 12342,
+   "sha1": "4f64977c26be65211d16c9b9a0c8210386f366a5",
+   "type": "image/webp",
+   "used_by": [
+    "X08"
+   ]
+  },
+  {
+   "path": "static/jcx/x/fe24d623.webp",
+   "bytes": 16794,
+   "sha1": "fe24d623455f6bc74259a8b92af9ebae3ddcae52",
+   "type": "image/webp",
+   "used_by": [
+    "X09"
+   ]
+  },
+  {
+   "path": "static/jcx/x/c686cdbe.webp",
+   "bytes": 24338,
+   "sha1": "c686cdbe790b6f4135e5b09f17569ff74a182cf8",
+   "type": "image/webp",
+   "used_by": [
+    "X10"
+   ]
+  },
+  {
+   "path": "static/jcx/x/a73173c5.webp",
+   "bytes": 11256,
+   "sha1": "a73173c5b5d79cbafd0bef9bde482b31b6ac5c0e",
+   "type": "image/webp",
+   "used_by": [
+    "X11"
+   ]
+  },
+  {
+   "path": "static/jcx/x/6d5780a1.webp",
+   "bytes": 23832,
+   "sha1": "6d5780a16c9990986d11269f2aeca370654f978d",
+   "type": "image/webp",
+   "used_by": [
+    "X12"
+   ]
+  },
+  {
+   "path": "static/jcx/x/b8a01f0b.webp",
+   "bytes": 12678,
+   "sha1": "b8a01f0b3a493776b76cd567bd0b601f4d5544d5",
+   "type": "image/webp",
+   "used_by": [
+    "X13"
+   ]
+  },
+  {
+   "path": "static/jcx/x/b613d8ae.webp",
+   "bytes": 19732,
+   "sha1": "b613d8ae1c724f28021d010bb9967b3c949649a7",
+   "type": "image/webp",
+   "used_by": [
+    "X14"
+   ]
+  },
+  {
+   "path": "static/jcx/x/cedfb389.webp",
+   "bytes": 32214,
+   "sha1": "cedfb389911bb43085fe306bcf59645809775905",
+   "type": "image/webp",
+   "used_by": [
+    "X15"
+   ]
+  },
+  {
+   "path": "static/jcx/x/78f2deff.webp",
+   "bytes": 14358,
+   "sha1": "78f2deffba2a056d810280eb1c7b6b605be30118",
+   "type": "image/webp",
+   "used_by": [
+    "X16"
+   ]
+  },
+  {
+   "path": "static/jcx/x/4aa6c57e.gif",
+   "bytes": 29520,
+   "sha1": "4aa6c57ed37410e9f83b74b6143dd527af13f46e",
+   "type": "image/gif",
+   "used_by": [
+    "X17"
+   ]
+  },
+  {
+   "path": "static/jcx/x/995299e3.webp",
+   "bytes": 35150,
+   "sha1": "995299e35b298ee3f660181336e875c1d6d81e4c",
+   "type": "image/webp",
+   "used_by": [
+    "X17"
+   ]
+  },
+  {
+   "path": "static/jcx/x/9f9e9127.js",
+   "bytes": 6767,
+   "sha1": "9f9e912719974f9481cf7f87a412ebe2c98af476",
+   "type": "text/javascript",
+   "used_by": [
+    "X19"
+   ]
+  },
+  {
+   "path": "static/jcx/x/d449b927.webp",
+   "bytes": 13960,
+   "sha1": "d449b927e3281dc7b206a7eef21192a2e8417e6c",
+   "type": "image/webp",
+   "used_by": [
+    "X20"
+   ]
+  },
+  {
+   "path": "static/jcx/x/58f24a6a.webp",
+   "bytes": 25316,
+   "sha1": "58f24a6afc96cf188250281580196c3a0fc8eccd",
+   "type": "image/webp",
+   "used_by": [
+    "X21"
+   ]
+  },
+  {
+   "path": "static/jcx/x/6c68a555.webp",
+   "bytes": 13002,
+   "sha1": "6c68a55562cadaf60a2b828514844cc45709452c",
+   "type": "image/webp",
+   "used_by": [
+    "X22"
+   ]
+  },
+  {
+   "path": "static/jcx/x/212b96ba.webp",
+   "bytes": 24938,
+   "sha1": "212b96babba69e3129acbe5917a86e427b0b732d",
+   "type": "image/webp",
+   "used_by": [
+    "X23"
+   ]
+  },
+  {
+   "path": "static/jcx/x/735ffcce.webp",
+   "bytes": 19508,
+   "sha1": "735ffcce43e37cc488c1a2d7d17894be336b633c",
+   "type": "image/webp",
+   "used_by": [
+    "X23"
+   ]
+  },
+  {
+   "path": "static/jcx/x/fc736a09.webp",
+   "bytes": 26364,
+   "sha1": "fc736a09f4960bc918537ab3efa2469813abb492",
+   "type": "image/webp",
+   "used_by": [
+    "X24"
+   ]
+  },
+  {
+   "path": "static/jcx/x/b8879693.webp",
+   "bytes": 37730,
+   "sha1": "b8879693c65d438f504da805a7c0ea87eb6fbe97",
+   "type": "image/webp",
+   "used_by": [
+    "X24"
+   ]
+  },
+  {
+   "path": "static/jcx/x/096f8755.webp",
+   "bytes": 12760,
+   "sha1": "096f8755b35720c0c36131e387b383909e510ac2",
+   "type": "image/webp",
+   "used_by": [
+    "X25"
+   ]
+  },
+  {
+   "path": "static/jcx/x/b709bcf1.webp",
+   "bytes": 31276,
+   "sha1": "b709bcf137901260adb770fa999730d3b52c4469",
+   "type": "image/webp",
+   "used_by": [
+    "X25",
+    "X48"
+   ]
+  },
+  {
+   "path": "static/jcx/x/360c8c29.webp",
+   "bytes": 30230,
+   "sha1": "360c8c29ddf86a437ae94657e5d45653dbd379ab",
+   "type": "image/webp",
+   "used_by": [
+    "X26"
+   ]
+  },
+  {
+   "path": "static/jcx/x/01906511.webp",
+   "bytes": 15308,
+   "sha1": "01906511119b36adb1952a7f46b99c7d2391b1db",
+   "type": "image/webp",
+   "used_by": [
+    "X27"
+   ]
+  },
+  {
+   "path": "static/jcx/x/713d1c71.webp",
+   "bytes": 4198,
+   "sha1": "713d1c710ef4e3b6fe0bb2169b8d5d8918f8eb46",
+   "type": "image/webp",
+   "used_by": [
+    "X28"
+   ]
+  },
+  {
+   "path": "static/jcx/x/a04b1d5e.webp",
+   "bytes": 40176,
+   "sha1": "a04b1d5e8b336227e3cbf51086d21ec9efd0d9d6",
+   "type": "image/webp",
+   "used_by": [
+    "X29"
+   ]
+  },
+  {
+   "path": "static/jcx/x/c117c4b2.webp",
+   "bytes": 37694,
+   "sha1": "c117c4b2113ee4d8f9273ec522d7bb364d3f56be",
+   "type": "image/webp",
+   "used_by": [
+    "X30"
+   ]
+  },
+  {
+   "path": "static/jcx/x/6e34f487.mp4",
+   "bytes": 142737,
+   "sha1": "6e34f487941a16ffb41e328bc4a8c685c2d46e95",
+   "type": "video/mp4",
+   "used_by": [
+    "X31"
+   ]
+  },
+  {
+   "path": "static/jcx/x/47b1686a.webp",
+   "bytes": 40376,
+   "sha1": "47b1686a15a61df3822205553b61db5825afff14",
+   "type": "image/webp",
+   "used_by": [
+    "X31"
+   ]
+  },
+  {
+   "path": "static/jcx/x/264cdf28.webp",
+   "bytes": 37224,
+   "sha1": "264cdf28fc01761efa2699a02dbd82624248bd40",
+   "type": "image/webp",
+   "used_by": [
+    "X32"
+   ]
+  },
+  {
+   "path": "static/jcx/x/4a147637.js",
+   "bytes": 1009,
+   "sha1": "4a1476374b5c1174af0a168f80688d1e81cf8b7b",
+   "type": "text/javascript",
+   "used_by": [
+    "X33"
+   ]
+  },
+  {
+   "path": "static/jcx/x/20ac3b01.html",
+   "bytes": 23495,
+   "sha1": "20ac3b01e02a5ea930f8cd4883c5e83569c94489",
+   "type": "text/html",
+   "used_by": [
+    "X33"
+   ]
+  },
+  {
+   "path": "static/jcx/x/2cd29079.js",
+   "bytes": 23927,
+   "sha1": "2cd29079a626eed5c1ab18df208ab0a1b8fb55b4",
+   "type": "text/javascript",
+   "used_by": [
+    "X34"
+   ]
+  },
+  {
+   "path": "static/jcx/x/2de532f0.webp",
+   "bytes": 15950,
+   "sha1": "2de532f0dda4ce5c70f2af138244dd2238690093",
+   "type": "image/webp",
+   "used_by": [
+    "X35"
+   ]
+  },
+  {
+   "path": "static/jcx/x/16e07876.webp",
+   "bytes": 12116,
+   "sha1": "16e07876bbbd118ed21454bd08bc1db3347dc4a1",
+   "type": "image/webp",
+   "used_by": [
+    "X37"
+   ]
+  },
+  {
+   "path": "static/jcx/x/ce601954.webp",
+   "bytes": 15568,
+   "sha1": "ce60195479bc110e35b41cc312b12bb3376fb8cb",
+   "type": "image/webp",
+   "used_by": [
+    "X37"
+   ]
+  },
+  {
+   "path": "static/jcx/x/3a2151f6.webp",
+   "bytes": 14834,
+   "sha1": "3a2151f627f834fd218709eb62c8a48a9954df48",
+   "type": "image/webp",
+   "used_by": [
+    "X37"
+   ]
+  },
+  {
+   "path": "static/jcx/x/683f8ea3.webp",
+   "bytes": 9898,
+   "sha1": "683f8ea32e5ac69b05eb4a94e5506d27f15486fb",
+   "type": "image/webp",
+   "used_by": [
+    "X37"
+   ]
+  },
+  {
+   "path": "static/jcx/x/3813f283.webp",
+   "bytes": 9644,
+   "sha1": "3813f2838b1610a2fa8432a8783ef76c1e9ebab1",
+   "type": "image/webp",
+   "used_by": [
+    "X38"
+   ]
+  },
+  {
+   "path": "static/jcx/x/e51f6ca4.webp",
+   "bytes": 8388,
+   "sha1": "e51f6ca4c5176778e3618e21eb6aa3e5b55e75a6",
+   "type": "image/webp",
+   "used_by": [
+    "X38"
+   ]
+  },
+  {
+   "path": "static/jcx/x/27d53e0d.webp",
+   "bytes": 9920,
+   "sha1": "27d53e0d1a1f1c3c1a4a5bbd8e222423aed7087e",
+   "type": "image/webp",
+   "used_by": [
+    "X38"
+   ]
+  },
+  {
+   "path": "static/jcx/x/13defca4.webp",
+   "bytes": 9792,
+   "sha1": "13defca40946ab93bb05f5651aefda9cb1acba00",
+   "type": "image/webp",
+   "used_by": [
+    "X38"
+   ]
+  },
+  {
+   "path": "static/jcx/x/114fc5fd.webp",
+   "bytes": 8456,
+   "sha1": "114fc5fd7ccf36e6ad28526429fc60ecdc647437",
+   "type": "image/webp",
+   "used_by": [
+    "X38"
+   ]
+  },
+  {
+   "path": "static/jcx/x/33ee762e.webp",
+   "bytes": 25276,
+   "sha1": "33ee762ec0e76a3044049b09efe0440cad35ea45",
+   "type": "image/webp",
+   "used_by": [
+    "X39"
+   ]
+  },
+  {
+   "path": "static/jcx/x/32bdc0a2.webp",
+   "bytes": 12064,
+   "sha1": "32bdc0a237554e1d40d04814b3c155de4557ebf3",
+   "type": "image/webp",
+   "used_by": [
+    "X39"
+   ]
+  },
+  {
+   "path": "static/jcx/x/9162dba0.webp",
+   "bytes": 9006,
+   "sha1": "9162dba0a4d097165306347d44607ab716407ed6",
+   "type": "image/webp",
+   "used_by": [
+    "X39"
+   ]
+  },
+  {
+   "path": "static/jcx/x/ae2793b4.webp",
+   "bytes": 8882,
+   "sha1": "ae2793b4d7e471f80af70eee2c0bf01b74694322",
+   "type": "image/webp",
+   "used_by": [
+    "X39"
+   ]
+  },
+  {
+   "path": "static/jcx/x/520a4cb4.webp",
+   "bytes": 10720,
+   "sha1": "520a4cb4ebe291b7baee09c2804293a6f01e3a1b",
+   "type": "image/webp",
+   "used_by": [
+    "X39"
+   ]
+  },
+  {
+   "path": "static/jcx/x/76f05629.webp",
+   "bytes": 39644,
+   "sha1": "76f0562975e607ebba8b927dd006fb291ee61f40",
+   "type": "image/webp",
+   "used_by": [
+    "X41",
+    "X49",
+    "X59"
+   ]
+  },
+  {
+   "path": "static/jcx/x/76c5590b.webm",
+   "bytes": 319000,
+   "sha1": "76c5590b82e1642ea7c60b54de1fcb651d0c39ec",
+   "type": "video/webm",
+   "used_by": [
+    "X42"
+   ]
+  },
+  {
+   "path": "static/jcx/x/be413113.webp",
+   "bytes": 39018,
+   "sha1": "be41311393deac5a3dd0d3b58a716740dc6661e2",
+   "type": "image/webp",
+   "used_by": [
+    "X42"
+   ]
+  },
+  {
+   "path": "static/jcx/x/b66547eb.webp",
+   "bytes": 40222,
+   "sha1": "b66547eb0fbf8f1092134035e8b9b0da246cf0ab",
+   "type": "image/webp",
+   "used_by": [
+    "X43",
+    "X52"
+   ]
+  },
+  {
+   "path": "static/jcx/x/3d907573.webp",
+   "bytes": 38136,
+   "sha1": "3d907573f5817f09ce84380ffea926f31a38d6bf",
+   "type": "image/webp",
+   "used_by": [
+    "X44",
+    "X59",
+    "X60"
+   ]
+  },
+  {
+   "path": "static/jcx/x/ba7f2f31.mp4",
+   "bytes": 132311,
+   "sha1": "ba7f2f316fff20b730cd8a39989b5cb0e5c0f43a",
+   "type": "video/mp4",
+   "used_by": [
+    "X45",
+    "X50"
+   ]
+  },
+  {
+   "path": "static/jcx/x/b4941ca0.webp",
+   "bytes": 36926,
+   "sha1": "b4941ca0a14560bd8b98640b53b6496e2de05803",
+   "type": "image/webp",
+   "used_by": [
+    "X45",
+    "X50"
+   ]
+  },
+  {
+   "path": "static/jcx/x/d690efd9.mp4",
+   "bytes": 190326,
+   "sha1": "877bad690efd91c384a705a587db97a813742282",
+   "type": "video/mp4",
+   "used_by": [
+    "X51"
+   ]
+  },
+  {
+   "path": "static/jcx/x/h/581a51f5/v.m3u8",
+   "bytes": 277,
+   "sha1": "38694744009f0f09dd68f750466e9fa79b8da4df",
+   "type": "application/vnd.apple.mpegurl",
+   "used_by": [
+    "X51"
+   ]
+  },
+  {
+   "path": "static/jcx/x/h/581a51f5/init.mp4",
+   "bytes": 673,
+   "sha1": "5a1a1ef038b88834468d85d2cd017ef257adad7a",
+   "type": "video/mp4",
+   "used_by": [
+    "X51"
+   ]
+  },
+  {
+   "path": "static/jcx/x/h/581a51f5/s0.m4s",
+   "bytes": 47099,
+   "sha1": "b390de313d19cd30716da732ed3926fd1d128ca0",
+   "type": "video/iso.segment",
+   "used_by": [
+    "X51"
+   ]
+  },
+  {
+   "path": "static/jcx/x/h/581a51f5/s1.m4s",
+   "bytes": 46929,
+   "sha1": "3ffc54ef036a63055aa7706522c291b5849319e5",
+   "type": "video/iso.segment",
+   "used_by": [
+    "X51"
+   ]
+  },
+  {
+   "path": "static/jcx/x/h/581a51f5/s2.m4s",
+   "bytes": 46734,
+   "sha1": "3b14135f1fcdd1e20b21a7173b5fc8c35a65bb87",
+   "type": "video/iso.segment",
+   "used_by": [
+    "X51"
+   ]
+  },
+  {
+   "path": "static/jcx/x/h/581a51f5/s3.m4s",
+   "bytes": 46490,
+   "sha1": "8e07892819040ee8719d3670ebc5206a77093cce",
+   "type": "video/iso.segment",
+   "used_by": [
+    "X51"
+   ]
+  },
+  {
+   "path": "static/jcx/x/h/581a51f5/s4.m4s",
+   "bytes": 22557,
+   "sha1": "2b1692cd4e6f4500d12f56b7cf945ae44dcb200f",
+   "type": "video/iso.segment",
+   "used_by": [
+    "X51"
+   ]
+  },
+  {
+   "path": "static/jcx/x/709143a7.webp",
+   "bytes": 35534,
+   "sha1": "709143a7d602711e1cb32ad5f0d9a8339c696796",
+   "type": "image/webp",
+   "used_by": [
+    "X51"
+   ]
+  },
+  {
+   "path": "static/jcx/x/61d6c5af.zip",
+   "bytes": 82414,
+   "sha1": "61d6c5af272a8cfe9f9319b385e91ccef5a184e7",
+   "type": "application/zip",
+   "used_by": [
+    "X53"
+   ]
+  },
+  {
+   "path": "static/jcx/x/cbdc3be7.zip",
+   "bytes": 73589,
+   "sha1": "cbdc3be71d8582cc7e0a2fcc507df6db37dcc580",
+   "type": "application/zip",
+   "used_by": [
+    "X54"
+   ]
+  },
+  {
+   "path": "static/jcx/x/c53ef737.zip",
+   "bytes": 76717,
+   "sha1": "c53ef7375b60b983bd898e5ae5c01493d92ed7e2",
+   "type": "application/zip",
+   "used_by": [
+    "X55"
+   ]
+  },
+  {
+   "path": "static/jcx/x/d897c48f.webp",
+   "bytes": 38494,
+   "sha1": "d897c48f543ba77ba18000930a3e0a79aacfbccc",
+   "type": "image/webp",
+   "used_by": [
+    "X56"
+   ]
+  },
+  {
+   "path": "static/jcx/x/caa5797d.mp4",
+   "bytes": 148196,
+   "sha1": "caa5797d7e7ea64d857e871f6ec69360e87b7503",
+   "type": "video/mp4",
+   "used_by": [
+    "X56"
+   ]
+  },
+  {
+   "path": "static/jcx/x/6523d88b.webp",
+   "bytes": 25142,
+   "sha1": "6523d88bfc2c94eede13c5182c3c7454ab2928b9",
+   "type": "image/webp",
+   "used_by": [
+    "X56"
+   ]
+  },
+  {
+   "path": "static/jcx/x/6d5a5ec2.webp",
+   "bytes": 20182,
+   "sha1": "6d5a5ec2cb2095b5620273092d49e9d12c482c5f",
+   "type": "image/webp",
+   "used_by": [
+    "X57"
+   ]
+  }
+ ],
+ "items": [
+  {
+   "x": "X01",
+   "name": "Medium rectangle 300×250 (most popular banner)",
+   "unit": "U01",
+   "kind": "image",
+   "place": "P03",
+   "pv": "P03 phone, P04",
+   "dev": 2,
+   "pages": "",
+   "size": {
+    "w": 300,
+    "h": 250,
+    "wm": 300,
+    "hm": 250
+   },
+   "media": {
+    "src": "static/jcx/x/6bb31f1f.webp",
+    "type": "image/webp"
+   },
+   "texts": {
+    "url": "{home}",
+    "alt": "Pellatone P1 headphones on a sand pedestal: Silence, tuned. Launch price $149. Shop now.",
+    "title": "Silence, tuned.",
+    "text": "Adaptive ANC, 60-hour battery. Launch price $149.",
+    "brand": "Pellatone",
+    "cta": "Shop now"
+   },
+   "code": {
+    "code": "",
+    "code_m": "",
+    "mode": 0
+   },
+   "opts": {},
+   "note": "JavCMS example (X01): fictional advertiser Pellatone (audio). Art made for JavCMS. Replace the picture, texts and link, then switch it on."
+  },
+  {
+   "x": "X02",
+   "name": "Large rectangle 336×280",
+   "unit": "U01",
+   "kind": "image",
+   "place": "P04",
+   "pv": "P04, P13",
+   "dev": 1,
+   "pages": "",
+   "size": {
+    "w": 336,
+    "h": 280,
+    "wm": 336,
+    "hm": 280
+   },
+   "media": {
+    "src": "static/jcx/x/6287b26c.webp",
+    "type": "image/webp"
+   },
+   "texts": {
+    "url": "{home}",
+    "alt": "Maison Ardelle Everyday Tote in cognac leather on an ivory plinth: Carry less, better. $240. Shop the tote.",
+    "title": "Carry less, better.",
+    "text": "The Everyday Tote. Made in small runs. $240, free returns.",
+    "brand": "Maison Ardelle",
+    "cta": "Shop the tote"
+   },
+   "code": {
+    "code": "",
+    "code_m": "",
+    "mode": 0
+   },
+   "opts": {},
+   "note": "JavCMS example (X02): fictional advertiser Maison Ardelle (leather goods). Art made for JavCMS. Replace the picture, texts and link, then switch it on."
+  },
+  {
+   "x": "X03",
+   "name": "Leaderboard 728×90 (top banner)",
+   "unit": "U01",
+   "kind": "image",
+   "place": "P01",
+   "pv": "P01 computer",
+   "dev": 1,
+   "pages": "",
+   "size": {
+    "w": 728,
+    "h": 90,
+    "wm": 728,
+    "hm": 90
+   },
+   "media": {
+    "src": "static/jcx/x/17c7370e.webp",
+    "type": "image/webp"
+   },
+   "texts": {
+    "url": "{home}",
+    "alt": "Cobaltnode video CDN: Stream from 120 edge cities. Unmetered hosting, flat $9 a month. Start free.",
+    "title": "Stream from 120 edge cities.",
+    "text": "Unmetered video CDN and hosting, flat $9/mo.",
+    "brand": "Cobaltnode",
+    "cta": "Start free"
+   },
+   "code": {
+    "code": "",
+    "code_m": "",
+    "mode": 0
+   },
+   "opts": {},
+   "note": "JavCMS example (X03): fictional advertiser Cobaltnode (video CDN / hosting). Art made for JavCMS. Replace the picture, texts and link, then switch it on."
+  },
+  {
+   "x": "X04",
+   "name": "Billboard 970×250 (big banner)",
+   "unit": "U01",
+   "kind": "image",
+   "place": "P02",
+   "pv": "P02 computer",
+   "dev": 1,
+   "pages": "",
+   "size": {
+    "w": 970,
+    "h": 250,
+    "wm": 970,
+    "hm": 250
+   },
+   "media": {
+    "src": "static/jcx/x/16274b37.webp",
+    "type": "image/webp"
+   },
+   "texts": {
+    "url": "{home}",
+    "alt": "Quellgate VPN: Your browsing is nobody's business. Save 68%, $2.49 a month on the 2-year plan. Get Quellgate.",
+    "title": "Your browsing is nobody's business.",
+    "text": "Encrypt every connection on up to 10 devices. No logs, ever.",
+    "brand": "Quellgate",
+    "cta": "Get Quellgate"
+   },
+   "code": {
+    "code": "",
+    "code_m": "",
+    "mode": 0
+   },
+   "opts": {},
+   "note": "JavCMS example (X04): fictional advertiser Quellgate (privacy / VPN). Art made for JavCMS. Replace the picture, texts and link, then switch it on."
+  },
+  {
+   "x": "X05",
+   "name": "Large leaderboard 970×90",
+   "unit": "U01",
+   "kind": "image",
+   "place": "P06",
+   "pv": "P06 computer",
+   "dev": 1,
+   "pages": "",
+   "size": {
+    "w": 970,
+    "h": 90,
+    "wm": 970,
+    "hm": 90
+   },
+   "media": {
+    "src": "static/jcx/x/4d9a7f26.webp",
+    "type": "image/webp"
+   },
+   "texts": {
+    "url": "{home}",
+    "alt": "Halcyra+ membership card in champagne light: Uninterrupted 4K. First month free. Try free.",
+    "title": "Uninterrupted 4K.",
+    "text": "Members-only films and series, on every screen. First month free.",
+    "brand": "Halcyra+",
+    "cta": "Try free"
+   },
+   "code": {
+    "code": "",
+    "code_m": "",
+    "mode": 0
+   },
+   "opts": {},
+   "note": "JavCMS example (X05): fictional advertiser Halcyra+ (video membership). Art made for JavCMS. Replace the picture, texts and link, then switch it on."
+  },
+  {
+   "x": "X06",
+   "name": "Wide skyscraper 160×600 (side rail)",
+   "unit": "U01",
+   "kind": "image",
+   "place": "P08",
+   "pv": "P08",
+   "dev": 1,
+   "pages": "",
+   "size": {
+    "w": 160,
+    "h": 600,
+    "wm": 160,
+    "hm": 600
+   },
+   "media": {
+    "src": "static/jcx/x/34780441.webp",
+    "type": "image/webp"
+   },
+   "texts": {
+    "url": "{home}",
+    "alt": "Flarebay app on a phone in front of a coral ring light: Go live in one tap. Free for creators. Start streaming.",
+    "title": "Go live in one tap.",
+    "text": "HD streams, live chat and tips. Zero setup. Free for creators.",
+    "brand": "Flarebay",
+    "cta": "Start streaming"
+   },
+   "code": {
+    "code": "",
+    "code_m": "",
+    "mode": 0
+   },
+   "opts": {},
+   "note": "JavCMS example (X06): fictional advertiser Flarebay (live streaming app). Art made for JavCMS. Replace the picture, texts and link, then switch it on."
+  },
+  {
+   "x": "X07",
+   "name": "Half page 300×600",
+   "unit": "U01",
+   "kind": "image",
+   "place": "P04",
+   "pv": "P04",
+   "dev": 1,
+   "pages": "",
+   "size": {
+    "w": 300,
+    "h": 600,
+    "wm": 300,
+    "hm": 600
+   },
+   "media": {
+    "src": "static/jcx/x/a1011e91.webp",
+    "type": "image/webp"
+   },
+   "texts": {
+    "url": "{home}",
+    "alt": "Vexmoor: Crown of Glass key art, a glass crown over a moonlit moor: Build. Defend. Rule the moor. Play free.",
+    "title": "Build. Defend. Rule the moor.",
+    "text": "Vexmoor: Crown of Glass. Season 1 out now. Free to play on PC and mobile.",
+    "brand": "Vexmoor",
+    "cta": "Play free"
+   },
+   "code": {
+    "code": "",
+    "code_m": "",
+    "mode": 0
+   },
+   "opts": {},
+   "note": "JavCMS example (X07): fictional advertiser Vexmoor (game). Art made for JavCMS. Replace the picture, texts and link, then switch it on."
+  },
+  {
+   "x": "X08",
+   "name": "Phone banner 320×50 (mobile leaderboard)",
+   "unit": "U01",
+   "kind": "image",
+   "place": "P01",
+   "pv": "P01 phone",
+   "dev": 2,
+   "pages": "",
+   "size": {
+    "w": 320,
+    "h": 50,
+    "wm": 320,
+    "hm": 50
+   },
+   "media": {
+    "src": "static/jcx/x/4f64977c.webp",
+    "type": "image/webp"
+   },
+   "texts": {
+    "url": "{home}",
+    "alt": "Halcyra+: Uninterrupted 4K. First month free. Try free.",
+    "title": "Uninterrupted 4K.",
+    "text": "Halcyra+: first month free.",
+    "brand": "Halcyra+",
+    "cta": "Try free"
+   },
+   "code": {
+    "code": "",
+    "code_m": "",
+    "mode": 0
+   },
+   "opts": {},
+   "note": "JavCMS example (X08): fictional advertiser Halcyra+ (video membership). Art made for JavCMS. Replace the picture, texts and link, then switch it on."
+  },
+  {
+   "x": "X09",
+   "name": "Large phone banner 320×100",
+   "unit": "U01",
+   "kind": "image",
+   "place": "P07",
+   "pv": "P07 phone",
+   "dev": 2,
+   "pages": "",
+   "size": {
+    "w": 320,
+    "h": 100,
+    "wm": 320,
+    "hm": 100
+   },
+   "media": {
+    "src": "static/jcx/x/fe24d623.webp",
+    "type": "image/webp"
+   },
+   "texts": {
+    "url": "{home}",
+    "alt": "Brothwick: a steaming bowl of noodles. Hot noodles in 25 min. First delivery is on us. Order.",
+    "title": "Hot noodles in 25 min",
+    "text": "First delivery is on us.",
+    "brand": "Brothwick",
+    "cta": "Order"
+   },
+   "code": {
+    "code": "",
+    "code_m": "",
+    "mode": 0
+   },
+   "opts": {},
+   "note": "JavCMS example (X09): fictional advertiser Brothwick (food delivery). Art made for JavCMS. Replace the picture, texts and link, then switch it on."
+  },
+  {
+   "x": "X10",
+   "name": "Square 250×250",
+   "unit": "U01",
+   "kind": "image",
+   "place": "P05",
+   "pv": "P05 computer, P12",
+   "dev": 1,
+   "pages": "",
+   "size": {
+    "w": 250,
+    "h": 250,
+    "wm": 250,
+    "hm": 250
+   },
+   "media": {
+    "src": "static/jcx/x/c686cdbe.webp",
+    "type": "image/webp"
+   },
+   "texts": {
+    "url": "{home}",
+    "alt": "Ostrelle: a teal suitcase on a pier at sunset. Stay for the sunset. 3 nights from $289. See stays.",
+    "title": "Stay for the sunset.",
+    "text": "Hand-picked coastal stays. 3 nights from $289.",
+    "brand": "Ostrelle",
+    "cta": "See stays"
+   },
+   "code": {
+    "code": "",
+    "code_m": "",
+    "mode": 0
+   },
+   "opts": {},
+   "note": "JavCMS example (X10): fictional advertiser Ostrelle (travel). Art made for JavCMS. Replace the picture, texts and link, then switch it on."
+  },
+  {
+   "x": "X11",
+   "name": "Full banner 468×60",
+   "unit": "U01",
+   "kind": "image",
+   "place": "P07",
+   "pv": "P07 computer",
+   "dev": 1,
+   "pages": "",
+   "size": {
+    "w": 468,
+    "h": 60,
+    "wm": 468,
+    "hm": 60
+   },
+   "media": {
+    "src": "static/jcx/x/a73173c5.webp",
+    "type": "image/webp"
+   },
+   "texts": {
+    "url": "{home}",
+    "alt": "Quellgate VPN: Encrypt every connection, $2.49 a month. Get Quellgate.",
+    "title": "Encrypt every connection. $2.49/mo",
+    "text": "No logs, ever. 30-day refund.",
+    "brand": "Quellgate",
+    "cta": "Get Quellgate"
+   },
+   "code": {
+    "code": "",
+    "code_m": "",
+    "mode": 0
+   },
+   "opts": {},
+   "note": "JavCMS example (X11): fictional advertiser Quellgate (privacy / VPN). Art made for JavCMS. Replace the picture, texts and link, then switch it on."
+  },
+  {
+   "x": "X12",
+   "name": "Skyscraper 120×600 (side rail)",
+   "unit": "U01",
+   "kind": "image",
+   "place": "P08",
+   "pv": "P08 narrow",
+   "dev": 1,
+   "pages": "",
+   "size": {
+    "w": 120,
+    "h": 600,
+    "wm": 120,
+    "hm": 600
+   },
+   "media": {
+    "src": "static/jcx/x/6d5780a1.webp",
+    "type": "image/webp"
+   },
+   "texts": {
+    "url": "{home}",
+    "alt": "Pellatone P1 headphones: Silence, tuned. $149. Shop now.",
+    "title": "Silence, tuned.",
+    "text": "P1 headphones, $149.",
+    "brand": "Pellatone",
+    "cta": "Shop now"
+   },
+   "code": {
+    "code": "",
+    "code_m": "",
+    "mode": 0
+   },
+   "opts": {},
+   "note": "JavCMS example (X12): fictional advertiser Pellatone (audio). Art made for JavCMS. Replace the picture, texts and link, then switch it on."
+  },
+  {
+   "x": "X13",
+   "name": "Small phone banner 300×50",
+   "unit": "U01",
+   "kind": "image",
+   "place": "P01",
+   "pv": "P01 small phone",
+   "dev": 2,
+   "pages": "",
+   "size": {
+    "w": 300,
+    "h": 50,
+    "wm": 300,
+    "hm": 50
+   },
+   "media": {
+    "src": "static/jcx/x/b8a01f0b.webp",
+    "type": "image/webp"
+   },
+   "texts": {
+    "url": "{home}",
+    "alt": "Cobaltnode: Video CDN for $9 a month, 120 edge cities. Start free.",
+    "title": "Video CDN $9/mo",
+    "text": "Cobaltnode: 120 edge cities.",
+    "brand": "Cobaltnode",
+    "cta": "Start free"
+   },
+   "code": {
+    "code": "",
+    "code_m": "",
+    "mode": 0
+   },
+   "opts": {},
+   "note": "JavCMS example (X13): fictional advertiser Cobaltnode (video CDN / hosting). Art made for JavCMS. Replace the picture, texts and link, then switch it on."
+  },
+  {
+   "x": "X14",
+   "name": "Small banner 300×100",
+   "unit": "U01",
+   "kind": "image",
+   "place": "P06",
+   "pv": "P06 phone",
+   "dev": 2,
+   "pages": "",
+   "size": {
+    "w": 300,
+    "h": 100,
+    "wm": 300,
+    "hm": 100
+   },
+   "media": {
+    "src": "static/jcx/x/b613d8ae.webp",
+    "type": "image/webp"
+   },
+   "texts": {
+    "url": "{home}",
+    "alt": "Corvella: two rose-gold rings. Fewer matches, better evenings. Join free.",
+    "title": "Fewer matches, better evenings.",
+    "text": "One thoughtful introduction a week.",
+    "brand": "Corvella",
+    "cta": "Join free"
+   },
+   "code": {
+    "code": "",
+    "code_m": "",
+    "mode": 0
+   },
+   "opts": {},
+   "note": "JavCMS example (X14): fictional advertiser Corvella (dating). Art made for JavCMS. Replace the picture, texts and link, then switch it on."
+  },
+  {
+   "x": "X15",
+   "name": "Wide banner 980×90 (panorama)",
+   "unit": "U01",
+   "kind": "image",
+   "place": "P06",
+   "pv": "P06 computer",
+   "dev": 1,
+   "pages": "",
+   "size": {
+    "w": 980,
+    "h": 90,
+    "wm": 980,
+    "hm": 90
+   },
+   "media": {
+    "src": "static/jcx/x/cedfb389.webp",
+    "type": "image/webp"
+   },
+   "texts": {
+    "url": "{home}",
+    "alt": "Ostrelle: sunset over the sea and a teal suitcase. Stay for the sunset. 3 nights from $289. See stays.",
+    "title": "Stay for the sunset.",
+    "text": "Hand-picked coastal stays, booked in a minute. 3 nights from $289.",
+    "brand": "Ostrelle",
+    "cta": "See stays"
+   },
+   "code": {
+    "code": "",
+    "code_m": "",
+    "mode": 0
+   },
+   "opts": {},
+   "note": "JavCMS example (X15): fictional advertiser Ostrelle (travel). Art made for JavCMS. Replace the picture, texts and link, then switch it on."
+  },
+  {
+   "x": "X16",
+   "name": "Small rectangle 180×150",
+   "unit": "U01",
+   "kind": "image",
+   "place": "P12",
+   "pv": "P14 / P12",
+   "dev": 1,
+   "pages": "",
+   "size": {
+    "w": 180,
+    "h": 150,
+    "wm": 180,
+    "hm": 150
+   },
+   "media": {
+    "src": "static/jcx/x/78f2deff.webp",
+    "type": "image/webp"
+   },
+   "texts": {
+    "url": "{home}",
+    "alt": "Brothwick: Noodles in 25 min. Order.",
+    "title": "Noodles in 25 min",
+    "text": "Brothwick: hot food from local kitchens.",
+    "brand": "Brothwick",
+    "cta": "Order"
+   },
+   "code": {
+    "code": "",
+    "code_m": "",
+    "mode": 0
+   },
+   "opts": {},
+   "note": "JavCMS example (X16): fictional advertiser Brothwick (food delivery). Art made for JavCMS. Replace the picture, texts and link, then switch it on."
+  },
+  {
+   "x": "X17",
+   "name": "Animated banner (GIF) 300×250",
+   "unit": "U01",
+   "kind": "image",
+   "place": "P04",
+   "pv": "P04",
+   "dev": 1,
+   "pages": "",
+   "size": {
+    "w": 300,
+    "h": 250,
+    "wm": 300,
+    "hm": 250
+   },
+   "media": {
+    "src": "static/jcx/x/4aa6c57e.gif",
+    "type": "image/gif",
+    "still": "static/jcx/x/995299e3.webp"
+   },
+   "texts": {
+    "url": "{home}",
+    "alt": "Flarebay: a phone in front of a ring light. Go live in one tap. Start streaming.",
+    "title": "Go live in one tap.",
+    "text": "HD streams, live chat and tips. Free for creators.",
+    "brand": "Flarebay",
+    "cta": "Start streaming"
+   },
+   "code": {
+    "code": "",
+    "code_m": "",
+    "mode": 0
+   },
+   "opts": {},
+   "note": "JavCMS example (X17): fictional advertiser Flarebay (live streaming app). Art made for JavCMS. Replace the picture, texts and link, then switch it on."
+  },
+  {
+   "x": "X18",
+   "name": "Banner from HTML code 728×90",
+   "unit": "U01",
+   "kind": "html",
+   "place": "P01",
+   "pv": "P01 computer",
+   "dev": 1,
+   "pages": "",
+   "size": {
+    "w": 728,
+    "h": 90,
+    "wm": 728,
+    "hm": 90
+   },
+   "media": {},
+   "texts": {
+    "url": "{home}",
+    "alt": "",
+    "title": "Small-run leather. Free returns.",
+    "text": "Maison Ardelle: quiet leather goods.",
+    "brand": "Maison Ardelle",
+    "cta": "Shop the collection"
+   },
+   "code": {
+    "code": "<a href=\"{home}\" rel=\"sponsored noopener\" target=\"_blank\" aria-label=\"Maison Ardelle: small-run leather, free returns. Shop the collection\" style=\"box-sizing:border-box;position:relative;display:flex;align-items:center;gap:16px;gap:clamp(8px, (100cqw - 640px) * 100, 16px);width:728px;max-width:100%;height:90px;margin:0 auto;padding:0 14px 0 18px;padding:0 clamp(10px, (100cqw - 640px) * 100, 14px) 0 clamp(12px, (100cqw - 640px) * 100, 18px);container-type:inline-size;overflow:hidden;border:0;border-radius:6px;background:linear-gradient(115deg,#f8f4ee 0%,#efe8de 62%,#e3d8c9 100%);box-shadow:inset 0 0 0 1px rgba(20,18,16,.14);color:#141210;font:500 14px/1.3 system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;letter-spacing:0;text-align:start;text-decoration:none;text-transform:none\"><span style=\"display:flex;align-items:center;gap:10px;gap:clamp(6px, (100cqw - 640px) * 100, 10px);flex:none;line-height:1\"><svg viewBox=\"0 0 48 48\" width=\"34\" height=\"34\" aria-hidden=\"true\" focusable=\"false\" style=\"display:block;flex:none;width:34px;height:34px\"><ellipse cx=\"24\" cy=\"24\" rx=\"20.5\" ry=\"21.5\" fill=\"none\" stroke=\"#141210\" stroke-width=\"1.6\"/><path d=\"M15 35.5L24 11.5l9 24\" fill=\"none\" stroke=\"#141210\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><path d=\"M18.6 27h10.8\" stroke=\"#8a5a3b\" stroke-width=\"2.6\" stroke-linecap=\"round\"/></svg><span style=\"display:block;font:600 22px/1 Georgia,'Times New Roman',serif;font-size:clamp(16px, (100cqw - 640px) * 100, 22px);letter-spacing:.02em;color:#141210;white-space:nowrap\">Maison Ardelle</span></span><span aria-hidden=\"true\" style=\"display:block;flex:none;width:1px;width:clamp(0px, (100cqw - 640px) * 100, 1px);height:44px;background:rgba(20,18,16,.16)\"></span><svg viewBox=\"0 0 200 200\" width=\"64\" height=\"64\" aria-hidden=\"true\" focusable=\"false\" style=\"display:block;flex:none;width:64px;width:clamp(0px, (100cqw - 640px) * 100, 64px);height:64px;margin:0 -4px;margin:0 clamp(-4px, (100cqw - 640px) * 100 * -1, 0px)\"><defs><linearGradient id=\"x18b\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"0\"><stop offset=\"0\" stop-color=\"#5e341d\"/><stop offset=\".16\" stop-color=\"#a96a3f\"/><stop offset=\".42\" stop-color=\"#945833\"/><stop offset=\".8\" stop-color=\"#7a4529\"/><stop offset=\"1\" stop-color=\"#4f2b17\"/></linearGradient><linearGradient id=\"x18h\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"0\"><stop offset=\"0\" stop-color=\"#4f2b17\"/><stop offset=\".5\" stop-color=\"#9a6038\"/><stop offset=\"1\" stop-color=\"#4f2b17\"/></linearGradient></defs><ellipse cx=\"100\" cy=\"190\" rx=\"78\" ry=\"5\" fill=\"#2b1a0e\" opacity=\".22\"/><path d=\"M64 74C62 22 96 22 96 74M104 74C104 22 138 22 136 74\" fill=\"none\" stroke=\"url(#x18h)\" stroke-width=\"7\" stroke-linecap=\"round\"/><path d=\"M38 70H162L174 186H26Z\" fill=\"url(#x18b)\"/><path d=\"M38 70H162L163.6 84H36.4Z\" fill=\"#000\" opacity=\".16\"/><path d=\"M39.5 88H160.5M31 180L41 74M169 180L159 74\" stroke=\"#e9c9a0\" stroke-width=\"1.4\" stroke-dasharray=\"3 2.6\" opacity=\".6\"/><path d=\"M44 74H60L52 182H33Z\" fill=\"#fff\" opacity=\".1\"/><circle cx=\"64\" cy=\"78\" r=\"3.6\" fill=\"#d9b373\"/><circle cx=\"96\" cy=\"78\" r=\"3.6\" fill=\"#d9b373\"/><circle cx=\"104\" cy=\"78\" r=\"3.6\" fill=\"#d9b373\"/><circle cx=\"136\" cy=\"78\" r=\"3.6\" fill=\"#d9b373\"/></svg><span style=\"display:flex;flex-direction:column;gap:5px;flex:1 1 auto;min-width:0;overflow:hidden;line-height:1.2;max-width:clamp(0px, (100cqw - 560px) * 100, 2000px)\"><span style=\"display:block;font:800 10px/1 system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#8a5a3b;white-space:nowrap\">Everyday Tote · $240</span><span style=\"display:block;font:600 16px/1.2 system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;color:#141210;overflow:hidden;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2\">Small-run leather. Free returns.</span></span><span style=\"display:inline-flex;align-items:center;gap:8px;flex:none;margin-inline-start:auto;height:40px;padding:0 18px 0 20px;padding:0 clamp(12px, (100cqw - 640px) * 100, 18px) 0 clamp(14px, (100cqw - 640px) * 100, 20px);border-radius:999px;background:#141210;color:#f8f4ee;font:700 13.5px/1 system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;font-size:clamp(12px, (100cqw - 640px) * 100, 13.5px);white-space:nowrap;box-shadow:0 6px 16px -8px rgba(0,0,0,.55)\">Shop the collection<svg viewBox=\"0 0 16 16\" width=\"14\" height=\"14\" aria-hidden=\"true\" focusable=\"false\" style=\"display:block;width:14px;height:14px;width:clamp(0px, (100cqw - 640px) * 100, 14px);margin-inline-start:clamp(-8px, (100cqw - 640px) * 100, 0px)\"><path d=\"M3 8h9M8.5 4l4 4-4 4\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></span></a>",
+    "code_m": "",
+    "mode": 0
+   },
+   "opts": {},
+   "note": "JavCMS example (X18): fictional advertiser Maison Ardelle (leather goods). Art made for JavCMS. Replace the picture, texts and link, then switch it on."
+  },
+  {
+   "x": "X19",
+   "name": "Ad network code (sample) 300×250",
+   "unit": "U01",
+   "kind": "code",
+   "place": "P04",
+   "pv": "P04",
+   "dev": 1,
+   "pages": "",
+   "size": {
+    "w": 300,
+    "h": 250,
+    "wm": 300,
+    "hm": 250
+   },
+   "media": {},
+   "texts": {
+    "url": "{home}",
+    "alt": "",
+    "title": "Video CDN and hosting, flat $9/mo",
+    "text": "120 edge cities. Start free.",
+    "brand": "Cobaltnode",
+    "cta": "Start free"
+   },
+   "code": {
+    "code": "<script async src=\"{b}static/jcx/x/9f9e9127.js\" data-url=\"{home}\"></script>",
+    "code_m": "",
+    "mode": 0
+   },
+   "opts": {},
+   "note": "JavCMS example (X19): fictional advertiser Cobaltnode (video CDN / hosting). Art made for JavCMS. Replace the picture, texts and link, then switch it on."
+  },
+  {
+   "x": "X20",
+   "name": "Responsive banner: 728×90 on computers, 320×50 on phones",
+   "unit": "U02",
+   "kind": "image",
+   "place": "P01",
+   "pv": "P01",
+   "dev": 3,
+   "pages": "",
+   "size": {
+    "w": 728,
+    "h": 90,
+    "wm": 320,
+    "hm": 50
+   },
+   "media": {
+    "src": "static/jcx/x/17c7370e.webp",
+    "type": "image/webp",
+    "srcm": "static/jcx/x/d449b927.webp"
+   },
+   "texts": {
+    "url": "{home}",
+    "alt": "Cobaltnode video CDN: Stream from 120 edge cities, flat $9 a month. Start free.",
+    "title": "Stream from 120 edge cities.",
+    "text": "Unmetered video CDN and hosting, flat $9/mo.",
+    "brand": "Cobaltnode",
+    "cta": "Start free"
+   },
+   "code": {
+    "code": "",
+    "code_m": "",
+    "mode": 0
+   },
+   "opts": {},
+   "note": "JavCMS example (X20): fictional advertiser Cobaltnode (video CDN / hosting). Art made for JavCMS. Replace the picture, texts and link, then switch it on."
+  },
+  {
+   "x": "X21",
+   "name": "Sticky bar for computers 728×90 (anchor ad)",
+   "unit": "U03",
+   "kind": "image",
+   "place": "P09",
+   "pv": "P09",
+   "dev": 1,
+   "pages": "",
+   "size": {
+    "w": 728,
+    "h": 90,
+    "wm": 728,
+    "hm": 90
+   },
+   "media": {
+    "src": "static/jcx/x/58f24a6a.webp",
+    "type": "image/webp"
+   },
+   "texts": {
+    "url": "{home}",
+    "alt": "Flarebay: Go live in one tap. Free for creators. Start streaming.",
+    "title": "Go live in one tap.",
+    "text": "HD streams, live chat and tips. Free for creators.",
+    "brand": "Flarebay",
+    "cta": "Start streaming"
+   },
+   "code": {
+    "code": "",
+    "code_m": "",
+    "mode": 0
+   },
+   "opts": {
+    "close_mem": "session"
+   },
+   "note": "JavCMS example (X21): fictional advertiser Flarebay (live streaming app). Art made for JavCMS. Replace the picture, texts and link, then switch it on."
+  },
+  {
+   "x": "X22",
+   "name": "Sticky bar for phones 320×50 (anchor ad)",
+   "unit": "U03",
+   "kind": "image",
+   "place": "P09",
+   "pv": "P09",
+   "dev": 2,
+   "pages": "",
+   "size": {
+    "w": 320,
+    "h": 50,
+    "wm": 320,
+    "hm": 50
+   },
+   "media": {
+    "src": "static/jcx/x/6c68a555.webp",
+    "type": "image/webp"
+   },
+   "texts": {
+    "url": "{home}",
+    "alt": "Brothwick: Hot noodles in 25 min. First delivery free. Order.",
+    "title": "Hot noodles in 25 min",
+    "text": "Brothwick: first delivery free.",
+    "brand": "Brothwick",
+    "cta": "Order"
+   },
+   "code": {
+    "code": "",
+    "code_m": "",
+    "mode": 0
+   },
+   "opts": {
+    "close_mem": "session"
+   },
+   "note": "JavCMS example (X22): fictional advertiser Brothwick (food delivery). Art made for JavCMS. Replace the picture, texts and link, then switch it on."
+  },
+  {
+   "x": "X23",
+   "name": "Side rails 160×600, left and right",
+   "unit": "U04",
+   "kind": "image",
+   "place": "P08",
+   "pv": "P08",
+   "dev": 1,
+   "pages": "",
+   "size": {
+    "w": 160,
+    "h": 600,
+    "wm": 160,
+    "hm": 600
+   },
+   "media": {
+    "src": "static/jcx/x/212b96ba.webp",
+    "type": "image/webp",
+    "cards": [
+     {
+      "img": "static/jcx/x/212b96ba.webp",
+      "title": "Vexmoor (left rail)",
+      "url": "{home}",
+      "brand": "Vexmoor"
+     },
+     {
+      "img": "static/jcx/x/735ffcce.webp",
+      "title": "Vexmoor (right rail)",
+      "url": "{home}",
+      "brand": "Vexmoor"
+     }
+    ]
+   },
+   "texts": {
+    "url": "{home}",
+    "alt": "Vexmoor: Crown of Glass. Build. Defend. Rule the moor. Play free.",
+    "title": "Build. Defend. Rule the moor.",
+    "text": "Vexmoor: Crown of Glass. Free to play.",
+    "brand": "Vexmoor",
+    "cta": "Play free"
+   },
+   "code": {
+    "code": "",
+    "code_m": "",
+    "mode": 0
+   },
+   "opts": {},
+   "note": "JavCMS example (X23): fictional advertiser Vexmoor (game). Art made for JavCMS. Replace the picture, texts and link, then switch it on."
+  },
+  {
+   "x": "X24",
+   "name": "Expandable banner for computers 970×90 → 970×250 (push-down)",
+   "unit": "U05",
+   "kind": "image",
+   "place": "P01",
+   "pv": "P01",
+   "dev": 1,
+   "pages": "",
+   "size": {
+    "w": 970,
+    "h": 90,
+    "wm": 970,
+    "hm": 90
+   },
+   "media": {
+    "src": "static/jcx/x/fc736a09.webp",
+    "type": "image/webp"
+   },
+   "texts": {
+    "url": "{home}",
+    "alt": "Pellatone P1 headphones: Silence, tuned. Shop now.",
+    "title": "Silence, tuned.",
+    "text": "See inside the P1: 40 mm driver, adaptive ANC, 60-hour battery.",
+    "brand": "Pellatone",
+    "cta": "Shop now"
+   },
+   "code": {
+    "code": "",
+    "code_m": "",
+    "mode": 0
+   },
+   "opts": {
+    "expand_img": "static/jcx/x/b8879693.webp",
+    "expand_h": 250
+   },
+   "note": "JavCMS example (X24): fictional advertiser Pellatone (audio). Art made for JavCMS. Replace the picture, texts and link, then switch it on."
+  },
+  {
+   "x": "X25",
+   "name": "Expandable banner for phones 320×50 → 300×250",
+   "unit": "U05",
+   "kind": "image",
+   "place": "P01",
+   "pv": "P01",
+   "dev": 2,
+   "pages": "",
+   "size": {
+    "w": 320,
+    "h": 50,
+    "wm": 320,
+    "hm": 50
+   },
+   "media": {
+    "src": "static/jcx/x/096f8755.webp",
+    "type": "image/webp"
+   },
+   "texts": {
+    "url": "{home}",
+    "alt": "Ostrelle: Stay for the sunset. 3 nights from $289. See stays.",
+    "title": "Stay for the sunset.",
+    "text": "3 nights on the coast from $289.",
+    "brand": "Ostrelle",
+    "cta": "See stays"
+   },
+   "code": {
+    "code": "",
+    "code_m": "",
+    "mode": 0
+   },
+   "opts": {
+    "expand_img": "static/jcx/x/b709bcf1.webp",
+    "expand_h": 250
+   },
+   "note": "JavCMS example (X25): fictional advertiser Ostrelle (travel). Art made for JavCMS. Replace the picture, texts and link, then switch it on."
+  },
+  {
+   "x": "X26",
+   "name": "Floating corner box 300×250",
+   "unit": "U06",
+   "kind": "image",
+   "place": "P10",
+   "pv": "P10 computer",
+   "dev": 1,
+   "pages": "",
+   "size": {
+    "w": 300,
+    "h": 250,
+    "wm": 300,
+    "hm": 250
+   },
+   "media": {
+    "src": "static/jcx/x/360c8c29.webp",
+    "type": "image/webp"
+   },
+   "texts": {
+    "url": "{home}",
+    "alt": "Corvella: two cups on a café table. Coffee for two, not twenty matches. Join free.",
+    "title": "Coffee for two, not twenty matches.",
+    "text": "One thoughtful introduction a week.",
+    "brand": "Corvella",
+    "cta": "Join free"
+   },
+   "code": {
+    "code": "",
+    "code_m": "",
+    "mode": 0
+   },
+   "opts": {
+    "corner": "auto",
+    "trigger": "scroll",
+    "scroll_pct": 50
+   },
+   "note": "JavCMS example (X26): fictional advertiser Corvella (dating). Art made for JavCMS. Replace the picture, texts and link, then switch it on."
+  },
+  {
+   "x": "X27",
+   "name": "Slide-up box for phones 320×100",
+   "unit": "U06",
+   "kind": "image",
+   "place": "P10",
+   "pv": "P10 phone",
+   "dev": 2,
+   "pages": "",
+   "size": {
+    "w": 320,
+    "h": 100,
+    "wm": 320,
+    "hm": 100
+   },
+   "media": {
+    "src": "static/jcx/x/01906511.webp",
+    "type": "image/webp"
+   },
+   "texts": {
+    "url": "{home}",
+    "alt": "Halcyra+: Your first month is on us. Try free.",
+    "title": "Your first month is on us.",
+    "text": "Uninterrupted 4K on every screen.",
+    "brand": "Halcyra+",
+    "cta": "Try free"
+   },
+   "code": {
+    "code": "",
+    "code_m": "",
+    "mode": 0
+   },
+   "opts": {
+    "corner": "auto",
+    "trigger": "scroll",
+    "scroll_pct": 50
+   },
+   "note": "JavCMS example (X27): fictional advertiser Halcyra+ (video membership). Art made for JavCMS. Replace the picture, texts and link, then switch it on."
+  },
+  {
+   "x": "X28",
+   "name": "Notification-style box 360×88 (in-page push)",
+   "unit": "U07",
+   "kind": "native",
+   "place": "P10",
+   "pv": "P10",
+   "dev": 3,
+   "pages": "",
+   "size": {
+    "w": 360,
+    "h": 88,
+    "wm": 360,
+    "hm": 88
+   },
+   "media": {
+    "src": "static/jcx/x/713d1c71.webp",
+    "type": "image/webp"
+   },
+   "texts": {
+    "url": "{home}",
+    "alt": "Brothwick noodle bowl",
+    "title": "Hot noodles in 25 min",
+    "text": "First delivery is on us",
+    "brand": "Brothwick",
+    "cta": "Order"
+   },
+   "code": {
+    "code": "",
+    "code_m": "",
+    "mode": 0
+   },
+   "opts": {},
+   "note": "JavCMS example (X28): fictional advertiser Brothwick (food delivery). Art made for JavCMS. Replace the picture, texts and link, then switch it on."
+  },
+  {
+   "x": "X29",
+   "name": "Full-screen ad between pages, computers 640×480 (interstitial)",
+   "unit": "U08",
+   "kind": "image",
+   "place": "P10",
+   "pv": "P10",
+   "dev": 1,
+   "pages": "",
+   "size": {
+    "w": 640,
+    "h": 480,
+    "wm": 640,
+    "hm": 480
+   },
+   "media": {
+    "src": "static/jcx/x/a04b1d5e.webp",
+    "type": "image/webp"
+   },
+   "texts": {
+    "url": "{home}",
+    "alt": "Halcyra+ premiere poster: Tonight's premiere starts at nine. Start your free month.",
+    "title": "Tonight's premiere starts at nine.",
+    "text": "Members-only films and series in 4K, on every screen.",
+    "brand": "Halcyra+",
+    "cta": "Start your free month"
+   },
+   "code": {
+    "code": "",
+    "code_m": "",
+    "mode": 0
+   },
+   "opts": {
+    "trigger": "link"
+   },
+   "note": "JavCMS example (X29): fictional advertiser Halcyra+ (video membership). Art made for JavCMS. Replace the picture, texts and link, then switch it on."
+  },
+  {
+   "x": "X30",
+   "name": "Full-screen ad after a link tap, phones 320×480 (interstitial)",
+   "unit": "U08",
+   "kind": "image",
+   "place": "P10",
+   "pv": "P10",
+   "dev": 2,
+   "pages": "",
+   "size": {
+    "w": 320,
+    "h": 480,
+    "wm": 320,
+    "hm": 480
+   },
+   "media": {
+    "src": "static/jcx/x/c117c4b2.webp",
+    "type": "image/webp"
+   },
+   "texts": {
+    "url": "{home}",
+    "alt": "Vexmoor key art: a glass crown over a moonlit moor. Build. Defend. Rule the moor. Play free.",
+    "title": "Build. Defend. Rule the moor.",
+    "text": "Vexmoor: Crown of Glass. Free to play.",
+    "brand": "Vexmoor",
+    "cta": "Play free"
+   },
+   "code": {
+    "code": "",
+    "code_m": "",
+    "mode": 0
+   },
+   "opts": {
+    "trigger": "link"
+   },
+   "note": "JavCMS example (X30): fictional advertiser Vexmoor (game). Art made for JavCMS. Replace the picture, texts and link, then switch it on."
+  },
+  {
+   "x": "X31",
+   "name": "Full-screen video between pages, computers 9:16, 8 s (interstitial video)",
+   "unit": "U08",
+   "kind": "video",
+   "place": "P10",
+   "pv": "P10",
+   "dev": 1,
+   "pages": "",
+   "size": {
+    "w": 360,
+    "h": 640,
+    "wm": 360,
+    "hm": 640
+   },
+   "media": {
+    "src": "static/jcx/x/6e34f487.mp4",
+    "type": "video/mp4",
+    "poster": "static/jcx/x/47b1686a.webp",
+    "dur": 8
+   },
+   "texts": {
+    "url": "{home}",
+    "alt": "Flarebay video: a ring light turns on and a phone goes live.",
+    "title": "Go live in one tap.",
+    "text": "HD streams, live chat and tips. Free for creators.",
+    "brand": "Flarebay",
+    "cta": "Start streaming"
+   },
+   "code": {
+    "code": "",
+    "code_m": "",
+    "mode": 0
+   },
+   "opts": {
+    "trigger": "link",
+    "vertical": true
+   },
+   "note": "JavCMS example (X31): fictional advertiser Flarebay (live streaming app). Art made for JavCMS. Replace the picture, texts and link, then switch it on."
+  },
+  {
+   "x": "X32",
+   "name": "Exit-intent overlay 600×400 (lightbox)",
+   "unit": "U09",
+   "kind": "image",
+   "place": "P10",
+   "pv": "P10 computer",
+   "dev": 1,
+   "pages": "",
+   "size": {
+    "w": 600,
+    "h": 400,
+    "wm": 600,
+    "hm": 400
+   },
+   "media": {
+    "src": "static/jcx/x/264cdf28.webp",
+    "type": "image/webp"
+   },
+   "texts": {
+    "url": "{home}",
+    "alt": "Ostrelle: Before you go, three nights on the coast from $289. See stays.",
+    "title": "Three nights on the coast, from $289.",
+    "text": "Hand-picked stays, booked in a minute.",
+    "brand": "Ostrelle",
+    "cta": "See stays"
+   },
+   "code": {
+    "code": "",
+    "code_m": "",
+    "mode": 0
+   },
+   "opts": {
+    "trigger": "exit"
+   },
+   "note": "JavCMS example (X32): fictional advertiser Ostrelle (travel). Art made for JavCMS. Replace the picture, texts and link, then switch it on."
+  },
+  {
+   "x": "X33",
+   "name": "Click script: new-tab ad (popunder / tab ad / clickunder)",
+   "unit": "U10",
+   "kind": "code",
+   "place": "P15b",
+   "pv": "P15b",
+   "dev": 3,
+   "pages": "",
+   "size": {
+    "w": 0,
+    "h": 0,
+    "wm": 0,
+    "hm": 0
+   },
+   "media": {},
+   "texts": {
+    "url": "{home}",
+    "alt": "",
+    "title": "Click script (example)",
+    "text": "Opens one Ostrelle example page per session after a click.",
+    "brand": "Ostrelle",
+    "cta": ""
+   },
+   "code": {
+    "code": "<script async src=\"{b}static/jcx/x/4a147637.js\"></script>",
+    "code_m": "",
+    "mode": 0
+   },
+   "opts": {},
+   "note": "JavCMS example (X33): the page it opens shows Ostrelle, a fictional advertiser (travel). Art made for JavCMS. Replace the code with your network's, then switch it on."
+  },
+  {
+   "x": "X34",
+   "name": "Push notification prompt (web push, sample)",
+   "unit": "U11",
+   "kind": "code",
+   "place": "P15h",
+   "pv": "P10",
+   "dev": 3,
+   "pages": "",
+   "size": {
+    "w": 0,
+    "h": 0,
+    "wm": 0,
+    "hm": 0
+   },
+   "media": {},
+   "texts": {
+    "url": "{home}",
+    "alt": "",
+    "title": "Get a note when new videos are added?",
+    "text": "You can turn it off at any time.",
+    "brand": "",
+    "cta": "Allow"
+   },
+   "code": {
+    "code": "<script async src=\"{b}static/jcx/x/2cd29079.js\"></script>",
+    "code_m": "",
+    "mode": 0
+   },
+   "opts": {},
+   "note": "JavCMS example (X34): the site's own prompt (no advertiser; it never asks the browser). Art made for JavCMS. Replace the code with your network's, then switch it on."
+  },
+  {
+   "x": "X35",
+   "name": "Card in video lists 16:9 (in-feed native)",
+   "unit": "U12",
+   "kind": "native",
+   "place": "P05",
+   "pv": "P05",
+   "dev": 3,
+   "pages": "",
+   "size": {
+    "w": 640,
+    "h": 360,
+    "wm": 640,
+    "hm": 360
+   },
+   "media": {
+    "src": "static/jcx/x/2de532f0.webp",
+    "type": "image/webp",
+    "cards": [
+     {
+      "img": "static/jcx/x/2de532f0.webp",
+      "title": "Three nights on the coast, from $289",
+      "url": "{home}",
+      "brand": "Ostrelle"
+     }
+    ]
+   },
+   "texts": {
+    "url": "{home}",
+    "alt": "Ostrelle: a suitcase on a pier at sunset",
+    "title": "Three nights on the coast, from $289",
+    "text": "Hand-picked coastal stays.",
+    "brand": "Ostrelle",
+    "cta": "See stays"
+   },
+   "code": {
+    "code": "",
+    "code_m": "",
+    "mode": 0
+   },
+   "opts": {
+    "every": 8,
+    "max": 2
+   },
+   "note": "JavCMS example (X35): fictional advertiser Ostrelle (travel). Art made for JavCMS. Replace the picture, texts and link, then switch it on."
+  },
+  {
+   "x": "X36",
+   "name": "Promoted video card 16:9",
+   "unit": "U12",
+   "kind": "native",
+   "place": "P05",
+   "pv": "P05",
+   "dev": 3,
+   "pages": "",
+   "size": {
+    "w": 640,
+    "h": 360,
+    "wm": 640,
+    "hm": 360
+   },
+   "media": {},
+   "texts": {
+    "url": "",
+    "alt": "Promoted video",
+    "title": "Promoted video",
+    "text": "",
+    "brand": "Sponsored",
+    "cta": ""
+   },
+   "code": {
+    "code": "",
+    "code_m": "",
+    "mode": 0
+   },
+   "opts": {
+    "every": 8,
+    "max": 2,
+    "target_id": "{newest_vod_id}"
+   },
+   "note": "JavCMS example (X36): no advertiser: it uses the newest video. Replace the picture, texts and link, then switch it on."
+  },
+  {
+   "x": "X37",
+   "name": "Recommendation widget, 4 cards (Taboola / Outbrain style)",
+   "unit": "U13",
+   "kind": "native",
+   "place": "P03d",
+   "pv": "P03d",
+   "dev": 3,
+   "pages": "",
+   "size": {
+    "w": 640,
+    "h": 360,
+    "wm": 640,
+    "hm": 360
+   },
+   "media": {
+    "cards": [
+     {
+      "img": "static/jcx/x/16e07876.webp",
+      "title": "The headphones sound engineers keep on their desk",
+      "url": "{home}",
+      "brand": "Pellatone"
+     },
+     {
+      "img": "static/jcx/x/ce601954.webp",
+      "title": "One tap to lock any café Wi-Fi",
+      "url": "{home}",
+      "brand": "Quellgate"
+     },
+     {
+      "img": "static/jcx/x/3a2151f6.webp",
+      "title": "Hot noodles at your door in 25 minutes",
+      "url": "{home}",
+      "brand": "Brothwick"
+     },
+     {
+      "img": "static/jcx/x/683f8ea3.webp",
+      "title": "The tote that goes with everything",
+      "url": "{home}",
+      "brand": "Maison Ardelle"
+     }
+    ]
+   },
+   "texts": {
+    "url": "{home}",
+    "alt": "Sponsored link",
+    "title": "Sponsored links",
+    "text": "",
+    "brand": "",
+    "cta": ""
+   },
+   "code": {
+    "code": "",
+    "code_m": "",
+    "mode": 0
+   },
+   "opts": {
+    "layout": "grid"
+   },
+   "note": "JavCMS example (X37): fictional advertisers Pellatone, Quellgate, Brothwick and Maison Ardelle. Art made for JavCMS. Replace the picture, texts and link, then switch it on."
+  },
+  {
+   "x": "X38",
+   "name": "Carousel, 5 square cards",
+   "unit": "U13",
+   "kind": "native",
+   "place": "P06",
+   "pv": "P06",
+   "dev": 3,
+   "pages": "",
+   "size": {
+    "w": 400,
+    "h": 400,
+    "wm": 400,
+    "hm": 400
+   },
+   "media": {
+    "cards": [
+     {
+      "img": "static/jcx/x/3813f283.webp",
+      "title": "Everyday Tote · $240",
+      "url": "{home}",
+      "brand": "Maison Ardelle"
+     },
+     {
+      "img": "static/jcx/x/e51f6ca4.webp",
+      "title": "Low Sneaker · $180",
+      "url": "{home}",
+      "brand": "Maison Ardelle"
+     },
+     {
+      "img": "static/jcx/x/27d53e0d.webp",
+      "title": "Zip Wallet · $120",
+      "url": "{home}",
+      "brand": "Maison Ardelle"
+     },
+     {
+      "img": "static/jcx/x/13defca4.webp",
+      "title": "Classic Belt · $90",
+      "url": "{home}",
+      "brand": "Maison Ardelle"
+     },
+     {
+      "img": "static/jcx/x/114fc5fd.webp",
+      "title": "Card Holder · $65",
+      "url": "{home}",
+      "brand": "Maison Ardelle"
+     }
+    ]
+   },
+   "texts": {
+    "url": "{home}",
+    "alt": "Maison Ardelle product",
+    "title": "Sponsored links",
+    "text": "",
+    "brand": "Maison Ardelle",
+    "cta": ""
+   },
+   "code": {
+    "code": "",
+    "code_m": "",
+    "mode": 0
+   },
+   "opts": {
+    "layout": "carousel"
+   },
+   "note": "JavCMS example (X38): fictional advertiser Maison Ardelle (leather goods). Art made for JavCMS. Replace the picture, texts and link, then switch it on."
+  },
+  {
+   "x": "X39",
+   "name": "Collection: big picture + 4 products",
+   "unit": "U13",
+   "kind": "native",
+   "place": "P06",
+   "pv": "P06",
+   "dev": 3,
+   "pages": "",
+   "size": {
+    "w": 640,
+    "h": 360,
+    "wm": 640,
+    "hm": 360
+   },
+   "media": {
+    "cards": [
+     {
+      "img": "static/jcx/x/33ee762e.webp",
+      "title": "Pellatone: sound made to last",
+      "url": "{home}",
+      "brand": "Pellatone"
+     },
+     {
+      "img": "static/jcx/x/32bdc0a2.webp",
+      "title": "P1 headphones · $149",
+      "url": "{home}",
+      "brand": "Pellatone"
+     },
+     {
+      "img": "static/jcx/x/9162dba0.webp",
+      "title": "S2 earbuds · $89",
+      "url": "{home}",
+      "brand": "Pellatone"
+     },
+     {
+      "img": "static/jcx/x/ae2793b4.webp",
+      "title": "Room speaker · $129",
+      "url": "{home}",
+      "brand": "Pellatone"
+     },
+     {
+      "img": "static/jcx/x/520a4cb4.webp",
+      "title": "Travel case · $29",
+      "url": "{home}",
+      "brand": "Pellatone"
+     }
+    ]
+   },
+   "texts": {
+    "url": "{home}",
+    "alt": "Pellatone product",
+    "title": "Sponsored links",
+    "text": "",
+    "brand": "Pellatone",
+    "cta": ""
+   },
+   "code": {
+    "code": "",
+    "code_m": "",
+    "mode": 0
+   },
+   "opts": {
+    "layout": "collection"
+   },
+   "note": "JavCMS example (X39): fictional advertiser Pellatone (audio). Art made for JavCMS. Replace the picture, texts and link, then switch it on."
+  },
+  {
+   "x": "X40",
+   "name": "Sponsored post label",
+   "unit": "U14",
+   "kind": "text",
+   "place": "P05",
+   "pv": "in place (newest video card and its pages)",
+   "dev": 3,
+   "pages": "",
+   "size": {
+    "w": 0,
+    "h": 0,
+    "wm": 0,
+    "hm": 0
+   },
+   "media": {},
+   "texts": {
+    "url": "",
+    "alt": "",
+    "title": "Sponsored",
+    "text": "This video is labelled as sponsored (preview only).",
+    "brand": "",
+    "cta": ""
+   },
+   "code": {
+    "code": "",
+    "code_m": "",
+    "mode": 0
+   },
+   "opts": {
+    "target_id": "{newest_vod_id}"
+   },
+   "note": "JavCMS example (X40): no advertiser: it uses the newest video. Replace the picture, texts and link, then switch it on."
+  },
+  {
+   "x": "X41",
+   "name": "Skippable pre-roll (skip after 5 s)",
+   "unit": "U15",
+   "kind": "video",
+   "place": "P11",
+   "pv": "P11",
+   "dev": 3,
+   "pages": "",
+   "size": {
+    "w": 640,
+    "h": 360,
+    "wm": 640,
+    "hm": 360
+   },
+   "media": {
+    "src": "https://vjs.zencdn.net/v/oceans.mp4",
+    "type": "video/mp4",
+    "poster": "static/jcx/x/76f05629.webp",
+    "dur": 47
+   },
+   "texts": {
+    "url": "{home}",
+    "alt": "Ostrelle video ad",
+    "title": "Wake up to the sea.",
+    "text": "Hand-picked coastal stays, booked in a minute.",
+    "brand": "Ostrelle",
+    "cta": "See stays"
+   },
+   "code": {
+    "code": "",
+    "code_m": "",
+    "mode": 0
+   },
+   "opts": {
+    "roll": "pre",
+    "skip": 5,
+    "max_s": 15,
+    "pod": 1,
+    "start": "click"
+   },
+   "note": "JavCMS example (X41): fictional advertiser Ostrelle (travel). Test video by URL. Credit: oceans: video.js demo clip, test only. Use your own video before you switch it on."
+  },
+  {
+   "x": "X42",
+   "name": "Pre-roll from a WebM file, 15 s",
+   "unit": "U15",
+   "kind": "video",
+   "place": "P11",
+   "pv": "P11",
+   "dev": 3,
+   "pages": "",
+   "size": {
+    "w": 640,
+    "h": 360,
+    "wm": 640,
+    "hm": 360
+   },
+   "media": {
+    "src": "static/jcx/x/76c5590b.webm",
+    "type": "video/webm",
+    "poster": "static/jcx/x/be413113.webp",
+    "dur": 15
+   },
+   "texts": {
+    "url": "{home}",
+    "alt": "Quellgate video ad",
+    "title": "Your browsing is nobody's business.",
+    "text": "Save 68%: $2.49 a month on the 2-year plan.",
+    "brand": "Quellgate",
+    "cta": "Get Quellgate"
+   },
+   "code": {
+    "code": "",
+    "code_m": "",
+    "mode": 0
+   },
+   "opts": {
+    "roll": "pre",
+    "skip": 5,
+    "max_s": 15,
+    "pod": 1,
+    "start": "click"
+   },
+   "note": "JavCMS example (X42): fictional advertiser Quellgate (privacy / VPN). Art made for JavCMS. Replace the picture, texts and link, then switch it on."
+  },
+  {
+   "x": "X43",
+   "name": "Pre-roll from an HLS stream (.m3u8)",
+   "unit": "U15",
+   "kind": "video",
+   "place": "P11",
+   "pv": "P11",
+   "dev": 3,
+   "pages": "",
+   "size": {
+    "w": 640,
+    "h": 360,
+    "wm": 640,
+    "hm": 360
+   },
+   "media": {
+    "src": "https://content.jwplatform.com/manifests/yp34SRmf.m3u8",
+    "type": "application/x-mpegURL",
+    "hls": "https://content.jwplatform.com/manifests/yp34SRmf.m3u8",
+    "poster": "static/jcx/x/b66547eb.webp",
+    "dur": 26
+   },
+   "texts": {
+    "url": "{home}",
+    "alt": "Cobaltnode video ad",
+    "title": "Adaptive streaming, 180p to 1080p.",
+    "text": "HLS from 120 edge cities. Flat $9/mo.",
+    "brand": "Cobaltnode",
+    "cta": "Start free"
+   },
+   "code": {
+    "code": "",
+    "code_m": "",
+    "mode": 0
+   },
+   "opts": {
+    "roll": "pre",
+    "skip": 5,
+    "max_s": 15,
+    "pod": 1,
+    "start": "click"
+   },
+   "note": "JavCMS example (X43): fictional advertiser Cobaltnode (video CDN / hosting). Test video by URL. Credit: JW Player demo stream, test only. Use your own video before you switch it on."
+  },
+  {
+   "x": "X44",
+   "name": "Non-skippable pre-roll, 10 s",
+   "unit": "U15",
+   "kind": "video",
+   "place": "P11",
+   "pv": "P11",
+   "dev": 3,
+   "pages": "",
+   "size": {
+    "w": 640,
+    "h": 360,
+    "wm": 640,
+    "hm": 360
+   },
+   "media": {
+    "src": "https://www.w3schools.com/html/mov_bbb.mp4",
+    "type": "video/mp4",
+    "poster": "static/jcx/x/3d907573.webp",
+    "dur": 10
+   },
+   "texts": {
+    "url": "{home}",
+    "alt": "Halcyra+ video ad",
+    "title": "Animation night, uninterrupted.",
+    "text": "Members-only films and series in 4K. First month free.",
+    "brand": "Halcyra+",
+    "cta": "Try free"
+   },
+   "code": {
+    "code": "",
+    "code_m": "",
+    "mode": 0
+   },
+   "opts": {
+    "roll": "pre",
+    "skip": 0,
+    "max_s": 15,
+    "pod": 1,
+    "start": "click"
+   },
+   "note": "JavCMS example (X44): fictional advertiser Halcyra+ (video membership). Test video by URL. Credit: Big Buck Bunny (c) Blender Foundation, CC BY 3.0. Use your own video before you switch it on."
+  },
+  {
+   "x": "X45",
+   "name": "Bumper pre-roll, 6 s",
+   "unit": "U15",
+   "kind": "video",
+   "place": "P11",
+   "pv": "P11",
+   "dev": 3,
+   "pages": "",
+   "size": {
+    "w": 640,
+    "h": 360,
+    "wm": 640,
+    "hm": 360
+   },
+   "media": {
+    "src": "static/jcx/x/ba7f2f31.mp4",
+    "type": "video/mp4",
+    "poster": "static/jcx/x/b4941ca0.webp",
+    "dur": 6
+   },
+   "texts": {
+    "url": "{home}",
+    "alt": "Brothwick video ad",
+    "title": "Hot noodles in 25 min.",
+    "text": "From the best local kitchens.",
+    "brand": "Brothwick",
+    "cta": "Order now"
+   },
+   "code": {
+    "code": "",
+    "code_m": "",
+    "mode": 0
+   },
+   "opts": {
+    "roll": "pre",
+    "skip": 0,
+    "max_s": 6,
+    "pod": 1,
+    "start": "click"
+   },
+   "note": "JavCMS example (X45): fictional advertiser Brothwick (food delivery). Art made for JavCMS. Replace the picture, texts and link, then switch it on."
+  },
+  {
+   "x": "X48",
+   "name": "Pre-roll from a VAST tag (2 ads)",
+   "unit": "U15",
+   "kind": "vast",
+   "place": "P11",
+   "pv": "P11",
+   "dev": 3,
+   "pages": "",
+   "size": {
+    "w": 640,
+    "h": 360,
+    "wm": 640,
+    "hm": 360
+   },
+   "media": {
+    "vast": [
+     "{abs}static/jcx/x/61ea1af3.xml"
+    ]
+   },
+   "texts": {
+    "url": "{home}",
+    "alt": "Two video ads (VAST): Ostrelle, then Halcyra+",
+    "title": "Wake up to the sea.",
+    "text": "Ostrelle, then Halcyra+ (VAST pod of 2).",
+    "brand": "Ostrelle",
+    "cta": "See stays"
+   },
+   "code": {
+    "code": "",
+    "code_m": "",
+    "mode": 0
+   },
+   "opts": {
+    "roll": "pre",
+    "skip": 5,
+    "max_s": 15,
+    "pod": 2,
+    "start": "click"
+   },
+   "note": "JavCMS example (X48): fictional advertisers Ostrelle, then Halcyra+. Test videos by URL. Credit: oceans: video.js demo clip, test only; Big Buck Bunny (c) Blender Foundation, CC BY 3.0. Put your network's VAST URL here before you switch it on."
+  },
+  {
+   "x": "X49",
+   "name": "Out-stream video in the page 16:9",
+   "unit": "U16",
+   "kind": "video",
+   "place": "P03",
+   "pv": "P03, P13",
+   "dev": 3,
+   "pages": "",
+   "size": {
+    "w": 640,
+    "h": 360,
+    "wm": 640,
+    "hm": 360
+   },
+   "media": {
+    "src": "https://vjs.zencdn.net/v/oceans.mp4",
+    "type": "video/mp4",
+    "poster": "static/jcx/x/76f05629.webp",
+    "dur": 47
+   },
+   "texts": {
+    "url": "{home}",
+    "alt": "Ostrelle video ad",
+    "title": "Wake up to the sea.",
+    "text": "Hand-picked coastal stays, booked in a minute.",
+    "brand": "Ostrelle",
+    "cta": "See stays"
+   },
+   "code": {
+    "code": "",
+    "code_m": "",
+    "mode": 0
+   },
+   "opts": {
+    "start": "muted"
+   },
+   "note": "JavCMS example (X49): fictional advertiser Ostrelle (travel). Test video by URL. Credit: oceans: video.js demo clip, test only. Use your own video before you switch it on."
+  },
+  {
+   "x": "X50",
+   "name": "Video card in video lists 16:9, 6 s loop (in-feed video)",
+   "unit": "U16",
+   "kind": "video",
+   "place": "P05",
+   "pv": "P05",
+   "dev": 3,
+   "pages": "",
+   "size": {
+    "w": 640,
+    "h": 360,
+    "wm": 640,
+    "hm": 360
+   },
+   "media": {
+    "src": "static/jcx/x/ba7f2f31.mp4",
+    "type": "video/mp4",
+    "poster": "static/jcx/x/b4941ca0.webp",
+    "dur": 6
+   },
+   "texts": {
+    "url": "{home}",
+    "alt": "Brothwick video ad",
+    "title": "Hot noodles in 25 min.",
+    "text": "From the best local kitchens.",
+    "brand": "Brothwick",
+    "cta": "Order now"
+   },
+   "code": {
+    "code": "",
+    "code_m": "",
+    "mode": 0
+   },
+   "opts": {
+    "start": "muted",
+    "every": 8,
+    "max": 1
+   },
+   "note": "JavCMS example (X50): fictional advertiser Brothwick (food delivery). Art made for JavCMS. Replace the picture, texts and link, then switch it on."
+  },
+  {
+   "x": "X51",
+   "name": "Vertical video 9:16, 10 s (Stories / Reels / Shorts style)",
+   "unit": "U16",
+   "kind": "video",
+   "place": "P05",
+   "pv": "P05 phone, P04 computer",
+   "dev": 3,
+   "pages": "",
+   "size": {
+    "w": 360,
+    "h": 640,
+    "wm": 360,
+    "hm": 640
+   },
+   "media": {
+    "src": "static/jcx/x/d690efd9.mp4",
+    "type": "video/mp4",
+    "hls": "static/jcx/x/h/581a51f5/v.m3u8",
+    "poster": "static/jcx/x/709143a7.webp",
+    "dur": 10
+   },
+   "texts": {
+    "url": "{home}",
+    "alt": "Vexmoor video ad",
+    "title": "Build. Defend. Rule the moor.",
+    "text": "Vexmoor: Crown of Glass. Free to play.",
+    "brand": "Vexmoor",
+    "cta": "Play free"
+   },
+   "code": {
+    "code": "",
+    "code_m": "",
+    "mode": 0
+   },
+   "opts": {
+    "start": "muted",
+    "vertical": true
+   },
+   "note": "JavCMS example (X51): fictional advertiser Vexmoor (game). Art made for JavCMS. Replace the picture, texts and link, then switch it on."
+  },
+  {
+   "x": "X52",
+   "name": "Shoppable video 16:9 with product cards",
+   "unit": "U16",
+   "kind": "video",
+   "place": "P06",
+   "pv": "P06",
+   "dev": 3,
+   "pages": "",
+   "size": {
+    "w": 640,
+    "h": 360,
+    "wm": 640,
+    "hm": 360
+   },
+   "media": {
+    "src": "https://content.jwplatform.com/manifests/yp34SRmf.m3u8",
+    "type": "application/x-mpegURL",
+    "hls": "https://content.jwplatform.com/manifests/yp34SRmf.m3u8",
+    "poster": "static/jcx/x/b66547eb.webp",
+    "dur": 26
+   },
+   "texts": {
+    "url": "{home}",
+    "alt": "Cobaltnode video ad",
+    "title": "Adaptive streaming, 180p to 1080p.",
+    "text": "HLS from 120 edge cities.",
+    "brand": "Cobaltnode",
+    "cta": "Start free"
+   },
+   "code": {
+    "code": "",
+    "code_m": "",
+    "mode": 0
+   },
+   "opts": {
+    "start": "muted",
+    "buttons": [
+     {
+      "label": "Starter · $9/mo",
+      "url": "{home}"
+     },
+     {
+      "label": "Pro · $29/mo",
+      "url": "{home}"
+     },
+     {
+      "label": "Edge+ · $79/mo",
+      "url": "{home}"
+     }
+    ]
+   },
+   "note": "JavCMS example (X52): fictional advertiser Cobaltnode (video CDN / hosting). Test video by URL. Credit: JW Player demo stream, test only. Use your own video before you switch it on."
+  },
+  {
+   "x": "X53",
+   "name": "HTML5 interactive banner 300×250 (rich media)",
+   "unit": "U17",
+   "kind": "html5",
+   "place": "P04",
+   "pv": "P04",
+   "dev": 1,
+   "pages": "",
+   "size": {
+    "w": 300,
+    "h": 250,
+    "wm": 300,
+    "hm": 250
+   },
+   "media": {
+    "src": "static/jcx/x/61d6c5af.zip",
+    "type": "application/zip"
+   },
+   "texts": {
+    "url": "{home}",
+    "alt": "Ostrelle interactive ad: three coastal stays",
+    "title": "Pick your sunset.",
+    "text": "Cove Cabin $289 · Cliff House $349 · Beach Hut $219",
+    "brand": "Ostrelle",
+    "cta": "See stays"
+   },
+   "code": {
+    "code": "",
+    "code_m": "",
+    "mode": 0
+   },
+   "opts": {},
+   "note": "JavCMS example (X53): fictional advertiser Ostrelle (travel). Art made for JavCMS. Replace the picture, texts and link, then switch it on."
+  },
+  {
+   "x": "X54",
+   "name": "Playable mini-game ad 320×480",
+   "unit": "U17",
+   "kind": "html5",
+   "place": "P03",
+   "pv": "P10 / P03",
+   "dev": 3,
+   "pages": "",
+   "size": {
+    "w": 320,
+    "h": 480,
+    "wm": 320,
+    "hm": 480
+   },
+   "media": {
+    "src": "static/jcx/x/cbdc3be7.zip",
+    "type": "application/zip"
+   },
+   "texts": {
+    "url": "{home}",
+    "alt": "Vexmoor playable ad",
+    "title": "Complete the crown.",
+    "text": "Tap the glowing shards. Then play Vexmoor free.",
+    "brand": "Vexmoor",
+    "cta": "Play free"
+   },
+   "code": {
+    "code": "",
+    "code_m": "",
+    "mode": 0
+   },
+   "opts": {},
+   "note": "JavCMS example (X54): fictional advertiser Vexmoor (game). Art made for JavCMS. Replace the picture, texts and link, then switch it on."
+  },
+  {
+   "x": "X55",
+   "name": "360° panorama ad 300×250",
+   "unit": "U17",
+   "kind": "html5",
+   "place": "P06",
+   "pv": "P06",
+   "dev": 3,
+   "pages": "",
+   "size": {
+    "w": 300,
+    "h": 250,
+    "wm": 300,
+    "hm": 250
+   },
+   "media": {
+    "src": "static/jcx/x/c53ef737.zip",
+    "type": "application/zip"
+   },
+   "texts": {
+    "url": "{home}",
+    "alt": "Corvella panorama ad: a rooftop terrace set for two",
+    "title": "Plan a better evening.",
+    "text": "Drag to look around. Corvella: fewer matches, better evenings.",
+    "brand": "Corvella",
+    "cta": "Join free"
+   },
+   "code": {
+    "code": "",
+    "code_m": "",
+    "mode": 0
+   },
+   "opts": {},
+   "note": "JavCMS example (X55): fictional advertiser Corvella (dating). Art made for JavCMS. Replace the picture, texts and link, then switch it on."
+  },
+  {
+   "x": "X56",
+   "name": "Home masthead 970×250, phone video 16:9 (TopView style)",
+   "unit": "U18",
+   "kind": "image",
+   "place": "P02",
+   "pv": "P02",
+   "dev": 3,
+   "pages": "",
+   "size": {
+    "w": 970,
+    "h": 250,
+    "wm": 320,
+    "hm": 180
+   },
+   "media": {
+    "src": "static/jcx/x/d897c48f.webp",
+    "type": "image/webp",
+    "srcm": "static/jcx/x/caa5797d.mp4",
+    "poster": "static/jcx/x/6523d88b.webp",
+    "dur": 8
+   },
+   "texts": {
+    "url": "{home}",
+    "alt": "Flarebay masthead: a phone in front of a coral ring light. Go live in one tap.",
+    "title": "Go live in one tap.",
+    "text": "HD streams, live chat and tips. Free for creators.",
+    "brand": "Flarebay",
+    "cta": "Start streaming"
+   },
+   "code": {
+    "code": "",
+    "code_m": "",
+    "mode": 0
+   },
+   "opts": {},
+   "note": "JavCMS example (X56): fictional advertiser Flarebay (live streaming app). Art made for JavCMS. Replace the picture, texts and link, then switch it on."
+  },
+  {
+   "x": "X57",
+   "name": "Brand takeover: page background 1920×1080 + billboard",
+   "unit": "U18",
+   "kind": "image",
+   "place": "P02",
+   "pv": "P02 + gutters",
+   "dev": 1,
+   "pages": "",
+   "size": {
+    "w": 970,
+    "h": 250,
+    "wm": 970,
+    "hm": 250
+   },
+   "media": {
+    "src": "static/jcx/x/16274b37.webp",
+    "type": "image/webp"
+   },
+   "texts": {
+    "url": "{home}",
+    "alt": "Quellgate VPN: Your browsing is nobody's business. Get Quellgate.",
+    "title": "Your browsing is nobody's business.",
+    "text": "Save 68% on the 2-year plan.",
+    "brand": "Quellgate",
+    "cta": "Get Quellgate"
+   },
+   "code": {
+    "code": "",
+    "code_m": "",
+    "mode": 0
+   },
+   "opts": {
+    "wallpaper": "static/jcx/x/6d5a5ec2.webp"
+   },
+   "note": "JavCMS example (X57): fictional advertiser Quellgate (privacy / VPN). Art made for JavCMS. Replace the picture, texts and link, then switch it on."
+  },
+  {
+   "x": "X58",
+   "name": "Text link (direct link / clickunder)",
+   "unit": "U19",
+   "kind": "link",
+   "place": "P01",
+   "pv": "P01 nav, P07",
+   "dev": 3,
+   "pages": "",
+   "size": {
+    "w": 0,
+    "h": 0,
+    "wm": 0,
+    "hm": 0
+   },
+   "media": {},
+   "texts": {
+    "url": "{home}",
+    "alt": "",
+    "title": "Quellgate VPN: 68% off",
+    "text": "Quellgate VPN: 68% off the 2-year plan",
+    "brand": "Quellgate",
+    "cta": ""
+   },
+   "code": {
+    "code": "",
+    "code_m": "",
+    "mode": 0
+   },
+   "opts": {},
+   "note": "JavCMS example (X58): fictional advertiser Quellgate (privacy / VPN). Replace the picture, texts and link, then switch it on."
+  },
+  {
+   "x": "X59",
+   "name": "Two pre-roll ads in a row (ad pod)",
+   "unit": "U15",
+   "kind": "video",
+   "place": "P11",
+   "pv": "P11",
+   "dev": 3,
+   "pages": "",
+   "size": {
+    "w": 640,
+    "h": 360,
+    "wm": 640,
+    "hm": 360
+   },
+   "media": {
+    "src": "https://vjs.zencdn.net/v/oceans.mp4",
+    "type": "video/mp4",
+    "poster": "static/jcx/x/76f05629.webp",
+    "dur": 47,
+    "pod": [
+     {
+      "src": "https://vjs.zencdn.net/v/oceans.mp4",
+      "type": "video/mp4",
+      "dur": 47,
+      "skip": 5,
+      "poster": "static/jcx/x/76f05629.webp"
+     },
+     {
+      "src": "https://www.w3schools.com/html/mov_bbb.mp4",
+      "type": "video/mp4",
+      "dur": 10,
+      "skip": 0,
+      "poster": "static/jcx/x/3d907573.webp"
+     }
+    ]
+   },
+   "texts": {
+    "url": "{home}",
+    "alt": "Two video ads",
+    "title": "Ostrelle, then Halcyra+",
+    "text": "Two-ad pod: Ad 1 of 2, Ad 2 of 2.",
+    "brand": "Ostrelle",
+    "cta": "See stays"
+   },
+   "code": {
+    "code": "",
+    "code_m": "",
+    "mode": 0
+   },
+   "opts": {
+    "roll": "pre",
+    "skip": 5,
+    "max_s": 15,
+    "pod": 2,
+    "start": "click"
+   },
+   "note": "JavCMS example (X59): fictional advertisers Ostrelle, then Halcyra+. Test videos by URL. Credit: oceans: video.js demo clip, test only; Big Buck Bunny (c) Blender Foundation, CC BY 3.0. Use your own videos before you switch it on."
+  },
+  {
+   "x": "X60",
+   "name": "Rewarded video: watch it to hide ads for 1 hour",
+   "unit": "U15",
+   "kind": "video",
+   "place": "P11",
+   "pv": "P11, P03",
+   "dev": 3,
+   "pages": "",
+   "size": {
+    "w": 640,
+    "h": 360,
+    "wm": 640,
+    "hm": 360
+   },
+   "media": {
+    "src": "https://www.w3schools.com/html/mov_bbb.mp4",
+    "type": "video/mp4",
+    "poster": "static/jcx/x/3d907573.webp",
+    "dur": 10
+   },
+   "texts": {
+    "url": "{home}",
+    "alt": "Halcyra+ video ad",
+    "title": "Animation night, uninterrupted.",
+    "text": "Members-only films and series in 4K.",
+    "brand": "Halcyra+",
+    "cta": "Try free"
+   },
+   "code": {
+    "code": "",
+    "code_m": "",
+    "mode": 0
+   },
+   "opts": {
+    "roll": "reward",
+    "reward_h": 1,
+    "skip": 0,
+    "max_s": 15
+   },
+   "note": "JavCMS example (X60): fictional advertiser Halcyra+ (video membership). Test video by URL. Credit: Big Buck Bunny (c) Blender Foundation, CC BY 3.0. Use your own video before you switch it on."
+  }
+ ]
+}

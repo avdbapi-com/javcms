@@ -1,0 +1,42 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="neon" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+<meta name="robots" content="noindex, follow" />
+<title>{:\\app\\common\\util\\TemplateText::get('ui.withdrawal_record')} - {:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$maccms['site_name']), ENT_QUOTES, 'UTF-8')}</title>
+{include file="public/include"}
+{include file="user/include"}
+</head>
+<body class="nx-page-user">
+{include file="public/head"}
+<main id="main-content" class="nx-main"><div class="nx-wrap">
+{include file="user/hero"}
+<div class="nx-ulayout">
+<aside>{include file="user/menu"}</aside>
+<section class="nx-upanel" aria-labelledby="nx-h-user"><div class="nx-upanel-head"><h1 id="nx-h-user">{:\\app\\common\\util\\TemplateText::get('ui.withdrawal_record')}</h1></div>
+<form class="nx-form" id="fm" name="fm" method="post" action="{:url('user/cash')}" onsubmit="return false" style="max-width:520px;margin:0 0 18px">
+<p class="nx-form-note">{:\\app\\common\\util\\TemplateText::get('ui.points')}: <span class="nx-ltr">{$obj.user_points|intval}</span> &middot; <span class="nx-ltr">{$GLOBALS['config']['user']['cash_min']|htmlspecialchars=ENT_QUOTES} / {$GLOBALS['config']['user']['cash_ratio']|htmlspecialchars=ENT_QUOTES}</span></p>
+<input class="nx-input" name="cash_bank_name" placeholder="{:\\app\\common\\util\\TemplateText::get('ui.please_enter_the_bank_name')}" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.please_enter_the_bank_name')}">
+<input class="nx-input" name="cash_bank_no" placeholder="{:\\app\\common\\util\\TemplateText::get('ui.please_enter_the_bank_account')}" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.bank_account')}">
+<input class="nx-input" name="cash_payee_name" placeholder="{:\\app\\common\\util\\TemplateText::get('ui.please_enter_the_payee')}" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.please_enter_the_payee')}">
+<input class="nx-input" name="cash_money" inputmode="decimal" placeholder="{:\\app\\common\\util\\TemplateText::get('ui.please_enter_the_withdrawal_amount')}" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.please_enter_the_withdrawal_amount')}">
+<button class="nx-submit" type="button" data-nx-cash data-url="{:url('user/cash')}">{:\\app\\common\\util\\TemplateText::get('ui.submit')}</button>
+</form>
+<form data-nx-records data-url="{:url('user/cash_del')}" onsubmit="return false">
+<div class="nx-toolbar"><button class="nx-btn" type="button" data-act="all">{:\\app\\common\\util\\TemplateText::get('ui.full_selection')}</button><button class="nx-btn" type="button" data-act="del">{:\\app\\common\\util\\TemplateText::get('delete')}</button></div>
+<div class="nx-table-wrap"><table class="nx-table"><thead><tr><th></th><th>{:\\app\\common\\util\\TemplateText::get('ui.points')}</th><th>{:\\app\\common\\util\\TemplateText::get('ui.amount')}</th><th>{:\\app\\common\\util\\TemplateText::get('ui.state')}</th><th>{:\\app\\common\\util\\TemplateText::get('ui.time')}</th></tr></thead><tbody>{volist name="list" id="vo"}<tr><td><input type="checkbox" name="ids[]" value="{$vo.cash_id}" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.select_item')}"></td><td class="nx-ltr">{$vo.cash_points|intval}</td><td class="nx-ltr">{$vo.cash_money|htmlspecialchars=ENT_QUOTES}</td><td>{if condition="$vo.cash_status eq '1'"}{:\\app\\common\\util\\TemplateText::get('ui.review')}{else/}{:\\app\\common\\util\\TemplateText::get('ui.not_reviewed')}{/if}</td><td class="nx-ltr">{$vo.cash_time|mac_day}</td></tr>{/volist}</tbody></table></div>
+</form>
+{if condition="empty($list)"}{include file="public/empty"}{/if}
+{include file="public/paging"}
+</section>
+</div>
+</div></main>
+{include file="public/foot"}
+</body>
+</html>

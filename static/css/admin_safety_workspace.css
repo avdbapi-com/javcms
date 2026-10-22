@@ -1,0 +1,156 @@
+/*
+ * This file is part of JavCMS - https://javcms.net
+ * Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+ * License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+ * See the LICENSE and NOTICE files that come with JavCMS.
+ * Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Telegram: https://t.me/avdb_api
+ */
+/* V9: private palette mapped to the kit tokens (admin_ux.css). */
+body.admin-studio.admin-dark .safety-workspace { --safety-bg: var(--ax-bg); --safety-surface: var(--ax-surface); --safety-surface-2: var(--ax-raised); --safety-border: var(--ax-line); --safety-ink: var(--ax-text); --safety-muted: var(--ax-muted); --safety-accent: var(--ax-accent); --safety-warning: var(--ax-warn); }
+
+body.admin-dark .safety-workspace {
+    --safety-bg: #090f1c;
+    --safety-surface: #111b2d;
+    --safety-surface-2: #16243a;
+    --safety-border: #2a3b57;
+    --safety-ink: #edf4ff;
+    --safety-muted: #9aabc2;
+    --safety-accent: #70e1bd;
+    --safety-warning: #f6c86e;
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: clamp(16px, 3vw, 34px);
+    color: var(--safety-ink);
+}
+
+.safety-workspace .safety-hero {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 24px;
+}
+
+.safety-workspace .safety-eyebrow {
+    margin: 0 0 6px;
+    color: var(--safety-accent);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+}
+
+.safety-workspace .safety-title {
+    margin: 0;
+    color: var(--safety-ink);
+    font-size: clamp(24px, 3vw, 36px);
+    line-height: 1.15;
+}
+
+.safety-workspace .safety-subtitle {
+    max-width: 70ch;
+    margin: 8px 0 0;
+    color: var(--safety-muted);
+    line-height: 1.55;
+}
+
+.safety-workspace .safety-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border: 1px solid rgba(246, 200, 110, .36);
+    border-radius: 999px;
+    background: rgba(246, 200, 110, .1);
+    color: var(--safety-warning);
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.safety-workspace .safety-panel {
+    padding: clamp(18px, 3vw, 30px);
+    border: 1px solid var(--safety-border);
+    border-radius: 14px;
+    background: var(--safety-surface);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, .18);
+}
+
+.safety-workspace .safety-tabs {
+    margin: 0 0 22px;
+    padding: 4px;
+    border: 1px solid var(--safety-border);
+    border-radius: 10px;
+    background: var(--safety-surface-2);
+}
+
+.safety-workspace .safety-tabs li {
+    border: 0;
+    border-radius: 7px;
+    color: var(--safety-muted);
+}
+
+.safety-workspace .safety-tabs li.layui-this {
+    background: var(--safety-surface);
+    color: var(--safety-accent);
+}
+
+.safety-workspace .safety-tabs li.layui-this:after { display: none; }
+
+.safety-workspace .safety-callout {
+    margin: 0 0 24px;
+    padding: 18px 20px;
+    border: 1px solid rgba(112, 225, 189, .25);
+    border-left: 3px solid var(--safety-accent);
+    border-radius: 10px;
+    background: rgba(112, 225, 189, .06);
+    color: var(--safety-ink);
+    line-height: 1.7;
+}
+
+.safety-workspace fieldset { margin: 0; padding: 0; border: 0; }
+
+.safety-workspace .safety-options {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin-bottom: 22px;
+}
+
+.safety-workspace .safety-option {
+    min-height: 42px;
+    padding: 10px 12px;
+    border: 1px solid var(--safety-border);
+    border-radius: 9px;
+    background: var(--safety-surface-2);
+}
+
+.safety-workspace .safety-action {
+    min-height: 42px;
+    border-radius: 8px;
+    font-weight: 700;
+}
+
+.safety-workspace .layui-form-checkbox[lay-skin=primary] > div { color: var(--safety-ink); }
+.safety-workspace .layui-form-checkbox[lay-skin=primary] > i { background: #0d1829; border-color: var(--safety-border); }
+.safety-workspace .layui-form-checkbox[lay-skin=primary]:hover > i,
+.safety-workspace .layui-form-checkbox[lay-skin=primary].layui-form-checked > i { border-color: var(--safety-accent); background: var(--safety-accent); color: #071a14; }
+
+@media (max-width: 640px) {
+    .safety-workspace .safety-hero { align-items: stretch; flex-direction: column; }
+    .safety-workspace .safety-status { align-self: flex-start; }
+    .safety-workspace .safety-options { grid-template-columns: 1fr; }
+    .safety-workspace .safety-action { width: 100%; }
+}
+
+/* Kit pages (brief 7.e): page header, sections and tables come from admin_ux.css. */
+body.admin-dark .safety-workspace.safety-workspace--kit { max-width: none; margin: 0; padding: var(--ax-pad, 24px); }
+.safety-workspace--kit .safety-scan-form__row, .safety-workspace--kit .safety-options { margin: 0 0 16px; padding: 0; border: 0; display: flex; flex-wrap: wrap; gap: 8px 24px; }
+.safety-workspace--kit .safety-callout { margin: 0 0 16px; line-height: 1.6; }
+.safety-workspace--kit .safety-snippet { display: block; white-space: pre-wrap; overflow-wrap: anywhere; font-size: 12.5px; color: var(--ax-text); background: none; padding: 0; }
+.safety-workspace--kit .safety-scan-table td { vertical-align: top; }
+/* Review visual P2-7: long checkbox labels (VI "Tệp phía máy chủ trong upload, template hoặc static") wrap inside the card on phones. */
+.safety-workspace--kit .safety-notice { line-height: 1.6; }
+.safety-workspace--kit .layui-form-checkbox[lay-skin=primary] { max-width: 100%; height: auto; min-height: 18px; line-height: 18px; white-space: normal; }
+.safety-workspace--kit .layui-form-checkbox[lay-skin=primary] > :is(div, span) { white-space: normal; overflow-wrap: anywhere; max-width: 100%; box-sizing: border-box; line-height: 1.45; vertical-align: top; }

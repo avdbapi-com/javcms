@@ -1,0 +1,945 @@
+JavCMS: files changed from the third-party originals
+====================================================
+
+This list is generated for this package by package/scripts/changed_files.py. The Apache License 2.0
+(section 4b) and the LGPL ask that changed files say that they were changed. JavCMS files with a JavCMS
+notice at the top already say so; third-party files carry no JavCMS notice, so this list says it for them.
+
+Each third-party file is compared with the original release it comes from: the MacCMS v2023.1000.3051
+release (which also ships ThinkPHP 5.0.24, the vendor/ packages and the bundled static libraries), and for
+the libraries JavCMS bundles in addition, their own original release: TinyMCE 5.4.0, KindEditor 4.1.12,
+CKEditor 4.11.1, UMeditor 1.2.2, CodeMirror 5.42.2, Layui 2.9.13 and Layui 2.7.6. The editor libraries came
+to JavCMS through ApiiCMS; files that their original release does not contain (language packs, custom build
+files) are compared with the ApiiCMS copy ("received copy"). Every file listed here differs from its original;
+changes of line endings or trailing spaces only are not listed.
+
+Who changed a file, and when: ApiiCMS (MIT, 2024), the MacCMS edition that JavCMS received, had already
+changed some of these files. Each listed file is also compared with the ApiiCMS file of the same path; a file
+that is the same as it is marked "as received (ApiiCMS)": JavCMS did not change it further, and its date is
+the date of the copy JavCMS received. Every other date is the date of the file's last change (its file date
+in this package), except for files whose file date is older than the start of the JavCMS work (2026-09-30):
+they show "pass date" or "received date" (see the legend). The JavCMS dates run from 2026-10-06 to 2026-10-22.
+Files of the MacCMS release that this package does not ship: 254.
+Other third-party code that JavCMS added itself is described in LICENSE (Part C) and NOTICE.
+
+Legend:
+  [notice]      the file starts with a JavCMS notice ("Based on MacCMS 10 ... changed by JavCMS")
+  code          program code changed (PHP and JavaScript compared token by token; comments and blanks ignored)
+  messages      only text strings changed (messages translated or reworded)
+  settings      a setting written as text changed (for example an editor toolbar list); other changes are shown too
+  comments      only comments changed (translated to English or reworded)
+  formatting    only spaces and line breaks changed
+  content       a file that is not PHP or JavaScript changed (CSS / HTML / SQL / text / image)
+  css-comments  a CSS file whose rules are unchanged; only its comments changed
+  config        configuration data written by the installer / admin (the package ships a clean default)
+  notice restored  its original third-party notice was put back to the upstream text
+  received copy    compared with the copy JavCMS received (ApiiCMS), see the section header
+  as received (ApiiCMS)  already changed in the copy JavCMS received from ApiiCMS (MIT, 2024); JavCMS did
+                not change it further
+  pass date     the file kept the older date of the copy JavCMS received; JavCMS changed it in its translation
+                and formatting pass (from 2026-09-30), so the date shown is 2026-10-09, the day of the first JavCMS
+                release, which already has the change
+  received date the file keeps the date of the copy JavCMS received (2024-08-08); there is no ApiiCMS file of that
+                path to compare with, so the change may come from ApiiCMS or from the JavCMS pass
+
+MacCMS v2023.1000.3051 release: ThinkPHP 5.0.24 (thinkphp/, Apache-2.0): 144 files
+-----------------------------------------------------------------------------------
+  thinkphp/base.php                                                  2026-10-06  comments
+  thinkphp/codecov.yml                                               2026-10-09  content, pass date
+  thinkphp/composer.json                                             2026-10-06  content
+  thinkphp/console.php                                               2026-10-09  comments, notice restored, pass date
+  thinkphp/convention.php                                            2026-10-06  messages
+  thinkphp/helper.php                                                2026-10-06  comments
+  thinkphp/lang/zh-cn.php                                            2026-10-06  code
+  thinkphp/library/think/App.php                                     2026-10-06  code, notice restored
+  thinkphp/library/think/Build.php                                   2026-10-06  messages
+  thinkphp/library/think/Cache.php                                   2026-10-06  comments
+  thinkphp/library/think/Collection.php                              2026-10-06  code, notice restored
+  thinkphp/library/think/Config.php                                  2026-10-06  comments
+  thinkphp/library/think/Console.php                                 2026-10-06  messages, notice restored
+  thinkphp/library/think/Controller.php                              2026-10-06  code
+  thinkphp/library/think/Cookie.php                                  2026-10-06  code
+  thinkphp/library/think/Db.php                                      2026-10-06  comments
+  thinkphp/library/think/Debug.php                                   2026-10-06  comments
+  thinkphp/library/think/Env.php                                     2026-10-06  comments
+  thinkphp/library/think/Error.php                                   2026-10-09  comments, notice restored, pass date
+  thinkphp/library/think/Exception.php                               2026-10-06  comments, notice restored
+  thinkphp/library/think/File.php                                    2026-10-06  comments
+  thinkphp/library/think/Hook.php                                    2026-10-06  comments
+  thinkphp/library/think/Lang.php                                    2026-10-06  code
+  thinkphp/library/think/Loader.php                                  2026-10-06  comments
+  thinkphp/library/think/Log.php                                     2026-10-06  comments
+  thinkphp/library/think/Model.php                                   2026-10-06  code
+  thinkphp/library/think/Paginator.php                               2026-10-06  code, notice restored
+  thinkphp/library/think/Process.php                                 2026-10-06  code, notice restored
+  thinkphp/library/think/Request.php                                 2026-10-06  code
+  thinkphp/library/think/Response.php                                2026-10-06  messages
+  thinkphp/library/think/Route.php                                   2026-10-06  messages
+  thinkphp/library/think/Session.php                                 2026-10-06  comments
+  thinkphp/library/think/Template.php                                2026-10-06  comments
+  thinkphp/library/think/Url.php                                     2026-10-06  comments
+  thinkphp/library/think/Validate.php                                2026-10-06  comments
+  thinkphp/library/think/View.php                                    2026-10-06  comments
+  thinkphp/library/think/cache/Driver.php                            2026-10-06  comments
+  thinkphp/library/think/cache/driver/File.php                       2026-10-17  code, notice restored
+  thinkphp/library/think/cache/driver/Lite.php                       2026-10-06  comments, notice restored
+  thinkphp/library/think/cache/driver/Memcache.php                   2026-10-06  comments
+  thinkphp/library/think/cache/driver/Memcached.php                  2026-10-06  comments
+  thinkphp/library/think/cache/driver/Redis.php                      2026-10-07  code, notice restored
+  thinkphp/library/think/cache/driver/Sqlite.php                     2026-10-06  comments, notice restored
+  thinkphp/library/think/cache/driver/Wincache.php                   2026-10-06  comments, notice restored
+  thinkphp/library/think/cache/driver/Xcache.php                     2026-10-06  comments, notice restored
+  thinkphp/library/think/console/Command.php                         2026-10-06  code, notice restored
+  thinkphp/library/think/console/Input.php                           2026-10-06  comments, notice restored
+  thinkphp/library/think/console/Output.php                          2026-10-06  comments, notice restored
+  thinkphp/library/think/console/command/Build.php                   2026-10-06  messages, notice restored
+  thinkphp/library/think/console/command/Clear.php                   2026-10-06  messages
+  thinkphp/library/think/console/command/Help.php                    2026-10-09  comments, notice restored, pass date
+  thinkphp/library/think/console/command/Lists.php                   2026-10-06  messages, notice restored
+  thinkphp/library/think/console/command/make/stubs/controller.stub  2026-10-09  content, pass date
+  thinkphp/library/think/console/command/optimize/Autoload.php       2026-10-06  messages, notice restored
+  thinkphp/library/think/console/command/optimize/Config.php         2026-10-06  messages, notice restored
+  thinkphp/library/think/console/command/optimize/Route.php          2026-10-09  comments, pass date
+  thinkphp/library/think/console/command/optimize/Schema.php         2026-10-06  messages, notice restored
+  thinkphp/library/think/console/input/Argument.php                  2026-10-06  comments, notice restored
+  thinkphp/library/think/console/input/Definition.php                2026-10-06  comments, notice restored
+  thinkphp/library/think/console/input/Option.php                    2026-10-06  comments, notice restored
+  thinkphp/library/think/console/output/Ask.php                      2026-10-06  code, notice restored
+  thinkphp/library/think/console/output/Descriptor.php               2026-10-06  code, notice restored
+  thinkphp/library/think/console/output/Formatter.php                2026-10-06  comments, notice restored
+  thinkphp/library/think/console/output/Question.php                 2026-10-06  comments, notice restored
+  thinkphp/library/think/console/output/descriptor/Console.php       2026-10-06  comments, notice restored
+  thinkphp/library/think/console/output/driver/Buffer.php            2026-10-09  comments, notice restored, pass date
+  thinkphp/library/think/console/output/driver/Console.php           2026-10-06  comments, notice restored
+  thinkphp/library/think/console/output/formatter/Stack.php          2026-10-06  code, notice restored
+  thinkphp/library/think/console/output/formatter/Style.php          2026-10-06  comments, notice restored
+  thinkphp/library/think/console/output/question/Choice.php          2026-10-06  comments, notice restored
+  thinkphp/library/think/console/output/question/Confirmation.php    2026-10-06  comments, notice restored
+  thinkphp/library/think/controller/Rest.php                         2026-10-06  comments
+  thinkphp/library/think/controller/Yar.php                          2026-10-06  comments
+  thinkphp/library/think/db/Builder.php                              2026-10-06  comments
+  thinkphp/library/think/db/Connection.php                           2026-10-06  code
+  thinkphp/library/think/db/Expression.php                           2026-10-06  comments
+  thinkphp/library/think/db/Query.php                                2026-10-06  code
+  thinkphp/library/think/db/builder/Mysql.php                        2026-10-06  comments
+  thinkphp/library/think/db/builder/Pgsql.php                        2026-10-06  comments
+  thinkphp/library/think/db/builder/Sqlite.php                       2026-10-06  comments
+  thinkphp/library/think/db/builder/Sqlsrv.php                       2026-10-06  comments
+  thinkphp/library/think/db/connector/Mysql.php                      2026-10-06  comments
+  thinkphp/library/think/db/connector/Pgsql.php                      2026-10-06  comments
+  thinkphp/library/think/db/connector/Sqlite.php                     2026-10-06  comments
+  thinkphp/library/think/db/connector/Sqlsrv.php                     2026-10-06  comments
+  thinkphp/library/think/db/connector/pgsql.sql                      2026-10-09  content, pass date
+  thinkphp/library/think/db/exception/BindParamException.php         2026-10-06  comments, notice restored
+  thinkphp/library/think/db/exception/DataNotFoundException.php      2026-10-06  comments, notice restored
+  thinkphp/library/think/db/exception/ModelNotFoundException.php     2026-10-06  comments, notice restored
+  thinkphp/library/think/debug/Console.php                           2026-10-06  code, notice restored
+  thinkphp/library/think/debug/Html.php                              2026-10-06  code
+  thinkphp/library/think/exception/ClassNotFoundException.php        2026-10-09  comments, notice restored, pass date
+  thinkphp/library/think/exception/DbException.php                   2026-10-06  comments, notice restored
+  thinkphp/library/think/exception/ErrorException.php                2026-10-06  comments, notice restored
+  thinkphp/library/think/exception/Handle.php                        2026-10-06  comments, notice restored
+  thinkphp/library/think/exception/HttpException.php                 2026-10-06  code, notice restored
+  thinkphp/library/think/exception/HttpResponseException.php         2026-10-09  comments, notice restored, pass date
+  thinkphp/library/think/exception/PDOException.php                  2026-10-06  comments, notice restored
+  thinkphp/library/think/exception/TemplateNotFoundException.php     2026-10-09  comments, notice restored, pass date
+  thinkphp/library/think/exception/ThrowableError.php                2026-10-18  code, notice restored
+  thinkphp/library/think/exception/ValidateException.php             2026-10-09  comments, notice restored, pass date
+  thinkphp/library/think/log/driver/File.php                         2026-10-06  messages
+  thinkphp/library/think/log/driver/Socket.php                       2026-10-06  messages, notice restored
+  thinkphp/library/think/log/driver/Test.php                         2026-10-06  comments
+  thinkphp/library/think/model/Collection.php                        2026-10-06  comments, notice restored
+  thinkphp/library/think/model/Merge.php                             2026-10-06  comments
+  thinkphp/library/think/model/Pivot.php                             2026-10-06  code
+  thinkphp/library/think/model/Relation.php                          2026-10-06  comments
+  thinkphp/library/think/model/relation/BelongsTo.php                2026-10-06  comments
+  thinkphp/library/think/model/relation/BelongsToMany.php            2026-10-06  comments
+  thinkphp/library/think/model/relation/HasMany.php                  2026-10-06  comments
+  thinkphp/library/think/model/relation/HasManyThrough.php           2026-10-06  comments
+  thinkphp/library/think/model/relation/HasOne.php                   2026-10-06  comments
+  thinkphp/library/think/model/relation/MorphMany.php                2026-10-06  comments
+  thinkphp/library/think/model/relation/MorphOne.php                 2026-10-06  comments
+  thinkphp/library/think/model/relation/MorphTo.php                  2026-10-06  comments
+  thinkphp/library/think/model/relation/OneToOne.php                 2026-10-06  comments
+  thinkphp/library/think/paginator/driver/Bootstrap.php              2026-10-06  comments, notice restored
+  thinkphp/library/think/process/Builder.php                         2026-10-06  messages, notice restored
+  thinkphp/library/think/process/Utils.php                           2026-10-06  comments, notice restored
+  thinkphp/library/think/process/pipes/Pipes.php                     2026-10-06  comments, notice restored
+  thinkphp/library/think/process/pipes/Unix.php                      2026-10-06  comments, notice restored
+  thinkphp/library/think/process/pipes/Windows.php                   2026-10-06  messages, notice restored
+  thinkphp/library/think/response/Json.php                           2026-10-06  comments
+  thinkphp/library/think/response/Jsonp.php                          2026-10-06  code
+  thinkphp/library/think/response/Redirect.php                       2026-10-06  comments
+  thinkphp/library/think/response/View.php                           2026-10-06  comments
+  thinkphp/library/think/response/Xml.php                            2026-10-06  comments
+  thinkphp/library/think/session/driver/Memcache.php                 2026-10-06  code
+  thinkphp/library/think/session/driver/Memcached.php                2026-10-06  code
+  thinkphp/library/think/session/driver/Redis.php                    2026-10-06  code
+  thinkphp/library/think/template/TagLib.php                         2026-10-06  comments, notice restored
+  thinkphp/library/think/template/driver/File.php                    2026-10-21  code
+  thinkphp/library/think/template/taglib/Cx.php                      2026-10-06  comments, notice restored
+  thinkphp/library/think/view/driver/Php.php                         2026-10-06  comments
+  thinkphp/library/think/view/driver/Think.php                       2026-10-06  comments
+  thinkphp/library/traits/controller/Jump.php                        2026-10-06  comments
+  thinkphp/library/traits/model/SoftDelete.php                       2026-10-06  comments
+  thinkphp/library/traits/think/Instance.php                         2026-10-06  comments
+  thinkphp/start.php                                                 2026-10-09  comments, pass date
+  thinkphp/tpl/default_index.tpl                                     2026-10-09  content
+  thinkphp/tpl/dispatch_jump.tpl                                     2026-10-06  content
+  thinkphp/tpl/page_trace.tpl                                        2026-10-06  content
+  thinkphp/tpl/think_exception.tpl                                   2026-10-09  content
+
+MacCMS v2023.1000.3051 release: Composer packages (vendor/: topthink, fastadmin-addons, composer; Apache-2.0 / MIT): 39 files
+------------------------------------------------------------------------------------------------------------------------
+  vendor/composer/ClassLoader.php                                    2026-10-09  comments, notice restored, pass date
+  vendor/karsonzhang/fastadmin-addons/src/Addons.php                 2026-10-06  comments
+  vendor/karsonzhang/fastadmin-addons/src/addons/AddonException.php  2026-10-09  comments, pass date
+  vendor/karsonzhang/fastadmin-addons/src/addons/Controller.php      2026-10-06  code
+  vendor/karsonzhang/fastadmin-addons/src/addons/Route.php           2026-10-06  comments
+  vendor/karsonzhang/fastadmin-addons/src/addons/Service.php         2026-10-06  messages
+  vendor/karsonzhang/fastadmin-addons/src/common.php                 2026-10-06  messages
+  vendor/topthink/think-captcha/src/Captcha.php                      2026-10-06  code, notice restored
+  vendor/topthink/think-captcha/src/helper.php                       2026-10-06  messages, notice restored
+  vendor/topthink/think-helper/src/Hash.php                          2026-10-06  messages, notice restored
+  vendor/topthink/think-helper/src/Str.php                           2026-10-06  comments, notice restored
+  vendor/topthink/think-helper/src/Time.php                          2026-10-06  comments
+  vendor/topthink/think-helper/src/hash/Bcrypt.php                   2026-10-06  comments, notice restored
+  vendor/topthink/think-helper/src/helper.php                        2026-10-06  comments, notice restored
+  vendor/topthink/think-image/src/Image.php                          2026-10-06  code, notice restored
+  vendor/topthink/think-image/src/image/gif/Decoder.php              2026-10-06  code, notice restored
+  vendor/topthink/think-image/src/image/gif/Encoder.php              2026-10-06  code, notice restored
+  vendor/topthink/think-image/src/image/gif/Gif.php                  2026-10-06  messages, notice restored
+  vendor/topthink/think-installer/src/Plugin.php                     2026-10-06  comments
+  vendor/topthink/think-installer/src/ThinkExtend.php                2026-10-06  messages, notice restored
+  vendor/topthink/think-installer/src/ThinkFramework.php             2026-10-06  comments
+  vendor/topthink/think-installer/src/ThinkTesting.php               2026-10-09  comments, notice restored, pass date
+  vendor/topthink/think-queue/src/Queue.php                          2026-10-09  comments, notice restored, pass date
+  vendor/topthink/think-queue/src/common.php                         2026-10-06  comments, notice restored
+  vendor/topthink/think-queue/src/queue/Connector.php                2026-10-06  messages, notice restored
+  vendor/topthink/think-queue/src/queue/Job.php                      2026-10-06  comments, notice restored
+  vendor/topthink/think-queue/src/queue/Listener.php                 2026-10-06  comments, notice restored
+  vendor/topthink/think-queue/src/queue/Queueable.php                2026-10-06  comments, notice restored
+  vendor/topthink/think-queue/src/queue/Worker.php                   2026-10-06  comments, notice restored
+  vendor/topthink/think-queue/src/queue/command/Listen.php           2026-10-09  comments, notice restored, pass date
+  vendor/topthink/think-queue/src/queue/command/Subscribe.php        2026-10-06  messages, notice restored
+  vendor/topthink/think-queue/src/queue/command/Work.php             2026-10-06  comments, notice restored
+  vendor/topthink/think-queue/src/queue/connector/Database.php       2026-10-06  comments, notice restored
+  vendor/topthink/think-queue/src/queue/connector/Redis.php          2026-10-06  messages, notice restored
+  vendor/topthink/think-queue/src/queue/connector/Topthink.php       2026-10-06  messages, notice restored
+  vendor/topthink/think-queue/src/queue/job/Database.php             2026-10-06  comments, notice restored
+  vendor/topthink/think-queue/src/queue/job/Redis.php                2026-10-06  comments, notice restored
+  vendor/topthink/think-queue/src/queue/job/Sync.php                 2026-10-09  comments, notice restored, pass date
+  vendor/topthink/think-queue/src/queue/job/Topthink.php             2026-10-06  comments, notice restored
+
+MacCMS v2023.1000.3051 release: SDKs bundled by MacCMS (extend/): 3 files
+----------------------------------------------------------------------------
+  extend/login/ThinkOauth.php     2026-10-07  code
+  extend/login/sdk/QqSDK.php      2026-10-07  code
+  extend/login/sdk/WeixinSDK.php  2026-10-07  code
+
+MacCMS v2023.1000.3051 release: Static files and bundled libraries of the MacCMS release (static/; each library keeps its own license, LICENSE Part C): 104 files
+------------------------------------------------------------------------------------------------------------------------
+  static/css/admin_style.css                                              2026-10-06  [notice], content
+  static/css/home.css                                                     2026-10-06  [notice], content
+  static/images/logo.jpg                                                  2026-10-09  content (binary), pass date
+  static/images/nopic.gif                                                 2026-10-08  content (binary)
+  static/js/admin_common.js                                               2026-10-14  [notice], code
+  static/js/home.js                                                       2026-10-08  [notice], code
+  static/js/jquery.cookie.js                                              2026-10-09  code
+  static/js/jquery.imageupload.js                                         2026-10-09  code
+  static/js/jquery.js                                                     2026-10-09  comments, notice restored, pass date
+  static/js/jquery.pngFix.js                                              2026-10-06  comments, notice restored
+  static/js/player.js                                                     2026-10-17  [notice], code
+  static/js/playerconfig.js                                               2026-10-15  [notice], code
+  static/js/tj.js                                                         2026-10-13  [notice], messages
+  static/layui/lay/modules/element.js                                     2026-10-06  messages, notice restored
+  static/layui/lay/modules/flow.js                                        2024-08-08  messages, notice restored, received date
+  static/layui/lay/modules/form.js                                        2026-10-06  messages, notice restored
+  static/layui/lay/modules/laydate.js                                     2026-10-06  messages, notice restored
+  static/layui/lay/modules/layedit.js                                     2026-10-06  messages, notice restored
+  static/layui/lay/modules/layer.js                                       2026-10-06  messages, notice restored
+  static/layui/lay/modules/laypage.js                                     2026-10-06  messages, notice restored
+  static/layui/lay/modules/mobile.js                                      2026-10-06  messages, notice restored
+  static/layui/lay/modules/table.js                                       2026-10-06  messages, notice restored
+  static/layui/lay/modules/tree.js                                        2026-10-06  messages, notice restored
+  static/layui/lay/modules/upload.js                                      2026-10-06  messages, notice restored
+  static/layui/lay/modules/util.js                                        2026-10-06  messages, notice restored
+  static/layui/layui.all.js                                               2026-10-06  code, notice restored
+  static/layui/modules/element.js                                         2026-10-09  messages, copy of static/layui/lay/modules/element.js, notice restored, pass date
+  static/layui/modules/flow.js                                            2026-10-09  messages, copy of static/layui/lay/modules/flow.js, notice restored, pass date
+  static/layui/modules/form.js                                            2026-10-06  code, copy of static/layui/lay/modules/form.js, notice restored
+  static/layui/modules/laydate.js                                         2026-10-06  code, copy of static/layui/lay/modules/laydate.js, notice restored
+  static/layui/modules/layedit.js                                         2026-10-06  messages, copy of static/layui/lay/modules/layedit.js, notice restored
+  static/layui/modules/layer.js                                           2026-10-06  messages, copy of static/layui/lay/modules/layer.js, notice restored
+  static/layui/modules/laypage.js                                         2026-10-06  messages, copy of static/layui/lay/modules/laypage.js, notice restored
+  static/layui/modules/mobile.js                                          2026-10-06  messages, copy of static/layui/lay/modules/mobile.js, notice restored
+  static/layui/modules/table.js                                           2026-10-06  messages, copy of static/layui/lay/modules/table.js, notice restored
+  static/layui/modules/tree.js                                            2026-10-09  messages, copy of static/layui/lay/modules/tree.js, notice restored, pass date
+  static/layui/modules/upload.js                                          2026-10-06  messages, copy of static/layui/lay/modules/upload.js, notice restored
+  static/layui/modules/util.js                                            2026-10-09  messages, copy of static/layui/lay/modules/util.js, notice restored, pass date
+  static/player/dplayer.html                                              2026-10-06  content
+  static/player/dplayer.js                                                2024-08-08  [notice], code, received date
+  static/player/dplayer/DPlayer.min.css                                   2026-10-06  content
+  static/player/dplayer/DPlayer.min.js                                    2026-10-06  code
+  static/player/dplayer/dash.all.min.js                                   2026-10-06  messages
+  static/player/dplayer/flv.min.js                                        2026-10-06  messages
+  static/player/dplayer/hls.min.js                                        2026-10-06  messages
+  static/player/dplayer/webtorrent.min.js                                 2026-10-06  messages
+  static/player/iframe.js                                                 2026-10-08  [notice], messages
+  static/player/index.html                                                2026-10-09  content, pass date
+  static/player/iva.html                                                  2026-10-06  content
+  static/player/iva.js                                                    2026-10-06  [notice], code
+  static/player/loading.html                                              2026-10-06  content
+  static/player/parse.js                                                  2026-10-08  [notice], messages
+  static/player/prestrain.html                                            2026-10-06  content
+  static/player/videojs.html                                              2026-10-06  content
+  static/player/videojs.js                                                2024-08-08  [notice], code, received date
+  static/player/videojs/video.min.js                                      2026-10-06  messages, notice restored
+  static/ueditor/config.json                                              2026-10-09  content, pass date
+  static/ueditor/dialogs/attachment/attachment.css                        2026-10-06  css-comments
+  static/ueditor/dialogs/attachment/attachment.html                       2026-10-06  content
+  static/ueditor/dialogs/attachment/attachment.js                         2026-10-06  messages
+  static/ueditor/dialogs/background/background.css                        2026-10-09  css-comments, pass date
+  static/ueditor/dialogs/background/background.js                         2026-10-06  comments
+  static/ueditor/dialogs/emotion/emotion.html                             2026-10-06  content
+  static/ueditor/dialogs/emotion/emotion.js                               2026-10-06  comments
+  static/ueditor/dialogs/help/help.html                                   2026-10-06  content
+  static/ueditor/dialogs/help/help.js                                     2026-10-06  comments
+  static/ueditor/dialogs/image/image.css                                  2026-10-06  css-comments
+  static/ueditor/dialogs/image/image.html                                 2026-10-06  content
+  static/ueditor/dialogs/image/image.js                                   2026-10-06  messages
+  static/ueditor/dialogs/internal.js                                      2026-10-06  comments
+  static/ueditor/dialogs/link/link.html                                   2026-10-06  content
+  static/ueditor/dialogs/map/map.html                                     2026-10-06  content
+  static/ueditor/dialogs/map/show.html                                    2026-10-06  content
+  static/ueditor/dialogs/scrawl/scrawl.css                                2026-10-06  content
+  static/ueditor/dialogs/scrawl/scrawl.html                               2026-10-06  content
+  static/ueditor/dialogs/scrawl/scrawl.js                                 2026-10-06  comments
+  static/ueditor/dialogs/searchreplace/searchreplace.js                   2026-10-06  comments
+  static/ueditor/dialogs/spechars/spechars.js                             2026-10-09  comments, pass date
+  static/ueditor/dialogs/table/edittable.js                               2026-10-09  comments, pass date
+  static/ueditor/dialogs/table/edittip.html                               2026-10-09  content, pass date
+  static/ueditor/dialogs/template/config.js                               2026-10-06  code
+  static/ueditor/dialogs/template/template.js                             2026-10-09  comments, pass date
+  static/ueditor/dialogs/video/video.css                                  2026-10-09  css-comments, pass date
+  static/ueditor/dialogs/video/video.js                                   2026-10-06  messages
+  static/ueditor/lang/zh-cn/zh-cn.js                                      2026-10-06  messages
+  static/ueditor/themes/default/css/ueditor.css                           2026-10-06  css-comments
+  static/ueditor/themes/default/css/ueditor.min.css                       2026-10-09  css-comments, pass date
+  static/ueditor/themes/default/dialogbase.css                            2026-10-09  css-comments, pass date
+  static/ueditor/themes/iframe.css                                        2026-10-06  css-comments
+  static/ueditor/third-party/codemirror/codemirror.css                    2024-08-08  css-comments, as received (ApiiCMS)
+  static/ueditor/third-party/codemirror/codemirror.js                     2026-10-06  comments
+  static/ueditor/third-party/jquery-1.10.2.min.js                         2026-10-09  comments, notice restored, pass date
+  static/ueditor/third-party/webuploader/webuploader.custom.js            2026-10-06  messages
+  static/ueditor/third-party/webuploader/webuploader.custom.min.js        2026-10-09  messages, pass date
+  static/ueditor/third-party/webuploader/webuploader.flashonly.js         2026-10-06  messages
+  static/ueditor/third-party/webuploader/webuploader.flashonly.min.js     2026-10-09  messages, pass date
+  static/ueditor/third-party/webuploader/webuploader.html5only.js         2026-10-06  messages
+  static/ueditor/third-party/webuploader/webuploader.html5only.min.js     2026-10-09  messages, pass date
+  static/ueditor/third-party/webuploader/webuploader.js                   2026-10-06  messages
+  static/ueditor/third-party/webuploader/webuploader.min.js               2026-10-09  messages, pass date
+  static/ueditor/third-party/webuploader/webuploader.withoutimage.js      2026-10-06  messages
+  static/ueditor/third-party/webuploader/webuploader.withoutimage.min.js  2026-10-09  messages, pass date
+  static/ueditor/ueditor.all.min.js                                       2026-10-06  messages
+  static/ueditor/ueditor.config.js                                        2026-10-18  settings
+
+MacCMS v2023.1000.3051 release: MacCMS application files (Apache-2.0): 272 files
+---------------------------------------------------------------------------------
+  LICENSE                                               2026-10-22  content
+  README.md                                             2026-10-22  content
+  api.php                                               2026-10-14  [notice], code, notice restored
+  application/admin/common/auth.php                     2026-10-17  [notice], code
+  application/admin/controller/Actor.php                2026-10-14  [notice], code
+  application/admin/controller/Addon.php                2026-10-14  [notice], code
+  application/admin/controller/Admin.php                2026-10-15  [notice], code
+  application/admin/controller/Annex.php                2026-10-14  [notice], code
+  application/admin/controller/Art.php                  2026-10-14  [notice], code
+  application/admin/controller/Base.php                 2026-10-19  [notice], code
+  application/admin/controller/Card.php                 2026-10-14  [notice], code
+  application/admin/controller/Cash.php                 2026-10-14  [notice], code
+  application/admin/controller/Cj.php                   2026-10-14  [notice], code
+  application/admin/controller/Collect.php              2026-10-19  [notice], code
+  application/admin/controller/Comment.php              2026-10-14  [notice], code
+  application/admin/controller/Database.php             2026-10-19  [notice], code, notice restored
+  application/admin/controller/Domain.php               2026-10-13  [notice], code
+  application/admin/controller/Gbook.php                2026-10-14  [notice], code
+  application/admin/controller/Group.php                2026-10-14  [notice], code
+  application/admin/controller/Images.php               2026-10-14  [notice], code
+  application/admin/controller/Index.php                2026-10-18  [notice], code
+  application/admin/controller/Link.php                 2026-10-14  [notice], code
+  application/admin/controller/Make.php                 2026-10-14  [notice], code
+  application/admin/controller/Order.php                2026-10-14  [notice], code
+  application/admin/controller/Plog.php                 2026-10-14  [notice], code
+  application/admin/controller/Role.php                 2026-10-14  [notice], code
+  application/admin/controller/Safety.php               2026-10-13  [notice], code
+  application/admin/controller/System.php               2026-10-15  [notice], code
+  application/admin/controller/Template.php             2026-10-13  [notice], code
+  application/admin/controller/Timming.php              2026-10-07  [notice], code
+  application/admin/controller/Topic.php                2026-10-14  [notice], code
+  application/admin/controller/Type.php                 2026-10-14  [notice], code
+  application/admin/controller/Ulog.php                 2026-10-14  [notice], code
+  application/admin/controller/Update.php               2026-10-14  [notice], code
+  application/admin/controller/Upload.php               2026-10-14  [notice], code
+  application/admin/controller/Urlsend.php              2026-10-14  [notice], code
+  application/admin/controller/User.php                 2026-10-14  [notice], code
+  application/admin/controller/Visit.php                2026-10-14  [notice], code
+  application/admin/controller/Vod.php                  2026-10-19  [notice], code
+  application/admin/controller/Voddowner.php            2026-10-15  [notice], code
+  application/admin/controller/Vodplayer.php            2026-10-15  [notice], code
+  application/admin/controller/Vodserver.php            2026-10-15  [notice], code
+  application/admin/controller/Website.php              2026-10-14  [notice], code
+  application/admin/lang/zh-cn.php                      2026-10-13  [notice], code
+  application/admin/view/actor/index.html               2026-10-14  [notice], content
+  application/admin/view/actor/info.html                2026-10-13  [notice], content
+  application/admin/view/addon/add.html                 2026-10-06  [notice], content
+  application/admin/view/addon/config.html              2026-10-06  [notice], content
+  application/admin/view/addon/index.html               2026-10-14  [notice], content
+  application/admin/view/addon/info.html                2026-10-06  [notice], content
+  application/admin/view/admin/index.html               2026-10-15  [notice], content
+  application/admin/view/admin/info.html                2026-10-15  [notice], content
+  application/admin/view/annex/file.html                2026-10-14  [notice], content
+  application/admin/view/annex/index.html               2026-10-14  [notice], content
+  application/admin/view/annex/init.html                2026-10-14  [notice], content
+  application/admin/view/art/batch.html                 2026-10-14  [notice], content
+  application/admin/view/art/index.html                 2026-10-14  [notice], content
+  application/admin/view/art/info.html                  2026-10-14  [notice], content
+  application/admin/view/card/index.html                2026-10-14  [notice], content
+  application/admin/view/card/info.html                 2026-10-14  [notice], content
+  application/admin/view/cash/index.html                2026-10-14  [notice], content
+  application/admin/view/cj/col_content.html            2026-10-06  [notice], content
+  application/admin/view/cj/col_url.html                2026-10-14  [notice], content
+  application/admin/view/cj/index.html                  2026-10-14  [notice], content
+  application/admin/view/cj/info.html                   2026-10-14  [notice], content
+  application/admin/view/cj/program.html                2026-10-14  [notice], content
+  application/admin/view/cj/publish.html                2026-10-14  [notice], content
+  application/admin/view/cj/show.html                   2026-10-14  [notice], content
+  application/admin/view/cj/show_url.html               2026-10-14  [notice], content
+  application/admin/view/collect/actor.html             2026-10-14  [notice], content
+  application/admin/view/collect/art.html               2026-10-15  [notice], content
+  application/admin/view/collect/index.html             2026-10-14  [notice], content
+  application/admin/view/collect/info.html              2026-10-15  [notice], content
+  application/admin/view/collect/role.html              2026-10-14  [notice], content
+  application/admin/view/collect/timing.html            2026-10-06  [notice], content
+  application/admin/view/collect/union.html             2026-10-14  [notice], content
+  application/admin/view/collect/vod.html               2026-10-15  [notice], content
+  application/admin/view/collect/website.html           2026-10-14  [notice], content
+  application/admin/view/comment/index.html             2026-10-14  [notice], content
+  application/admin/view/comment/info.html              2026-10-14  [notice], content
+  application/admin/view/database/export.html           2026-10-13  [notice], content
+  application/admin/view/database/import.html           2026-10-13  [notice], content
+  application/admin/view/database/rep.html              2026-10-13  [notice], content
+  application/admin/view/database/sql.html              2026-10-13  [notice], content
+  application/admin/view/domain/index.html              2026-10-13  [notice], content
+  application/admin/view/extend/editor/kindeditor.html  2026-10-18  [notice], content
+  application/admin/view/extend/editor/tinymce.html     2024-08-08  content, as received (ApiiCMS)
+  application/admin/view/extend/editor/ueditor.html     2026-10-18  [notice], content
+  application/admin/view/extend/editor/umeditor.html    2026-10-18  [notice], content
+  application/admin/view/extend/email/phpmailer.html    2026-10-13  [notice], content
+  application/admin/view/extend/upload/alibaba.html     2026-10-09  [notice], content, pass date
+  application/admin/view/extend/upload/ftp.html         2026-10-14  [notice], content
+  application/admin/view/gbook/index.html               2026-10-14  [notice], content
+  application/admin/view/gbook/info.html                2026-10-14  [notice], content
+  application/admin/view/group/index.html               2026-10-13  [notice], content
+  application/admin/view/group/info.html                2026-10-14  [notice], content
+  application/admin/view/images/opt.html                2026-10-14  [notice], content
+  application/admin/view/index/index.html               2026-10-20  [notice], content
+  application/admin/view/index/login.html               2026-10-13  [notice], content
+  application/admin/view/index/quickmenu.html           2026-10-13  [notice], content
+  application/admin/view/index/welcome.html             2026-10-14  [notice], content
+  application/admin/view/link/index.html                2026-10-14  [notice], content
+  application/admin/view/link/info.html                 2026-10-14  [notice], content
+  application/admin/view/make/opt.html                  2026-10-14  [notice], content
+  application/admin/view/order/index.html               2026-10-14  [notice], content
+  application/admin/view/plog/index.html                2026-10-14  [notice], content
+  application/admin/view/public/editor.html             2026-10-14  [notice], content
+  application/admin/view/public/foot.html               2026-10-13  [notice], content
+  application/admin/view/public/head.html               2026-10-14  [notice], content
+  application/admin/view/public/jump.html               2026-10-13  [notice], content
+  application/admin/view/public/msg.html                2026-10-13  [notice], content
+  application/admin/view/public/select_copyright.html   2026-10-13  [notice], content
+  application/admin/view/public/select_hits.html        2026-10-13  [notice], content
+  application/admin/view/public/select_level.html       2026-10-13  [notice], content
+  application/admin/view/public/select_lock.html        2026-10-13  [notice], content
+  application/admin/view/public/select_state.html       2026-10-13  [notice], content
+  application/admin/view/public/select_status.html      2026-10-13  [notice], content
+  application/admin/view/public/select_type.html        2026-10-13  [notice], content
+  application/admin/view/role/index.html                2026-10-14  [notice], content
+  application/admin/view/role/info.html                 2026-10-13  [notice], content
+  application/admin/view/safety/data.html               2026-10-13  [notice], content
+  application/admin/view/safety/file.html               2026-10-13  [notice], content
+  application/admin/view/system/config.html             2026-10-14  [notice], content
+  application/admin/view/system/configapi.html          2026-10-14  [notice], content
+  application/admin/view/system/configcollect.html      2026-10-14  [notice], content
+  application/admin/view/system/configcomment.html      2026-10-14  [notice], content
+  application/admin/view/system/configemail.html        2026-10-13  [notice], content
+  application/admin/view/system/configinterface.html    2026-10-13  [notice], content
+  application/admin/view/system/configpay.html          2026-10-13  [notice], content
+  application/admin/view/system/configplay.html         2026-10-14  [notice], content
+  application/admin/view/system/configseo.html          2026-10-15  [notice], content
+  application/admin/view/system/configupload.html       2026-10-14  [notice], content
+  application/admin/view/system/configurl.html          2026-10-14  [notice], content
+  application/admin/view/system/configuser.html         2026-10-14  [notice], content
+  application/admin/view/template/ads.html              2026-10-13  [notice], content
+  application/admin/view/template/index.html            2026-10-13  [notice], content
+  application/admin/view/template/info.html             2026-10-13  [notice], content
+  application/admin/view/template/wizard.html           2026-10-13  [notice], content
+  application/admin/view/timming/index.html             2026-10-14  [notice], content
+  application/admin/view/timming/info.html              2026-10-13  [notice], content
+  application/admin/view/topic/index.html               2026-10-14  [notice], content
+  application/admin/view/topic/info.html                2026-10-13  [notice], content
+  application/admin/view/type/index.html                2026-10-14  [notice], content
+  application/admin/view/type/info.html                 2026-10-14  [notice], content
+  application/admin/view/ulog/index.html                2026-10-14  [notice], content
+  application/admin/view/upload/index.html              2026-10-14  [notice], content
+  application/admin/view/urlsend/index.html             2026-10-14  [notice], content
+  application/admin/view/user/index.html                2026-10-14  [notice], content
+  application/admin/view/user/info.html                 2026-10-14  [notice], content
+  application/admin/view/user/reward.html               2026-10-14  [notice], content
+  application/admin/view/visit/index.html               2026-10-14  [notice], content
+  application/admin/view/vod/batch.html                 2026-10-14  [notice], content
+  application/admin/view/vod/index.html                 2026-10-18  [notice], content
+  application/admin/view/vod/info.html                  2026-10-14  [notice], content
+  application/admin/view/vod/iplot.html                 2026-10-14  [notice], content
+  application/admin/view/voddowner/index.html           2026-10-15  [notice], content
+  application/admin/view/voddowner/info.html            2026-10-13  [notice], content
+  application/admin/view/vodplayer/import.html          2026-10-06  [notice], content
+  application/admin/view/vodplayer/index.html           2026-10-15  [notice], content
+  application/admin/view/vodplayer/info.html            2026-10-13  [notice], content
+  application/admin/view/vodserver/index.html           2026-10-15  [notice], content
+  application/admin/view/vodserver/info.html            2026-10-13  [notice], content
+  application/admin/view/website/batch.html             2026-10-14  [notice], content
+  application/admin/view/website/index.html             2026-10-14  [notice], content
+  application/admin/view/website/info.html              2026-10-14  [notice], content
+  application/api/controller/Base.php                   2026-10-14  [notice], code
+  application/api/controller/Provide.php                2026-10-18  [notice], code
+  application/api/controller/Receive.php                2026-10-14  [notice], code
+  application/api/controller/Timming.php                2026-10-14  [notice], code
+  application/api/controller/Wechat.php                 2026-10-14  [notice], code
+  application/common.php                                2026-10-18  [notice], code, notice restored
+  application/common/behavior/Init.php                  2026-10-15  [notice], code
+  application/common/controller/All.php                 2026-10-21  [notice], code
+  application/common/extend/editor/Ckeditor.php         2026-10-09  [notice], comments, pass date
+  application/common/extend/email/Phpmailer.php         2026-10-07  [notice], code
+  application/common/extend/pay/Alipay.php              2026-10-07  [notice], code
+  application/common/extend/pay/Codepay.php             2026-10-07  [notice], code
+  application/common/extend/pay/Weixin.php              2026-10-07  [notice], code
+  application/common/extend/pay/Zhapay.php              2026-10-07  [notice], code
+  application/common/extend/sms/Aliyun.php              2026-10-07  [notice], code
+  application/common/extend/sms/Qcloud.php              2026-10-07  [notice], code
+  application/common/extend/upload/Alibaba.php          2026-10-06  [notice], messages
+  application/common/extend/upload/Ftp.php              2026-10-09  [notice], messages, pass date
+  application/common/extend/upload/Qiniu.php            2026-10-06  [notice], messages
+  application/common/extend/upload/Uomg.php             2026-10-06  [notice], messages
+  application/common/extend/upload/Upyun.php            2026-10-06  [notice], messages
+  application/common/extend/upload/Weibo.php            2026-10-06  [notice], messages
+  application/common/extend/urlsend/Baidu.php           2026-10-06  [notice], code
+  application/common/extend/urlsend/Baidufast.php       2026-10-06  [notice], code
+  application/common/model/Actor.php                    2026-10-06  [notice], code
+  application/common/model/Admin.php                    2026-10-14  [notice], code
+  application/common/model/Annex.php                    2026-10-06  [notice], code
+  application/common/model/Art.php                      2026-10-07  [notice], code
+  application/common/model/Base.php                     2026-10-06  [notice], comments
+  application/common/model/Card.php                     2026-10-07  [notice], code
+  application/common/model/Cash.php                     2026-10-14  [notice], code
+  application/common/model/Cj.php                       2026-10-06  [notice], messages
+  application/common/model/Collect.php                  2026-10-19  [notice], code
+  application/common/model/Comment.php                  2026-10-07  [notice], code
+  application/common/model/Extend.php                   2026-10-15  [notice], code
+  application/common/model/Gbook.php                    2026-10-06  [notice], code
+  application/common/model/Group.php                    2026-10-06  [notice], messages
+  application/common/model/Image.php                    2026-10-06  [notice], comments
+  application/common/model/Link.php                     2026-10-06  [notice], code
+  application/common/model/Msg.php                      2026-10-06  [notice], messages
+  application/common/model/Order.php                    2026-10-06  [notice], code
+  application/common/model/Plog.php                     2026-10-06  [notice], messages
+  application/common/model/Role.php                     2026-10-07  [notice], code
+  application/common/model/Topic.php                    2026-10-17  [notice], code
+  application/common/model/Type.php                     2026-10-19  [notice], code
+  application/common/model/Ulog.php                     2026-10-07  [notice], code
+  application/common/model/Upload.php                   2026-10-14  [notice], code
+  application/common/model/User.php                     2026-10-14  [notice], code
+  application/common/model/Visit.php                    2026-10-06  [notice], messages
+  application/common/model/Vod.php                      2026-10-21  [notice], code
+  application/common/model/VodSearch.php                2026-10-07  [notice], code
+  application/common/model/Website.php                  2026-10-06  [notice], code
+  application/common/taglib/Maccms.php                  2026-10-15  [notice], code
+  application/common/util/Collection.php                2026-10-14  [notice], code
+  application/common/util/Database.php                  2026-10-13  [notice], code
+  application/common/util/Dir.php                       2026-10-06  [notice], code
+  application/common/util/Download.php                  2026-10-06  [notice], messages
+  application/common/util/Ftp.php                       2026-10-06  [notice], messages
+  application/common/util/PclZip.php                    2026-10-06  code, notice restored
+  application/common/util/Pinyin.php                    2026-10-06  [notice], code
+  application/common/util/Qrcode.php                    2026-10-06  messages, notice restored
+  application/common/util/SinaUpload.php                2026-10-06  [notice], messages
+  application/common/util/WechatPublic.php              2026-10-06  [notice], code
+  application/common/validate/User.php                  2026-10-06  [notice], comments
+  application/common/validate/Vod.php                   2026-10-06  [notice], code
+  application/config.php                                2026-10-14  [notice], code
+  application/database.php                              2026-10-22  config, notice restored
+  application/extra/bind.php                            2026-10-22  config
+  application/extra/maccms.php                          2026-10-22  config
+  application/extra/quickmenu.php                       2024-08-08  config, as received (ApiiCMS)
+  application/extra/timming.php                         2024-08-09  config
+  application/extra/version.php                         2026-10-20  [notice], messages
+  application/extra/voddowner.php                       2024-08-08  config
+  application/extra/vodplayer.php                       2024-08-08  config
+  application/extra/vodserver.php                       2024-08-08  config
+  application/index/controller/Ajax.php                 2026-10-18  [notice], code
+  application/index/controller/Base.php                 2026-10-18  [notice], code
+  application/index/controller/Comment.php              2026-10-07  [notice], code
+  application/index/controller/Gbook.php                2026-10-07  [notice], code
+  application/index/controller/Index.php                2026-10-09  [notice], code
+  application/index/controller/Label.php                2026-10-13  [notice], code
+  application/index/controller/Map.php                  2026-10-07  [notice], code
+  application/index/controller/MyError.php              2026-10-09  [notice], code
+  application/index/controller/Payment.php              2026-10-09  [notice], code
+  application/index/controller/Rss.php                  2026-10-13  [notice], code
+  application/index/controller/User.php                 2026-10-14  [notice], code
+  application/index/controller/Verify.php               2026-10-07  [notice], code
+  application/index/controller/Vod.php                  2026-10-19  [notice], code
+  application/index/event/LoginEvent.php                2026-10-06  [notice], code
+  application/index/view/index/index.html               2026-10-09  [notice], content, pass date
+  application/index/view/public/jump.html               2026-10-09  [notice], content, pass date
+  application/index/view/public/msg.html                2026-10-09  [notice], content, pass date
+  application/install/controller/Index.php              2026-10-19  [notice], code
+  application/install/lang/zh-cn.php                    2026-10-19  [notice], code
+  application/install/sql/install.sql                   2026-10-22  content
+  application/install/view/index/foot.html              2026-10-20  [notice], content
+  application/install/view/index/head.html              2026-10-09  [notice], content
+  application/install/view/index/index.html             2026-10-09  [notice], content, pass date
+  application/install/view/index/step2.html             2026-10-20  [notice], content
+  application/install/view/index/step3.html             2026-10-15  [notice], content
+  application/lang/zh-cn.php                            2026-10-20  [notice], code
+  application/lang/zh-tw.php                            2026-10-20  [notice], code
+  application/route.php                                 2026-10-14  config
+  application/tags.php                                  2026-10-14  [notice], code
+  crossdomain.xml                                       2026-10-14  content
+  index.php                                             2026-10-15  [notice], code, notice restored
+  install.php                                           2026-10-14  [notice], code, notice restored
+
+TinyMCE 5.4.0 (static/editor/tinymce/, LGPL-2.1; original: npm tinymce@5.4.0): 11 files
+-----------------------------------------------------------------------------------------
+  static/editor/tinymce/jquery.tinymce.min.js              2026-10-06  comments, notice restored
+  static/editor/tinymce/langs/vi-vn.js                     2026-10-06  messages, received copy
+  static/editor/tinymce/langs/zh_CN.js                     2026-10-06  code, received copy
+  static/editor/tinymce/plugins/colorpicker/plugin.min.js  2026-10-06  messages, notice restored
+  static/editor/tinymce/plugins/contextmenu/plugin.min.js  2026-10-06  messages, notice restored
+  static/editor/tinymce/plugins/image/plugin.min.js        2026-10-06  messages, notice restored
+  static/editor/tinymce/plugins/imagetools/plugin.min.js   2026-10-06  messages, notice restored
+  static/editor/tinymce/plugins/media/plugin.min.js        2026-10-06  messages, notice restored
+  static/editor/tinymce/plugins/textcolor/plugin.min.js    2026-10-06  messages, notice restored
+  static/editor/tinymce/themes/silver/theme.min.js         2026-10-06  messages, notice restored
+  static/editor/tinymce/tinymce.min.js                     2026-10-06  messages, notice restored
+
+KindEditor 4.1.12 (static/editor/kindeditor/, LGPL-2.1; original: github.com/kindsoft/kindeditor tag v4.1.12): 19 files
+------------------------------------------------------------------------------------------------------------------------
+  static/editor/kindeditor/kindeditor-all-min.js               2026-10-06  code, received copy
+  static/editor/kindeditor/lang/zh-CN.js                       2026-10-06  messages, notice restored
+  static/editor/kindeditor/plugins/autoheight/autoheight.js    2026-10-06  comments, notice restored
+  static/editor/kindeditor/plugins/baidumap/index.html         2026-10-06  content
+  static/editor/kindeditor/plugins/filemanager/filemanager.js  2026-10-09  comments, notice restored, pass date
+  static/editor/kindeditor/plugins/fixtoolbar/fixtoolbar.js    2026-10-09  formatting, pass date
+  static/editor/kindeditor/plugins/flash/flash.js              2026-10-09  comments, notice restored, pass date
+  static/editor/kindeditor/plugins/image/image.js              2026-10-06  comments, notice restored
+  static/editor/kindeditor/plugins/insertfile/insertfile.js    2026-10-09  formatting, notice restored, pass date
+  static/editor/kindeditor/plugins/link/link.js                2026-10-09  formatting, notice restored, pass date
+  static/editor/kindeditor/plugins/map/map.js                  2026-10-06  comments, notice restored
+  static/editor/kindeditor/plugins/media/media.js              2026-10-09  comments, notice restored, pass date
+  static/editor/kindeditor/plugins/multiimage/multiimage.js    2026-10-06  messages, notice restored
+  static/editor/kindeditor/plugins/quickformat/quickformat.js  2026-10-09  comments, notice restored, pass date
+  static/editor/kindeditor/plugins/table/table.js              2026-10-06  comments, notice restored
+  static/editor/kindeditor/plugins/template/html/1.html        2026-10-09  content, pass date
+  static/editor/kindeditor/plugins/template/html/2.html        2026-10-09  content, pass date
+  static/editor/kindeditor/plugins/template/html/3.html        2026-10-09  content, pass date
+  static/editor/kindeditor/themes/default/default.css          2026-10-06  css-comments
+
+CKEditor 4.11.1 (static/editor/ckeditor/, GPL-2.0+ / LGPL-2.1+ / MPL-1.1; original: npm ckeditor@4.11.1): 18 files
+--------------------------------------------------------------------------------------------------------------------
+  (JavCMS ships a custom build from the CKEditor online builder (build-config.js); its core, language and skin files differ from the npm build by construction, so they are compared with the custom build as JavCMS received it (received copy))
+  static/editor/ckeditor/build-config.js                                   2026-10-06  code, received copy
+  static/editor/ckeditor/ckeditor.js                                       2026-10-09  code, received copy, pass date
+  static/editor/ckeditor/config.js                                         2026-10-09  comments, received copy, notice restored, pass date
+  static/editor/ckeditor/contents.css                                      2026-10-06  css-comments, notice restored
+  static/editor/ckeditor/lang/en.js                                        2026-10-06  code
+  static/editor/ckeditor/lang/zh-cn.js                                     2026-10-06  messages, received copy
+  static/editor/ckeditor/lang/zh.js                                        2026-10-06  code
+  static/editor/ckeditor/plugins/a11yhelp/dialogs/lang/zh-cn.js            2026-10-06  messages
+  static/editor/ckeditor/plugins/a11yhelp/dialogs/lang/zh.js               2026-10-06  messages
+  static/editor/ckeditor/plugins/colordialog/dialogs/colordialog.css       2026-10-06  css-comments, notice restored
+  static/editor/ckeditor/plugins/copyformatting/styles/copyformatting.css  2026-10-06  css-comments, notice restored
+  static/editor/ckeditor/plugins/preview/preview.html                      2026-10-06  content
+  static/editor/ckeditor/plugins/specialchar/dialogs/lang/zh-cn.js         2026-10-06  messages
+  static/editor/ckeditor/plugins/specialchar/dialogs/lang/zh.js            2026-10-06  messages
+  static/editor/ckeditor/plugins/tableselection/styles/tableselection.css  2026-10-06  css-comments
+  static/editor/ckeditor/plugins/templates/dialogs/templates.css           2026-10-06  css-comments, notice restored
+  static/editor/ckeditor/plugins/wsc/dialogs/tmpFrameset.html              2026-10-06  content
+  static/editor/ckeditor/styles.js                                         2026-10-06  comments
+
+UMeditor 1.2.2 (static/editor/umeditor/, MIT; MathQuill v0.xa: LGPL, no version stated; original: github.com/fex-team/umeditor release v1.2.2 (utf8-php)): 18 files
+------------------------------------------------------------------------------------------------------------------------
+  static/editor/umeditor/dialogs/emotion/emotion.js           2026-10-06  code
+  static/editor/umeditor/dialogs/formula/formula.html         2026-10-06  content
+  static/editor/umeditor/dialogs/formula/formula.js           2026-10-06  comments
+  static/editor/umeditor/dialogs/image/image.css              2026-10-06  css-comments
+  static/editor/umeditor/dialogs/image/image.js               2026-10-06  messages
+  static/editor/umeditor/dialogs/link/link.js                 2026-10-09  comments, pass date
+  static/editor/umeditor/dialogs/map/map.html                 2026-10-06  content
+  static/editor/umeditor/dialogs/map/map.js                   2026-10-06  comments
+  static/editor/umeditor/dialogs/video/video.css              2026-10-09  css-comments, pass date
+  static/editor/umeditor/dialogs/video/video.js               2026-10-06  comments
+  static/editor/umeditor/lang/en/en.js                        2026-10-06  messages
+  static/editor/umeditor/lang/zh-cn/zh-cn.js                  2026-10-06  messages
+  static/editor/umeditor/themes/default/css/umeditor.css      2026-10-06  css-comments
+  static/editor/umeditor/themes/default/css/umeditor.min.css  2026-10-09  css-comments, received copy, pass date
+  static/editor/umeditor/third-party/jquery.min.js            2026-10-09  comments, notice restored, pass date
+  static/editor/umeditor/third-party/mathquill/mathquill.js   2026-10-06  comments, notice restored
+  static/editor/umeditor/umeditor.config.js                   2026-10-18  settings, received copy
+  static/editor/umeditor/umeditor.min.js                      2026-10-06  code, received copy
+
+CodeMirror 5.42.2 (static/codemirror/, MIT; original: npm codemirror@5.42.2): 172 files
+----------------------------------------------------------------------------------------
+  static/codemirror/addon/comment/comment.js                   2026-10-06  comments
+  static/codemirror/addon/comment/continuecomment.js           2026-10-06  comments
+  static/codemirror/addon/dialog/dialog.js                     2026-10-06  comments
+  static/codemirror/addon/edit/closetag.js                     2026-10-06  comments
+  static/codemirror/addon/edit/continuelist.js                 2026-10-06  comments
+  static/codemirror/addon/edit/matchbrackets.js                2026-10-06  comments
+  static/codemirror/addon/fold/brace-fold.js                   2026-10-06  comments
+  static/codemirror/addon/fold/foldcode.js                     2026-10-06  comments
+  static/codemirror/addon/fold/indent-fold.js                  2026-10-06  comments
+  static/codemirror/addon/hint/javascript-hint.js              2026-10-06  comments
+  static/codemirror/addon/hint/show-hint.js                    2026-10-06  code
+  static/codemirror/addon/hint/sql-hint.js                     2026-10-06  comments
+  static/codemirror/addon/hint/xml-hint.js                     2026-10-06  comments
+  static/codemirror/addon/lint/json-lint.js                    2026-10-06  comments
+  static/codemirror/addon/lint/lint.js                         2024-08-08  formatting, received date
+  static/codemirror/addon/lint/yaml-lint.js                    2026-10-06  comments
+  static/codemirror/addon/merge/merge.js                       2026-10-06  comments
+  static/codemirror/addon/mode/multiplex.js                    2024-08-08  formatting, received date
+  static/codemirror/addon/runmode/runmode.js                   2026-10-06  comments
+  static/codemirror/addon/search/match-highlighter.js          2026-10-06  comments
+  static/codemirror/addon/search/search.js                     2026-10-06  comments
+  static/codemirror/addon/search/searchcursor.js               2026-10-06  comments
+  static/codemirror/addon/selection/mark-selection.js          2026-10-06  comments
+  static/codemirror/addon/tern/tern.js                         2026-10-06  comments
+  static/codemirror/addon/wrap/hardwrap.js                     2026-10-06  comments
+  static/codemirror/bin/source-highlight                       2026-10-06  content
+  static/codemirror/keymap/emacs.js                            2026-10-06  messages
+  static/codemirror/keymap/sublime.js                          2026-10-06  comments
+  static/codemirror/keymap/vim.js                              2026-10-06  messages
+  static/codemirror/lib/codemirror.css                         2026-10-06  css-comments
+  static/codemirror/lib/codemirror.js                          2026-10-06  comments
+  static/codemirror/mode/asn.1/asn.1.js                        2026-10-06  comments
+  static/codemirror/mode/asterisk/asterisk.js                  2024-08-08  formatting, notice restored, received date
+  static/codemirror/mode/brainfuck/brainfuck.js                2024-08-08  formatting, received date
+  static/codemirror/mode/clike/clike.js                        2026-10-06  comments
+  static/codemirror/mode/clojure/clojure.js                    2026-10-06  comments
+  static/codemirror/mode/cmake/cmake.js                        2026-10-06  comments
+  static/codemirror/mode/cobol/cobol.js                        2024-08-08  comments, received date
+  static/codemirror/mode/coffeescript/coffeescript.js          2026-10-06  comments
+  static/codemirror/mode/crystal/crystal.js                    2026-10-06  comments
+  static/codemirror/mode/css/css.js                            2024-08-08  comments, received date
+  static/codemirror/mode/dart/dart.js                          2026-10-06  comments
+  static/codemirror/mode/django/django.js                      2026-10-06  comments
+  static/codemirror/mode/dockerfile/dockerfile.js              2026-10-06  comments
+  static/codemirror/mode/dtd/dtd.js                            2026-10-06  comments
+  static/codemirror/mode/dylan/dylan.js                        2026-10-06  comments
+  static/codemirror/mode/ecl/ecl.js                            2026-10-06  comments
+  static/codemirror/mode/erlang/erlang.js                      2026-10-06  comments
+  static/codemirror/mode/factor/factor.js                      2026-10-06  comments
+  static/codemirror/mode/forth/forth.js                        2026-10-06  comments
+  static/codemirror/mode/gas/gas.js                            2026-10-06  comments
+  static/codemirror/mode/gfm/gfm.js                            2026-10-06  comments
+  static/codemirror/mode/gherkin/gherkin.js                    2024-08-08  formatting, received date
+  static/codemirror/mode/groovy/groovy.js                      2024-08-08  comments, received date
+  static/codemirror/mode/haml/haml.js                          2026-10-06  comments
+  static/codemirror/mode/haxe/haxe.js                          2026-10-06  comments
+  static/codemirror/mode/idl/idl.js                            2026-10-06  comments
+  static/codemirror/mode/javascript/javascript.js              2026-10-06  comments
+  static/codemirror/mode/jinja2/jinja2.js                      2024-08-08  formatting, received date
+  static/codemirror/mode/jsx/jsx.js                            2026-10-06  comments
+  static/codemirror/mode/julia/julia.js                        2026-10-06  comments
+  static/codemirror/mode/livescript/livescript.js              2024-08-08  comments, received date
+  static/codemirror/mode/lua/lua.js                            2024-08-08  comments, received date
+  static/codemirror/mode/markdown/markdown.js                  2026-10-06  comments
+  static/codemirror/mode/mathematica/mathematica.js            2026-10-06  comments
+  static/codemirror/mode/mbox/mbox.js                          2026-10-06  comments
+  static/codemirror/mode/mirc/mirc.js                          2024-08-08  comments, received date
+  static/codemirror/mode/modelica/modelica.js                  2026-10-06  comments
+  static/codemirror/mode/mscgen/mscgen.js                      2026-10-06  comments
+  static/codemirror/mode/mumps/mumps.js                        2026-10-06  comments
+  static/codemirror/mode/nginx/nginx.js                        2024-08-08  comments, received date
+  static/codemirror/mode/ntriples/ntriples.js                  2026-10-06  comments
+  static/codemirror/mode/octave/octave.js                      2026-10-06  comments
+  static/codemirror/mode/oz/oz.js                              2026-10-06  comments
+  static/codemirror/mode/pegjs/pegjs.js                        2024-08-08  formatting, received date
+  static/codemirror/mode/perl/perl.js                          2026-10-06  comments
+  static/codemirror/mode/php/php.js                            2026-10-06  comments
+  static/codemirror/mode/pig/pig.js                            2026-10-06  comments, notice restored
+  static/codemirror/mode/powershell/powershell.js              2024-08-08  formatting, received date
+  static/codemirror/mode/properties/properties.js              2026-10-06  comments
+  static/codemirror/mode/protobuf/protobuf.js                  2026-10-06  comments
+  static/codemirror/mode/pug/pug.js                            2024-08-08  formatting, received date
+  static/codemirror/mode/puppet/puppet.js                      2026-10-06  comments
+  static/codemirror/mode/python/python.js                      2026-10-06  code
+  static/codemirror/mode/q/q.js                                2024-08-08  formatting, received date
+  static/codemirror/mode/r/r.js                                2024-08-08  comments, received date
+  static/codemirror/mode/rpm/rpm.js                            2024-08-08  comments, received date
+  static/codemirror/mode/rst/rst.js                            2024-08-08  formatting, received date
+  static/codemirror/mode/ruby/ruby.js                          2026-10-06  comments
+  static/codemirror/mode/sas/sas.js                            2026-10-06  comments
+  static/codemirror/mode/sass/sass.js                          2024-08-08  comments, received date
+  static/codemirror/mode/scheme/scheme.js                      2026-10-06  comments, notice restored
+  static/codemirror/mode/shell/shell.js                        2024-08-08  comments, received date
+  static/codemirror/mode/sieve/sieve.js                        2026-10-06  comments
+  static/codemirror/mode/slim/slim.js                          2026-10-06  comments
+  static/codemirror/mode/smarty/smarty.js                      2024-08-08  formatting, received date
+  static/codemirror/mode/soy/soy.js                            2024-08-08  comments, received date
+  static/codemirror/mode/spreadsheet/spreadsheet.js            2026-10-06  comments
+  static/codemirror/mode/sql/sql.js                            2026-10-06  comments
+  static/codemirror/mode/stex/stex.js                          2026-10-06  comments, notice restored
+  static/codemirror/mode/stylus/stylus.js                      2024-08-08  comments, received date
+  static/codemirror/mode/swift/swift.js                        2024-08-08  comments, received date
+  static/codemirror/mode/tcl/tcl.js                            2024-08-08  comments, received date
+  static/codemirror/mode/tiddlywiki/tiddlywiki.js              2026-10-06  comments, notice restored
+  static/codemirror/mode/tiki/tiki.css                         2024-08-08  css-comments, received date
+  static/codemirror/mode/tiki/tiki.js                          2026-10-06  comments
+  static/codemirror/mode/toml/toml.js                          2024-08-08  formatting, received date
+  static/codemirror/mode/ttcn-cfg/ttcn-cfg.js                  2026-10-06  comments
+  static/codemirror/mode/ttcn/ttcn.js                          2026-10-06  comments
+  static/codemirror/mode/twig/twig.js                          2024-08-08  formatting, received date
+  static/codemirror/mode/vb/vb.js                              2026-10-06  comments
+  static/codemirror/mode/vbscript/vbscript.js                  2026-10-06  comments
+  static/codemirror/mode/velocity/velocity.js                  2026-10-06  comments
+  static/codemirror/mode/verilog/verilog.js                    2026-10-06  comments
+  static/codemirror/mode/webidl/webidl.js                      2024-08-08  comments, received date
+  static/codemirror/mode/xquery/xquery.js                      2026-10-06  comments
+  static/codemirror/mode/yaml-frontmatter/yaml-frontmatter.js  2026-10-06  comments
+  static/codemirror/mode/yaml/yaml.js                          2024-08-08  comments, received date
+  static/codemirror/package.json                               2024-08-08  content, received date
+  static/codemirror/rollup.config.js                           2024-08-08  formatting, received date
+  static/codemirror/src/display/Display.js                     2026-10-06  comments
+  static/codemirror/src/display/gutters.js                     2026-10-06  comments
+  static/codemirror/src/display/operations.js                  2026-10-06  comments
+  static/codemirror/src/display/scrolling.js                   2026-10-06  comments
+  static/codemirror/src/display/update_display.js              2026-10-06  comments
+  static/codemirror/src/display/update_lines.js                2026-10-06  comments
+  static/codemirror/src/display/view_tracking.js               2026-10-06  comments
+  static/codemirror/src/edit/CodeMirror.js                     2026-10-06  comments
+  static/codemirror/src/edit/commands.js                       2026-10-06  comments
+  static/codemirror/src/edit/deleteNearSelection.js            2026-10-06  comments
+  static/codemirror/src/edit/drop_events.js                    2026-10-06  comments
+  static/codemirror/src/edit/fromTextArea.js                   2026-10-06  comments
+  static/codemirror/src/edit/global_events.js                  2026-10-06  comments
+  static/codemirror/src/edit/key_events.js                     2024-08-08  comments, received date
+  static/codemirror/src/edit/main.js                           2026-10-06  comments
+  static/codemirror/src/edit/methods.js                        2026-10-06  comments
+  static/codemirror/src/edit/mouse_events.js                   2026-10-06  comments
+  static/codemirror/src/edit/options.js                        2026-10-06  comments
+  static/codemirror/src/input/ContentEditableInput.js          2026-10-06  comments
+  static/codemirror/src/input/TextareaInput.js                 2026-10-06  comments
+  static/codemirror/src/input/indent.js                        2026-10-06  comments
+  static/codemirror/src/input/keymap.js                        2026-10-06  comments
+  static/codemirror/src/measurement/position_measurement.js    2026-10-06  comments
+  static/codemirror/src/model/Doc.js                           2026-10-06  comments
+  static/codemirror/src/model/change_measurement.js            2026-10-06  comments
+  static/codemirror/src/model/changes.js                       2026-10-06  comments
+  static/codemirror/src/model/chunk.js                         2026-10-06  comments
+  static/codemirror/src/model/document_data.js                 2026-10-06  comments
+  static/codemirror/src/model/history.js                       2026-10-06  comments
+  static/codemirror/src/model/mark_text.js                     2026-10-06  comments
+  static/codemirror/src/model/selection.js                     2026-10-06  comments
+  static/codemirror/src/model/selection_updates.js             2026-10-06  comments
+  static/codemirror/src/util/bidi.js                           2026-10-06  formatting
+  static/codemirror/src/util/browser.js                        2026-10-06  comments
+  static/codemirror/src/util/event.js                          2026-10-06  comments
+  static/codemirror/src/util/feature_detection.js              2026-10-06  comments
+  static/codemirror/src/util/operation_group.js                2026-10-06  comments
+  static/codemirror/theme/blackboard.css                       2024-08-08  css-comments, received date
+  static/codemirror/theme/darcula.css                          2024-08-08  css-comments, received date
+  static/codemirror/theme/duotone-dark.css                     2026-10-06  css-comments, notice restored
+  static/codemirror/theme/duotone-light.css                    2026-10-06  css-comments, notice restored
+  static/codemirror/theme/icecoder.css                         2024-08-08  css-comments, received date
+  static/codemirror/theme/idea.css                             2024-08-08  css-comments, received date
+  static/codemirror/theme/lesser-dark.css                      2024-08-08  css-comments, received date
+  static/codemirror/theme/mbo.css                              2024-08-08  css-comments, received date
+  static/codemirror/theme/mdn-like.css                         2024-08-08  css-comments, received date
+  static/codemirror/theme/midnight.css                         2024-08-08  css-comments, received date
+  static/codemirror/theme/monokai.css                          2024-08-08  css-comments, received date
+  static/codemirror/theme/solarized.css                        2026-10-06  css-comments
+  static/codemirror/theme/twilight.css                         2024-08-08  css-comments, received date
+  static/codemirror/theme/vibrant-ink.css                      2026-10-06  css-comments
+  static/codemirror/theme/zenburn.css                          2024-08-08  css-comments, received date
+
+Layui 2.9.13 (static/vendor/layui/, MIT; original: npm layui@2.9.13): 2 files
+--------------------------------------------------------------------------------
+  static/vendor/layui/css/layui.css  2026-10-06  content
+  static/vendor/layui/layui.js       2026-10-06  code
+
+Layui 2.7.6 (static/layui/, MIT; original: npm layui@2.7.6): 3 files
+-----------------------------------------------------------------------
+  (only the Layui 2.7.6 files (layui.js, css/, font/); the rest of static/layui is Layui 2.2.5 of the MacCMS base release)
+  static/layui/css/layui.css                            2026-10-09  content, pass date
+  static/layui/css/modules/laydate/default/laydate.css  2026-10-06  content
+  static/layui/layui.js                                 2026-10-09  messages, notice restored
+
+MacCMS v2023.1000.3051 release and bundled libraries: files replaced or left out for licence reasons (files whose author or licence is not confirmed as free for every use; replace_assets.py, remove_library_art.py): 48 files
+------------------------------------------------------------------------------------------------------------------------
+  static/editor/umeditor/dialogs/emotion/images/bface.gif            2026-10-18  not shipped: Baidu Hi emoticon preview sprite (Tuzki and other characters)
+  static/editor/umeditor/dialogs/emotion/images/cface.gif            2026-10-18  not shipped: Baidu Hi emoticon preview sprite (Tuzki and other characters)
+  static/editor/umeditor/dialogs/emotion/images/fface.gif            2026-10-18  not shipped: Baidu Hi emoticon preview sprite (Tuzki and other characters)
+  static/editor/umeditor/dialogs/emotion/images/jxface2.gif          2026-10-18  not shipped: Baidu Hi emoticon preview sprite (Tuzki and other characters)
+  static/editor/umeditor/dialogs/emotion/images/tface.gif            2026-10-18  not shipped: Baidu Hi emoticon preview sprite (Tuzki and other characters)
+  static/editor/umeditor/dialogs/emotion/images/wface.gif            2026-10-18  not shipped: Baidu Hi emoticon preview sprite (Tuzki and other characters)
+  static/editor/umeditor/dialogs/emotion/images/yface.gif            2026-10-18  not shipped: Baidu Hi emoticon preview sprite (Tuzki and other characters)
+  static/js/jquery.lang.js                                           2026-10-18  not shipped: jquery.lang (zh_tran) script: no author and no licence stated, unused
+  static/player/flv.js                                               2026-10-18  not shipped: Flash-only player stub that loads play.swf (no shipped player list uses it)
+  static/player/play.swf                                             2026-10-18  not shipped: Vcastr 3.0 Flash player with TweenLite / TweenFilterLite and a pixel font of unstated licence
+  static/ueditor/dialogs/attachment/fileTypeImages/icon_chm.gif      2026-10-18  replaced: copy of an application icon (Word, Excel, PowerPoint, Photoshop, Acrobat, WinRAR ...) -> a JavCMS-made file sign
+  static/ueditor/dialogs/attachment/fileTypeImages/icon_default.png  2026-10-18  replaced: copy of an application icon (Word, Excel, PowerPoint, Photoshop, Acrobat, WinRAR ...) -> a JavCMS-made file sign
+  static/ueditor/dialogs/attachment/fileTypeImages/icon_doc.gif      2026-10-18  replaced: copy of an application icon (Word, Excel, PowerPoint, Photoshop, Acrobat, WinRAR ...) -> a JavCMS-made file sign
+  static/ueditor/dialogs/attachment/fileTypeImages/icon_exe.gif      2026-10-18  replaced: copy of an application icon (Word, Excel, PowerPoint, Photoshop, Acrobat, WinRAR ...) -> a JavCMS-made file sign
+  static/ueditor/dialogs/attachment/fileTypeImages/icon_jpg.gif      2026-10-18  replaced: copy of an application icon (Word, Excel, PowerPoint, Photoshop, Acrobat, WinRAR ...) -> a JavCMS-made file sign
+  static/ueditor/dialogs/attachment/fileTypeImages/icon_mp3.gif      2026-10-18  replaced: copy of an application icon (Word, Excel, PowerPoint, Photoshop, Acrobat, WinRAR ...) -> a JavCMS-made file sign
+  static/ueditor/dialogs/attachment/fileTypeImages/icon_mv.gif       2026-10-18  replaced: copy of an application icon (Word, Excel, PowerPoint, Photoshop, Acrobat, WinRAR ...) -> a JavCMS-made file sign
+  static/ueditor/dialogs/attachment/fileTypeImages/icon_pdf.gif      2026-10-18  replaced: copy of an application icon (Word, Excel, PowerPoint, Photoshop, Acrobat, WinRAR ...) -> a JavCMS-made file sign
+  static/ueditor/dialogs/attachment/fileTypeImages/icon_ppt.gif      2026-10-18  replaced: copy of an application icon (Word, Excel, PowerPoint, Photoshop, Acrobat, WinRAR ...) -> a JavCMS-made file sign
+  static/ueditor/dialogs/attachment/fileTypeImages/icon_psd.gif      2026-10-18  replaced: copy of an application icon (Word, Excel, PowerPoint, Photoshop, Acrobat, WinRAR ...) -> a JavCMS-made file sign
+  static/ueditor/dialogs/attachment/fileTypeImages/icon_rar.gif      2026-10-18  replaced: copy of an application icon (Word, Excel, PowerPoint, Photoshop, Acrobat, WinRAR ...) -> a JavCMS-made file sign
+  static/ueditor/dialogs/attachment/fileTypeImages/icon_txt.gif      2026-10-18  replaced: copy of an application icon (Word, Excel, PowerPoint, Photoshop, Acrobat, WinRAR ...) -> a JavCMS-made file sign
+  static/ueditor/dialogs/attachment/fileTypeImages/icon_xls.gif      2026-10-18  replaced: copy of an application icon (Word, Excel, PowerPoint, Photoshop, Acrobat, WinRAR ...) -> a JavCMS-made file sign
+  static/ueditor/dialogs/emotion/images/bface.gif                    2026-10-18  not shipped: Baidu Hi emoticon preview sprite (Tuzki and other characters)
+  static/ueditor/dialogs/emotion/images/cface.gif                    2026-10-18  not shipped: Baidu Hi emoticon preview sprite (Tuzki and other characters)
+  static/ueditor/dialogs/emotion/images/fface.gif                    2026-10-18  not shipped: Baidu Hi emoticon preview sprite (Tuzki and other characters)
+  static/ueditor/dialogs/emotion/images/jxface2.gif                  2026-10-18  not shipped: Baidu Hi emoticon preview sprite (Tuzki and other characters)
+  static/ueditor/dialogs/emotion/images/tface.gif                    2026-10-18  not shipped: Baidu Hi emoticon preview sprite (Tuzki and other characters)
+  static/ueditor/dialogs/emotion/images/wface.gif                    2026-10-18  not shipped: Baidu Hi emoticon preview sprite (Tuzki and other characters)
+  static/ueditor/dialogs/emotion/images/yface.gif                    2026-10-18  not shipped: Baidu Hi emoticon preview sprite (Tuzki and other characters)
+  vendor/topthink/think-captcha/assets/bgs/1.jpg                     2026-10-18  not shipped: unused background photo of unknown origin
+  vendor/topthink/think-captcha/assets/bgs/2.jpg                     2026-10-18  not shipped: unused background photo of unknown origin
+  vendor/topthink/think-captcha/assets/bgs/3.jpg                     2026-10-18  not shipped: unused background photo of unknown origin
+  vendor/topthink/think-captcha/assets/bgs/4.jpg                     2026-10-18  not shipped: unused background photo of unknown origin
+  vendor/topthink/think-captcha/assets/bgs/5.jpg                     2026-10-18  not shipped: unused background photo of unknown origin
+  vendor/topthink/think-captcha/assets/bgs/6.jpg                     2026-10-18  not shipped: unused background photo of unknown origin
+  vendor/topthink/think-captcha/assets/bgs/7.jpg                     2026-10-18  not shipped: unused background photo of unknown origin
+  vendor/topthink/think-captcha/assets/bgs/8.jpg                     2026-10-18  not shipped: unused background photo of unknown origin
+  vendor/topthink/think-captcha/assets/ttfs/1.ttf                    2026-10-18  not shipped: font "3x5" by Keith Bates, k-type.com (free for personal use only)
+  vendor/topthink/think-captcha/assets/ttfs/2.ttf                    2026-10-18  not shipped: font "13_Misa" by Zane Townsend (licence not stated)
+  vendor/topthink/think-captcha/assets/ttfs/3.ttf                    2026-10-18  not shipped: font "AddCityboy" by Atushi Aoki ("All rights reserved")
+  vendor/topthink/think-captcha/assets/ttfs/4.ttf                    2026-10-18  not shipped: font "Airbus Special" (licence not stated)
+  vendor/topthink/think-captcha/assets/ttfs/5.ttf                    2026-10-18  not shipped: font "Yahoo" by Daniel Gauthier (licence not stated)
+  vendor/topthink/think-captcha/assets/ttfs/6.ttf                    2026-10-18  not shipped: font "Stencil Four" by Harold Lohner (free for personal use)
+  vendor/topthink/think-captcha/assets/ttfs/DroidSansMono.ttf        2026-10-18  added: Droid Sans Mono (Google, Apache License 2.0), a copy of static/font/test.ttf
+  static/editor/kindeditor/plugins/emoticons/images/ (136 files)     2026-10-18  not shipped: the classic QQ faces of Tencent (with the QQ penguin), KindEditor emoticons plugin
+  static/images/face/ (16 files)                                     2026-10-18  not shipped: Baidu Tieba faces (mac_em_replace), unused
+  static/layui/images/face/ (72 files)                               2026-10-18  not shipped: the Sina Weibo emoticon set (faces of Layui layedit), unused
+
+Files in these library folders that the original release and the received copy do not contain: 2
+------------------------------------------------------------
+  static/editor/ckeditor/lang/en-us.js  2026-10-06  added (CKEditor 4.11.1 folder; not compared)
+  static/codemirror/leetcode.css  2024-08-08  added (CodeMirror 5.42.2 folder; not compared)
+
+In all: 805 changed files.
+Replaced or left out for licence reasons: 269 files of the MacCMS release and the bundled libraries (listed above).

@@ -1,0 +1,30 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}
+$ncSortKeys = ['time' => 'ui.latest', 'hits' => 'ui.popular', 'score' => 'top_rated', 'up' => 'most_liked'];
+$ncSortIcons = ['time' => 'clock', 'hits' => 'flame', 'score' => 'star', 'up' => 'thumbs-up'];
+$ncSortPages = ['time' => 'new', 'hits' => 'hot', 'score' => 'score', 'up' => 'up'];
+$ncSortMode = isset($ncSortMode) ? (string)$ncSortMode : 'label';
+$ncSortActive = (isset($ncSortActive) && isset($ncSortKeys[$ncSortActive])) ? $ncSortActive : 'time';
+$ncSortParam = (isset($param) && is_array($param)) ? $param : [];
+$ncSortItems = [];
+foreach ($ncSortKeys as $ncSortBy => $ncSortKey) {
+    if ($ncSortMode === 'type' && isset($obj['type_id'])) {
+        $ncSortHref = mac_url_type($obj, ['by' => $ncSortBy], 'show');
+    } elseif ($ncSortMode === 'search') {
+        $ncSortQuery = ['by' => $ncSortBy];
+        foreach (['wd', 'area', 'lang', 'year', 'level', 'letter', 'state', 'tag', 'class', 'actor', 'director', 'order'] as $ncSortField) {
+            if (isset($ncSortParam[$ncSortField]) && $ncSortParam[$ncSortField] !== '') { $ncSortQuery[$ncSortField] = $ncSortParam[$ncSortField]; }
+        }
+        $ncSortHref = mac_url_search($ncSortQuery, 'vod');
+    } else {
+        $ncSortHref = mac_url('label/' . $ncSortPages[$ncSortBy]);
+    }
+    $ncSortItems[] = ['href' => $ncSortHref, 'text' => \app\common\util\TemplateText::get($ncSortKey), 'icon' => $ncSortIcons[$ncSortBy], 'on' => $ncSortBy === $ncSortActive ? 1 : 0];
+}
+{/php}<nav class="nc-sort" aria-label="{:\\app\\common\\util\\TemplateText::get('sort_by')}"><div class="nc-sort-in">{volist name="ncSortItems" id="ncSi"}<a class="nc-pill nc-sort-a{if condition="$ncSi.on eq 1"} is-on{/if}" href="{$ncSi.href|htmlspecialchars=ENT_QUOTES}"{if condition="$ncSi.on eq 1"} aria-current="true"{/if}><svg class="nc-i" aria-hidden="true"><use href="{$ncIco}{$ncSi.icon}"></use></svg>{$ncSi.text}{if condition="$ncSi.on eq 1"}<svg class="nc-drizzle" viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true"><path d="M2 5C10 1 18 1 26 5S42 9 50 5 66 1 74 5 90 9 98 5" pathLength="1"/></svg>{/if}</a>{/volist}</div></nav>

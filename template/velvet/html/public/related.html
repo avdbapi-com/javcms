@@ -1,0 +1,15 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<section class="vv-module vv-related" data-vv-module data-vv-reveal data-ai-group>
+  <div class="vv-mod-head" data-ai-hot><span class="vv-tile vv-tile--like" aria-hidden="true">{:\\app\\common\\util\\AutoIcon::ui('heart', ['class'=>'vv-i'])}</span><h2>{:\\app\\common\\util\\TemplateText::get('you_may_also_like')}</h2><span class="vv-mod-info">{:\\app\\common\\util\\TemplateText::get('velvet.picked_for_you')}</span></div>
+  <div class="vv-mod-tools"><button class="vv-pill" type="button" data-vv-shuffle>{:\\app\\common\\util\\AutoIcon::ui('shuffle', ['class'=>'vv-i'])}{:\\app\\common\\util\\TemplateText::get('velvet.shuffle')}</button></div>
+  <div class="vv-mod-body">
+    {php}$vvK = 0;{/php}{maccms:vod num="30" type="current" not="'.$obj['vod_id'].'" order="desc" by="time" paging="no" id="vo" key="vvK"}{if condition="$vvK eq 1"}<div class="vv-grid vv-batch" data-grid-fill data-vv-batch>{elseif condition="$vvK eq 11 || $vvK eq 21"/}</div><div class="vv-grid vv-batch" data-grid-fill data-vv-batch hidden>{/if}{include file="public/vodbox"}{/maccms:vod}{if condition="$vvK gt 0"}</div>{/if}
+    {empty name="__LIST__"}{include file="public/empty"}{/empty}
+  </div>
+</section>

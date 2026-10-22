@@ -1,0 +1,37 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="velvet" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+<meta name="robots" content="noindex, follow" />
+<title>{:\\app\\common\\util\\TemplateText::get('ui.member_login_personal_center')} {:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$maccms['site_name']), ENT_QUOTES, 'UTF-8')}</title>
+{include file="public/include"}
+{include file="user/include"}
+</head>
+<body class="vv-page-auth">
+{include file="public/head"}
+<main id="main-content" class="vv-main">
+  <section class="vv-auth">
+    <div class="vv-auth-card">
+      <h1>{:\\app\\common\\util\\TemplateText::get('ui.member_login')}</h1>
+      <p class="vv-auth-lead">{:\\app\\common\\util\\TemplateText::get('ui.find_your_next_watch')}</p>
+      <form id="fm" class="vv-form" method="post" action="{:mac_url('user/login')}" data-vv-form data-url="{:mac_url('user/login')}" data-success="{:mac_url('user/index')}">
+        <div class="vv-field"><label for="user_name">{:\\app\\common\\util\\AutoIcon::ui('user', ['class'=>'vv-i vv-field-ai', 'size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ui.username')}</label><input id="user_name" name="user_name" type="text" maxlength="30" autocomplete="username" data-required="ui.please_enter_the_user" placeholder="{:\\app\\common\\util\\TemplateText::get('ui.please_enter_the_account_number')}"></div>
+        <div class="vv-field"><label for="user_pwd">{:\\app\\common\\util\\AutoIcon::ui('lock', ['class'=>'vv-i vv-field-ai', 'size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ui.password')}</label><input id="user_pwd" name="user_pwd" type="password" maxlength="20" autocomplete="current-password" data-required="ui.please_enter_the_password_ab9294" placeholder="{:\\app\\common\\util\\TemplateText::get('ui.please_enter_the_password')}"></div>
+{if condition="$GLOBALS['config']['user']['login_verify'] eq 1"}
+        <div class="vv-field"><label for="verify">{:\\app\\common\\util\\AutoIcon::ui('shield', ['class'=>'vv-i vv-field-ai', 'size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ui.verification_code')}</label><div class="vv-inline"><input id="verify" name="verify" type="text" maxlength="4" autocomplete="off" inputmode="text" data-required="ui.please_enter_the_verification_code_0d14a4" data-vv-captcha-input placeholder="{:\\app\\common\\util\\TemplateText::get('ui.please_enter_the_verification_code')}"><span class="vv-captcha-slot" data-vv-captcha-src="{:mac_url('verify/index')}"></span></div></div>
+{/if}
+        <button id="btn_submit" class="vv-btn vv-btn-primary vv-btn-block" type="submit">{:\\app\\common\\util\\AutoIcon::ui('log-in', ['class'=>'vv-i', 'tint'=>'none'])}{:\\app\\common\\util\\TemplateText::get('ui.log_in')}</button>
+      </form>
+      <div class="vv-auth-links" data-ai-group><a href="{:mac_url('user/reg')}">{:\\app\\common\\util\\AutoIcon::navIcon('register', '', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ui.registered_account')}</a><a href="{:mac_url('user/findpass')}">{:\\app\\common\\util\\AutoIcon::ui('key', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ui.forget_the_password')}</a></div>
+    </div>
+  </section>
+</main>
+{include file="public/foot"}
+</body>
+</html>

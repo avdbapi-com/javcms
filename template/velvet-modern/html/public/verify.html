@@ -1,0 +1,62 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="velvet-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}" data-fx="vt smooth" data-fx-lerp="0.09" data-fx-vt-style="velvet-modern">
+<head>
+<meta name="robots" content="noindex, follow" />
+<title>{:\\app\\common\\util\\TemplateText::get('ui.verification_code')}</title>
+{include file="public/include"}
+</head>
+<body class="vp-page-auth">
+{include file="public/head"}
+<main id="main-content" class="vp-main vp-main--auth">
+  <section class="vp-auth">
+    <span class="vp-auth-spot" aria-hidden="true"></span>
+    <div class="vp-auth-card">
+      <p class="vp-eyebrow">{:\\app\\common\\util\\TemplateText::get('vp.box_office')}</p>
+      <h1>{:\\app\\common\\util\\TemplateText::get('ui.verification_code')}</h1>
+      <p class="vp-auth-lead">{:\\app\\common\\util\\TemplateText::get('ui.verification_information')}</p>
+      <form id="native-verification-form" class="vp-form" action="{:mac_url('ajax/verify_check')}" method="post">
+        {:token()}
+        <input type="hidden" name="type" value="{$type|htmlspecialchars=ENT_QUOTES}">
+        <div class="vp-field"><label for="native-verification-code">{:\\app\\common\\util\\TemplateText::get('ui.verification_code')}</label><div class="vp-inline"><input id="native-verification-code" name="verify" autocomplete="off" required maxlength="4" inputmode="text"><span class="vp-captcha-slot" id="native-verification-slot" data-src="{:mac_url('verify/index')}"></span></div></div>
+        <button class="vp-btn vp-btn-ghost" type="button" id="native-verification-refresh">{:\\app\\common\\util\\TemplateText::get('not_to_see_change_one')}</button>
+        <button class="vp-btn vp-btn-gold vp-btn-block" type="submit">{:\\app\\common\\util\\TemplateText::get('ui.confirm')}</button>
+        <p id="native-verification-status" class="vp-status" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+</main>
+{include file="public/foot"}
+<script>
+(function () {
+  var form = document.getElementById('native-verification-form'), slot = document.getElementById('native-verification-slot'), field = document.getElementById('native-verification-code'), refresh = document.getElementById('native-verification-refresh');
+  if (!form || !slot || !field) return;
+  var image = null;
+  function ensure() { if (image) return image; image = document.createElement('img'); image.className = 'vp-captcha'; image.width = 120; image.height = 44; image.alt = window.TemplateMessages ? window.TemplateMessages['verification_code'] || '' : ''; image.tabIndex = 0; image.setAttribute('role', 'button'); image.src = slot.getAttribute('data-src'); image.addEventListener('click', reload); slot.appendChild(image); return image; }
+  function reload() { var img = ensure(); var url = new URL(slot.getAttribute('data-src'), location.href); url.searchParams.set('r', Date.now()); img.src = url.href; }
+  field.addEventListener('focus', ensure);
+  refresh.addEventListener('click', reload);
+  form.addEventListener('submit', function (event) {
+    event.preventDefault();
+    var button = form.querySelector('button[type=submit]');
+    button.disabled = true;
+    fetch(form.action, { method: 'POST', credentials: 'same-origin', headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' }, body: new URLSearchParams(new FormData(form)).toString() })
+      .then(function (response) { return response.json(); })
+      .then(function (reply) {
+        if (reply.code === 1) { location.reload(); return; }
+        document.getElementById('native-verification-status').textContent = String(reply.msg || '');
+        reload();
+      })
+      .catch(function () { document.getElementById('native-verification-status').textContent = window.TemplateMessages['ui.connection_failed_try_again']; })
+      .finally(function () { button.disabled = false; });
+  });
+})();
+</script>
+</body>
+</html>

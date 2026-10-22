@@ -1,0 +1,9 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}$tplSlideCode = \app\common\util\AvdbLanguage::displayCode($vo); if ($tplSlideCode !== '' && stripos($tplSlideCode, 'avdb-') === 0) { $tplSlideCode = ''; }{/php}
+<a class="banner-slide" href="{:mac_url_vod_play($vo)}"><img data-lowres src="{$vo.vod_pic|mac_default=$tplNoPic|mac_url_img|htmlspecialchars=ENT_QUOTES}" alt="" width="760" height="428" decoding="async" {if condition="$key gt 2"}loading="lazy"{/if}><span class="banner-cap">{if condition="$tplSlideCode neq ''"}<span class="code">{$tplSlideCode|htmlspecialchars=ENT_QUOTES}</span>{/if}<span class="title">{$vo.vod_display_name|mac_default=$vo.vod_name|htmlspecialchars=ENT_QUOTES}</span><span class="meta">{if condition="$vo.vod_duration neq ''"}<span>{$vo.vod_duration|htmlspecialchars=ENT_QUOTES}</span>{/if}<span>{$vo.vod_hits|intval} {:\\app\\common\\util\\TemplateText::get('ui.views')}</span></span></span></a>

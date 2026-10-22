@@ -1,0 +1,158 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Based on MacCMS 10 (Apache-2.0) by magicblack, changed by JavCMS.
+JavCMS changes: Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors,
+JavCMS Community License 1.0. The MacCMS parts stay under the Apache License 2.0.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>{$title} - Apple CMS</title>
+    <link rel="stylesheet" href="__STATIC__/layui/css/layui.css">
+    <link rel="stylesheet" href="__STATIC__/css/admin_style.css">
+    <script>
+        var maccms = {
+            "path": "__ROOT__",
+            "mid": "{$maccms['mid']}",
+            "aid": "{$maccms['aid']}",
+            "url": "{$maccms['site_url']}",
+            "wapurl": "{$maccms['site_wapurl']}",
+            "mob_status": "{$maccms['mob_status']}"
+        };
+    </script>
+</head>
+<body>
+    <div>Link Tags:<br>
+        {maccms:link num="3" start="0" type="all" order="asc" by="sort"}
+        {$key}->{$vo.link_id}->{$vo.link_name}<br>
+        {/maccms:link}
+    </div>
+    <br>
+
+    <div>Area Tags:<br>
+        {maccms:area num="4" order="desc"}
+        {$key}->{$vo.area_name}<br>
+        {/maccms:area}
+    </div>
+    <br>
+
+    <div>Language Tags:<br>
+        {maccms:lang num="4" order="desc"}
+        {$key}->{$vo.lang_name}<br>
+        {/maccms:lang}
+    </div>
+    <br>
+
+    <div>Year Tags:<br>
+        {maccms:year num="4" order="desc"}
+        {$key}->{$vo.year_name}<br>
+        {/maccms:year}
+    </div>
+    <br>
+
+    <div>Class Tags:<br>
+        {maccms:class num="4" order="desc"}
+        {$key}->{$vo.class_name}<br>
+        {/maccms:class}
+    </div>
+    <br>
+
+    <div>Version Tags:<br>
+        {maccms:version num="4" order="desc"}
+        {$key}->{$vo.version_name}<br>
+        {/maccms:version}
+    </div>
+    <br>
+
+    <div>State Tags:<br>
+        {maccms:state num="4" order="desc"}
+        {$key}->{$vo.state_name}<br>
+        {/maccms:state}
+    </div>
+    <br>
+
+    <div>Letter Tags:<br>
+        {maccms:letter num="4" order="desc" by=""}
+        {$key}->{$vo.letter_name}<br>
+        {/maccms:letter}
+    </div>
+    <br>
+
+    <div>Guestbook Tags:<br>
+        {maccms:gbook num="4" paging="no" order="desc" by=""}
+        {$key}->{$vo.gbook_name}<br>
+        {/maccms:gbook}
+    </div>
+    <br>
+
+    <div>Comment Tags:<br>
+        {maccms:comment num="4" paging="yes" order="desc" by=""}
+        {$key}->{$vo.comment_name}<br>
+        {/maccms:comment}
+    </div>
+    <br>
+
+    <div>Pagination:<br>
+        <div class="mac_pages">
+            <div class="page_tip">Total {$__PAGING__.record_total} records, current page {$__PAGING__.page_current}/{$__PAGING__.page_total}</div>
+            <div class="page_info">
+                <a class="page_link" href="{$__PAGING__.page_url|str_replace='PAGELINK',1,###}" title="First Page">First Page</a>
+                <a class="page_link" href="{$__PAGING__.page_url|str_replace='PAGELINK',$__PAGING__.page_prev,###}" title="Previous Page">Previous Page</a>
+                {maccms:foreach name="$__PAGING__.page_num" id="num"}
+                {if condition="$__PAGING__['page_current'] eq $num"}
+                <a class="page_link page_current" href="javascript:;" title="Total {$num} pages">{$num}</a>
+                {else}
+                <a class="page_link" href="{$__PAGING__.page_url|str_replace='PAGELINK',$num,###}" title="Total {$num} pages">{$num}</a>
+                {/if}
+                {/maccms:foreach}
+                <a class="page_link" href="{$__PAGING__.page_url|str_replace='PAGELINK',$__PAGING__.page_next,###}" title="Next Page">Next Page</a>
+                <a class="page_link" href="{$__PAGING__.page_url|str_replace='PAGELINK',$__PAGING__.page_total,###}" title="Last Page">Last Page</a>
+
+                <input class="page_input" type="text" placeholder="Page number" id="page" autocomplete="off" style="width:40px">
+                <button class="page_btn mac_page_go" type="button" data-url="{$__PAGING__.page_url}" data-total="{$__PAGING__.page_total}" data-sp="{$__PAGING__.page_sp}">Go to Page</button>
+            </div>
+        </div>
+    </div>
+    <br>
+
+    <div>Type Tags:<br>
+        {maccms:type num="4" mid="vod" ids="" order="asc" by="id"}
+        {$key}->{$vo.type_name}<br>
+        {/maccms:type}
+    </div>
+    <br>
+
+    <div>Topic Tags:<br>
+        {maccms:topic num="4" paging="no" ids="" level="" order="asc" by="id"}
+        {$key}->{$vo.topic_name}<br>
+        {/maccms:topic}
+    </div>
+    <br>
+
+    <div>Article Tags:<br>
+        {maccms:art num="4" paging="no" ids="" type="" topic="" level="" order="asc" by="id"}
+        {$key}->{$vo.art_name}<br>
+        {/maccms:art}
+    </div>
+    <br>
+
+    <div>Video Tags:<br>
+        {maccms:vod num="4" paging="no" ids="" type="" topic="" level="" order="asc" by="id"}
+        {$key}->{$vo.vod_name}<br>
+        {/maccms:vod}
+    </div>
+    <br>
+
+    <div>For Loop:<br>
+        {maccms:for start="1" end="5" comparison="elt" step="1" name="key"}
+        {$key}<br>
+        {/maccms:for}
+    </div>
+</body>
+</html>

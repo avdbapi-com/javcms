@@ -1,0 +1,25 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="honey" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/auto"}
+{include file="public/include"}
+</head>
+<body class="hn-page-detail hn-page-down">
+{include file="public/head"}
+<main id="main-content" class="hn-main"><div class="hn-wrap hn-narrow">
+<div class="hn-card"><div class="hn-page-head" data-ai-group><h1 class="hn-page-title" data-ai-hot>{:\\app\\common\\util\\AutoIcon::ui('download', ['size'=>'lg', 'plate'=>true, 'class'=>'hn-cell'])}<span dir="auto">{$obj.vod_display_name|mac_default=$obj.vod_name|htmlspecialchars=ENT_QUOTES}</span></h1></div>
+<div class="hn-actions" style="margin-bottom:18px"><a class="hn-btn" href="{:htmlspecialchars(mac_url_vod_detail($obj), ENT_QUOTES)}">{:\\app\\common\\util\\AutoIcon::ui('info', ['class'=>'hn-i', 'tint'=>'none'])}{:\\app\\common\\util\\TemplateText::get('ui.details')}</a><a class="hn-btn hn-btn-amber" href="{:htmlspecialchars(mac_url_vod_play($obj,['sid'=>1,'nid'=>1]), ENT_QUOTES)}">{:\\app\\common\\util\\AutoIcon::ui('play', ['class'=>'hn-i', 'tint'=>'none'])}{:\\app\\common\\util\\TemplateText::get('ui.watch_online')}</a></div>
+{notempty name="obj.vod_down_list"}{maccms:foreach name="obj.vod_down_list" id="hnDsrc"}<h2 class="hn-block-title" data-ai-hot>{:\\app\\common\\util\\AutoIcon::ui('list', ['size'=>'lg', 'plate'=>true, 'class'=>'hn-cell'])}{$hnDsrc.player_info.show|mac_default=$hnDsrc.from|htmlspecialchars=ENT_QUOTES}</h2><div class="hn-chips" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px">{maccms:foreach name="hnDsrc.urls" id="hnDep"}<a class="hn-chip" href="{:mac_safe_url($hnDep['url'])}" target="_blank" rel="nofollow noopener noreferrer">{:\\app\\common\\util\\AutoIcon::ui('download', ['class'=>'hn-i', 'tint'=>'none'])}{$hnDep.name|htmlspecialchars=ENT_QUOTES}</a>{/maccms:foreach}</div>{/maccms:foreach}{else/}<p class="hn-muted">{:\\app\\common\\util\\TemplateText::get('ui.no_download_links_are_available_for_this_video')}</p>{/notempty}
+</div>
+</div></main>
+{include file="public/foot"}
+</body>
+</html>
+

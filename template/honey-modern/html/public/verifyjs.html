@@ -1,0 +1,21 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<script>
+(function(){
+ var form=document.getElementById("native-verification-form"),image=document.getElementById("native-verification-image");
+ if(!form||!image)return;
+ document.getElementById("native-verification-refresh").addEventListener("click",function(){var s=image.getAttribute("data-nc-src");if(s){image.removeAttribute("data-nc-src");image.src=s;return;}var url=new URL(image.src,location.href);url.searchParams.set("r",Date.now());image.src=url.href;});
+ form.addEventListener("submit",function(event){
+  event.preventDefault();var button=form.querySelector("button[type=submit]");button.disabled=true;
+  fetch(form.action,{method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/x-www-form-urlencoded;charset=UTF-8"},body:new URLSearchParams(new FormData(form)).toString()}).then(function(response){return response.json();}).then(function(reply){
+   if(reply.code===1){location.reload();return;}
+   document.getElementById("native-verification-status").textContent=String(reply.msg||"");document.getElementById("native-verification-refresh").click();
+  }).catch(function(){document.getElementById("native-verification-status").textContent=window.TemplateMessages["ui.connection_failed_try_again"];}).finally(function(){button.disabled=false;});
+ });
+})();
+</script>

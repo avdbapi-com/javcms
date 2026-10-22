@@ -1,0 +1,26 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="honey" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/vod_type"}
+{include file="public/include"}
+</head>
+<body class="hn-page-list hn-page-type">
+{include file="public/head"}
+<main id="main-content" class="hn-main"><div class="hn-wrap">
+{php}$hnSortMode = 'type'; $hnSortActive = isset($param['by']) ? (string)$param['by'] : 'time';{/php}
+<div class="hn-page-head" data-ai-group><div><h1 class="hn-page-title hn-split" data-ai-hot>{:\\app\\common\\util\\AutoIcon::icon('category', $obj['type_name'], ['size'=>'xl', 'plate'=>true, 'class'=>'hn-cell hn-cell-xl'])}<span>{:\\app\\common\\util\\TemplateText::get(htmlspecialchars_decode((string)$obj['type_name'], ENT_QUOTES))}</span></h1><span class="hn-count">{:\\app\\common\\util\\TemplateText::get('total_videos')} <span class="hn-ltr">{:number_format((int)mac_data_count($obj['type_id'],'all'))}</span></span></div>{include file="public/sortmenu"}</div>
+<nav class="hn-catrow" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.categories')}" data-ai-group>{maccms:type ids="parent" flag="vod" order="asc" by="sort" id="hnRowCat" key="hnRowK" hide_empty="1"}<a href="{:mac_url_type($hnRowCat)}"{if condition="$hnRowCat.type_id eq $obj.type_id || $hnRowCat.type_id eq $obj.type_pid"} aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::icon('category', $hnRowCat['type_name'], ['size'=>'sm', 'i'=>$hnRowK])}<span>{:\\app\\common\\util\\TemplateText::get(htmlspecialchars_decode((string)$hnRowCat['type_name'], ENT_QUOTES))}</span></a>{/maccms:type}</nav>
+{include file="public/subcats"}<div class="hn-grid" data-grid-fill>{maccms:vod num="20" paging="yes" type="current" order="desc" by="time" pageurl="vod/type"}{include file="public/vodbox"}{/maccms:vod}</div>
+{include file="public/list_note"}{include file="public/listend"}
+</div></main>
+{include file="public/foot"}
+</body>
+</html>
+

@@ -1,0 +1,22 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}$tzSlides = $tzK; $tzSlideTitle = $tzPlain(($vo['vod_display_name'] ?? '') !== '' ? $vo['vod_display_name'] : ($vo['vod_name'] ?? '')); $tzSlideCode = \app\common\util\AvdbLanguage::displayCode($vo); $tzSlideCode = (string)preg_replace('/-(UNCENSORED-LEAK(?:ED)?|ENGLISH-SUBTITLES?)$/i', '', $tzSlideCode); if ($tzSlideCode === '' || stripos($tzSlideCode, 'avdb-') === 0 || strlen($tzSlideCode) > 24) { $tzSlideCode = ''; } $tzSlideDesc = $tzPlain($vo['vod_display_blurb'] ?? ''); if ($tzSlideDesc === '') { $tzSlideDesc = $tzPlain($vo['vod_display_content'] ?? ''); } $tzSlideDesc = mac_substring($tzSlideDesc, 220); $tzSlideHits = (int)($vo['vod_hits'] ?? 0);{/php}
+    <article class="tz-slide{if condition="$tzK eq 1"} is-active{/if}" aria-roledescription="slide" aria-label="{:\\app\\common\\util\\TemplateText::get('topaz.slide_of', ['n'=>$tzK, 'total'=>6])}"{if condition="$tzK gt 1"} aria-hidden="true"{/if} data-tz-slide>
+      <div class="tz-slide-media" aria-hidden="true">
+        <img class="tz-slide-bg" src="{$vo.vod_pic|mac_default=$tplNoPic|mac_url_img|htmlspecialchars=ENT_QUOTES}" alt="" width="800" height="450" decoding="async"{if condition="$tzK gt 1"} loading="lazy"{/if}>
+        <img data-lowres class="tz-slide-img" src="{$vo.vod_pic|mac_default=$tplNoPic|mac_url_img|htmlspecialchars=ENT_QUOTES}" alt="" width="800" height="450" decoding="async"{if condition="$tzK eq 1"} fetchpriority="high"{else/} loading="lazy"{/if}>
+      </div>
+      <div class="tz-slide-shade" aria-hidden="true"></div>
+      <div class="tz-slide-body">
+        <span class="tz-badge">{:\\app\\common\\util\\AutoIcon::ui('star', ['class'=>'tz-i', 'tint'=>'none'])}{:\\app\\common\\util\\TemplateText::get('topaz.featured_week')}</span>
+        <h2 class="tz-slide-title"><a href="{:mac_url_vod_play($vo)}">{$tzSlideTitle|htmlspecialchars=ENT_QUOTES}</a></h2>
+        <div class="tz-slide-meta">{if condition="$tzSlideHits gt 0"}<span>{:\\app\\common\\util\\AutoIcon::ui('eye', ['class'=>'tz-i', 'tint'=>'none'])}{:number_format($tzSlideHits)}</span>{/if}{notempty name="vo.vod_score"}<span>{:\\app\\common\\util\\AutoIcon::ui('star', ['class'=>'tz-i', 'tint'=>'none'])}{$vo.vod_score|htmlspecialchars=ENT_QUOTES}</span>{/notempty}{if condition="$tzSlideCode neq ''"}<span>{$tzSlideCode|htmlspecialchars=ENT_QUOTES}</span>{/if}{notempty name="vo.vod_duration"}<span>{:\\app\\common\\util\\AutoIcon::ui('clock', ['class'=>'tz-i', 'tint'=>'none'])}{$vo.vod_duration|htmlspecialchars=ENT_QUOTES}</span>{/notempty}</div>
+        {if condition="$tzSlideDesc neq ''"}<p class="tz-slide-desc">{$tzSlideDesc|htmlspecialchars=ENT_QUOTES}</p>{/if}
+        <div class="tz-slide-act"><a class="tz-btn tz-btn--gold tz-btn--lg" href="{:mac_url_vod_play($vo)}">{:\\app\\common\\util\\AutoIcon::ui('play', ['class'=>'tz-i', 'tint'=>'none'])}<span>{:\\app\\common\\util\\TemplateText::get('play_now')}</span></a><a class="tz-btn tz-btn--glass tz-btn--lg" href="{:mac_url_vod_detail($vo)}">{:\\app\\common\\util\\AutoIcon::ui('info', ['class'=>'tz-i', 'tint'=>'none'])}<span>{:\\app\\common\\util\\TemplateText::get('ui.details')}</span></a></div>
+      </div>
+    </article>

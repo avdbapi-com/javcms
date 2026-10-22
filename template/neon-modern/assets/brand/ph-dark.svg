@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 180" width="320" height="180" preserveAspectRatio="xMidYMid slice">
+  <!-- Neon Nocturne placeholder poster (dark): bokeh through wet glass and a dim neon screen. No text. Original, JavCMS Community License 1.0. -->
+  <defs>
+    <linearGradient id="nndg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f0b1c"/><stop offset="1" stop-color="#07060c"/></linearGradient>
+    <radialGradient id="nndp"><stop offset="0" stop-color="#ff4d94" stop-opacity=".55"/><stop offset=".55" stop-color="#ff4d94" stop-opacity=".18"/><stop offset="1" stop-color="#ff4d94" stop-opacity="0"/></radialGradient>
+    <radialGradient id="nndv"><stop offset="0" stop-color="#a283ff" stop-opacity=".5"/><stop offset=".55" stop-color="#a283ff" stop-opacity=".16"/><stop offset="1" stop-color="#a283ff" stop-opacity="0"/></radialGradient>
+    <radialGradient id="nndm"><stop offset="0" stop-color="#5df2c6" stop-opacity=".38"/><stop offset=".55" stop-color="#5df2c6" stop-opacity=".1"/><stop offset="1" stop-color="#5df2c6" stop-opacity="0"/></radialGradient>
+    <radialGradient id="nnds"><stop offset="0" stop-color="#ffb347" stop-opacity=".4"/><stop offset="1" stop-color="#ffb347" stop-opacity="0"/></radialGradient>
+    <radialGradient id="nndd" cx=".38" cy=".32" r=".7"><stop offset="0" stop-color="#fff" stop-opacity=".5"/><stop offset=".35" stop-color="#fff" stop-opacity=".08"/><stop offset="1" stop-color="#fff" stop-opacity=".02"/></radialGradient>
+  </defs>
+  <rect width="320" height="180" fill="url(#nndg)"/>
+  <circle cx="58" cy="44" r="48" fill="url(#nndp)"/><circle cx="272" cy="56" r="58" fill="url(#nndv)"/><circle cx="226" cy="148" r="36" fill="url(#nndm)"/>
+  <circle cx="34" cy="150" r="32" fill="url(#nndv)"/><circle cx="150" cy="22" r="22" fill="url(#nnds)"/><circle cx="300" cy="150" r="26" fill="url(#nndp)"/>
+  <g fill="url(#nndd)"><circle cx="92" cy="72" r="4.5"/><circle cx="214" cy="38" r="3.4"/><circle cx="252" cy="112" r="5.2"/><circle cx="118" cy="138" r="3.6"/><circle cx="182" cy="126" r="2.8"/><circle cx="66" cy="114" r="2.8"/><circle cx="286" cy="88" r="2.4"/><circle cx="30" cy="84" r="3"/></g>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="132" y="66" width="56" height="40" rx="9" stroke="#ff4d94" stroke-width="7" opacity=".14"/>
+    <rect x="132" y="66" width="56" height="40" rx="9" stroke="#ff4d94" stroke-width="2.4" opacity=".7"/>
+    <path d="M154 77 169 86 154 95Z" stroke="#a283ff" stroke-width="2" opacity=".75"/>
+  </g>
+</svg>

@@ -1,0 +1,25 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}if (!isset($vvPlain)) { $vvPlain = function ($v) { $v = (string)$v; for ($i = 0; $i < 4; $i++) { $d = html_entity_decode($v, ENT_QUOTES | ENT_HTML5, 'UTF-8'); if ($d === $v) { break; } $v = $d; } return trim($v); }; } $vvTitle = $vvPlain(($obj['vod_display_name'] ?? '') !== '' ? $obj['vod_display_name'] : ($obj['vod_name'] ?? ''));{/php}<!DOCTYPE html>
+<html data-template-theme="velvet" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+<meta name="robots" content="noindex, follow" />
+<title>{:\\app\\common\\util\\TemplateText::get('ui.downloads')}</title>
+{include file="public/include"}
+</head>
+<body class="vv-page-state">
+<main id="main-content" class="vv-standalone">
+  <div class="vv-state">
+    <span class="vv-state-icon" aria-hidden="true">{:\\app\\common\\util\\AutoIcon::ui('film', ['class'=>'vv-i'])}</span>
+    <p class="vv-tip">{:\\app\\common\\util\\TemplateText::get('ui.downloads')}</p>
+    <h1>{$vvTitle|htmlspecialchars=ENT_QUOTES}</h1>
+    <div class="vv-state-actions"><a class="vv-btn vv-btn-primary" href="{:htmlspecialchars(mac_url_vod_down($obj,['sid'=>$param['sid'],'nid'=>$param['nid']]), ENT_QUOTES)}" target="_top">{:\\app\\common\\util\\TemplateText::get('ui.downloads')}</a><a class="vv-btn vv-btn-ghost" href="{:htmlspecialchars(mac_url_vod_detail($obj), ENT_QUOTES)}" target="_top">{:\\app\\common\\util\\TemplateText::get('ui.details')}</a></div>
+  </div>
+</main>
+</body>
+</html>

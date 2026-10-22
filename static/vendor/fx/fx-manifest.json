@@ -1,0 +1,2079 @@
+{
+ "schema": "javcms.fx-vendor.v1",
+ "generated": "2026-10-10",
+ "base": "/static/vendor/fx/",
+ "policy": "Pinned exact versions (newest release at least 14 days old on 2026-10-10), permissive licences only (MIT, ISC, BSD, Apache-2.0, Unlicense, 0BSD; fonts OFL-1.1). Nothing is loaded from a CDN at runtime.",
+ "libraries": [
+  {
+   "dir": "ogl@1.0.11",
+   "name": "ogl",
+   "version": "1.0.11",
+   "license": "Unlicense",
+   "homepage": "https://github.com/oframe/ogl",
+   "copyright": "public domain dedication (Unlicense); author Nathan Gordon",
+   "license_files": [
+    "ogl@1.0.11/LICENSE.txt"
+   ],
+   "license_note": null,
+   "source": {
+    "npm": "ogl@1.0.11",
+    "tarball": "https://registry.npmjs.org/ogl/-/ogl-1.0.11.tgz",
+    "integrity": "sha512-kUpC154AFfxi16pmZUK4jk3J+8zxwTWGPo03EoYA8QPbzikHoaC82n6pNTbd+oEaJonaE8aPWBlX7ad9zrqLsA==",
+    "shasum": "369d6b8681035500fbb14d461f4d74f014527b88"
+   },
+   "files": [
+    {
+     "path": "ogl@1.0.11/ogl.min.js",
+     "bytes": 132983,
+     "gzip": 39228,
+     "brotli": 33326,
+     "sha256": "6686d3a546761ac9d84372bdddb0c60f716f87322647f3428716e40aac05ac6b",
+     "type": "esm",
+     "safari_min": 13.1,
+     "syntax": [
+      "asyncAwait",
+      "exponent",
+      "nullish",
+      "objectRestSpread",
+      "optionalCatch"
+     ],
+     "runtime_apis": [],
+     "made_by": "bundled + minified with esbuild 0.28.2",
+     "entry": "export * from 'ogl';"
+    },
+    {
+     "path": "ogl@1.0.11/ogl-core.min.js",
+     "bytes": 89692,
+     "gzip": 25526,
+     "brotli": 21682,
+     "sha256": "e0a2b681a4f81142a7ce29187e466a7429a94d8d889a8229796a4c411b3a96f3",
+     "type": "esm",
+     "safari_min": 10.1,
+     "syntax": [
+      "exponent"
+     ],
+     "runtime_apis": [],
+     "made_by": "bundled + minified with esbuild 0.28.2",
+     "entry": "export { Geometry, Program, Renderer, Camera, Transform, Mesh, Texture, RenderTarget, Color, Euler, Mat3, Mat4, Quat, Vec2, Vec3, Vec4, Plane, Box, Sphere, Cylinder, Torus, Triangle, Orbit, Raycast, Curve, Post, Flowmap, GPGPU, Polyline, InstancedMesh } from 'ogl';"
+    }
+   ]
+  },
+  {
+   "dir": "motion@13.4.4",
+   "name": "motion",
+   "version": "13.4.4",
+   "license": "MIT",
+   "homepage": "https://motion.dev",
+   "copyright": "Copyright (c)",
+   "license_files": [
+    "motion@13.4.4/LICENSE.md",
+    "motion@13.4.4/LICENSE-framer-motion.md"
+   ],
+   "license_note": null,
+   "source": {
+    "npm": "motion@13.4.4",
+    "tarball": "https://registry.npmjs.org/motion/-/motion-13.4.4.tgz",
+    "integrity": "sha512-lyX5kpAum2MmigecKWrFdIj3Sjn7pHek2EUrXY0WGZbOjJ1f5NfX0g4KQAb2Bp2EqL0a6dUzse11s1n7OYr5jg==",
+    "shasum": "f45c99cf20c3b448a10a1da853cda1b13331ab15"
+   },
+   "files": [
+    {
+     "path": "motion@13.4.4/motion.min.js",
+     "bytes": 82872,
+     "gzip": 30424,
+     "brotli": 27475,
+     "sha256": "437d99641d35cfb942a0e581571fb986c0f1995628a1dba7378557e92c789baf",
+     "type": "esm",
+     "safari_min": 13.1,
+     "syntax": [
+      "asyncAwait",
+      "exponent",
+      "nullish",
+      "objectRestSpread",
+      "optionalCatch"
+     ],
+     "runtime_apis": [
+      "ResizeObserver(Safari 13.1)",
+      "ViewTransition(Safari 18)",
+      "ScrollTimeline(Safari 26)"
+     ],
+     "made_by": "bundled + minified with esbuild 0.28.2",
+     "entry": "export { animate, animateMini, createScopedAnimate, animateView, stagger, spring, inertia, keyframes, delay, scroll, scrollInfo, inView, hover, press, resize, frame, cancelFrame, frameData, time, motionValue, styleEffect, attrEffect, svgEffect, propEffect, springValue, mapValue, transformValue, mix, interpolate, transform, wrap, clamp, progress, distance, distance2D, supportsScrollTimeline, supportsViewTimeline, cubicBezier, steps, easeIn, easeOut, easeInOut, backIn, backOut, backInOut, circIn, circOut, circInOut, anticipate, mirrorEasing, reverseEasing } from 'motion';"
+    },
+    {
+     "path": "motion@13.4.4/motion-mini.min.js",
+     "bytes": 14351,
+     "gzip": 5981,
+     "brotli": 5458,
+     "sha256": "9a983d04b2ba5857e8cdeda361562fdce6b1748dfa55329c4333591ebe2161a6",
+     "type": "esm",
+     "safari_min": 13.1,
+     "syntax": [
+      "nullish",
+      "objectRestSpread",
+      "optionalCatch"
+     ],
+     "runtime_apis": [
+      "ScrollTimeline(Safari 26)"
+     ],
+     "made_by": "bundled + minified with esbuild 0.28.2",
+     "entry": "export * from 'motion/mini';"
+    },
+    {
+     "path": "motion@13.4.4/motion.umd.min.js",
+     "bytes": 147040,
+     "gzip": 48973,
+     "brotli": 43393,
+     "sha256": "6d77ae5da8109c17f718d8b49929c7b748d34223ff216c409131e23459aea3df",
+     "type": "classic",
+     "safari_min": 13.1,
+     "syntax": [
+      "asyncAwait",
+      "exponent",
+      "nullish",
+      "objectRestSpread",
+      "optionalCatch",
+      "optionalChaining"
+     ],
+     "runtime_apis": [
+      "ResizeObserver(Safari 13.1)",
+      "ViewTransition(Safari 18)",
+      "ScrollTimeline(Safari 26)"
+     ],
+     "made_by": "copied unchanged from the npm tarball",
+     "source": "dist/motion.js"
+    }
+   ]
+  },
+  {
+   "dir": "animejs@4.5.0",
+   "name": "anime.js",
+   "version": "4.5.0",
+   "license": "MIT",
+   "homepage": "https://animejs.com",
+   "copyright": "Copyright (c)",
+   "license_files": [
+    "animejs@4.5.0/LICENSE.md"
+   ],
+   "license_note": null,
+   "source": {
+    "npm": "animejs@4.5.0",
+    "tarball": "https://registry.npmjs.org/animejs/-/animejs-4.5.0.tgz",
+    "integrity": "sha512-NQimYX+lz8WaXonGS9zVVoviCIAjONeJayxacUditaivYLqyXgGjFKjuyl0aUUhFKm5MriX9ty1TGovNzoJQWA==",
+    "shasum": "d0f6f5141cff15629ae02ce3c379a0846784e4d1"
+   },
+   "files": [
+    {
+     "path": "animejs@4.5.0/anime.esm.min.js",
+     "bytes": 118678,
+     "gzip": 40976,
+     "brotli": 36424,
+     "sha256": "a19015a1a92d52025a2fb6703b6d67eadd1cc2aeaf880770e96e04cf6aa07be1",
+     "type": "esm",
+     "safari_min": 13.1,
+     "syntax": [
+      "exponent",
+      "objectRestSpread",
+      "optionalCatch",
+      "optionalChaining"
+     ],
+     "runtime_apis": [
+      "ResizeObserver(Safari 13.1)",
+      "CSS.registerProperty(Safari 16.4)",
+      "Intl.Segmenter(Safari 14.1)"
+     ],
+     "made_by": "copied unchanged from the npm tarball",
+     "source": "dist/bundles/anime.esm.min.js"
+    },
+    {
+     "path": "animejs@4.5.0/anime-lite.esm.min.js",
+     "bytes": 83679,
+     "gzip": 31060,
+     "brotli": 27862,
+     "sha256": "8ed51f82ee2b1256bedc083a0b3c7abfcc831d06c7c029052dfa59e5f2bdd76a",
+     "type": "esm",
+     "safari_min": 13.1,
+     "syntax": [
+      "exponent",
+      "nullish",
+      "objectRestSpread",
+      "optionalCatch"
+     ],
+     "runtime_apis": [
+      "ResizeObserver(Safari 13.1)",
+      "CSS.registerProperty(Safari 16.4)",
+      "Intl.Segmenter(Safari 14.1)"
+     ],
+     "made_by": "bundled + minified with esbuild 0.28.2",
+     "entry": "export { animate, createTimeline, createTimer, createAnimatable, createScope, onScroll, utils, svg, text, eases, easings, spring, createSpring, cubicBezier, steps, stagger, waapi, engine } from 'animejs';"
+    },
+    {
+     "path": "animejs@4.5.0/anime.umd.min.js",
+     "bytes": 118043,
+     "gzip": 40667,
+     "brotli": 36129,
+     "sha256": "8d5b3a58a1f64023a04a4cedeef135a2263b18da04b35177ac13438a0bad033b",
+     "type": "classic",
+     "safari_min": 13.1,
+     "syntax": [
+      "exponent",
+      "objectRestSpread",
+      "optionalCatch",
+      "optionalChaining"
+     ],
+     "runtime_apis": [
+      "ResizeObserver(Safari 13.1)",
+      "CSS.registerProperty(Safari 16.4)",
+      "Intl.Segmenter(Safari 14.1)"
+     ],
+     "made_by": "copied unchanged from the npm tarball",
+     "source": "dist/bundles/anime.umd.min.js"
+    }
+   ]
+  },
+  {
+   "dir": "lenis@1.3.26",
+   "name": "lenis",
+   "version": "1.3.26",
+   "license": "MIT",
+   "homepage": "https://github.com/darkroomengineering/lenis",
+   "copyright": "Copyright (c)",
+   "license_files": [
+    "lenis@1.3.26/LICENSE.txt"
+   ],
+   "license_note": null,
+   "source": {
+    "npm": "lenis@1.3.26",
+    "tarball": "https://registry.npmjs.org/lenis/-/lenis-1.3.26.tgz",
+    "integrity": "sha512-s/xTCZCxTFvHbAN1OzuhNaN5YPJH2ail0XAkctKW1b+RUAG4nUL5UHLXwNko1h8aEeT2jspBXegMgPJd8zcuag==",
+    "shasum": "2262e4fa3de7b7085aea82a64e204b234711d24d"
+   },
+   "files": [
+    {
+     "path": "lenis@1.3.26/lenis.esm.min.js",
+     "bytes": 20013,
+     "gzip": 5832,
+     "brotli": 5232,
+     "sha256": "f798538a7977e8d78e59b01c88893fa256f8c684888f2443a5aa7000c2337697",
+     "type": "esm",
+     "safari_min": 13.1,
+     "syntax": [
+      "exponent",
+      "nullish",
+      "objectRestSpread"
+     ],
+     "runtime_apis": [
+      "ResizeObserver(Safari 13.1)"
+     ],
+     "made_by": "minified with esbuild 0.28.2",
+     "source": "dist/lenis.mjs"
+    },
+    {
+     "path": "lenis@1.3.26/lenis.min.js",
+     "bytes": 18685,
+     "gzip": 5389,
+     "brotli": 4844,
+     "sha256": "306f7b6d19642f617aa4e8fb67bc9d3cae17bd0c34e52b852e476dc11657da4c",
+     "type": "classic",
+     "safari_min": 14,
+     "syntax": [
+      "classPublicInstanceField",
+      "exponent",
+      "logicalAssign",
+      "nullish",
+      "objectRestSpread",
+      "optionalChaining"
+     ],
+     "runtime_apis": [
+      "ResizeObserver(Safari 13.1)"
+     ],
+     "made_by": "copied unchanged from the npm tarball (trailing sourceMappingURL comment removed; .map not shipped)",
+     "source": "dist/lenis.min.js"
+    },
+    {
+     "path": "lenis@1.3.26/lenis.css",
+     "bytes": 513,
+     "gzip": 241,
+     "brotli": 193,
+     "sha256": "2f668ae84a668327f246faf8a770383a2bf69196d214290fbc4d5548910606c5",
+     "made_by": "copied unchanged from the npm tarball",
+     "source": "dist/lenis.css"
+    }
+   ]
+  },
+  {
+   "dir": "swiper@14.2.0",
+   "name": "Swiper",
+   "version": "14.2.0",
+   "license": "MIT",
+   "homepage": "https://swiperjs.com",
+   "copyright": "Copyright (c)",
+   "license_files": [
+    "swiper@14.2.0/LICENSE.txt"
+   ],
+   "license_note": null,
+   "source": {
+    "npm": "swiper@14.2.0",
+    "tarball": "https://registry.npmjs.org/swiper/-/swiper-14.2.0.tgz",
+    "integrity": "sha512-GsL4M9Fq7Sg22OyL3SjdNj/0bxTfIxPJJHHW394Li0u5vYtExi0a09iBUc8CuLafJi5pAlH2AHUe1PocxHl45g==",
+    "shasum": "879048cf1ea46fac5b5a8e6b3283833b37701d68"
+   },
+   "files": [
+    {
+     "path": "swiper@14.2.0/swiper.esm.min.js",
+     "bytes": 154006,
+     "gzip": 46243,
+     "brotli": 40205,
+     "sha256": "2010cdbe01707a1259cca320f2328f8dda6f244cb0696dbaa1d82c915c47f9b9",
+     "type": "esm",
+     "safari_min": 13.1,
+     "syntax": [
+      "exponent",
+      "nullish",
+      "objectRestSpread",
+      "optionalCatch"
+     ],
+     "runtime_apis": [
+      "ResizeObserver(Safari 13.1)"
+     ],
+     "made_by": "bundled + minified with esbuild 0.28.2",
+     "entry": "export { default as Swiper } from 'swiper';\nexport * from 'swiper/modules';"
+    },
+    {
+     "path": "swiper@14.2.0/swiper-lite.esm.min.js",
+     "bytes": 111432,
+     "gzip": 34271,
+     "brotli": 30209,
+     "sha256": "0066a1bbf7f61085ec7b20e8ee6785c86c6bd08cfbb1d8da5ff361804d271285",
+     "type": "esm",
+     "safari_min": 13.1,
+     "syntax": [
+      "exponent",
+      "nullish",
+      "objectRestSpread",
+      "optionalCatch"
+     ],
+     "runtime_apis": [
+      "ResizeObserver(Safari 13.1)"
+     ],
+     "made_by": "bundled + minified with esbuild 0.28.2",
+     "entry": "export { default as Swiper } from 'swiper';\nexport { Navigation, Pagination, Autoplay, Keyboard, A11y, Mousewheel, FreeMode, Parallax, EffectFade, EffectCreative, EffectCoverflow, EffectCards } from 'swiper/modules';"
+    },
+    {
+     "path": "swiper@14.2.0/swiper-bundle.min.js",
+     "bytes": 152712,
+     "gzip": 43782,
+     "brotli": 38077,
+     "sha256": "e7d3449fa513c79bedfe9b53f7bba58edb927a81efcea053384faf3c67566736",
+     "type": "classic",
+     "safari_min": 14.1,
+     "syntax": [
+      "classPublicInstanceField",
+      "classStaticField",
+      "exponent",
+      "logicalAssign",
+      "nullish",
+      "objectRestSpread",
+      "optionalCatch",
+      "optionalChaining"
+     ],
+     "runtime_apis": [
+      "ResizeObserver(Safari 13.1)"
+     ],
+     "made_by": "copied unchanged from the npm tarball (trailing sourceMappingURL comment removed; .map not shipped)",
+     "source": "swiper-bundle.min.js"
+    },
+    {
+     "path": "swiper@14.2.0/swiper-bundle.min.css",
+     "bytes": 14612,
+     "gzip": 2931,
+     "brotli": 2528,
+     "sha256": "d3bd7ac4a5cb1eb7c19587255bbba195c3ea726d4aa1e76d3e573f595249fcfd",
+     "made_by": "copied unchanged from the npm tarball",
+     "source": "swiper-bundle.min.css"
+    }
+   ]
+  },
+  {
+   "dir": "embla-carousel@8.6.0",
+   "name": "Embla Carousel",
+   "version": "8.6.0",
+   "license": "MIT",
+   "homepage": "https://www.embla-carousel.com",
+   "copyright": "Copyright (c)",
+   "license_files": [
+    "embla-carousel@8.6.0/LICENSE.txt"
+   ],
+   "license_note": "LICENSE from GitHub tag v8.6.0 (the npm package ships none)",
+   "source": {
+    "npm": "embla-carousel@8.6.0",
+    "tarball": "https://registry.npmjs.org/embla-carousel/-/embla-carousel-8.6.0.tgz",
+    "integrity": "sha512-SjWyZBHJPbqxHOzckOfo8lHisEaJWmwd23XppYFYVh10bU66/Pn5tkVkbkCMZVdbUE5eTCI2nD8OyIP4Z+uwkA==",
+    "shasum": "abcedff2bff36992ea8ac27cd30080ca5b6a3f58"
+   },
+   "files": [
+    {
+     "path": "embla-carousel@8.6.0/embla-carousel.esm.min.js",
+     "bytes": 18693,
+     "gzip": 7766,
+     "brotli": 7037,
+     "sha256": "bd4bc0925a78a6ae0fc8b9e9843622d68d2cd4ee189927dc19068f781d0f3689",
+     "type": "esm",
+     "safari_min": 10,
+     "syntax": [],
+     "runtime_apis": [
+      "ResizeObserver(Safari 13.1)"
+     ],
+     "made_by": "minified with esbuild 0.28.2",
+     "source": "esm/embla-carousel.esm.js"
+    },
+    {
+     "path": "embla-carousel@8.6.0/embla-carousel.umd.js",
+     "bytes": 17946,
+     "gzip": 7141,
+     "brotli": 6467,
+     "sha256": "f05b5dbfe37d79b636b9db74ad04ed5e99b4bce369d781b0fb38b0b2ac619e66",
+     "type": "classic",
+     "safari_min": 10,
+     "syntax": [],
+     "runtime_apis": [
+      "ResizeObserver(Safari 13.1)"
+     ],
+     "made_by": "copied unchanged from the npm tarball",
+     "source": "embla-carousel.umd.js"
+    }
+   ]
+  },
+  {
+   "dir": "embla-carousel-autoplay@8.6.0",
+   "name": "Embla Carousel Autoplay",
+   "version": "8.6.0",
+   "license": "MIT",
+   "homepage": "https://www.embla-carousel.com/plugins/autoplay/",
+   "copyright": "Copyright (c)",
+   "license_files": [
+    "embla-carousel-autoplay@8.6.0/LICENSE.txt"
+   ],
+   "license_note": "LICENSE from GitHub tag v8.6.0 (the npm package ships none)",
+   "source": {
+    "npm": "embla-carousel-autoplay@8.6.0",
+    "tarball": "https://registry.npmjs.org/embla-carousel-autoplay/-/embla-carousel-autoplay-8.6.0.tgz",
+    "integrity": "sha512-OBu5G3nwaSXkZCo1A6LTaFMZ8EpkYbwIaH+bPqdBnDGQ2fh4+NbzjXjs2SktoPNKCtflfVMc75njaDHOYXcrsA==",
+    "shasum": "bc86c97de00d52ec34b05058736ef50af6e0d0e4"
+   },
+   "files": [
+    {
+     "path": "embla-carousel-autoplay@8.6.0/embla-carousel-autoplay.esm.min.js",
+     "bytes": 2473,
+     "gzip": 1138,
+     "brotli": 1011,
+     "sha256": "2fccc3e901c6fc5d814c863f17336bcab055e4d8f3a4c83e09b2d0afa766a52d",
+     "type": "esm",
+     "safari_min": 10,
+     "syntax": [],
+     "runtime_apis": [],
+     "made_by": "minified with esbuild 0.28.2",
+     "source": "esm/embla-carousel-autoplay.esm.js"
+    },
+    {
+     "path": "embla-carousel-autoplay@8.6.0/embla-carousel-autoplay.umd.js",
+     "bytes": 2451,
+     "gzip": 1056,
+     "brotli": 933,
+     "sha256": "f92de17882497c13f360a2ee11ce3d87e2e48e73369b44bfcf1b2444ef591948",
+     "type": "classic",
+     "safari_min": 10,
+     "syntax": [],
+     "runtime_apis": [],
+     "made_by": "copied unchanged from the npm tarball",
+     "source": "embla-carousel-autoplay.umd.js"
+    }
+   ]
+  },
+  {
+   "dir": "splitting@1.1.0",
+   "name": "Splitting",
+   "version": "1.1.0",
+   "license": "MIT",
+   "homepage": "https://splitting.js.org",
+   "copyright": "Copyright (c)",
+   "license_files": [
+    "splitting@1.1.0/LICENSE.md"
+   ],
+   "license_note": null,
+   "source": {
+    "npm": "splitting@1.1.0",
+    "tarball": "https://registry.npmjs.org/splitting/-/splitting-1.1.0.tgz",
+    "integrity": "sha512-6Tj+4mvlSti4DUu1yl0PnkHIIoLchFYJHqz2DnwYkvEehXbjrR2epa4ds/xdto6ZdZsC+NP5IOOehi9VGjNlMQ==",
+    "shasum": "e89102aa21f4f459d62e9fc027164dfb4fb8298d"
+   },
+   "files": [
+    {
+     "path": "splitting@1.1.0/splitting.min.js",
+     "bytes": 3871,
+     "gzip": 1750,
+     "brotli": 1571,
+     "sha256": "2c57efb96085bbfd54ec98062087affc0b958ecf408ad49ea6cfa6efbba2fb8d",
+     "type": "classic",
+     "safari_min": 10,
+     "syntax": [],
+     "runtime_apis": [
+      "Intl.Segmenter(Safari 14.1)"
+     ],
+     "made_by": "copied unchanged from the npm tarball",
+     "source": "dist/splitting.min.js"
+    },
+    {
+     "path": "splitting@1.1.0/splitting-lite.min.js",
+     "bytes": 2507,
+     "gzip": 1235,
+     "brotli": 1109,
+     "sha256": "628ab966523b9ce5d462f0fa6294109319e36a654f98a86f6a75c23b645b24b8",
+     "type": "classic",
+     "safari_min": 10,
+     "syntax": [],
+     "runtime_apis": [
+      "Intl.Segmenter(Safari 14.1)"
+     ],
+     "made_by": "copied unchanged from the npm tarball",
+     "source": "dist/splitting-lite.min.js"
+    },
+    {
+     "path": "splitting@1.1.0/splitting.css",
+     "bytes": 1784,
+     "gzip": 632,
+     "brotli": 510,
+     "sha256": "18aad67beae0833d77ea19de4be394240925825344e2ec9a0a325d39ae3d1396",
+     "made_by": "copied unchanged from the npm tarball",
+     "source": "dist/splitting.css"
+    },
+    {
+     "path": "splitting@1.1.0/splitting-cells.css",
+     "bytes": 1518,
+     "gzip": 526,
+     "brotli": 413,
+     "sha256": "bb184decc84625a3ee861becce95ad31f84dd7da35d649385261bf42898f40b5",
+     "made_by": "copied unchanged from the npm tarball",
+     "source": "dist/splitting-cells.css"
+    }
+   ]
+  },
+  {
+   "dir": "vanilla-tilt@1.8.1",
+   "name": "vanilla-tilt.js",
+   "version": "1.8.1",
+   "license": "MIT",
+   "homepage": "https://micku7zu.github.io/vanilla-tilt.js/",
+   "copyright": "Copyright (c)",
+   "license_files": [
+    "vanilla-tilt@1.8.1/LICENSE.txt"
+   ],
+   "license_note": null,
+   "source": {
+    "npm": "vanilla-tilt@1.8.1",
+    "tarball": "https://registry.npmjs.org/vanilla-tilt/-/vanilla-tilt-1.8.1.tgz",
+    "integrity": "sha512-hPB1XUsnh+SIeVSW2beb5RnuFxz4ZNgxjGD78o52F49gS4xaoLeEMh9qrQnJrnEn/vjjBI7IlxrrXmz4tGV0Kw==",
+    "shasum": "09cb4dc89509a55a44bb221917bb8ecdc2e39113"
+   },
+   "files": [
+    {
+     "path": "vanilla-tilt@1.8.1/vanilla-tilt.min.js",
+     "bytes": 8887,
+     "gzip": 2471,
+     "brotli": 2209,
+     "sha256": "de6fa8d3f40dbae2726a72f7d1ae46bb0588267af05355bef1d128f737f4a282",
+     "type": "classic",
+     "safari_min": 10,
+     "syntax": [],
+     "runtime_apis": [],
+     "made_by": "copied unchanged from the npm tarball",
+     "source": "dist/vanilla-tilt.min.js"
+    }
+   ]
+  },
+  {
+   "dir": "atropos@2.0.2",
+   "name": "Atropos",
+   "version": "2.0.2",
+   "license": "MIT",
+   "homepage": "https://atroposjs.com",
+   "copyright": "Copyright (c)",
+   "license_files": [
+    "atropos@2.0.2/LICENSE.txt"
+   ],
+   "license_note": null,
+   "source": {
+    "npm": "atropos@2.0.2",
+    "tarball": "https://registry.npmjs.org/atropos/-/atropos-2.0.2.tgz",
+    "integrity": "sha512-8f0u0hEOlBTWTSvzY17TcHuQjxUIpkTBq70/I4+UF5B43ORtOoRjm8TPBYEgLM8Ba9AWf6PDtkagbYoybdjaKg==",
+    "shasum": "8024e845487a69662b70fdb83f5e81039c934def"
+   },
+   "files": [
+    {
+     "path": "atropos@2.0.2/atropos.esm.min.js",
+     "bytes": 6975,
+     "gzip": 2605,
+     "brotli": 2290,
+     "sha256": "cbcf32935f4dc356b850e1ff37209c2f99a832af557035f341c9c47956967cfb",
+     "type": "esm",
+     "safari_min": 10,
+     "syntax": [],
+     "runtime_apis": [],
+     "made_by": "copied unchanged from the npm tarball (trailing sourceMappingURL comment removed; .map not shipped)",
+     "source": "atropos.min.mjs"
+    },
+    {
+     "path": "atropos@2.0.2/atropos.min.js",
+     "bytes": 6886,
+     "gzip": 2575,
+     "brotli": 2266,
+     "sha256": "a0c24e5b60debd6c523ac42aa43ed0eded9f2cabc1bebb9152e15e5ddf4687ed",
+     "type": "classic",
+     "safari_min": 10,
+     "syntax": [],
+     "runtime_apis": [],
+     "made_by": "copied unchanged from the npm tarball (trailing sourceMappingURL comment removed; .map not shipped)",
+     "source": "atropos.min.js"
+    },
+    {
+     "path": "atropos@2.0.2/atropos.min.css",
+     "bytes": 1666,
+     "gzip": 638,
+     "brotli": 489,
+     "sha256": "f5f6448daa556aaa2ca7a07d47acc5e633495bd7625f97943887f1fc94b3b081",
+     "made_by": "copied unchanged from the npm tarball",
+     "source": "atropos.min.css"
+    }
+   ]
+  },
+  {
+   "dir": "tsparticles-slim@3.9.1",
+   "name": "tsParticles slim",
+   "version": "3.9.1",
+   "license": "MIT",
+   "homepage": "https://particles.js.org",
+   "copyright": "Copyright (c)",
+   "license_files": [
+    "tsparticles-slim@3.9.1/LICENSE.txt"
+   ],
+   "license_note": null,
+   "source": {
+    "npm": "@tsparticles/slim@3.9.1",
+    "tarball": "https://registry.npmjs.org/@tsparticles/slim/-/slim-3.9.1.tgz",
+    "integrity": "sha512-CL5cDmADU7sDjRli0So+hY61VMbdroqbArmR9Av+c1Fisa5ytr6QD7Jv62iwU2S6rvgicEe9OyRmSy5GIefwZw==",
+    "shasum": "4f34b5c1515a143f6d4885cf01e4666e240287c5"
+   },
+   "files": [
+    {
+     "path": "tsparticles-slim@3.9.1/tsparticles.slim.bundle.min.js",
+     "bytes": 152671,
+     "gzip": 42153,
+     "brotli": 36665,
+     "sha256": "6ae8e059cdc703997eb8432493660523604cc95093ee400abff03f5cc52bee95",
+     "type": "classic",
+     "safari_min": 14,
+     "syntax": [
+      "asyncAwait",
+      "exponent",
+      "logicalAssign",
+      "nullish",
+      "objectRestSpread",
+      "optionalCatch",
+      "optionalChaining"
+     ],
+     "runtime_apis": [
+      "Object.hasOwn(Safari 15.4)",
+      "OffscreenCanvas(Safari 16.4)",
+      "ResizeObserver(Safari 13.1)"
+     ],
+     "made_by": "copied unchanged from the npm tarball",
+     "source": "tsparticles.slim.bundle.min.js"
+    },
+    {
+     "path": "tsparticles-slim@3.9.1/tsparticles.slim.bundle.min.js.LICENSE.txt",
+     "bytes": 47,
+     "gzip": 67,
+     "brotli": 51,
+     "sha256": "1ea25c7c809eb8de0a72c41f25fea8c997502e9ef301093f21783c880770ba8c",
+     "made_by": "copied unchanged from the npm tarball",
+     "source": "tsparticles.slim.bundle.min.js.LICENSE.txt"
+    }
+   ]
+  },
+  {
+   "dir": "lottie-web@5.13.0",
+   "name": "lottie-web (light SVG player)",
+   "version": "5.13.0",
+   "license": "MIT",
+   "homepage": "https://github.com/airbnb/lottie-web",
+   "copyright": "Copyright (c)",
+   "license_files": [
+    "lottie-web@5.13.0/LICENSE.md"
+   ],
+   "license_note": null,
+   "source": {
+    "npm": "lottie-web@5.13.0",
+    "tarball": "https://registry.npmjs.org/lottie-web/-/lottie-web-5.13.0.tgz",
+    "integrity": "sha512-+gfBXl6sxXMPe8tKQm7qzLnUy5DUPJPKIyRHwtpCpyUEYjHYRJC/5gjUvdkuO2c3JllrPtHXH5UJJK8LRYl5yQ==",
+    "shasum": "441d3df217cc8ba302338c3f168e1a3af0f221d3"
+   },
+   "files": [
+    {
+     "path": "lottie-web@5.13.0/lottie_light.min.js",
+     "bytes": 168394,
+     "gzip": 46584,
+     "brotli": 40345,
+     "sha256": "9588432bec30c8ef8200bac4a67d8aaad881047bc2a6c9fa624d90ec96402410",
+     "type": "classic",
+     "safari_min": 10,
+     "syntax": [],
+     "runtime_apis": [
+      "OffscreenCanvas(Safari 16.4)"
+     ],
+     "made_by": "copied unchanged from the npm tarball",
+     "source": "build/player/lottie_light.min.js"
+    }
+   ]
+  },
+  {
+   "dir": "flubber@0.4.2",
+   "name": "flubber",
+   "version": "0.4.2",
+   "license": "MIT",
+   "homepage": "https://github.com/veltman/flubber",
+   "copyright": "Copyright (c)",
+   "license_files": [
+    "flubber@0.4.2/LICENSE.txt"
+   ],
+   "license_note": null,
+   "source": {
+    "npm": "flubber@0.4.2",
+    "tarball": "https://registry.npmjs.org/flubber/-/flubber-0.4.2.tgz",
+    "integrity": "sha512-79RkJe3rA4nvRCVc2uXjj7U/BAUq84TS3KHn6c0Hr9K64vhj83ZNLUziNx4pJoBumSPhOl5VjH+Z0uhi+eE8Uw==",
+    "shasum": "14452d4a838cc3b9f2fb6175da94e35acd55fbaa"
+   },
+   "files": [
+    {
+     "path": "flubber@0.4.2/flubber.min.js",
+     "bytes": 53509,
+     "gzip": 18556,
+     "brotli": 15373,
+     "sha256": "5f04395eabfef5048e3e779da3624834fa873c4ccee3b5b5f6134298ba675ae4",
+     "type": "classic",
+     "safari_min": 10,
+     "syntax": [],
+     "runtime_apis": [],
+     "made_by": "copied unchanged from the npm tarball",
+     "source": "build/flubber.min.js"
+    }
+   ]
+  },
+  {
+   "dir": "canvas-confetti@1.9.4",
+   "name": "canvas-confetti",
+   "version": "1.9.4",
+   "license": "ISC",
+   "homepage": "https://github.com/catdad/canvas-confetti",
+   "copyright": "Copyright (c)",
+   "license_files": [
+    "canvas-confetti@1.9.4/LICENSE.txt"
+   ],
+   "license_note": null,
+   "source": {
+    "npm": "canvas-confetti@1.9.4",
+    "tarball": "https://registry.npmjs.org/canvas-confetti/-/canvas-confetti-1.9.4.tgz",
+    "integrity": "sha512-yxQbJkAVrFXWNbTUjPqjF7G+g6pDotOUHGbkZq2NELZUMDpiJ85rIEazVb8GTaAptNW2miJAXbs1BtioA251Pw==",
+    "shasum": "4412a5daa96afd0b4d70ecd66b65ce8db3022b2b"
+   },
+   "files": [
+    {
+     "path": "canvas-confetti@1.9.4/confetti.esm.min.js",
+     "bytes": 10853,
+     "gzip": 4387,
+     "brotli": 3970,
+     "sha256": "f99dfbd301f30c8794bf36b7eb4dd17484d4daa04736d532ce2dd46ef85efec1",
+     "type": "esm",
+     "safari_min": 11.1,
+     "syntax": [
+      "optionalCatch"
+     ],
+     "runtime_apis": [
+      "OffscreenCanvas(Safari 16.4)"
+     ],
+     "made_by": "minified with esbuild 0.28.2",
+     "source": "dist/confetti.module.mjs"
+    },
+    {
+     "path": "canvas-confetti@1.9.4/confetti.min.js",
+     "bytes": 10813,
+     "gzip": 4372,
+     "brotli": 3954,
+     "sha256": "0f2d50447b4f5a55efd2829aa791e9701dc4cc23b4afd326689eb3e616f1894c",
+     "type": "classic",
+     "safari_min": 11.1,
+     "syntax": [
+      "optionalCatch"
+     ],
+     "runtime_apis": [
+      "OffscreenCanvas(Safari 16.4)"
+     ],
+     "made_by": "minified with esbuild 0.28.2",
+     "source": "dist/confetti.browser.js"
+    }
+   ]
+  },
+  {
+   "dir": "countup.js@2.10.1",
+   "name": "CountUp.js",
+   "version": "2.10.1",
+   "license": "MIT",
+   "homepage": "https://inorganik.github.io/countUp.js/",
+   "copyright": "Jamie Perkins (author per package.json; the licence text has no copyright line)",
+   "license_files": [
+    "countup.js@2.10.1/LICENSE.md"
+   ],
+   "license_note": null,
+   "source": {
+    "npm": "countup.js@2.10.1",
+    "tarball": "https://registry.npmjs.org/countup.js/-/countup.js-2.10.1.tgz",
+    "integrity": "sha512-UHW/BsPDgVZfN919D4iu2HPv+jJxZUuaR3EhT0ScFZaD446GiQtkMTgOnOyJXdA2AewdlyUk9UvERlTHTbVpcw==",
+    "shasum": "94b67c994e933e73a551a78ecdf88f434544612a"
+   },
+   "files": [
+    {
+     "path": "countup.js@2.10.1/countUp.esm.min.js",
+     "bytes": 6841,
+     "gzip": 2183,
+     "brotli": 1921,
+     "sha256": "6a2a5075089b50c72c04749c6e13c95e4ff08a156f8ac466abd8e79a5239f7d2",
+     "type": "esm",
+     "safari_min": 10,
+     "syntax": [],
+     "runtime_apis": [],
+     "made_by": "copied unchanged from the npm tarball",
+     "source": "dist/countUp.min.js"
+    },
+    {
+     "path": "countup.js@2.10.1/countUp.umd.min.js",
+     "bytes": 7074,
+     "gzip": 2262,
+     "brotli": 2001,
+     "sha256": "2b08353ed1cd319ac41a79d74cd5508855ce33fd14d981997196b7b418cb4225",
+     "type": "classic",
+     "safari_min": 10,
+     "syntax": [],
+     "runtime_apis": [],
+     "made_by": "copied unchanged from the npm tarball",
+     "source": "dist/countUp.umd.js"
+    }
+   ]
+  },
+  {
+   "dir": "auto-animate@0.10.0",
+   "name": "@formkit/auto-animate",
+   "version": "0.10.0",
+   "license": "MIT",
+   "homepage": "https://auto-animate.formkit.com",
+   "copyright": "Copyright 2022 FormKit Inc.",
+   "license_files": [
+    "auto-animate@0.10.0/LICENSE.txt"
+   ],
+   "license_note": null,
+   "source": {
+    "npm": "@formkit/auto-animate@0.10.0",
+    "tarball": "https://registry.npmjs.org/@formkit/auto-animate/-/auto-animate-0.10.0.tgz",
+    "integrity": "sha512-KGomRttjUfORuPUaR/ZGQw+6xfMrTM+sxnILv7JAd9AmabU9rg9i6gF/iC0Ih+QpKCubJpCA/1DX9UHKE8cX+A==",
+    "shasum": "0eadd565f50e54e5dc6f29c41b32d32b53661eab"
+   },
+   "files": [
+    {
+     "path": "auto-animate@0.10.0/auto-animate.esm.min.js",
+     "bytes": 8603,
+     "gzip": 3418,
+     "brotli": 3072,
+     "sha256": "43d80c22edc7b925f17a7c21d1eb53a525bc494b545f534f8c459e46e20b5e8a",
+     "type": "esm",
+     "safari_min": 11.1,
+     "syntax": [
+      "asyncAwait",
+      "objectRestSpread",
+      "optionalCatch"
+     ],
+     "runtime_apis": [
+      "requestIdleCallback(no Safari)",
+      "ResizeObserver(Safari 13.1)"
+     ],
+     "made_by": "minified with esbuild 0.28.2",
+     "source": "index.mjs"
+    }
+   ]
+  },
+  {
+   "dir": "simplex-noise@4.0.3",
+   "name": "simplex-noise",
+   "version": "4.0.3",
+   "license": "MIT",
+   "homepage": "https://github.com/jwagner/simplex-noise.js",
+   "copyright": "Copyright (c)",
+   "license_files": [
+    "simplex-noise@4.0.3/LICENSE.txt"
+   ],
+   "license_note": null,
+   "source": {
+    "npm": "simplex-noise@4.0.3",
+    "tarball": "https://registry.npmjs.org/simplex-noise/-/simplex-noise-4.0.3.tgz",
+    "integrity": "sha512-qSE2I4AngLQG7BXqoZj51jokT4WUXe8mOBrvfOXpci8+6Yu44+/dD5zqDpOx3Ux792eamTd2lLcI8jqFntk/lg==",
+    "shasum": "e60b840ecfb9ac972870c8c7979bd867a5b4032f"
+   },
+   "files": [
+    {
+     "path": "simplex-noise@4.0.3/simplex-noise.esm.min.js",
+     "bytes": 4148,
+     "gzip": 1907,
+     "brotli": 1562,
+     "sha256": "ffee0daab731f3e6b6696d6e86fa6b23debdde8d3ae15cb2f92d782bb3073f3e",
+     "type": "esm",
+     "safari_min": 10,
+     "syntax": [],
+     "runtime_apis": [],
+     "made_by": "minified with esbuild 0.28.2",
+     "source": "dist/esm/simplex-noise.js"
+    }
+   ]
+  },
+  {
+   "dir": "zdog@1.1.3",
+   "name": "Zdog",
+   "version": "1.1.3",
+   "license": "MIT",
+   "homepage": "https://zzz.dog",
+   "copyright": "Copyright (c)",
+   "license_files": [
+    "zdog@1.1.3/LICENSE.txt"
+   ],
+   "license_note": "Zdog 1.1.3 declares the MIT licence in package.json (\"license\": \"MIT\"), in the header of dist/zdog.dist.min.js\n(\"Licensed MIT ... Copyright 2020 Metafizzy\") and in its README (\"Licensed MIT. Made by Metafizzy\").\nNeither the npm package nor the GitHub tag v1.1.3 contains a licence file, so the standard MIT text is reproduced here.",
+   "source": {
+    "npm": "zdog@1.1.3",
+    "tarball": "https://registry.npmjs.org/zdog/-/zdog-1.1.3.tgz",
+    "integrity": "sha512-raRj6r0gPzopFm5XWBJZr/NuV4EEnT4iE+U3dp5FV5pCb588Gmm3zLIp/j9yqqcMiHH8VNQlerLTgOqL7krh6w==",
+    "shasum": "55dd17a3582a0b74d48f8bfed7b2c2f2602646a9"
+   },
+   "files": [
+    {
+     "path": "zdog@1.1.3/zdog.dist.min.js",
+     "bytes": 29737,
+     "gzip": 7229,
+     "brotli": 6489,
+     "sha256": "2baede641561fa7f00490809a3357ce66a70a47c4c46385b078b8e10027c14f0",
+     "type": "classic",
+     "safari_min": 10,
+     "syntax": [],
+     "runtime_apis": [],
+     "made_by": "copied unchanged from the npm tarball",
+     "source": "dist/zdog.dist.min.js"
+    }
+   ]
+  },
+  {
+   "dir": "rough-notation@0.5.1",
+   "name": "Rough Notation",
+   "version": "0.5.1",
+   "license": "MIT",
+   "homepage": "https://roughnotation.com",
+   "copyright": "Copyright (c)",
+   "license_files": [
+    "rough-notation@0.5.1/LICENSE.txt"
+   ],
+   "license_note": null,
+   "source": {
+    "npm": "rough-notation@0.5.1",
+    "tarball": "https://registry.npmjs.org/rough-notation/-/rough-notation-0.5.1.tgz",
+    "integrity": "sha512-ITHofTzm13cWFVfoGsh/4c/k2Mg8geKgBCwex71UZLnNuw403tCRjYPQ68jSAd37DMbZIePXPjDgY0XdZi9HPw==",
+    "shasum": "32abbb16b973fb00fba83ab96b18704e98620e95"
+   },
+   "files": [
+    {
+     "path": "rough-notation@0.5.1/rough-notation.esm.min.js",
+     "bytes": 10691,
+     "gzip": 3959,
+     "brotli": 3579,
+     "sha256": "af346fb8433c55a08400d4c8d3edd2083b5e5d1f78980f20cc7151cdc8379687",
+     "type": "esm",
+     "safari_min": 10.1,
+     "syntax": [
+      "exponent"
+     ],
+     "runtime_apis": [
+      "ResizeObserver(Safari 13.1)"
+     ],
+     "made_by": "copied unchanged from the npm tarball",
+     "source": "lib/rough-notation.esm.js"
+    },
+    {
+     "path": "rough-notation@0.5.1/rough-notation.iife.min.js",
+     "bytes": 10781,
+     "gzip": 4002,
+     "brotli": 3606,
+     "sha256": "f90aa0090e361ff48694b74e0319e109856decb3e757c280dfe25e3607f35fac",
+     "type": "classic",
+     "safari_min": 10.1,
+     "syntax": [
+      "exponent"
+     ],
+     "runtime_apis": [
+      "ResizeObserver(Safari 13.1)"
+     ],
+     "made_by": "copied unchanged from the npm tarball",
+     "source": "lib/rough-notation.iife.js"
+    }
+   ]
+  },
+  {
+   "dir": "morphicons@1.7.1",
+   "name": "morphicons",
+   "version": "1.7.1",
+   "license": "MIT",
+   "homepage": "https://github.com/guillermolg00/morphicons",
+   "copyright": "Copyright (c)",
+   "license_files": [
+    "morphicons@1.7.1/LICENSE.txt"
+   ],
+   "license_note": null,
+   "source": {
+    "npm": "morphicons@1.7.1",
+    "tarball": "https://registry.npmjs.org/morphicons/-/morphicons-1.7.1.tgz",
+    "integrity": "sha512-q5ylxy5/d7vBg0OAzanlooXf05PekovMYDuuQVpr6vAQZxl99lrJbaIi+jJ32PXQf9WEEaDO2pbNBsx1ZhEnFQ==",
+    "shasum": "2384e48e410ba2954c3bbde69d6b0804a8127d2a"
+   },
+   "files": [
+    {
+     "path": "morphicons@1.7.1/morphicons.esm.min.js",
+     "bytes": 16218,
+     "gzip": 7325,
+     "brotli": 6604,
+     "sha256": "21ea3ba6ba5af24740b82a0787a597165aaeb891ac4e01eb80cd005ec377f956",
+     "type": "esm",
+     "safari_min": 13.1,
+     "syntax": [
+      "exponent",
+      "nullish",
+      "objectRestSpread"
+     ],
+     "runtime_apis": [],
+     "made_by": "bundled + minified with esbuild 0.28.2",
+     "entry": "export * from 'morphicons/dom';"
+    },
+    {
+     "path": "morphicons@1.7.1/morphicons-element.esm.min.js",
+     "bytes": 22196,
+     "gzip": 9409,
+     "brotli": 8456,
+     "sha256": "f2c7e12195499ea6938219ce45ad8c8b4d6536610d06829f167483b28c33bd1b",
+     "type": "esm",
+     "safari_min": 13.1,
+     "syntax": [
+      "exponent",
+      "nullish",
+      "objectRestSpread"
+     ],
+     "runtime_apis": [
+      "Object.hasOwn(Safari 15.4)"
+     ],
+     "made_by": "bundled + minified with esbuild 0.28.2",
+     "entry": "export * from 'morphicons/element';"
+    }
+   ]
+  },
+  {
+   "dir": "number-flow@0.6.2",
+   "name": "NumberFlow (vanilla custom element)",
+   "version": "0.6.2",
+   "license": "MIT",
+   "homepage": "https://number-flow.barvian.me",
+   "copyright": "Copyright (c)",
+   "license_files": [
+    "number-flow@0.6.2/LICENSE.md",
+    "number-flow@0.6.2/LICENSE-esm-env.txt"
+   ],
+   "license_note": null,
+   "source": {
+    "npm": "number-flow@0.6.2",
+    "tarball": "https://registry.npmjs.org/number-flow/-/number-flow-0.6.2.tgz",
+    "integrity": "sha512-MCnImG4Q5vPwhSXnov56nOuyyKn6LC+Qd7II1UiKc+ACRtug5iAtn0+CwXNxM38AC5lSowEY+oYEtZX2qMnUyw==",
+    "shasum": "458f61f697af94584b06e41c10c144455ac8eb32"
+   },
+   "files": [
+    {
+     "path": "number-flow@0.6.2/number-flow.esm.min.js",
+     "bytes": 17440,
+     "gzip": 5897,
+     "brotli": 5256,
+     "sha256": "072151ef32186dbb0c0b3c7a940ce4671071670cf30b4aa3bd21393a803148ca",
+     "type": "esm",
+     "safari_min": 13.1,
+     "syntax": [
+      "nullish",
+      "objectRestSpread",
+      "optionalCatch"
+     ],
+     "runtime_apis": [
+      "CSS.registerProperty(Safari 16.4)"
+     ],
+     "made_by": "bundled + minified with esbuild 0.28.2",
+     "entry": "export * from 'number-flow';\nexport { default } from 'number-flow';"
+    }
+   ]
+  }
+ ],
+ "bundled_dependencies": [
+  {
+   "name": "framer-motion",
+   "version": "13.4.4",
+   "license": "MIT",
+   "integrity": "sha512-lbsZO95NGbulo6apz70zEt6Vxf/anoRwQI2ECEc/EQYWO5CGbITtl7plDW8P/VXgXw6e8wrbhH4a9i+ygke0Mg==",
+   "where": "inside motion@13.4.4/motion.min.js and motion-mini.min.js",
+   "license_file": "motion@13.4.4/LICENSE-framer-motion.md"
+  },
+  {
+   "name": "motion-dom",
+   "version": "13.4.4",
+   "license": "MIT",
+   "integrity": "sha512-z2qN3RUABSci4G7cr5aHTFhqPNCWJsEMMfRlzxqtANQsSCIbVJmHvMV288m5x7doEQBTYbRTWbKdztmquCn4Sw==",
+   "where": "inside motion@13.4.4 ES module bundles",
+   "license_file": "motion@13.4.4/LICENSE.md"
+  },
+  {
+   "name": "motion-utils",
+   "version": "13.3.0",
+   "license": "MIT",
+   "integrity": "sha512-sgSschQp7EseHInIlR7hBbMuvet3RA0bs28KPZAXJcGKGdxHGvh1ogpYDilY3bOMtl73EqPNmp75sAKHYPU5sg==",
+   "where": "inside motion@13.4.4 ES module bundles",
+   "license_file": "motion@13.4.4/LICENSE.md"
+  },
+  {
+   "name": "esm-env",
+   "version": "1.2.2",
+   "license": "MIT",
+   "integrity": "sha512-Epxrv+Nr/CaL4ZcFGPJIYLWFom+YeV1DqMLHJoEd9SYRxNbaFruBwfEX/kkHUJf55j2+TUbmDcmuilbP1TmXHA==",
+   "where": "a few bytes inside number-flow@0.6.2/number-flow.esm.min.js",
+   "license_file": "number-flow@0.6.2/LICENSE-esm-env.txt"
+  }
+ ],
+ "icons": [
+  {
+   "dir": "lucide@1.48.0",
+   "name": "Lucide",
+   "version": "1.48.0",
+   "license": "ISC",
+   "homepage": "https://lucide.dev",
+   "copyright": "Copyright (c)",
+   "license_files": [
+    "lucide@1.48.0/LICENSE.txt"
+   ],
+   "source": {
+    "npm": "lucide-static@1.48.0",
+    "tarball": "https://registry.npmjs.org/lucide-static/-/lucide-static-1.48.0.tgz",
+    "integrity": "sha512-ZUGgZ4rzlLfVbhN2Zi37TMrTaSpXAbWx6Y/xZxKSDLPiqxtTK7Mw2M+oBJa0gjV8p3+CWBHh48u+IC9+jKlUjA==",
+    "shasum": "1e624cfe50e0da5f338b9f3610a30a523d047dca"
+   },
+   "variants": {
+    "lucide": {
+     "sprite": "lucide@1.48.0/sprite.svg",
+     "viewBox": "0 0 24 24",
+     "fallbacks": [
+      "brand-telegram",
+      "brand-x",
+      "brand-facebook",
+      "brand-reddit",
+      "brand-whatsapp"
+     ]
+    }
+   },
+   "icons": 158,
+   "files": [
+    {
+     "path": "lucide@1.48.0/LICENSE.txt",
+     "bytes": 3208,
+     "gzip": 1504,
+     "brotli": 1146,
+     "sha256": "b495047bd93a9b06913511076f504daba17d5bbeb3e0650f3bb53a4220329c57"
+    },
+    {
+     "path": "lucide@1.48.0/icons.json",
+     "bytes": 9410,
+     "gzip": 1778,
+     "brotli": 1529,
+     "sha256": "21b91c97dd7d0ff34fcb9fe8770e8de3e0bdceb803736352294cbe0dd45e2501"
+    },
+    {
+     "path": "lucide@1.48.0/sprite.svg",
+     "bytes": 54265,
+     "gzip": 8497,
+     "brotli": 7506,
+     "sha256": "cf84b000011a166e95479ec9f357c42262b4b10a204b920618d0252e82184d97"
+    }
+   ]
+  },
+  {
+   "dir": "phosphor-icons@2.1.1",
+   "name": "Phosphor Icons",
+   "version": "2.1.1",
+   "license": "MIT",
+   "homepage": "https://phosphoricons.com",
+   "copyright": "Copyright (c)",
+   "license_files": [
+    "phosphor-icons@2.1.1/LICENSE.txt"
+   ],
+   "source": {
+    "npm": "@phosphor-icons/core@2.1.1",
+    "tarball": "https://registry.npmjs.org/@phosphor-icons/core/-/core-2.1.1.tgz",
+    "integrity": "sha512-v4ARvrip4qBCImOE5rmPUylOEK4iiED9ZyKjcvzuezqMaiRASCHKcRIuvvxL/twvLpkfnEODCOJp5dM4eZilxQ==",
+    "shasum": "62a4cfbec9772f1a613a647da214fbb96f3ad39d"
+   },
+   "variants": {
+    "phosphor-regular": {
+     "sprite": "phosphor-icons@2.1.1/sprite-regular.svg",
+     "viewBox": "0 0 256 256",
+     "fallbacks": []
+    },
+    "phosphor-light": {
+     "sprite": "phosphor-icons@2.1.1/sprite-light.svg",
+     "viewBox": "0 0 256 256",
+     "fallbacks": []
+    },
+    "phosphor-bold": {
+     "sprite": "phosphor-icons@2.1.1/sprite-bold.svg",
+     "viewBox": "0 0 256 256",
+     "fallbacks": []
+    },
+    "phosphor-fill": {
+     "sprite": "phosphor-icons@2.1.1/sprite-fill.svg",
+     "viewBox": "0 0 256 256",
+     "fallbacks": []
+    },
+    "phosphor-duotone": {
+     "sprite": "phosphor-icons@2.1.1/sprite-duotone.svg",
+     "viewBox": "0 0 256 256",
+     "fallbacks": []
+    }
+   },
+   "icons": 158,
+   "files": [
+    {
+     "path": "phosphor-icons@2.1.1/LICENSE.txt",
+     "bytes": 1092,
+     "gzip": 666,
+     "brotli": 482,
+     "sha256": "ddbe6082ec3cf979db47e5af549d2849c5d6182b3e005ef91ce1dbb9eb122f11"
+    },
+    {
+     "path": "phosphor-icons@2.1.1/icons.json",
+     "bytes": 29328,
+     "gzip": 4364,
+     "brotli": 3119,
+     "sha256": "4fb349224b5ec3e3ceaad14bc65b6cf8cfebb1ab5b56aa02b3f993365057b54c"
+    },
+    {
+     "path": "phosphor-icons@2.1.1/sprite-bold.svg",
+     "bytes": 69339,
+     "gzip": 19315,
+     "brotli": 16919,
+     "sha256": "0dd6b4bc0d4102dcad53a937fa866e8c93b8aa60a5e95252602b3eafc1da8317"
+    },
+    {
+     "path": "phosphor-icons@2.1.1/sprite-duotone.svg",
+     "bytes": 98304,
+     "gzip": 24151,
+     "brotli": 20930,
+     "sha256": "2a2e51af510e84781c0cd18d237055d4cbdd6136f81afba714b7a856c0d4521d"
+    },
+    {
+     "path": "phosphor-icons@2.1.1/sprite-fill.svg",
+     "bytes": 59900,
+     "gzip": 15566,
+     "brotli": 13666,
+     "sha256": "1dfa22c293b72a1102a5a837f92fb07034e54572772c8f69ca9e933005422722"
+    },
+    {
+     "path": "phosphor-icons@2.1.1/sprite-light.svg",
+     "bytes": 75961,
+     "gzip": 21097,
+     "brotli": 18256,
+     "sha256": "bae5e39c0f73e58fc99d741ad46214f1a88f6a0e4b33c376eaa26b06c9fbfdac"
+    },
+    {
+     "path": "phosphor-icons@2.1.1/sprite-regular.svg",
+     "bytes": 69095,
+     "gzip": 19163,
+     "brotli": 16826,
+     "sha256": "9d06828cec93d65be1891728efa68c153520c8e89403c09f4c5c1232cf9f3025"
+    }
+   ]
+  },
+  {
+   "dir": "tabler-icons@3.48.0",
+   "name": "Tabler Icons",
+   "version": "3.48.0",
+   "license": "MIT",
+   "homepage": "https://tabler.io/icons",
+   "copyright": "Copyright (c)",
+   "license_files": [
+    "tabler-icons@3.48.0/LICENSE.txt"
+   ],
+   "source": {
+    "npm": "@tabler/icons@3.48.0",
+    "tarball": "https://registry.npmjs.org/@tabler/icons/-/icons-3.48.0.tgz",
+    "integrity": "sha512-lQk06gVHNVBnJp0UOgtth54mcZBJM7rdYKsAxKOProj1bbSAx+/xiuOWfHlyvgdL3M+Y+I0HINrjHa3ygp8eXQ==",
+    "shasum": "08ad2b8c328ef5115b10ea306a52b6d9271f7b32"
+   },
+   "variants": {
+    "tabler-outline": {
+     "sprite": "tabler-icons@3.48.0/sprite-outline.svg",
+     "viewBox": "0 0 24 24",
+     "fallbacks": []
+    },
+    "tabler-filled": {
+     "sprite": "tabler-icons@3.48.0/sprite-filled.svg",
+     "viewBox": "0 0 24 24",
+     "fallbacks": [
+      "sort",
+      "chevron-up",
+      "chevron-left",
+      "chevrons-left",
+      "chevrons-right",
+      "arrow-left",
+      "arrow-right",
+      "arrow-up",
+      "arrow-down",
+      "arrow-up-right",
+      "minus",
+      "map",
+      "telescope",
+      "loader",
+      "refresh",
+      "ban",
+      "wifi-off",
+      "inbox",
+      "package",
+      "languages",
+      "wand",
+      "maximize",
+      "minimize",
+      "eye-off",
+      "target",
+      "code",
+      "qr-code",
+      "share",
+      "upload",
+      "user-circle",
+      "users",
+      "user-plus",
+      "log-in",
+      "log-out",
+      "unlock",
+      "at-sign",
+      "coins",
+      "notebook",
+      "history",
+      "hash",
+      "library",
+      "newspaper",
+      "rss",
+      "chart",
+      "activity",
+      "percent",
+      "trending-up",
+      "rocket",
+      "shuffle",
+      "repeat",
+      "volume",
+      "volume-off",
+      "film",
+      "clapperboard",
+      "cast",
+      "music",
+      "live",
+      "brand-telegram",
+      "brand-reddit"
+     ]
+    }
+   },
+   "icons": 158,
+   "files": [
+    {
+     "path": "tabler-icons@3.48.0/LICENSE.txt",
+     "bytes": 1073,
+     "gzip": 666,
+     "brotli": 481,
+     "sha256": "b740a1d46122672da62833e97f7e7c8a13fa85cbc7445b584b297cc00dde93db"
+    },
+    {
+     "path": "tabler-icons@3.48.0/icons.json",
+     "bytes": 18291,
+     "gzip": 2810,
+     "brotli": 2376,
+     "sha256": "4d59dbf6853d397739de2ab2c5438cab9c8649b5079893accfc0bcb903524da0"
+    },
+    {
+     "path": "tabler-icons@3.48.0/sprite-filled.svg",
+     "bytes": 64349,
+     "gzip": 13968,
+     "brotli": 12063,
+     "sha256": "96ab2ec679bfc118878363a4188a2faf78896b9f35ba49e3cf3e3afb598aea07"
+    },
+    {
+     "path": "tabler-icons@3.48.0/sprite-outline.svg",
+     "bytes": 54094,
+     "gzip": 7237,
+     "brotli": 6285,
+     "sha256": "5b39c4a3f994570fcdd473c5ea3826b5cfe3f81dd5e3014b3978bd4742d6d8eb"
+    }
+   ]
+  },
+  {
+   "dir": "remixicon@4.8.0",
+   "name": "Remix Icon",
+   "version": "4.8.0",
+   "license": "Apache-2.0",
+   "homepage": "https://remixicon.com",
+   "copyright": "Remix Design (the Apache-2.0 text carries no copyright line)",
+   "license_files": [
+    "remixicon@4.8.0/LICENSE.txt"
+   ],
+   "source": {
+    "npm": "remixicon@4.8.0",
+    "tarball": "https://registry.npmjs.org/remixicon/-/remixicon-4.8.0.tgz",
+    "integrity": "sha512-8qTM/bWkmsAWitvcL9XrVPVdqHRrdmnNp4zCFBdmIHBygxfHWwoK6NzitbiMyRzjcXKBMlS/ab5M65/ZlxJTVA==",
+    "shasum": "52d16cc63f8557140ed39d5cb9c6403bccdddb68"
+   },
+   "variants": {
+    "remix-line": {
+     "sprite": "remixicon@4.8.0/sprite-line.svg",
+     "viewBox": "0 0 24 24",
+     "fallbacks": []
+    },
+    "remix-fill": {
+     "sprite": "remixicon@4.8.0/sprite-fill.svg",
+     "viewBox": "0 0 24 24",
+     "fallbacks": []
+    }
+   },
+   "icons": 158,
+   "files": [
+    {
+     "path": "remixicon@4.8.0/LICENSE.txt",
+     "bytes": 11357,
+     "gzip": 3928,
+     "brotli": 3056,
+     "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+     "path": "remixicon@4.8.0/icons.json",
+     "bytes": 15096,
+     "gzip": 2448,
+     "brotli": 2069,
+     "sha256": "02775a635ba0bf5c1ae896f3f020dff514210827e611840ae0ce68ca0739b9c1"
+    },
+    {
+     "path": "remixicon@4.8.0/sprite-fill.svg",
+     "bytes": 71096,
+     "gzip": 22696,
+     "brotli": 19716,
+     "sha256": "696d50f27333692179f6a6020a1686dbb388ec879353c0212aae99d550b3a4fb"
+    },
+    {
+     "path": "remixicon@4.8.0/sprite-line.svg",
+     "bytes": 86291,
+     "gzip": 27987,
+     "brotli": 24356,
+     "sha256": "44bbb61f006d76195c8f37f6d4039159a3a46610433e2f8e9b4e011b62e9456f"
+    }
+   ]
+  }
+ ],
+ "fonts": [
+  {
+   "family": "Unbounded",
+   "dir": "fonts/unbounded@5.3.0/",
+   "css": "fonts/unbounded@5.3.0/unbounded.css",
+   "license": "OFL-1.1",
+   "copyright": "Copyright 2022 The Unbounded Project Authors (https://github.com/googlefonts/unbounded)",
+   "license_files": [
+    "fonts/unbounded@5.3.0/OFL.txt"
+   ],
+   "source": {
+    "npm": "@fontsource-variable/unbounded@5.3.0",
+    "tarball": "https://registry.npmjs.org/@fontsource-variable/unbounded/-/unbounded-5.3.0.tgz",
+    "integrity": "sha512-ea565Ncn4r7gPdBEHcmaF31V11hDfkL7b/JCklLobQbMfbu2ZZQrVWNgdeEFWFLqNh36yhieZWOgxdAnMTzrLg==",
+    "shasum": "23f6c61b8d28d969631b38914e0d9ee1bde1daa0"
+   },
+   "axes": {
+    "wght": [
+     "200",
+     "900"
+    ]
+   },
+   "subsets": [
+    "latin",
+    "latin-ext",
+    "vietnamese",
+    "cyrillic",
+    "cyrillic-ext"
+   ],
+   "styles": [
+    "normal"
+   ],
+   "total_bytes": 216400,
+   "preload": [
+    "fonts/unbounded@5.3.0/unbounded-latin-wght-normal.woff2"
+   ],
+   "role": "display: wide geometric, very bold headlines"
+  },
+  {
+   "family": "Space Grotesk",
+   "dir": "fonts/space-grotesk@5.3.0/",
+   "css": "fonts/space-grotesk@5.3.0/space-grotesk.css",
+   "license": "OFL-1.1",
+   "copyright": "Copyright 2020 The Space Grotesk Project Authors (https://github.com/floriankarsten/space-grotesk)",
+   "license_files": [
+    "fonts/space-grotesk@5.3.0/OFL.txt"
+   ],
+   "source": {
+    "npm": "@fontsource-variable/space-grotesk@5.3.0",
+    "tarball": "https://registry.npmjs.org/@fontsource-variable/space-grotesk/-/space-grotesk-5.3.0.tgz",
+    "integrity": "sha512-2IxmvfB08i9vnGB3Ym/AXvhRE+8XOjWMXIyDum03c+tPwH0FUoMNQfGpU8NXPxjbws0Vvss3AH0Zqt4oJBBAdw==",
+    "shasum": "f35f8915850afbefe92b0fe15b1db49928e55186"
+   },
+   "axes": {
+    "wght": [
+     "300",
+     "700"
+    ]
+   },
+   "subsets": [
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "normal"
+   ],
+   "total_bytes": 47940,
+   "preload": [
+    "fonts/space-grotesk@5.3.0/space-grotesk-latin-wght-normal.woff2"
+   ],
+   "role": "display/text: technical grotesk"
+  },
+  {
+   "family": "Syne",
+   "dir": "fonts/syne@5.3.0/",
+   "css": "fonts/syne@5.3.0/syne.css",
+   "license": "OFL-1.1",
+   "copyright": "Copyright 2019 The Syne Project Authors (https://gitlab.com/bonjour-monde/fonderie/syne-typeface)",
+   "license_files": [
+    "fonts/syne@5.3.0/OFL.txt"
+   ],
+   "source": {
+    "npm": "@fontsource-variable/syne@5.3.0",
+    "tarball": "https://registry.npmjs.org/@fontsource-variable/syne/-/syne-5.3.0.tgz",
+    "integrity": "sha512-GUNH65fUfWHQcX7bO0BGgScE465gawpTId45aDfhHcVj/upbb6b+2d++5keKP128vK8+LtE4dvLkKTsxoh7TwA==",
+    "shasum": "916f13efe820e2c13a2655edad3da181925977fd"
+   },
+   "axes": {
+    "wght": [
+     "400",
+     "800"
+    ]
+   },
+   "subsets": [
+    "latin",
+    "latin-ext",
+    "greek"
+   ],
+   "styles": [
+    "normal"
+   ],
+   "total_bytes": 60532,
+   "preload": [
+    "fonts/syne@5.3.0/syne-latin-wght-normal.woff2"
+   ],
+   "role": "display: art-gallery, extended at heavy weights"
+  },
+  {
+   "family": "Bricolage Grotesque",
+   "dir": "fonts/bricolage-grotesque@5.3.0/",
+   "css": "fonts/bricolage-grotesque@5.3.0/bricolage-grotesque.css",
+   "license": "OFL-1.1",
+   "copyright": "Copyright 2022 The Bricolage Grotesque Project Authors (https://github.com/ateliertriay/bricolage)",
+   "license_files": [
+    "fonts/bricolage-grotesque@5.3.0/OFL.txt"
+   ],
+   "source": {
+    "npm": "@fontsource-variable/bricolage-grotesque@5.3.0",
+    "tarball": "https://registry.npmjs.org/@fontsource-variable/bricolage-grotesque/-/bricolage-grotesque-5.3.0.tgz",
+    "integrity": "sha512-TLi9Q4hJjS2UvoTMRSS2nHu6c4R56lAw60NR9QYtVRCHn0XtsFpiEhNffZ8Glsoxu6wEEwLKBP8lb94J52PNBA==",
+    "shasum": "9734016f851d1790bf49c095f59a5e8447814d00"
+   },
+   "axes": {
+    "opsz": [
+     "12",
+     "96"
+    ],
+    "wdth": [
+     "75",
+     "100"
+    ],
+    "wght": [
+     "200",
+     "800"
+    ]
+   },
+   "subsets": [
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "normal"
+   ],
+   "total_bytes": 207164,
+   "preload": [
+    "fonts/bricolage-grotesque@5.3.0/bricolage-grotesque-latin-standard-normal.woff2"
+   ],
+   "role": "display/text: quirky grotesk with optical size + width axes"
+  },
+  {
+   "family": "Fraunces",
+   "dir": "fonts/fraunces@5.3.0/",
+   "css": "fonts/fraunces@5.3.0/fraunces.css",
+   "license": "OFL-1.1",
+   "copyright": "Copyright 2020 The Fraunces Project Authors (github.com/undercasetype/Fraunces)",
+   "license_files": [
+    "fonts/fraunces@5.3.0/OFL.txt"
+   ],
+   "source": {
+    "npm": "@fontsource-variable/fraunces@5.3.0",
+    "tarball": "https://registry.npmjs.org/@fontsource-variable/fraunces/-/fraunces-5.3.0.tgz",
+    "integrity": "sha512-9BYGySn4AHEJdgp9Z28tQ3X+laJMEOITXkQarZXeloWQZDq5oOvXJ3kDA8c7MGIfpogIaZfjrQBqmda8POOCKA==",
+    "shasum": "6c8a69a0dcac753643a04e068ed2ad5689e99229"
+   },
+   "axes": {
+    "ital": [
+     "0",
+     "1"
+    ],
+    "opsz": [
+     "9",
+     "144"
+    ],
+    "wght": [
+     "100",
+     "900"
+    ],
+    "SOFT": [
+     "0",
+     "100"
+    ],
+    "WONK": [
+     "0",
+     "1"
+    ]
+   },
+   "subsets": [
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "italic",
+    "normal"
+   ],
+   "total_bytes": 359700,
+   "preload": [
+    "fonts/fraunces@5.3.0/fraunces-latin-full-normal.woff2",
+    "fonts/fraunces@5.3.0/fraunces-latin-wght-italic.woff2"
+   ],
+   "role": "display serif: soft \"wonky\" old-style, SOFT/WONK/opsz axes"
+  },
+  {
+   "family": "Playfair Display",
+   "dir": "fonts/playfair-display@5.3.0/",
+   "css": "fonts/playfair-display@5.3.0/playfair-display.css",
+   "license": "OFL-1.1",
+   "copyright": "Copyright 2017 The Playfair Display Project Authors (https://github.com/clauseggers/Playfair-Display), Reserved Font Name \"Playfair Display\"",
+   "license_files": [
+    "fonts/playfair-display@5.3.0/OFL.txt"
+   ],
+   "source": {
+    "npm": "@fontsource-variable/playfair-display@5.3.0",
+    "tarball": "https://registry.npmjs.org/@fontsource-variable/playfair-display/-/playfair-display-5.3.0.tgz",
+    "integrity": "sha512-IHdzTvE8eGIXHteZql7KXoqdc3Gfm+Zs1u4XlSC3MeplkwviT3sx/P6gI0tLwg/xIYLF4ZJYveZ5V+bl9cnDwA==",
+    "shasum": "999c3ff0683d6eb2bd5a09e2db4d07e08f255093"
+   },
+   "axes": {
+    "ital": [
+     "0",
+     "1"
+    ],
+    "wght": [
+     "400",
+     "900"
+    ]
+   },
+   "subsets": [
+    "latin",
+    "latin-ext",
+    "vietnamese",
+    "cyrillic"
+   ],
+   "styles": [
+    "italic",
+    "normal"
+   ],
+   "total_bytes": 184864,
+   "preload": [
+    "fonts/playfair-display@5.3.0/playfair-display-latin-wght-normal.woff2",
+    "fonts/playfair-display@5.3.0/playfair-display-latin-wght-italic.woff2"
+   ],
+   "role": "display serif: high-contrast, elegant"
+  },
+  {
+   "family": "Tilt Neon",
+   "dir": "fonts/tilt-neon@5.3.0/",
+   "css": "fonts/tilt-neon@5.3.0/tilt-neon.css",
+   "license": "OFL-1.1",
+   "copyright": "Copyright 2019 The Tilt Project Authors (https://github.com/googlefonts/Tilt-Fonts)",
+   "license_files": [
+    "fonts/tilt-neon@5.3.0/OFL.txt"
+   ],
+   "source": {
+    "npm": "@fontsource-variable/tilt-neon@5.3.0",
+    "tarball": "https://registry.npmjs.org/@fontsource-variable/tilt-neon/-/tilt-neon-5.3.0.tgz",
+    "integrity": "sha512-eHfyW9Oc9v+iMUKpfmoMYovmGolb/Wm/BA+pQvsBPjJF9H/ONW1wwdy5MRc+nenf8NJJPDYzYkWk+Eadlyy5zA==",
+    "shasum": "ec8f63e77e088faf36ac01bcaced0245cd8a3264"
+   },
+   "axes": {
+    "XROT": [
+     "-45",
+     "45"
+    ],
+    "YROT": [
+     "-45",
+     "45"
+    ]
+   },
+   "subsets": [
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "normal"
+   ],
+   "total_bytes": 314208,
+   "preload": [
+    "fonts/tilt-neon@5.3.0/tilt-neon-latin-full-normal.woff2"
+   ],
+   "role": "display: neon-tube strokes, XROT/YROT 3D tilt axes"
+  },
+  {
+   "family": "Orbitron",
+   "dir": "fonts/orbitron@5.3.0/",
+   "css": "fonts/orbitron@5.3.0/orbitron.css",
+   "license": "OFL-1.1",
+   "copyright": "Copyright 2018 The Orbitron Project Authors (https://github.com/theleagueof/orbitron)",
+   "license_files": [
+    "fonts/orbitron@5.3.0/OFL.txt"
+   ],
+   "source": {
+    "npm": "@fontsource-variable/orbitron@5.3.0",
+    "tarball": "https://registry.npmjs.org/@fontsource-variable/orbitron/-/orbitron-5.3.0.tgz",
+    "integrity": "sha512-KwW0YX1DJNqF0v86W1hZonuauypCFaltGdpB6qwCeu5bUyHoFpeZ84aAjChZSRF7RWZFithg/il0nMwYxJgqDA==",
+    "shasum": "2430145895ddde4f2863e0c97821a3d686c846ad"
+   },
+   "axes": {
+    "wght": [
+     "400",
+     "900"
+    ]
+   },
+   "subsets": [
+    "latin"
+   ],
+   "styles": [
+    "normal"
+   ],
+   "total_bytes": 11800,
+   "preload": [
+    "fonts/orbitron@5.3.0/orbitron-latin-wght-normal.woff2"
+   ],
+   "role": "display: sci-fi / HUD (latin only)"
+  },
+  {
+   "family": "Oswald",
+   "dir": "fonts/oswald@5.3.0/",
+   "css": "fonts/oswald@5.3.0/oswald.css",
+   "license": "OFL-1.1",
+   "copyright": "Copyright 2016 The Oswald Project Authors (https://github.com/googlefonts/OswaldFont)",
+   "license_files": [
+    "fonts/oswald@5.3.0/OFL.txt"
+   ],
+   "source": {
+    "npm": "@fontsource-variable/oswald@5.3.0",
+    "tarball": "https://registry.npmjs.org/@fontsource-variable/oswald/-/oswald-5.3.0.tgz",
+    "integrity": "sha512-sSZzcTeaQGNyZbTVlS4tNNHElK38UktFLqKd6NQDLFCBV27320rQC3kXSZVytYm1PPjKmPxqVaGwqj7LEKUWQw==",
+    "shasum": "99515312f948cfc64f74da9eade6a7376863a905"
+   },
+   "axes": {
+    "wght": [
+     "200",
+     "700"
+    ]
+   },
+   "subsets": [
+    "latin",
+    "latin-ext",
+    "vietnamese",
+    "cyrillic",
+    "cyrillic-ext"
+   ],
+   "styles": [
+    "normal"
+   ],
+   "total_bytes": 95108,
+   "preload": [
+    "fonts/oswald@5.3.0/oswald-latin-wght-normal.woff2"
+   ],
+   "role": "display: condensed poster / labels"
+  },
+  {
+   "family": "Lexend",
+   "dir": "fonts/lexend@5.3.0/",
+   "css": "fonts/lexend@5.3.0/lexend.css",
+   "license": "OFL-1.1",
+   "copyright": "Copyright 2019 The Lexend Project Authors (https://github.com/googlefonts/lexend)",
+   "license_files": [
+    "fonts/lexend@5.3.0/OFL.txt"
+   ],
+   "source": {
+    "npm": "@fontsource-variable/lexend@5.3.0",
+    "tarball": "https://registry.npmjs.org/@fontsource-variable/lexend/-/lexend-5.3.0.tgz",
+    "integrity": "sha512-3SXtiZ8rFbT0oaPzEboCG5RM3jtyhpNxandh1jWNLqvrJRfV/eP3R+GGw+o5e3hS1uqmAGutKxSvaWG5oyrimA==",
+    "shasum": "612837a8b7a167cef0e90e468d29cced13d90daf"
+   },
+   "axes": {
+    "wght": [
+     "100",
+     "900"
+    ]
+   },
+   "subsets": [
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "normal"
+   ],
+   "total_bytes": 87996,
+   "preload": [
+    "fonts/lexend@5.3.0/lexend-latin-wght-normal.woff2"
+   ],
+   "role": "text: geometric, very readable"
+  },
+  {
+   "family": "Manrope",
+   "dir": "fonts/manrope@5.3.0/",
+   "css": "fonts/manrope@5.3.0/manrope.css",
+   "license": "OFL-1.1",
+   "copyright": "Copyright 2019 The Manrope Project Authors (https://github.com/sharanda/manrope)",
+   "license_files": [
+    "fonts/manrope@5.3.0/OFL.txt"
+   ],
+   "source": {
+    "npm": "@fontsource-variable/manrope@5.3.0",
+    "tarball": "https://registry.npmjs.org/@fontsource-variable/manrope/-/manrope-5.3.0.tgz",
+    "integrity": "sha512-6D5dgokHsWDDMtmXHznKa0hK229NN+1a4BLPmUCLqcO1Pw5EEhWY5RFt0AcXnVRAljFFPfRtLkJePQj6LSsV6g==",
+    "shasum": "da97b427a854b8169141364b8080a9e5f3922518"
+   },
+   "axes": {
+    "wght": [
+     "200",
+     "800"
+    ]
+   },
+   "subsets": [
+    "latin",
+    "latin-ext",
+    "vietnamese",
+    "cyrillic",
+    "cyrillic-ext",
+    "greek"
+   ],
+   "styles": [
+    "normal"
+   ],
+   "total_bytes": 74972,
+   "preload": [
+    "fonts/manrope@5.3.0/manrope-latin-wght-normal.woff2"
+   ],
+   "role": "text: modern UI sans, widest script coverage"
+  },
+  {
+   "family": "Chakra Petch",
+   "dir": "fonts/chakra-petch@5.3.0/",
+   "css": "fonts/chakra-petch@5.3.0/chakra-petch.css",
+   "license": "OFL-1.1",
+   "copyright": "Copyright 2018 The Chakra Petch Project Authors (https://github.com/m4rc1e/Chakra-Petch.git)",
+   "license_files": [
+    "fonts/chakra-petch@5.3.0/OFL.txt"
+   ],
+   "source": {
+    "npm": "@fontsource/chakra-petch@5.3.0",
+    "tarball": "https://registry.npmjs.org/@fontsource/chakra-petch/-/chakra-petch-5.3.0.tgz",
+    "integrity": "sha512-QZvbM/q2R6n1pg2x+TJPftZmBNS+ADU37L4Z4L/6UJIz+JZ/SRaEf8usPFRiP7Ht28sIideMu/Bm1SnGlSrwNw==",
+    "shasum": "0e96b3214595029e3ac108daffa60e9e964b0f18"
+   },
+   "axes": {},
+   "subsets": [
+    "latin",
+    "latin-ext",
+    "vietnamese",
+    "thai"
+   ],
+   "styles": [
+    "normal"
+   ],
+   "total_bytes": 119744,
+   "preload": [
+    "fonts/chakra-petch@5.3.0/chakra-petch-latin-400-normal.woff2",
+    "fonts/chakra-petch@5.3.0/chakra-petch-latin-500-normal.woff2",
+    "fonts/chakra-petch@5.3.0/chakra-petch-latin-600-normal.woff2",
+    "fonts/chakra-petch@5.3.0/chakra-petch-latin-700-normal.woff2"
+   ],
+   "role": "display/text: techy squared sans with Thai"
+  }
+ ],
+ "original_assets": [
+  {
+   "path": "fonts/fallbacks.css",
+   "bytes": 27905,
+   "gzip": 3630,
+   "brotli": 3006,
+   "sha256": "4405ff51d954101c7067889b023437f89fc44f8f5bb82d4c65213077272e6b36",
+   "license": "JavCMS Community License 1.0 (JavCMS project, original work)"
+  },
+  {
+   "path": "icon-concepts.json",
+   "bytes": 56344,
+   "gzip": 7643,
+   "brotli": 5429,
+   "sha256": "9c3dd538efb0eb0db58f29373c7c75c81c523fc6bfc50ed93d5f3373f28d109d",
+   "license": "JavCMS Community License 1.0 (JavCMS project, original work)"
+  },
+  {
+   "path": "lottie-anims/empty-library.json",
+   "bytes": 23604,
+   "gzip": 1281,
+   "brotli": 1082,
+   "sha256": "2a05de5241d7e6b7fb35d6489b19d44d6fa1b5210aa51655e65e9d83ad70509d",
+   "license": "JavCMS Community License 1.0 (JavCMS project, original work)"
+  },
+  {
+   "path": "lottie-anims/heart-burst.json",
+   "bytes": 10664,
+   "gzip": 938,
+   "brotli": 771,
+   "sha256": "a3cc314d0bbb8293d48f62763434cd9d40c021bb129c99f34cfe3dc73f669882",
+   "license": "JavCMS Community License 1.0 (JavCMS project, original work)"
+  },
+  {
+   "path": "lottie-anims/index.json",
+   "bytes": 1588,
+   "gzip": 548,
+   "brotli": 465,
+   "sha256": "a71e97e86da1963f7f1cf0a5ed99c3186e61a73a03aa24d81d4ac0f3f3ce5ef2",
+   "license": "JavCMS Community License 1.0 (JavCMS project, original work)"
+  },
+  {
+   "path": "lottie-anims/loading-orbit.json",
+   "bytes": 3666,
+   "gzip": 689,
+   "brotli": 591,
+   "sha256": "6411ce21e00ba9748194e68e30791f756d9076bd1ae706cfa06bbc3d4daa0763",
+   "license": "JavCMS Community License 1.0 (JavCMS project, original work)"
+  },
+  {
+   "path": "lottie-anims/not-found.json",
+   "bytes": 11301,
+   "gzip": 1126,
+   "brotli": 944,
+   "sha256": "43f13749121f469316d8e0708ba38a2bfc792b7eb13f0c75a67a1e8dc18260f2",
+   "license": "JavCMS Community License 1.0 (JavCMS project, original work)"
+  },
+  {
+   "path": "lottie-anims/search-empty.json",
+   "bytes": 8179,
+   "gzip": 1010,
+   "brotli": 850,
+   "sha256": "f6a62290c33c77c3b60bd001012341e637427d5e72d57fdc406ab3bda2ccb030",
+   "license": "JavCMS Community License 1.0 (JavCMS project, original work)"
+  },
+  {
+   "path": "lottie-anims/success-check.json",
+   "bytes": 3409,
+   "gzip": 740,
+   "brotli": 630,
+   "sha256": "e893220e319738b8ce7af718dbf1048d78fe45cb22075705dcf0ed697ab19880",
+   "license": "JavCMS Community License 1.0 (JavCMS project, original work)"
+  },
+  {
+   "path": "svg-anims/empty-library.svg",
+   "bytes": 3385,
+   "gzip": 1036,
+   "brotli": 902,
+   "sha256": "e521e79f9de9f3cd4dd00e75e60c22955639b4263a4f37b675211c3a5ca339d0",
+   "license": "JavCMS Community License 1.0 (JavCMS project, original work)"
+  },
+  {
+   "path": "svg-anims/heart-burst.svg",
+   "bytes": 2459,
+   "gzip": 850,
+   "brotli": 732,
+   "sha256": "d3d387a7fbceac6a7a9e6007158d32fce93c91116138a01daed1d64770273952",
+   "license": "JavCMS Community License 1.0 (JavCMS project, original work)"
+  },
+  {
+   "path": "svg-anims/loading-orbit.svg",
+   "bytes": 1335,
+   "gzip": 654,
+   "brotli": 566,
+   "sha256": "1d12a6241b30d00a091e95af94c78b0be58824c5c6134cb8b91b595c4fbd31a9",
+   "license": "JavCMS Community License 1.0 (JavCMS project, original work)"
+  },
+  {
+   "path": "svg-anims/not-found.svg",
+   "bytes": 2769,
+   "gzip": 1020,
+   "brotli": 891,
+   "sha256": "6c07963e6c1342e985576134db2aa9d577422a1699fdbc92cef44792d6dd5baa",
+   "license": "JavCMS Community License 1.0 (JavCMS project, original work)"
+  },
+  {
+   "path": "svg-anims/search-empty.svg",
+   "bytes": 2231,
+   "gzip": 881,
+   "brotli": 777,
+   "sha256": "f9020284c0c05d46ac708a683aa5c67767f014a5a2f96c71ae40c7e1a8d5c55f",
+   "license": "JavCMS Community License 1.0 (JavCMS project, original work)"
+  },
+  {
+   "path": "svg-anims/success-check.svg",
+   "bytes": 1420,
+   "gzip": 667,
+   "brotli": 568,
+   "sha256": "5b48cd72784a7b031b56edb4c467b3f4a3b4d6b7daacfa701e4231647853b45f",
+   "license": "JavCMS Community License 1.0 (JavCMS project, original work)"
+  }
+ ]
+}

@@ -1,0 +1,16 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<div class="mac_login hn-card">
+<form class="mac_login_form hn-form">
+<div class="login_form_group hn-field">{:\\app\\common\\util\\AutoIcon::ui('user', ['class'=>'hn-i', 'tint'=>'none'])}<input class="mac_u_name" name="user_name" placeholder="{:\\app\\common\\util\\TemplateText::get('ui.username')}" type="text" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.username')}" /></div>
+<div class="login_form_group hn-field">{:\\app\\common\\util\\AutoIcon::ui('lock', ['class'=>'hn-i', 'tint'=>'none'])}<input class="mac_u_pwd" name="user_pwd" placeholder="{:\\app\\common\\util\\TemplateText::get('ui.password')}" type="password" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.password')}" /></div>
+{if condition="$GLOBALS['config']['user']['login_verify'] eq 1"}<div class="login_form_group verification-field hn-verify"><input class="mac_u_verify" name="verify" placeholder="{:\\app\\common\\util\\TemplateText::get('ui.verification_code')}" type="text" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.verification_code')}" /><img class="mac_verify_img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='128' height='40'%2F%3E" data-hn-src="{:url('verify/index')}" alt="{:\\app\\common\\util\\TemplateText::get('ui.verification_code')}" role="button" tabindex="0" aria-label="{:\\app\\common\\util\\TemplateText::get('not_to_see_change_one')}" /></div>{/if}
+<div class="login_form_link hn-auth-links"><a href="{:url('user/reg')}">{:\\app\\common\\util\\TemplateText::get('ui.register')}</a><a href="{:url('user/findpass')}">{:\\app\\common\\util\\TemplateText::get('ui.forget_the_password')}</a></div>
+<div class="login_form_group"><input class="login_form_submit hn-btn hn-btn-amber" type="button" value="{:\\app\\common\\util\\TemplateText::get('ui.log_in')}" /></div>
+</form>
+</div>

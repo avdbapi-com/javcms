@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8" />
+<meta name="keywords" content="Baidu Maps, Baidu Maps API, Baidu Maps Custom Tools, Baidu Maps WYSIWYG Tools" />
+<meta name="description" content="Baidu Maps API custom maps, helping users generate Baidu Maps through visual operations" />
+<title>Baidu Maps API Custom Maps</title>
+<!--Load the Baidu Map API-->
+<style type="text/css">
+	html,body{margin:0;padding:0;}
+	.iw_poi_title {color:#CC5522;font-size:14px;font-weight:bold;overflow:hidden;padding-right:13px;white-space:nowrap}
+	.iw_poi_content {font:12px arial,sans-serif;overflow:visible;padding-top:4px;white-space:-moz-pre-wrap;word-wrap:break-word}
+</style>
+<script type="text/javascript" src="http://api.map.baidu.com/api?key=&v=1.1&services=true"></script>
+</head>
+
+<body onload="initMap();">
+  <!--Baidu map container-->
+  <div style="width:697px;height:550px;border:#ccc solid 1px;" id="dituContent"></div>
+</body>
+<script type="text/javascript">
+	function getParam(name) {
+		return location.href.match(new RegExp('[?&]' + name + '=([^?&]+)', 'i')) ? decodeURIComponent(RegExp.$1) : '';
+	}
+	var centerParam = getParam('center');
+	var zoomParam = getParam('zoom');
+	var widthParam = getParam('width');
+	var heightParam = getParam('height');
+	var markersParam = getParam('markers');
+	var markerStylesParam = getParam('markerStyles');
+
+	// Initialize the map.
+	function initMap(){
+		// [FF] Error after switching modes
+		if (!window.BMap) {
+			return;
+		}
+		var dituContent = document.getElementById('dituContent');
+		dituContent.style.width = widthParam + 'px';
+		dituContent.style.height = heightParam + 'px';
+
+		createMap();//Create a map
+		setMapEvent();//Configure map interactions
+		addMapControl();//Add map controls
+
+		// Create map markers.
+		var markersArr = markersParam.split(',');
+		var point = new BMap.Point(markersArr[0], markersArr[1]);
+		var marker = new BMap.Marker(point);
+		map.addOverlay(marker); // Add labels to the map
+	}
+
+	// Create the map.
+	function createMap(){
+		var map = new BMap.Map("dituContent");//Create a map in the Baidu Map container
+		var centerArr = centerParam.split(',');
+		var point = new BMap.Point(centerArr[0], centerArr[1]);//Define the center coordinates
+		map.centerAndZoom(point, zoomParam);//Set the map center and zoom level
+		window.map = map;//Expose the map globally
+	}
+
+	// Configure map interactions.
+	function setMapEvent(){
+		map.enableDragging();//Enable dragging, which is on by default
+		map.enableScrollWheelZoom();//Enable scroll-wheel zoom
+		map.enableDoubleClickZoom();//Enable double-click zoom, which is on by default
+		map.enableKeyboard();//Enable map movement with the arrow keys
+	}
+
+	// Add map controls.
+	function addMapControl(){
+		// Add zoom controls to the map
+	var ctrl_nav = new BMap.NavigationControl({anchor:BMAP_ANCHOR_TOP_LEFT,type:BMAP_NAVIGATION_CONTROL_LARGE});
+	map.addControl(ctrl_nav);
+		// Add a thumbnail control to the map
+	var ctrl_ove = new BMap.OverviewMapControl({anchor:BMAP_ANCHOR_BOTTOM_RIGHT,isOpen:1});
+	map.addControl(ctrl_ove);
+		// Add a scale control to the map
+	var ctrl_sca = new BMap.ScaleControl({anchor:BMAP_ANCHOR_BOTTOM_LEFT});
+	map.addControl(ctrl_sca);
+	}
+</script>
+</html>

@@ -1,0 +1,31 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}
+if (!isset($nnBrand)) {
+    $nnSiteName = trim(\app\common\util\AvdbLanguage::decodeEntities((string)($maccms['site_name'] ?? '')));
+    $nnLen = function_exists('mb_strlen') ? mb_strlen($nnSiteName, 'UTF-8') : strlen($nnSiteName);
+    $nnBrand = $nnSiteName;
+    if ($nnLen > 18) {
+        $nnHost = strtolower(trim((string)($maccms['site_url'] ?? '')));
+        $nnHost = (string)preg_replace('~^[a-z][a-z0-9+.\-]*://~', '', $nnHost);
+        $nnHost = (string)preg_replace('~[/?#].*~', '', $nnHost);
+        $nnHost = (string)preg_replace('~:[0-9]+$~', '', $nnHost);
+        $nnHost = (string)preg_replace('~^www\.~', '', $nnHost);
+        $nnParts = explode('.', $nnHost);
+        $nnLabel = trim((string)($nnParts[0] ?? ''));
+        if ($nnLabel !== '' && !ctype_digit($nnLabel) && $nnLabel !== 'localhost') { $nnBrand = $nnLabel; }
+    }
+    if ($nnBrand === '') { $nnBrand = 'javcms'; }
+    $nnLogoRaw = trim((string)($maccms['site_logo'] ?? ''));
+    $nnLogoPath = (string)parse_url($nnLogoRaw, PHP_URL_PATH);
+    $nnLogoBase = strtolower(basename($nnLogoPath !== '' ? $nnLogoPath : $nnLogoRaw));
+    $nnCustomLogo = $nnLogoRaw !== '' && !in_array($nnLogoBase, ['20819301b2e936fcc59a7cee9f4e4d4a.png', '0643d1703707a998e41b8813a97ed2e7.png'], true);
+    $nnLogoSrc = $nnCustomLogo ? mac_safe_url(mac_url_img($nnLogoRaw)) : '';
+    if ($nnLogoSrc === '') { $nnCustomLogo = false; }
+}
+{/php}<a class="nn-logo" href="{$maccms.path|htmlspecialchars=ENT_QUOTES}" aria-label="{$nnSiteName|htmlspecialchars=ENT_QUOTES}" title="{$nnSiteName|htmlspecialchars=ENT_QUOTES}">{if condition="$nnCustomLogo"}<img class="nn-logo-img" src="{$nnLogoSrc}" alt="{$nnSiteName|htmlspecialchars=ENT_QUOTES}" height="40" decoding="async" data-nn-logo><span class="nn-wordmark nn-tube nn-logo-alt" aria-hidden="true">{$nnBrand|htmlspecialchars=ENT_QUOTES}</span>{else/}<svg class="nn-mark" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><rect class="g1" x="10" y="12" width="44" height="32" rx="8"/><rect class="t1" x="10" y="12" width="44" height="32" rx="8"/><rect class="c1" x="10" y="12" width="44" height="32" rx="8"/><path class="g2" d="M27.5 21 39.5 28 27.5 35Z"/><path class="t2" d="M27.5 21 39.5 28 27.5 35Z"/><path class="c2" d="M27.5 21 39.5 28 27.5 35Z"/><path class="t1" d="M32 44v7M22 52h20"/><circle class="ledg" cx="47.5" cy="18.5" r="4.6"/><circle class="led" cx="47.5" cy="18.5" r="2.2"/></svg><span class="nn-wordmark nn-tube" data-nn-fit>{$nnBrand|htmlspecialchars=ENT_QUOTES}</span>{/if}</a>

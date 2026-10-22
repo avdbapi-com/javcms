@@ -1,0 +1,32 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="ember-modern" data-fx="vt" data-fx-vt-style="ember-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/auto"}
+{include file="public/include"}
+</head>
+<body class="t-page-list">
+{include file="public/head"}
+<main id="main-content" class="t-main" tabindex="-1">
+  <section class="t-band is-static">
+    <div class="t-wrap">
+      <nav class="t-crumb" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.main_navigation')}"><a href="{$maccms.path|htmlspecialchars=ENT_QUOTES}">{:\\app\\common\\util\\TemplateText::get('ui.home')}</a><svg class="t-i t-flip" aria-hidden="true"><use href="{$tplIcons}#chev-right"></use></svg><a href="{:mac_url('art/index')}">{:\\app\\common\\util\\TemplateText::get('ui.articles')}</a><svg class="t-i t-flip" aria-hidden="true"><use href="{$tplIcons}#chev-right"></use></svg><span aria-current="page">{if condition="$param.wd neq ''"}{:\\app\\common\\util\\TemplateText::raw('ui.search_for_query', ['query'=>$param['wd']])}{else/}{:\\app\\common\\util\\TemplateText::get('ui.articles')}{/if}</span></nav>
+      <div class="t-band-in"><h1 data-t-expand>{if condition="$param.wd neq ''"}{:\\app\\common\\util\\TemplateText::raw('ui.search_for_query', ['query'=>$param['wd']])}{else/}{:\\app\\common\\util\\TemplateText::get('ui.articles')}{/if}</h1></div>
+      
+    </div>
+  </section>
+  <div class="t-wrap">
+    <ul class="t-artlist" data-grid-fill data-fx="stagger">{maccms:art num="20" paging="yes" type="all" order="desc" by="time" pageurl="art/search" id="vo"}{php}$emtArName = $emtDe($vo["art_name"] ?? ""); $emtArBlurb = trim(strip_tags($emtDe($vo["art_blurb"] ?? ""))); $emtArPic = mac_url_img(mac_default($vo["art_pic"] ?? "", $maccms["path_tpl"] . "assets/brand/ph-dark.svg"));{/php}<li class="t-artrow"><a class="t-thumb" href="{:mac_url_art_detail($vo)}" tabindex="-1" aria-hidden="true" data-fx="skeleton"><img src="{$emtArPic|htmlspecialchars=ENT_QUOTES}" alt="" width="320" height="180" loading="lazy" decoding="async"></a><div class="t-artrow-b"><h3 class="t-ct"><a href="{:mac_url_art_detail($vo)}"><span>{$emtArName|htmlspecialchars=ENT_QUOTES}</span></a></h3>{if condition="$emtArBlurb neq ''"}<p class="t-artrow-x">{$emtArBlurb|htmlspecialchars=ENT_QUOTES}</p>{/if}<p class="t-cm"><time datetime="{$vo.art_time|date='Y-m-d',###}">{$vo.art_time|date='Y-m-d',###}</time><span class="t-score"><svg class="t-i" aria-hidden="true"><use href="{$tplIcons}#eye"></use></svg>{$vo.art_hits|intval}</span></p></div></li>{/maccms:art}</ul>
+    {if condition="$__PAGING__.record_total eq 0"}{php}$emtEmptyKey = 'emt.empty_articles';{/php}{include file="public/empty"}{/if}
+    {include file="public/paging"}
+  </div>
+</main>
+{include file="public/foot"}
+</body>
+</html>

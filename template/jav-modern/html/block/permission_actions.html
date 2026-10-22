@@ -1,0 +1,16 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<div class="gallery-permission-actions">
+{if condition="intval($user['user_id'] ?? 0) lt 1"}
+<a class="gallery-permission-primary" href="{:mac_url('user/login')}">{:\\app\\common\\util\\TemplateText::get('ui.log_in_immediately')}</a>
+{else/}
+<a href="{:mac_url('user/buy')}">{:\\app\\common\\util\\TemplateText::get('ui.immediately_recharge')}</a>
+<button class="gallery-permission-primary" type="button" onclick="MAC.User.BuyPopedom(this)" data-id="{:intval($permissionId)}" data-mid="{:intval($permissionMid)}" data-type="{:intval($permissionType)}" data-sid="{:intval($permissionSid)}" data-nid="{:intval($permissionNid)}">{:\\app\\common\\util\\TemplateText::get('ui.confirm_the_purchase')}</button>
+{/if}
+<a href="{:mac_url('user/upgrade')}">{:\\app\\common\\util\\TemplateText::get('ui.immediately_upgrade')}</a>
+</div>

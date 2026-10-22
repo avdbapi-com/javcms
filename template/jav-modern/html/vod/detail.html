@@ -1,0 +1,42 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="jav-modern" data-template-variant="modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+{include file="seo/vod_detail"}
+{include file="block/include"}
+</head>
+<body class="gallery-page page-detail">
+{include file="block/head"}
+{include file="block/vod_meta"}
+{php}$tplMoreTitle = \app\common\util\TemplateText::get('you_may_also_like');{/php}
+<main id="main-content" class="container film-page">
+  <nav class="crumbs" aria-label="{:\\app\\common\\util\\TemplateText::get('jav.breadcrumb')}"><a href="{$maccms.path}">{:\\app\\common\\util\\AutoIcon::navIcon('home', '', ['size'=>'sm'])}<span>{:\\app\\common\\util\\TemplateText::get('home')}</span></a>{if condition="$tplCatUrl neq ''"}<span aria-hidden="true">/</span><a href="{$tplCatUrl|htmlspecialchars=ENT_QUOTES}">{$tplCatIco}<span>{$tplCatName|htmlspecialchars=ENT_QUOTES}</span></a>{/if}{if condition="$tplCode neq ''"}<span aria-hidden="true">/</span><span>{$tplCode|htmlspecialchars=ENT_QUOTES}</span>{/if}</nav>
+  <article class="film">
+    <div class="film-poster">
+      <a class="poster-frame" href="{if condition="$tplPlayUrl neq ''"}{$tplPlayUrl|htmlspecialchars=ENT_QUOTES}{else /}#film-desc-title{/if}" data-tilt aria-label="{:\\app\\common\\util\\TemplateText::get('jav.watch_now')}: {$tplName|htmlspecialchars=ENT_QUOTES}"><img data-lowres src="{$tplPic|htmlspecialchars=ENT_QUOTES}" alt="{$tplName|htmlspecialchars=ENT_QUOTES}" width="800" height="450" decoding="async" fetchpriority="high"><span class="poster-play" aria-hidden="true"></span></a>
+    </div>
+    <div class="film-info">
+      <h1{php}echo \app\common\util\AvdbLanguage::langAttr(isset($obj) && is_array($obj) ? $obj : []);{/php} class="film-title">{$tplName|htmlspecialchars=ENT_QUOTES}</h1>
+      <p class="film-quick">{if condition="$tplScore gt 0"}<span class="q-score" title="{$tplL.score}">{:$tplIco('star')}{$tplScore|number_format=1}</span>{/if}<span class="q-views">{:$tplIco('eye')}{$tplHits} {$tplL.views}</span>{if condition="$tplDuration neq ''"}<span class="q-dur">{:$tplIco('clock')}{$tplDuration|htmlspecialchars=ENT_QUOTES}</span>{/if}{if condition="$tplRelease neq ''"}<span class="q-date">{:$tplIco('calendar')}{$tplRelease|htmlspecialchars=ENT_QUOTES}</span>{/if}</p>
+      {include file="block/vod_facts"}
+      <div class="film-actions">
+        {if condition="$tplPlayUrl neq ''"}<a class="btn-watch" href="{$tplPlayUrl|htmlspecialchars=ENT_QUOTES}" data-magnet>{:\\app\\common\\util\\AutoIcon::ui('play', ['tint'=>'none'])}{:\\app\\common\\util\\TemplateText::get('jav.watch_now')}</a>{/if}
+        {notempty name="obj.vod_down_list"}<a class="btn-ghost" href="{:mac_url_vod_down($obj,['sid'=>1,'nid'=>1])}">{:\\app\\common\\util\\AutoIcon::ui('download', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('downloads')}</a>{/notempty}
+      </div>
+    </div>
+  </article>
+  {include file="block/vod_desc"}
+  {include file="block/vod_more"}
+  {include file="block/comments"}
+</main>
+<span class="mac_ulog_set hide" data-type="1" data-mid="{$maccms.mid}" data-id="{$obj.vod_id}" data-sid="{$param.sid|default='1'}" data-nid="{$param.nid|default='1'}"></span>
+{include file="block/copy"}
+{include file="block/foot"}
+</body>
+</html>

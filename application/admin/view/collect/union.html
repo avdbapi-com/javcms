@@ -1,0 +1,47 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Based on MacCMS 10 (Apache-2.0) by magicblack, changed by JavCMS.
+JavCMS changes: Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors,
+JavCMS Community License 1.0. The MacCMS parts stay under the Apache License 2.0.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{include file="../../../application/admin/view/public/head" /}
+
+<div class="page-container p10">
+
+    <div class="my-toolbar-box">
+        <div class="ax-toolbar">
+            <input type="hidden" id="ax-run-token" value="{:mac_admin_csrf_token()}">
+            {if condition="$collect_break_vod neq ''"}
+            <button type="button" class="ax-btn ax-btn--primary" data-ax-action="{:url('load')}" data-ax-post-run="flag=vod">{:lang('admin/collect/index/video_collect')}</button>
+            {/if}
+            {if condition="$collect_break_art neq ''"}
+            <button type="button" class="ax-btn ax-btn--primary" data-ax-action="{:url('load')}" data-ax-post-run="flag=art">{:lang('admin/collect/index/art_collect')}</button>
+            {/if}
+            {if condition="$collect_break_actor neq ''"}
+            <button type="button" class="ax-btn ax-btn--primary" data-ax-action="{:url('load')}" data-ax-post-run="flag=actor">{:lang('admin/collect/index/star_collect')}</button>
+            {/if}
+            {if condition="$collect_break_role neq ''"}
+            <button type="button" class="ax-btn ax-btn--primary" data-ax-action="{:url('load')}" data-ax-post-run="flag=role">{:lang('admin/collect/index/role_collect')}</button>
+            {/if}
+            {if condition="$collect_break_website neq ''"}
+            <button type="button" class="ax-btn ax-btn--primary" data-ax-action="{:url('load')}" data-ax-post-run="flag=website">{:lang('admin/collect/index/website_collect')}</button>
+            {/if}
+        </div>
+    </div>
+    <hr>
+
+</div>
+
+{include file="../../../application/admin/view/public/foot" /}
+<script type="text/javascript">
+    layui.use(['laypage', 'layer'], function() {
+        var laypage = layui.laypage
+                , layer = layui.layer;
+
+
+    });
+</script>
+</body>
+</html>

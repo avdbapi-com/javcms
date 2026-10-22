@@ -1,0 +1,105 @@
+name: Bug report
+description: Something in JavCMS does not work as described in the docs.
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a problem. Before you send it:
+        - Search the [open and closed issues](https://github.com/avdbapi-com/javcms/issues?q=is%3Aissue) and the [help center](https://help.avdbapi.com).
+        - **Never post passwords, database settings, API keys or the contents of `application/database.php`.**
+        - Screenshots must be safe for work: crop or blur video posters and titles.
+        - A security problem? Do not open an issue: follow the [security policy](https://github.com/avdbapi-com/javcms/security/policy).
+  - type: dropdown
+    id: version
+    attributes:
+      label: JavCMS version
+      description: Shown in the Version row on the admin home page and in application/extra/version.php.
+      options:
+        - "1.2.0"
+        - "1.1.0"
+        - Older
+    validations:
+      required: true
+  - type: input
+    id: php
+    attributes:
+      label: PHP version
+      placeholder: "8.3.12"
+    validations:
+      required: true
+  - type: input
+    id: database
+    attributes:
+      label: Database and version
+      placeholder: "MariaDB 10.11.6"
+    validations:
+      required: true
+  - type: dropdown
+    id: server
+    attributes:
+      label: Web server
+      options:
+        - Apache
+        - Nginx
+        - OpenLiteSpeed / LiteSpeed
+        - IIS
+        - Other
+    validations:
+      required: true
+  - type: dropdown
+    id: hosting
+    attributes:
+      label: Hosting
+      options:
+        - Shared hosting
+        - VPS or dedicated server
+        - Docker
+        - Local test machine
+    validations:
+      required: true
+  - type: input
+    id: theme
+    attributes:
+      label: Theme folder
+      description: Only if the problem shows on the visitor pages.
+      placeholder: "javcms-modern"
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What you see, and the exact error text if there is one.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open Import > Import videos
+        2. Choose ...
+        3. See ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Log lines
+      description: The matching lines from runtime/log or your web server error log. Remove passwords, keys and personal data first.
+      render: text
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checklist
+      options:
+        - label: I searched the existing issues and the help center.
+          required: true
+        - label: I removed passwords, keys and personal data, and my screenshots are safe for work.
+          required: true

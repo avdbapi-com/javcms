@@ -1,0 +1,26 @@
+/*
+ * This file is part of JavCMS - https://javcms.net
+ * Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+ * License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+ * See the LICENSE and NOTICE files that come with JavCMS.
+ * Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Telegram: https://t.me/avdb_api
+ */
+.interface-settings { color:var(--studio-text,inherit); }
+.interface-settings .interface-card { margin:0 0 20px; padding:20px; border:1px solid var(--studio-line,#d9dce1); border-radius:12px; background:var(--studio-surface,#fff); }
+.interface-settings .interface-card h2 { font-size:18px; margin:0 0 8px; color:inherit; }
+.interface-settings .interface-card p { color:var(--studio-muted,#59616d); margin:8px 0 16px; }
+.interface-settings .interface-field { max-width:640px; }
+.interface-settings label { display:block; margin:8px 0; font-weight:600; }
+.interface-settings .interface-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px; }
+.interface-settings .interface-map { min-width:0; }
+.interface-settings .interface-map textarea { resize:vertical; min-height:180px; }
+.interface-settings details { margin-top:12px; }
+.interface-settings summary { cursor:pointer; font-weight:600; padding:6px 0; }
+.interface-settings details label { font-size:13px; }
+.interface-settings details button { margin-top:12px; }
+.interface-settings .interface-status:empty { display:none; }
+.interface-settings .interface-status:not(:empty) { border-left:3px solid var(--studio-accent,#366bcb); padding-left:12px; margin-bottom:16px; }
+.interface-settings .interface-status p { color:var(--studio-text,inherit); }
+.interface-settings code { overflow-wrap:anywhere; }
+@media(max-width:700px) { .interface-settings .interface-grid { grid-template-columns:1fr; } .interface-settings .interface-card { padding:14px; } .interface-settings .layui-form-label { width:auto; float:none; text-align:left; padding:0; } .interface-settings .layui-input-block { margin-left:0; } }

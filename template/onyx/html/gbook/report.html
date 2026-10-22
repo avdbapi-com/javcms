@@ -1,0 +1,16 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<div class="mac_report form-card">
+  <form class="gbook_form" onsubmit="return false">
+    <input type="hidden" name="gbook_rid" value="{:intval($param['id'] ?? 0)}">
+    <div class="field"><label for="report-content">{:\\app\\common\\util\\TemplateText::get('ui.please_enter_the_error_content')}</label><textarea id="report-content" class="gbook_content" name="gbook_content" maxlength="1000">{$param.name}</textarea></div>
+    {if condition="$gbook.verify eq 1"}<div class="field"><label for="report-verify">{:\\app\\common\\util\\TemplateText::get('ui.verification_code')}</label><input id="report-verify" type="text" name="verify" class="input mac_verify" maxlength="4" autocomplete="off"></div>{/if}
+    <div class="form-actions"><button type="button" class="btn btn-fill gbook_submit">{:\\app\\common\\util\\TemplateText::get('ui.submit_a_message')}</button><span class="form-note">{:\\app\\common\\util\\TemplateText::get('ui.you_can_also_enter')} <span class="gbook_remaining"></span></span></div>
+  </form>
+</div>
+<script>$(function () { MAC.Gbook.Login = {$gbook.login|intval}; MAC.Gbook.Verify = {$gbook.verify|intval}; MAC.Gbook.Init(); });</script>

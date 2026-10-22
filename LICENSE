@@ -1,0 +1,628 @@
+JavCMS Community License 1.0
+============================
+
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+
+Official sources of JavCMS:
+  https://javcms.net
+  https://avdbapi.com
+  https://xvidapi.com
+  https://upload18.org
+  Telegram group: https://t.me/avdb_api
+
+This license applies from JavCMS release 1.2.0. Releases up to and including 1.1.0
+stay under the licenses they were published with (Apache-2.0; MIT for the
+files that said MIT; see Part E).
+
+Note: this license is written in plain English. It is not legal advice, and the
+owner of JavCMS may have it checked by a lawyer.
+
+In short: use it for free, also for your own website that earns money. Copy it,
+change it and share it. Do not sell it, and do not charge other people for
+installing, setting up, running, supporting, changing or handing over JavCMS.
+Copies that you share stay free and carry no money-making code or links of
+yours.
+
+
+PART A. THE JAVCMS COMMUNITY LICENSE 1.0
+----------------------------------------
+
+1. What this license covers
+
+   "JavCMS" in this license means the work of the JavCMS project in this package:
+   - the code that JavCMS wrote;
+   - the changes that JavCMS made to MacCMS files (the changes only, not the
+     original MacCMS code);
+   - the JavCMS work on the themes in the template/ folder (see Part D);
+   - the JavCMS documentation (README, INSTALL, UPGRADE, CHANGELOG, docs/).
+
+   It does not cover third-party components. They keep their own licenses
+   (see Parts B and C). Changes that JavCMS made inside a third-party file
+   whose license requires changed versions to stay under that license (for
+   example the LGPL of the editor libraries, PclZip and PHP QR Code) are
+   under that license, not under this one. Changes that JavCMS made inside
+   other third-party files (for example ThinkPHP, CodeMirror, UMeditor and
+   Layui files; NOTICE.CHANGED-FILES.txt lists them) are covered by this
+   license in the same way as its changes to MacCMS files: the changes only,
+   while the original code in those files keeps its own license.
+
+2. What you may do
+
+   Anyone may, free of charge:
+   - use JavCMS, also for your own websites that earn money, for example with
+     ads (a website of your own company, or of an organisation that employs
+     you or that you volunteer for without pay, counts as your own website; a
+     customer's or client's website does not, even when you are paid to work
+     on it: a contractor, freelancer or business that is paid to install, set
+     up, run or change JavCMS for someone else is not using it for its own
+     website);
+   - copy JavCMS;
+   - change JavCMS;
+   - share JavCMS, changed or unchanged, under the conditions in section 4.
+
+3. What nobody may do: sell JavCMS
+
+   Nobody may ask for or take money, or any other payment, for:
+   - copies or downloads of JavCMS;
+   - changed versions of JavCMS;
+   - JavCMS themes, or any part of JavCMS;
+   - installation packages that contain JavCMS;
+   - access to copies of JavCMS (the software itself) behind a paywall (for
+     example a paid download area or a paid membership that is needed to get
+     JavCMS), or access to them that is only given in exchange for something
+     else of value (for example watching ads, filling in paid surveys or
+     passing through paid link shorteners);
+   - installing, setting up or handing over JavCMS, or a changed version of it,
+     for other people (for example a paid installation or setup service, or a
+     website with JavCMS that is built for a customer and handed over);
+   - support for JavCMS, or running, customizing or changing JavCMS or its
+     themes, for other people (for example paid support, paid management of
+     someone else's JavCMS website, paid customization or paid changes; what
+     counts as your own website is said in section 2);
+   - hosting plans or other services that come with JavCMS installed or set
+     up (a host whose customers install JavCMS themselves is fine).
+
+   Charging for any of these counts as selling JavCMS. So does earning money
+   with copies of JavCMS that you share, through money-making code or links
+   built into them (section 4). Free help is available from the JavCMS
+   community: https://t.me/avdb_api
+
+   Allowed: running your own website with JavCMS and earning money with that
+   website, for example with ads or with paid areas of that website (section 2).
+   The rules above are about JavCMS itself, not about the content of your
+   website. You may also sell a website that you have really run yourself (its
+   domain, content and audience), as long as JavCMS on it stays free under
+   this license with every notice kept and no price is asked for JavCMS
+   itself. Building or setting up JavCMS websites in order to sell them is not
+   allowed.
+
+4. Conditions when you share JavCMS
+
+   When you share JavCMS or a changed version of it:
+   - it must stay free of charge (section 3);
+   - it must not carry money-making code or links of the person who shares it
+     (or of anyone that person works with): no ads, affiliate or referral
+     codes, paid or sold links (backlinks), cryptocurrency miners, or tracking
+     whose data is sold to others, built into the copy. This is not about the
+     notices and links that come with JavCMS itself (keep the notices), and
+     running your own website with JavCMS, with your own ads on that website,
+     stays allowed (section 2);
+   - it must stay under this same license, and you must include this LICENSE
+     file and the NOTICE file;
+   - you must keep every copyright, license and source notice, including the
+     short notice at the top of the JavCMS files;
+   - you must mark your changes: say in the changed files, or in a list that
+     comes with your copy, which files you changed.
+
+5. No warranty
+
+   JavCMS is provided "as is", without any warranty. The authors are not liable
+   for any damage or loss that comes from using it.
+
+6. End of your rights
+
+   If you break this license, your rights under it end automatically. People
+   who received JavCMS from that person keep their rights, as long as they
+   follow this license.
+
+7. Files that said "MIT" in earlier releases, and files with third-party code
+
+   Some JavCMS files said "MIT" in their header in earlier releases: the
+   visitor theme switcher, the auto-icon system, the FX kit, the stylesheets
+   and scripts of the seven *-modern themes, and some JavCMS artwork and
+   animations. From release 1.2.0 these files are under this license as
+   well, and their headers and folder license files say so. Copies of them
+   from releases up to and including 1.1.0 stay under the MIT license (see
+   Part E).
+
+   A JavCMS file that contains third-party code says so in its short notice
+   ("Contains third-party code under its own license, named in NOTICE", or
+   "Partly based on a third-party theme" for theme files). For such a file,
+   this license covers only the JavCMS parts; the third-party code keeps its
+   own license, and NOTICE or Part D names it. A MacCMS file that
+   contains a measurable share of changes from the MacCMS editions RamCMS
+   and/or ApiiCMS says so in its notice ("with changes from the MacCMS
+   editions RamCMS (Apache-2.0) and/or ApiiCMS (MIT)"); smaller traces may be
+   in other changed MacCMS files, which carry the usual MacCMS notice. Those
+   changes keep their own licenses (Parts B and C).
+
+8. Contributions
+
+   If you send changes to the JavCMS project, you agree that they may be used
+   and shared under this license.
+
+
+PART B. PARTS THAT STAY UNDER THE APACHE LICENSE 2.0
+---------------------------------------------------
+
+The following parts are not JavCMS work. They keep the Apache License 2.0. The
+no-sale rule in Part A does not apply to them: under the Apache License 2.0,
+anyone may use, change, share and also sell these parts on their own, as long as
+they follow that license.
+
+- MacCMS 10 by magicblack (https://github.com/magicblack/maccms10): the original
+  MacCMS code that JavCMS is based on (base release v2023.1000.3051).
+  Copyright 2014-2021 magicblack. The original MacCMS notice is kept below,
+  word for word. A few image files come from later MacCMS releases under the
+  same license: static/images/pro/lang-en.png, lang-zh.png and paly.png
+  (v2026.1000.4056) and static/images/signin_ic_account.png,
+  signin_ic_code.png and signin_ic_password.png (v2024.1000.4046).
+- ThinkPHP 5.0.24 (thinkphp/): Copyright 2006-2018 ThinkPHP (thinkphp.cn),
+  liu21st.
+- topthink think-captcha, think-helper, think-image, think-installer and
+  think-queue, and karsonzhang fastadmin-addons (vendor/). The six captcha
+  fonts that the MacCMS release ships with think-captcha are freeware fonts of
+  other authors (one of them is free for personal use only); they are not part
+  of think-captcha's license and are not in this package. Its captcha font
+  folder (vendor/topthink/think-captcha/assets/ttfs/) holds a copy of the
+  Droid Sans Mono font named below instead, and the unused captcha background
+  photos (assets/bgs/), whose origin is not known, are left out.
+- hls.js 1.7.3 and 0.9.1, flv.js 1.4.2 and Video.js 7.4.1 (with vtt.js), used by
+  the players and the ad engine.
+- Remix Icon 4.8.0 glyphs inside the JavCMS icon sprites
+  (static/template-ui/auto-icon/) and in the sprites of crimson-modern and
+  onyx-modern (template/crimson-modern/assets/icons.svg,
+  template/onyx-modern/assets/icons.svg).
+- Material Icons path data (Google, https://github.com/google/material-design-icons)
+  in the topaz icon sprite template/topaz/assets/img/icons.svg.
+- The Droid Sans Mono font static/font/test.ttf (Digitized data copyright ©
+  2007, Google Corporation), the default font of the text watermark, shipped
+  by MacCMS. From release 1.2.0 a copy of it is also the captcha font
+  (vendor/topthink/think-captcha/assets/ttfs/DroidSansMono.ttf).
+- Not in this package: the Flash video player static/player/play.swf of the
+  MacCMS release (Vcastr 3.0, Apache License 2.0 on its project page, with
+  TweenLite / TweenFilterLite and a pixel font inside whose licenses the file
+  does not state) and its player stub static/player/flv.js; current browsers no
+  longer run Flash.
+- RamCMS (https://github.com/cinohub/ramcms, formerly
+  https://github.com/brevisnguyen/ramcms), a Vietnamese edition of MacCMS 10
+  by Brevis Nguyen. Its license file is the MacCMS notice below (Apache License
+  2.0); it adds no copyright line of its own. Some changes that RamCMS made to
+  MacCMS files are in JavCMS, mostly through ApiiCMS (Part C); the files with a
+  measurable share say so in their notice.
+- The OAuth login classes in extend/login/ (MacCMS classes that JavCMS
+  rewrote) stay under the Apache License 2.0, as their headers say.
+
+JavCMS changed some of these files. NOTICE and NOTICE.CHANGED-FILES.txt list
+those changes.
+
+Original MacCMS notice (kept as section 4 of the Apache License 2.0 requires):
+
+苹果CMS(maccms)遵循Apache2开源协议发布，并提供免费使用。
+版权所有Copyright © 2014-2021 by magicblack (https://github.com/magicblack)
+All rights reserved。
+
+Apache Licence是著名的非盈利开源组织Apache采用的协议。
+该协议和BSD类似，鼓励代码共享和尊重原作者的著作权，
+允许代码修改，再作为开源或商业软件发布。需要满足
+的条件： 
+1． 需要给代码的用户一份Apache Licence ；
+2． 如果你修改了代码，需要在被修改的文件中说明；
+3． 在延伸的代码中（修改和有源代码衍生的代码中）需要
+带有原来代码中的协议，商标，专利声明和其他原来作者规
+定需要包含的说明；
+4． 如果再发布的产品中包含一个Notice文件，则在Notice文
+件中需要带有本协议内容。你可以在Notice中增加自己的
+许可，但不可以表现为对Apache Licence构成更改。 
+具体的协议参考：http://www.apache.org/licenses/LICENSE-2.0
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+POSSIBILITY OF SUCH DAMAGE.
+
+
+PART C. OTHER THIRD-PARTY COMPONENTS
+------------------------------------
+
+These components are not JavCMS work and keep their own licenses. The no-sale
+rule in Part A does not apply to them, and nothing in this license takes away a
+right that their own license gives you. Most folders contain the component's own
+license file.
+
+Component                                  Version         License                         Where
+PHPMailer                                  7.1.1           LGPL-2.1 (own LICENSE file)     application/common/vendor/phpmailer/
+PclZip                                     2.8.2           LGPL-2.1 (1)                    application/common/util/PclZip.php
+PHP QR Code                                1.1.4           LGPL-3.0 (2)                    application/common/util/Qrcode.php
+Composer autoloader                        2.x             MIT                             vendor/composer/, vendor/autoload.php
+hiddeninput.exe (Symfony Console)          -               MIT                             thinkphp/library/think/console/
+CKEditor 4                                 4.11.1          GPL-2.0+ / LGPL-2.1+ / MPL-1.1  static/editor/ckeditor/ (4)
+TinyMCE                                    5.4.0           LGPL-2.1 (own license file)     static/editor/tinymce/
+KindEditor                                 4.1.12          LGPL-2.1 (1)                    static/editor/kindeditor/
+UEditor Mini (UMeditor)                    1.2.2           MIT                             static/editor/umeditor/
+MathQuill (inside UMeditor)                0.xa            LGPL (2)                        static/editor/umeditor/third-party/mathquill/
+Symbola font (MathQuill)                   2.52            free for any use (NOTICE)       static/editor/umeditor/third-party/mathquill/font/
+STIX fonts (MathQuill)                     1.0.0           STIX license (own file)         static/editor/umeditor/third-party/mathquill/font/
+                                                                                           stixgeneral-bundle/
+UEditor                                    1.4.3           MIT (bundled parts: MIT, BSD-3) static/ueditor/
+CodeMirror                                 5.42.2          MIT                             static/codemirror/
+Layui                                      2.7.6 / 2.2.5   MIT (NOTICE)                    static/layui/
+Layui                                      2.9.13          MIT (NOTICE)                    static/vendor/layui/
+ApiiCMS (changes to MacCMS files)          main branch     MIT (NOTICE)                    application/ (files that say so in their notice)
+ApiiCMS files shipped unchanged            main branch     MIT (NOTICE)                    baidu, bing, sm, so and sogou.html in template/jav/html/rss/
+                                                                                           and template/jav-modern/html/rss/,
+                                                                                           16 player stubs in static/player/ (NOTICE),
+                                                                                           application/admin/view/extend/editor/tinymce.html
+Bootstrap 5.3.3 rules                      5.3.3           MIT (NOTICE)                    static/css/admin_base.css (a JavCMS file)
+jQuery                                     1.9.1 / 3.7.1   MIT                             static/js/jquery.js, static/vendor/jquery/
+jQuery plugins (Autocomplete, clipboard.js,
+  pngFix, lazyload, jscolor)               various         MIT / LGPL                      static/js/jquery.*.js
+jquery.cookie (readable rewrite, JavCMS)   -               MIT (NOTICE)                    static/js/jquery.cookie.js
+jQuery-image-upload (readable rewrite,
+  JavCMS)                                  -               MIT (NOTICE)                    static/js/jquery.imageupload.js
+jquery.cookie                              1.4.1           MIT (NOTICE)                    template/jav/statics/js/,
+                                                                                           template/jav-modern/statics/js/
+webgl-noise (2D simplex noise)             -               MIT (NOTICE)                    template/crimson-modern/assets/js/gl-screentone.js,
+                                                                                           template/onyx-modern/assets/js/gl-dither.js
+Hash without Sine                          -               MIT (NOTICE)                    template/crimson-modern/assets/js/gl-screentone.js,
+                                                                                           template/topaz-modern/assets/js/gl-caustics.js
+ArtPlayer                                  5.4.0           MIT                             static/player/artplayer/artplayer.js (the folder
+                                                                                           also holds hls.js 1.7.3 (Part B) with its license
+                                                                                           file, and the JavCMS player page index.html with
+                                                                                           its two images ploading.gif and indicator.svg,
+                                                                                           made by JavCMS)
+DPlayer                                    1.27.1          MIT (NOTICE)                    static/player/dplayer/
+dash.js                                    2.6.7           BSD-3-Clause (NOTICE)           static/player/dplayer/
+WebTorrent                                 0.98.18         MIT (NOTICE)                    static/player/dplayer/
+vast-client-js                             6.5.0           MIT                             static/jcx/lib/
+html5shiv / Respond.js / qrcodejs          3.7.3 / 1.4.2   MIT (html5shiv: MIT or GPL-2.0) static/vendor/legacy/, static/vendor/qrcodejs/
+Inter, Quicksand, JetBrains Mono, Poppins
+  and Rubik fonts                          -               SIL OFL 1.1 (3)                 static/vendor/fonts/
+Effect libraries, icon sets and fonts      see THIRD-PARTY.md  MIT / ISC / Unlicense /     static/vendor/fx/
+                                                           Apache-2.0 / OFL-1.1
+Lucide, Phosphor and Tabler icon glyphs    see THIRD-PARTY.txt ISC / MIT                   static/template-ui/auto-icon/; Lucide geometry
+                                                                                           also in theme-switcher.js and fx/morph.js;
+                                                                                           the theme sprites assets/icons.svg of
+                                                                                           ember-modern (Tabler), honey-modern,
+                                                                                           topaz-modern and velvet-modern (Phosphor)
+                                                                                           and neon-modern (Lucide)
+Lucide icons (some from Feather)           1.48.0          ISC / MIT (texts in the file)   static/admin/icons/admin-icons.svg
+three.js and morphicons                    r186 / 1.7.1    MIT                             static/template-ui/gallery-motion.js
+
+(1) The LGPL-2.1 text is in application/common/vendor/phpmailer/LICENSE.
+(2) The LGPL-3.0 text is in LICENSE.LGPL-3.0.txt; the GPL-3.0 text it builds on is in
+    LICENSE.GPL-3.0.txt. (MathQuill names the GNU Lesser General Public License without a
+    version number.)
+(3) The SIL Open Font License 1.1 text and the copyright lines of the five font families are
+    in LICENSE.OFL-1.1.txt.
+(4) CKEditor's own license file, static/editor/ckeditor/LICENSE.md (from the original
+    CKEditor 4.11.1 release; every CKEditor file header names it), holds the full texts of
+    the three licenses. The LGPL-2.1 text is also in application/common/vendor/phpmailer/LICENSE.
+
+JavCMS changed some of these third-party files. NOTICE.CHANGED-FILES.txt lists every changed
+file of the MacCMS base release (which ships most of them) and of the bundled editor libraries
+(TinyMCE, KindEditor, CKEditor, UMeditor), CodeMirror and Layui, each compared with its original
+release, with the kind of change and its date.
+
+Apache-2.0 components (Part B) are not repeated here.
+
+Not in this package: files whose author or license is not confirmed as free
+for every use, also on websites that earn money, are left out or replaced by
+files that JavCMS made: the six captcha fonts and the captcha background
+photos of think-captcha (Part B), the emoticon images of KindEditor (the QQ
+faces), UEditor and UMeditor (Baidu Hi), Layui (the Sina Weibo set) and MacCMS
+(Baidu Tieba faces) with the emoticon buttons of KindEditor and UEditor, the
+application icons of the UEditor attachment list (replaced by JavCMS-made file
+signs), the Flash player play.swf with its stub flv.js, the ArtPlayer demo
+images, the icon images of the MDXiangJiao theme pack in the neon theme and the
+play button and watch-page strip of the jav theme (replaced by JavCMS-made
+images), the DashLite admin stylesheet, the fancyBox 2.1.5 stylesheet and
+images, the Pear Admin Layui files, layui_dropdown, jquery.lang.js, and the
+theme JAVCMS Classic (Part D). NOTICE.CHANGED-FILES.txt lists the files of the
+MacCMS release and of the bundled libraries among them.
+
+
+PART D. WHERE THE THEMES COME FROM
+----------------------------------
+
+- jav, jav-modern and javcms-modern are older JavCMS themes, built on
+  third-party themes:
+  - javcms-modern ("JAVCMS Modern", the default theme of this package) keeps
+    the page markup of a third-party tube theme made for KVS (Kernel Video
+    Sharing) that had been adapted to MacCMS; who made that theme and the
+    adaptation, and under which license, is not known. The javcms-modern page
+    templates whose notice says "partly based on a third-party theme" keep
+    that markup (header, menu, video and article lists); JavCMS claims no
+    rights in it. Its stylesheets (gallery.css, jc-core.css, jc-skin.css,
+    surface.css) and scripts were written by JavCMS.
+  - JAVCMS Classic (template/javcms), the default theme up to release 1.1.0,
+    is not in this package from release 1.2.0. It was built on the same tube
+    theme and loaded that theme's base stylesheet (ksassets/css/main.css; some
+    of its rules are the same as rules of the KVS default theme of the Kernel
+    Team), its IcoMoon icon font (ksassets/font/icomoon.*) and orang.css, a
+    stylesheet of the 8X default_pc theme pack with that pack's icon font;
+    their authors and licenses are not known. Sites that upgrade keep their
+    own copy of it (UPGRADE.md). Earlier releases also carried the fancyBox
+    2.1.5 stylesheet and its four images in that theme (non-commercial use
+    only).
+  - The page templates of jav and jav-modern were built on stui-based
+    third-party MacCMS templates (heisejianyue and xigua111, as shipped by
+    RamCMS); JavCMS claims no rights in that work. The stylesheets of jav and
+    jav-modern were written by JavCMS; they style the class names of that
+    framework. Up to release 1.1.0 jav also carried the play button image
+    statics/img/play.png of the heisejianyue template and a background strip
+    of unknown origin for its watch page (statics/img/play_bg.webp); from
+    release 1.2.0 both are images made by JavCMS.
+  - Some user pages of these three themes share layout with stock X4 / 8X
+    theme pages.
+- ember, onyx, velvet, honey, neon, crimson and topaz were rebuilt by JavCMS
+  from third-party MacCMS theme packs: 8X / X4 / default_pc (ember), MDblack
+  (onyx), MDkm (velvet), MDYouTiao (honey), MDXiangJiao (neon), MDLutu
+  (crimson) and hanime.zip (topaz). The templates, styles and scripts were
+  written again by JavCMS, but the designs come from those packs, and a few
+  files keep parts of them: the user pages of ember and honey (see below) and
+  the topaz stylesheet assets/css/topaz.css, which reuses a number of rules of
+  the hanime stylesheet (html/style/css/application.css). Up to release 1.1.0
+  the neon theme also used 42 icon images of the original MDXiangJiao pack
+  (template/neon/assets/img/icons/); from release 1.2.0 the 14 that neon shows
+  are images made by JavCMS, and the other 28, which nothing used, are left
+  out.
+- The seven *-modern themes (ember-modern, onyx-modern, velvet-modern,
+  honey-modern, neon-modern, crimson-modern, topaz-modern) were designed for
+  JavCMS on the same template set.
+
+The JavCMS license covers the JavCMS work on these themes: its code, its
+changes and its own designs. It does not cover the work of the original theme
+authors, and it gives no rights in that work. Files that still contain the work
+of an original theme author say so in their notice ("partly based on a
+third-party theme"); this includes the user-centre, payment, confirm and
+similar pages of jav, ember and honey (and their -modern twins) and of
+javcms-modern that still share layout and script with stock theme pages
+(among them the user info, menu, sign-in and password pages of ember, jav and
+javcms-modern), the article pages art/detail, art/ajax_detail, art/type,
+art/hot, art/indexhot and art/new of jav and jav-modern, which keep the page
+skeleton of the xigua111 template, the javcms-modern templates that keep the
+markup of the KVS tube theme (header, menu, video and article lists), the
+user-centre stylesheets of ember and ember-modern, which restyle the FED
+framework of the 8X user pages, and the topaz stylesheet assets/css/topaz.css.
+Template files whose shared parts come from MacCMS itself say "Based on MacCMS
+10" instead; among them are the RSS and sitemap templates (html/rss/) of every
+theme, except five of jav and five of jav-modern: baidu.html, bing.html,
+sm.html, so.html and sogou.html there are ApiiCMS templates
+(template/mrphim/html/rss/ in ApiiCMS), unchanged apart from spaces, so they
+carry no JavCMS notice (see NOTICE); google.html and index.html of these two
+themes are JavCMS rewrites of the MacCMS templates.
+
+
+PART E. EARLIER RELEASES
+------------------------
+
+JavCMS releases up to and including 1.1.0 (published on 15 October 2026 and
+before) stay under the licenses they were published with (Apache-2.0; MIT
+for the files that said MIT). This license applies from release 1.2.0.
+
+
+PART F. APACHE LICENSE 2.0 (FULL TEXT)
+--------------------------------------
+
+This is the license of the parts listed in Part B.
+
+                                 Apache License
+                           Version 2.0, January 2004
+                        http://www.apache.org/licenses/
+
+   TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
+
+   1. Definitions.
+
+      "License" shall mean the terms and conditions for use, reproduction,
+      and distribution as defined by Sections 1 through 9 of this document.
+
+      "Licensor" shall mean the copyright owner or entity authorized by
+      the copyright owner that is granting the License.
+
+      "Legal Entity" shall mean the union of the acting entity and all
+      other entities that control, are controlled by, or are under common
+      control with that entity. For the purposes of this definition,
+      "control" means (i) the power, direct or indirect, to cause the
+      direction or management of such entity, whether by contract or
+      otherwise, or (ii) ownership of fifty percent (50%) or more of the
+      outstanding shares, or (iii) beneficial ownership of such entity.
+
+      "You" (or "Your") shall mean an individual or Legal Entity
+      exercising permissions granted by this License.
+
+      "Source" form shall mean the preferred form for making modifications,
+      including but not limited to software source code, documentation
+      source, and configuration files.
+
+      "Object" form shall mean any form resulting from mechanical
+      transformation or translation of a Source form, including but
+      not limited to compiled object code, generated documentation,
+      and conversions to other media types.
+
+      "Work" shall mean the work of authorship, whether in Source or
+      Object form, made available under the License, as indicated by a
+      copyright notice that is included in or attached to the work
+      (an example is provided in the Appendix below).
+
+      "Derivative Works" shall mean any work, whether in Source or Object
+      form, that is based on (or derived from) the Work and for which the
+      editorial revisions, annotations, elaborations, or other modifications
+      represent, as a whole, an original work of authorship. For the purposes
+      of this License, Derivative Works shall not include works that remain
+      separable from, or merely link (or bind by name) to the interfaces of,
+      the Work and Derivative Works thereof.
+
+      "Contribution" shall mean any work of authorship, including
+      the original version of the Work and any modifications or additions
+      to that Work or Derivative Works thereof, that is intentionally
+      submitted to Licensor for inclusion in the Work by the copyright owner
+      or by an individual or Legal Entity authorized to submit on behalf of
+      the copyright owner. For the purposes of this definition, "submitted"
+      means any form of electronic, verbal, or written communication sent
+      to the Licensor or its representatives, including but not limited to
+      communication on electronic mailing lists, source code control systems,
+      and issue tracking systems that are managed by, or on behalf of, the
+      Licensor for the purpose of discussing and improving the Work, but
+      excluding communication that is conspicuously marked or otherwise
+      designated in writing by the copyright owner as "Not a Contribution."
+
+      "Contributor" shall mean Licensor and any individual or Legal Entity
+      on behalf of whom a Contribution has been received by Licensor and
+      subsequently incorporated within the Work.
+
+   2. Grant of Copyright License. Subject to the terms and conditions of
+      this License, each Contributor hereby grants to You a perpetual,
+      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+      copyright license to reproduce, prepare Derivative Works of,
+      publicly display, publicly perform, sublicense, and distribute the
+      Work and such Derivative Works in Source or Object form.
+
+   3. Grant of Patent License. Subject to the terms and conditions of
+      this License, each Contributor hereby grants to You a perpetual,
+      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+      (except as stated in this section) patent license to make, have made,
+      use, offer to sell, sell, import, and otherwise transfer the Work,
+      where such license applies only to those patent claims licensable
+      by such Contributor that are necessarily infringed by their
+      Contribution(s) alone or by combination of their Contribution(s)
+      with the Work to which such Contribution(s) was submitted. If You
+      institute patent litigation against any entity (including a
+      cross-claim or counterclaim in a lawsuit) alleging that the Work
+      or a Contribution incorporated within the Work constitutes direct
+      or contributory patent infringement, then any patent licenses
+      granted to You under this License for that Work shall terminate
+      as of the date such litigation is filed.
+
+   4. Redistribution. You may reproduce and distribute copies of the
+      Work or Derivative Works thereof in any medium, with or without
+      modifications, and in Source or Object form, provided that You
+      meet the following conditions:
+
+      (a) You must give any other recipients of the Work or
+          Derivative Works a copy of this License; and
+
+      (b) You must cause any modified files to carry prominent notices
+          stating that You changed the files; and
+
+      (c) You must retain, in the Source form of any Derivative Works
+          that You distribute, all copyright, patent, trademark, and
+          attribution notices from the Source form of the Work,
+          excluding those notices that do not pertain to any part of
+          the Derivative Works; and
+
+      (d) If the Work includes a "NOTICE" text file as part of its
+          distribution, then any Derivative Works that You distribute must
+          include a readable copy of the attribution notices contained
+          within such NOTICE file, excluding those notices that do not
+          pertain to any part of the Derivative Works, in at least one
+          of the following places: within a NOTICE text file distributed
+          as part of the Derivative Works; within the Source form or
+          documentation, if provided along with the Derivative Works; or,
+          within a display generated by the Derivative Works, if and
+          wherever such third-party notices normally appear. The contents
+          of the NOTICE file are for informational purposes only and
+          do not modify the License. You may add Your own attribution
+          notices within Derivative Works that You distribute, alongside
+          or as an addendum to the NOTICE text from the Work, provided
+          that such additional attribution notices cannot be construed
+          as modifying the License.
+
+      You may add Your own copyright statement to Your modifications and
+      may provide additional or different license terms and conditions
+      for use, reproduction, or distribution of Your modifications, or
+      for any such Derivative Works as a whole, provided Your use,
+      reproduction, and distribution of the Work otherwise complies with
+      the conditions stated in this License.
+
+   5. Submission of Contributions. Unless You explicitly state otherwise,
+      any Contribution intentionally submitted for inclusion in the Work
+      by You to the Licensor shall be under the terms and conditions of
+      this License, without any additional terms or conditions.
+      Notwithstanding the above, nothing herein shall supersede or modify
+      the terms of any separate license agreement you may have executed
+      with Licensor regarding such Contributions.
+
+   6. Trademarks. This License does not grant permission to use the trade
+      names, trademarks, service marks, or product names of the Licensor,
+      except as required for reasonable and customary use in describing the
+      origin of the Work and reproducing the content of the NOTICE file.
+
+   7. Disclaimer of Warranty. Unless required by applicable law or
+      agreed to in writing, Licensor provides the Work (and each
+      Contributor provides its Contributions) on an "AS IS" BASIS,
+      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+      implied, including, without limitation, any warranties or conditions
+      of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A
+      PARTICULAR PURPOSE. You are solely responsible for determining the
+      appropriateness of using or redistributing the Work and assume any
+      risks associated with Your exercise of permissions under this License.
+
+   8. Limitation of Liability. In no event and under no legal theory,
+      whether in tort (including negligence), contract, or otherwise,
+      unless required by applicable law (such as deliberate and grossly
+      negligent acts) or agreed to in writing, shall any Contributor be
+      liable to You for damages, including any direct, indirect, special,
+      incidental, or consequential damages of any character arising as a
+      result of this License or out of the use or inability to use the
+      Work (including but not limited to damages for loss of goodwill,
+      work stoppage, computer failure or malfunction, or any and all
+      other commercial damages or losses), even if such Contributor
+      has been advised of the possibility of such damages.
+
+   9. Accepting Warranty or Additional Liability. While redistributing
+      the Work or Derivative Works thereof, You may choose to offer,
+      and charge a fee for, acceptance of support, warranty, indemnity,
+      or other liability obligations and/or rights consistent with this
+      License. However, in accepting such obligations, You may act only
+      on Your own behalf and on Your sole responsibility, not on behalf
+      of any other Contributor, and only if You agree to indemnify,
+      defend, and hold each Contributor harmless for any liability
+      incurred by, or claims asserted against, such Contributor by reason
+      of your accepting any such warranty or additional liability.
+
+   END OF TERMS AND CONDITIONS
+
+   APPENDIX: How to apply the Apache License to your work.
+
+      To apply the Apache License to your work, attach the following
+      boilerplate notice, with the fields enclosed by brackets "[]"
+      replaced with your own identifying information. (Don't include
+      the brackets!)  The text should be enclosed in the appropriate
+      comment syntax for the file format. We also recommend that a
+      file or class name and description of purpose be included on the
+      same "printed page" as the copyright notice for easier
+      identification within third-party archives.
+
+   Copyright [yyyy] [name of copyright owner]
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.

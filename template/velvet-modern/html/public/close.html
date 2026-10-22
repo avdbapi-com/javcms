@@ -1,0 +1,31 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}<!DOCTYPE html>
+<html data-template-theme="velvet-modern" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}">
+<head>
+<script src="{:MAC_PATH}static/template-ui/theme.js?v=20261007-theme1"></script>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="robots" content="noindex, follow" />
+<title>{:\\app\\common\\util\\TemplateText::get('ui.website_maintenance')}</title>
+<link rel="icon" href="{:MAC_PATH_TEMPLATE}assets/brand/favicon.svg?v=20261010-r1" type="image/svg+xml" />
+<link rel="stylesheet" href="{:MAC_PATH}static/vendor/fx/fonts/playfair-display@5.3.0/playfair-display.css" />
+<link rel="stylesheet" href="{:MAC_PATH}static/vendor/fx/fonts/lexend@5.3.0/lexend.css" />
+<link rel="stylesheet" href="{:MAC_PATH_TEMPLATE}assets/css/vp.css?v=20261014-ma1" />
+</head>
+<body class="vp-page-gate">
+<main id="main-content" class="vp-standalone">
+  <div class="vp-intermission vp-state">
+    <span class="vp-state-icon" aria-hidden="true"><svg class="vp-i" viewBox="0 0 256 256"><path d="M216 64H40v128h176z" opacity=".3"/><path d="M128 40a8 8 0 0 1 8 8v40a8 8 0 0 1-16 0V48a8 8 0 0 1 8-8m0 112a12 12 0 1 1-12 12 12 12 0 0 1 12-12M40 200h176a8 8 0 0 1 0 16H40a8 8 0 0 1 0-16"/></svg></span>
+    <p class="vp-eyebrow">{:\\app\\common\\util\\TemplateText::get('vp.intermission')}</p>
+    <h1>{:\\app\\common\\util\\TemplateText::get('ui.the_site_is_undergoing_maintenance')}</h1>
+    <div class="vp-state-msg">{$close_tip|htmlspecialchars=ENT_QUOTES}</div>
+  </div>
+</main>
+</body>
+</html>

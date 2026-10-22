@@ -1,0 +1,17 @@
+{/*
+This file is part of JavCMS - https://javcms.net
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Telegram: https://t.me/avdb_api
+*/}{php}$tplFreshOn = 1; $tplFreshFrom = strtotime('today'); $tplCardN = 100;{/php}
+<section class="t-sec t-wrap" id="t-fresh" aria-labelledby="t-fresh-title">
+  <div class="t-sec-head" data-ai-group data-ai-hot>
+    <span class="t-sec-ic">{:\\app\\common\\util\\AutoIcon::navIcon('latest', '', ['size'=>'lg', 'plate'=>true])}</span><h2 class="t-sec-t" id="t-fresh-title" data-t-kin><span>{:\\app\\common\\util\\TemplateText::get('emt.fresh_sparks')}</span></h2>
+    <span class="t-legend" aria-hidden="true"><i></i></span>
+    <a class="t-more" href="{:mac_url('label/new')}">{:\\app\\common\\util\\TemplateText::get('ui.view_more')}<svg class="t-i t-flip" aria-hidden="true"><use href="{$tplIcons}#arrow-right"></use></svg></a>
+  </div>
+  <ul class="t-grid" data-grid-fill data-fx="glow stagger">{maccms:vod num="10" type="all" order="desc" by="time" pageurl="index/index" paging="yes" id="vo"}{include file="public/vodbox"}{/maccms:vod}</ul>
+</section>
+{php}$tplFreshOn = 0;{/php}
