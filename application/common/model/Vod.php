@@ -1,11 +1,12 @@
 <?php
 /*
- * This file is part of JavCMS - https://javcms.net
+ * This file is part of JavCMS - https://github.com/avdbapi-com/javcms
  * Based on MacCMS 10 (Apache-2.0) by magicblack, changed by JavCMS.
  * JavCMS changes: Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors,
  * JavCMS Community License 1.0. The MacCMS parts stay under the Apache License 2.0.
  * See the LICENSE and NOTICE files that come with JavCMS.
- * Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Live demo: https://javcms.net (adult content, 18 and over only)
  * Telegram: https://t.me/avdb_api
  */
 namespace app\common\model;
@@ -1448,9 +1449,9 @@ class Vod extends Base {
      * "per-value search_len for comma lists: prefer the 1.1 result"; import-r4 filter-like-parity-searchlen, search-r4
      * F-r4-1, merge r4 hand-over 1). Every field (wd, tag, class, actor, director, ...) is cut as ONE string at search_len
      * characters, then the list splits the comma values (mac_like_arr), so:
-     *  - a comma list longer than search_len keeps its cut last value ("Neley Leevinley,Haleylee Ixmelus" -> "...,Haleylee
-     *    Ixmel"; an empty last part matches every row, as in 1.1: "Reiko Kobayakawa,Eimi Fukada,Ena Satsuki" -> "...,E");
-     *  - a single value longer than search_len is cut, never dropped ("YMDS-132 The day Alice became her" lists its video,
+     *  - a comma list longer than search_len keeps its cut last value ("Performer Alpha,Performer Betamax" -> "...,Performer
+     *    Betam"; an empty last part matches every row, as in 1.1: "Performer A,Performer B,Example C" -> "...,E");
+     *  - a single value longer than search_len is cut, never dropped ("ABC-123 A long sample video title" lists its video,
      *    not the unfiltered catalogue).
      * The page's head and links (All::label_search() / label_type(): title, canonical, language and sort links; the landing
      * facts) cut the same request with the same function, so the list, its count, its title and every link name one value

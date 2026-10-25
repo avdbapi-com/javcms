@@ -1,10 +1,11 @@
 <?php
 /*
- * This file is part of JavCMS - https://javcms.net
+ * This file is part of JavCMS - https://github.com/avdbapi-com/javcms
  * Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
  * License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
  * See the LICENSE and NOTICE files that come with JavCMS.
- * Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Live demo: https://javcms.net (adult content, 18 and over only)
  * Telegram: https://t.me/avdb_api
  */
 namespace app\common\util;
@@ -21,8 +22,8 @@ use think\Db;
  * same only if the MATCH keeps EVERY row the LIKE finds. A FULLTEXT index finds words by their start, while LIKE also
  * finds a value inside a longer word ("Wife" in "Housewife", "Censored" in "Uncensored"). So a word of the value is
  * used only when the value itself proves the word starts a word in the row: it follows a separator inside the value.
- *  - word after a separator and before one ("Rei" in "(Rei Mizuna)")  -> +word   (whole word in every matching row)
- *  - word after a separator at the end of the value ("Hatano" in "Yui Hatano")   -> +word*  (the row's word starts so)
+ *  - word after a separator and before one ("Rin" in "(Rin Sample)")  -> +word   (whole word in every matching row)
+ *  - word after a separator at the end of the value ("Sample" in "Ann Sample")   -> +word*  (the row's word starts so)
  *  - the first word of a value that starts with a letter or digit: never (it can end a longer word in the row).
  * v2 (ft-vocab): a word the value cannot prove to start a row word is expanded through the vocabulary of the column
  * (FilterVocab, {prefix}vod_ft_vocab): a single-word value w becomes the group of index words that CONTAIN w
@@ -157,7 +158,7 @@ final class FilterMatch
     public static $visitorHook = null;
     public static $statsHook = null;
     /**
-     * JavCMS 1.2.0 round 10 (the final rehearsal on a copy of live javcms.net, search-r10 FR-1 / FR-2; orchestrator O-26 (a) /
+     * JavCMS 1.2.0 round 10 (the final rehearsal on a copy of the live demo site, search-r10 FR-1 / FR-2; orchestrator O-26 (a) /
      * (b)): the term-statistics shortcuts of rounds 6-8 (a visitor request leaves a MATCH the statistics put above STATS_WALK,
      * or dense above STATS_DENSE x the guard, to the list's own walk, without a probe) and the row-budget walks they lead to
      * were measured and needed with 7.1 M videos on 2 cores, where the rows of such a MATCH are cold disk reads. A site below

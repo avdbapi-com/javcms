@@ -1,8 +1,9 @@
 {/*
-This file is part of JavCMS - https://javcms.net
+This file is part of JavCMS - https://github.com/avdbapi-com/javcms
 Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
 License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
 See the LICENSE and NOTICE files that come with JavCMS.
-Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
+Live demo: https://javcms.net (adult content, 18 and over only)
 Telegram: https://t.me/avdb_api
 */}{php}if (!isset($tplNoPic)) { $tplNoPic = $maccms['path_tpl'] . 'assets/brand/ph-dark.svg'; } if (!isset($tplIcons)) { $tplIcons = $maccms['path_tpl'] . 'assets/icons.svg'; }{/php}<section class="tp-ajax"><div class="tp-grid" data-grid-fill>{maccms:vod num="20" paging="yes" type="all" pageurl="vod/search" order="desc" by="time" id="vo"}{include file="public/vodbox"}{/maccms:vod}</div>{if condition="$__PAGING__.record_total eq 0"}{include file="public/empty"}{/if}{include file="public/paging"}</section>

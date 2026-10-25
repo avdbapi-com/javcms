@@ -1,7 +1,7 @@
 {
   "engine": "apple",
-  "fetched": 1792654550,
-  "fetched_utc": "2026-10-22T07:35:50Z",
+  "fetched": 1792905808,
+  "fetched_utc": "2026-10-25T05:23:28Z",
   "sources": ["https://search.developer.apple.com/applebot.json"],
   "prefixes": [
     {"ipv4Prefix":"17.241.208.160/27"},

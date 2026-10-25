@@ -1,8 +1,9 @@
 {/*
-This file is part of JavCMS - https://javcms.net
+This file is part of JavCMS - https://github.com/avdbapi-com/javcms
 Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
 License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
 See the LICENSE and NOTICE files that come with JavCMS.
-Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
+Live demo: https://javcms.net (adult content, 18 and over only)
 Telegram: https://t.me/avdb_api
 */}{php}$emtLabelOn = isset($emtLabelOn) ? (string)$emtLabelOn : ''; $emtLabelTabs = array(array('new', 'label/new', 'ui.latest', 'zap', 1), array('hot', 'label/hot', 'emt.burning', 'flame', 5), array('score', 'label/score', 'top_rated', 'star', 3), array('up', 'label/up', 'most_liked', 'thumbs-up', 2), array('sort', 'label/sort', 'ui.all_videos', 'grid', 1));{/php}<nav class="t-sorts" aria-label="{:\\app\\common\\util\\TemplateText::get('sort_by')}">{volist name="emtLabelTabs" id="emtLt"}<a class="h{$emtLt.4}" href="{:mac_url($emtLt[1])}" {if condition="$emtLt[0] eq $emtLabelOn"}aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::ui($emtLt[3], ['size'=>'sm', 'tint'=>'none'])}{:\\app\\common\\util\\TemplateText::get($emtLt[2])}</a>{/volist}</nav>

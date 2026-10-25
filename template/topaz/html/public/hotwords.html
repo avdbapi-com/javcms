@@ -1,9 +1,10 @@
 {/*
-This file is part of JavCMS - https://javcms.net
+This file is part of JavCMS - https://github.com/avdbapi-com/javcms
 Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
 License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
 See the LICENSE and NOTICE files that come with JavCMS.
-Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
+Live demo: https://javcms.net (adult content, 18 and over only)
 Telegram: https://t.me/avdb_api
 */}{php}$tzHot = []; $tzAz = []; foreach (explode(',', (string)($maccms['search_hot'] ?? '')) as $tzHw) { $tzHw = trim(\app\common\util\AvdbLanguage::decodeEntities($tzHw)); if ($tzHw === '') { continue; } if (preg_match('/^[A-Za-z0-9]$/', $tzHw)) { $tzAz[] = strtoupper($tzHw); } elseif (mb_strlen($tzHw) <= 40 && !in_array($tzHw, $tzHot, true)) { $tzHot[] = $tzHw; } } $tzHot = array_slice($tzHot, 0, 24); $tzAz = array_slice(array_values(array_unique($tzAz)), 0, 36);{/php}
 {notempty name="tzHot"}<section class="tz-hotsec" aria-labelledby="tz-hot-h"><h2 class="tz-hotsec-h" id="tz-hot-h">{:\\app\\common\\util\\AutoIcon::navIcon('trending', '', ['class'=>'tz-i'])}{:\\app\\common\\util\\TemplateText::get('topaz.hot_searches')}</h2><div class="tz-chips" data-ai-group>{volist name="tzHot" id="tzHotW"}<a class="tz-tagchip tz-hotchip" href="{:mac_url_search(['wd'=>$tzHotW])}">{:\\app\\common\\util\\AutoIcon::keepTag($tzHotW) ? \\app\\common\\util\\AutoIcon::icon('tag', $tzHotW, ['size'=>'sm', 'i'=>$key]) : \\app\\common\\util\\AutoIcon::ui('search', ['size'=>'sm', 'i'=>$key])}<span>{$tzHotW|htmlspecialchars=ENT_QUOTES}</span></a>{/volist}</div></section>{/notempty}

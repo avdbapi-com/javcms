@@ -1,8 +1,9 @@
 {/*
-This file is part of JavCMS - https://javcms.net
+This file is part of JavCMS - https://github.com/avdbapi-com/javcms
 Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
 License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
 See the LICENSE and NOTICE files that come with JavCMS.
-Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
+Live demo: https://javcms.net (adult content, 18 and over only)
 Telegram: https://t.me/avdb_api
 */}{php}$hnRankTabs = []; foreach ([['hot', 'ui.popular_videos', 'hot'], ['new', 'ui.latest_videos', 'latest'], ['score', 'top_rated', 'top'], ['up', 'most_liked', 'liked']] as $hnRtI => $hnRt) { $hnRankTabs[] = ['href' => mac_url('label/' . $hnRt[0]), 'text' => \app\common\util\TemplateText::get($hnRt[1]), 'icon' => \app\common\util\AutoIcon::navIcon($hnRt[2], '', ['i' => $hnRtI]), 'on' => $hnRt[0] === (isset($hnRankOn) ? $hnRankOn : 'hot') ? 1 : 0]; }{/php}<div class="hn-rtabs" data-ai-group>{volist name="hnRankTabs" id="hnRankTab"}{if condition="$hnRankTab.on eq 1"}<h1 class="hn-rtab is-on" data-ai-hot>{$hnRankTab.icon}<span>{$hnRankTab.text}</span></h1>{else/}<a class="hn-rtab" href="{$hnRankTab.href|htmlspecialchars=ENT_QUOTES}">{$hnRankTab.icon}<span>{$hnRankTab.text}</span></a>{/if}{/volist}</div>

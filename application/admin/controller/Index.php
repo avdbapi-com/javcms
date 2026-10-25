@@ -1,11 +1,12 @@
 <?php
 /*
- * This file is part of JavCMS - https://javcms.net
+ * This file is part of JavCMS - https://github.com/avdbapi-com/javcms
  * Based on MacCMS 10 (Apache-2.0) by magicblack, changed by JavCMS.
  * JavCMS changes: Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors,
  * JavCMS Community License 1.0. The MacCMS parts stay under the Apache License 2.0.
  * See the LICENSE and NOTICE files that come with JavCMS.
- * Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Live demo: https://javcms.net (adult content, 18 and over only)
  * Telegram: https://t.me/avdb_api
  */
 namespace app\admin\controller;
@@ -412,6 +413,11 @@ class Index extends Base
         $todo = ($this->check_auth('comment', 'data') ? (int)$stats['comments_waiting'] : 0)
             + ($this->check_auth('gbook', 'data') ? (int)$stats['messages_unanswered'] : 0)
             + ($this->check_auth('avdbimport', 'index') ? (int)$stats['import_failed'] : 0);
+        // 1.2.1: a newer release the updater's last check found is a to-do of the founder (only the founder installs it)
+        $updateNotice = $this->updateNotice();
+        if ($updateNotice !== null) {
+            $todo++;
+        }
 
         $site = config('maccms.site');
         $siteName = self::plain(is_array($site) && isset($site['site_name']) ? $site['site_name'] : '');
@@ -463,6 +469,7 @@ class Index extends Base
         $this->assign('shell_lang_menu', $langCookie);
         $this->assign('shell_langs', $langs);
         $this->assign('shell_todo', $todo);
+        $this->assign('shell_update_counted', $updateNotice !== null);
         $this->assign('shell_site_name', self::h($siteName));
         $this->assign('shell_admin_name', self::h($adminName));
         $this->assign('shell_initial', self::h($initial));
@@ -618,6 +625,24 @@ class Index extends Base
         return lang('admin/ux/overview/days_ago', [(int)floor($d / 86400)]);
     }
 
+    /**
+     * 1.2.1: the newest release the one-click updater's last check found (runtime/update/check.php, no network), when it
+     * is newer than this site and the admin is the founder (only the founder installs updates); else null.
+     */
+    protected function updateNotice()
+    {
+        if ((int)($this->_admin['admin_id'] ?? 0) !== 1 || !is_file(APP_PATH . 'common/util/updater/Service.php')) {
+            return null;
+        }
+        try {
+            \app\common\util\updater\Util::setRoot(ROOT_PATH);
+            $n = \app\common\util\updater\Service::notice();
+        } catch (\Throwable $e) {
+            return null;
+        }
+        return !empty($n['available']) && (string)$n['latest'] !== '' ? (string)$n['latest'] : null;
+    }
+
     protected function entryFile()
     {
         return basename((string)$this->request->baseFile());
@@ -721,8 +746,16 @@ class Index extends Base
         } else {
             $strip[] = ['kind' => 'off', 'text' => lang('admin/ux/overview/autoimport_off')];
         }
+        $updateNotice = $this->updateNotice();
         if ($updateSql) {
             $strip[] = ['kind' => 'warn', 'text' => lang('admin/ux/overview/db_update')];
+        } elseif ($updateNotice !== null) {
+            // 1.2.1: the updater's last check found a newer release (Admins & backup > Updates)
+            $strip[] = ['kind' => 'warn', 'text' => lang('admin/ux/updates/overview_available', [$versionCode, $updateNotice])];
+        } elseif ((int)($this->_admin['admin_id'] ?? 0) !== 1 && is_file(APP_PATH . 'common/util/updater/Service.php')) {
+            // only the founder learns whether a newer release is known (only the founder installs updates): the version
+            // alone for every other admin, never "up to date" (ux-4 P3-9)
+            $strip[] = ['kind' => 'info', 'text' => lang('admin/ux/updates/overview_version', [$versionCode])];
         } else {
             $strip[] = ['kind' => 'ok', 'text' => lang('admin/ux/overview/version_ok', [$versionCode])];
         }
@@ -741,6 +774,9 @@ class Index extends Base
         };
         if (!$siteOn && $can('system', 'config')) {
             $addAtt(lang('admin/ux/overview/att_site_closed'), 'admin/ux/overview/btn_turn_on', $tab('n21', 'system', 'config'), 'ai-triangle-alert');
+        }
+        if ($updateNotice !== null) {
+            $addAtt(lang('admin/ux/updates/att_available', [$updateNotice]), 'admin/ux/updates/att_btn', $tab('n116', 'update', 'index'), 'ai-refresh-cw');
         }
         // The Update controller is permission-checked now (security r3 P3-4): only an admin who may open it gets the button.
         if ($updateSql && $can('update', 'step2')) {

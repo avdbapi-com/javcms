@@ -1,6 +1,15 @@
 # OpenLiteSpeed rewrite-only file: copy to the application root as .htaccess.
 # Enable Rewrite and Auto Load from .htaccess; restart OLS after changes.
 RewriteEngine On
+# One-click updater (1.2.1): a step of a running update (?jcupd=...) and the requests during its maintenance window
+# must finish even when the browser tab closes. LiteSpeed ends PHP on a client disconnect unless the request carries
+# "noabort" (Apache ignores both variables; PHP's ignore_user_abort() covers it there). Keep these lines first.
+RewriteCond %{QUERY_STRING} (^|&)jcupd=
+RewriteRule ^ - [E=noabort:1,E=noconntimeout:1]
+# Site installed in a sub-folder (https://site.example/cms/)? Rewrite has no variable for the folder of this file:
+# write the folder here, %{DOCUMENT_ROOT}/cms/runtime/update/maintenance.php (deployment/README.md, Subdirectory).
+RewriteCond %{DOCUMENT_ROOT}/runtime/update/maintenance.php -f
+RewriteRule ^ - [E=noabort:1,E=noconntimeout:1]
 RewriteRule ^(?:application|runtime|vendor|thinkphp|extend|deployment|backup|backups)(?:/|$) - [F,L,NC]
 # Theme page templates are rendered by PHP; their source (template/<theme>/html/) is not a public file.
 RewriteRule ^template/[^/]+/html(?:/|$) - [F,L,NC]

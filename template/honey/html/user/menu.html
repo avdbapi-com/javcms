@@ -1,9 +1,10 @@
 {/*
-This file is part of JavCMS - https://javcms.net
+This file is part of JavCMS - https://github.com/avdbapi-com/javcms
 Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
 License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
 See the LICENSE and NOTICE files that come with JavCMS.
-Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
+Live demo: https://javcms.net (adult content, 18 and over only)
 Telegram: https://t.me/avdb_api
 */}{php}$hnUAct = strtolower((string)request()->action()); $hnUFace = trim((string)($obj['user_portrait'] ?? '')); $hnUFace = $hnUFace === '' ? $maccms['path_tpl'] . 'assets/img/avatar.svg' : mac_url_img($hnUFace); $hnCash = (string)($GLOBALS['config']['user']['cash_status'] ?? '0') === '1'; $hnUMenu = [['index', 'user', 'ui.my_information'], ['info', 'edit', 'ui.modify_the_information'], ['favs', 'heart', 'ui.my_collection'], ['plays', 'play', 'ui.play_record'], ['ulog', 'clock', 'history'], ['popedom', 'key', 'ui.my_authority'], ['upgrade', 'crown', 'ui.upgrade_member'], ['buy', 'diamond', 'ui.recharge_center'], ['orders', 'list', 'ui.recharge_record'], ['plog', 'bolt', 'ui.points_record']]; if ($hnCash) { $hnUMenu[] = ['cash', 'download', 'ui.withdrawal_record']; } $hnUMenu[] = ['comment', 'chat', 'ui.comments']; $hnUMenu[] = ['gbook', 'mail', 'ui.recent_messages']; $hnUMenu[] = ['logout', 'logout', 'ui.quit']; $hnUItems = []; foreach ($hnUMenu as $hnUm) { $hnUItems[] = ['href' => mac_url('user/' . $hnUm[0]), 'icon' => $hnUm[1], 'text' => \app\common\util\TemplateText::get($hnUm[2]), 'on' => ($hnUAct === $hnUm[0] || ($hnUm[0] === 'index' && $hnUAct === 'ajax_info')) ? 1 : 0]; }{/php}
 <div class="hn-umenu">

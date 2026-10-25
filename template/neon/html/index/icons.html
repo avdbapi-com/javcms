@@ -1,8 +1,9 @@
 {/*
-This file is part of JavCMS - https://javcms.net
+This file is part of JavCMS - https://github.com/avdbapi-com/javcms
 Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
 License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
 See the LICENSE and NOTICE files that come with JavCMS.
-Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
+Live demo: https://javcms.net (adult content, 18 and over only)
 Telegram: https://t.me/avdb_api
 */}{php}$nxIconNo = 0;{/php}<nav class="nx-icons" data-ai-group aria-label="{:\\app\\common\\util\\TemplateText::get('ui.categories')}">{maccms:type ids="parent" flag="vod" order="asc" by="sort" id="nxCat" hide_empty="1"}{php}$nxIconNo++; $nxIconPic = trim((string)($nxCat['type_pic'] ?? '')); $nxCatDir = preg_match('/[\x{0590}-\x{08FF}\x{FB1D}-\x{FDFF}\x{FE70}-\x{FEFF}]/u', \app\common\util\TemplateText::raw(\app\common\util\AvdbLanguage::decodeEntities((string)($nxCat['type_name'] ?? '')))) ? 'rtl' : 'ltr'; $nxIconSrc = $nxIconPic !== '' ? (string)mac_url_img($nxIconPic) : $nxIco . 'cat-' . ((($nxIconNo - 1) % 7) + 1) . '.png';{/php}<a href="{:mac_url_type($nxCat)}"{if condition="$nxCat.type_id eq $GLOBALS['type_id'] || $nxCat.type_id eq $GLOBALS['type_pid']"} aria-current="page"{/if}><span class="nx-icon-art"><img src="{$nxIconSrc|htmlspecialchars=ENT_QUOTES}" alt="" width="50" height="50" loading="lazy">{:\\app\\common\\util\\AutoIcon::icon('category', $nxCat['type_name'], ['size'=>'sm', 'class'=>'nx-icon-badge', 'i'=>$nxIconNo])}</span><span dir="{$nxCatDir}">{:\\app\\common\\util\\TemplateText::get(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)($nxCat['type_name'] ?? '')))}</span></a>{/maccms:type}<a href="{:mac_url('label/sort')}"><span class="nx-icon-art"><img src="{$nxIco|htmlspecialchars=ENT_QUOTES}cat-8.png" alt="" width="50" height="50" loading="lazy">{:\\app\\common\\util\\AutoIcon::navIcon('all', '', ['size'=>'sm', 'class'=>'nx-icon-badge', 'i'=>9])}</span><span>{:\\app\\common\\util\\TemplateText::get('ui.all_videos_59a0c0')}</span></a></nav>

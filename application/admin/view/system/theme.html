@@ -1,9 +1,10 @@
 {/*
-This file is part of JavCMS - https://javcms.net
+This file is part of JavCMS - https://github.com/avdbapi-com/javcms
 Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
 License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
 See the LICENSE and NOTICE files that come with JavCMS.
-Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
+Live demo: https://javcms.net (adult content, 18 and over only)
 Telegram: https://t.me/avdb_api
 */}{include file="../../../application/admin/view/public/head" /}
 <link rel="stylesheet" href="__STATIC__/css/admin_template_workspace_v1.css?v={:filemtime(ROOT_PATH . 'static/css/admin_template_workspace_v1.css')}">
@@ -26,7 +27,74 @@ Telegram: https://t.me/avdb_api
     </div>
     {/if}
 
+    <!-- One form token for the whole page: the switcher card and "Use this theme" both read it at click time and put the
+         fresh token of every answer back here (ThinkPHP keeps one token per session). -->
     <input type="hidden" id="theme-token" name="__token__" value="{$Request.token}" />
+
+    <!-- 1.2.1 Visitor theme switcher (System::switcherOnlySave(), application/common/util/ThemeSwitcher.php). -->
+    <section class="ax-section ax-switcher" id="visitor-switcher" aria-labelledby="axsw-title">
+        <div class="ax-switcher__head">
+            <h2 id="axsw-title">{:lang('admin/ux/system/switcher_card')}</h2>
+            <span class="ax-chip {if condition="$switcher.state eq 'off'"}ax-chip--off{else /}ax-chip--ok{/if}" id="axsw-chip">{:lang('admin/ux/system/switcher_status_' . $switcher['state'])}</span>
+        </div>
+        <p class="ax-help" id="axsw-help">{:lang('admin/ux/system/switcher_card_help')}</p>
+        {if condition="$switcher.static"}
+        <div class="ax-notice ax-notice--warn" role="note"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-triangle-alert"/></svg>
+            <div><p>{:lang('admin/system/config/theme_switcher_static_warning')}</p></div>
+        </div>
+        {/if}
+        <form class="ax-switcher__form" id="axsw-form" data-ax-dirty data-rev="{$switcher.rev|htmlspecialchars}" novalidate autocomplete="off">
+            <fieldset class="ax-switcher__set">
+                <legend>{:lang('admin/ux/system/switcher_onoff')}</legend>
+                <div class="ax-switcher__pills">
+                    <label class="ax-switcher__pill"><input type="radio" name="axsw_on" value="1" lay-ignore {if condition="$switcher.on"}checked{/if}><span>{:lang('admin/ux/system/on')}</span></label>
+                    <label class="ax-switcher__pill"><input type="radio" name="axsw_on" value="0" lay-ignore {if condition="!$switcher.on"}checked{/if}><span>{:lang('admin/ux/system/off')}</span></label>
+                </div>
+            </fieldset>
+            <p class="ax-switcher__note" id="axsw-offnote" {if condition="$switcher.on"}hidden{/if}><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-info"/></svg><span>{:lang('admin/ux/system/switcher_off_note')}</span></p>
+            <div class="ax-switcher__rest{if condition="!$switcher.on"} is-dim{/if}" id="axsw-rest">
+                <fieldset class="ax-switcher__set" id="axsw-display">
+                    <legend>{:lang('admin/ux/system/switcher_display')}</legend>
+                    <div class="ax-switcher__cards">
+                        {volist name="switcher_modes" id="sm"}
+                        <label class="ax-switcher__card">
+                            <input type="radio" name="axsw_show" value="{$sm}" lay-ignore aria-labelledby="axsw-show-{$sm}-title" aria-describedby="axsw-show-{$sm}-help" {if condition="$switcher.show eq $sm"}checked{/if}>
+                            <span class="ax-switcher__card-text">
+                                <span class="ax-switcher__card-title" id="axsw-show-{$sm}-title">{:lang('admin/ux/system/switcher_show_' . $sm)}</span>
+                                <span class="ax-switcher__card-help" id="axsw-show-{$sm}-help">{:lang('admin/ux/system/switcher_show_' . $sm . '_help')}</span>
+                            </span>
+                        </label>
+                        {/volist}
+                    </div>
+                </fieldset>
+                <fieldset class="ax-switcher__set{if condition="$switcher.show eq 'header'"} is-dim{/if}" id="axsw-corner" aria-describedby="axsw-corner-help">
+                    <legend>{:lang('admin/ux/system/switcher_corner')}</legend>
+                    <div class="ax-switcher__pills">
+                        <label class="ax-switcher__pill"><input type="radio" name="axsw_pos" value="bottom-end" lay-ignore {if condition="$switcher.pos neq 'bottom-start'"}checked{/if}><span>{:lang('admin/ux/system/switcher_corner_end')}</span></label>
+                        <label class="ax-switcher__pill"><input type="radio" name="axsw_pos" value="bottom-start" lay-ignore {if condition="$switcher.pos eq 'bottom-start'"}checked{/if}><span>{:lang('admin/ux/system/switcher_corner_start')}</span></label>
+                    </div>
+                    <p class="ax-help" id="axsw-corner-help">{:lang('admin/ux/system/switcher_corner_help')}</p>
+                    <p class="ax-help ax-switcher__inote" id="axsw-cornernote" {if condition="$switcher.show neq 'header'"}hidden{/if}>{:lang('admin/ux/system/switcher_corner_header_note')}</p>
+                </fieldset>
+                <fieldset class="ax-switcher__set" id="axsw-themes" aria-describedby="axsw-themes-help">
+                    <legend>{:lang('admin/system/config/theme_switcher_themes')}</legend>
+                    <p class="ax-help" id="axsw-themes-help">{:lang('admin/system/config/theme_switcher_themes_tip')}</p>
+                    <ul class="ax-switcher__themes" role="list">
+                        {volist name="switcher_themes" id="st"}
+                        <li><label class="ax-switcher__theme"><input type="checkbox" name="axsw_themes" value="{$st.dir|htmlspecialchars}" lay-ignore {if condition="$st.default"}data-default="1"{/if} {if condition="$st.checked"}checked{/if}><span class="ax-switcher__theme-text"><span class="ax-switcher__theme-name">{$st.name|htmlspecialchars}</span><span class="ax-faint ax-mono">{$st.dir|htmlspecialchars}</span>{if condition="$st.default"}<span class="ax-chip ax-chip--ok">{:lang('admin/ux/system/switcher_default_chip')}</span>{/if}</span></label></li>
+                        {/volist}
+                    </ul>
+                    <p class="ax-switcher__note ax-switcher__note--warn" id="axsw-onlydefault" hidden><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-triangle-alert"/></svg><span>{:lang('admin/ux/system/switcher_only_default')}</span></p>
+                </fieldset>
+            </div>
+            <div class="ax-switcher__actions">
+                <button type="reset" class="ax-btn ax-btn--ghost" id="axsw-undo"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-rotate-ccw"/></svg><span>{:lang('admin/ux/system/undo_changes')}</span></button>
+                <button type="submit" class="ax-btn ax-btn--primary" id="axsw-save"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-save"/></svg><span>{:lang('admin/ux/kit/save')}</span></button>
+                <span class="ax-switcher__status" id="axsw-status" role="status" aria-live="polite"></span>
+            </div>
+        </form>
+    </section>
+
     <ul class="ax-theme-grid" role="list">
         {volist name="cards" id="vo"}
         <li class="ax-theme-card{if condition="$vo.current"} is-current{/if}">
@@ -54,9 +122,224 @@ Telegram: https://t.me/avdb_api
 </div>
 
 {include file="../../../application/admin/view/public/foot" /}
+<script type="application/json" id="axsw-strings">{$switcher_js}</script>
 <script type="text/javascript">
 (function () {
     var grid = document.querySelector('.ax-theme-grid');
+    var token = document.getElementById('theme-token');
+    var S = { };
+    try { S = JSON.parse(document.getElementById('axsw-strings').textContent) || { }; } catch (e) { S = { }; }
+    var busy = false; // one request at a time: both forms share the one token
+
+    // ---- token: every answer carries a fresh one; after a network failure the page is asked for a new one
+    function takeToken(res) {
+        if (res && res.data && res.data.__token__) { token.value = res.data.__token__; return true; }
+        return false;
+    }
+    // after = function (html) for the fetched page (the card reads its stored switcher settings from it)
+    function refetchToken(after) {
+        $.ajax({ type: 'GET', url: location.href, dataType: 'text', cache: false }).done(function (html) {
+            // an AJAX GET of an admin page comes back as a JSON string of the HTML
+            if (html && html.charAt(0) === '"') { try { html = JSON.parse(html); } catch (e) { /* keep the text */ } }
+            var m = /id="theme-token"[^>]*value="([^"]+)"/.exec(html) || /name="__token__"[^>]*value="([^"]+)"/.exec(html);
+            if (m && m[1]) { token.value = m[1]; }
+            if (after) { after(html); }
+        });
+    }
+    function now() {
+        var d = new Date();
+        return ('0' + d.getHours()).slice(-2) + ':' + ('0' + d.getMinutes()).slice(-2);
+    }
+
+    // ---- card "Visitor theme switcher"
+    var form = document.getElementById('axsw-form');
+    if (form) {
+        var save = document.getElementById('axsw-save');
+        var statusBox = document.getElementById('axsw-status');
+        var chip = document.getElementById('axsw-chip');
+        var rest = document.getElementById('axsw-rest');
+        var offNote = document.getElementById('axsw-offnote');
+        var corner = document.getElementById('axsw-corner');
+        var cornerNote = document.getElementById('axsw-cornernote');
+        var themesSet = document.getElementById('axsw-themes');
+        var onlyDefault = document.getElementById('axsw-onlydefault');
+        var value = function (name) {
+            var n = form.querySelector('input[name="' + name + '"]:checked');
+            return n ? n.value : '';
+        };
+        var ticked = function () {
+            return Array.prototype.map.call(form.querySelectorAll('input[name="axsw_themes"]:checked'), function (n) { return n.value; });
+        };
+        // adds / removes one id in an element's aria-describedby list (the notes below are read with the group they
+        // explain: a screen reader announces the description of a fieldset, never that of a plain div)
+        var describe = function (node, id, on) {
+            var ids = (node.getAttribute('aria-describedby') || '').split(/\s+/).filter(function (x) { return x && x !== id; });
+            if (on) { ids.push(id); }
+            if (ids.length) { node.setAttribute('aria-describedby', ids.join(' ')); } else { node.removeAttribute('aria-describedby'); }
+        };
+        // Off: everything but On / Off is marked inactive (still saved); header mode: the corner applies only where the
+        // floating button is shown instead, so it is marked with a note. Only the theme in use ticked: visitors would
+        // get a switcher with nothing to switch to, said right under the list.
+        var sync = function () {
+            var on = value('axsw_on') === '1', header = value('axsw_show') === 'header';
+            rest.classList.toggle('is-dim', !on);
+            offNote.hidden = on;
+            Array.prototype.forEach.call(rest.querySelectorAll('fieldset'), function (set) { describe(set, 'axsw-offnote', !on); });
+            corner.classList.toggle('is-dim', header);
+            cornerNote.hidden = !header;
+            describe(corner, 'axsw-cornernote', header);
+            var picked = form.querySelectorAll('input[name="axsw_themes"]:checked');
+            var alone = picked.length > 0 && Array.prototype.every.call(picked, function (n) { return n.getAttribute('data-default') === '1'; });
+            onlyDefault.hidden = !alone;
+            describe(themesSet, 'axsw-onlydefault', alone);
+        };
+        // put the form back to what the server saved (normalised values); "Undo changes" returns to it from now on
+        var apply = function (sw) {
+            if (!sw) { return; }
+            var set = function (name, v) {
+                Array.prototype.forEach.call(form.querySelectorAll('input[name="' + name + '"]'), function (n) { n.checked = n.defaultChecked = n.value === v; });
+            };
+            set('axsw_on', sw.on === '1' ? '1' : '0');
+            set('axsw_show', sw.show);
+            set('axsw_pos', sw.pos);
+            var keep = sw.themes || [];
+            Array.prototype.forEach.call(form.querySelectorAll('input[name="axsw_themes"]'), function (n) { n.checked = n.defaultChecked = keep.indexOf(n.value) > -1; });
+            sync();
+        };
+        form.addEventListener('change', sync);
+        // A save was refused as stale: settings were saved after this page was opened, so the values it was loaded with
+        // are no longer the saved ones. Going back to "the saved settings" then means a reload (fix round 3, SVVA3-P3-2).
+        var stale = false;
+        // the reset event comes before the inputs are reset
+        form.addEventListener('reset', function (e) {
+            if (stale) {
+                // "Undo changes" on a stale page: the saved settings are newer than this page, only a reload shows them
+                // (the kit has already counted the page as unchanged: no leave prompt)
+                e.preventDefault();
+                if (window.AxUX) { AxUX.markClean(); }
+                location.reload();
+                return;
+            }
+            setTimeout(sync, 0); statusBox.textContent = '';
+        });
+        sync();
+        // The status line of Site identity opens this card through the admin shell (...?section=theme#visitor-switcher).
+        // With unsaved card changes the shell asks first; after "Leave without saving" it marks this page clean and only
+        // changes the address hash (no reload). The card then goes back to the saved settings, so it never shows a choice
+        // that is not stored while the page counts as unchanged. Changes the user chose to keep are never touched.
+        window.addEventListener('hashchange', function () {
+            if (location.hash !== '#visitor-switcher' || (window.AxUX && AxUX.isDirty())) { return; }
+            if (stale) { location.reload(); return; } // newer settings were saved elsewhere: the reload shows them
+            form.reset(); // back to the saved values (defaultChecked, which apply() keeps in step with every save)
+        });
+        // The values one save sends (also what a lost answer is compared with).
+        var current = function () {
+            return { on: value('axsw_on'), show: value('axsw_show'), pos: value('axsw_pos'), themes: ticked().join('|') };
+        };
+        var same = function (a, b) { return !!a && !!b && a.on === b.on && a.show === b.show && a.pos === b.pos && a.themes === b.themes; };
+        // A save without an answer (connection lost) may still have been written. The page fetched for a new token shows
+        // the stored settings and their revision: when they are exactly what was sent, the save went through, and the card
+        // takes that revision and counts as saved, so its next save is no stale refusal (fix round 3, SVVA3-P3-1; the server
+        // also answers a repeated save that changes nothing like a save). Anything else stays as it is. Only while the card
+        // still starts from the revision the failed save was sent with and no other request is under way (fix round 4,
+        // SVVC4-P3-1): a later save that was accepted before this page came back knows newer settings than the page.
+        var recover = function (sent, base) {
+            return function (html) {
+                if (!sent || !window.DOMParser || busy || (form.getAttribute('data-rev') || '') !== base) { return; }
+                var doc = null;
+                try { doc = new DOMParser().parseFromString(html, 'text/html'); } catch (e) { doc = null; }
+                var f = doc && doc.getElementById('axsw-form');
+                var rev = f ? f.getAttribute('data-rev') || '' : '';
+                if (!/^[0-9a-f]{16}$/.test(rev) || rev === form.getAttribute('data-rev')) { return; }
+                var pick = function (name) { var n = f.querySelector('input[name="' + name + '"][checked]'); return n ? n.value : ''; };
+                var stored = { on: pick('axsw_on'), show: pick('axsw_show'), pos: pick('axsw_pos'),
+                    themes: Array.prototype.map.call(f.querySelectorAll('input[name="axsw_themes"][checked]'), function (n) { return n.value; }).join('|') };
+                if (!same(stored, sent)) { return; }
+                form.setAttribute('data-rev', rev);
+                stale = false;
+                // the sent values are the saved ones from now on ("Undo changes" returns to them)
+                Array.prototype.forEach.call(form.querySelectorAll('input[type="radio"], input[type="checkbox"]'), function (n) {
+                    var v = n.name === 'axsw_themes' ? sent.themes.split('|').indexOf(n.value) > -1 : sent[n.name.replace('axsw_', '')] === n.value;
+                    n.defaultChecked = v;
+                });
+                var c = doc.getElementById('axsw-chip');
+                if (c) { chip.textContent = c.textContent; chip.className = c.className; }
+                if (same(current(), sent)) {
+                    if (window.AxUX) { AxUX.markClean(); }
+                    statusBox.textContent = AxUX.t('saved_at', now());
+                }
+            };
+        };
+        var send = function (retried) {
+            var sent = current();
+            // the revision this save starts from (recover() checks that the card has not moved on in the meantime)
+            var base = form.getAttribute('data-rev') || '';
+            $.ajax({
+                type: 'POST',
+                url: S.url || location.pathname,
+                // jQuery drops an empty array: the list always travels "|"-joined ('' = every theme). switcher_rev: the
+                // settings revision this page shows (a save is refused once newer settings are stored)
+                data: { switcher_only: 1, 'site[theme_switcher]': sent.on, 'site[theme_switcher_show]': sent.show,
+                    'site[theme_switcher_pos]': sent.pos, 'site[theme_switcher_themes]': sent.themes,
+                    switcher_rev: form.getAttribute('data-rev') || '', __token__: token.value },
+                dataType: 'json'
+            }).done(function (res) {
+                var fresh = takeToken(res);
+                if (res && res.code == 1) {
+                    if (res.data && res.data.switcher) { apply(res.data.switcher); }
+                    if (res.data && res.data.rev) { form.setAttribute('data-rev', res.data.rev); stale = false; }
+                    if (res.data && res.data.label) {
+                        chip.textContent = res.data.label;
+                        chip.className = 'ax-chip ' + (res.data.state === 'off' ? 'ax-chip--off' : 'ax-chip--ok');
+                    }
+                    if (window.AxUX) { AxUX.markClean(); }
+                    statusBox.textContent = AxUX.t('saved_at', now());
+                    AxUX.toast(res.msg, res.data && res.data.dropped && res.data.dropped.length ? 'warn' : 'ok');
+                    done();
+                } else if (res && res.data && res.data.stale) {
+                    // newer settings were saved after this page was opened (another tab or admin): nothing was written.
+                    // The changes stay on screen; a reload shows the stored settings.
+                    stale = true;
+                    statusBox.textContent = res.msg || '';
+                    done();
+                    AxUX.confirm({ title: S.stale_title || '', message: res.msg || '', confirmLabel: S.reload || '', danger: false, count: 0 }).then(function (ok) {
+                        if (ok) { AxUX.markClean(); location.reload(); }
+                    });
+                } else if (res && res.data && res.data.retry && fresh && !retried) {
+                    // the token was used up (another tab of this admin saved): once more with the fresh one; the revision
+                    // travels again, so a resend never reverts what that other tab saved
+                    send(true);
+                } else {
+                    statusBox.textContent = '';
+                    AxUX.toast(res && res.msg ? res.msg : AxUX.t('request_failed'), 'error');
+                    done();
+                }
+            }).fail(function () {
+                statusBox.textContent = '';
+                AxUX.toast(AxUX.t('request_failed'), 'error');
+                refetchToken(recover(sent, base));
+                done();
+            });
+        };
+        // The button stays enabled while it saves (aria-disabled + the busy flag block a second request): a disabled
+        // button would drop the keyboard focus to the page start.
+        var done = function () {
+            busy = false;
+            save.removeAttribute('aria-disabled');
+            save.removeAttribute('aria-busy');
+            if (!document.activeElement || document.activeElement === document.body) { save.focus(); }
+        };
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            if (busy) { return; }
+            busy = true;
+            save.setAttribute('aria-disabled', 'true');
+            save.setAttribute('aria-busy', 'true');
+            statusBox.textContent = S.saving || '';
+            send(false);
+        });
+    }
+
     if (!grid) { return; }
     // preview-light.webp on hover / focus, back to dark afterwards
     function swap(card, light) {
@@ -69,31 +352,47 @@ Telegram: https://t.me/avdb_api
         card.addEventListener('focusin', function () { swap(card, true); });
         card.addEventListener('focusout', function (e) { if (!card.contains(e.relatedTarget)) { swap(card, false); } });
     });
-    var busy = false;
-    grid.addEventListener('click', function (e) {
-        var btn = e.target.closest('.j-theme-use');
-        if (!btn || busy) { return; }
+    function useTheme(btn) {
         busy = true;
-        btn.disabled = true;
-        var token = document.getElementById('theme-token');
+        // enabled while it works (aria-disabled + busy), so the keyboard focus stays on it
+        btn.setAttribute('aria-disabled', 'true');
+        var release = function () {
+            btn.removeAttribute('aria-disabled'); busy = false;
+            if (!document.activeElement || document.activeElement === document.body) { btn.focus(); }
+        };
         $.ajax({
             type: 'POST',
-            url: "{:url('system/config')}",
+            url: S.url || location.pathname,
             data: { theme_only: 1, template_dir: btn.getAttribute('data-dir'), __token__: token.value },
             dataType: 'json'
         }).done(function (res) {
-            if (res && res.data && res.data.__token__) { token.value = res.data.__token__; }
+            takeToken(res);
             if (res && res.code == 1) {
                 AxUX.toast(res.msg, 'ok');
+                // the page reloads to show the new theme first: unsaved card changes were confirmed away before
+                if (window.AxUX) { AxUX.markClean(); }
                 setTimeout(function () { location.reload(); }, 1200);
             } else {
                 AxUX.toast(res && res.msg ? res.msg : AxUX.t('request_failed'), 'error');
-                btn.disabled = false; busy = false;
+                release();
             }
         }).fail(function () {
             AxUX.toast(AxUX.t('request_failed'), 'error');
-            btn.disabled = false; busy = false;
+            release();
+            refetchToken();
         });
+    }
+    grid.addEventListener('click', function (e) {
+        var btn = e.target.closest('.j-theme-use');
+        if (!btn || busy) { return; }
+        if (window.AxUX && AxUX.isDirty()) {
+            // the reload after "Use this theme" would drop the unsaved switcher settings: ask first
+            AxUX.confirm({ message: S.leave || '', danger: false }).then(function (ok) {
+                if (ok && !busy) { useTheme(btn); }
+            });
+            return;
+        }
+        useTheme(btn);
     });
 }());
 </script>

@@ -1,9 +1,10 @@
 {/*
-This file is part of JavCMS - https://javcms.net
+This file is part of JavCMS - https://github.com/avdbapi-com/javcms
 Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
 License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
 See the LICENSE and NOTICE files that come with JavCMS.
-Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
+Live demo: https://javcms.net (adult content, 18 and over only)
 Telegram: https://t.me/avdb_api
 */}{php}
 if (!isset($ncBrand)) {
@@ -25,7 +26,7 @@ if (!isset($ncBrand)) {
     $ncLogoRaw = trim((string)($maccms['site_logo'] ?? ''));
     $ncLogoPath = (string)parse_url($ncLogoRaw, PHP_URL_PATH);
     $ncLogoBase = strtolower(basename($ncLogoPath !== '' ? $ncLogoPath : $ncLogoRaw));
-    $ncCustomLogo = $ncLogoRaw !== '' && !in_array($ncLogoBase, ['20819301b2e936fcc59a7cee9f4e4d4a.png', '0643d1703707a998e41b8813a97ed2e7.png'], true);
+    $ncCustomLogo = $ncLogoRaw !== '' && !in_array($ncLogoBase, ['20819301b2e936fcc59a7cee9f4e4d4a.png', '0643d1703707a998e41b8813a97ed2e7.png'], true) && !preg_match('#(?:^|/)static/images/logo(?:_1)?\.(?:png|jpg)$#i', $ncLogoPath !== '' ? $ncLogoPath : $ncLogoRaw);
     $ncLogoSrc = $ncCustomLogo ? mac_safe_url(mac_url_img($ncLogoRaw)) : '';
     if ($ncLogoSrc === '') { $ncCustomLogo = false; }
     $ncSiteAttr = htmlspecialchars($ncSiteName, ENT_QUOTES, 'UTF-8');

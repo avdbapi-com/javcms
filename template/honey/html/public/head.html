@@ -1,9 +1,10 @@
 {/*
-This file is part of JavCMS - https://javcms.net
+This file is part of JavCMS - https://github.com/avdbapi-com/javcms
 Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
 License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
 See the LICENSE and NOTICE files that come with JavCMS.
-Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
+Live demo: https://javcms.net (adult content, 18 and over only)
 Telegram: https://t.me/avdb_api
 */}{php}$hnHasActor = false; $hnHasTopic = false; $hnHasArt = false;{/php}{maccms:actor num="1" id="hnProbeActor"}{php}$hnHasActor = true;{/php}{/maccms:actor}{maccms:topic num="1" id="hnProbeTopic"}{php}$hnHasTopic = true;{/php}{/maccms:topic}{maccms:art num="1" id="hnProbeArt"}{php}$hnHasArt = true;{/php}{/maccms:art}
 {php}$hnNoPic = $maccms['path_tpl'] . 'assets/img/placeholder.svg'; $hnAid = intval($maccms['aid'] ?? 0); $hnCatId = intval($GLOBALS['type_id'] ?? 0); $hnCatPid = intval($GLOBALS['type_pid'] ?? 0); $hnHot = []; foreach (explode(',', (string)($maccms['search_hot'] ?? '')) as $hnHotWord) { $hnHotWord = trim($hnHotWord); if ($hnHotWord !== '' && mb_strlen($hnHotWord) > 1 && count($hnHot) < 12) { $hnHot[] = ['q' => $hnHotWord, 'u' => mac_url('vod/search', ['wd' => $hnHotWord])]; } } if (count($hnHot) < 4) { $hnHotPool = \think\Cache::get('honey_hot_genres_v1'); if (!is_array($hnHotPool)) { $hnHotPool = []; try { foreach (\think\Db::name('vod')->where(['vod_status' => 1])->order('vod_hits desc')->limit(60)->column('vod_class') as $hnHotRow) { foreach (explode(',', (string)$hnHotRow) as $hnHotName) { $hnHotName = trim(html_entity_decode($hnHotName, ENT_QUOTES | ENT_HTML5, 'UTF-8')); if ($hnHotName !== '' && mb_strlen($hnHotName) <= 30 && \app\common\util\AutoIcon::keepTag($hnHotName)) { $hnHotPool[$hnHotName] = ($hnHotPool[$hnHotName] ?? 0) + 1; } } } arsort($hnHotPool); $hnHotPool = array_slice(array_keys($hnHotPool), 0, 12); } catch (\Exception $hnHotErr) { $hnHotPool = []; } \think\Cache::set('honey_hot_genres_v1', $hnHotPool, 3600); } foreach ($hnHotPool as $hnHotName) { if (count($hnHot) < 12) { $hnHot[] = ['q' => $hnHotName, 'u' => mac_url_search(['class' => $hnHotName], 'vod')]; } } }{/php}

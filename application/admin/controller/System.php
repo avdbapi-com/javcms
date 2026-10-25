@@ -1,11 +1,12 @@
 <?php
 /*
- * This file is part of JavCMS - https://javcms.net
+ * This file is part of JavCMS - https://github.com/avdbapi-com/javcms
  * Based on MacCMS 10 (Apache-2.0) by magicblack, changed by JavCMS.
  * JavCMS changes: Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors,
  * JavCMS Community License 1.0. The MacCMS parts stay under the Apache License 2.0.
  * See the LICENSE and NOTICE files that come with JavCMS.
- * Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Live demo: https://javcms.net (adult content, 18 and over only)
  * Telegram: https://t.me/avdb_api
  */
 namespace app\admin\controller;
@@ -228,6 +229,10 @@ class System extends Base
             if ((string)($config['theme_only'] ?? '') === '1') {
                 return $this->themeOnlySave($config['template_dir'] ?? '');
             }
+            // 1.2.1 Themes page card "Visitor theme switcher": changes only the switcher settings (returns early).
+            if ((string)($config['switcher_only'] ?? '') === '1') {
+                return $this->switcherOnlySave($config['site'] ?? null, $config['switcher_rev'] ?? null);
+            }
 
             // Validate the selected public and mobile templates before reading
             // info.ini or writing configuration. A directory name is user input
@@ -251,9 +256,13 @@ class System extends Base
             $config['site']['ads_dir'] = ThemeGate::adsDir($templateDir);
             $config['site']['mob_ads_dir'] = ($mobileTemplate !== '' && $mobileTemplate !== 'no') ? ThemeGate::adsDir($mobileTemplate) : 'ads';
 
-            // Visitor theme switcher: toggle, corner, optional subset, and the offered-list snapshot that the
-            // public side reads (app\common\util\ThemeSwitcher). A ticked theme that is no longer selectable is
-            // dropped and reported instead of blocking the whole form; only a malformed name is an error.
+            // Visitor theme switcher: toggle, display mode, corner, optional subset, and the offered-list snapshot that
+            // the public side reads (app\common\util\ThemeSwitcher). Since 1.2.1 these settings live on the Themes page
+            // (switcherOnlySave()), their single source of truth: keepStored() replaces whatever switcher field this
+            // post still carries (a Site identity tab opened before the update) with the stored values, then they are
+            // normalised with the snapshot, which depends on the template chosen here. A stored theme that is no longer
+            // selectable is dropped and reported instead of blocking the whole form; only a malformed name is an error.
+            $config['site'] = \app\common\util\ThemeSwitcher::keepStored($config['site'], (array)(config('maccms')['site'] ?? []));
             $switcherDropped = [];
             $switcher = \app\common\util\ThemeSwitcher::adminSave($config['site'], function ($slug) {
                 return self::templateReady($slug, 'html');
@@ -337,14 +346,8 @@ class System extends Base
         list($templates, $hiddenTemplates) = self::templateChoices(self::activeTemplate());
         $this->assign('templates', $templates);
         $this->assign('hidden_templates', $hiddenTemplates);
-        $switcherSite = (array)(config('maccms')['site'] ?? []);
-        $this->assign('switcher_themes', \app\common\util\ThemeSwitcher::subset($switcherSite));
-        // Static HTML pages are rendered once for everybody and cannot follow a visitor's choice.
-        $staticPages = false;
-        foreach ((array)(config('maccms')['view'] ?? []) as $viewMode) {
-            if ((string)$viewMode === '2') { $staticPages = true; break; }
-        }
-        $this->assign('switcher_static', $staticPages);
+        // 1.2.1: the visitor theme switcher is set on the Themes page; this page shows its state and links there.
+        $this->assign('switcher_state', self::switcherState((array)(config('maccms')['site'] ?? [])));
 
         $langs = glob('./application/lang/*.php');
         foreach ($langs as $k => &$v) {
@@ -445,8 +448,148 @@ class System extends Base
         usort($cards, function ($a, $b) { return (int)$b['current'] - (int)$a['current']; });
         $this->assign('cards', $cards);
         $this->assign('preview_theme', \app\common\util\ThemePreview::current());
+        // 1.2.1 card "Visitor theme switcher" (saved by switcherOnlySave()).
+        $site = (array)(config('maccms')['site'] ?? []);
+        $subset = \app\common\util\ThemeSwitcher::subset($site);
+        $offer = [];
+        foreach ($choices as $row) {
+            if ($row['note'] !== '') {
+                continue;
+            }
+            // The default is listed like every theme: ticking it keeps it in the visitor list after a later change of
+            // the default (as the subset always worked); it is offered anyway while it is the default.
+            $item = ['dir' => $row['dir'], 'name' => $row['name'], 'default' => $row['dir'] === $current,
+                'checked' => in_array($row['dir'], $subset, true)];
+            if ($item['default']) { array_unshift($offer, $item); } else { $offer[] = $item; }
+        }
+        $state = self::switcherState($site);
+        $this->assign('switcher', [
+            'on' => \app\common\util\ThemeSwitcher::enabled($site),
+            'show' => \app\common\util\ThemeSwitcher::show($site),
+            'pos' => \app\common\util\ThemeSwitcher::position($site),
+            'state' => $state,
+            'status' => self::switcherStatusText($site),
+            'static' => self::switcherStatic(),
+            // the revision this page shows: its save is refused once newer settings are stored (switcherOnlySave())
+            'rev' => \app\common\util\ThemeSwitcher::revision($site),
+        ]);
+        $this->assign('switcher_themes', $offer);
+        $this->assign('switcher_modes', \app\common\util\ThemeSwitcher::SHOW_MODES);
+        $this->assign('switcher_js', json_encode([
+            'leave' => lang('admin/ux/system/leave_unsaved'),
+            'saving' => lang('admin/ux/system/switcher_saving'),
+            'stale_title' => lang('admin/ux/system/switcher_stale_title'),
+            'reload' => lang('admin/ux/system/switcher_reload'),
+            'url' => url('system/config'),
+        ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT));
         $this->assign('title', self::uxTitle('admin/ux/menu/themes', 'admin/ux/system/themes_title'));
         return $this->fetch('admin@system/theme');
+    }
+
+    /**
+     * 1.2.1 Themes page card (POST system/config switcher_only=1 with site[theme_switcher], site[theme_switcher_show],
+     * site[theme_switcher_pos], site[theme_switcher_themes], switcher_rev and __token__): merges ONLY these settings into
+     * the stored site settings (ThemeSwitcher::saveOnly(): strict values, the offered-list snapshot) and writes
+     * maccms.php. Every other setting stays as it is. Every answer carries a fresh form token (the page keeps one token
+     * for both of its forms, like "Use this theme"). The pre-framework page copies are renewed by
+     * Base::edgeWatchSettings().
+     * switcher_rev is the settings revision the page was loaded with (ThemeSwitcher::revision()); when the stored
+     * settings have changed since (another tab or another admin saved them), or the post carries none (a page from
+     * before this check), nothing is written and the answer asks to reload (data.stale, the stored revision): an older
+     * page never reverts newer settings, not even through its automatic resend after a renewed token. An outdated
+     * revision whose save would change nothing (ThemeSwitcher::unchangedBy(): a lost answer, two tabs with the same
+     * change) is answered like a save, without writing, and the page takes the stored revision; only the offered-list
+     * snapshot is written then when the theme folders changed since the last save (fix round 4, SVVA4-P3-1).
+     */
+    protected function switcherOnlySave($posted, $rev = null)
+    {
+        $maccms = config('maccms');
+        if (!is_array($maccms)) {
+            return $this->ajaxErrorWithFreshToken(lang('save_err'));
+        }
+        $stored = (array)($maccms['site'] ?? []);
+        $ready = function ($slug) {
+            return self::templateReady($slug, 'html');
+        };
+        if (!\app\common\util\ThemeSwitcher::revisionMatches($stored, $rev)) {
+            // Settings were saved after this page was opened. Refused, unless the save would change nothing (fix round 3,
+            // SVVA3-P3-1): the answer to this page's own last save was lost after it had been written, or another tab
+            // saved the same settings. Then nothing is written and the page takes the stored revision.
+            $same = \app\common\util\ThemeSwitcher::unchangedBy($stored, $posted, $rev, $ready);
+            if ($same === null) {
+                return $this->ajaxErrorWithFreshToken(lang('admin/ux/system/switcher_stale'), [
+                    'stale' => 1,
+                    'rev' => \app\common\util\ThemeSwitcher::revision($stored),
+                ]);
+            }
+            // The four settings are the stored ones; the offered-list snapshot is rebuilt from the theme folders like
+            // every save (fix round 4, SVVA4-P3-1): a folder that became selectable since the last save is offered.
+            if (!empty($same['write'])) {
+                $maccms['site'] = $same['site'];
+                if (mac_arr2file(APP_PATH . 'extra/maccms.php', $maccms) === false) {
+                    return $this->ajaxErrorWithFreshToken(lang('save_err'));
+                }
+            }
+            return $this->switcherSaved($same['site'], $same['dropped']);
+        }
+        $result = \app\common\util\ThemeSwitcher::saveOnly($stored, $posted, $ready);
+        if (empty($result['ok'])) {
+            return $this->ajaxErrorWithFreshToken(lang(($result['error'] ?? '') === 'name'
+                ? 'admin/system/config/theme_switcher_invalid' : 'admin/ux/system/switcher_invalid'));
+        }
+        $site = $result['site'];
+        $maccms['site'] = $site;
+        if (mac_arr2file(APP_PATH . 'extra/maccms.php', $maccms) === false) {
+            return $this->ajaxErrorWithFreshToken(lang('save_err'));
+        }
+        return $this->switcherSaved($site, (array)($result['dropped'] ?? []));
+    }
+
+    /** Answer of a card save: the stored values (the card shows them), the page's revision from now on, the status. */
+    protected function switcherSaved(array $site, array $dropped)
+    {
+        $dropped = array_values($dropped);
+        $msg = lang('admin/ux/system/switcher_saved');
+        if ($dropped) {
+            $msg .= ' ' . lang('admin/system/config/theme_switcher_dropped') . ': ' . htmlspecialchars(implode(', ', $dropped), ENT_QUOTES, 'UTF-8');
+        }
+        return $this->ajaxSuccessWithFreshToken($msg, [
+            'switcher' => [
+                'on' => \app\common\util\ThemeSwitcher::enabled($site) ? '1' : '0',
+                'show' => \app\common\util\ThemeSwitcher::show($site),
+                'pos' => \app\common\util\ThemeSwitcher::position($site),
+                'themes' => \app\common\util\ThemeSwitcher::subset($site),
+            ],
+            // the page's revision from now on (its next save is checked against it)
+            'rev' => \app\common\util\ThemeSwitcher::revision($site),
+            'dropped' => $dropped,
+            'state' => self::switcherState($site),
+            'label' => lang('admin/ux/system/switcher_status_' . self::switcherState($site)),
+            'status' => self::switcherStatusText($site),
+        ]);
+    }
+
+    /** 'off' or the display mode ('always' | 'header' | 'end'). */
+    protected static function switcherState(array $site)
+    {
+        return \app\common\util\ThemeSwitcher::enabled($site) ? \app\common\util\ThemeSwitcher::show($site) : 'off';
+    }
+
+    /** "Visitor theme switcher: On, always visible" (Site identity status line, Themes page card). */
+    protected static function switcherStatusText(array $site)
+    {
+        return lang('admin/ux/system/switcher_status', [lang('admin/ux/system/switcher_status_' . self::switcherState($site))]);
+    }
+
+    /** Static HTML pages are rendered once for everybody and cannot follow a visitor's choice. */
+    protected static function switcherStatic()
+    {
+        foreach ((array)(config('maccms')['view'] ?? []) as $viewMode) {
+            if ((string)$viewMode === '2') {
+                return true;
+            }
+        }
+        return false;
     }
 
     public function configurl()

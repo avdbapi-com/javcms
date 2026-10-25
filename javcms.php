@@ -1,11 +1,12 @@
 <?php
 /*
- * This file is part of JavCMS - https://javcms.net
+ * This file is part of JavCMS - https://github.com/avdbapi-com/javcms
  * Based on MacCMS 10 (Apache-2.0) by magicblack, changed by JavCMS.
  * JavCMS changes: Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors,
  * JavCMS Community License 1.0. The MacCMS parts stay under the Apache License 2.0.
  * See the LICENSE and NOTICE files that come with JavCMS.
- * Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Live demo: https://javcms.net (adult content, 18 and over only)
  * Telegram: https://t.me/avdb_api
  */
 /*
@@ -16,6 +17,9 @@
 '--------------------------------------------------------
 */
 header('Content-Type:text/html;charset=utf-8');
+// One-click update (1.2.1): the steps of a running update go to the engine copy it made when it started
+// (runtime/update/runner.php) before any file of the site's code is loaded; other admin pages wait while files are swapped.
+if (is_file(__DIR__ . '/runtime/update/runner.php')) { include __DIR__ . '/runtime/update/runner.php'; }
 require_once __DIR__ . '/application/common/util/SecurityHeaders.php';
 JavcmsSecurityHeaders::send();
 // Detecting the PHP environment

@@ -1,9 +1,10 @@
 {/*
-This file is part of JavCMS - https://javcms.net
+This file is part of JavCMS - https://github.com/avdbapi-com/javcms
 Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
 License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
 See the LICENSE and NOTICE files that come with JavCMS.
-Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
+Live demo: https://javcms.net (adult content, 18 and over only)
 Telegram: https://t.me/avdb_api
 */}{php}
 if (!isset($tpBrand)) {
@@ -22,7 +23,7 @@ if (mb_strlen($tpBrand, 'UTF-8') > 18) {
 if ($tpBrand === '') { $tpBrand = 'JAVCMS'; }
 $tpLogoRaw = trim((string)($maccms['site_logo'] ?? ''));
 $tpLogoPath = ltrim((string)preg_replace('~^(https?:)?//[^/]+~i', '', $tpLogoRaw), '/');
-$tpLogoCustom = ($tpLogoRaw !== '' && !in_array($tpLogoPath, ['upload/site/20240730-1/20819301b2e936fcc59a7cee9f4e4d4a.png', 'upload/site/20240730-1/0643d1703707a998e41b8813a97ed2e7.png'], true)) ? mac_safe_url(mac_url_img($tpLogoRaw)) : '';
+$tpLogoCustom = ($tpLogoRaw !== '' && !in_array($tpLogoPath, ['upload/site/20240730-1/20819301b2e936fcc59a7cee9f4e4d4a.png', 'upload/site/20240730-1/0643d1703707a998e41b8813a97ed2e7.png', 'static/images/logo.png', 'static/images/logo.jpg', 'static/images/logo_1.png'], true)) ? mac_safe_url(mac_url_img($tpLogoRaw)) : '';
 $tpLang = (string)($maccms['ui_lang'] ?? 'en');
 $tpFx = !in_array($tpLang, ['ja', 'zh', 'ko', 'th', 'ar', 'hi'], true);
 $tplNoPic = $maccms['path_tpl'] . 'assets/brand/ph-dark.svg';

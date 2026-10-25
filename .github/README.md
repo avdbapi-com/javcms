@@ -15,9 +15,9 @@
 <a href="https://github.com/avdbapi-com/javcms/releases/latest"><picture><source media="(prefers-color-scheme: dark)" srcset="/docs/images/badge-download-dark.svg"><source media="(prefers-color-scheme: light)" srcset="/docs/images/badge-download-light.svg"><img alt="Download the latest JavCMS release" src="/docs/images/badge-download-dark.svg" height="30"></picture></a> <a href="https://javcms.net"><picture><source media="(prefers-color-scheme: dark)" srcset="/docs/images/badge-demo-dark.svg"><source media="(prefers-color-scheme: light)" srcset="/docs/images/badge-demo-light.svg"><img alt="Live demo: javcms.net (adult content, 18+)" src="/docs/images/badge-demo-dark.svg" height="30"></picture></a> <a href="#license"><picture><source media="(prefers-color-scheme: dark)" srcset="/docs/images/badge-license-dark.svg"><source media="(prefers-color-scheme: light)" srcset="/docs/images/badge-license-light.svg"><img alt="License: JavCMS Community License 1.0 (free to use and share, never sold)" src="/docs/images/badge-license-dark.svg" height="30"></picture></a> <a href="/INSTALL.md"><picture><source media="(prefers-color-scheme: dark)" srcset="/docs/images/badge-php-dark.svg"><source media="(prefers-color-scheme: light)" srcset="/docs/images/badge-php-light.svg"><img alt="PHP 7.4 to 8.5" src="/docs/images/badge-php-dark.svg" height="30"></picture></a> <a href="/docs/HOSTING.md"><picture><source media="(prefers-color-scheme: dark)" srcset="/docs/images/badge-db-dark.svg"><source media="(prefers-color-scheme: light)" srcset="/docs/images/badge-db-light.svg"><img alt="MySQL 5.6+ or MariaDB 10.1+" src="/docs/images/badge-db-dark.svg" height="30"></picture></a> <a href="#17-themes"><picture><source media="(prefers-color-scheme: dark)" srcset="/docs/images/badge-themes-dark.svg"><source media="(prefers-color-scheme: light)" srcset="/docs/images/badge-themes-light.svg"><img alt="17 themes, dark and light" src="/docs/images/badge-themes-dark.svg" height="30"></picture></a> <a href="https://t.me/avdbapi_support"><picture><source media="(prefers-color-scheme: dark)" srcset="/docs/images/badge-telegram-dark.svg"><source media="(prefers-color-scheme: light)" srcset="/docs/images/badge-telegram-light.svg"><img alt="Telegram support: @avdbapi_support" src="/docs/images/badge-telegram-dark.svg" height="30"></picture></a>
 </p>
 
-<p align="center"><a href="#quick-install"><b>Quick install</b></a> · <a href="/UPGRADE.md">Upgrade from 1.1.0</a> · <a href="https://help.avdbapi.com/documentation/installation-guide-for-javcms/">Install guide</a> · <a href="/CHANGELOG.md">What is new</a></p>
+<p align="center"><a href="#quick-install"><b>Quick install</b></a> · <a href="#updating">Updating</a> · <a href="/UPGRADE.md">Upgrade from 1.1.0</a> · <a href="https://help.avdbapi.com/documentation/installation-guide-for-javcms/">Install guide</a> · <a href="/CHANGELOG.md">What is new</a></p>
 
-<p align="center">Try it live: <a href="https://javcms.net">javcms.net</a> - live demo with adult content, 18+ only. Pick any theme with the palette button.</p>
+<p align="center">Try it live: <a href="https://javcms.net">javcms.net</a> - live demo with adult content, 18+ only. Pick any theme with the palette button. Ads are off on the demo; the <b>Demo</b> button turns them on for your browser.</p>
 
 JavCMS is a free, source-available website system for video sites. You install it on your own hosting, and it fills your site with videos from the AVDB API and the xvidapi API, in a few clicks or fully automatically, from a few thousand videos up to millions. It is based on MacCMS 10 (ThinkPHP 5.0).
 
@@ -37,7 +37,7 @@ JavCMS is a free, source-available website system for video sites. You install i
 
 <table>
 <tr>
-<td width="50%" valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="/docs/images/icon-themes-dark.svg"><source media="(prefers-color-scheme: light)" srcset="/docs/images/icon-themes-light.svg"><img src="/docs/images/icon-themes-dark.svg" width="40" height="40" alt=""></picture><br><b>17 themes, dark and light</b><br>Every theme works on phones, tablets and computers, starts dark and has a light mode. Visitors can pick a theme with the theme switcher.</td>
+<td width="50%" valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="/docs/images/icon-themes-dark.svg"><source media="(prefers-color-scheme: light)" srcset="/docs/images/icon-themes-light.svg"><img src="/docs/images/icon-themes-dark.svg" width="40" height="40" alt=""></picture><br><b>17 themes, dark and light</b><br>Every theme works on phones, tablets and computers, starts dark and has a light mode. Visitors can pick a theme with the theme switcher, visible on every page by default.</td>
 <td width="50%" valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="/docs/images/icon-ads-dark.svg"><source media="(prefers-color-scheme: light)" srcset="/docs/images/icon-ads-light.svg"><img src="/docs/images/icon-ads-dark.svg" width="40" height="40" alt=""></picture><br><b>Ads manager with video pre-roll</b><br>18 places on your pages, 58 example ads in 19 formats, pre-roll with a Skip button, VAST tags, schedules and simple stats. With the main switch off, pages carry no ad code.</td>
 </tr>
 <tr>
@@ -51,6 +51,9 @@ JavCMS is a free, source-available website system for video sites. You install i
 <tr>
 <td width="50%" valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="/docs/images/icon-languages-dark.svg"><source media="(prefers-color-scheme: light)" srcset="/docs/images/icon-languages-light.svg"><img src="/docs/images/icon-languages-dark.svg" width="40" height="40" alt=""></picture><br><b>Admin in 4 languages, site in 17</b><br>The admin speaks English, Vietnamese, Simplified and Traditional Chinese. Visitors get a language menu with 17 languages in every theme.</td>
 <td width="50%" valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="/docs/images/icon-admin-dark.svg"><source media="(prefers-color-scheme: light)" srcset="/docs/images/icon-admin-light.svg"><img src="/docs/images/icon-admin-dark.svg" width="40" height="40" alt=""></picture><br><b>Made for beginners</b><br>A setup checklist on the first page, a search box (press <code>/</code>), one-click backups, a security scan and admin accounts with exact rights.</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="/docs/images/icon-update-dark.svg"><source media="(prefers-color-scheme: light)" srcset="/docs/images/icon-update-light.svg"><img src="/docs/images/icon-update-dark.svg" width="40" height="40" alt=""></picture><br><b>One-click updates from GitHub (1.2.1 and newer)</b><br><b>Admins &amp; backup › Updates</b> installs each new release with one click: signed releases only, a backup of the replaced files, settings and database first, a maintenance page while files are swapped, a health check, an automatic rollback if anything fails and a manual rollback for 7 days. Sites on 1.2.0 move up once with the update bridge (<a href="#updating">Updating</a>).</td>
 </tr>
 </table>
 
@@ -77,7 +80,7 @@ Every theme starts in dark mode, has a light mode and a language menu with 17 la
 **What you need:** PHP 7.4 to 8.5 (PDO MySQL, mbstring, cURL, GD, XML, ZIP, fileinfo and OpenSSL; the installer checks them), MySQL 5.6+ or MariaDB 10.1+ (MySQL 5.7.8+ or MariaDB 10.2.3+ recommended), Apache 2.4, Nginx, OpenLiteSpeed or IIS, and an empty database with a user that has full rights on it. HTTPS is strongly recommended; automatic imports need a public HTTPS address.
 
 1. Create an empty database and a database user in your hosting panel.
-2. Download the [latest release](https://github.com/avdbapi-com/javcms/releases/latest), upload the zip to your site folder and extract it there.
+2. Download the [latest release](https://github.com/avdbapi-com/javcms/releases/latest): in its **Assets** list, click `javcms-<version>.zip`. Upload the zip to your site folder and extract it there. How to check the download: [INSTALL.md](/INSTALL.md#download-javcms).
 3. Open `https://your-domain/install.php` and follow the steps. Choose the catalogs you will import: AVDB, xvidapi, both or later.
 4. Sign in to the admin at `https://your-domain/javcms.php`.
 5. Follow the checklist on the first admin page.
@@ -94,19 +97,27 @@ php tools/import.php --run --max-minutes=4
 
 Step by step, with file permissions, cron and HTTPS: [INSTALL.md](/INSTALL.md). Which hosting for which catalog: [docs/HOSTING.md](/docs/HOSTING.md).
 
+## Updating
+
+- **1.2.1 and newer:** open **Admins & backup › Updates** with the founder admin account (the first account of your site), click **Review and update** (**Check now** first if the new release is not shown yet), then **Update now**. Updates come only from the releases of this repository and must carry the JavCMS release signature; a backup comes first, a failed update rolls back by itself, and you can roll back to the previous version for 7 days. Over SSH: `php tools/update.php --check`, then `php tools/update.php --apply`.
+- **1.2.0:** update once with the update bridge. Download `javcms-update.php` from the [latest release](https://github.com/avdbapi-com/javcms/releases/latest) (compare its SHA-256 with `javcms-update.php.sha256`), upload it into your site folder as `install.php`, open `https://your-domain/install.php` while you are signed in to the admin as the founder, and click **Check for updates**, **Check this site** and **Update now**. Step by step: [Update JavCMS 1.2.0 to 1.2.1 (update bridge)](https://help.avdbapi.com/documentation/javcms-update-bridge/).
+- **1.1.0:** [upgrade by hand](#upgrade-from-110).
+
+Everything else (the command line, sites without an outgoing connection, an update that cannot finish): [UPGRADE.md](/UPGRADE.md) and the help guide [One-click updates](https://help.avdbapi.com/documentation/javcms-one-click-updates/).
+
 ## Upgrade from 1.1.0
 
 Plan about 30 minutes. Your videos, members, settings and uploads stay; nothing in your data is rewritten.
 
 1. Back up the database (**Admins & backup › Backup & restore**, then **Download**) and your site files.
 2. Pause automatic imports and any running import.
-3. Extract the new zip on your computer and delete `application/database.php`, `application/route.php` and every file in `application/extra/` except `version.php` from the extracted files.
+3. Download the new zip from the [latest release](https://github.com/avdbapi-com/javcms/releases/latest), extract it on your computer and delete `application/database.php`, `application/route.php` and every file in `application/extra/` except `version.php` from the extracted files.
 4. Upload the rest and replace the existing files.
 5. Sign in, click **Clear cache**, reload with Ctrl+F5, and purge your CDN or OPcache if you use one.
 6. Open **Admins & backup › Speed & protection**, click **Finish upgrade**, then **Build search index** (or run `php tools/upgrade.php`).
 7. Resume your imports and check your pages, search, `sitemap.xml` and `robots.txt`.
 
-JAVCMS Classic (`template/javcms`) is not part of 1.2.0: if your site uses it, switch to JAVCMS Modern or another theme. All details, also for edited theme files and going back: [UPGRADE.md](/UPGRADE.md).
+JAVCMS Classic (`template/javcms`) is not part of 1.2.0 or 1.2.1: if your site uses it, switch to JAVCMS Modern or another theme. All details, also for edited theme files and going back: [UPGRADE.md](/UPGRADE.md).
 
 ## Big catalogs
 
@@ -126,7 +137,7 @@ With 7.1 million videos on a 2-core test server (cold database), a typical new s
 | Guide | What it covers |
 |---|---|
 | [INSTALL.md](/INSTALL.md) | Installing, file permissions, first steps, cron, HTTPS |
-| [UPGRADE.md](/UPGRADE.md) | Moving from 1.1.0 |
+| [UPGRADE.md](/UPGRADE.md) | One-click updates (1.2.1 and newer), the update bridge for 1.2.0, moving from 1.1.0 |
 | [CHANGELOG.md](/CHANGELOG.md) | Everything that changed |
 | [docs/THEMES.md](/docs/THEMES.md) | Themes, preview, visitor theme switcher |
 | [docs/IMPORT.md](/docs/IMPORT.md) | Importing videos from AVDB and xvidapi |
@@ -156,7 +167,7 @@ The license text is written in plain English and is the one that counts; this su
 - **Bugs:** [open an issue](https://github.com/avdbapi-com/javcms/issues/new/choose) with your JavCMS, PHP, database and web server versions and what you see. Never post passwords.
 - **Security problems:** please report them privately, see [SECURITY.md](/.github/SECURITY.md).
 - **Contributing:** read [CONTRIBUTING.md](/.github/CONTRIBUTING.md) and our [Code of Conduct](/.github/CODE_OF_CONDUCT.md).
-- **New releases:** watch this repository (Watch › Custom › Releases).
+- **New releases:** watch this repository (Watch › Custom › Releases). Sites on 1.2.1 or newer also see them in the admin (**Admins & backup › Updates**).
 
 <div align="center">
 

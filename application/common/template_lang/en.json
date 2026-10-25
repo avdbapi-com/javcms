@@ -711,6 +711,7 @@
   "ui.theme_switcher_open": "Change theme",
   "ui.theme_switcher_title": "Site theme",
   "ui.theme_switcher_hint": "Your choice is saved in this browser.",
+  "ui.theme_switcher_short": "Theme",
   "ui.theme_current": "Current theme",
   "ui.theme_default": "Site default",
   "ui.theme_modern": "Modern style",

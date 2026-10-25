@@ -1,9 +1,10 @@
 {/*
-This file is part of JavCMS - https://javcms.net
+This file is part of JavCMS - https://github.com/avdbapi-com/javcms
 Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
 License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
 See the LICENSE and NOTICE files that come with JavCMS.
-Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
+Live demo: https://javcms.net (adult content, 18 and over only)
 Telegram: https://t.me/avdb_api
 */}{php}$vpFk++; $vpSeen[] = intval($vo['vod_id'] ?? 0); $vpFTitle = $vpPlain(($vo['vod_display_name'] ?? '') !== '' ? $vo['vod_display_name'] : ($vo['vod_name'] ?? '')); $vpFeat[] = $vpFTitle; $vpFScore = (float)($vo['vod_score'] ?? 0);{/php}
 <article class="vp-feature{if condition="$vpFk eq 1"} is-active{/if}" id="vp-feature-{$vpFk}"{if condition="$vpFk gt 1"} role="tabpanel" aria-labelledby="vp-ftab-{$vpFk}" hidden{/if} data-vp-feature>

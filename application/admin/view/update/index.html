@@ -1,0 +1,236 @@
+{/*
+This file is part of JavCMS - https://github.com/avdbapi-com/javcms
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
+Live demo: https://javcms.net (adult content, 18 and over only)
+Telegram: https://t.me/avdb_api
+*/}{include file="../../../application/admin/view/public/head" /}
+<style>
+/* Admins & backup > Updates (one-click updates, JavCMS 1.2.1). Kit tokens only; the cards are the kit's .ax-section
+   (radius, padding and heading of its neighbours Backup & restore and Security scan), .up-card adds the inner layout. */
+.up-page{max-width:1100px;margin:0 auto;color:var(--ax-text)}
+.up-page [hidden]{display:none!important}
+.up-card>h2{margin:0 0 10px;display:flex;flex-wrap:wrap;gap:8px;align-items:baseline}
+.up-card>h2 small{font-size:13px;font-weight:400;color:var(--ax-muted)}
+.up-card>h2:focus{outline:none}
+.up-versions{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px 24px;margin:0 0 14px}
+.up-versions dt{color:var(--ax-muted);font-size:12.5px;margin:0 0 2px}
+.up-versions dd{margin:0;font-size:16px;font-weight:650;overflow-wrap:anywhere;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.up-versions dd.up-small{font-size:13.5px;font-weight:400;color:var(--ax-text)}
+.up-actions{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center}
+.up-switch{display:inline-flex;align-items:flex-start;gap:8px;font-size:13px;color:var(--ax-text);max-width:640px;line-height:1.45}
+.up-switch input{width:18px;height:18px;margin-top:1px;flex:none;accent-color:var(--ax-accent)}
+.up-msg{margin:10px 0 0;min-height:1em;color:var(--ax-muted);overflow-wrap:anywhere}
+.up-msg.is-bad{color:var(--ax-danger,#e5484d)}
+.up-msg.is-ok{color:var(--ax-ok,#30a46c)}
+.up-check-error{margin:0 0 12px;color:var(--ax-text);font-size:13.5px;line-height:1.5;overflow-wrap:anywhere}
+.up-check-error details{margin-top:4px;color:var(--ax-muted);font-size:12.5px}
+.up-check-error summary{cursor:pointer}
+.up-notes{max-height:340px;overflow:auto;padding:4px 14px;margin:0 0 12px;border:1px solid var(--ax-line);border-radius:var(--ax-r-sm,6px);background:var(--ax-raised);overflow-wrap:anywhere;color:var(--ax-text)}
+.up-notes h3,.up-notes h4,.up-notes h5,.up-notes h6{font-size:14.5px;margin:12px 0 6px;color:var(--ax-text)}
+.up-notes p,.up-notes li{font-size:13.5px;line-height:1.55;color:var(--ax-text)}
+.up-notes ul{list-style:disc;padding-left:20px;margin:6px 0}
+.up-notes ol{list-style:decimal;padding-left:22px;margin:6px 0}
+/* the marker is drawn by the li: the admin's base styles (layui, dashlite) set li{list-style:none} on every list item */
+.up-notes ul>li{display:list-item;list-style:disc outside}
+.up-notes ol>li{display:list-item;list-style:decimal outside}
+.up-notes li{margin:2px 0}
+.up-notes code{font-family:var(--ax-mono,monospace);font-size:12.5px;background:var(--ax-surface);color:var(--ax-text);padding:1px 4px;border-radius:4px}
+.up-notes pre{margin:8px 0;padding:8px 10px;background:var(--ax-surface);border-radius:6px;overflow:auto;white-space:pre-wrap}
+.up-notes pre code{padding:0;background:none}
+.up-notes a{color:var(--ax-accent)}
+.up-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.up-hint{color:var(--ax-faint);font-size:12.5px;margin:6px 0 0;line-height:1.5}
+.up-req{list-style:none;margin:0 0 14px;padding:0;border:1px solid var(--ax-line);border-radius:var(--ax-r-sm,6px);overflow:hidden}
+.up-req li{display:grid;grid-template-columns:88px minmax(0,1fr);gap:10px;align-items:start;padding:8px 12px;border-top:1px solid var(--ax-line);font-size:13.5px}
+.up-req li:first-child{border-top:0}
+.up-req li span:last-child{overflow-wrap:anywhere}
+.up-blocked{margin:0 0 12px}
+.up-plan{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:0 0 12px}
+.up-plan div{border:1px solid var(--ax-line);border-radius:var(--ax-r-sm,6px);padding:10px 12px;background:var(--ax-raised)}
+.up-plan b{display:block;font-size:20px;line-height:1.2}
+.up-plan span{font-size:12.5px;color:var(--ax-muted)}
+.up-list{max-height:180px;overflow:auto;margin:6px 0 12px;padding:8px 12px;font-family:var(--ax-mono,monospace);font-size:12px;background:var(--ax-raised);border:1px solid var(--ax-line);border-radius:var(--ax-r-sm,6px);white-space:pre-wrap;overflow-wrap:anywhere}
+.up-choice{border:1px solid var(--ax-line);border-radius:var(--ax-r-sm,6px);padding:10px 14px;margin:0 0 12px}
+.up-choice legend{font-size:13.5px;font-weight:650;line-height:1.4;color:var(--ax-text);padding:0 6px;margin:0;border:0;width:auto}
+.up-choice label{display:flex;gap:8px;align-items:flex-start;margin:6px 0;font-size:13.5px;line-height:1.45}
+.up-choice input{margin-top:3px;accent-color:var(--ax-accent)}
+.up-confirm{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end;margin-top:6px}
+.up-confirm .ax-field{display:flex;flex-direction:column;gap:4px;min-width:220px;flex:0 1 280px;margin:0}
+.up-confirm .ax-field label{font-size:13px;color:var(--ax-text)}
+.up-confirm input[type=password]{box-sizing:border-box;height:var(--ax-h,40px);padding:6px 10px;background:var(--ax-surface);color:var(--ax-text);border:1px solid var(--ax-field);border-radius:var(--ax-r-sm,6px)}
+.up-confirm .ax-btn{height:var(--ax-h,40px);margin:0}
+.up-confirm .ax-btn[aria-disabled="true"]{opacity:.65;cursor:progress}
+.up-check{display:flex;gap:8px;align-items:flex-start;font-size:13px;margin:8px 0;line-height:1.45}
+.up-check input{margin-top:2px;accent-color:var(--ax-accent)}
+.up-bar{width:100%;height:14px;accent-color:var(--ax-accent);margin:8px 0}
+.up-phases{list-style:none;margin:0 0 10px;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:6px}
+.up-phases li{display:flex;gap:6px;align-items:center;font-size:12.5px;color:var(--ax-muted);padding:4px 6px;border-radius:6px}
+.up-phases li::before{content:"";width:10px;height:10px;border-radius:50%;border:2px solid currentColor;flex:none}
+.up-phases li.is-done{color:var(--ax-ok,#30a46c)}
+.up-phases li.is-done::before{background:currentColor}
+.up-phases li.is-skip{text-decoration:line-through}
+.up-phases li.is-fail{color:var(--ax-danger,#e5484d);font-weight:650}
+.up-phases li.is-fail::before{background:currentColor}
+.up-phases li.is-now{color:var(--ax-accent);font-weight:650;background:var(--ax-raised)}
+.up-now{margin:0 0 8px;font-weight:600;overflow-wrap:anywhere}
+.up-log{border:1px solid var(--ax-line);border-radius:var(--ax-r-sm,6px);padding:8px 12px;background:var(--ax-raised)}
+.up-log summary{cursor:pointer;font-weight:650}
+.up-log ol{list-style:none;margin:8px 0 0;padding:0;max-height:300px;overflow:auto;font-family:var(--ax-mono,monospace);font-size:12px;line-height:1.5}
+.up-log ol:focus-visible{outline:2px solid var(--ax-accent);outline-offset:2px}
+.up-log li{padding:1px 0;overflow-wrap:anywhere}
+.up-log li.is-warn{color:var(--ax-warn,#f5a524)}
+.up-log li.is-error{color:var(--ax-danger,#e5484d)}
+.up-log time{color:var(--ax-muted);margin-right:6px}
+.up-result{margin:12px 0 0}
+.up-page .ax-notice--ok{background:var(--ax-ok-soft)}
+.up-page .ax-notice--ok>.ax-ic{color:var(--ax-ok)}
+.up-result .ax-notice p{color:var(--ax-text);overflow-wrap:anywhere}
+.up-result .up-result-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.up-help{font-size:13.5px;line-height:1.6;color:var(--ax-muted)}
+.up-help li{margin:3px 0}
+.up-help code{font-family:var(--ax-mono,monospace);font-size:12.5px}
+.up-test{margin:0 0 16px}
+@media(max-width:700px){.up-req li{grid-template-columns:1fr}.up-confirm .ax-field{flex:1 1 100%;min-width:0}}
+</style>
+<main id="up-page" class="page-container up-page">
+ {include file="../../../application/admin/view/public/page_head" icon="ai-refresh-cw" title="admin/ux/menu/updates" help="admin/ux/help/updates" /}
+ {if condition="$up['test']"}
+ <div class="ax-notice ax-notice--warn up-test" role="note"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-triangle-alert"/></svg><div><p>{:lang('admin/ux/updates/test_mode')}</p></div></div>
+ {/if}
+ {if condition="$up_runtime_problem neq ''"}
+ <div class="ax-notice ax-notice--danger up-test" id="up-runtime" role="alert"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-circle-alert"/></svg><div><p>{$up_runtime_problem|htmlspecialchars}</p></div></div>
+ {/if}
+
+ <section class="ax-section up-card" id="up-status" aria-labelledby="up-status-title">
+  <h2 id="up-status-title">{:lang('admin/ux/updates/status_title')}</h2>
+  <dl class="up-versions">
+   <div><dt>{:lang('admin/ux/updates/installed')}</dt><dd id="up-installed">{$up.installed|htmlspecialchars}</dd></div>
+   <div><dt>{:lang('admin/ux/updates/latest')}</dt><dd id="up-latest">
+    {if condition="is_array($up['check']['latest'])"}{$up['check']['latest']['version']|htmlspecialchars}
+     {if condition="$up['check']['available']"}<span class="ax-chip ax-chip--warn">{:lang('admin/ux/updates/chip_available')}</span>{else /}<span class="ax-chip ax-chip--ok">{:lang('admin/ux/updates/chip_current')}</span>{/if}
+    {elseif condition="$up['check']['state'] eq 'error'" /}<span class="ax-chip ax-chip--danger">{:lang('admin/ux/updates/chip_check_failed')}</span>
+    {else /}<span class="ax-chip ax-chip--off">{:lang('admin/ux/updates/not_checked')}</span>{/if}
+   </dd></div>
+   <div><dt>{:lang('admin/ux/updates/last_check')}</dt><dd class="up-small" id="up-checked">{if condition="$up_checked neq ''"}{$up_checked|htmlspecialchars}{if condition="$up['check']['via'] neq ''"} · {:lang('admin/ux/updates/via_' . preg_replace('/[^a-z]/', '', $up['check']['via']))}{/if}{else /}{:lang('admin/ux/updates/never')}{/if}</dd></div>
+  </dl>
+  {if condition="$up_check_error neq ''"}<div class="up-check-error" id="up-check-error"><p>{$up_check_error|htmlspecialchars}</p>{if condition="$up['check']['error'] neq ''"}<details><summary>{:lang('admin/ux/updates/check_details')}</summary><p>{$up['check']['error']|htmlspecialchars}</p></details>{/if}</div>{/if}
+  {if condition="$up_check_note neq ''"}<p class="up-check-error" id="up-check-note">{$up_check_note|htmlspecialchars}</p>{/if}
+  <div class="up-actions">
+   <button type="button" class="ax-btn" data-up="check"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-refresh-cw"/></svg><span>{:lang('admin/ux/updates/check_now')}</span></button>
+   <label class="up-switch"><input type="checkbox" data-up="auto"{if condition="$up['settings']['auto_check']"} checked{/if}><span>{:lang('admin/ux/updates/auto_check')}</span></label>
+  </div>
+  <p class="up-msg" id="up-msg" role="status" aria-live="polite"></p>
+ </section>
+
+ {if condition="$up['check']['available'] && !$up['run']"}
+ <section class="ax-section up-card" id="up-release" aria-labelledby="up-release-title">
+  <h2 id="up-release-title">{:lang('admin/ux/updates/release_title', [$up['check']['latest']['version']])} <small>{:lang('admin/ux/updates/released', [$up['check']['latest']['released']])} · {:number_format($up['check']['latest']['files'])} {:lang('admin/ux/updates/files')} · {:round($up['check']['latest']['size'] / 1048576, 1)} MB</small></h2>
+  {if condition="$up_notes neq ''"}<div class="up-notes">{$up_notes}</div>{/if}
+  <div class="up-row">
+   <button type="button" class="ax-btn ax-btn--primary" data-up="review"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-list-checks"/></svg><span>{:lang('admin/ux/updates/review')}</span></button>
+   {if condition="$up['check']['release_url'] neq ''"}<a class="ax-btn ax-btn--ghost" href="{$up['check']['release_url']|htmlspecialchars}" target="_blank" rel="noopener noreferrer"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-external-link"/></svg><span>{:lang('admin/ux/updates/release_page')}</span></a>{/if}
+  </div>
+  <p class="up-hint">{:lang('admin/ux/updates/review_hint')}</p>
+ </section>
+
+ <section class="ax-section up-card" id="up-review" aria-labelledby="up-review-title" hidden>
+  <h2 id="up-review-title" tabindex="-1">{:lang('admin/ux/updates/review_title')}</h2>
+  <progress class="up-bar" id="up-pre-bar" max="100" value="0" aria-label="{:lang('admin/ux/updates/precheck_running')}"></progress>
+  <p class="up-hint" id="up-pre-text" role="status" aria-live="polite"></p>
+  <div id="up-pre-body" hidden>
+   <h3 class="ax-sr-only">{:lang('admin/ux/updates/req_title')}</h3>
+   <ul class="up-req" id="up-req"></ul>
+   <div class="ax-notice ax-notice--danger up-blocked" id="up-blocked" role="alert" hidden><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-circle-alert"/></svg><div><p>{:lang('admin/ux/updates/precheck_blocked')}</p></div></div>
+   <div class="up-plan" id="up-plan"></div>
+   <div id="up-modified" hidden>
+    <p class="up-hint" id="up-modified-text"></p>
+    <pre class="up-list" id="up-modified-list"></pre>
+    <p class="up-hint"><a href="#" id="up-modified-dl">{:lang('admin/ux/updates/modified_download')}</a></p>
+    <p class="up-hint" id="up-needed" hidden></p>
+    <fieldset class="up-choice">
+     <legend>{:lang('admin/ux/updates/choice_title')}</legend>
+     <label><input type="radio" name="up-choice" value="replace" checked><span>{:lang('admin/ux/updates/choice_replace_long')}</span></label>
+     <label><input type="radio" name="up-choice" value="keep"><span>{:lang('admin/ux/updates/choice_keep_long')}</span></label>
+    </fieldset>
+   </div>
+   <p class="up-hint" id="up-db-text"></p>
+   <p class="up-hint" id="up-estimate" hidden></p>
+   <form class="up-confirm" id="up-arm-form" autocomplete="off" novalidate>
+    <label class="up-check" style="flex:1 1 100%"><input type="checkbox" id="up-confirm" value="1"><span id="up-confirm-text">{:lang('admin/ux/updates/confirm_text')}</span></label>
+    <div class="ax-field"><label for="up-password">{:lang('admin/ux/updates/password')}</label><input id="up-password" type="password" maxlength="72" autocomplete="current-password"></div>
+    <button type="submit" class="ax-btn ax-btn--primary" id="up-arm-btn"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-download"/></svg><span>{:lang('admin/ux/updates/update_now')}</span></button>
+   </form>
+   <p class="up-msg" id="up-arm-msg" role="alert"></p>
+  </div>
+ </section>
+ {/if}
+
+ <section class="ax-section up-card" id="up-run" aria-labelledby="up-run-title"{if condition="!$up['run']"} hidden{/if}>
+  <h2 id="up-run-title" tabindex="-1"><span id="up-run-heading">{if condition="$up['run']"}{if condition="$up['run']['kind'] eq 'rollback'"}{:lang('admin/ux/updates/run_title_rollback', [$up['run']['to']])}{else /}{:lang('admin/ux/updates/run_title', [$up['run']['to']])}{/if}{/if}</span> <span class="ax-chip ax-chip--warn" id="up-maint" hidden>{:lang('admin/ux/updates/maint_on_badge')}</span></h2>
+  <p class="up-hint" id="up-keep-open">{:lang('admin/ux/updates/run_keep_open')}</p>
+  <ol class="up-phases" id="up-phases"></ol>
+  <progress class="up-bar" id="up-bar" max="100" value="0" aria-label="{:lang('admin/ux/updates/running')}"></progress>
+  <p class="up-now" id="up-now"></p>
+  <details class="up-log" open><summary>{:lang('admin/ux/updates/log_title')}</summary><div role="log" aria-live="polite"><ol id="up-log" tabindex="0" aria-label="{:lang('admin/ux/updates/log_title')}"></ol></div></details>
+  <div class="up-row" style="margin-top:10px">
+   <button type="button" class="ax-btn" data-up="cancel" id="up-cancel" hidden>{:lang('admin/ux/updates/cancel')}</button>
+   <a class="ax-btn ax-btn--ghost" id="up-log-dl" href="#" hidden><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-download"/></svg><span>{:lang('admin/ux/updates/download_log')}</span></a>
+  </div>
+  <form class="up-confirm" id="up-rearm-form" autocomplete="off" novalidate hidden>
+   <p class="up-hint" id="up-rearm-hint" style="flex:1 1 100%">{:lang('admin/ux/updates/continue_run')}</p>
+   <label class="up-check" id="up-close-row" style="flex:1 1 100%" hidden><input type="checkbox" id="up-close-ok" value="1"><span>{:lang('admin/ux/updates/attention_close_tick')}</span></label>
+   <div class="ax-field"><label for="up-rearm-password">{:lang('admin/ux/updates/password')}</label><input id="up-rearm-password" type="password" maxlength="72" autocomplete="current-password" aria-describedby="up-rearm-hint"></div>
+   <button type="submit" class="ax-btn ax-btn--primary">{:lang('admin/ux/updates/continue_btn')}</button>
+   <button type="button" class="ax-btn ax-btn--ghost" id="up-close-btn" hidden><span>{:lang('admin/ux/updates/attention_close_btn')}</span></button>
+  </form>
+  <div class="up-result" id="up-result" hidden></div>
+ </section>
+
+ {if condition="$up['rollback'] && !$up['run']"}
+ <section class="ax-section up-card" id="up-rollback" aria-labelledby="up-rollback-title">
+  <h2 id="up-rollback-title">{:lang('admin/ux/updates/rollback_title', [$up['rollback']['to']])}</h2>
+  <p class="up-help">{:lang('admin/ux/updates/rollback_text', [$up['rollback']['to'], $up_rollback_until])}</p>
+  {if condition="$up['rollback']['breaking'] && !empty($up['rollback']['db_missing'])"}<p class="up-hint" id="up-db-missing">{$up_rollback_db_missing}</p>{/if}
+  <form class="up-confirm" id="up-rollback-form" data-to="{$up['rollback']['to']|htmlspecialchars}" autocomplete="off" novalidate>
+   {if condition="$up['rollback']['breaking'] && empty($up['rollback']['db_missing'])"}<label class="up-check" style="flex:1 1 100%"><input type="checkbox" id="up-db-restore" value="1"><span>{:lang('admin/ux/updates/rollback_db')}</span></label>{/if}
+   <div class="ax-field"><label for="up-rb-password">{:lang('admin/ux/updates/password')}</label><input id="up-rb-password" type="password" maxlength="72" autocomplete="current-password"></div>
+   <button type="submit" class="ax-btn"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-rotate-ccw"/></svg><span>{:lang('admin/ux/updates/rollback_btn', [$up['rollback']['to']])}</span></button>
+  </form>
+  <p class="up-msg" id="up-rb-msg" role="alert"></p>
+ </section>
+ {/if}
+
+ <section class="ax-section up-card" aria-labelledby="up-history-title">
+  <h2 id="up-history-title">{:lang('admin/ux/updates/history_title')}</h2>
+  {if condition="empty($up_history)"}<p class="up-hint">{:lang('admin/ux/updates/history_none')}</p>{else /}
+  <table class="ax-table ax-table--cards">
+   <thead><tr><th scope="col">{:lang('admin/ux/updates/h_date')}</th><th scope="col">{:lang('admin/ux/updates/h_change')}</th><th scope="col">{:lang('admin/ux/updates/h_result')}</th><th scope="col">{:lang('admin/ux/updates/h_log')}</th></tr></thead>
+   <tbody>
+   {volist name="up_history" id="h"}
+    <tr><td data-label="{:lang('admin/ux/updates/h_date')}">{$h.started|htmlspecialchars}</td><td data-label="{:lang('admin/ux/updates/h_change')}">{$h.change|htmlspecialchars}</td><td data-label="{:lang('admin/ux/updates/h_result')}"><span>{$h.status_label|htmlspecialchars}{if condition="$h['error'] neq ''"}<br><span class="up-hint">{$h.error|htmlspecialchars}</span>{/if}</span></td><td data-label="{:lang('admin/ux/updates/h_log')}"><a href="{:url('update/log')}?run={$h.id|htmlspecialchars}">{:lang('admin/ux/updates/download_log')}</a></td></tr>
+   {/volist}
+   </tbody>
+  </table>
+  {/if}
+ </section>
+
+ <section class="ax-section up-card up-help" aria-labelledby="up-help-title">
+  <h2 id="up-help-title">{:lang('admin/ux/updates/help_title')}</h2>
+  <ul>
+   <li>{:lang('admin/ux/updates/help_source')}</li>
+   <li>{:lang('admin/ux/updates/help_signed')}</li>
+   <li>{:lang('admin/ux/updates/help_backup')}</li>
+   <li>{:lang('admin/ux/updates/help_maint')}</li>
+   <li>{:lang('admin/ux/updates/help_rollback')}</li>
+   <li>{:lang('admin/ux/updates/help_cli')} <code>php tools/update.php --check</code> · <code>--apply</code> · <code>--rollback</code></li>
+   <li>{:lang('admin/ux/updates/help_offline')}</li>
+  </ul>
+  <p class="up-hint">{:lang('admin/ux/updates/help_engine', [$up['engine'], $up['php']])}</p>
+ </section>
+</main>
+<script>window.AX_UP = {$up_js}; window.AX_UP_LANG = {$up_lang_js};</script>
+<script src="__STATIC__/js/admin_updates.js?v={:filemtime(ROOT_PATH . 'static/js/admin_updates.js')}"></script>
+{include file="../../../application/admin/view/public/foot" /}

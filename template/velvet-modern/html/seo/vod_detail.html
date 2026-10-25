@@ -1,9 +1,10 @@
 {/*
-This file is part of JavCMS - https://javcms.net
+This file is part of JavCMS - https://github.com/avdbapi-com/javcms
 Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
 License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
 See the LICENSE and NOTICE files that come with JavCMS.
-Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
+Live demo: https://javcms.net (adult content, 18 and over only)
 Telegram: https://t.me/avdb_api
 */}{php}
 $vpSeoObj = isset($obj) && is_array($obj) ? $obj : []; foreach (['name', 'blurb', 'content', 'actor', 'class', 'director', 'writer', 'tag', 'area'] as $vpSeoF) { $vpSeoV = (string)($vpSeoObj['vod_display_' . $vpSeoF] ?? ($vpSeoObj['vod_' . $vpSeoF] ?? '')); for ($vpSeoI = 0; $vpSeoI < 4; $vpSeoI++) { $vpSeoD = html_entity_decode($vpSeoV, ENT_QUOTES | ENT_HTML5, 'UTF-8'); if ($vpSeoD === $vpSeoV) { break; } $vpSeoV = $vpSeoD; } if ($vpSeoV !== '') { $vpSeoObj['vod_display_' . $vpSeoF] = $vpSeoV; } }

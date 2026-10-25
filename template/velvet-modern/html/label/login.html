@@ -1,8 +1,9 @@
 {/*
-This file is part of JavCMS - https://javcms.net
+This file is part of JavCMS - https://github.com/avdbapi-com/javcms
 Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
 License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
 See the LICENSE and NOTICE files that come with JavCMS.
-Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
+Live demo: https://javcms.net (adult content, 18 and over only)
 Telegram: https://t.me/avdb_api
 */}<div class="mac_login vp-auth-card vp-auth-card--mini"><h2>{:\\app\\common\\util\\TemplateText::get('ui.log_in')}</h2><form id="gallery-modal-login" class="vp-form" action="{:mac_url('user/login')}" method="post"><div class="vp-field"><label for="modal-user-name">{:\\app\\common\\util\\TemplateText::get('ui.username')}</label><input id="modal-user-name" name="user_name" type="text" autocomplete="username" required></div><div class="vp-field"><label for="modal-user-password">{:\\app\\common\\util\\TemplateText::get('ui.password')}</label><input id="modal-user-password" name="user_pwd" type="password" autocomplete="current-password" required></div>{if condition="$GLOBALS['config']['user']['login_verify'] eq 1"}<div class="vp-field"><label for="modal-verify">{:\\app\\common\\util\\TemplateText::get('ui.verification_code')}</label><input id="modal-verify" name="verify" type="text" class="mac_verify" required></div>{/if}<button class="vp-btn vp-btn-gold vp-btn-block" type="submit">{:\\app\\common\\util\\TemplateText::get('ui.log_in')}</button><a href="{:mac_url('user/reg')}">{:\\app\\common\\util\\TemplateText::get('ui.create_account')}</a><p role="status" class="login-status vp-status"></p></form></div>

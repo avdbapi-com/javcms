@@ -1,8 +1,9 @@
 {/*
-This file is part of JavCMS - https://javcms.net
+This file is part of JavCMS - https://github.com/avdbapi-com/javcms
 Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
 License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
 See the LICENSE and NOTICE files that come with JavCMS.
-Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
+Live demo: https://javcms.net (adult content, 18 and over only)
 Telegram: https://t.me/avdb_api
 */}<form class="ct-form ct-ajaxlogin" method="post" action="{:url('user/login')}"><div class="ct-field"><label for="ct-al-name">{:\\app\\common\\util\\AutoIcon::ui('user', ['class'=>'ct-ico'])}{:\\app\\common\\util\\TemplateText::get('ui.username')}</label><input class="ct-input" id="ct-al-name" name="user_name" type="text" autocomplete="username"></div><div class="ct-field"><label for="ct-al-pwd">{:\\app\\common\\util\\AutoIcon::ui('lock', ['class'=>'ct-ico'])}{:\\app\\common\\util\\TemplateText::get('ui.password')}</label><input class="ct-input" id="ct-al-pwd" name="user_pwd" type="password" autocomplete="current-password"></div>{if condition="$GLOBALS['config']['user']['login_verify'] eq 1"}<div class="ct-field"><label for="ct-al-verify">{:\\app\\common\\util\\AutoIcon::ui('shield', ['class'=>'ct-ico'])}{:\\app\\common\\util\\TemplateText::get('ui.verification_code')}</label><div class="ct-captcha"><input class="ct-input" id="ct-al-verify" name="verify" type="text"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-captcha-src="{:url('verify/index')}" alt="{:\\app\\common\\util\\TemplateText::get('ui.verification_code')}" width="128" height="40" role="button" tabindex="0"></div></div>{/if}<div class="ct-row"><a class="ct-link" href="{:url('user/reg')}">{:\\app\\common\\util\\TemplateText::get('ui.create_account')}</a><a class="ct-link" href="{:url('user/findpass')}">{:\\app\\common\\util\\TemplateText::get('ui.forget_the_password')}</a></div><a class="ct-btn ct-btn--block" href="{:url('user/login')}">{:\\app\\common\\util\\TemplateText::get('ui.log_in')}</a></form>

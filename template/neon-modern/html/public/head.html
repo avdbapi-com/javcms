@@ -1,9 +1,10 @@
 {/*
-This file is part of JavCMS - https://javcms.net
+This file is part of JavCMS - https://github.com/avdbapi-com/javcms
 Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
 License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
 See the LICENSE and NOTICE files that come with JavCMS.
-Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
+Live demo: https://javcms.net (adult content, 18 and over only)
 Telegram: https://t.me/avdb_api
 */}{php}$tplNoPic = $maccms['path_tpl'] . 'assets/brand/ph-dark.webp'; $nnSvg = $maccms['path_tpl'] . 'assets/icons.svg?v=20261010-n1'; $nnNoFace = $maccms['path_tpl'] . 'assets/brand/avatar.svg'; $nnAid = intval($maccms['aid'] ?? 0); $nnCa = strtolower((string)($maccms['controller_action'] ?? '')); $nnLangs = \app\common\util\TemplateText::languages(); $nnLangNow = (string)($maccms['ui_lang'] ?? 'en'); $nnQ = (isset($param) && is_array($param) && isset($param['wd'])) ? (string)$param['wd'] : ''; $nnHasActor = false; $nnHasTopic = false; $nnHasArt = false; $nnCatOn = in_array($nnCa, ['vod/type', 'vod/show'], true);{/php}{maccms:actor num="1" id="nnProbeActor"}{php}$nnHasActor = true;{/php}{/maccms:actor}{maccms:topic num="1" id="nnProbeTopic"}{php}$nnHasTopic = true;{/php}{/maccms:topic}{maccms:art num="1" id="nnProbeArt"}{php}$nnHasArt = true;{/php}{/maccms:art}
 <a class="nn-skip" href="#main-content">{:\\app\\common\\util\\TemplateText::get('ui.skip_to_content')}</a>

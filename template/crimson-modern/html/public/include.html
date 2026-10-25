@@ -1,9 +1,10 @@
 {/*
-This file is part of JavCMS - https://javcms.net
+This file is part of JavCMS - https://github.com/avdbapi-com/javcms
 Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
 License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
 See the LICENSE and NOTICE files that come with JavCMS.
-Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
+Live demo: https://javcms.net (adult content, 18 and over only)
 Telegram: https://t.me/avdb_api
 */}<script src="{$maccms.path|htmlspecialchars=ENT_QUOTES}static/template-ui/theme.js?v=20261007-theme1"></script>
 <meta charset="utf-8" />
@@ -23,7 +24,7 @@ $ciSiteName = $ciDec($maccms['site_name'] ?? ''); if ($ciSiteName === '') { $ciS
 /* Brand: the admin's own logo unless it is empty or the shipped product logo; else the theme mark + wordmark (brandText). */
 $ciLogoRaw = trim((string)($maccms['site_logo'] ?? '')); $ciLogoKey = strtolower(ltrim((string)parse_url($ciLogoRaw, PHP_URL_PATH), '/'));
 $ciLogoImg = '';
-if ($ciLogoRaw !== '' && !preg_match('#(?:^|/)upload/site/20240730-1/(?:20819301b2e936fcc59a7cee9f4e4d4a|0643d1703707a998e41b8813a97ed2e7)\.png$#', $ciLogoKey)) { $ciLogoImg = (string)mac_url_img($ciLogoRaw); }
+if ($ciLogoRaw !== '' && !preg_match('#(?:^|/)(?:upload/site/20240730-1/(?:20819301b2e936fcc59a7cee9f4e4d4a|0643d1703707a998e41b8813a97ed2e7)\.png|static/images/logo(?:_1)?\.(?:png|jpg))$#', $ciLogoKey)) { $ciLogoImg = (string)mac_url_img($ciLogoRaw); }
 $ciBrand = $ciSiteName;
 if (mb_strlen($ciSiteName) > 18) { $ciHost = strtolower(trim((string)($maccms['site_url'] ?? ''))); $ciHost = preg_replace('#^[a-z][a-z0-9+.-]*://#', '', $ciHost); $ciHost = preg_replace('#[/?\#:].*$#', '', $ciHost); $ciHost = preg_replace('#^www\.#', '', $ciHost); $ciLabel = (string)strtok($ciHost, '.');
  if ($ciLabel !== '' && $ciLabel !== 'localhost' && !preg_match('/^[0-9]+$/', $ciLabel)) { $ciBrand = $ciLabel; } }

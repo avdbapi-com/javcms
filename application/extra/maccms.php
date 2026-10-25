@@ -34,6 +34,7 @@ return array (
     'mob_ads_dir' => 'ads',
     'theme_switcher' => '1',
     'theme_switcher_pos' => 'bottom-end',
+    'theme_switcher_show' => 'always',
     'theme_switcher_themes' => '',
   ),
   'app' => 

@@ -1,9 +1,10 @@
 {/*
-This file is part of JavCMS - https://javcms.net
+This file is part of JavCMS - https://github.com/avdbapi-com/javcms
 Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
 License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
 See the LICENSE and NOTICE files that come with JavCMS.
-Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
+Live demo: https://javcms.net (adult content, 18 and over only)
 Telegram: https://t.me/avdb_api
 */}{php}$tzRel = [];{/php}{maccms:vod num="16" type="current" not="'.$obj['vod_id'].'" order="desc" by="time" paging="no" id="tzRv" key="tzRvk"}{php}$tzRel[] = $tzRv;{/php}{/maccms:vod}{php}$tzUp = array_slice($tzRel, 10, 6);{/php}<aside class="tz-side" aria-labelledby="tz-upnext-h">
   <h2 class="tz-side-h" id="tz-upnext-h">{:\\app\\common\\util\\AutoIcon::ui('list', ['class'=>'tz-i', 'tint'=>'none'])}{:\\app\\common\\util\\TemplateText::get('you_may_also_like')}</h2>

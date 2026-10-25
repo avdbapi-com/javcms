@@ -1,10 +1,11 @@
 <?php
 /*
- * This file is part of JavCMS - https://javcms.net
+ * This file is part of JavCMS - https://github.com/avdbapi-com/javcms
  * Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
  * License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
  * See the LICENSE and NOTICE files that come with JavCMS.
- * Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Live demo: https://javcms.net (adult content, 18 and over only)
  * Telegram: https://t.me/avdb_api
  */
 // Runs the self-maintenance of app\common\util\Housekeeping from the command line (the site also runs it by itself).
@@ -51,6 +52,11 @@
 if (PHP_SAPI !== 'cli') {
     exit(1);
 }
+// One-click update (1.2.1): no run while an update replaces files (it would load half-replaced code). The job holds a
+// shared lock on runtime/update-jobs.lock while it runs: an update waits for running jobs before it replaces files.
+$javcmsUpdJobLock = is_dir(dirname(__DIR__) . '/runtime') ? @fopen(dirname(__DIR__) . '/runtime/update-jobs.lock', 'c') : false;
+if ($javcmsUpdJobLock) { @flock($javcmsUpdJobLock, LOCK_SH); }
+if (is_file(dirname(__DIR__) . '/runtime/update/maintenance.php')) { fwrite(STDERR, "An update is replacing files right now; skipped.\n"); exit(0); }
 if (PHP_VERSION_ID < 70400) {
     fwrite(STDERR, "PHP 7.4 or newer is required (this is " . PHP_VERSION . ")\n");
     exit(2);
@@ -162,8 +168,9 @@ if ($opt['sitemap-files-only']) {
 
 if ($opt['search-stats-only']) {
     // engines-r6 NEW-1 (D-10): term statistics + term map of the search index (Housekeeping::searchStats; own connection
-    // without statement limit, memory limit raised to Housekeeping::SEARCH_STATS_MEMORY, low priority)
-    @set_time_limit(0);
+    // without statement limit, memory limit raised to Housekeeping::SEARCH_STATS_MEMORY, low priority); set_time_limit only
+    // when PHP has it (PHP 8 removes a disabled function: this child of tools/upgrade.php would die there)
+    if (function_exists('set_time_limit')) { @set_time_limit(0); }
     $budget = max(0, min(86400, (int)$opt['search-budget']));
     $r = \app\common\util\Housekeeping::searchStats($scaleRoot, $budget > 0 ? microtime(true) + $budget : 0.0, !$opt['no-map']);
     echo json_encode(['search_stats' => $r], JSON_UNESCAPED_SLASHES | JSON_PARTIAL_OUTPUT_ON_ERROR), PHP_EOL;

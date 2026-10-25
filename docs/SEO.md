@@ -47,7 +47,7 @@ Without the PHP GD extension, upload a square 512 × 512 PNG.
 **Code & analytics** (second tab)
 
 - **Google Analytics 4 ID:** paste your measurement ID (starts with `G-`). JavCMS adds Google's code.
-- **Code in <head>** and **Code at the end of every page:** for other analytics or verification code.
+- **Code in `<head>`** and **Code at the end of every page:** for other analytics or verification code.
 - **Wait for consent:** code waits for the visitor's cookie consent.
 
 ## 2. Languages

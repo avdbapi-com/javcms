@@ -113,7 +113,7 @@ The page shows the exact line with **Copy**:
 
 1. Add the line in the "Cron Jobs" page of your hosting panel. [HOSTING.md](HOSTING.md) shows where, for cPanel,
    DirectAdmin and Plesk, and which PHP program to use when `php` is not found.
-2. Wait 5 minutes. The page then shows **Cron last ran: <time>** in green.
+2. Wait 5 minutes. The page then shows **Cron last ran: `<time>`** in green.
 3. From then on, large imports go to cron: the button says **Start (cron continues it)** and the job says
    **started by command line**.
 
@@ -133,6 +133,9 @@ php tools/import.php --pause --job=12
 always is) or more than half of the space left. Without it `--start` stops and asks you to confirm.
 `--run` works for up to 4 minutes and stops; run it again (or let cron run it) and it continues where it stopped.
 A stopped or killed run loses at most one short step.
+While a one-click update replaces files (1.2.1 and newer), `tools/import.php` does not run: it prints "An update is
+replacing files right now; skipped." and the next cron run continues the job. An update waits up to two minutes for
+a running import before it replaces files, so the cron line can stay as it is.
 
 ### The whole catalog
 
@@ -239,7 +242,7 @@ Good to know:
 - Automatic imports only bring **new and changed** videos (and check for removed ones). Big imports
   ("newest 100,000", "whole catalog") are never started by the schedule: start them yourself on the import page;
   they continue by themselves (the hourly run also moves a running import one step on).
-- The provider status line shows **Newest video at the provider: <date>**. xvidapi's newest video is from
+- The provider status line shows **Newest video at the provider: `<date>`**. xvidapi's newest video is from
   April 2026, so its hourly sync finds nothing new today. That is normal, not a broken import.
 - **Pause automatic imports** keeps the current job. Turning automatic imports off stops future runs.
   Videos you already imported stay.
@@ -252,9 +255,9 @@ JavCMS never sends a visitor's request to AVDB or xvidapi. Imports ask xvidapi a
 shared by the page, the schedule and the command line on your site. The status line of each source shows the state:
 
 - **Ready: one request every 5 s**, or **Pacing: next request in N s**.
-- **Waiting after N failed requests: next try at <time>**: the provider did not answer; JavCMS waits longer each time
+- **Waiting after N failed requests: next try at `<time>`**: the provider did not answer; JavCMS waits longer each time
   (up to 1 hour) and continues by itself. After 8 failures in a row the import pauses with a message.
-- **Paused until <time>: The provider asks for a browser check; its API must be exempt from the challenge.**
+- **Paused until `<time>`: The provider asks for a browser check; its API must be exempt from the challenge.**
   The provider's own protection (Cloudflare) blocks the API for a while. JavCMS waits 1 hour; it does not retry
   in a loop. Nothing to do on your side.
 - When the provider asks to wait (HTTP 429), the import waits as long as asked.
@@ -269,7 +272,7 @@ When a provider removes a video, JavCMS hides it on your site too, carefully:
    hidden (not deleted). Hiding can be undone.
 3. **Safety stop:** if a check would hide more than 2 % of the videos of that source, or more than 5,000, or the
    provider suddenly answers with nothing, the check stops and hides nothing. The page then says **"The last check
-   stopped and hid nothing: <reason>"**. A broken or hostile answer from the provider cannot empty your site.
+   stopped and hid nothing: `<reason>`"**. A broken or hostile answer from the provider cannot empty your site.
 4. Under **Videos removed by the provider** you see how many are hidden and how many were removed more than 30 days
    ago. **Delete the N older than 30 days…** deletes those for good, after a confirm. Nothing is deleted automatically.
 
@@ -277,7 +280,7 @@ When a provider removes a video, JavCMS hides it on your site too, carefully:
 
 When you delete an imported video, JavCMS remembers its provider ID. The next automatic import or big import does
 **not** bring it back. To get it back on purpose, import it with **Only the videos I selected** and tick the option
-to import deleted videos again. **Undo** and **Remove all videos from <source>** do not remember deleted videos,
+to import deleted videos again. **Undo** and **Remove all videos from `<source>`** do not remember deleted videos,
 so a smaller import later can bring them back.
 
 ## Pause, retry and undo
@@ -295,7 +298,7 @@ to keep your database small, and it can no longer be undone. The history list ke
 
 ### Remove all videos from one source
 
-Under **Videos from <source> on your site**, **Remove all videos from <source>…** deletes every video imported from
+Under **Videos from `<source>` on your site**, **Remove all videos from `<source>`…** deletes every video imported from
 that source and turns off its automatic import. Categories without videos are hidden. The page shows the number and
 the time first; type the confirmation (for example `REMOVE 3000 VIDEOS`) to start. It runs in short steps and you can
 leave the page.

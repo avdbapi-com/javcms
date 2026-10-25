@@ -1,9 +1,10 @@
 {/*
-This file is part of JavCMS - https://javcms.net
+This file is part of JavCMS - https://github.com/avdbapi-com/javcms
 Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
 License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
 See the LICENSE and NOTICE files that come with JavCMS.
-Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
+Live demo: https://javcms.net (adult content, 18 and over only)
 Telegram: https://t.me/avdb_api
 */}<div class="tp-msgs">{maccms:gbook num="10" paging="yes" pageurl="gbook/index" order="desc" by="id"}<article class="tp-msg"><div class="tp-msg-head"><strong>{$vo.gbook_name|htmlspecialchars=ENT_QUOTES}</strong><time>{$vo.gbook_time|mac_day}</time></div><p>{$vo.gbook_content|htmlspecialchars=ENT_QUOTES}</p>{notempty name="vo.gbook_reply"}<p class="tp-msg-reply"><strong>{:\\app\\common\\util\\TemplateText::get('ui.site_reply')}</strong> {$vo.gbook_reply|htmlspecialchars=ENT_QUOTES}</p>{/notempty}</article>{/maccms:gbook}</div>
 {if condition="$__PAGING__.record_total eq 0"}<div class="tp-empty tp-empty--sm"><span class="tp-empty-ico" aria-hidden="true"><svg class="tp-i"><use href="{$maccms.path_tpl}assets/icons.svg#chat"/></svg></span><p>{:\\app\\common\\util\\TemplateText::get('ui.no_messages_yet')}</p></div>{/if}

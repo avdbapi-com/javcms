@@ -1,9 +1,10 @@
 {/*
-This file is part of JavCMS - https://javcms.net
+This file is part of JavCMS - https://github.com/avdbapi-com/javcms
 Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
 License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
 See the LICENSE and NOTICE files that come with JavCMS.
-Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
+Live demo: https://javcms.net (adult content, 18 and over only)
 Telegram: https://t.me/avdb_api
 */}<!DOCTYPE html><html data-template-theme="honey" lang="{:\\app\\common\\util\\TemplateText::locale()}" dir="{:\\app\\common\\util\\TemplateText::direction()}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex, follow"><title>{:\\app\\common\\util\\TemplateText::get('ui.iframeplayer')}</title><link rel="stylesheet" href="{$maccms.path_tpl}assets/css/player.css"><script>var maccms=<?php echo json_encode(['path'=>(string)($maccms['path'] ?? ''),'mid'=>(string)($maccms['mid'] ?? '1'),'url'=>(string)($maccms['site_url'] ?? ''),'wapurl'=>(string)($maccms['site_wapurl'] ?? ''),'mob_status'=>(string)($maccms['mob_status'] ?? '0')], JSON_HEX_TAG|JSON_HEX_AMP|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES); ?>;var templatePlayerMessages={:\\app\\common\\util\\TemplateText::json(['ui.access_required'])};</script><script src="{$maccms.path|htmlspecialchars=ENT_QUOTES}static/vendor/jquery/jquery-3.7.1.min.js"></script></head><body><div id="native-player">{$player_data}{$player_js}</div>
 <script>

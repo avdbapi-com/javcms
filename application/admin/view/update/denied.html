@@ -1,0 +1,14 @@
+{/*
+This file is part of JavCMS - https://github.com/avdbapi-com/javcms
+Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
+License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
+See the LICENSE and NOTICE files that come with JavCMS.
+Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
+Live demo: https://javcms.net (adult content, 18 and over only)
+Telegram: https://t.me/avdb_api
+*/}{include file="../../../application/admin/view/public/head" /}
+<main class="page-container" style="max-width:900px;margin:0 auto">
+ {include file="../../../application/admin/view/public/page_head" icon="ai-refresh-cw" title="admin/ux/menu/updates" help="admin/ux/help/updates" /}
+ <div class="ax-notice ax-notice--warn" role="note"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="__STATIC__/admin/icons/admin-icons.svg?v={$admin_icons_v}#ai-shield-alert"/></svg><div><p>{$up_error|htmlspecialchars}</p></div></div>
+</main>
+{include file="../../../application/admin/view/public/foot" /}

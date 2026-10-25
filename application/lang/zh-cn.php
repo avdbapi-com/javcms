@@ -1,11 +1,12 @@
 <?php
 /*
- * This file is part of JavCMS - https://javcms.net
+ * This file is part of JavCMS - https://github.com/avdbapi-com/javcms
  * Based on MacCMS 10 (Apache-2.0) by magicblack, changed by JavCMS.
  * JavCMS changes: Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors,
  * JavCMS Community License 1.0. The MacCMS parts stay under the Apache License 2.0.
  * See the LICENSE and NOTICE files that come with JavCMS.
- * Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Live demo: https://javcms.net (adult content, 18 and over only)
  * Telegram: https://t.me/avdb_api
  */
 /* * This is the global language pack. Module-specific language packs take precedence; place them in the module's lang directory, for example application/admin/lang/.
@@ -925,10 +926,6 @@ https://example.com/images/123.jpg
     'admin/system/config/template_state_incomplete'=>'不完整（需要 info.ini 和 html/index/index.html）',
     'admin/system/config/template_state_invalid'=>'目录名称无效',
     'admin/system/config/theme_switcher'=>'访客主题切换',
-    'admin/system/config/theme_switcher_tip'=>'访客可通过浮动按钮选择所提供的主题，选择保存在其浏览器中。上方的"网站模板"仍是首次访问的默认主题，再次选择它即恢复为网站默认。访客选择同样会替代移动端模板。新主题在保存本设置后才会对访客显示。',
-    'admin/system/config/theme_switcher_pos'=>'切换按钮位置',
-    'admin/system/config/theme_switcher_pos_end'=>'底部末端（LTR 为右侧，RTL 为左侧）',
-    'admin/system/config/theme_switcher_pos_start'=>'底部起始端（LTR 为左侧，RTL 为右侧）',
     'admin/system/config/theme_switcher_themes'=>'向访客提供的主题',
     'admin/system/config/theme_switcher_themes_tip'=>'全部不勾选即提供所有可选主题。默认主题始终提供。',
     'admin/system/config/theme_switcher_invalid'=>'所选的切换主题中有一个目录名称无效。',
@@ -1017,7 +1014,7 @@ https://example.com/images/123.jpg
     'admin/system/config/makesize_tip'=>'Number of pages generated in each batch. Around 20 is recommended.',
     'admin/system/config/admin_login_verify'=>'Admin sign-in verification code',
     'admin/system/config/editor'=>'Rich text editor',
-    'admin/system/config/editor_tip'=>'ueditor is included by default. Download the required extension package from the official site before selecting another editor.',
+    'admin/system/config/editor_tip'=>'Every editor in this list comes with JavCMS: pick one and save. There is nothing to download.',
     'admin/system/config/player_sort'=>'Player order',
     'admin/system/config/player_sort_tip'=>'Display order of players on the public site.',
     'admin/system/config/global'=>'Global',

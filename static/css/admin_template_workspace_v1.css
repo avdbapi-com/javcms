@@ -1,9 +1,10 @@
 /*
- * This file is part of JavCMS - https://javcms.net
+ * This file is part of JavCMS - https://github.com/avdbapi-com/javcms
  * Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
  * License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
  * See the LICENSE and NOTICE files that come with JavCMS.
- * Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Live demo: https://javcms.net (adult content, 18 and over only)
  * Telegram: https://t.me/avdb_api
  */
 /* Template and ad listings. Keep native routes, modal handlers and clipboard targets. */
@@ -80,4 +81,63 @@ body.admin-studio .ax-theme-card__title h2, .ax-theme-card__title h2 { margin:0;
     body.admin-studio .ax-theme-page > .ax-page-head { flex-wrap: wrap; }
     body.admin-studio .ax-theme-page > .ax-page-head > .ax-page-head__text { flex: 1 1 calc(100% - 48px); }
     body.admin-studio .ax-theme-page > .ax-page-head > .ax-page-head__actions { flex: 1 1 100%; padding-left: 48px; }
+}
+
+/* 1.2.1 Visitor theme switcher card (system/theme.html, System::switcherOnlySave()): kit tokens only. Native radios and
+ * checkboxes (no layui skin: the card is outside any .layui-form, inputs carry lay-ignore); a checked option is
+ * outlined in the accent colour. "Off" marks every setting but On / Off as inactive, header mode marks the corner:
+ * they stay readable and usable (they are saved), so the text keeps the kit colours (no opacity, WCAG 1.4.3); a dashed
+ * frame, dashed option borders and a neutral selection show the state, the note beside them says why. */
+.ax-switcher__head { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:8px 12px; margin:0 0 4px; }
+body.admin-studio .ax-switcher__head > h2, .ax-switcher__head > h2 { margin:0; color:var(--ax-text); font:650 15px/1.3 var(--ax-font); }
+.ax-switcher > .ax-help { margin:0 0 16px; max-width:80ch; }
+.ax-switcher > .ax-notice { margin-bottom:16px; }
+.ax-switcher__form { display:grid; gap:18px; margin:0; }
+.ax-switcher__rest { display:grid; gap:18px; min-width:0; }
+.ax-switcher__set { display:block; min-width:0; margin:0; padding:0; border:0; }
+body.admin-studio .ax-switcher__set > legend, .ax-switcher__set > legend { float:left; width:100%; margin:0 0 8px; padding:0; color:var(--ax-text); font:600 13px/1.3 var(--ax-font); }
+.ax-switcher__set > legend + * { clear:both; }
+.ax-switcher__set > .ax-help { margin-top:8px; }
+.ax-switcher__rest.is-dim, .ax-switcher__rest:not(.is-dim) .ax-switcher__set.is-dim { outline:1px dashed var(--ax-field); outline-offset:8px; border-radius:var(--ax-r); }
+:is(.ax-switcher__rest, .ax-switcher__set).is-dim :is(.ax-switcher__pill, .ax-switcher__card, .ax-switcher__theme) { border-style:dashed; }
+:is(.ax-switcher__rest, .ax-switcher__set).is-dim :is(.ax-switcher__pill, .ax-switcher__card, .ax-switcher__theme):has(input:checked),
+:is(.ax-switcher__rest, .ax-switcher__set).is-dim :is(.ax-switcher__pill, .ax-switcher__card, .ax-switcher__theme):has(input:checked):hover { border-color:var(--ax-field); background:var(--ax-raised); }
+:is(.ax-switcher__rest, .ax-switcher__set).is-dim :is(input[type="radio"], input[type="checkbox"]) { accent-color:var(--ax-muted); }
+.ax-switcher input[type="radio"], .ax-switcher input[type="checkbox"] { flex:none; width:18px; height:18px; margin:1px 0 0; accent-color:var(--ax-accent); cursor:pointer; }
+.ax-switcher__pills { display:flex; flex-wrap:wrap; gap:8px; }
+.ax-switcher__pill { box-sizing:border-box; display:inline-flex; align-items:center; gap:8px; min-height:var(--ax-h); margin:0; padding:0 14px; border:1px solid var(--ax-field); border-radius:var(--ax-r-sm); background:var(--ax-raised); color:var(--ax-text); font:550 13px/1.2 var(--ax-font); cursor:pointer; }
+.ax-switcher__pill input[type="radio"] { margin:0; }
+.ax-switcher__cards { display:grid; grid-template-columns:repeat(auto-fit, minmax(230px, 1fr)); gap:10px; }
+.ax-switcher__card { box-sizing:border-box; display:flex; align-items:flex-start; gap:10px; min-width:0; margin:0; padding:12px 14px; border:1px solid var(--ax-line); border-radius:var(--ax-r); background:var(--ax-raised); cursor:pointer; }
+.ax-switcher__card-text { display:grid; gap:4px; min-width:0; }
+.ax-switcher__card-title { color:var(--ax-text); font:600 13.5px/1.35 var(--ax-font); overflow-wrap:anywhere; }
+.ax-switcher__card-help { color:var(--ax-muted); font-size:12.5px; line-height:1.45; overflow-wrap:anywhere; }
+.ax-switcher__themes { display:grid; grid-template-columns:repeat(auto-fill, minmax(220px, 1fr)); gap:8px; margin:8px 0 0; padding:0; list-style:none; }
+.ax-switcher__themes > li { min-width:0; margin:0; padding:0; }
+.ax-switcher__theme { box-sizing:border-box; display:flex; align-items:flex-start; gap:10px; min-width:0; min-height:var(--ax-h); height:100%; margin:0; padding:10px 12px; border:1px solid var(--ax-line); border-radius:var(--ax-r-sm); background:var(--ax-raised); cursor:pointer; }
+.ax-switcher__theme-text { display:flex; flex-wrap:wrap; align-items:center; gap:4px 8px; min-width:0; }
+.ax-switcher__theme-name { color:var(--ax-text); font:550 13px/1.35 var(--ax-font); overflow-wrap:anywhere; }
+/* the folder name keeps 4.5:1 on a ticked tile too (--ax-faint on the accent-soft fill is only 4.2:1) */
+.ax-switcher__theme-text > .ax-mono { font-size:11.5px; overflow-wrap:anywhere; color:var(--ax-muted); }
+.ax-switcher__theme-text > .ax-chip { white-space:normal; line-height:1.25; }
+:is(.ax-switcher__pill, .ax-switcher__card, .ax-switcher__theme):has(input:checked) { border-color:var(--ax-accent); background:var(--ax-accent-soft); }
+@media (hover:hover) { :is(.ax-switcher__pill, .ax-switcher__card, .ax-switcher__theme):hover { border-color:var(--ax-field); } :is(.ax-switcher__pill, .ax-switcher__card, .ax-switcher__theme):has(input:checked):hover { border-color:var(--ax-accent-hover); } }
+.ax-switcher__note { display:flex; align-items:flex-start; gap:8px; margin:0; padding:10px 12px; border-radius:var(--ax-r); background:var(--ax-raised); color:var(--ax-text); font-size:13px; line-height:1.45; }
+.ax-switcher__note > .ax-ic { flex:none; margin-top:1px; color:var(--ax-accent); }
+.ax-switcher__set > .ax-switcher__note { margin-top:10px; }
+.ax-switcher__note--warn { background:var(--ax-warn-soft); }
+.ax-switcher__note--warn > .ax-ic { color:var(--ax-warn); }
+.ax-switcher__note[hidden], .ax-switcher__inote[hidden] { display:none; }
+.ax-switcher__actions { display:flex; flex-wrap:wrap; align-items:center; justify-content:flex-end; gap:8px 12px; padding-top:14px; border-top:1px solid var(--ax-line); }
+.ax-switcher__actions > .ax-btn--primary { min-width:112px; }
+.ax-switcher__status { order:-1; margin-right:auto; color:var(--ax-muted); font-size:12.5px; }
+@media (max-width: 767.98px) {
+    .ax-switcher__theme, .ax-switcher__card { min-height:44px; }
+    .ax-switcher input[type="radio"], .ax-switcher input[type="checkbox"] { width:20px; height:20px; }
+}
+@media (max-width: 640px) {
+    .ax-switcher__cards, .ax-switcher__themes { grid-template-columns:1fr; }
+    .ax-switcher__pills > .ax-switcher__pill { flex:1 1 140px; justify-content:flex-start; }
+    .ax-switcher__actions > .ax-btn { flex:1 1 auto; }
+    .ax-switcher__status { flex:1 1 100%; }
 }

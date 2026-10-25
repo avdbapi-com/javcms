@@ -1,10 +1,11 @@
 {/*
-This file is part of JavCMS - https://javcms.net
+This file is part of JavCMS - https://github.com/avdbapi-com/javcms
 Based on MacCMS 10 (Apache-2.0) by magicblack, changed by JavCMS.
 JavCMS changes: Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors,
 JavCMS Community License 1.0. The MacCMS parts stay under the Apache License 2.0.
 See the LICENSE and NOTICE files that come with JavCMS.
-Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
+Live demo: https://javcms.net (adult content, 18 and over only)
 Telegram: https://t.me/avdb_api
 */}{include file="../../../application/admin/view/public/head" /}
 <link rel="stylesheet" href="__STATIC__/css/admin_navigation_studio.css?v={:filemtime(ROOT_PATH . 'static/css/admin_navigation_studio.css')}">
@@ -19,7 +20,7 @@ Telegram: https://t.me/avdb_api
             <button type="button" id="shellSearchBtn" class="studio-tool" aria-label="{:lang('admin/ux/shell/search_label')}" title="{:lang('admin/ux/shell/search_label')}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axS}#ai-search"/></svg><span class="studio-tool__label">{:lang('btn_search')}</span><kbd aria-hidden="true">/</kbd></button>
             {if condition="$shell_can_clear"}<button type="button" id="shellClearCache" class="studio-tool" aria-label="{:lang('admin/ux/shell/clear_cache')}" title="{:lang('admin/ux/shell/clear_cache')}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axS}#ai-eraser"/></svg><span class="studio-tool__label">{:lang('admin/ux/shell/clear_cache')}</span></button>{/if}
             <a href="__ROOT__/" target="_blank" rel="noopener" class="studio-tool studio-tool--site" title="{:lang('admin/ux/shell/view_site')}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axS}#ai-external-link"/></svg><span class="studio-tool__label">{:lang('admin/ux/shell/view_site')}</span></a>
-            <button type="button" id="shellBell" class="studio-tool studio-tool--icon" data-count="{$shell_todo}" aria-label="{:lang('admin/ux/shell/todo')}{if condition="$shell_todo gt 0"} ({$shell_todo}){/if}" title="{if condition="$shell_todo gt 0"}{:lang('admin/ux/shell/todo')}{else /}{:lang('admin/ux/shell/todo_none')}{/if}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axS}#ai-bell"/></svg>{if condition="$shell_todo gt 0"}<span class="studio-badge" aria-hidden="true">{if condition="$shell_todo gt 99"}99+{else /}{$shell_todo}{/if}</span>{/if}</button>
+            <button type="button" id="shellBell" class="studio-tool studio-tool--icon" data-count="{$shell_todo}"{if condition="$shell_update_counted"} data-update="1"{/if} aria-label="{:lang('admin/ux/shell/todo')}{if condition="$shell_todo gt 0"} ({$shell_todo}){/if}" title="{if condition="$shell_todo gt 0"}{:lang('admin/ux/shell/todo')}{else /}{:lang('admin/ux/shell/todo_none')}{/if}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axS}#ai-bell"/></svg>{if condition="$shell_todo gt 0"}<span class="studio-badge" aria-hidden="true">{if condition="$shell_todo gt 99"}99+{else /}{$shell_todo}{/if}</span>{/if}</button>
             <div class="ax-menu studio-account">
                 <button type="button" class="studio-tool studio-account__btn" aria-haspopup="menu" aria-expanded="false" aria-label="{:lang('admin/ux/account/menu')}: {$shell_admin_name}"><span class="studio-avatar" aria-hidden="true">{$shell_initial}</span><span class="studio-tool__label studio-account__name">{$shell_admin_name}</span><svg class="ax-ic ax-ic--chevron studio-tool__label" aria-hidden="true" focusable="false"><use href="{$axS}#ai-chevron-down"/></svg></button>
                 <div class="ax-menu__list studio-account__list" role="menu" hidden>
@@ -136,5 +137,6 @@ Telegram: https://t.me/avdb_api
 <script type="text/javascript" src="__STATIC__/js/admin_common.js?v={:filemtime(ROOT_PATH . 'static/js/admin_common.js')}"></script>{/* public/foot.html loads this file with a fixed ?v=; the shell pages use the file time until hand-over HO-shell-1 is applied */}
 <script>window.AX_SHELL = {$shell_cfg_json}; window.AX_SHELL_LANG = {$shell_lang_json}; window.AX_SHELL_INDEX = {$shell_index_json};</script>
 <script src="__STATIC__/js/admin_navigation_studio.js?v={:filemtime(ROOT_PATH . 'static/js/admin_navigation_studio.js')}"></script>
+<script src="__STATIC__/js/admin_update_notice.js?v={:filemtime(ROOT_PATH . 'static/js/admin_update_notice.js')}" data-url="{:url('update/notice')}" defer></script>{/* 1.2.1: "update available" badge on Admins & backup > Updates */}
 </body>
 </html>

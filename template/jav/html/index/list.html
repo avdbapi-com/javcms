@@ -1,8 +1,9 @@
 {/*
-This file is part of JavCMS - https://javcms.net
+This file is part of JavCMS - https://github.com/avdbapi-com/javcms
 Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
 License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
 See the LICENSE and NOTICE files that come with JavCMS.
-Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
+Live demo: https://javcms.net (adult content, 18 and over only)
 Telegram: https://t.me/avdb_api
 */}{maccms:type ids="parent" order="asc" by="sort" id="vo1" key="key1" flag="vod" hide_empty="1"}<section class="stui-pannel home-section"><div class="stui-vodlist__head"><h2><a href="{:mac_url_type($vo1)}">{:\\app\\common\\util\\TemplateText::get(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$vo1['type_name']))}</a></h2></div><ul class="stui-vodlist" data-grid-fill>{maccms:vod num="10" type="'.$vo1['type_id'].'" order="desc" by="time" paging="no"}<li>{include file="block/vod_box"}</li>{/maccms:vod}</ul></section>{/maccms:type}

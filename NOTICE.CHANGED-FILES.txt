@@ -18,7 +18,7 @@ changed some of these files. Each listed file is also compared with the ApiiCMS 
 that is the same as it is marked "as received (ApiiCMS)": JavCMS did not change it further, and its date is
 the date of the copy JavCMS received. Every other date is the date of the file's last change (its file date
 in this package), except for files whose file date is older than the start of the JavCMS work (2026-09-30):
-they show "pass date" or "received date" (see the legend). The JavCMS dates run from 2026-10-06 to 2026-10-22.
+they show "pass date" or "received date" (see the legend). The JavCMS dates run from 2026-10-06 to 2026-10-24.
 Files of the MacCMS release that this package does not ship: 254.
 Other third-party code that JavCMS added itself is described in LICENSE (Part C) and NOTICE.
 
@@ -241,7 +241,7 @@ MacCMS v2023.1000.3051 release: Static files and bundled libraries of the MacCMS
 ------------------------------------------------------------------------------------------------------------------------
   static/css/admin_style.css                                              2026-10-06  [notice], content
   static/css/home.css                                                     2026-10-06  [notice], content
-  static/images/logo.jpg                                                  2026-10-09  content (binary), pass date
+  static/images/logo.jpg                                                  2026-10-24  content (binary)
   static/images/nopic.gif                                                 2026-10-08  content (binary)
   static/js/admin_common.js                                               2026-10-14  [notice], code
   static/js/home.js                                                       2026-10-08  [notice], code
@@ -346,10 +346,10 @@ MacCMS v2023.1000.3051 release: Static files and bundled libraries of the MacCMS
 
 MacCMS v2023.1000.3051 release: MacCMS application files (Apache-2.0): 272 files
 ---------------------------------------------------------------------------------
-  LICENSE                                               2026-10-22  content
-  README.md                                             2026-10-22  content
-  api.php                                               2026-10-14  [notice], code, notice restored
-  application/admin/common/auth.php                     2026-10-17  [notice], code
+  LICENSE                                               2026-10-24  content
+  README.md                                             2026-10-24  content
+  api.php                                               2026-10-24  [notice], code, notice restored
+  application/admin/common/auth.php                     2026-10-24  [notice], code
   application/admin/controller/Actor.php                2026-10-14  [notice], code
   application/admin/controller/Addon.php                2026-10-14  [notice], code
   application/admin/controller/Admin.php                2026-10-15  [notice], code
@@ -366,20 +366,20 @@ MacCMS v2023.1000.3051 release: MacCMS application files (Apache-2.0): 272 files
   application/admin/controller/Gbook.php                2026-10-14  [notice], code
   application/admin/controller/Group.php                2026-10-14  [notice], code
   application/admin/controller/Images.php               2026-10-14  [notice], code
-  application/admin/controller/Index.php                2026-10-18  [notice], code
+  application/admin/controller/Index.php                2026-10-24  [notice], code
   application/admin/controller/Link.php                 2026-10-14  [notice], code
   application/admin/controller/Make.php                 2026-10-14  [notice], code
   application/admin/controller/Order.php                2026-10-14  [notice], code
   application/admin/controller/Plog.php                 2026-10-14  [notice], code
   application/admin/controller/Role.php                 2026-10-14  [notice], code
   application/admin/controller/Safety.php               2026-10-13  [notice], code
-  application/admin/controller/System.php               2026-10-15  [notice], code
+  application/admin/controller/System.php               2026-10-24  [notice], code
   application/admin/controller/Template.php             2026-10-13  [notice], code
   application/admin/controller/Timming.php              2026-10-07  [notice], code
   application/admin/controller/Topic.php                2026-10-14  [notice], code
   application/admin/controller/Type.php                 2026-10-14  [notice], code
   application/admin/controller/Ulog.php                 2026-10-14  [notice], code
-  application/admin/controller/Update.php               2026-10-14  [notice], code
+  application/admin/controller/Update.php               2026-10-24  [notice], code
   application/admin/controller/Upload.php               2026-10-14  [notice], code
   application/admin/controller/Urlsend.php              2026-10-14  [notice], code
   application/admin/controller/User.php                 2026-10-14  [notice], code
@@ -443,7 +443,7 @@ MacCMS v2023.1000.3051 release: MacCMS application files (Apache-2.0): 272 files
   application/admin/view/group/index.html               2026-10-13  [notice], content
   application/admin/view/group/info.html                2026-10-14  [notice], content
   application/admin/view/images/opt.html                2026-10-14  [notice], content
-  application/admin/view/index/index.html               2026-10-20  [notice], content
+  application/admin/view/index/index.html               2026-10-24  [notice], content
   application/admin/view/index/login.html               2026-10-13  [notice], content
   application/admin/view/index/quickmenu.html           2026-10-13  [notice], content
   application/admin/view/index/welcome.html             2026-10-14  [notice], content
@@ -468,7 +468,7 @@ MacCMS v2023.1000.3051 release: MacCMS application files (Apache-2.0): 272 files
   application/admin/view/role/info.html                 2026-10-13  [notice], content
   application/admin/view/safety/data.html               2026-10-13  [notice], content
   application/admin/view/safety/file.html               2026-10-13  [notice], content
-  application/admin/view/system/config.html             2026-10-14  [notice], content
+  application/admin/view/system/config.html             2026-10-22  [notice], content
   application/admin/view/system/configapi.html          2026-10-14  [notice], content
   application/admin/view/system/configcollect.html      2026-10-14  [notice], content
   application/admin/view/system/configcomment.html      2026-10-14  [notice], content
@@ -560,7 +560,7 @@ MacCMS v2023.1000.3051 release: MacCMS application files (Apache-2.0): 272 files
   application/common/model/Upload.php                   2026-10-14  [notice], code
   application/common/model/User.php                     2026-10-14  [notice], code
   application/common/model/Visit.php                    2026-10-06  [notice], messages
-  application/common/model/Vod.php                      2026-10-21  [notice], code
+  application/common/model/Vod.php                      2026-10-24  [notice], code
   application/common/model/VodSearch.php                2026-10-07  [notice], code
   application/common/model/Website.php                  2026-10-06  [notice], code
   application/common/taglib/Maccms.php                  2026-10-15  [notice], code
@@ -577,9 +577,9 @@ MacCMS v2023.1000.3051 release: MacCMS application files (Apache-2.0): 272 files
   application/common/validate/User.php                  2026-10-06  [notice], comments
   application/common/validate/Vod.php                   2026-10-06  [notice], code
   application/config.php                                2026-10-14  [notice], code
-  application/database.php                              2026-10-22  config, notice restored
-  application/extra/bind.php                            2026-10-22  config
-  application/extra/maccms.php                          2026-10-22  config
+  application/database.php                              2026-10-24  config, notice restored
+  application/extra/bind.php                            2026-10-24  config
+  application/extra/maccms.php                          2026-10-24  config
   application/extra/quickmenu.php                       2024-08-08  config, as received (ApiiCMS)
   application/extra/timming.php                         2024-08-09  config
   application/extra/version.php                         2026-10-20  [notice], messages
@@ -605,19 +605,19 @@ MacCMS v2023.1000.3051 release: MacCMS application files (Apache-2.0): 272 files
   application/index/view/public/msg.html                2026-10-09  [notice], content, pass date
   application/install/controller/Index.php              2026-10-19  [notice], code
   application/install/lang/zh-cn.php                    2026-10-19  [notice], code
-  application/install/sql/install.sql                   2026-10-22  content
+  application/install/sql/install.sql                   2026-10-24  content
   application/install/view/index/foot.html              2026-10-20  [notice], content
   application/install/view/index/head.html              2026-10-09  [notice], content
   application/install/view/index/index.html             2026-10-09  [notice], content, pass date
   application/install/view/index/step2.html             2026-10-20  [notice], content
   application/install/view/index/step3.html             2026-10-15  [notice], content
-  application/lang/zh-cn.php                            2026-10-20  [notice], code
-  application/lang/zh-tw.php                            2026-10-20  [notice], code
+  application/lang/zh-cn.php                            2026-10-24  [notice], code
+  application/lang/zh-tw.php                            2026-10-24  [notice], code
   application/route.php                                 2026-10-14  config
   application/tags.php                                  2026-10-14  [notice], code
   crossdomain.xml                                       2026-10-14  content
-  index.php                                             2026-10-15  [notice], code, notice restored
-  install.php                                           2026-10-14  [notice], code, notice restored
+  index.php                                             2026-10-24  [notice], code, notice restored
+  install.php                                           2026-10-24  [notice], code, notice restored
 
 TinyMCE 5.4.0 (static/editor/tinymce/, LGPL-2.1; original: npm tinymce@5.4.0): 11 files
 -----------------------------------------------------------------------------------------

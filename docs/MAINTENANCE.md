@@ -16,7 +16,7 @@ and the few things you should do yourself: backups, a cron job on bigger sites, 
 | **Cron** | when cron last ran | the cron lines to copy |
 
 Red notices tell you what to do: "Build the search index", "Search order is approximate after your big import",
-"Set up cron", "All visitors appear to come from <address>: set the proxy header" (see [SECURITY.md](SECURITY.md)),
+"Set up cron", "All visitors appear to come from `<address>`: set the proxy header" (see [SECURITY.md](SECURITY.md)),
 "Database almost full", "File locks are not supported here".
 
 **Details** shows the size level of your site and its limits, the page cache size, refused pages per hour and the
@@ -88,6 +88,10 @@ hosting panel (every 5 minutes):
 Replace the path with the real path of your site folder, and use the same PHP version as your site
 ([HOSTING.md](HOSTING.md) shows the PHP program for cPanel, DirectAdmin and Plesk). Speed & protection prints both
 cron lines of your site (this one and the import line) ready to copy.
+
+While a one-click update replaces files (1.2.1 and newer), `tools/housekeeping.php` does not run: it prints "An update
+is replacing files right now; skipped." and the next run goes on. An update waits up to two minutes for a running
+housekeeping job before it replaces files.
 
 ### See what the clean-up did
 
@@ -296,7 +300,7 @@ bring them back from the recycle bin in the admin.
 
 **Deleting videos frees space inside the database for new videos, but the files do not shrink.**
 If your host counts the file size, run this after you deleted many videos (for example "Remove all videos from
-<source>"):
+`<source>`"):
 
 ```
 php tools/db-tune.php --reclaim --dry-run
@@ -317,7 +321,13 @@ for the logs of the running import; see [HOSTING.md](HOSTING.md).
 ## Backups
 
 The clean-up never makes backups for you. **Make your own backups regularly**, for example once a week
-and always before an upgrade.
+and always before an upgrade by hand.
+
+A one-click update (**Admins & backup › Updates**, from 1.2.1) makes its own backup first: the files it replaces,
+your settings and your database. A whole-database set of an update is listed in Backup & restore under the update's
+start time; the updater removes its own backups after 7 days (a rollback that is running or waits for you keeps them
+until it ends). Details: [../UPGRADE.md](../UPGRADE.md), "From 1.2.1 on: one click". A backup that you
+download yourself is still the safest copy.
 
 **Database backup in the admin**
 
@@ -325,7 +335,7 @@ and always before an upgrade.
 2. Click **Back up everything** (or tick some tables and click **Back up selected tables**).
    Keep the page open until it is done.
 3. Click **Download** and keep the file on your computer or in cloud storage.
-4. Delete old backups from the list after you downloaded them. Backups stay on your server
+4. Delete old backups from the list after you downloaded them. Your backups stay on your server
    (in `application/data/backup/`) until you delete them, and they use your disk space.
 
 **Restore:** on the same page, open the **Restore database** tab, find the backup and click **Restore**.
@@ -366,4 +376,7 @@ Turn it on only for a short test on a copy of your site, then set it back to `'t
 2. Look at **Overview** in the admin. It shows problems that need attention.
 3. Run **Admins & backup › Security scan**.
 4. Check the database size in Backup & restore.
-5. Look for a new JavCMS release on GitHub or Telegram. Read [../UPGRADE.md](../UPGRADE.md) before upgrading.
+5. Look for a new JavCMS release: from 1.2.1 on, **Admins & backup › Updates** shows it (the admin checks GitHub at
+   most every 12 hours) and installs it with one click. All releases are on
+   https://github.com/avdbapi-com/javcms/releases (the Telegram group announces new releases too); download them only
+   from there. Read [../UPGRADE.md](../UPGRADE.md) before upgrading.

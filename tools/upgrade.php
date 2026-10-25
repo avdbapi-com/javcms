@@ -1,10 +1,11 @@
 <?php
 /*
- * This file is part of JavCMS - https://javcms.net
+ * This file is part of JavCMS - https://github.com/avdbapi-com/javcms
  * Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
  * License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
  * See the LICENSE and NOTICE files that come with JavCMS.
- * Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Live demo: https://javcms.net (adult content, 18 and over only)
  * Telegram: https://t.me/avdb_api
  */
 if (PHP_SAPI !== 'cli') { exit(1); }
@@ -13,7 +14,9 @@ if (PHP_SAPI !== 'cli') { exit(1); }
 // Usage: php tools/upgrade.php [--root=<site folder>] [--no-search-backfill] [--no-deep-maps] [--json]
 //        php tools/upgrade.php --prepare-rollback [--root=<site folder>]
 //   (default)            1. new tables (page counts, sitemap blocks, view-counter buffer; search index tables; importer
-//                           tables and columns), 2. the indexes of the video table: two list indexes, four sort indexes
+//                           tables and columns), 1b. settings: site.theme_switcher_show = 'always' (1.2.1, visitor theme
+//                           switcher always visible) when application/extra/maccms.php has no such key (a stored value is
+//                           never changed), 2. the indexes of the video table: two list indexes, four sort indexes
 //                           and the five FULLTEXT indexes of the filters and title search (one at a time, skipped while
 //                           another ALTER on that table runs; never dropped), plus the translation table's covering index
 //                           idx_tr_lastmod (the sitemap's per-language dates read from the index only), 2b. the filter
@@ -70,8 +73,10 @@ if (!is_file($root . 'application/data/install/install.lock')) {
     fwrite(STDERR, "This site is not installed yet: open install.php first.\n");
     exit(2);
 }
-@set_time_limit(0);
-@ignore_user_abort(true);
+// PHP 8 removes a function named in disable_functions (calling it is a fatal error that @ does not hide): only what exists
+// is called (shared hosts often disable these two for the command line too)
+if (function_exists('set_time_limit')) { @set_time_limit(0); }
+if (function_exists('ignore_user_abort')) { @ignore_user_abort(true); }
 // engines-r6 NEW-1: the whole-table builds of steps 2b to 5b (rank files, the search term map: about 250 MB of PHP memory at
 // 7 M videos) need more than the 128 MB a command-line PHP often has: raised to 1 GB like tools/search-index.php (never
 // lowered; -1 = no limit stays)
@@ -105,6 +110,27 @@ use app\common\util\Sitemap;
 use app\common\util\HitBuffer;
 use app\common\util\RequestGate;
 use app\common\util\Housekeeping;
+
+/**
+ * Step 1b (1.2.1): site.theme_switcher_show = 'always' in application/extra/maccms.php when the key is missing; a stored
+ * value is never changed (ThemeSwitcher::upgradeFile() / upgradeSite(), covered by tests/theme_switcher.php).
+ * Returns the line printed after "1b. Settings: " (its first word is 'added' only when the file was written).
+ */
+function upgrade_settings($file)
+{
+    if (!class_exists('\app\common\util\ThemeSwitcher') || !method_exists('\app\common\util\ThemeSwitcher', 'upgradeFile')) {
+        return 'not written: application/common/util/ThemeSwitcher.php is older than 1.2.1';
+    }
+    $state = \app\common\util\ThemeSwitcher::upgradeFile($file);
+    $say = [
+        'added' => 'added site.theme_switcher_show = always',
+        'already' => 'already there',
+        'missing' => 'not written: application/extra/maccms.php is missing',
+        'unreadable' => 'not written: application/extra/maccms.php has no site settings',
+        'unwritable' => 'not written: application/extra/maccms.php is not writable (the site uses "always" anyway)',
+    ];
+    return $say[$state] ?? 'not written: ' . $state;
+}
 
 $out = [];
 $say = function ($line) use ($opt) {
@@ -168,6 +194,12 @@ if ($importer) {
         $say('   Importer tables and columns: ' . $out['importer']);
     }
 }
+
+// ---- 1b. settings (1.2.1): the display mode of the visitor theme switcher, added when missing (never changed; the site
+// reads a missing or unknown value as "always" anyway, so a read-only settings file is only reported, not fatal)
+$out['settings'] = upgrade_settings(APP_PATH . 'extra/maccms.php');
+if (strpos($out['settings'], 'added') === 0) { $changed++; }
+$say('1b. Settings: ' . $out['settings']);
 
 // ---- 2. list indexes (2.12 step 2b; D-L1)
 $t0 = microtime(true);
@@ -342,6 +374,12 @@ if ($ready === true) {
 } elseif ($opt['no-search-backfill'] || !is_file($tool) || $ready === null) {
     $out['search'] = 'not built';
     $say('4. Search index: not built yet; run "php tools/search-index.php --backfill" (until then search works the old way)');
+} elseif (!function_exists('passthru') || (PHP_VERSION_ID >= 80000 && !function_exists('set_time_limit'))) {
+    // the backfill runs in a child PHP started with passthru() that calls set_time_limit(): PHP 8 removes a disabled
+    // function (calling it is a fatal error), and the child reads the same php.ini - left to the admin then
+    // (UPDATER-VERIFY-HOSTING-6 VH6-1)
+    $out['search'] = 'not built';
+    $say('4. Search index: not built here (this PHP disables passthru or set_time_limit, which the backfill needs): build it in the admin, or run "php tools/search-index.php --backfill" where PHP allows it (until then search works the old way)');
 } else {
     $say('4. Search index: building (php tools/search-index.php --backfill) ...');
     $cmd = escapeshellarg(PHP_BINARY) . ' ' . escapeshellarg($tool) . ' --backfill --root=' . escapeshellarg(rtrim($root, '/'));

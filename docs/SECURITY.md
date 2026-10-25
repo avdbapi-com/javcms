@@ -48,7 +48,10 @@ Step 3 below (the two lines in `.htaccess` or `web.config`) is needed as well: w
 5. Check that `https://your-domain/javcms.php` no longer opens the admin.
 6. Save your new address in your password manager. Do not post it anywhere.
 
-After every upgrade, repeat steps 2 and 3: the new release contains `javcms.php` and `.htaccess` again.
+After every upgrade by hand, repeat steps 2 and 3: the new release contains `javcms.php` and `.htaccess` again.
+A one-click update (**Admins & backup › Updates**, from 1.2.1) finds your renamed admin file and updates it in place,
+and it keeps your changed `.htaccess` or `web.config`: the release's new copy waits in
+`runtime/update/merge/<version>/` for you to compare.
 
 ## 2. Use strong passwords
 
@@ -88,9 +91,10 @@ After the install, the file `application/data/install/install.lock` exists.
 It stops anybody from running the installer again and taking over your site.
 
 - **Never delete `install.lock`** on a live site.
-- Check: open `https://your-domain/install.php`. It must say "Installation is locked".
+- Check: open `https://your-domain/install.php`. It must say "This site is installed" (JavCMS 1.2.0 and older say
+  "Installation is locked").
 - Extra safety: you can delete `install.php` after the install. The site does not need it.
-  (An upgrade brings it back; delete it again.)
+  (An upgrade brings it back, a one-click update too; delete it again afterwards.)
 
 ## 5. Set file permissions correctly
 
@@ -99,6 +103,10 @@ It stops anybody from running the installer again and taking over your site.
 - Only these need write access for PHP: `runtime/`, `upload/`, `application/extra/`, `application/data/`,
   `static/jcx/`, and the files `application/route.php` and `application/database.php`.
   During the install, `application/` itself also needs write access.
+- One-click updates (**Admins & backup › Updates**) also need write access to the folders of the release files they
+  replace. Where PHP runs as your own hosting user (most shared hosting) that is already the case. If you keep the
+  program files read-only for PHP, the update's check names every file it cannot write and nothing starts: update by
+  hand then ([../UPGRADE.md](../UPGRADE.md)).
 - If you know how, make `application/database.php` read-only after the install. JavCMS does not change it later.
 
 ### Check that private files are private
@@ -159,11 +167,18 @@ you can make it stronger. Open `application/common/util/SecurityHeaders.php` and
   at hstspreload.org. Leaving that list takes months, so think twice.
 
 Do not add a second HSTS header in your hosting panel, CDN or `.htaccess`. After an upgrade, make your change again,
-because the new release brings the default file back.
+because the new release brings the default file back (a one-click update lists `SecurityHeaders.php` among the files
+you changed before it starts; with **Replace**, the recommended choice, its backup keeps your copy).
 
 ## 8. Keep everything up to date
 
-- **JavCMS:** watch GitHub and Telegram for new releases. Read [../UPGRADE.md](../UPGRADE.md) and back up first.
+- **JavCMS:** watch the GitHub repository https://github.com/avdbapi-com/javcms for new releases (Watch › Custom ›
+  Releases; the Telegram group announces them too). Download releases only from
+  https://github.com/avdbapi-com/javcms/releases: copies on other websites can be old or changed.
+  Read [../UPGRADE.md](../UPGRADE.md) and back up first. From 1.2.1 on, **Admins & backup › Updates** shows new
+  releases by itself (the admin checks GitHub at most every 12 hours) and installs them with one click, with its own
+  backup and an automatic rollback. Only the founder admin account can update, and every release must carry a valid
+  JavCMS signature.
 - **PHP:** use a PHP version that still gets security updates (PHP 8.1 or newer if your host offers it).
   JavCMS works with PHP 7.4 to 8.5.
 - **Database:** use a maintained MySQL or MariaDB version.
@@ -274,14 +289,14 @@ same values are the keys `budget_heavy`, `budget_light`, `stmt_limit`, `under_at
 If your site runs behind a proxy on the same server or network (nginx in front of Apache, a hosting panel proxy,
 a load balancer, Cloudflare Tunnel), JavCMS may see one address for all visitors. It then switches the per-network
 limits **off** for that address (so your visitors are never blocked together) and shows a red notice on Speed &
-protection: **"All visitors appear to come from <address>: set the proxy header."**
+protection: **"All visitors appear to come from `<address>`: set the proxy header."**
 
-- Click **Trust this proxy (<header>)**. JavCMS trusts that proxy and reads the visitor address from the header your
+- Click **Trust this proxy (`<header>`)**. JavCMS trusts that proxy and reads the visitor address from the header your
   proxy really sends. Only a proxy on this server or your private network can be trusted.
 - If visitors reach your site through **cloudflared** (Cloudflare Tunnel) on this server, turn on the
   **Cloudflare Tunnel switch** instead.
 
-**"<address> sends page views with many different browsers (a CDN or firewall in front of the site?)"** is a yellow
+**"`<address>` sends page views with many different browsers (a CDN or firewall in front of the site?)"** is a yellow
 notice for a public address that sends most of the pages that are not cached, with more than 20 different browser names
 in 10 minutes. Its limits stay per address (300 searches, filters or deep pages and 2,400 other pages per minute);
 for 10 minutes it may build more pages at the same time, so the visitors behind a real CDN are not slowed down. If that

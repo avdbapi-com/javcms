@@ -1,9 +1,10 @@
 {/*
-This file is part of JavCMS - https://javcms.net
+This file is part of JavCMS - https://github.com/avdbapi-com/javcms
 Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
 License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
 See the LICENSE and NOTICE files that come with JavCMS.
-Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
+Live demo: https://javcms.net (adult content, 18 and over only)
 Telegram: https://t.me/avdb_api
 */}<div class="nn-cap"><h2 class="nn-cap-title">{:\\app\\common\\util\\AutoIcon::ui('messages', ['class'=>'nn-cap-ai'])}<span>{:\\app\\common\\util\\TemplateText::get('ui.comments')}</span></h2></div>
 <form class="comment_form nn-cform" method="post" action="{:mac_url('comment/saveData')}"><input name="comment_pid" type="hidden" value="0">{:token()}<div class="nn-cform-row">{:\\app\\common\\util\\AutoIcon::ui('message', ['size'=>'lg', 'plate'=>true, 'class'=>'nn-cform-ai'])}<div class="nn-cform-fields"><label class="nn-sr" for="comment-content">{:\\app\\common\\util\\TemplateText::get('ui.your_comment')}</label><textarea id="comment-content" class="comment_content" name="comment_content" maxlength="200" required placeholder="{:\\app\\common\\util\\TemplateText::get('ui.enter_comment')}"></textarea>{if condition="$comment.verify eq 1"}<div class="nn-verify"><label class="nn-sr" for="comment-verify">{:\\app\\common\\util\\TemplateText::get('ui.verification_code')}</label><input class="nn-input mac_verify" id="comment-verify" name="verify" autocomplete="off" maxlength="4" placeholder="{:\\app\\common\\util\\TemplateText::get('ui.verification_code')}"></div>{/if}</div><button type="button" class="comment_submit nn-send">{:\\app\\common\\util\\AutoIcon::ui('send', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('ui.post_comment')}</button></div></form>

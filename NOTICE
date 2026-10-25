@@ -2,7 +2,9 @@ JavCMS
 Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
 
 Official sources of JavCMS:
-  https://javcms.net
+  https://github.com/avdbapi-com/javcms (source code and releases; download
+    JavCMS only from https://github.com/avdbapi-com/javcms/releases)
+  https://javcms.net (live demo, adult content, 18+; not a download place)
   https://avdbapi.com
   https://xvidapi.com
   https://upload18.org
@@ -20,13 +22,16 @@ Releases up to and including 1.1.0 stay under the Apache License 2.0 (files
 in them that said MIT stay MIT for those copies).
 
 JavCMS PHP, template, CSS and JavaScript files start with a short comment that
-names JavCMS, the license and these sources, except a few generated or data
-files (the minified ad engine files built from deployment/jcx-src, whose
+names JavCMS with the address of its GitHub repository, the license and the
+official sources above (javcms.net as the live demo), except a few generated or
+data files (the minified ad engine files built from deployment/jcx-src, whose
 sources carry the comment; ad creatives; configuration data that the admin
-rewrites; empty files) and the two readable rewrites of third-party jQuery
-plugins, static/js/jquery.cookie.js and static/js/jquery.imageupload.js,
-which keep the plugins' MIT license (named below). The comment is an ordinary
-code comment: it is never sent to visitors as part of a page. A JavCMS file that
+rewrites; empty files), the two readable rewrites of third-party jQuery
+plugins, static/js/jquery.cookie.js and static/js/jquery.imageupload.js, which
+keep the plugins' MIT license (named below), and the two small JavCMS helper
+files Compat.php and load.php inside the folder of the bundled sodium_compat
+copy (application/common/util/updater/sodium/). The comment is an ordinary code
+comment: it is never sent to visitors as part of a page. A JavCMS file that
 contains third-party code says so in that comment, and the section "Third-party
 code inside JavCMS files" below names the code. JavCMS files that said "MIT" in
 earlier releases are under the Community License from 1.2.0 (LICENSE, Part A,
@@ -237,6 +242,24 @@ Third-party code inside JavCMS files, and components without their own license f
 - static/js/jquery.jscolor.js (shipped by MacCMS without a header) is jscolor
   1.x by Jan Odvarko (http://jscolor.com), released under the GNU Lesser
   General Public License.
+- The one-click updater (from release 1.2.1) bundles two third-party parts in
+  application/common/util/updater/ (the update bridge javcms-update.php, a
+  separate file of the GitHub release, carries the same two):
+  sodium/ is a trimmed copy of paragonie/sodium_compat
+  (https://github.com/paragonie/sodium_compat; the copy that WordPress 7.1.3
+  bundles, polyfill-1.0.8), used only to check the Ed25519 signatures of
+  releases on hosts without the PHP extension sodium: Copyright (c) 2016-2023
+  Paragon Initiative Enterprises, Copyright (c) 2013-2019 Frank Denis. ISC
+  license; the license text is sodium/LICENSE. JavCMS kept only the 11 files
+  of the verification path and renamed their classes to JavcmsUpdSodium_*
+  (no other change); sodium/README.txt names each source file with its
+  SHA-256. These files carry no JavCMS notice, and neither do the two small
+  JavCMS helper files of that folder (Compat.php, load.php).
+  cacert.pem holds 150 certificates of the Mozilla CA certificate store, as
+  shipped by Git for Windows (2026-02-12), for the HTTPS certificate check of
+  the update downloads (the server's own CA list is the fallback). It is
+  under the Mozilla Public License 2.0 (https://www.mozilla.org/MPL/2.0/); its
+  first lines say so.
 
 The MIT license, which applies to each MIT component named above together with
 its own copyright line:

@@ -1,13 +1,19 @@
 <?php
 /*
- * This file is part of JavCMS - https://javcms.net
+ * This file is part of JavCMS - https://github.com/avdbapi-com/javcms
  * Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
  * License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
  * See the LICENSE and NOTICE files that come with JavCMS.
- * Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Live demo: https://javcms.net (adult content, 18 and over only)
  * Telegram: https://t.me/avdb_api
  */
 if (PHP_SAPI !== 'cli') { exit(1); }
+// One-click update (1.2.1): no run while an update replaces files (it would load half-replaced code). The job holds a
+// shared lock on runtime/update-jobs.lock while it runs: an update waits for running jobs before it replaces files.
+$javcmsUpdJobLock = is_dir(dirname(__DIR__) . '/runtime') ? @fopen(dirname(__DIR__) . '/runtime/update-jobs.lock', 'c') : false;
+if ($javcmsUpdJobLock) { @flock($javcmsUpdJobLock, LOCK_SH); }
+if (is_file(dirname(__DIR__) . '/runtime/update/maintenance.php')) { fwrite(STDERR, "An update is replacing files right now; skipped.\n"); exit(0); }
 /*
  * JavCMS import runner for the command line and cron (XVID-SCALE-BRIEF D-I1, D-I11).
  *

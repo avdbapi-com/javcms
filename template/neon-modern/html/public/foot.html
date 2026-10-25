@@ -1,9 +1,10 @@
 {/*
-This file is part of JavCMS - https://javcms.net
+This file is part of JavCMS - https://github.com/avdbapi-com/javcms
 Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
 License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
 See the LICENSE and NOTICE files that come with JavCMS.
-Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
+Live demo: https://javcms.net (adult content, 18 and over only)
 Telegram: https://t.me/avdb_api
 */}{php}$nnSitemap = ''; try { $nnSitemap = \app\common\util\Sitemap::indexUrl(); } catch (\Throwable $nnSitemapError) { $nnSitemap = ''; } $nnFootSvg = $maccms['path_tpl'] . 'assets/icons.svg?v=20261010-n1'; $nnFootDesc = method_exists('app\common\util\TemplateSeo', 'siteTagline') ? \app\common\util\TemplateSeo::siteTagline(is_array($maccms) ? $maccms : []) : (\app\common\util\TemplateText::locale() === \app\common\util\AvdbLanguage::defaultLocale() ? trim(\app\common\util\AvdbLanguage::decodeEntities((string)($maccms['site_description'] ?? ''))) : ''); if (function_exists('mb_strlen') && mb_strlen($nnFootDesc, 'UTF-8') > 220) { $nnFootDesc = rtrim(mb_substr($nnFootDesc, 0, 217, 'UTF-8')) . '...'; } $nnFootMail = trim(\app\common\util\AvdbLanguage::decodeEntities((string)($maccms['site_email'] ?? '')));{/php}
 <footer class="nn-footer">

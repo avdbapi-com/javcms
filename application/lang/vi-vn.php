@@ -1,11 +1,12 @@
 <?php
 /*
- * This file is part of JavCMS - https://javcms.net
+ * This file is part of JavCMS - https://github.com/avdbapi-com/javcms
  * Based on MacCMS 10 (Apache-2.0) by magicblack, changed by JavCMS.
  * JavCMS changes: Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors,
  * JavCMS Community License 1.0. The MacCMS parts stay under the Apache License 2.0.
  * See the LICENSE and NOTICE files that come with JavCMS.
- * Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Live demo: https://javcms.net (adult content, 18 and over only)
  * Telegram: https://t.me/avdb_api
  */
 /* * This is the global language pack. Module language packs, such as application/admin/lang/, take precedence over the global pack.
@@ -923,10 +924,6 @@ https://example.com/images/123.jpg',
     'admin/system/config/template_state_incomplete'=>'chưa đầy đủ (cần info.ini và html/index/index.html)',
     'admin/system/config/template_state_invalid'=>'tên thư mục không hợp lệ',
     'admin/system/config/theme_switcher'=>'Bộ chọn giao diện cho khách',
-    'admin/system/config/theme_switcher_tip'=>'Khách có thể chọn một giao diện được cung cấp từ nút nổi; lựa chọn được lưu trong trình duyệt của họ. "Website template" ở trên vẫn là giao diện mặc định cho lần truy cập đầu, và chọn lại nó sẽ đưa khách về giao diện mặc định. Lựa chọn của khách cũng thay thế giao diện di động. Giao diện mới chỉ hiện cho khách sau khi bạn lưu cài đặt này.',
-    'admin/system/config/theme_switcher_pos'=>'Vị trí nút chọn giao diện',
-    'admin/system/config/theme_switcher_pos_end'=>'Góc dưới cuối (phải với LTR, trái với RTL)',
-    'admin/system/config/theme_switcher_pos_start'=>'Góc dưới đầu (trái với LTR, phải với RTL)',
     'admin/system/config/theme_switcher_themes'=>'Giao diện cung cấp cho khách',
     'admin/system/config/theme_switcher_themes_tip'=>'Bỏ trống tất cả để cung cấp mọi giao diện có thể chọn. Giao diện mặc định luôn được cung cấp.',
     'admin/system/config/theme_switcher_invalid'=>'Một trong các giao diện đã chọn có tên thư mục không hợp lệ.',
@@ -1015,7 +1012,7 @@ https://example.com/images/123.jpg',
     'admin/system/config/makesize_tip'=>'Number of pages generated in each batch. Around 20 is recommended.',
     'admin/system/config/admin_login_verify'=>'Admin sign-in verification code',
     'admin/system/config/editor'=>'Rich text editor',
-    'admin/system/config/editor_tip'=>'ueditor is included by default. Download the required extension package from the official site before selecting another editor.',
+    'admin/system/config/editor_tip'=>'Every editor in this list comes with JavCMS: pick one and save. There is nothing to download.',
     'admin/system/config/player_sort'=>'Player order',
     'admin/system/config/player_sort_tip'=>'Display order of players on the public site.',
     'admin/system/config/global'=>'Global',

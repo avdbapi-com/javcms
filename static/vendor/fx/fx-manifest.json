@@ -1957,10 +1957,10 @@
  "original_assets": [
   {
    "path": "fonts/fallbacks.css",
-   "bytes": 27905,
-   "gzip": 3630,
-   "brotli": 3006,
-   "sha256": "4405ff51d954101c7067889b023437f89fc44f8f5bb82d4c65213077272e6b36",
+   "bytes": 28010,
+   "gzip": 3673,
+   "brotli": 3051,
+   "sha256": "4f9c9911393cce06136dd4ba61a620041c45f23bfc86be535e0fbcccd0148edf",
    "license": "JavCMS Community License 1.0 (JavCMS project, original work)"
   },
   {

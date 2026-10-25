@@ -1,11 +1,12 @@
 <?php
 /*
- * This file is part of JavCMS - https://javcms.net
+ * This file is part of JavCMS - https://github.com/avdbapi-com/javcms
  * Based on MacCMS 10 (Apache-2.0) by magicblack, changed by JavCMS.
  * JavCMS changes: Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors,
  * JavCMS Community License 1.0. The MacCMS parts stay under the Apache License 2.0.
  * See the LICENSE and NOTICE files that come with JavCMS.
- * Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Live demo: https://javcms.net (adult content, 18 and over only)
  * Telegram: https://t.me/avdb_api
  */
 
@@ -939,10 +940,6 @@ return [
     'admin/system/config/template_state_incomplete'=>'incomplete (needs info.ini and html/index/index.html)',
     'admin/system/config/template_state_invalid'=>'invalid folder name',
     'admin/system/config/theme_switcher'=>'Visitor theme switcher',
-    'admin/system/config/theme_switcher_tip'=>'Visitors can pick one of the offered themes from a floating button; the choice is kept in their browser. "Website template" above stays the default for first visits, and choosing it again returns a visitor to the site default. A visitor choice also replaces the mobile template. New themes appear for visitors after you save these settings.',
-    'admin/system/config/theme_switcher_pos'=>'Switcher button position',
-    'admin/system/config/theme_switcher_pos_end'=>'Bottom end (right in LTR, left in RTL)',
-    'admin/system/config/theme_switcher_pos_start'=>'Bottom start (left in LTR, right in RTL)',
     'admin/system/config/theme_switcher_themes'=>'Themes offered to visitors',
     'admin/system/config/theme_switcher_themes_tip'=>'Leave all unchecked to offer every selectable theme. The default theme is always offered.',
     'admin/system/config/theme_switcher_invalid'=>'One of the selected switcher themes has an invalid folder name.',
@@ -1028,7 +1025,7 @@ return [
     'admin/system/config/makesize_tip'=>'Number of pages generated in each batch. Around 20 is recommended.',
     'admin/system/config/admin_login_verify'=>'Admin sign-in verification code',
     'admin/system/config/editor'=>'Rich text editor',
-    'admin/system/config/editor_tip'=>'ueditor is included by default. Download the required extension package from the official site before selecting another editor.',
+    'admin/system/config/editor_tip'=>'Every editor in this list comes with JavCMS: pick one and save. There is nothing to download.',
     'admin/system/config/player_sort'=>'Player order',
     'admin/system/config/player_sort_tip'=>'Display order of players on the public site.',
     'admin/system/config/global'=>'Global',

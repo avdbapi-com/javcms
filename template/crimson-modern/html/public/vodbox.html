@@ -1,9 +1,10 @@
 {/*
-This file is part of JavCMS - https://javcms.net
+This file is part of JavCMS - https://github.com/avdbapi-com/javcms
 Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
 License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
 See the LICENSE and NOTICE files that come with JavCMS.
-Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
+Live demo: https://javcms.net (adult content, 18 and over only)
 Telegram: https://t.me/avdb_api
 */}{php}if (!isset($ciCardInit)) { $ciCardInit = 1; $ciNow = time(); $ciTxtHot = \app\common\util\TemplateText::get('ink.badge_hot'); $ciTxtNew = \app\common\util\TemplateText::get('ink.badge_new'); $ciTxtViews = \app\common\util\TemplateText::get('ui.views');
  $ciShort = function ($n) { $n = (int)$n; if ($n >= 1000000) { return rtrim(rtrim(number_format($n / 1000000, 1, '.', ''), '0'), '.') . 'M'; } if ($n >= 10000) { return rtrim(rtrim(number_format($n / 1000, 1, '.', ''), '0'), '.') . 'K'; } return number_format($n); }; }

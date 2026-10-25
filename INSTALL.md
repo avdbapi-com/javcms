@@ -10,7 +10,52 @@ You need:
 - PHP 7.4 to 8.5,
 - MySQL 5.7.8+ or MariaDB 10.2.3+ (MySQL 5.6+ or MariaDB 10.1+ also works, but search in other languages will not).
   MariaDB 10.2.3+ gives the fastest search,
-- the JavCMS zip file.
+- the JavCMS zip file from GitHub (see "Download JavCMS" below).
+
+## Download JavCMS
+
+Get JavCMS only from its release page on GitHub. Copies on other websites can be old or changed, and JavCMS is free:
+if somebody asks you to pay for it, it is not an official download. javcms.net is the live demo (adult content, 18+),
+not a download place.
+
+1. Open https://github.com/avdbapi-com/javcms/releases/latest. This address always opens the newest JavCMS release.
+2. In the **Assets** list of the release, click `javcms-<version>.zip` (for release 1.2.1: `javcms-1.2.1.zip`).
+   Your browser saves the file. Newer releases carry their newer version number in the file names.
+3. Optional: click `javcms-<version>.zip.sha256` too. It holds one line: the SHA-256 checksum, then the file name.
+
+The other files of a release are for updates and are not needed for a new site: `javcms-<version>.json` and
+`javcms-release.json` with their `.sig` signature files, and the update bridge `javcms-update.php` with its `.sha256`.
+
+Do not install from the **Source code (zip)** and **Source code (tar.gz)** links that GitHub adds to every release:
+GitHub makes them from the repository, they are not the tested release file, and no checksum file comes with them.
+Always use `javcms-<version>.zip`.
+
+**Check the download (optional).** A checksum proves that the zip is complete and unchanged. Run one of these in the
+folder with the zip. The result must be the checksum in the `.sha256` file:
+
+| Computer | Command |
+|---|---|
+| Windows (Command Prompt) | `certutil -hashfile javcms-1.2.1.zip SHA256` |
+| Mac (Terminal) | `shasum -a 256 javcms-1.2.1.zip` |
+| Linux | `sha256sum -c javcms-1.2.1.zip.sha256` (it prints `javcms-1.2.1.zip: OK`) |
+
+If the two values differ, download the zip again. Never install a zip whose checksum does not match.
+
+**With a terminal on your server (SSH)** you can download, check and extract in one go. Replace
+`/home/YOURUSER/public_html` with the real path of your site folder:
+
+```
+cd /home/YOURUSER/public_html
+curl -fLO https://github.com/avdbapi-com/javcms/releases/download/v1.2.1/javcms-1.2.1.zip
+curl -fLO https://github.com/avdbapi-com/javcms/releases/download/v1.2.1/javcms-1.2.1.zip.sha256
+sha256sum -c javcms-1.2.1.zip.sha256 && unzip -q javcms-1.2.1.zip
+```
+
+`unzip` runs only when the check prints `javcms-1.2.1.zip: OK`. No `curl` on your server? `wget` works with the same
+two addresses. Then go on with step 3 from point 3 and delete both downloaded files. For a newer release, write its
+version number everywhere instead of `1.2.1` (the release page shows the number).
+
+Earlier releases: JavCMS 1.1.0 and older are not on GitHub and are not offered for download.
 
 ## 1. Choose the PHP version
 
@@ -36,7 +81,7 @@ It never overwrites tables that already exist.
 
 1. Open the File Manager of your hosting panel and go to your site folder
    (often `public_html` or `www`).
-2. Upload the JavCMS zip file there.
+2. Upload the JavCMS zip file (`javcms-<version>.zip`) there.
 3. Extract (unzip) it in that folder.
    You should now see `index.php`, `install.php`, `javcms.php`, and the folders
    `application`, `static`, `template` and others **directly** in your site folder.
@@ -75,6 +120,11 @@ If the installer says "Not writable", set the folders above to `775`.
 Optional: if your site folder itself is writable, JavCMS can also write `favicon.ico`, `ads.txt`
 and a few small files that ad networks or search engines ask for into the site root.
 If it is not writable, the admin offers a download button and you upload the file yourself.
+
+**One-click updates** (Admins & backup › Updates) replace the files of the release, so they need PHP to be able to
+write the site's folders as well. On most shared hosting PHP runs as your own hosting user and can do that with the
+permissions above. If it cannot, the update's check names every file it may not write before anything changes, and
+you can update by hand instead ([UPGRADE.md](UPGRADE.md)).
 
 ## 5. Run the installer
 
@@ -117,7 +167,8 @@ gets the current ones).
 
 The installer creates the file `application/data/install/install.lock`.
 **Keep this file.** It stops anybody from running the installer again.
-If you open `install.php` later, it says "Installation is locked".
+If you open `install.php` later, it says "This site is installed": the installer is locked (JavCMS 1.2.0 and older
+say "Installation is locked").
 
 ## 6. Sign in to the admin
 
@@ -161,6 +212,12 @@ Also do these:
   Our texts are only examples, not legal advice.
 - Public APIs and the receiving interface are **off** after install. Turn on only what you need.
 - Send your sitemap to Google and Bing. See [docs/SEO.md](docs/SEO.md).
+- Keep JavCMS up to date: **Admins & backup › Updates** looks for new releases on GitHub at most every 12 hours and
+  installs them with one click, with a backup and an automatic rollback. Only the founder account (the admin account
+  from step 5) can update. See [UPGRADE.md](UPGRADE.md).
+- Visitors can pick a theme with the visitor theme switcher, a palette button on every page. Choose where it shows,
+  or switch it off, on **Site & theme › Themes** (card **Visitor theme switcher**).
+  See [docs/THEMES.md](docs/THEMES.md).
 
 ## 8. HTTPS (SSL)
 
@@ -211,7 +268,7 @@ In your hosting panel, open "Cron Jobs" and add these lines (every 5 minutes):
 | "Could not connect to the database" | Check the server address, user name and password. Some hosts use `localhost`, others an address like `mysql.yourhost.com`. |
 | Pages other than the home page show "404 Not Found" | Your server does not use the rewrite rules. On Apache, check that `.htaccess` was uploaded. On Nginx, add the rules from [deployment/README.md](deployment/README.md). |
 | The admin page is blank or shows an error 500 | Check the PHP version (7.4 to 8.5) and the extensions from step 1. Your host's error log shows the exact reason. |
-| "Installation is locked" but you want to install again | Only if you really want to start over: delete `application/data/install/install.lock`, use an empty database, and run `install.php` again. Put the lock file back afterwards (the installer does this for you). |
+| `install.php` says "This site is installed" (or "Installation is locked") but you want to install again | Only if you really want to start over: delete `application/data/install/install.lock`, use an empty database, and run `install.php` again. Put the lock file back afterwards (the installer does this for you). |
 | Search in other languages finds nothing or shows an error | Your database is older than MySQL 5.7.8 / MariaDB 10.2.3. Ask your host for a newer version. |
 
 Still stuck? Ask on Telegram: https://t.me/avdb_api

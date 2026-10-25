@@ -1,9 +1,10 @@
 /*
- * This file is part of JavCMS - https://javcms.net
+ * This file is part of JavCMS - https://github.com/avdbapi-com/javcms
  * Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
  * License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
  * See the LICENSE and NOTICE files that come with JavCMS.
- * Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Live demo: https://javcms.net (adult content, 18 and over only)
  * Telegram: https://t.me/avdb_api
  */
 *{box-sizing:border-box}html,body{width:100%;height:100%;margin:0;background:#102226;color:#f0f9f7;font-family:system-ui,-apple-system,"Segoe UI",sans-serif}body{overflow:auto}#native-player{width:100%;height:100%;min-width:0}.MacPlayer{width:100%!important;height:100%!important;min-width:0}#native-player iframe,#native-player video,#native-player object,#native-player embed{max-width:100%;border:0}.player_showtry[hidden]{display:none!important}.native-preview-ended{display:grid!important;place-items:center;padding:clamp(16px,4vw,36px);overflow:auto;background:#102226}.player_showtry{width:min(100%,580px);margin:auto}.native-preview-card{border:1px solid #476569;border-radius:18px;background:#20373b;padding:clamp(22px,5vw,40px);overflow-wrap:anywhere;text-align:start}.native-preview-kicker{margin:0 0 18px;color:#a9eee0;font-weight:750;font-size:.75rem;letter-spacing:.13em;text-transform:uppercase}.native-preview-card h1{font-size:clamp(1.35rem,4vw,1.9rem);line-height:1.2;margin:0 0 20px}.native-preview-card p{line-height:1.65}.native-preview-note{font-size:.85rem;color:#c2d9d8}.native-preview-actions{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin-top:24px}.native-preview-actions a{display:inline-flex;align-items:center;min-height:44px;color:#b2ece1;text-underline-offset:4px}.native-preview-primary,.native-preview-actions a.native-preview-primary{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:12px 18px;border-radius:9px;border:1px solid #a9eee0;background:#a9eee0;color:#122b2d;font:inherit;font-weight:750;text-decoration:none;cursor:pointer}.native-preview-card :focus-visible{outline:3px solid #fff;outline-offset:4px}#player-status:empty{display:none}@media(max-width:480px){.native-preview-actions{align-items:stretch;flex-direction:column}.native-preview-primary{width:100%}.native-preview-card{padding:24px 20px}}

@@ -1,8 +1,9 @@
 {/*
-This file is part of JavCMS - https://javcms.net
+This file is part of JavCMS - https://github.com/avdbapi-com/javcms
 Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
 License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
 See the LICENSE and NOTICE files that come with JavCMS.
-Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
+Live demo: https://javcms.net (adult content, 18 and over only)
 Telegram: https://t.me/avdb_api
 */}{php}$ctBanner = 0; $ctGroup = 0; $ctSeen = isset($ctSeen) && is_array($ctSeen) ? $ctSeen : [];{/php}<section class="ct-banner" data-ct-banner aria-roledescription="carousel" aria-label="{:\\app\\common\\util\\TemplateText::get('crimson.featured')}"><div class="ct-banner-track">{maccms:vod num="6" type="all" level="9" order="desc" by="time" paging="no" id="vo"}{php}$ctSeen[] = intval($vo['vod_id']); $ctBanner++;{/php}{include file="index/slide"}{/maccms:vod}{if condition="$ctBanner eq 0"}{maccms:vod num="6" type="all" order="desc" by="hits" paging="no" id="vo"}{php}$ctSeen[] = intval($vo['vod_id']); $ctBanner++;{/php}{include file="index/slide"}{/maccms:vod}{/if}</div><button class="ct-banner-nav ct-banner-prev" type="button" data-ct-step="-1" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.previous_page')}"><svg class="ct-ico" aria-hidden="true"><use href="{$ctIco|htmlspecialchars=ENT_QUOTES}#chev-l"></use></svg></button><button class="ct-banner-nav ct-banner-next" type="button" data-ct-step="1" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.next_page')}"><svg class="ct-ico" aria-hidden="true"><use href="{$ctIco|htmlspecialchars=ENT_QUOTES}#chev-r"></use></svg></button></section>

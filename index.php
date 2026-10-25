@@ -1,11 +1,12 @@
 <?php
 /*
- * This file is part of JavCMS - https://javcms.net
+ * This file is part of JavCMS - https://github.com/avdbapi-com/javcms
  * Based on MacCMS 10 (Apache-2.0) by magicblack, changed by JavCMS.
  * JavCMS changes: Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors,
  * JavCMS Community License 1.0. The MacCMS parts stay under the Apache License 2.0.
  * See the LICENSE and NOTICE files that come with JavCMS.
- * Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Live demo: https://javcms.net (adult content, 18 and over only)
  * Telegram: https://t.me/avdb_api
  */
 /*
@@ -16,6 +17,9 @@
 '--------------------------------------------------------
 */
 header('Content-Type:text/html;charset=utf-8');
+// One-click update (1.2.1): while an update replaces files, visitors get its maintenance page (runtime/update/gate.php,
+// written by the update and never part of a release) before any other file of the site is loaded.
+if (is_file(__DIR__ . '/runtime/update/maintenance.php') && is_file(__DIR__ . '/runtime/update/gate.php')) { include __DIR__ . '/runtime/update/gate.php'; }
 require_once __DIR__ . '/application/common/util/SecurityHeaders.php';
 JavcmsSecurityHeaders::send();
 // Never print PHP errors (file paths) to visitors, even where the host's php.ini has display_errors=On.

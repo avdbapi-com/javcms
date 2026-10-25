@@ -22,8 +22,9 @@ for the third-party parts named below, which keep their own licences.
   shots; the README captions explain them. Each file is byte-identical to its help-center copy (SHA-256 checked when
   the README is built).
 - javcms-thm-javcms-modern-hd.webp, javcms-thm-javcms-modern-hl.webp and javcms-ads-02.webp: the small tagline under
-  the default site logo (static/images/logo.png) was painted over with the header background, because its wording does
-  not fit a public code site. Nothing else in these images was changed; the help-center copies carry the same edit.
+  the default site logo of 1.2.0 (static/images/logo.png) was painted over with the header background, because its
+  wording does not fit a public code site; JavCMS 1.2.1 ships that logo without the tagline. Nothing else in these
+  images was changed; the help-center copies carry the same edit.
 - javcms-ads-09.webp shows a frame of the public sample video that the example pre-roll plays (oceans.mp4 from the
   video.js test media, https://vjs.zencdn.net/v/oceans.mp4). That frame is not covered by the JavCMS Community License
   and stays with its owner.

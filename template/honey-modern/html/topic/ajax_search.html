@@ -1,8 +1,9 @@
 {/*
-This file is part of JavCMS - https://javcms.net
+This file is part of JavCMS - https://github.com/avdbapi-com/javcms
 Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
 License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
 See the LICENSE and NOTICE files that come with JavCMS.
-Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
+Live demo: https://javcms.net (adult content, 18 and over only)
 Telegram: https://t.me/avdb_api
 */}{php}if (!isset($ncIco)) { $ncIco = $maccms['path_tpl'] . 'assets/icons.svg?v=20261012c#'; }{/php}<div class="nc-jgrid" data-grid-fill>{maccms:topic num="20" paging="yes" pageurl="topic/search" order="desc" by="time"}{include file="topic/card"}{/maccms:topic}</div>{if condition="$__PAGING__.record_total eq 0"}{include file="public/empty"}{/if}{include file="public/paging"}

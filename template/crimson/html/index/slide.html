@@ -1,8 +1,9 @@
 {/*
-This file is part of JavCMS - https://javcms.net
+This file is part of JavCMS - https://github.com/avdbapi-com/javcms
 Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
 License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
 See the LICENSE and NOTICE files that come with JavCMS.
-Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
+Live demo: https://javcms.net (adult content, 18 and over only)
 Telegram: https://t.me/avdb_api
 */}{php}$ctSTitle = trim((string)($vo['vod_display_name'] ?? '')); if ($ctSTitle === '') { $ctSTitle = trim(strip_tags((string)($vo['vod_name'] ?? ''))); } for ($ctSI = 0; $ctSI < 4 && strpos($ctSTitle, '&') !== false; $ctSI++) { $ctSD = html_entity_decode($ctSTitle, ENT_QUOTES | ENT_HTML5, 'UTF-8'); if ($ctSD === $ctSTitle) { break; } $ctSTitle = $ctSD; } $ctSPic = trim((string)($vo['vod_pic'] ?? '')); $ctSPic = $ctSPic === '' ? $maccms['path_tpl'] . 'assets/img/poster.svg' : mac_url_img($ctSPic); $ctSMeta = []; $ctSCode = \app\common\util\AvdbLanguage::displayCode($vo); if ($ctSCode !== '' && stripos($ctSCode, 'avdb-') !== 0 && strlen($ctSCode) <= 40 && stripos($ctSTitle, $ctSCode) !== 0) { $ctSMeta[] = $ctSCode; } if (trim((string)($vo['vod_duration'] ?? '')) !== '') { $ctSMeta[] = trim((string)$vo['vod_duration']); } if (!empty($vo['vod_time'])) { $ctSMeta[] = date('Y-m-d', (int)$vo['vod_time']); } $ctSMetaText = implode(' · ', $ctSMeta); $ctSDir = preg_match('/[\x{0590}-\x{08FF}\x{FB1D}-\x{FDFF}\x{FE70}-\x{FEFF}]/u', $ctSTitle) ? 'rtl' : 'auto';{/php}<a class="ct-slide" href="{:mac_url_vod_play($vo)}"><img data-lowres src="{$ctSPic|htmlspecialchars=ENT_QUOTES}" alt="{$ctSTitle|htmlspecialchars=ENT_QUOTES}" width="640" height="360"{if condition="$ctBanner gt 1"} loading="lazy"{else/} fetchpriority="high"{/if} decoding="async"><span class="ct-slide-cap"><strong dir="{$ctSDir}">{$ctSTitle|htmlspecialchars=ENT_QUOTES}</strong>{if condition="$ctSMetaText neq ''"}<span dir="ltr">{$ctSMetaText|htmlspecialchars=ENT_QUOTES}</span>{/if}</span></a>

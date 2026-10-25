@@ -1,8 +1,9 @@
 {/*
-This file is part of JavCMS - https://javcms.net
+This file is part of JavCMS - https://github.com/avdbapi-com/javcms
 Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
 License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
 See the LICENSE and NOTICE files that come with JavCMS.
-Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
+Live demo: https://javcms.net (adult content, 18 and over only)
 Telegram: https://t.me/avdb_api
 */}{php}$ncEmptyText = \app\common\util\TemplateText::get(isset($ncEmptyKey) ? $ncEmptyKey : 'ui.no_results_found_try_another_category_or_search'); $ncEmptyHead = \app\common\util\TemplateText::get(isset($ncEmptyHeadKey) ? $ncEmptyHeadKey : 'nc.empty_title');{/php}<div class="nc-empty">{if condition="!empty($ncEmptyScene)"}{:\\app\\common\\util\\AutoIcon::scene($ncEmptyScene)}{else/}{include file="public/dipper"}{/if}<h2>{$ncEmptyHead}</h2><p>{$ncEmptyText}</p><div class="nc-empty-act"><a class="nc-btn nc-btn-honey" href="{:mac_url('label/new')}"><svg class="nc-i" aria-hidden="true"><use href="{$ncIco}clock"></use></svg>{:\\app\\common\\util\\TemplateText::get('nc.browse_latest')}</a><a class="nc-btn nc-btn-soft" href="{$maccms.path|htmlspecialchars=ENT_QUOTES}"><svg class="nc-i" aria-hidden="true"><use href="{$ncIco}home"></use></svg>{:\\app\\common\\util\\TemplateText::get('ui.home')}</a></div>{if condition="!empty($ncEmptyScene)"}{include file="public/hotwords"}{/if}</div>

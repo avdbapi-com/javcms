@@ -4,6 +4,15 @@ Options -Indexes -MultiViews
 DirectoryIndex index.php
 AcceptPathInfo On
 RewriteEngine On
+# One-click updater (1.2.1): a step of a running update (?jcupd=...) and the requests during its maintenance window
+# must finish even when the browser tab closes. LiteSpeed ends PHP on a client disconnect unless the request carries
+# "noabort" (Apache ignores both variables; PHP's ignore_user_abort() covers it there). Keep these lines first.
+RewriteCond %{QUERY_STRING} (^|&)jcupd=
+RewriteRule ^ - [E=noabort:1,E=noconntimeout:1]
+# Site installed in a sub-folder (https://site.example/cms/)? mod_rewrite has no variable for the folder of this file:
+# write the folder here, %{DOCUMENT_ROOT}/cms/runtime/update/maintenance.php (deployment/README.md, Subdirectory).
+RewriteCond %{DOCUMENT_ROOT}/runtime/update/maintenance.php -f
+RewriteRule ^ - [E=noabort:1,E=noconntimeout:1]
 
 # Private source/config/cache and operator artifacts are not HTTP resources.
 RewriteRule ^(?:application|runtime|vendor|thinkphp|extend|deployment|backup|backups)(?:/|$) - [F,L,NC]

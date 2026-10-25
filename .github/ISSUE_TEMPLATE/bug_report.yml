@@ -17,6 +17,7 @@ body:
       label: JavCMS version
       description: Shown in the Version row on the admin home page and in application/extra/version.php.
       options:
+        - "1.2.1"
         - "1.2.0"
         - "1.1.0"
         - Older
@@ -92,7 +93,7 @@ body:
     id: logs
     attributes:
       label: Log lines
-      description: The matching lines from runtime/log or your web server error log. Remove passwords, keys and personal data first.
+      description: The matching lines from runtime/log or your web server error log; for an update problem, the run log from Admins & backup > Updates (Download the log). Remove passwords, keys and personal data first.
       render: text
   - type: checkboxes
     id: checks

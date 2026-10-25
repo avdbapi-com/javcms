@@ -5,7 +5,11 @@
 | Version | Supported with security fixes |
 |---|---|
 | 1.2.x | yes |
-| 1.1.0 and older | no: please upgrade to 1.2.0 ([UPGRADE.md](../UPGRADE.md)) |
+| 1.1.0 and older | no: please upgrade to the newest release ([UPGRADE.md](../UPGRADE.md)) |
+
+Security fixes come as new releases. JavCMS 1.2.1 and newer install them with one click on
+**Admins & backup › Updates** (signed releases from this repository only); a 1.2.0 site updates once with the
+update bridge (see [UPGRADE.md](../UPGRADE.md)).
 
 ## Report a problem privately
 
@@ -37,7 +41,8 @@ Please include:
 ## Scope
 
 In scope: the JavCMS code in this repository (PHP, templates, JavaScript and the installer) and its default
-configuration files.
+configuration files, the one-click updater (JavCMS 1.2.1 and newer) and the files of each GitHub release: the zip,
+the signed release manifests and the update bridge `javcms-update.php`.
 
 Out of scope: problems of a server setup or hosting panel, third-party services (AVDB API, xvidapi, ad networks),
 denial of service by sheer traffic volume, and reports from automated scanners without a working example.

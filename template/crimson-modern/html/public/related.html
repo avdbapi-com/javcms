@@ -1,9 +1,10 @@
 {/*
-This file is part of JavCMS - https://javcms.net
+This file is part of JavCMS - https://github.com/avdbapi-com/javcms
 Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
 License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
 See the LICENSE and NOTICE files that come with JavCMS.
-Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
+Live demo: https://javcms.net (adult content, 18 and over only)
 Telegram: https://t.me/avdb_api
 */}{php}$ciMode = ''; $ciN = 0; $ciSfxText = \app\common\util\TemplateText::raw('ink.sfx_more_to_watch'); $ciSfxId = 'ci-h-related';{/php}<section class="ci-chapter ci-related" aria-labelledby="ci-h-related"><header class="ci-chap-head"><span class="ci-narr ci-chap-n">{:\\app\\common\\util\\AutoIcon::ui('film')}{:\\app\\common\\util\\TemplateText::get('ink.next_chapter')}</span>{include file="public/sfx"}{if condition="$ciTypeName neq ''"}<a class="ci-more" href="{:mac_url_type($obj['type'])}"><span>{:\\app\\common\\util\\TemplateText::get('ink.more')}</span>{:\\app\\common\\util\\AutoIcon::ui('arrow-right', ['size'=>'sm'])}</a>{/if}</header>
 <div class="ci-grid" data-grid-fill>{maccms:vod num="10" type="current" not="'.$obj['vod_id'].'" order="desc" by="time" paging="no" id="vo"}{php}$ciN++;{/php}{include file="public/vodbox"}{/maccms:vod}</div>{if condition="$ciN eq 0"}{include file="public/empty"}{/if}

@@ -1,7 +1,7 @@
 {
   "engine": "duckduckgo",
-  "fetched": 1792654550,
-  "fetched_utc": "2026-10-22T07:35:50Z",
+  "fetched": 1792905807,
+  "fetched_utc": "2026-10-25T05:23:27Z",
   "sources": ["https://duckduckgo.com/duckduckbot.json"],
   "prefixes": [
     {"ipv4Prefix":"104.43.54.127/32"},

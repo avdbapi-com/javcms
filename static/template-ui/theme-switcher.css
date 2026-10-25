@@ -1,9 +1,10 @@
 /*
- * This file is part of JavCMS - https://javcms.net
+ * This file is part of JavCMS - https://github.com/avdbapi-com/javcms
  * Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
  * License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
  * See the LICENSE and NOTICE files that come with JavCMS.
- * Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Live demo: https://javcms.net (adult content, 18 and over only)
  * Telegram: https://t.me/avdb_api
  */
 /*! JavCMS visitor theme switcher | JavCMS Community License 1.0 (project-owned) */
@@ -12,7 +13,11 @@
      --jv-switcher-bottom        gap from the viewport bottom, bottom-end corner
      --jv-switcher-bottom-start  same for the bottom-start corner (default: --jv-switcher-bottom)
      --jv-switcher-end / --jv-switcher-start   gap from the inline edge
-   env(safe-area-inset-*) is added on top (0 unless a theme uses viewport-fit=cover). */
+   env(safe-area-inset-*) is added on top (0 unless a theme uses viewport-fit=cover).
+   Display mode (html[data-jv-switcher-show], set by the script from site.theme_switcher_show): always | header | end.
+   Header mode: the header button (.jv-ts-hbtn, printed by the server with its own small CSS before </head>) is
+   styled by the theme like its neighbour; this file only hides it while the script finds it unusable and gives it a
+   forced-colours focus indicator. */
 .jv-ts{--jv-ts-bg:#17171c;--jv-ts-panel:#1d1d23;--jv-ts-card:#25252d;--jv-ts-line:rgba(255,255,255,.14);--jv-ts-ink:#f4f4f6;--jv-ts-muted:#b6b6c0;--jv-ts-accent:#ffb347;--jv-ts-accent-ink:#1a1206;--jv-ts-ring:#ffd38a;--jv-ts-shadow:0 10px 30px rgba(0,0,0,.45);font-family:inherit;font-size:16px;line-height:1.4;color:var(--jv-ts-ink)}
 html[data-color-mode="light"] .jv-ts{--jv-ts-bg:#ffffff;--jv-ts-panel:#ffffff;--jv-ts-card:#f3f3f6;--jv-ts-line:rgba(0,0,0,.14);--jv-ts-ink:#16161a;--jv-ts-muted:#55555f;--jv-ts-accent:#9a4f00;--jv-ts-accent-ink:#ffffff;--jv-ts-ring:#7a3d00;--jv-ts-shadow:0 10px 30px rgba(0,0,0,.18)}
 .jv-ts *,.jv-ts *::before,.jv-ts *::after{box-sizing:border-box}
@@ -27,23 +32,49 @@ html[data-jv-switcher-pos="bottom-start"] .jv-ts-btn{inset-inline-end:auto;inset
 /* parked (the reserved space at the page end is not in view): never drawn over page content, click-through,
    but still a Tab stop that shows itself while it has keyboard focus */
 .jv-ts-btn[data-jv-park]:not(:focus-visible){opacity:0;pointer-events:none}
+/* first screen of the visible modes where the ad engine runs: waits transparent for its lift above the sticky ad bar,
+   then fades in (same rules as parked: click-through, a Tab stop that shows itself on keyboard focus) */
+.jv-ts-btn[data-jv-settle]:not(:focus-visible){opacity:0;pointer-events:none}
+/* header mode while the header button is in use: the floating button stays laid out (the ad engine keeps its corner
+   and its lift column) but is not drawn and is no Tab stop */
+.jv-ts-btn[data-jv-headon]{opacity:0;visibility:hidden;pointer-events:none;transition:opacity .2s,visibility 0s linear .2s}
+/* a header button that is laid out but covered or pushed out of the screen (visibility only: no layout change); its icon
+   too, since a theme rule such as pointer-events:all keeps hidden SVG shapes clickable */
+.jv-ts-hbtn[data-jv-ts-off],.jv-ts-hbtn[data-jv-ts-off] *{visibility:hidden!important;pointer-events:none!important}
 .jv-ts-btn[data-jv-hide]{opacity:0;visibility:hidden;pointer-events:none;transition:opacity .2s,visibility 0s linear .2s}
+/* visible modes: the ad engine moved the drawn button (above its sticky bar, or back): transparent for two frames, then it
+   fades in at its new place instead of jumping there (fix round 4, SVVF4-P3-1). The move itself stays instant: the
+   engine measures the button's box to place it. Never while it has keyboard focus (the ring stays where the focus is). */
+.jv-ts-btn[data-jv-move]:not(:focus-visible){opacity:0!important;transition-duration:0s!important}
+/* visible modes: the shared theme CSS (static/template-ui/contrast.css) forces one transition-property list with
+   !important on every element, which shifts these durations onto other properties (visibility got .2s: a button being
+   shown stayed hidden, and unfocusable, for a frame). The widget keeps its own list; "end" stays as in 1.2.0. */
+html:not([data-jv-switcher-show="end"]) .jv-ts .jv-ts-btn{transition-property:opacity,visibility,transform!important}
 .jv-ts .jv-ts-btn:focus,.jv-ts .jv-ts-close:focus,.jv-ts .jv-ts-card:focus{outline:none}
 /* ONE focus ring. The button ring sits on the page, so its colour follows the page tone that the script measures
-   (data-jv-bg); box-shadow is reset so a theme-wide :focus-visible shadow never adds a second ring. */
-.jv-ts{--jv-ts-ring-page:#ffd38a}
-.jv-ts[data-jv-bg="light"]{--jv-ts-ring-page:#16161a}
-.jv-ts .jv-ts-btn:focus-visible{outline:3px solid var(--jv-ts-ring-page);outline-offset:2px;box-shadow:var(--jv-ts-shadow)}
+   (data-jv-bg); box-shadow is reset so a theme-wide :focus-visible shadow never adds a second ring. Because the button
+   can sit over pictures, slides or an ad skin of any colour, the ring lies between two bands of a contrasting halo
+   (WCAG technique C40, two-colour indicator): ring and halo differ by 11:1 or more, so the indicator stands out on any
+   background. Spread shadows follow the round button. */
+.jv-ts{--jv-ts-ring-page:#ffd38a;--jv-ts-ring-halo:#16161a}
+.jv-ts[data-jv-bg="light"]{--jv-ts-ring-page:#16161a;--jv-ts-ring-halo:#ffffff}
+.jv-ts .jv-ts-btn:focus-visible{outline:3px solid var(--jv-ts-ring-page);outline-offset:2px;box-shadow:0 0 0 2px var(--jv-ts-ring-halo),0 0 0 7px var(--jv-ts-ring-halo),var(--jv-ts-shadow)}
 .jv-ts .jv-ts-close:focus-visible,.jv-ts .jv-ts-card:focus-visible{outline:3px solid var(--jv-ts-ring);outline-offset:2px;box-shadow:none}
 /* reserved space at the page end: the script sets the height to the button's band (min 80 px) */
 .jv-ts-spacer{height:80px;pointer-events:none}
+html[data-jv-switcher-show="header"] .jv-ts-spacer{height:0}
 .jv-ts-sr{position:absolute!important;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
 
-/* scrim + panel: z just below ui.css overlays (2147483000) and notices (2147483100) */
+/* scrim + panel: the topmost layer of the site while the panel is open (fix round 4, SVVF4-P2-1). The panel is a modal
+   dialog that makes the rest of the page inert, and an inert element is skipped by the hit test: whatever is drawn above
+   the dialog cannot be tapped and passes the tap to the theme card under it. So nothing of the page may be drawn above
+   it: theme overlays and notices (ui.css 2147483000 / 2147483100), the ad engine's sticky bar, corner panels and rails
+   (static/jcx/jcx.css up to 2147483100) and the cookie notice (static/site/jv-site.css 2147483500) lie under the scrim
+   while it is open, like the rest of the page. */
 html.jv-ts-lock,html.jv-ts-lock body{overflow:hidden!important}
 html.jv-ts-lock{scrollbar-gutter:stable}
-.jv-ts-scrim{display:none;position:fixed;inset:0;z-index:2147482000;background:rgba(0,0,0,.5)}
-.jv-ts-panel{display:none;position:fixed;z-index:2147482001;flex-direction:column;width:min(440px,calc(100vw - 32px));max-height:calc(100vh - 120px);max-height:calc(100dvh - 120px);padding:14px 14px 16px;border:1px solid var(--jv-ts-line);border-radius:16px;background:var(--jv-ts-panel);color:var(--jv-ts-ink);box-shadow:var(--jv-ts-shadow);outline:none;text-align:start}
+.jv-ts-scrim{display:none;position:fixed;inset:0;z-index:2147483640;background:rgba(0,0,0,.5)}
+.jv-ts-panel{display:none;position:fixed;z-index:2147483641;flex-direction:column;width:min(440px,calc(100vw - 32px));max-height:calc(100vh - 120px);max-height:calc(100dvh - 120px);padding:14px 14px 16px;border:1px solid var(--jv-ts-line);border-radius:16px;background:var(--jv-ts-panel);color:var(--jv-ts-ink);box-shadow:var(--jv-ts-shadow);outline:none;text-align:start}
 .jv-ts-open .jv-ts-scrim{display:block}
 .jv-ts-open .jv-ts-panel{display:flex;animation:jv-ts-in .18s ease-out}
 @keyframes jv-ts-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
@@ -54,7 +85,9 @@ html.jv-ts-lock{scrollbar-gutter:stable}
 .jv-ts-close svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
 @media (hover:hover){.jv-ts-close:hover{background:var(--jv-ts-card)}}
 .jv-ts-hint{margin:0 0 12px;font-size:13px;color:var(--jv-ts-muted)}
-.jv-ts-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));grid-auto-rows:max-content;align-content:start;gap:10px;flex:1 1 auto;min-height:0;margin:0 -4px;padding:4px;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+/* the grid scrolls on its own; its padding holds the whole focus ring of a card at its edges (outline 3 px + offset
+   2 px = 5 px: fix round 4, SVVF4-P3-2), the negative margin keeps the cards where they were */
+.jv-ts-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));grid-auto-rows:max-content;align-content:start;gap:10px;flex:1 1 auto;min-height:0;margin:0 -6px;padding:6px;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
 .jv-ts-card{display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;gap:6px;min-width:0;min-height:44px;height:auto;overflow:hidden;margin:0;padding:6px 6px 8px;border:2px solid transparent;border-radius:12px;background:var(--jv-ts-card);color:var(--jv-ts-ink);text-align:start;cursor:pointer;font:inherit}
 .jv-ts-card[aria-checked="true"]{border-color:var(--jv-ts-accent)}
 .jv-ts-card[aria-disabled="true"]{cursor:default}
@@ -78,12 +111,33 @@ html.jv-ts-lock{scrollbar-gutter:stable}
   .jv-ts-handle{display:block;width:40px;height:4px;margin:2px auto 8px;border-radius:2px;background:var(--jv-ts-line)}
 }
 @keyframes jv-ts-up{from{transform:translateY(24px);opacity:.4}to{transform:none;opacity:1}}
-@media (prefers-reduced-motion:reduce){.jv-ts-btn,.jv-ts-btn[data-jv-hide]{transition:none}.jv-ts-btn:active{transform:none}.jv-ts-open .jv-ts-panel{animation:none}}
-html.jv-ts-reduced .jv-ts-btn,html.jv-ts-reduced .jv-ts-btn[data-jv-hide]{transition:none}
+@media (prefers-reduced-motion:reduce){.jv-ts-btn,.jv-ts-btn[data-jv-hide],.jv-ts-btn[data-jv-headon]{transition:none}.jv-ts-btn:active{transform:none}.jv-ts-open .jv-ts-panel{animation:none}}
+html.jv-ts-reduced .jv-ts-btn,html.jv-ts-reduced .jv-ts-btn[data-jv-hide],html.jv-ts-reduced .jv-ts-btn[data-jv-headon]{transition:none}
 html.jv-ts-reduced .jv-ts-btn:active{transform:none}
 html.jv-ts-reduced .jv-ts-open .jv-ts-panel{animation:none}
-@media print{.jv-ts,.jv-ts-spacer{display:none!important}}
+/* print: no button and no reserved band (the script shows the spacer with an inline display on themes that hide it;
+   its height is not !important, so it collapses here) */
+@media print{.jv-ts,.jv-ts-spacer{display:none!important}.jv-ts-spacer{height:0!important;min-height:0!important;margin:0!important;padding:0!important;border:0!important;overflow:hidden!important}}
 @media (forced-colors:active){.jv-ts-btn,.jv-ts-card,.jv-ts-panel{border:1px solid CanvasText}.jv-ts-card[aria-checked="true"]{outline:3px solid Highlight}}
+/* forced colours (Windows contrast themes) drop every box-shadow, so the halo of the focus ring is gone and pictures are
+   not recoloured: the ring (the user's Highlight colour) keeps two bands in the user's Canvas colour, inside and outside
+   it, drawn by borders. The two-colour indicator stays visible on any background and follows the user's palette.
+   Geometry as the halo: band 0-2 px, ring 2-5 px, band 5-7 px outside the button (inset counts from its padding box). */
+@media (forced-colors:active){
+  .jv-ts .jv-ts-btn:focus-visible{outline:3px solid Highlight;outline-offset:2px}
+  .jv-ts .jv-ts-btn:focus-visible::before,.jv-ts .jv-ts-btn:focus-visible::after{content:"";position:absolute;box-sizing:border-box;border-radius:50%;pointer-events:none;forced-color-adjust:none}
+  .jv-ts .jv-ts-btn:focus-visible::before{inset:-3px;border:2px solid Canvas}
+  .jv-ts .jv-ts-btn:focus-visible::after{inset:-8px;border:2px solid Canvas}
+}
+/* forced colours, header button (fix round 3, SVVP3-2): it is styled by the theme like its light/dark button (D3), whose
+   own outline in Highlight can vanish over a dark header picture. With the keyboard focus it gets the floating button's
+   two-colour indicator, drawn by one pseudo-element in system colours: band (Canvas) 0-2 px, ring (Highlight) 2-5 px,
+   band (Canvas) 5-7 px outside its padding box. position:relative only anchors that pseudo-element: the header button
+   copies the toggle's classes, which every shipped theme lays out static or relative without offsets. */
+@media (forced-colors:active){
+  .jv-ts-hbtn:focus-visible{position:relative;outline:none!important}
+  .jv-ts-hbtn:focus-visible::before{content:"";position:absolute;inset:-5px;box-sizing:border-box;margin:0;padding:0;border:3px solid Highlight;border-radius:inherit;background:none;box-shadow:inset 0 0 0 2px Canvas,0 0 0 2px Canvas;pointer-events:none;forced-color-adjust:none}
+}
 
 /* ---------------------------------------------------------------------------------------------
    Per-theme defaults (THEME-SWITCHER-SPEC 6.2 as corrected by -REVIEW table E). Each block uses

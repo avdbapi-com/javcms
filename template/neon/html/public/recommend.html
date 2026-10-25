@@ -1,9 +1,10 @@
 {/*
-This file is part of JavCMS - https://javcms.net
+This file is part of JavCMS - https://github.com/avdbapi-com/javcms
 Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
 License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
 See the LICENSE and NOTICE files that come with JavCMS.
-Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
+Live demo: https://javcms.net (adult content, 18 and over only)
 Telegram: https://t.me/avdb_api
 */}{php}$nxRecIds = []; $nxRecShown = 0; $nxRecPick = $nxPickIds('vod_score desc', 8, [intval($obj['vod_id'] ?? 0)]);{/php}
 <aside class="nx-side" aria-labelledby="nx-h-rec" data-ai-group><div class="nx-cap"><h2 class="nx-cap-title" id="nx-h-rec"><span class="nx-cap-ico">{:\\app\\common\\util\\AutoIcon::ui('thumbs-up', ['size'=>'lg', 'plate'=>true])}</span><span>{:\\app\\common\\util\\TemplateText::get('neon.recommended')}</span></h2></div>

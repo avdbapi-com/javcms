@@ -1,9 +1,10 @@
 {/*
-This file is part of JavCMS - https://javcms.net
+This file is part of JavCMS - https://github.com/avdbapi-com/javcms
 Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
 License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
 See the LICENSE and NOTICE files that come with JavCMS.
-Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
+Live demo: https://javcms.net (adult content, 18 and over only)
 Telegram: https://t.me/avdb_api
 */}{php}$tplArtCats = [];{/php}{maccms:type ids="parent" order="asc" by="sort" flag="art" id="tplArtCat"}{php}$tplArtCats[] = $tplArtCat;{/php}{/maccms:type}
 {notempty name="tplArtCats"}<nav class="cat-chips art-cats" aria-label="{:\\app\\common\\util\\TemplateText::get('article_categories')}">{volist name="tplArtCats" id="tplArtCat" key="tplArtK"}<a href="{:mac_url_type($tplArtCat)}"{if condition="defined('MAC_TYPE_ID') && ($tplArtCat.type_id eq MAC_TYPE_ID || $tplArtCat.type_id eq MAC_TYPE_PID)"} aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::icon('category', $tplArtCat['type_name'], ['size'=>'sm', 'i'=>$tplArtK])}{:\\app\\common\\util\\TemplateText::get(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)$tplArtCat['type_name']))}</a>{/volist}</nav>{/notempty}

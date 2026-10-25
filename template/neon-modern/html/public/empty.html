@@ -1,8 +1,9 @@
 {/*
-This file is part of JavCMS - https://javcms.net
+This file is part of JavCMS - https://github.com/avdbapi-com/javcms
 Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
 License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
 See the LICENSE and NOTICE files that come with JavCMS.
-Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
+Live demo: https://javcms.net (adult content, 18 and over only)
 Telegram: https://t.me/avdb_api
 */}{php}$nnEmptyText = \app\common\util\TemplateText::get(isset($nnEmptyKey) ? $nnEmptyKey : 'ui.no_results_found_try_another_category_or_search'); $nnEmptyScene = (isset($nnEmptyKey) && $nnEmptyKey) ? 'empty-library' : ((isset($nnCa) && strpos((string)$nnCa, 'search') !== false) ? 'search-empty' : 'empty-library'); $nnEmptyKey = null;{/php}<div class="nn-empty"><p class="nn-empty-sign nn-sign" aria-hidden="true">{:\\app\\common\\util\\TemplateText::get('nn.nothing_here')}</p>{:\\app\\common\\util\\AutoIcon::scene($nnEmptyScene)}<p>{$nnEmptyText}</p><div class="nn-empty-actions"><a class="nn-btn nn-btn-primary" href="{:mac_url('label/new')}">{:\\app\\common\\util\\AutoIcon::navIcon('latest')}{:\\app\\common\\util\\TemplateText::get('ui.latest_videos')}</a><a class="nn-btn" href="{:mac_url('vod/search')}">{:\\app\\common\\util\\AutoIcon::ui('search')}{:\\app\\common\\util\\TemplateText::get('ui.search')}</a></div></div>

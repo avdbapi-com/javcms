@@ -1,10 +1,11 @@
 <?php
 /*
- * This file is part of JavCMS - https://javcms.net
+ * This file is part of JavCMS - https://github.com/avdbapi-com/javcms
  * Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
  * License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
  * See the LICENSE and NOTICE files that come with JavCMS.
- * Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
+ * Live demo: https://javcms.net (adult content, 18 and over only)
  * Telegram: https://t.me/avdb_api
  */
 namespace app\common\util;
@@ -357,8 +358,9 @@ final class ScaleSchema
             return ['ok' => false, 'state' => 'error', 'added' => [], 'present' => [], 'error' => 'invalid prefix'];
         }
         $say = function ($msg) use ($progress) { if ($progress) { $progress($msg); } };
-        @ignore_user_abort(true);
-        @set_time_limit(0);
+        // PHP 8 removes a function named in disable_functions (calling it is a fatal error): only what exists is called
+        if (function_exists('ignore_user_abort')) { @ignore_user_abort(true); }
+        if (function_exists('set_time_limit')) { @set_time_limit(0); }
         $lockName = '';
         $heavy = false;
         $result = ['ok' => false, 'state' => '', 'added' => [], 'present' => [], 'names' => [], 'error' => ''];

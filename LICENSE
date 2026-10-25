@@ -4,7 +4,9 @@ JavCMS Community License 1.0
 Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
 
 Official sources of JavCMS:
-  https://javcms.net
+  https://github.com/avdbapi-com/javcms (source code and releases; download
+    JavCMS only from https://github.com/avdbapi-com/javcms/releases)
+  https://javcms.net (live demo, adult content, 18+; not a download place)
   https://avdbapi.com
   https://xvidapi.com
   https://upload18.org
@@ -306,6 +308,8 @@ Lucide, Phosphor and Tabler icon glyphs    see THIRD-PARTY.txt ISC / MIT        
                                                                                            and neon-modern (Lucide)
 Lucide icons (some from Feather)           1.48.0          ISC / MIT (texts in the file)   static/admin/icons/admin-icons.svg
 three.js and morphicons                    r186 / 1.7.1    MIT                             static/template-ui/gallery-motion.js
+paragonie/sodium_compat (trimmed copy)     polyfill-1.0.8  ISC (own LICENSE file)          application/common/util/updater/sodium/ (5)
+Mozilla CA certificate store               2026-02-12      MPL-2.0 (5)                     application/common/util/updater/cacert.pem
 
 (1) The LGPL-2.1 text is in application/common/vendor/phpmailer/LICENSE.
 (2) The LGPL-3.0 text is in LICENSE.LGPL-3.0.txt; the GPL-3.0 text it builds on is in
@@ -316,6 +320,17 @@ three.js and morphicons                    r186 / 1.7.1    MIT                  
 (4) CKEditor's own license file, static/editor/ckeditor/LICENSE.md (from the original
     CKEditor 4.11.1 release; every CKEditor file header names it), holds the full texts of
     the three licenses. The LGPL-2.1 text is also in application/common/vendor/phpmailer/LICENSE.
+(5) The one-click updater (from release 1.2.1). sodium_compat checks the Ed25519 signatures of
+    releases on hosts without the PHP extension sodium: a trimmed copy (the 11 files of the
+    verification path, classes renamed to JavcmsUpdSodium_*) of the paragonie/sodium_compat copy
+    that WordPress 7.1.3 bundles. Copyright (c) 2016-2023 Paragon Initiative Enterprises,
+    Copyright (c) 2013-2019 Frank Denis. The ISC license text is in sodium/LICENSE; sodium/README.txt
+    names the source files with their SHA-256. Compat.php and load.php in that folder are small
+    JavCMS helper files (a stand-in class and a loader). cacert.pem holds 150 certificates of the
+    Mozilla CA certificate store (as shipped by Git for Windows, 2026-02-12) for the HTTPS check
+    of the update downloads; it is under the Mozilla Public License 2.0
+    (https://www.mozilla.org/MPL/2.0/). The update bridge javcms-update.php, a separate file of
+    the GitHub release for sites on 1.2.0, carries the same two parts.
 
 JavCMS changed some of these third-party files. NOTICE.CHANGED-FILES.txt lists every changed
 file of the MacCMS base release (which ships most of them) and of the bundled editor libraries

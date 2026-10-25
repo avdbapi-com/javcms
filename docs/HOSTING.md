@@ -284,6 +284,25 @@ So a VPS needs 2 vCPU or more (the minimum in the table above). Behind a proxy o
 (the page warns when every visitor seems to come from one address), otherwise the per-visitor limits cannot tell
 your visitors apart.
 
+## One-click updates
+
+From 1.2.1, **Admins & backup › Updates** updates JavCMS from its GitHub releases. For that your hosting needs:
+
+- outgoing HTTPS connections from PHP to `api.github.com`, `github.com` and GitHub's release download hosts
+  (`release-assets.githubusercontent.com`, `objects.githubusercontent.com`); nothing else is contacted. Without them,
+  upload the release files into `runtime/update/inbox/` ([../UPGRADE.md](../UPGRADE.md), "Without an outgoing
+  connection");
+- write permission for PHP on the folders of the release files (on most shared hosting PHP runs as your own user);
+- free disk space for the download, the backup and the new files (the Review checks it before anything changes);
+- `runtime/` as a real folder of the site on a local disk (not a link to another folder, not a network mount without
+  file locks);
+- where the web server's OPcache never re-reads changed files (`opcache.validate_timestamps=0`): permission for the site
+  to reset OPcache (`opcache_reset` not in `disable_functions`, `opcache.restrict_api` not pointing elsewhere).
+
+Short PHP time limits, `open_basedir`, LiteSpeed and IIS work: every part of an update runs in short steps that
+continue where the last one stopped. Without these conditions you update by hand. Details:
+[../UPGRADE.md](../UPGRADE.md), "Hosting notes for updates".
+
 ## Where the numbers come from
 
 All sizes were measured on test servers with up to 8.07 million videos, after a real import order (random index

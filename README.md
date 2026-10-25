@@ -6,7 +6,9 @@ in a few clicks or fully automatically, from a few thousand videos up to million
 
 JavCMS is based on MacCMS 10 (ThinkPHP 5.0).
 
+- Download: https://github.com/avdbapi-com/javcms/releases/latest (always the newest release)
 - Source code: https://github.com/avdbapi-com/javcms
+- Live demo: https://javcms.net (adult content, 18+)
 - Help (Telegram): https://t.me/avdb_api
 
 ## What you get
@@ -36,7 +38,8 @@ Every theme starts in dark mode, and visitors can switch to light mode.
 | `topaz` | Topaz |
 | `topaz-modern` | Topaz Prism (Modern) |
 
-You can let visitors pick a theme themselves with the visitor theme switcher.
+Visitors can pick a theme themselves with the visitor theme switcher: a palette button that every page shows from the
+first screen. You can also put it in the site header or show it only at the end of the page, or switch it off.
 More: [docs/THEMES.md](docs/THEMES.md)
 
 ### 17 languages for visitors
@@ -118,6 +121,7 @@ More: [docs/SEO.md](docs/SEO.md)
 - A search box: press `/` and type what you need.
 - Rarely used tools stay hidden under "Show advanced tools".
 - Hide a category with one switch: it disappears from your site at once.
+- One-click updates from GitHub, with a backup and an automatic rollback (see "Updates" below).
 - One-click database backup, download and restore.
 - A security scan for changed files and injected scripts.
 - Separate admin accounts with exact rights. An admin can never give more rights than it has.
@@ -144,26 +148,47 @@ More: [docs/MAINTENANCE.md](docs/MAINTENANCE.md)
   [deployment/README.md](deployment/README.md)
 - An empty database and a database user with full rights on it.
 - **HTTPS** is strongly recommended. Automatic imports need a public HTTPS address.
+- For one-click updates: PHP must be able to write the site's files and reach GitHub over HTTPS. Without that you
+  update by hand, or from a package you upload yourself ([UPGRADE.md](UPGRADE.md)).
 
 ## Quick install
 
 1. Create an empty database and a database user in your hosting panel.
-2. Upload the zip to your site folder and extract it there.
+2. Download the newest release from https://github.com/avdbapi-com/javcms/releases/latest: in its **Assets** list,
+   click `javcms-<version>.zip` (for release 1.2.1: `javcms-1.2.1.zip`). Upload the zip to your site folder and
+   extract it there. How to check the download: [INSTALL.md](INSTALL.md), "Download JavCMS".
 3. Open `https://your-domain/install.php` and follow the steps. Choose which catalogs you will import (AVDB, xvidapi, both or later).
 4. Sign in to the admin at `https://your-domain/javcms.php`.
 5. Follow the checklist on the first admin page.
 
 Full step-by-step guide: [INSTALL.md](INSTALL.md)
 
-Already running the previous release? Read [UPGRADE.md](UPGRADE.md).
+Already running JavCMS? Read "Updates" below and [UPGRADE.md](UPGRADE.md).
 What is new: [CHANGELOG.md](CHANGELOG.md)
+
+## Updates
+
+From release 1.2.1, JavCMS updates itself from its GitHub releases. **Admins & backup › Updates** (founder admin
+account only) shows the installed and the newest version, the release notes and a check of your site, and installs the
+update with one click: with a backup of the replaced files, your settings and your database, a maintenance page for
+visitors while the files are replaced, a health check, an automatic rollback when anything fails, and a manual
+rollback for 7 days. The admin looks for a new release at most every 12 hours (you can switch that off). Every release
+is signed (Ed25519): packages without a valid JavCMS signature, older versions and other products are refused.
+
+- **Sites on 1.2.0** update once with the one-file update bridge `javcms-update.php` from the release page; after that,
+  with one click.
+- **Sites on 1.1.0** update by hand with the zip.
+- **Command line:** `php tools/update.php --check`, `php tools/update.php --apply`, `php tools/update.php --rollback`
+  (`php tools/update.php --help` lists every option).
+
+Step by step: [UPGRADE.md](UPGRADE.md)
 
 ## All guides
 
 | Guide | What it covers |
 |---|---|
 | [INSTALL.md](INSTALL.md) | Installing, file permissions, first steps, cron, HTTPS |
-| [UPGRADE.md](UPGRADE.md) | Moving from the previous release |
+| [UPGRADE.md](UPGRADE.md) | Updates: one click from 1.2.1, the update bridge for 1.2.0, by hand from 1.1.0 |
 | [CHANGELOG.md](CHANGELOG.md) | Everything that changed |
 | [docs/THEMES.md](docs/THEMES.md) | Themes, preview, visitor theme switcher |
 | [docs/IMPORT.md](docs/IMPORT.md) | Importing videos from AVDB and xvidapi |
@@ -202,9 +227,15 @@ From release 1.2.0, JavCMS is under the **JavCMS Community License 1.0** (file `
   LGPL); `LICENSE` and `NOTICE` list them, `NOTICE.CHANGED-FILES.txt` lists the changed files of the MacCMS release
   and of the bundled editor libraries, CodeMirror and Layui. Releases up to 1.1.0 stay under the Apache License 2.0 (files in them that said
   MIT stay MIT for those copies).
-- JavCMS PHP, template, CSS and JavaScript files start with a short comment that names JavCMS and its license (except
-  a few generated or data files and two readable rewrites of third-party jQuery plugins, named in `NOTICE`). It is an
-  ordinary code comment and never appears in your pages.
+- JavCMS PHP, template, CSS and JavaScript files start with a short comment that names JavCMS, its license, the GitHub
+  repository and the live demo (except a few generated or data files, two readable rewrites of third-party jQuery
+  plugins and the two small loader files of the bundled sodium_compat code, all named in `NOTICE`). It is an ordinary
+  code comment and never appears in your pages.
 
-Official sources: https://javcms.net, https://avdbapi.com, https://xvidapi.com, https://upload18.org and the
-Telegram group https://t.me/avdb_api.
+Official sources: https://github.com/avdbapi-com/javcms (source code and releases), https://javcms.net (live demo,
+adult content, 18+), https://avdbapi.com, https://xvidapi.com, https://upload18.org and the Telegram group
+https://t.me/avdb_api.
+
+Download JavCMS only from its GitHub release page, https://github.com/avdbapi-com/javcms/releases. javcms.net is the
+live demo, not a download place, and copies on other websites can be old or changed. JavCMS is free: if somebody asks
+you to pay for it, it is not an official download. JavCMS 1.1.0 and older are not offered for download.

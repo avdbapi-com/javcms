@@ -46,20 +46,34 @@ device for less motion, and they skip 3D background effects on slow or low-memor
 3. Click **Stop preview** to go back.
 4. Click **Use this theme** on the one you like. Visitors see the change right away.
 
+The card **Visitor theme switcher** at the top of the same page lets visitors choose: see below.
+
 ## Let visitors choose (visitor theme switcher)
 
-The visitor theme switcher is a small floating button. Visitors click it and pick a theme.
+The visitor theme switcher is a palette button on your site. Visitors click it and pick one of the themes you offer.
 Their choice is kept in their browser.
 
-1. Open **Site & theme › Site identity** and find the **Themes** card.
-2. **Visitor theme switcher:** on or off. It is on in new installs and off on upgraded sites.
-3. **Switcher button position:** bottom end (right) or bottom start (left).
-4. **Themes offered to visitors:** tick the themes you want to offer.
+1. Open **Site & theme › Themes**. The card **Visitor theme switcher** is above the theme pictures.
+2. **Show it to visitors:** On or Off. It is on in new installs.
+3. **Where the button shows:**
+   - **Always visible floating button (recommended):** a round button in a bottom corner of every page, visible from the
+     first screen. It moves above bottom ad bars and steps aside for videos and open menus.
+   - **In the site header:** an icon next to the light/dark button in the site header. Where the theme has no room for
+     it (often on phones), or once the header has scrolled out of view, the floating button is shown instead.
+   - **Only at the end of the page:** the button appears only when a visitor reaches the end of a page, so it never
+     covers content. Visitors may not notice it.
+4. **Corner of the floating button:** bottom right or bottom left. Pages in right-to-left languages such as Arabic use
+   the opposite corner.
+5. **Themes offered to visitors:** tick the themes you want to offer.
    Leave all unticked to offer every theme. Your default theme is always offered.
-5. Save.
+   If only the theme in use is ticked, visitors have nothing to switch to: the card tells you so.
+6. Click **Save** in the card.
+   If another tab or another admin changed the switcher settings after you opened the page, the card asks you to reload
+   the page before it saves a different choice.
 
 First-time visitors always see your default theme.
 Pages saved as static HTML files (an option in Page addresses) ignore the visitor's choice.
+**Site identity** shows whether the switcher is on and links to this card.
 
 If you use a CDN with a "cache everything" rule: exclude your HTML pages from that rule,
 or add the cookies `jv_theme`, `jv_theme_preview` and `avdb_ui_lang` to its cache key.
@@ -69,6 +83,9 @@ Otherwise one visitor's theme or language can be shown to others.
 
 - Your **logo** and **site icon** are set once in Site & theme › Site identity and show in every theme.
   See [SEO.md](SEO.md).
+- As long as your site uses the default JavCMS logo, seven Modern themes (Crimson Ink, Ember Thermal, Honey Nectar,
+  Neon Nocturne, Onyx Grid, Topaz Prism and Velvet Premiere) show their own brand mark and wordmark instead of the logo
+  picture. Upload your own logo and they show it.
 - The **brand colour** in Site identity colours the phone browser bar. Empty uses the theme's own colour.
 - The Ember theme can show a separate logo on phones (the field appears while Ember is your theme).
 
@@ -96,6 +113,7 @@ Advanced: to preview a theme only in your browser from the command line, run
 
 - **Theme files (advanced)** on the Themes page lets you look at a theme's HTML files (read-only).
 - To change a theme, edit its files in `template/<folder>/` with your hosting File Manager or by FTP.
-  Keep a copy of your changes: an upgrade replaces the theme files.
+  Keep a copy of your changes: an update replaces the theme files of the release. A one-click update lists the
+  release files you changed before it starts, and its backup keeps your copies.
 - Theme texts in all languages are in `template/<folder>/lang/<code>.json`.
 - Click **Clear cache** in the admin after you change theme files.

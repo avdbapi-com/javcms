@@ -1,8 +1,9 @@
 {/*
-This file is part of JavCMS - https://javcms.net
+This file is part of JavCMS - https://github.com/avdbapi-com/javcms
 Copyright (c) 2026 JAVCMS.NET and the JavCMS contributors.
 License: JavCMS Community License 1.0 - free to use, copy, change and share, not for sale.
 See the LICENSE and NOTICE files that come with JavCMS.
-Official sources: https://javcms.net https://avdbapi.com https://xvidapi.com https://upload18.org
+Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
+Live demo: https://javcms.net (adult content, 18 and over only)
 Telegram: https://t.me/avdb_api
 */}{php}$nnChipNo = 0;{/php}<nav class="nn-catsigns" data-ai-group aria-label="{:\\app\\common\\util\\TemplateText::get('ui.categories')}">{maccms:type ids="parent" flag="vod" order="asc" by="sort" id="nnCat" hide_empty="1"}{php}$nnChipNo++; $nnChipTone = 'nn-tone-' . \app\common\util\AutoIcon::slot($nnCat['type_name']);{/php}<a class="nn-catsign nn-sign nn-tube {$nnChipTone}" href="{:mac_url_type($nnCat)}"{if condition="$nnCat.type_id eq $GLOBALS['type_id'] || $nnCat.type_id eq $GLOBALS['type_pid']"} aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::icon('category', $nnCat['type_name'], ['size'=>'lg', 'plate'=>true, 'i'=>$nnChipNo - 1])}<span>{:\\app\\common\\util\\TemplateText::get(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)($nnCat['type_name'] ?? '')))}</span><small class="nn-ltr">{:number_format((float)mac_data_count($nnCat['type_id'],'all'))}</small></a>{/maccms:type}</nav>
