@@ -6,7 +6,7 @@
  * See the LICENSE and NOTICE files that come with JavCMS.
  * Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
  * Live demo: https://javcms.net (adult content, 18 and over only)
- * Telegram: https://t.me/avdb_api
+ * Telegram group: https://t.me/+jj6McO-iYfA0MTM1  Support: https://t.me/avdbapi_support
  */
 // Admin strings (zh-cn, part 91-seo): site identity, favicon, languages, legal & age, search titles, sitemap & robots.txt,
 // IndexNow (SEO-ADMIN-BRIEF section I.1), translated by item seo-i18n. Keys follow en-us/41-seo.php (the last key

@@ -5,6 +5,6 @@ License: JavCMS Community License 1.0 - free to use, copy, change and share, not
 See the LICENSE and NOTICE files that come with JavCMS.
 Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
 Live demo: https://javcms.net (adult content, 18 and over only)
-Telegram: https://t.me/avdb_api
+Telegram group: https://t.me/+jj6McO-iYfA0MTM1  Support: https://t.me/avdbapi_support
 */}{php}if (isset($tplSorts) && is_array($tplSorts)) { $tplSortIco = ['clock', 'flame', 'star', 'thumbs-up', 'layout-dashboard']; foreach ($tplSorts as $tplSi => $tplSv) { if (!isset($tplSv['ico'])) { $tplSorts[$tplSi]['ico'] = \app\common\util\AutoIcon::ui($tplSortIco[$tplSi] ?? 'sort', ['size' => 'sm', 'i' => $tplSi]); } } }{/php}
 {notempty name="tplSorts"}<div class="sortbar" data-ai-group><span>{:\\app\\common\\util\\AutoIcon::ui('sort', ['size'=>'sm'])}{:\\app\\common\\util\\TemplateText::get('sort_by')}</span>{volist name="tplSorts" id="tplS"}<a href="{$tplS.url|htmlspecialchars=ENT_QUOTES}" rel="nofollow" {if condition="$tplS.on"}aria-current="page"{/if}>{$tplS.ico}<span>{$tplS.label|htmlspecialchars=ENT_QUOTES}</span></a>{/volist}</div>{/notempty}

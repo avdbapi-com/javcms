@@ -3,6 +3,9 @@ contact_links:
   - name: Help center
     url: https://help.avdbapi.com
     about: Guides with screenshots for installing, importing, ads and SEO.
+  - name: Community chat (Telegram group)
+    url: https://t.me/+jj6McO-iYfA0MTM1
+    about: Ask other JavCMS users in the Telegram group.
   - name: Questions and setup help (Telegram support)
     url: https://t.me/avdbapi_support
     about: Ask the team in a private Telegram chat.

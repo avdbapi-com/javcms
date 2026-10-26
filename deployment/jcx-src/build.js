@@ -5,7 +5,7 @@
  * See the LICENSE and NOTICE files that come with JavCMS.
  * Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
  * Live demo: https://javcms.net (adult content, 18 and over only)
- * Telegram: https://t.me/avdb_api
+ * Telegram group: https://t.me/+jj6McO-iYfA0MTM1  Support: https://t.me/avdbapi_support
  */
 // Builds static/jcx/{jcx.js,jcx-l.js,jcx-m.js,jcx-p.js,jcx.css,jcx-v.js,jcx-a.js} from the readable sources in this folder and
 // checks the size budgets of ADS-BRIEF 11.3 (gzip -9). jcx-m.js (rarer formats loaded on demand: U13 widgets, U08 / U09

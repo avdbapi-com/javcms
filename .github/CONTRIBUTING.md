@@ -4,7 +4,7 @@ Thanks for helping to make JavCMS better. Bug reports, ideas, docs fixes, transl
 
 ## Before you start
 
-- Questions and setup help: the [help center](https://help.avdbapi.com) and [@avdbapi_support](https://t.me/avdbapi_support) on Telegram.
+- Questions and setup help: the [help center](https://help.avdbapi.com), the [Telegram group](https://t.me/+jj6McO-iYfA0MTM1) and [@avdbapi_support](https://t.me/avdbapi_support) on Telegram.
   Issues are for bugs and feature requests.
 - Search the [issues](https://github.com/avdbapi-com/javcms/issues) first: your topic may already be there.
 - Security problems: never in public. Follow [SECURITY.md](SECURITY.md).

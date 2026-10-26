@@ -5,5 +5,5 @@ License: JavCMS Community License 1.0 - free to use, copy, change and share, not
 See the LICENSE and NOTICE files that come with JavCMS.
 Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
 Live demo: https://javcms.net (adult content, 18 and over only)
-Telegram: https://t.me/avdb_api
+Telegram group: https://t.me/+jj6McO-iYfA0MTM1  Support: https://t.me/avdbapi_support
 */}<article class="ci-panel"><h2 class="ci-panel-h" dir="auto">{$obj.vod_display_name|mac_default=$obj.vod_name|htmlspecialchars=ENT_QUOTES}</h2>{if condition="empty($obj['vod_pwd']) OR session('1-1-'.$obj['vod_id']) eq '1'"}<p dir="auto">{$obj.vod_display_blurb|htmlspecialchars=ENT_QUOTES}</p>{else/}<p>{:\\app\\common\\util\\TemplateText::get('ui.access_required')}</p>{/if}<a class="ci-btn" href="{:htmlspecialchars(mac_url_vod_detail($obj), ENT_QUOTES)}">{:\\app\\common\\util\\TemplateText::get('ui.details')}</a></article>

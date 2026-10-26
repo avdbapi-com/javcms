@@ -5,7 +5,7 @@
  * See the LICENSE and NOTICE files that come with JavCMS.
  * Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
  * Live demo: https://javcms.net (adult content, 18 and over only)
- * Telegram: https://t.me/avdb_api
+ * Telegram group: https://t.me/+jj6McO-iYfA0MTM1  Support: https://t.me/avdbapi_support
  */
 /* JavCMS admin UI kit script (static/js/admin_ux.js). Brief ADMIN-IA-BRIEF.md section 6.3.
    Loaded LAST from application/admin/view/public/head.html, after jQuery, layui and admin_studio.js.

@@ -6,7 +6,7 @@
  * See the LICENSE and NOTICE files that come with JavCMS.
  * Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
  * Live demo: https://javcms.net (adult content, 18 and over only)
- * Telegram: https://t.me/avdb_api
+ * Telegram group: https://t.me/+jj6McO-iYfA0MTM1  Support: https://t.me/avdbapi_support
  */
 /*! Topaz Prism (Modern) - caustics with spectral fringes | original GLSL for the JavCMS FX kit (K1 shader module) | JavCMS Community License 1.0
  * Light playing through crystal: an animated Voronoi (cell points drift on sine paths) whose cell edges (F2 - F1) become

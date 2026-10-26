@@ -5,7 +5,8 @@
     "1.2.0: xvidapi as a second video source (whole catalog by default, size estimate, storage target), search index, page cache and fair limits per visitor network for millions of videos, no page limits, the Speed & protection page, JAVCMS Modern as the default theme, JavCMS Community License 1.0. See CHANGELOG.md.",
     "1.1.0: 18 themes, ad system with 58 examples, SEO tools and favicon upload, admin overhaul, automatic AVDB import, faster search, the database stays small, many security fixes. See CHANGELOG.md."
   ],
-  "telegram": "https://t.me/avdb_api",
+  "telegram": "https://t.me/+jj6McO-iYfA0MTM1",
+  "telegram_support": "https://t.me/avdbapi_support",
   "githubRepo": "https://github.com/avdbapi-com/javcms",
   "packageName": ""
 }

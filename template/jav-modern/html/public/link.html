@@ -5,5 +5,5 @@ License: JavCMS Community License 1.0 - free to use, copy, change and share, not
 See the LICENSE and NOTICE files that come with JavCMS.
 Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
 Live demo: https://javcms.net (adult content, 18 and over only)
-Telegram: https://t.me/avdb_api
+Telegram group: https://t.me/+jj6McO-iYfA0MTM1  Support: https://t.me/avdbapi_support
 */}{php}$tplLinks = [];{/php}{maccms:link num="all" type="font" id="tplLk"}{php}$tplLinks[] = $tplLk;{/php}{/maccms:link}{notempty name="tplLinks"}<nav class="partner-links" aria-label="{:\\app\\common\\util\\TemplateText::get('jav.partner_sites')}"><span>{:\\app\\common\\util\\TemplateText::get('jav.partner_sites')}</span>{volist name="tplLinks" id="tplLk"}<a href="{:mac_safe_url($tplLk['link_url'])}" target="_blank" rel="nofollow noopener noreferrer">{$tplLk.link_name|htmlspecialchars=ENT_QUOTES}</a>{/volist}</nav>{/notempty}

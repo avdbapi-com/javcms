@@ -5,7 +5,7 @@
  * See the LICENSE and NOTICE files that come with JavCMS.
  * Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
  * Live demo: https://javcms.net (adult content, 18 and over only)
- * Telegram: https://t.me/avdb_api
+ * Telegram group: https://t.me/+jj6McO-iYfA0MTM1  Support: https://t.me/avdbapi_support
  */
 /* JavCMS ads runtime (ADS-BRIEF 5): reads #jcx-d, fetches c.json, filters (dates, weekdays, hours, device, caps,
    members, countries, closed memory), weighted rotation, fills the slot boxes the placer printed (image / picture,

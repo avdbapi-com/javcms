@@ -5,7 +5,7 @@ License: JavCMS Community License 1.0 - free to use, copy, change and share, not
 See the LICENSE and NOTICE files that come with JavCMS.
 Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
 Live demo: https://javcms.net (adult content, 18 and over only)
-Telegram: https://t.me/avdb_api
+Telegram group: https://t.me/+jj6McO-iYfA0MTM1  Support: https://t.me/avdbapi_support
 */}<section class="hn-meta" data-ai-group aria-label="{:\\app\\common\\util\\TemplateText::get('ui.details')}"><dl>
 {if condition="$hnCode neq ''"}<div class="hn-meta-row"><dt><span class="hn-dot">{:\\app\\common\\util\\AutoIcon::ui('hash', ['class'=>'hn-i', 'tint'=>'none'])}</span>{:$hnLbl('ui.id_code')}</dt><dd><span class="hn-chip hn-chip-code">{$hnCode|htmlspecialchars=ENT_QUOTES}</span></dd></div>{/if}
 {notempty name="hnActors"}<div class="hn-meta-row"><dt><span class="hn-dot">{:\\app\\common\\util\\AutoIcon::ui('users', ['class'=>'hn-i', 'tint'=>'none'])}</span>{:$hnLbl('ui.performers')}</dt><dd>{volist name="hnActors" id="hnMv"}<a class="hn-chip hn-chip-av" href="{:$hnSearchUrl('actor', $hnMv)}">{:\\app\\common\\util\\AutoIcon::avatar($hnMv, '', ['size'=>'xs', 'decorative'=>true])}<span dir="auto">{:$hnShow($hnMv)}</span></a>{/volist}</dd></div>{/notempty}

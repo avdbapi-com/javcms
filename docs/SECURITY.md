@@ -365,7 +365,7 @@ Attackers who know your server's real address can go around Cloudflare. After Cl
 3. Compare your files with a fresh copy of the same JavCMS release. Replace changed files.
 4. Restore a clean database backup if your content was changed.
 5. Change your admin address again (section 1).
-6. Ask your host to check their logs, and ask for help on Telegram: https://t.me/avdb_api
+6. Ask your host to check their logs, and ask for help in the Telegram group: https://t.me/+jj6McO-iYfA0MTM1 or write to Support: https://t.me/avdbapi_support
 
 Nobody from the JavCMS team will ever ask for your passwords. Never post passwords, database settings
 or the content of `application/database.php` or `application/extra/` in a chat or an issue.

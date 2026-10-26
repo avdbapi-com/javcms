@@ -5,7 +5,7 @@ License: JavCMS Community License 1.0 - free to use, copy, change and share, not
 See the LICENSE and NOTICE files that come with JavCMS.
 Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
 Live demo: https://javcms.net (adult content, 18 and over only)
-Telegram: https://t.me/avdb_api
+Telegram group: https://t.me/+jj6McO-iYfA0MTM1  Support: https://t.me/avdbapi_support
 */}{notempty name="tplRelated"}<section class="film-more reveal" aria-labelledby="film-more-title">
 <div class="stui-vodlist__head" data-ai-group><h2 id="film-more-title">{:\\app\\common\\util\\AutoIcon::ui('sparkles')}{$tplMoreTitle}</h2>{if condition="$tplCatUrl neq ''"}<a class="pull-right more-link" href="{$tplCatUrl|htmlspecialchars=ENT_QUOTES}">{:\\app\\common\\util\\TemplateText::get('ui.view_more')}</a>{/if}</div>
 <ul class="stui-vodlist" data-grid-fill>{volist name="tplRelated" id="vo"}<li>{include file="block/vod_box"}</li>{/volist}</ul>

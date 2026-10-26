@@ -5,5 +5,5 @@ License: JavCMS Community License 1.0 - free to use, copy, change and share, not
 See the LICENSE and NOTICE files that come with JavCMS.
 Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
 Live demo: https://javcms.net (adult content, 18 and over only)
-Telegram: https://t.me/avdb_api
+Telegram group: https://t.me/+jj6McO-iYfA0MTM1  Support: https://t.me/avdbapi_support
 */}<div class="message-list">{maccms:gbook num="10" paging="yes" pageurl="gbook/index" order="desc" by="id"}<article><div class="comment-head"><strong>{$vo.gbook_name|htmlspecialchars=ENT_QUOTES}</strong><time>{$vo.gbook_time|mac_day}</time></div><p>{$vo.gbook_content|htmlspecialchars=ENT_QUOTES}</p>{notempty name="vo.gbook_reply"}<p class="site-reply"><strong>{:\\app\\common\\util\\TemplateText::get('ui.site_reply')}</strong> {$vo.gbook_reply|htmlspecialchars=ENT_QUOTES}</p>{/notempty}</article>{/maccms:gbook}{if condition="$__PAGING__.record_total eq 0"}<p class="community-empty">{:\\app\\common\\util\\TemplateText::get('ui.no_messages_yet')}</p>{/if}{include file="public/paging"}</div>

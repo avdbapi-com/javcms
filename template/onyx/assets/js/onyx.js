@@ -5,7 +5,7 @@
  * See the LICENSE and NOTICE files that come with JavCMS.
  * Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
  * Live demo: https://javcms.net (adult content, 18 and over only)
- * Telegram: https://t.me/avdb_api
+ * Telegram group: https://t.me/+jj6McO-iYfA0MTM1  Support: https://t.me/avdbapi_support
  */
 /* Onyx theme behaviour (vanilla JS, no dependencies). Rewritten from scratch for the MDblack look:
    drawers, priority nav, coverflow banner, tabs, copy link, search suggestions, member state, TOP button, card spotlight. */

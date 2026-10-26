@@ -18,7 +18,7 @@ changed some of these files. Each listed file is also compared with the ApiiCMS 
 that is the same as it is marked "as received (ApiiCMS)": JavCMS did not change it further, and its date is
 the date of the copy JavCMS received. Every other date is the date of the file's last change (its file date
 in this package), except for files whose file date is older than the start of the JavCMS work (2026-09-30):
-they show "pass date" or "received date" (see the legend). The JavCMS dates run from 2026-10-06 to 2026-10-24.
+they show "pass date" or "received date" (see the legend). The JavCMS dates run from 2026-10-06 to 2026-10-26.
 Files of the MacCMS release that this package does not ship: 254.
 Other third-party code that JavCMS added itself is described in LICENSE (Part C) and NOTICE.
 
@@ -346,8 +346,8 @@ MacCMS v2023.1000.3051 release: Static files and bundled libraries of the MacCMS
 
 MacCMS v2023.1000.3051 release: MacCMS application files (Apache-2.0): 272 files
 ---------------------------------------------------------------------------------
-  LICENSE                                               2026-10-24  content
-  README.md                                             2026-10-24  content
+  LICENSE                                               2026-10-26  content
+  README.md                                             2026-10-26  content
   api.php                                               2026-10-24  [notice], code, notice restored
   application/admin/common/auth.php                     2026-10-24  [notice], code
   application/admin/controller/Actor.php                2026-10-14  [notice], code

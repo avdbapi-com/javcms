@@ -5,7 +5,7 @@
  * See the LICENSE and NOTICE files that come with JavCMS.
  * Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
  * Live demo: https://javcms.net (adult content, 18 and over only)
- * Telegram: https://t.me/avdb_api
+ * Telegram group: https://t.me/+jj6McO-iYfA0MTM1  Support: https://t.me/avdbapi_support
  */
 /* JavCMS site runtime (SEO-ADMIN-BRIEF F.2, F.3): age gate overlay, cookie notice, release of code held for consent.
    Loaded with defer only when the gate, the notice, the legal row or held code is on the page. Nothing is sent to the server. */

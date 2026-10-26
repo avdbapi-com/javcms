@@ -5,7 +5,7 @@
  * See the LICENSE and NOTICE files that come with JavCMS.
  * Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
  * Live demo: https://javcms.net (adult content, 18 and over only)
- * Telegram: https://t.me/avdb_api
+ * Telegram group: https://t.me/+jj6McO-iYfA0MTM1  Support: https://t.me/avdbapi_support
  */
 /* JavCMS video ads: the VAST part (ADS-BRIEF 7.4). Readable source of static/jcx/jcx-a.js (build:
    node deployment/jcx-src/build.js, budget 1.5 KB gzip). Split out of jcx-v.js in the video fix round (2026-10-16,

@@ -7,7 +7,7 @@
  * See the LICENSE and NOTICE files that come with JavCMS.
  * Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
  * Live demo: https://javcms.net (adult content, 18 and over only)
- * Telegram: https://t.me/avdb_api
+ * Telegram group: https://t.me/+jj6McO-iYfA0MTM1  Support: https://t.me/avdbapi_support
  */
 /* * This is the global language pack. Module language packs, such as application/admin/lang/, take precedence over the global pack.
 *Global keys: available throughout the system
@@ -81,7 +81,8 @@ return [
     'admin/module_removed'=>'Mô-đun dành riêng cho Trung Quốc này không có trong JAVCMS.',
     'admin/paysetup/china_removed'=>'Các cổng thanh toán chỉ dành cho Trung Quốc (Alipay, WeChat Pay, Codepay, Zhapay) không có trong JAVCMS. Điểm, nhóm thành viên và thẻ nạp vẫn hoạt động.',
     'admin/footer/repo'=>'Mã nguồn (GitHub)',
-    'admin/footer/support'=>'Hỗ trợ (Telegram)',
+    'admin/footer/support'=>'Hỗ trợ',
+    'admin/footer/tg_group'=>'Nhóm Telegram',
     'install/is_ok1'=>'Cài đặt hoàn tất!',
     'install/is_ok2'=>'Xây dựng website của bạn với JAVCMS',
 
@@ -1994,7 +1995,7 @@ https://example.com/images/123.jpg',
     'install/select_lang'=>'Select a language pack [select lang]',
     'install/lang_tip'=>'Choose the language for the admin interface.',
     'install/user_agreement_title'=>'Giấy phép JavCMS',
-    'install/user_agreement'=>'JavCMS là phần mềm miễn phí, có sẵn mã nguồn (source-available), theo Giấy phép Cộng đồng JavCMS 1.0 (JavCMS Community License 1.0). Toàn văn nằm trong tệp LICENSE trong thư mục JavCMS; trang này chỉ tóm tắt ngắn và không thêm điều khoản nào khác.<br /><br />Bạn được dùng JavCMS miễn phí, kể cả cho website của chính bạn có kiếm tiền (ví dụ bằng quảng cáo), và được sao chép, sửa đổi và chia sẻ nó.<br /><br />Không ai được bán JavCMS: không thu tiền cho bản sao, lượt tải, phiên bản đã sửa, giao diện hay bất kỳ phần nào của nó, gói cài đặt hay quyền truy cập trả phí, và không thu tiền cho việc cài đặt, thiết lập, vận hành, hỗ trợ, sửa đổi hay bàn giao JavCMS cho người khác, hay cho các gói hosting có cài sẵn JavCMS. Các bản chia sẻ phải miễn phí và giữ cùng giấy phép, kèm tệp LICENSE và NOTICE, giữ nguyên mọi thông báo và ghi rõ các thay đổi; chúng không được chứa quảng cáo, mã liên kết tiếp thị (affiliate) hay mã giới thiệu, liên kết trả phí, mã đào tiền ảo hay mã hoặc liên kết kiếm tiền khác của người chia sẻ (quảng cáo trên website của chính bạn thì được phép).<br /><br />JavCMS dựa trên MacCMS 10 (Apache License 2.0) và có các thay đổi từ RamCMS (Apache License 2.0) và ApiiCMS (MIT License). MacCMS, ThinkPHP và các phần của bên thứ ba khác giữ giấy phép riêng của chúng; tệp LICENSE và NOTICE liệt kê chúng.<br /><br />JavCMS được cung cấp không kèm bất kỳ bảo đảm nào.<br /><br />Mã nguồn: https://github.com/avdbapi-com/javcms - Hỗ trợ: https://t.me/avdb_api',
+    'install/user_agreement'=>'JavCMS là phần mềm miễn phí, có sẵn mã nguồn (source-available), theo Giấy phép Cộng đồng JavCMS 1.0 (JavCMS Community License 1.0). Toàn văn nằm trong tệp LICENSE trong thư mục JavCMS; trang này chỉ tóm tắt ngắn và không thêm điều khoản nào khác.<br /><br />Bạn được dùng JavCMS miễn phí, kể cả cho website của chính bạn có kiếm tiền (ví dụ bằng quảng cáo), và được sao chép, sửa đổi và chia sẻ nó.<br /><br />Không ai được bán JavCMS: không thu tiền cho bản sao, lượt tải, phiên bản đã sửa, giao diện hay bất kỳ phần nào của nó, gói cài đặt hay quyền truy cập trả phí, và không thu tiền cho việc cài đặt, thiết lập, vận hành, hỗ trợ, sửa đổi hay bàn giao JavCMS cho người khác, hay cho các gói hosting có cài sẵn JavCMS. Các bản chia sẻ phải miễn phí và giữ cùng giấy phép, kèm tệp LICENSE và NOTICE, giữ nguyên mọi thông báo và ghi rõ các thay đổi; chúng không được chứa quảng cáo, mã liên kết tiếp thị (affiliate) hay mã giới thiệu, liên kết trả phí, mã đào tiền ảo hay mã hoặc liên kết kiếm tiền khác của người chia sẻ (quảng cáo trên website của chính bạn thì được phép).<br /><br />JavCMS dựa trên MacCMS 10 (Apache License 2.0) và có các thay đổi từ RamCMS (Apache License 2.0) và ApiiCMS (MIT License). MacCMS, ThinkPHP và các phần của bên thứ ba khác giữ giấy phép riêng của chúng; tệp LICENSE và NOTICE liệt kê chúng.<br /><br />JavCMS được cung cấp không kèm bất kỳ bảo đảm nào.<br /><br />Mã nguồn: https://github.com/avdbapi-com/javcms - Nhóm Telegram: https://t.me/+jj6McO-iYfA0MTM1 - Hỗ trợ: https://t.me/avdbapi_support',
 
     'install/user_agreement_agree'=>'Agree and install',
     'install/environment_title'=>'System requirements check',

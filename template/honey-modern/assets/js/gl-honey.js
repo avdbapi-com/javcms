@@ -5,7 +5,7 @@
  * See the LICENSE and NOTICE files that come with JavCMS.
  * Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
  * Live demo: https://javcms.net (adult content, 18 and over only)
- * Telegram: https://t.me/avdb_api
+ * Telegram group: https://t.me/+jj6McO-iYfA0MTM1  Support: https://t.me/avdbapi_support
  */
 /*! Honey Nectar (Modern) - liquid honey | original GLSL for the JavCMS FX kit (K1 shader module) | JavCMS Community License 1.0
  * A slow, viscous height field h = fbm(p*1.3 + flow) + .35*fbm(p*3.1 - t*.03) (gradient noise from the kit library,

@@ -5,7 +5,7 @@ License: JavCMS Community License 1.0 - free to use, copy, change and share, not
 See the LICENSE and NOTICE files that come with JavCMS.
 Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
 Live demo: https://javcms.net (adult content, 18 and over only)
-Telegram: https://t.me/avdb_api
+Telegram group: https://t.me/+jj6McO-iYfA0MTM1  Support: https://t.me/avdbapi_support
 */}{php}$tpEmptyTitle = isset($tpEmptyTitle) && $tpEmptyTitle !== '' ? $tpEmptyTitle : \app\common\util\TemplateText::raw('tp.empty_tray'); $tpEmptyText = isset($tpEmptyText) && $tpEmptyText !== '' ? $tpEmptyText : \app\common\util\TemplateText::raw('tp.empty_tray_sub'); $tpEmptyIcon = isset($tpEmptyIcon) && $tpEmptyIcon !== '' ? $tpEmptyIcon : 'diamond'; $tpEmptyScene = isset($tpEmptyScene) ? (string)$tpEmptyScene : '';{/php}<div class="tp-empty" data-tp-empty>
   {if condition="$tpEmptyScene neq ''"}<div class="tp-empty-scene">{:\\app\\common\\util\\AutoIcon::scene($tpEmptyScene)}</div>{else/}<div class="tp-zdog" data-tp-zdog aria-hidden="true"><span class="tp-zdog-static"><svg class="tp-i"><use href="{$maccms.path_tpl}assets/icons.svg#{$tpEmptyIcon}"/></svg></span><span class="tp-zdog-sparks" data-tp-sparks></span></div>{/if}
   <h2>{$tpEmptyTitle|htmlspecialchars=ENT_QUOTES}</h2>

@@ -271,4 +271,4 @@ In your hosting panel, open "Cron Jobs" and add these lines (every 5 minutes):
 | `install.php` says "This site is installed" (or "Installation is locked") but you want to install again | Only if you really want to start over: delete `application/data/install/install.lock`, use an empty database, and run `install.php` again. Put the lock file back afterwards (the installer does this for you). |
 | Search in other languages finds nothing or shows an error | Your database is older than MySQL 5.7.8 / MariaDB 10.2.3. Ask your host for a newer version. |
 
-Still stuck? Ask on Telegram: https://t.me/avdb_api
+Still stuck? Ask in the Telegram group: https://t.me/+jj6McO-iYfA0MTM1 or write to Support: https://t.me/avdbapi_support

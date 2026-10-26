@@ -5,7 +5,7 @@ License: JavCMS Community License 1.0 - free to use, copy, change and share, not
 See the LICENSE and NOTICE files that come with JavCMS.
 Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
 Live demo: https://javcms.net (adult content, 18 and over only)
-Telegram: https://t.me/avdb_api
+Telegram group: https://t.me/+jj6McO-iYfA0MTM1  Support: https://t.me/avdbapi_support
 */}{php}
 $ciSeoObj = isset($obj) && is_array($obj) ? $obj : []; foreach (['name', 'blurb', 'content', 'actor', 'class', 'director', 'writer', 'tag', 'area'] as $ciSeoF) { $ciSeoV = (string)($ciSeoObj['vod_display_' . $ciSeoF] ?? ($ciSeoObj['vod_' . $ciSeoF] ?? '')); for ($ciSeoI = 0; $ciSeoI < 4; $ciSeoI++) { $ciSeoD = html_entity_decode($ciSeoV, ENT_QUOTES | ENT_HTML5, 'UTF-8'); if ($ciSeoD === $ciSeoV) { break; } $ciSeoV = $ciSeoD; } if (strpos($ciSeoV, '\u') !== false) { $ciSeoV = preg_replace_callback('/\\\\u([0-9a-fA-F]{4})/', function ($ciSeoM) { $ciSeoC = hexdec($ciSeoM[1]); return ($ciSeoC >= 32 && $ciSeoC !== 0xFEFF) ? html_entity_decode('&#' . $ciSeoC . ';', ENT_QUOTES | ENT_HTML5, 'UTF-8') : ''; }, $ciSeoV); } if ($ciSeoV !== '') { $ciSeoObj['vod_display_' . $ciSeoF] = $ciSeoV; } }
 echo \app\common\util\TemplateSeo::head($maccms, $ciSeoObj, isset($param) && is_array($param) ? $param : []);

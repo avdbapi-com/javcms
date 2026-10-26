@@ -5,7 +5,7 @@
  * See the LICENSE and NOTICE files that come with JavCMS.
  * Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
  * Live demo: https://javcms.net (adult content, 18 and over only)
- * Telegram: https://t.me/avdb_api
+ * Telegram group: https://t.me/+jj6McO-iYfA0MTM1  Support: https://t.me/avdbapi_support
  */
 /*! Ember Thermal (Modern) - effects module | original code (JavCMS Community License 1.0, JavCMS project)
  * E3 kinetic heat type (Splitting 1.1, MIT): section titles expand from wdth 75 / wght 500 to wdth 100 / wght 800

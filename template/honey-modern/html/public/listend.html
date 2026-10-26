@@ -5,6 +5,6 @@ License: JavCMS Community License 1.0 - free to use, copy, change and share, not
 See the LICENSE and NOTICE files that come with JavCMS.
 Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
 Live demo: https://javcms.net (adult content, 18 and over only)
-Telegram: https://t.me/avdb_api
+Telegram group: https://t.me/+jj6McO-iYfA0MTM1  Support: https://t.me/avdbapi_support
 */}{php}$ncListCount = isset($ncListN) ? intval($ncListN) : ((is_array($__LIST__) && !isset($__LIST__['list'])) ? count($__LIST__) : ((isset($__LIST__['list']) && is_array($__LIST__['list'])) ? count($__LIST__['list']) : 0)); $ncLastPage = !isset($__PAGING__['page_total']) || intval($__PAGING__['page_current'] ?? 1) >= intval($__PAGING__['page_total']);{/php}{if condition="$ncListCount eq 0"}{include file="public/empty"}{elseif condition="$ncLastPage"/}<script>(function(s){var g=s&&s.previousElementSibling;while(g&&!g.hasAttribute("data-grid-fill"))g=g.previousElementSibling;if(g)for(var i=0;i<g.children.length;i++)g.children[i].setAttribute("data-grid-keep","");})(document.currentScript);</script>{/if}
 {include file="public/paging"}

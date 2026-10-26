@@ -5,5 +5,5 @@ License: JavCMS Community License 1.0 - free to use, copy, change and share, not
 See the LICENSE and NOTICE files that come with JavCMS.
 Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
 Live demo: https://javcms.net (adult content, 18 and over only)
-Telegram: https://t.me/avdb_api
+Telegram group: https://t.me/+jj6McO-iYfA0MTM1  Support: https://t.me/avdbapi_support
 */}<article class="ci-panel"><h2 class="ci-panel-h">{:htmlspecialchars(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)($obj['art_name'] ?? '')), ENT_QUOTES, 'UTF-8')}</h2>{if condition="empty($obj['art_pwd']) OR session('2-1-'.$obj['art_id']) eq '1'"}<div class="ci-article">{:\\app\\common\\util\\TemplateContent::html($obj['art_content'] ?? '')}</div>{else/}<p>{:\\app\\common\\util\\TemplateText::get('ui.access_required')}</p>{/if}<a class="ci-btn" href="{:htmlspecialchars(mac_url_art_detail($obj), ENT_QUOTES)}">{:\\app\\common\\util\\TemplateText::get('ui.details')}</a></article>

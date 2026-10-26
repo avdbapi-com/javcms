@@ -5,7 +5,7 @@ License: JavCMS Community License 1.0 - free to use, copy, change and share, not
 See the LICENSE and NOTICE files that come with JavCMS.
 Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
 Live demo: https://javcms.net (adult content, 18 and over only)
-Telegram: https://t.me/avdb_api
+Telegram group: https://t.me/+jj6McO-iYfA0MTM1  Support: https://t.me/avdbapi_support
 */}<section class="ct-panel ct-meta" aria-labelledby="ct-meta-h"><h2 class="ct-panel-h" id="ct-meta-h">{:\\app\\common\\util\\AutoIcon::ui('info', ['class'=>'ct-ico'])}{:\\app\\common\\util\\TemplateText::get('ui.details')}</h2><dl data-ai-group>
 {if condition="$ctCode neq ''"}<div class="ct-meta-row"><dt>{:\\app\\common\\util\\AutoIcon::ui('hash', ['class'=>'ct-ico'])}{:\\app\\common\\util\\TemplateText::get('crimson.code')}</dt><dd><span class="ct-tag ct-tag--plain ct-code" dir="ltr">{$ctCode|htmlspecialchars=ENT_QUOTES}</span></dd></div>{/if}
 {notempty name="ctActorItems"}<div class="ct-meta-row"><dt>{:\\app\\common\\util\\AutoIcon::ui('users', ['class'=>'ct-ico'])}{:\\app\\common\\util\\TemplateText::get('crimson.performers')}</dt><dd>{volist name="ctActorItems" id="ctIt"}<a class="ct-tag ct-tag--av" href="{:mac_url_search(['actor'=>$ctIt['v']])}">{:\\app\\common\\util\\AutoIcon::avatar($ctIt['v'], '', ['size'=>'xs', 'decorative'=>true])}<span dir="auto">{$ctIt.l|htmlspecialchars=ENT_QUOTES}</span></a>{/volist}</dd></div>{/notempty}

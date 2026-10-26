@@ -5,7 +5,7 @@ License: JavCMS Community License 1.0 - free to use, copy, change and share, not
 See the LICENSE and NOTICE files that come with JavCMS.
 Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
 Live demo: https://javcms.net (adult content, 18 and over only)
-Telegram: https://t.me/avdb_api
+Telegram group: https://t.me/+jj6McO-iYfA0MTM1  Support: https://t.me/avdbapi_support
 */}{php}$hnSlideCount = 0;{/php}<section class="hn-slider" aria-roledescription="carousel" aria-label="{:\\app\\common\\util\\TemplateText::get('honey.featured')}" data-hn-slider>
 <div class="hn-slides" tabindex="0">{maccms:vod num="6" level="9" type="all" order="desc" by="time" paging="no" id="hnSv"}{php}$hnSlideCount++;{/php}{include file="index/slideitem"}{/maccms:vod}{if condition="$hnSlideCount eq 0"}{maccms:vod num="6" type="all" order="desc" by="hits_week" paging="no" id="hnSv"}{php}$hnSlideCount++;{/php}{include file="index/slideitem"}{/maccms:vod}{/if}</div>
 <button class="hn-slider-arrow prev" type="button" data-hn-prev aria-label="{:\\app\\common\\util\\TemplateText::get('previous_page')}">{:\\app\\common\\util\\AutoIcon::ui('chevron-left', ['class'=>'hn-i', 'tint'=>'none'])}</button><button class="hn-slider-arrow next" type="button" data-hn-next aria-label="{:\\app\\common\\util\\TemplateText::get('next_page')}">{:\\app\\common\\util\\AutoIcon::ui('chevron-right', ['class'=>'hn-i', 'tint'=>'none'])}</button>

@@ -5,7 +5,7 @@ License: JavCMS Community License 1.0 - free to use, copy, change and share, not
 See the LICENSE and NOTICE files that come with JavCMS.
 Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
 Live demo: https://javcms.net (adult content, 18 and over only)
-Telegram: https://t.me/avdb_api
+Telegram group: https://t.me/+jj6McO-iYfA0MTM1  Support: https://t.me/avdbapi_support
 */}{php}if (!isset($ciCardInit)) { $ciCardInit = 1; $ciNow = time(); $ciTxtHot = \app\common\util\TemplateText::get('ink.badge_hot'); $ciTxtNew = \app\common\util\TemplateText::get('ink.badge_new'); $ciTxtViews = \app\common\util\TemplateText::get('ui.views');
  $ciShort = function ($n) { $n = (int)$n; if ($n >= 1000000) { return rtrim(rtrim(number_format($n / 1000000, 1, '.', ''), '0'), '.') . 'M'; } if ($n >= 10000) { return rtrim(rtrim(number_format($n / 1000, 1, '.', ''), '0'), '.') . 'K'; } return number_format($n); }; }
 $ciMode = isset($ciMode) ? (string)$ciMode : '';

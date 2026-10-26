@@ -5,5 +5,5 @@ License: JavCMS Community License 1.0 - free to use, copy, change and share, not
 See the LICENSE and NOTICE files that come with JavCMS.
 Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
 Live demo: https://javcms.net (adult content, 18 and over only)
-Telegram: https://t.me/avdb_api
+Telegram group: https://t.me/+jj6McO-iYfA0MTM1  Support: https://t.me/avdbapi_support
 */}{php}$ctCurType = intval($obj['type_id'] ?? 0); $ctCurPid = intval($obj['type_pid'] ?? 0);{/php}<nav class="ct-chips ct-chips--scroll ct-catchips" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.categories')}" data-ai-group>{maccms:type ids="parent" flag="vod" order="asc" by="sort" id="ctChipCat" key="ctChipK" hide_empty="1"}<a class="ct-chip" href="{:mac_url_type($ctChipCat,[],'type')}"{if condition="$ctChipCat.type_id eq $ctCurType || $ctChipCat.type_id eq $ctCurPid"} aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::icon('category', $ctChipCat['type_name'], ['size'=>'sm', 'i'=>intval($ctChipK)])}{:\\app\\common\\util\\TemplateText::get(htmlspecialchars_decode((string)$ctChipCat['type_name'], ENT_QUOTES))}</a>{/maccms:type}</nav>

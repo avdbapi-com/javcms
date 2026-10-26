@@ -163,7 +163,7 @@ The license text is written in plain English and is the one that counts; this su
 
 ## Support and community
 
-- **Questions and setup help:** the [help center](https://help.avdbapi.com) (start with the [install guide](https://help.avdbapi.com/documentation/installation-guide-for-javcms/)) and Telegram support [@avdbapi_support](https://t.me/avdbapi_support).
+- **Questions and setup help:** the [help center](https://help.avdbapi.com) (start with the [install guide](https://help.avdbapi.com/documentation/installation-guide-for-javcms/)), the JavCMS [Telegram group](https://t.me/+jj6McO-iYfA0MTM1) and Telegram support [@avdbapi_support](https://t.me/avdbapi_support).
 - **Bugs:** [open an issue](https://github.com/avdbapi-com/javcms/issues/new/choose) with your JavCMS, PHP, database and web server versions and what you see. Never post passwords.
 - **Security problems:** please report them privately, see [SECURITY.md](/.github/SECURITY.md).
 - **Contributing:** read [CONTRIBUTING.md](/.github/CONTRIBUTING.md) and our [Code of Conduct](/.github/CODE_OF_CONDUCT.md).

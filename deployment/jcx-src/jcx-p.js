@@ -5,7 +5,7 @@
  * See the LICENSE and NOTICE files that come with JavCMS.
  * Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
  * Live demo: https://javcms.net (adult content, 18 and over only)
- * Telegram: https://t.me/avdb_api
+ * Telegram group: https://t.me/+jj6McO-iYfA0MTM1  Support: https://t.me/avdbapi_support
  */
 /* JavCMS ads: admin preview and visual place picker (ADS-BRIEF 4.4, 4.7, 8.1). Loaded by the head snippet only when
    the browser has the preview hint cookie jcxh=1 or the URL fragment #jcx-pick=<nonce>. All data comes from the

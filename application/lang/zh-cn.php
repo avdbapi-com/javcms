@@ -7,7 +7,7 @@
  * See the LICENSE and NOTICE files that come with JavCMS.
  * Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
  * Live demo: https://javcms.net (adult content, 18 and over only)
- * Telegram: https://t.me/avdb_api
+ * Telegram group: https://t.me/+jj6McO-iYfA0MTM1  Support: https://t.me/avdbapi_support
  */
 /* * This is the global language pack. Module-specific language packs take precedence; place them in the module's lang directory, for example application/admin/lang/.
 * Global keys may be used throughout the system.
@@ -81,7 +81,8 @@ return [
     'admin/module_removed'=>'此仅限中国的模块未包含在 JAVCMS 中。',
     'admin/paysetup/china_removed'=>'JAVCMS 不包含仅限中国的支付网关（支付宝、微信支付、码支付、Zhapay）。积分、会员组和充值卡仍可正常使用。',
     'admin/footer/repo'=>'源代码 (GitHub)',
-    'admin/footer/support'=>'技术支持 (Telegram)',
+    'admin/footer/support'=>'客服支持',
+    'admin/footer/tg_group'=>'Telegram 群组',
     'install/is_ok1'=>'安装完成！',
     'install/is_ok2'=>'使用 JAVCMS 搭建您的网站',
 
@@ -2029,7 +2030,7 @@ https://example.com/images/123.jpg
     'install/select_lang'=>'Select a language pack [select lang]',
     'install/lang_tip'=>'Choose the language for the admin interface.',
     'install/user_agreement_title'=>'JavCMS 许可证',
-    'install/user_agreement'=>'JavCMS 是依据 JavCMS 社区许可证 1.0（JavCMS Community License 1.0）发布的免费、源码可用（source-available）软件。完整条款见 JavCMS 目录中的 LICENSE 文件；本页只是简短摘要，不增加任何其他条款。<br /><br />您可以免费使用 JavCMS，包括用于您自己的盈利网站（例如投放广告），也可以复制、修改和分享它。<br /><br />任何人不得出售 JavCMS：不得为副本、下载、修改版本、模板或其任何部分、安装包或付费访问收取费用，也不得为他人安装、设置、运营、支持、修改或交付 JavCMS 收取费用，不得销售预装 JavCMS 的主机套餐。分享的副本必须保持免费并使用相同的许可证，附带 LICENSE 和 NOTICE 文件，保留所有声明并标明修改；其中不得含有分享者的广告、联盟推广或推荐代码、付费链接、挖矿代码或其他为分享者赚钱的代码或链接（在您自己的网站上投放广告不受此限）。<br /><br />JavCMS 基于 MacCMS 10（Apache License 2.0），并包含来自 RamCMS（Apache License 2.0）和 ApiiCMS（MIT License）的修改。MacCMS、ThinkPHP 及其他第三方部分保留各自的许可证；LICENSE 和 NOTICE 文件列出了它们。<br /><br />JavCMS 不提供任何担保。<br /><br />源代码：https://github.com/avdbapi-com/javcms - 支持：https://t.me/avdb_api',
+    'install/user_agreement'=>'JavCMS 是依据 JavCMS 社区许可证 1.0（JavCMS Community License 1.0）发布的免费、源码可用（source-available）软件。完整条款见 JavCMS 目录中的 LICENSE 文件；本页只是简短摘要，不增加任何其他条款。<br /><br />您可以免费使用 JavCMS，包括用于您自己的盈利网站（例如投放广告），也可以复制、修改和分享它。<br /><br />任何人不得出售 JavCMS：不得为副本、下载、修改版本、模板或其任何部分、安装包或付费访问收取费用，也不得为他人安装、设置、运营、支持、修改或交付 JavCMS 收取费用，不得销售预装 JavCMS 的主机套餐。分享的副本必须保持免费并使用相同的许可证，附带 LICENSE 和 NOTICE 文件，保留所有声明并标明修改；其中不得含有分享者的广告、联盟推广或推荐代码、付费链接、挖矿代码或其他为分享者赚钱的代码或链接（在您自己的网站上投放广告不受此限）。<br /><br />JavCMS 基于 MacCMS 10（Apache License 2.0），并包含来自 RamCMS（Apache License 2.0）和 ApiiCMS（MIT License）的修改。MacCMS、ThinkPHP 及其他第三方部分保留各自的许可证；LICENSE 和 NOTICE 文件列出了它们。<br /><br />JavCMS 不提供任何担保。<br /><br />源代码：https://github.com/avdbapi-com/javcms - Telegram 群组：https://t.me/+jj6McO-iYfA0MTM1 - 客服支持：https://t.me/avdbapi_support',
 
     'install/user_agreement_agree'=>'Agree and install',
     'install/environment_title'=>'System requirements check',

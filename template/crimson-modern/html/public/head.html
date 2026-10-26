@@ -5,7 +5,7 @@ License: JavCMS Community License 1.0 - free to use, copy, change and share, not
 See the LICENSE and NOTICE files that come with JavCMS.
 Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
 Live demo: https://javcms.net (adult content, 18 and over only)
-Telegram: https://t.me/avdb_api
+Telegram group: https://t.me/+jj6McO-iYfA0MTM1  Support: https://t.me/avdbapi_support
 */}{php}$ciHasActor = false; $ciHasTopic = false; $ciHasArt = false; $ciCats = []; $ciTypeNow = intval($GLOBALS['type_id'] ?? 0); $ciTypePNow = intval($GLOBALS['type_pid'] ?? 0); $ciAid = intval($maccms['aid'] ?? 0);{/php}{maccms:actor num="1" id="ciProbeActor"}{php}$ciHasActor = true;{/php}{/maccms:actor}{maccms:topic num="1" id="ciProbeTopic"}{php}$ciHasTopic = true;{/php}{/maccms:topic}{maccms:art num="1" id="ciProbeArt"}{php}$ciHasArt = true;{/php}{/maccms:art}{maccms:type ids="parent" flag="vod" order="asc" by="sort" id="ciNavT" hide_empty="1"}{php}$ciCats[] = ['id' => intval($ciNavT['type_id']), 'url' => mac_url_type($ciNavT), 'name' => \app\common\util\TemplateText::get(htmlspecialchars_decode((string)$ciNavT['type_name'], ENT_QUOTES)), 'raw' => (string)$ciNavT['type_name'], 'on' => (intval($ciNavT['type_id']) === $ciTypeNow || intval($ciNavT['type_id']) === $ciTypePNow) ? 1 : 0];{/php}{/maccms:type}{php}
 $ciNav = [
  ['k' => 'home', 'href' => $maccms['path'], 'icon' => 'home', 'text' => \app\common\util\TemplateText::get('ui.home'), 'on' => $ciAct === 'index/index' ? 1 : 0],

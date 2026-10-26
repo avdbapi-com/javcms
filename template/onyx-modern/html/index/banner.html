@@ -5,7 +5,7 @@ License: JavCMS Community License 1.0 - free to use, copy, change and share, not
 See the LICENSE and NOTICE files that come with JavCMS.
 Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
 Live demo: https://javcms.net (adult content, 18 and over only)
-Telegram: https://t.me/avdb_api
+Telegram group: https://t.me/+jj6McO-iYfA0MTM1  Support: https://t.me/avdbapi_support
 */}{php}$oxFeat = []; $oxFeatFallback = 0; $oxLatestTime = 0; $oxTotal = (int)mac_data_count(0, 'all'); $oxToday = (int)mac_data_count(0, 'today'); $oxIdxParts = explode('%%N%%', \app\common\util\TemplateText::raw('ox.index_of', ['count' => '%%N%%']), 2); if (count($oxIdxParts) < 2) { $oxIdxParts[] = ''; } $oxIdxA = (string)$oxIdxParts[0]; $oxIdxB = (string)$oxIdxParts[1];{/php}
 {maccms:vod num="5" type="all" level="9" order="desc" by="time" paging="no" id="vo"}{php}$oxFeat[] = $vo;{/php}{/maccms:vod}
 {empty name="oxFeat"}{php}$oxFeatFallback = 1;{/php}{maccms:vod num="5" type="all" order="desc" by="hits_week" paging="no" id="vo"}{php}$oxFeat[] = $vo;{/php}{/maccms:vod}{/empty}{php}$oxFeat = \app\common\util\AvdbLanguage::heroOrder($oxFeat);{/php}

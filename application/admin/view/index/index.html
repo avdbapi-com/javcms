@@ -6,7 +6,7 @@ JavCMS Community License 1.0. The MacCMS parts stay under the Apache License 2.0
 See the LICENSE and NOTICE files that come with JavCMS.
 Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
 Live demo: https://javcms.net (adult content, 18 and over only)
-Telegram: https://t.me/avdb_api
+Telegram group: https://t.me/+jj6McO-iYfA0MTM1  Support: https://t.me/avdbapi_support
 */}{include file="../../../application/admin/view/public/head" /}
 <link rel="stylesheet" href="__STATIC__/css/admin_navigation_studio.css?v={:filemtime(ROOT_PATH . 'static/css/admin_navigation_studio.css')}">
 {php}$axS = '__STATIC__/admin/icons/admin-icons.svg?v=' . $admin_icons_v;{/php}
@@ -39,7 +39,8 @@ Telegram: https://t.me/avdb_api
                     {if condition="$shell_can_lock"}<button type="button" class="ax-menu__item" role="menuitem" data-shell-act="lock"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axS}#ai-lock"/></svg>{:lang('admin/ux/account/lock')}</button>{/if}
                     <a class="ax-menu__item studio-only-phone" role="menuitem" href="__ROOT__/" target="_blank" rel="noopener"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axS}#ai-external-link"/></svg>{:lang('admin/ux/shell/view_site')}</a>
                     <a class="ax-menu__item" role="menuitem" href="https://github.com/avdbapi-com/javcms#readme" target="_blank" rel="noopener"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axS}#ai-life-buoy"/></svg>{:lang('admin/ux/account/help')}</a>
-                    <a class="ax-menu__item" role="menuitem" href="https://t.me/avdb_api" target="_blank" rel="noopener"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axS}#ai-send"/></svg>{:lang('admin/footer/support')}</a>
+                    <a class="ax-menu__item" role="menuitem" href="https://t.me/+jj6McO-iYfA0MTM1" target="_blank" rel="noopener"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axS}#ai-send"/></svg>{:lang('admin/footer/tg_group')}</a>
+                    <a class="ax-menu__item" role="menuitem" href="https://t.me/avdbapi_support" target="_blank" rel="noopener"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axS}#ai-message-circle"/></svg>{:lang('admin/footer/support')}</a>
                     <div class="ax-menu__sep" role="separator"></div>
                     <a class="ax-menu__item" role="menuitem" href="{:url('index/logout')}"><svg class="ax-ic" aria-hidden="true" focusable="false"><use href="{$axS}#ai-log-out"/></svg>{:lang('admin/ux/account/logout')}</a>
                 </div>
@@ -122,7 +123,7 @@ Telegram: https://t.me/avdb_api
             </div>
         </div>
     </main>
-    <footer class="studio-footer"><span>{:lang('maccms_copyright')}</span><span class="studio-footer__links"><a href="https://github.com/avdbapi-com/javcms" target="_blank" rel="noopener">{:lang('admin/footer/repo')}</a><a href="https://t.me/avdb_api" target="_blank" rel="noopener">{:lang('admin/footer/support')}</a></span></footer>
+    <footer class="studio-footer"><span>{:lang('maccms_copyright')}</span><span class="studio-footer__links"><a href="https://github.com/avdbapi-com/javcms" target="_blank" rel="noopener">{:lang('admin/footer/repo')}</a><a href="https://t.me/+jj6McO-iYfA0MTM1" target="_blank" rel="noopener">{:lang('admin/footer/tg_group')}</a><a href="https://t.me/avdbapi_support" target="_blank" rel="noopener">{:lang('admin/footer/support')}</a></span></footer>
     <div id="shellLock" class="studio-lock" role="dialog" aria-modal="true" aria-labelledby="shellLockTitle" hidden>
         <form class="studio-lock__card" autocomplete="off" novalidate>
             <span class="studio-lock__icon" aria-hidden="true"><svg class="ax-ic ax-ic--lg" aria-hidden="true" focusable="false"><use href="{$axS}#ai-lock"/></svg></span>

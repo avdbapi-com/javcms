@@ -5,5 +5,5 @@ License: JavCMS Community License 1.0 - free to use, copy, change and share, not
 See the LICENSE and NOTICE files that come with JavCMS.
 Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
 Live demo: https://javcms.net (adult content, 18 and over only)
-Telegram: https://t.me/avdb_api
+Telegram group: https://t.me/+jj6McO-iYfA0MTM1  Support: https://t.me/avdbapi_support
 */}{php}$tzScene = ''; if (empty($GLOBALS['tz_scene_done'])) { $tzScene = \app\common\util\AutoIcon::scene(strpos(strtolower((string)($maccms['controller_action'] ?? '')), 'search') !== false ? 'search-empty' : 'empty-library'); if ($tzScene !== '') { $GLOBALS['tz_scene_done'] = 1; } }{/php}<div class="tz-empty{if condition="$tzScene neq ''"} tz-empty--scene{/if}">{if condition="$tzScene neq ''"}{php}echo $tzScene;{/php}{else/}<span class="tz-empty-ico" aria-hidden="true">{:\\app\\common\\util\\AutoIcon::ui('film', ['class'=>'tz-i', 'tint'=>'none'])}</span>{/if}<p>{:\\app\\common\\util\\TemplateText::get('ui.no_results_found_try_another_category_or_search')}</p><a class="tz-btn tz-btn--goldline" href="{$maccms.path}">{:\\app\\common\\util\\TemplateText::get('ui.back_to_home')}</a></div>

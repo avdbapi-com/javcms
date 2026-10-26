@@ -5,7 +5,7 @@
  * See the LICENSE and NOTICE files that come with JavCMS.
  * Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
  * Live demo: https://javcms.net (adult content, 18 and over only)
- * Telegram: https://t.me/avdb_api
+ * Telegram group: https://t.me/+jj6McO-iYfA0MTM1  Support: https://t.me/avdbapi_support
  */
 /*! Neon Nocturne (Modern) - "Rain on glass over neon bokeh" signature shader for the JavCMS FX kit (data-fx="shader", K1 hook)
  * Original GLSL ES 1.0 (JAVCMS, JavCMS Community License 1.0). Clean-room recipe (MODERN-CONCEPTS 7.6):

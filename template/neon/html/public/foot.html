@@ -5,7 +5,7 @@ License: JavCMS Community License 1.0 - free to use, copy, change and share, not
 See the LICENSE and NOTICE files that come with JavCMS.
 Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
 Live demo: https://javcms.net (adult content, 18 and over only)
-Telegram: https://t.me/avdb_api
+Telegram group: https://t.me/+jj6McO-iYfA0MTM1  Support: https://t.me/avdbapi_support
 */}{php}$nxSitemap = ''; try { $nxSitemap = \app\common\util\Sitemap::indexUrl(); } catch (\Throwable $nxSitemapError) { $nxSitemap = ''; } $nxFootLogo = trim((string)($maccms['site_logo'] ?? '')); $nxFootIco = $maccms['path_tpl'] . 'assets/img/icons/'; $nxFootSvg = $maccms['path_tpl'] . 'assets/img/neon.svg'; $nxAid = (int)($maccms['aid'] ?? 0); $nxCa = strtolower((string)($maccms['controller_action'] ?? '')); $nxFootTag = method_exists('app\common\util\TemplateSeo', 'siteTagline') ? \app\common\util\TemplateSeo::siteTagline(is_array($maccms) ? $maccms : []) : (\app\common\util\TemplateText::locale() === \app\common\util\AvdbLanguage::defaultLocale() ? trim(\app\common\util\AvdbLanguage::decodeEntities((string)($maccms['site_description'] ?? ''))) : '');{/php}
 <footer class="nx-footer">
 <div class="nx-wrap nx-footer-in">

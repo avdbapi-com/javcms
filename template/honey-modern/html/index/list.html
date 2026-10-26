@@ -5,7 +5,7 @@ License: JavCMS Community License 1.0 - free to use, copy, change and share, not
 See the LICENSE and NOTICE files that come with JavCMS.
 Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
 Live demo: https://javcms.net (adult content, 18 and over only)
-Telegram: https://t.me/avdb_api
+Telegram group: https://t.me/+jj6McO-iYfA0MTM1  Support: https://t.me/avdbapi_support
 */}{maccms:type order="asc" by="sort" ids="parent" id="ncType" key="ncTypeKey" flag="vod" length="3" hide_empty="1" not="'.intval($GLOBALS['jvPbShown'] ?? 0).'"}{include file="public/drips"}
 <section class="nc-sec" aria-labelledby="nc-sec-cat-{$ncType.type_id}" data-ai-group><div class="nc-sec-head"><span class="nc-hexbadge" aria-hidden="true">{:\\app\\common\\util\\AutoIcon::icon('category', $ncType['type_name'])}</span><div class="nc-sec-titles"><h2 class="nc-sec-title" id="nc-sec-cat-{$ncType.type_id}" data-nc-melt="view"><a href="{:mac_url_type($ncType)}">{:\\app\\common\\util\\TemplateText::get(htmlspecialchars_decode((string)$ncType['type_name'], ENT_QUOTES))}</a></h2><p class="nc-sec-cap">{:\\app\\common\\util\\TemplateText::get('nc.cap_videos', ['count'=>number_format((int)mac_data_count($ncType['type_id'],'all'))])}</p></div><a class="nc-more" href="{:mac_url_type($ncType)}">{:\\app\\common\\util\\TemplateText::get('nc.view_all')}<svg class="nc-i nc-flip" aria-hidden="true"><use href="{$ncIco}chevron-right"></use></svg></a></div>
 <div class="nc-grid" data-grid-fill data-fx="stagger" data-fx-style="drop">{maccms:vod num="10" type="'.$ncType['type_id'].'" order="desc" by="time" paging="no"}{include file="public/vodbox"}{/maccms:vod}</div></section>

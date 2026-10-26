@@ -5,7 +5,7 @@ License: JavCMS Community License 1.0 - free to use, copy, change and share, not
 See the LICENSE and NOTICE files that come with JavCMS.
 Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
 Live demo: https://javcms.net (adult content, 18 and over only)
-Telegram: https://t.me/avdb_api
+Telegram group: https://t.me/+jj6McO-iYfA0MTM1  Support: https://t.me/avdbapi_support
 */}{php}$ctIco = isset($ctIco) ? $ctIco : $maccms['path_tpl'] . 'assets/img/ct-icons.svg';
 if (!isset($ctPlain)) { $ctPlain = function ($v) { $v = trim((string)$v); for ($pI = 0; $pI < 4 && strpos($v, '&') !== false; $pI++) { $pD = html_entity_decode($v, ENT_QUOTES | ENT_HTML5, 'UTF-8'); if ($pD === $v) { break; } $v = $pD; } return trim($v); }; }
 $ctCardTitle = $ctPlain($vo['vod_display_name'] ?? ''); if ($ctCardTitle === '') { $ctCardTitle = $ctPlain(strip_tags((string)($vo['vod_name'] ?? ''))); }

@@ -5,5 +5,5 @@ License: JavCMS Community License 1.0 - free to use, copy, change and share, not
 See the LICENSE and NOTICE files that come with JavCMS.
 Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
 Live demo: https://javcms.net (adult content, 18 and over only)
-Telegram: https://t.me/avdb_api
+Telegram group: https://t.me/+jj6McO-iYfA0MTM1  Support: https://t.me/avdbapi_support
 */}{php}if (!isset($tplNoPic)) { $tplNoPic = $maccms['path_tpl'] . 'assets/img/poster.svg'; } if (!isset($tplIcons)) { $tplIcons = $maccms['path_tpl'] . 'assets/img/icons.svg'; }{/php}<section class="tz-ajax"><div class="tz-grid" data-grid-fill>{maccms:vod num="20" paging="yes" type="current" pageurl="vod/show" order="desc" by="time" id="vo"}{include file="public/vodbox"}{/maccms:vod}</div>{if condition="$__PAGING__.record_total eq 0"}{include file="public/empty"}{/if}{include file="public/paging"}</section>

@@ -5,7 +5,7 @@
  * See the LICENSE and NOTICE files that come with JavCMS.
  * Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
  * Live demo: https://javcms.net (adult content, 18 and over only)
- * Telegram: https://t.me/avdb_api
+ * Telegram group: https://t.me/+jj6McO-iYfA0MTM1  Support: https://t.me/avdbapi_support
  */
 /* JavCMS ads: fixed units, loaded by jcx.js only when one is eligible (ADS-BRIEF 5.1, 5.7, 5.9, 6, 11.4):
    U03 sticky bar (dock), U04 side rails, U06 floating corner / slide-in, U07 notification-style box,

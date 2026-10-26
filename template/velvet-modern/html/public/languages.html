@@ -5,5 +5,5 @@ License: JavCMS Community License 1.0 - free to use, copy, change and share, not
 See the LICENSE and NOTICE files that come with JavCMS.
 Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
 Live demo: https://javcms.net (adult content, 18 and over only)
-Telegram: https://t.me/avdb_api
+Telegram group: https://t.me/+jj6McO-iYfA0MTM1  Support: https://t.me/avdbapi_support
 */}{php}$galleryLanguages = \app\common\util\TemplateText::languages(); $vpLangNow = (string)($maccms['ui_lang'] ?? 'en');{/php}<details class="language-menu vp-pop vp-lang"><summary class="vp-iconbtn" title="{:\\app\\common\\util\\TemplateText::get('ui.language')}" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.language')}">{:\\app\\common\\util\\AutoIcon::ui('languages', ['class'=>'vp-i'])}<span class="vp-lang-code" aria-hidden="true">{$vpLangNow|htmlspecialchars=ENT_QUOTES}</span></summary><div class="language-links" data-lenis-prevent>{volist name="galleryLanguages" id="galleryLanguage" key="galleryLanguageIndex"}<a href="{:\\app\\common\\util\\TemplateText::languageUrl($key)}" lang="{$key|htmlspecialchars=ENT_QUOTES}" hreflang="{$key|htmlspecialchars=ENT_QUOTES}"{if condition="$key eq $vpLangNow"} aria-current="true"{/if}>{$galleryLanguage|htmlspecialchars=ENT_QUOTES}</a>{/volist}</div></details>

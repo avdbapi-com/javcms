@@ -5,5 +5,5 @@ License: JavCMS Community License 1.0 - free to use, copy, change and share, not
 See the LICENSE and NOTICE files that come with JavCMS.
 Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
 Live demo: https://javcms.net (adult content, 18 and over only)
-Telegram: https://t.me/avdb_api
+Telegram group: https://t.me/+jj6McO-iYfA0MTM1  Support: https://t.me/avdbapi_support
 */}{php}$galleryLanguages = \app\common\util\TemplateText::languages(); $jcLangNow = \app\common\util\TemplateText::locale();{/php}<details class="language-menu"><summary aria-label="{:\\app\\common\\util\\TemplateText::get('ui.language')}">{:\\app\\common\\util\\AutoIcon::ui('languages', ['i'=>11, 'class'=>'jc-lang-ico'])}<span class="jc-lang-label">{:\\app\\common\\util\\TemplateText::get('ui.language')}</span></summary><div class="language-links">{volist name="galleryLanguages" id="galleryLanguage" key="galleryLanguageIndex"}<a href="{:\\app\\common\\util\\TemplateText::languageUrl($key)}" lang="{$key|htmlspecialchars=ENT_QUOTES}" hreflang="{$key|htmlspecialchars=ENT_QUOTES}"{if condition="$key eq $jcLangNow"} aria-current="true"{/if}>{if condition="$key eq $jcLangNow"}{:\\app\\common\\util\\AutoIcon::ui('check', ['size'=>'sm'])}{/if}<span>{$galleryLanguage|htmlspecialchars=ENT_QUOTES}</span></a>{/volist}</div></details>

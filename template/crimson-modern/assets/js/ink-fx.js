@@ -5,7 +5,7 @@
  * See the LICENSE and NOTICE files that come with JavCMS.
  * Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
  * Live demo: https://javcms.net (adult content, 18 and over only)
- * Telegram: https://t.me/avdb_api
+ * Telegram group: https://t.me/+jj6McO-iYfA0MTM1  Support: https://t.me/avdbapi_support
  */
 /*! Crimson Ink (Modern) - motion layer (ES module) | JavCMS theme | original code (JavCMS Community License 1.0)
  * C3 panel slam: Motion 13.4.4 springs through inView (cards stagger 35 ms; phones: half distance; reduced motion: fade only).

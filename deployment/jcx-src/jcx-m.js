@@ -5,7 +5,7 @@
  * See the LICENSE and NOTICE files that come with JavCMS.
  * Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
  * Live demo: https://javcms.net (adult content, 18 and over only)
- * Telegram: https://t.me/avdb_api
+ * Telegram group: https://t.me/+jj6McO-iYfA0MTM1  Support: https://t.me/avdbapi_support
  */
 /* JavCMS ads: rarer formats, loaded on demand (ADS-BRIEF 5.1; split out of jcx.js / jcx-l.js in repair round 2 so
    both stay inside their 11.3 budgets, R3r2-07): the U13 recommendation widget / carousel / collection and the

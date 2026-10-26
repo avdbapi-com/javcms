@@ -5,7 +5,7 @@ License: JavCMS Community License 1.0 - free to use, copy, change and share, not
 See the LICENSE and NOTICE files that come with JavCMS.
 Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
 Live demo: https://javcms.net (adult content, 18 and over only)
-Telegram: https://t.me/avdb_api
+Telegram group: https://t.me/+jj6McO-iYfA0MTM1  Support: https://t.me/avdbapi_support
 */}
 <aside class="sidebar" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.categories')}"><div class="side-content"><p class="sidebar-heading">{:\\app\\common\\util\\AutoIcon::navIcon('categories', '', ['size'=>'sm'])}<span>{:\\app\\common\\util\\TemplateText::get('ui.browse_categories')}</span></p><ul class="list-link" data-ai-group>
 {maccms:type order="asc" by="sort" ids="parent" key="jcNavKey" hide_empty="1"}<li><a href="{:mac_url_type($vo)}" {if condition="($vo.type_id eq $GLOBALS['type_id'] || $vo.type_id eq $GLOBALS['type_pid'])"}aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::icon('category', $vo['type_name'], ['i'=>$jcNavKey])}<span class="jc-cat-name">{:\\app\\common\\util\\TemplateText::get(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)($vo['type_name'] ?? '')))}</span><span class="category-count">{:mac_data_count($vo.type_id,'all')}</span></a></li>{/maccms:type}

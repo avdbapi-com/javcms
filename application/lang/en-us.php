@@ -7,7 +7,7 @@
  * See the LICENSE and NOTICE files that come with JavCMS.
  * Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
  * Live demo: https://javcms.net (adult content, 18 and over only)
- * Telegram: https://t.me/avdb_api
+ * Telegram group: https://t.me/+jj6McO-iYfA0MTM1  Support: https://t.me/avdbapi_support
  */
 
 return [
@@ -76,7 +76,8 @@ return [
     'admin/module_removed'=>'This China-only module is not included in JAVCMS.',
     'admin/paysetup/china_removed'=>'China-only payment gateways (Alipay, WeChat Pay, Codepay, Zhapay) are not included in JAVCMS. Points, member groups and recharge cards keep working.',
     'admin/footer/repo'=>'Source code (GitHub)',
-    'admin/footer/support'=>'Support (Telegram)',
+    'admin/footer/support'=>'Support',
+    'admin/footer/tg_group'=>'Telegram group',
 
     'vod'=>'Video',
     'art'=>'Article',
@@ -1976,7 +1977,7 @@ TRUNCATE {pre}vod',
     'install/select_lang'=>'Select a language pack [select lang]',
     'install/lang_tip'=>'Choose the language for the admin interface.',
     'install/user_agreement_title'=>'JavCMS license',
-    'install/user_agreement'=>'JavCMS is free, source-available software under the JavCMS Community License 1.0. The full text is in the file LICENSE in the JavCMS folder; this page is a short summary and adds no other terms.<br /><br />You may use JavCMS free of charge, also for your own websites that earn money (for example with ads), and you may copy, change and share it.<br /><br />Nobody may sell JavCMS: no payment for copies, downloads, changed versions, themes or parts of it, installation packages or paywalled access, and no payment for installing, setting up, running, supporting, changing or handing over JavCMS for other people, or for hosting plans that come with JavCMS installed. Shared copies stay free and under the same license, with the LICENSE and NOTICE files and every notice kept and the changes marked, and they must not carry ads, affiliate or referral codes, paid links, miners or other money-making code or links of the person who shares them (ads on your own website are fine).<br /><br />JavCMS is based on MacCMS 10 (Apache License 2.0) and contains changes from RamCMS (Apache License 2.0) and ApiiCMS (MIT License). MacCMS, ThinkPHP and the other third-party parts keep their own licenses; LICENSE and NOTICE list them.<br /><br />JavCMS comes without any warranty.<br /><br />Source code: https://github.com/avdbapi-com/javcms - Support: https://t.me/avdb_api',
+    'install/user_agreement'=>'JavCMS is free, source-available software under the JavCMS Community License 1.0. The full text is in the file LICENSE in the JavCMS folder; this page is a short summary and adds no other terms.<br /><br />You may use JavCMS free of charge, also for your own websites that earn money (for example with ads), and you may copy, change and share it.<br /><br />Nobody may sell JavCMS: no payment for copies, downloads, changed versions, themes or parts of it, installation packages or paywalled access, and no payment for installing, setting up, running, supporting, changing or handing over JavCMS for other people, or for hosting plans that come with JavCMS installed. Shared copies stay free and under the same license, with the LICENSE and NOTICE files and every notice kept and the changes marked, and they must not carry ads, affiliate or referral codes, paid links, miners or other money-making code or links of the person who shares them (ads on your own website are fine).<br /><br />JavCMS is based on MacCMS 10 (Apache License 2.0) and contains changes from RamCMS (Apache License 2.0) and ApiiCMS (MIT License). MacCMS, ThinkPHP and the other third-party parts keep their own licenses; LICENSE and NOTICE list them.<br /><br />JavCMS comes without any warranty.<br /><br />Source code: https://github.com/avdbapi-com/javcms - Telegram group: https://t.me/+jj6McO-iYfA0MTM1 - Support: https://t.me/avdbapi_support',
 
     'install/user_agreement_agree'=>'Agree and install',
     'install/environment_title'=>'System requirements check',

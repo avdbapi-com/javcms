@@ -5,7 +5,7 @@ License: JavCMS Community License 1.0 - free to use, copy, change and share, not
 See the LICENSE and NOTICE files that come with JavCMS.
 Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
 Live demo: https://javcms.net (adult content, 18 and over only)
-Telegram: https://t.me/avdb_api
+Telegram group: https://t.me/+jj6McO-iYfA0MTM1  Support: https://t.me/avdbapi_support
 */}{php}$emtFeat = array(); $emtSeen = array();{/php}{maccms:vod num="5" type="all" level="9" order="desc" by="time" paging="no" id="tplF"}{php}if (!isset($emtSeen[$tplF['vod_id']])) { $emtSeen[$tplF['vod_id']] = 1; $emtFeat[] = $tplF; }{/php}{/maccms:vod}{if condition="count($emtFeat) lt 5"}{maccms:vod num="8" type="all" order="desc" by="hits_week" paging="no" id="tplG"}{php}if (count($emtFeat) < 5 && !isset($emtSeen[$tplG['vod_id']])) { $emtSeen[$tplG['vod_id']] = 1; $emtFeat[] = $tplG; }{/php}{/maccms:vod}{/if}{php}
 $emtFeat = \app\common\util\AvdbLanguage::heroOrder($emtFeat);
 $emtCh = array();

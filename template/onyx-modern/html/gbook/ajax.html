@@ -5,7 +5,7 @@ License: JavCMS Community License 1.0 - free to use, copy, change and share, not
 See the LICENSE and NOTICE files that come with JavCMS.
 Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
 Live demo: https://javcms.net (adult content, 18 and over only)
-Telegram: https://t.me/avdb_api
+Telegram group: https://t.me/+jj6McO-iYfA0MTM1  Support: https://t.me/avdbapi_support
 */}<ol class="ox-log-list">{maccms:gbook num="10" paging="yes" pageurl="gbook/index" order="desc" by="id"}<li class="ox-log-row"><p class="ox-log-line"><time class="ox-log-t" datetime="{$vo.gbook_time|date='Y-m-d H:i',###}">[{$vo.gbook_time|date='Y-m-d H:i',###}]</time> <b class="ox-log-u">{$vo.gbook_name|htmlspecialchars=ENT_QUOTES}</b> <span class="ox-log-g" aria-hidden="true">&rsaquo;</span> <span class="ox-log-x">{$vo.gbook_content|htmlspecialchars=ENT_QUOTES}</span></p>{notempty name="vo.gbook_reply"}<p class="ox-log-line ox-log-reply"><span class="ox-log-g" aria-hidden="true">&#8627;</span> <b class="ox-log-u">{:\\app\\common\\util\\TemplateText::get('ui.site_reply')}</b> <span class="ox-log-g" aria-hidden="true">&rsaquo;</span> <span class="ox-log-x">{$vo.gbook_reply|htmlspecialchars=ENT_QUOTES}</span></p>{/notempty}</li>{/maccms:gbook}</ol>
 {if condition="$__PAGING__.record_total eq 0"}<p class="ox-log-empty">{:\\app\\common\\util\\AutoIcon::ui('inbox', ['size'=>'sm','class'=>'ox-log-ai'])}<span aria-hidden="true">&gt; </span>{:\\app\\common\\util\\TemplateText::get('ui.no_messages_yet')}<span class="ox-bcaret" aria-hidden="true"></span></p>{/if}
 {include file="public/paging"}

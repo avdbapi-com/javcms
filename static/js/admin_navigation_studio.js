@@ -5,7 +5,7 @@
  * See the LICENSE and NOTICE files that come with JavCMS.
  * Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
  * Live demo: https://javcms.net (adult content, 18 and over only)
- * Telegram: https://t.me/avdb_api
+ * Telegram group: https://t.me/+jj6McO-iYfA0MTM1  Support: https://t.me/avdbapi_support
  */
 /* JavCMS admin shell: menu, search, tabs, account menu, lock screen (ADMIN-IA-BRIEF.md sections 1.2, 4.1-4.6).
    Needs: layui (element, layer), AxUX (static/js/admin_ux.js), window.AX_SHELL, AX_SHELL_LANG, AX_SHELL_INDEX (index.html).

@@ -9,7 +9,8 @@ JavCMS is based on MacCMS 10 (ThinkPHP 5.0).
 - Download: https://github.com/avdbapi-com/javcms/releases/latest (always the newest release)
 - Source code: https://github.com/avdbapi-com/javcms
 - Live demo: https://javcms.net (adult content, 18+)
-- Help (Telegram): https://t.me/avdb_api
+- Telegram group: https://t.me/+jj6McO-iYfA0MTM1
+- Support: https://t.me/avdbapi_support
 
 ## What you get
 
@@ -201,7 +202,8 @@ Step by step: [UPGRADE.md](UPGRADE.md)
 
 ## Where to get help
 
-- Telegram: https://t.me/avdb_api
+- Telegram group: https://t.me/+jj6McO-iYfA0MTM1
+- Support: https://t.me/avdbapi_support
 - GitHub: https://github.com/avdbapi-com/javcms (report bugs here)
 - AVDB API documentation: https://avdbapi.com/index.php/label/help.html
 
@@ -234,7 +236,7 @@ From release 1.2.0, JavCMS is under the **JavCMS Community License 1.0** (file `
 
 Official sources: https://github.com/avdbapi-com/javcms (source code and releases), https://javcms.net (live demo,
 adult content, 18+), https://avdbapi.com, https://xvidapi.com, https://upload18.org and the Telegram group
-https://t.me/avdb_api.
+https://t.me/+jj6McO-iYfA0MTM1 (Support: https://t.me/avdbapi_support).
 
 Download JavCMS only from its GitHub release page, https://github.com/avdbapi-com/javcms/releases. javcms.net is the
 live demo, not a download place, and copies on other websites can be old or changed. JavCMS is free: if somebody asks

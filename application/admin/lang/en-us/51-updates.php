@@ -6,7 +6,7 @@
  * See the LICENSE and NOTICE files that come with JavCMS.
  * Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
  * Live demo: https://javcms.net (adult content, 18 and over only)
- * Telegram: https://t.me/avdb_api
+ * Telegram group: https://t.me/+jj6McO-iYfA0MTM1  Support: https://t.me/avdbapi_support
  */
 // Admins & backup > Updates: one-click updates from the GitHub releases (JavCMS 1.2.1). Own part file, so other admin
 // language work never collides with it. Keys used by the page script take {name} placeholders; keys the templates fill

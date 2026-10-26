@@ -5,7 +5,7 @@ License: JavCMS Community License 1.0 - free to use, copy, change and share, not
 See the LICENSE and NOTICE files that come with JavCMS.
 Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
 Live demo: https://javcms.net (adult content, 18 and over only)
-Telegram: https://t.me/avdb_api
+Telegram group: https://t.me/+jj6McO-iYfA0MTM1  Support: https://t.me/avdbapi_support
 */}{php}$tplRailHot = array(); foreach (preg_split('/[,，]/u', (string)($maccms['search_hot'] ?? '')) as $tplRailWord) { $tplRailWord = trim(\app\common\util\AutoIcon::text($tplRailWord)); if (mb_strlen($tplRailWord) >= 2 && mb_strlen($tplRailWord) <= 30 && \app\common\util\AutoIcon::keepTag($tplRailWord) && !in_array($tplRailWord, $tplRailHot, true)) { $tplRailHot[] = $tplRailWord; } if (count($tplRailHot) >= 10) { break; } }{/php}
 <nav class="e-catrail" aria-label="{:\\app\\common\\util\\TemplateText::get('ui.browse_categories')}" data-ai-group>
   <span class="e-catrail-lbl">{:\\app\\common\\util\\AutoIcon::navIcon('categories', '', ['size'=>'sm'])}<span class="sr-only">{:\\app\\common\\util\\TemplateText::get('ui.categories')}</span></span>

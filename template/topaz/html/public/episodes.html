@@ -5,7 +5,7 @@ License: JavCMS Community License 1.0 - free to use, copy, change and share, not
 See the LICENSE and NOTICE files that come with JavCMS.
 Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
 Live demo: https://javcms.net (adult content, 18 and over only)
-Telegram: https://t.me/avdb_api
+Telegram group: https://t.me/+jj6McO-iYfA0MTM1  Support: https://t.me/avdbapi_support
 */}{if condition="$tplEpCount gt 1"}<section class="tz-panel tz-eps-panel" aria-labelledby="tz-eps-h">
   <div class="tz-panel-head"><h2 id="tz-eps-h">{:\\app\\common\\util\\TemplateText::get('topaz.episodes')}</h2></div>
   {maccms:foreach name="obj.vod_play_list" id="tplSource" key="tplSid"}<div class="tz-server"><h3>{:\\app\\common\\util\\AutoIcon::ui('monitor-play', ['class'=>'tz-i', 'tint'=>'none'])}{$tplSource.player_info.show|htmlspecialchars=ENT_QUOTES}</h3><div class="tz-eplist">{maccms:foreach name="tplSource.urls" id="tplEp" key="tplNid"}<a class="tz-ep{if condition="isset($param['sid']) && $param['sid'] eq $tplSource['sid'] && $param['nid'] eq $tplEp['nid']"} is-on{/if}" href="{:mac_url_vod_play($obj,['sid'=>$tplSource['sid'],'nid'=>$tplEp['nid']])}"{if condition="isset($param['sid']) && $param['sid'] eq $tplSource['sid'] && $param['nid'] eq $tplEp['nid']"} aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::ui('play-circle', ['class'=>'tz-i', 'tint'=>'none'])}{$tplEp.name|htmlspecialchars=ENT_QUOTES}</a>{/maccms:foreach}</div></div>{/maccms:foreach}

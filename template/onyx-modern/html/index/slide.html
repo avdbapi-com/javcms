@@ -5,7 +5,7 @@ License: JavCMS Community License 1.0 - free to use, copy, change and share, not
 See the LICENSE and NOTICE files that come with JavCMS.
 Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
 Live demo: https://javcms.net (adult content, 18 and over only)
-Telegram: https://t.me/avdb_api
+Telegram group: https://t.me/+jj6McO-iYfA0MTM1  Support: https://t.me/avdbapi_support
 */}{php}$oxCatCount = 0;{/php}{maccms:type ids="parent" flag="vod" order="asc" by="sort" id="tplCc" hide_empty="1"}{php}$oxCatCount++;{/php}{/maccms:type}
 {php}$oxBandWord = \app\common\util\TemplateText::raw('ui.categories'); $oxSecNum = '05'; $oxSecId = 'sec-cats'; $oxSecTitle = \app\common\util\TemplateText::raw('ui.categories'); $oxSecSub = \app\common\util\TemplateText::raw('ox.cat_sub', ['count' => $oxCatCount]); $oxSecUrl = mac_url('label/sort');{/php}
 {include file="public/band"}

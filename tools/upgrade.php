@@ -6,7 +6,7 @@
  * See the LICENSE and NOTICE files that come with JavCMS.
  * Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
  * Live demo: https://javcms.net (adult content, 18 and over only)
- * Telegram: https://t.me/avdb_api
+ * Telegram group: https://t.me/+jj6McO-iYfA0MTM1  Support: https://t.me/avdbapi_support
  */
 if (PHP_SAPI !== 'cli') { exit(1); }
 // Finishes an upgrade to JavCMS 1.2.0 in one command (XVID-SCALE-BRIEF 2.12 steps 2a-4). Safe to run again: every step

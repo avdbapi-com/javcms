@@ -5,7 +5,7 @@ License: JavCMS Community License 1.0 - free to use, copy, change and share, not
 See the LICENSE and NOTICE files that come with JavCMS.
 Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
 Live demo: https://javcms.net (adult content, 18 and over only)
-Telegram: https://t.me/avdb_api
+Telegram group: https://t.me/+jj6McO-iYfA0MTM1  Support: https://t.me/avdbapi_support
 */}{php}$tzSlides = $tzK; $tzSlideTitle = $tzPlain(($vo['vod_display_name'] ?? '') !== '' ? $vo['vod_display_name'] : ($vo['vod_name'] ?? '')); $tzSlideCode = \app\common\util\AvdbLanguage::displayCode($vo); $tzSlideCode = (string)preg_replace('/-(UNCENSORED-LEAK(?:ED)?|ENGLISH-SUBTITLES?)$/i', '', $tzSlideCode); if ($tzSlideCode === '' || stripos($tzSlideCode, 'avdb-') === 0 || strlen($tzSlideCode) > 24) { $tzSlideCode = ''; } $tzSlideDesc = $tzPlain($vo['vod_display_blurb'] ?? ''); if ($tzSlideDesc === '') { $tzSlideDesc = $tzPlain($vo['vod_display_content'] ?? ''); } $tzSlideDesc = mac_substring($tzSlideDesc, 220); $tzSlideHits = (int)($vo['vod_hits'] ?? 0);{/php}
     <article class="tz-slide{if condition="$tzK eq 1"} is-active{/if}" aria-roledescription="slide" aria-label="{:\\app\\common\\util\\TemplateText::get('topaz.slide_of', ['n'=>$tzK, 'total'=>6])}"{if condition="$tzK gt 1"} aria-hidden="true"{/if} data-tz-slide>
       <div class="tz-slide-media" aria-hidden="true">

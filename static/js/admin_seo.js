@@ -5,7 +5,7 @@
  * See the LICENSE and NOTICE files that come with JavCMS.
  * Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
  * Live demo: https://javcms.net (adult content, 18 and over only)
- * Telegram: https://t.me/avdb_api
+ * Telegram group: https://t.me/+jj6McO-iYfA0MTM1  Support: https://t.me/avdbapi_support
  */
 /* SEO / site settings pages (SEO-ADMIN-BRIEF A.1-A.7, E.1-E.4): Site identity cards, icon / share upload, Google
    previews, page tabs, checklist browser checks, Languages, Legal & age, Sitemap & robots.txt, IndexNow, URL warning.

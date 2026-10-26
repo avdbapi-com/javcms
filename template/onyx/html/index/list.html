@@ -5,7 +5,7 @@ License: JavCMS Community License 1.0 - free to use, copy, change and share, not
 See the LICENSE and NOTICE files that come with JavCMS.
 Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
 Live demo: https://javcms.net (adult content, 18 and over only)
-Telegram: https://t.me/avdb_api
+Telegram group: https://t.me/+jj6McO-iYfA0MTM1  Support: https://t.me/avdbapi_support
 */}{php}$tplHomeNot = (isset($tplHomeSeen) && is_array($tplHomeSeen)) ? implode(',', array_unique(array_filter(array_map('intval', $tplHomeSeen)))) : '';{/php}
 {maccms:type ids="parent" flag="vod" order="asc" by="sort" num="4" id="tplCat" key="tplCatKey" hide_empty="1" not="'.intval($GLOBALS['jvPbShown'] ?? 0).'"}
 <section class="sec sec-home" data-ai-group aria-labelledby="sec-cat-{$tplCat.type_id}">

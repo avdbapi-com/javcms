@@ -732,4 +732,4 @@ step 1: JavCMS 1.1.0 and older are not offered for download (they were never pub
 If the data itself is damaged, restore the database: Admins & backup › Backup & restore › **Restore database** tab ›
 **Restore** next to your backup (type `RESTORE` to confirm), or import your exported file in phpMyAdmin.
 
-Ask for help on Telegram: https://t.me/avdb_api . Tell us what you see and which step you were on.
+Ask for help in the Telegram group: https://t.me/+jj6McO-iYfA0MTM1 or write to Support: https://t.me/avdbapi_support . Tell us what you see and which step you were on.

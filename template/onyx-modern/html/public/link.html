@@ -5,6 +5,6 @@ License: JavCMS Community License 1.0 - free to use, copy, change and share, not
 See the LICENSE and NOTICE files that come with JavCMS.
 Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
 Live demo: https://javcms.net (adult content, 18 and over only)
-Telegram: https://t.me/avdb_api
+Telegram group: https://t.me/+jj6McO-iYfA0MTM1  Support: https://t.me/avdbapi_support
 */}{php}$oxLinks = [];{/php}{maccms:link type="all" order="desc" by="id" num="30" id="tplLink"}{php}$oxLinks[] = ['u' => (string)($tplLink['link_url'] ?? ''), 'n' => \app\common\util\AvdbLanguage::decodeEntities((string)($tplLink['link_name'] ?? ''))];{/php}{/maccms:link}
 {notempty name="oxLinks"}<nav class="ox-sec ox-links-row" aria-labelledby="ox-links-h"><h2 class="ox-label" id="ox-links-h">{:\\app\\common\\util\\TemplateText::get('ui.friendly_link')}</h2><div class="ox-brackets">{volist name="oxLinks" id="oxL"}<a href="{:mac_safe_url($oxL['u'])}" target="_blank" rel="nofollow noopener noreferrer">{$oxL.n|htmlspecialchars=ENT_QUOTES}</a>{/volist}</div></nav>{/notempty}

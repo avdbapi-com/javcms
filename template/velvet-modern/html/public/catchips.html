@@ -5,5 +5,5 @@ License: JavCMS Community License 1.0 - free to use, copy, change and share, not
 See the LICENSE and NOTICE files that come with JavCMS.
 Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
 Live demo: https://javcms.net (adult content, 18 and over only)
-Telegram: https://t.me/avdb_api
+Telegram group: https://t.me/+jj6McO-iYfA0MTM1  Support: https://t.me/avdbapi_support
 */}<nav class="vp-chips vp-catchips" data-ai-group aria-label="{:\\app\\common\\util\\TemplateText::get('ui.categories')}">{maccms:type ids="parent" flag="vod" order="asc" by="sort" id="vpChip" key="vpChipK" hide_empty="1"}<a class="vp-chip{if condition="$vpChip.type_id eq $GLOBALS['type_id'] || $vpChip.type_id eq $GLOBALS['type_pid']"} is-active{/if}" href="{:mac_url_type($vpChip)}"{if condition="$vpChip.type_id eq $GLOBALS['type_id'] || $vpChip.type_id eq $GLOBALS['type_pid']"} aria-current="page"{/if}>{:\\app\\common\\util\\AutoIcon::icon('category', $vpChip['type_name'] ?? '', ['size'=>'sm', 'i'=>$vpChipK])}{:\\app\\common\\util\\TemplateText::get(\\app\\common\\util\\AvdbLanguage::decodeEntities((string)($vpChip['type_name'] ?? '')))}</a>{/maccms:type}</nav>

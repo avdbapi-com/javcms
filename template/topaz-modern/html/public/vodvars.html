@@ -5,7 +5,7 @@ License: JavCMS Community License 1.0 - free to use, copy, change and share, not
 See the LICENSE and NOTICE files that come with JavCMS.
 Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
 Live demo: https://javcms.net (adult content, 18 and over only)
-Telegram: https://t.me/avdb_api
+Telegram group: https://t.me/+jj6McO-iYfA0MTM1  Support: https://t.me/avdbapi_support
 */}{php}
 if (!isset($tpPlain)) { $tpPlain = function ($v) { $v = (string)$v; for ($i = 0; $i < 6; $i++) { $d = html_entity_decode($v, ENT_QUOTES | ENT_HTML5, 'UTF-8'); if ($d === $v) { break; } $v = $d; } return trim($v); }; }
 $tpSplit = function ($value) { $out = []; foreach (explode(',', (string)$value) as $tpPart) { $tpPart = trim($tpPart); if ($tpPart !== '' && !in_array($tpPart, $out, true)) { $out[] = $tpPart; } } return $out; };

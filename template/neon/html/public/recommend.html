@@ -5,7 +5,7 @@ License: JavCMS Community License 1.0 - free to use, copy, change and share, not
 See the LICENSE and NOTICE files that come with JavCMS.
 Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
 Live demo: https://javcms.net (adult content, 18 and over only)
-Telegram: https://t.me/avdb_api
+Telegram group: https://t.me/+jj6McO-iYfA0MTM1  Support: https://t.me/avdbapi_support
 */}{php}$nxRecIds = []; $nxRecShown = 0; $nxRecPick = $nxPickIds('vod_score desc', 8, [intval($obj['vod_id'] ?? 0)]);{/php}
 <aside class="nx-side" aria-labelledby="nx-h-rec" data-ai-group><div class="nx-cap"><h2 class="nx-cap-title" id="nx-h-rec"><span class="nx-cap-ico">{:\\app\\common\\util\\AutoIcon::ui('thumbs-up', ['size'=>'lg', 'plate'=>true])}</span><span>{:\\app\\common\\util\\TemplateText::get('neon.recommended')}</span></h2></div>
 <div class="nx-rlist" data-grid-fill>{if condition="$nxRecPick neq ''"}{maccms:vod num="8" ids="'.$nxRecPick.'" order="desc" by="score" paging="no" id="vo"}{php}$nxRecIds[] = intval($vo['vod_id']); $nxRecShown++;{/php}{include file="public/rcard"}{/maccms:vod}{/if}{if condition="$nxRecShown lt 8"}{php}$nxRecNeed = 8 - $nxRecShown; $nxRecNot = implode(',', array_merge([intval($obj['vod_id'] ?? 0)], $nxRecIds));{/php}{maccms:vod num="'.$nxRecNeed.'" not="'.$nxRecNot.'" type="current" order="desc" by="score" paging="no" id="vo"}{php}$nxRecIds[] = intval($vo['vod_id']); $nxRecShown++;{/php}{include file="public/rcard"}{/maccms:vod}{/if}</div>

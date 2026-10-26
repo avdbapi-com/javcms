@@ -6,7 +6,7 @@
  * See the LICENSE and NOTICE files that come with JavCMS.
  * Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
  * Live demo: https://javcms.net (adult content, 18 and over only)
- * Telegram: https://t.me/avdb_api
+ * Telegram group: https://t.me/+jj6McO-iYfA0MTM1  Support: https://t.me/avdbapi_support
  */
 /*! Crimson Ink (Modern) - "Screentone Burst" WebGL shader for the FX kit host (data-fx="shader") | JavCMS theme
  * Original GLSL (JavCMS Community License 1.0, JavCMS project): radial speed-line sectors that cross-fade to a new random set 2.5x per second

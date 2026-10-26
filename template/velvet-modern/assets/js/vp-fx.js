@@ -5,7 +5,7 @@
  * See the LICENSE and NOTICE files that come with JavCMS.
  * Official sources: https://github.com/avdbapi-com/javcms https://avdbapi.com https://xvidapi.com https://upload18.org
  * Live demo: https://javcms.net (adult content, 18 and over only)
- * Telegram: https://t.me/avdb_api
+ * Telegram group: https://t.me/+jj6McO-iYfA0MTM1  Support: https://t.me/avdbapi_support
  */
 /*! Velvet Premiere (Modern) - effects layer (ES module) | original work for JavCMS (JavCMS Community License 1.0)
  * V2 following spotlight (simplex-noise wander), V3 rose-petal burst (canvas-confetti), V6 ticket-tab FLIP highlight
