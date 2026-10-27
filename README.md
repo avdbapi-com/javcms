@@ -156,7 +156,7 @@ More: [docs/MAINTENANCE.md](docs/MAINTENANCE.md)
 
 1. Create an empty database and a database user in your hosting panel.
 2. Download the newest release from https://github.com/avdbapi-com/javcms/releases/latest: in its **Assets** list,
-   click `javcms-<version>.zip` (for release 1.2.1: `javcms-1.2.1.zip`). Upload the zip to your site folder and
+   click `javcms-<version>.zip` (for release 1.2.2: `javcms-1.2.2.zip`). Upload the zip to your site folder and
    extract it there. How to check the download: [INSTALL.md](INSTALL.md), "Download JavCMS".
 3. Open `https://your-domain/install.php` and follow the steps. Choose which catalogs you will import (AVDB, xvidapi, both or later).
 4. Sign in to the admin at `https://your-domain/javcms.php`.

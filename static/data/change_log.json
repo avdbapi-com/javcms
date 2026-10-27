@@ -1,6 +1,7 @@
 {
-  "latestVersion": "1.2.1",
+  "latestVersion": "1.2.2",
   "change_log": [
+    "1.2.2: Telegram links updated: new group + support account (Telegram group https://t.me/+jj6McO-iYfA0MTM1, support https://t.me/avdbapi_support). See CHANGELOG.md.",
     "1.2.1: one-click updates from the admin (Admins & backup > Updates: signed releases from GitHub, a backup before every update, automatic rollback) and the update bridge for 1.2.0 sites. See CHANGELOG.md.",
     "1.2.0: xvidapi as a second video source (whole catalog by default, size estimate, storage target), search index, page cache and fair limits per visitor network for millions of videos, no page limits, the Speed & protection page, JAVCMS Modern as the default theme, JavCMS Community License 1.0. See CHANGELOG.md.",
     "1.1.0: 18 themes, ad system with 58 examples, SEO tools and favicon upload, admin overhaul, automatic AVDB import, faster search, the database stays small, many security fixes. See CHANGELOG.md."

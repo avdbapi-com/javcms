@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.2.2 (2026-10-26)
+
+Everything that changed since 1.2.1 (2026-10-25). Sites on 1.2.1 get this release with one click (**Admins & backup › Updates**); a site on 1.2.0 gets there once with the update bridge `javcms-update.php` from the release page. How to update by hand: [UPGRADE.md](UPGRADE.md), "Update by hand".
+
+### Telegram links updated: new group + support account
+
+- The JavCMS Telegram group has a new address: https://t.me/+jj6McO-iYfA0MTM1 . For direct help there is now a support account: https://t.me/avdbapi_support (@avdbapi_support). The old group link is gone from every file.
+- The notice comment at the top of every JavCMS file names both links ("Telegram group: ...  Support: ..."). It is an ordinary code comment and never appears in your pages; it is the reason why this update replaces almost every file of the release. If you edited release files, choose **Replace** on the Updates page (your copies go into the backup).
+- The account menu and the footer of the admin show **Telegram group** and **Support** (new language key `admin/footer/tg_group`; **Support** opens the support account).
+- The license page of the installer, README, INSTALL, UPGRADE, LICENSE and NOTICE (official sources), docs/SECURITY.md and `static/data/change_log.json` (new key `telegram_support`) name the new group and the support account.
+- Tiếng Việt: Đã cập nhật liên kết Telegram: nhóm mới (https://t.me/+jj6McO-iYfA0MTM1) + tài khoản hỗ trợ (https://t.me/avdbapi_support).
+- 简体中文：已更新 Telegram 链接：新群组（https://t.me/+jj6McO-iYfA0MTM1）+ 客服账号（https://t.me/avdbapi_support）。
+- 繁體中文：已更新 Telegram 連結：新群組（https://t.me/+jj6McO-iYfA0MTM1）+ 客服帳號（https://t.me/avdbapi_support）。
+
 ## 1.2.1 (2026-10-25)
 
 Everything that changed since 1.2.0 (2026-10-22). How to move your site to this release: [UPGRADE.md](UPGRADE.md). From this release on, JavCMS updates itself with one click; a site on 1.2.0 gets there once with the update bridge `javcms-update.php` from the release page.

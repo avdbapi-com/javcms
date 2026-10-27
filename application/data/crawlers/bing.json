@@ -1,7 +1,7 @@
 {
   "engine": "bing",
-  "fetched": 1792905807,
-  "fetched_utc": "2026-10-25T05:23:27Z",
+  "fetched": 1793057930,
+  "fetched_utc": "2026-10-26T23:38:50Z",
   "sources": ["https://www.bing.com/toolbox/bingbot.json"],
   "prefixes": [
     {"ipv4Prefix":"157.55.39.0/24"},

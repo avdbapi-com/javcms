@@ -577,9 +577,9 @@ MacCMS v2023.1000.3051 release: MacCMS application files (Apache-2.0): 272 files
   application/common/validate/User.php                  2026-10-06  [notice], comments
   application/common/validate/Vod.php                   2026-10-06  [notice], code
   application/config.php                                2026-10-14  [notice], code
-  application/database.php                              2026-10-24  config, notice restored
-  application/extra/bind.php                            2026-10-24  config
-  application/extra/maccms.php                          2026-10-24  config
+  application/database.php                              2026-10-26  config, notice restored
+  application/extra/bind.php                            2026-10-26  config
+  application/extra/maccms.php                          2026-10-26  config
   application/extra/quickmenu.php                       2024-08-08  config, as received (ApiiCMS)
   application/extra/timming.php                         2024-08-09  config
   application/extra/version.php                         2026-10-20  [notice], messages
@@ -605,7 +605,7 @@ MacCMS v2023.1000.3051 release: MacCMS application files (Apache-2.0): 272 files
   application/index/view/public/msg.html                2026-10-09  [notice], content, pass date
   application/install/controller/Index.php              2026-10-19  [notice], code
   application/install/lang/zh-cn.php                    2026-10-19  [notice], code
-  application/install/sql/install.sql                   2026-10-24  content
+  application/install/sql/install.sql                   2026-10-26  content
   application/install/view/index/foot.html              2026-10-20  [notice], content
   application/install/view/index/head.html              2026-10-09  [notice], content
   application/install/view/index/index.html             2026-10-09  [notice], content, pass date

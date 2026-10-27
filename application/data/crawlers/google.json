@@ -1,7 +1,7 @@
 {
   "engine": "google",
-  "fetched": 1792905806,
-  "fetched_utc": "2026-10-25T05:23:26Z",
+  "fetched": 1793057930,
+  "fetched_utc": "2026-10-26T23:38:50Z",
   "sources": ["https://developers.google.com/static/crawling/ipranges/common-crawlers.json","https://developers.google.com/static/crawling/ipranges/special-crawlers.json"],
   "prefixes": [
     {"ipv6Prefix":"2001:4860:4801:10::/64"},

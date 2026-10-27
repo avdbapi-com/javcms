@@ -19,7 +19,7 @@ if somebody asks you to pay for it, it is not an official download. javcms.net i
 not a download place.
 
 1. Open https://github.com/avdbapi-com/javcms/releases/latest. This address always opens the newest JavCMS release.
-2. In the **Assets** list of the release, click `javcms-<version>.zip` (for release 1.2.1: `javcms-1.2.1.zip`).
+2. In the **Assets** list of the release, click `javcms-<version>.zip` (for release 1.2.2: `javcms-1.2.2.zip`).
    Your browser saves the file. Newer releases carry their newer version number in the file names.
 3. Optional: click `javcms-<version>.zip.sha256` too. It holds one line: the SHA-256 checksum, then the file name.
 
@@ -35,9 +35,9 @@ folder with the zip. The result must be the checksum in the `.sha256` file:
 
 | Computer | Command |
 |---|---|
-| Windows (Command Prompt) | `certutil -hashfile javcms-1.2.1.zip SHA256` |
-| Mac (Terminal) | `shasum -a 256 javcms-1.2.1.zip` |
-| Linux | `sha256sum -c javcms-1.2.1.zip.sha256` (it prints `javcms-1.2.1.zip: OK`) |
+| Windows (Command Prompt) | `certutil -hashfile javcms-1.2.2.zip SHA256` |
+| Mac (Terminal) | `shasum -a 256 javcms-1.2.2.zip` |
+| Linux | `sha256sum -c javcms-1.2.2.zip.sha256` (it prints `javcms-1.2.2.zip: OK`) |
 
 If the two values differ, download the zip again. Never install a zip whose checksum does not match.
 
@@ -46,14 +46,14 @@ If the two values differ, download the zip again. Never install a zip whose chec
 
 ```
 cd /home/YOURUSER/public_html
-curl -fLO https://github.com/avdbapi-com/javcms/releases/download/v1.2.1/javcms-1.2.1.zip
-curl -fLO https://github.com/avdbapi-com/javcms/releases/download/v1.2.1/javcms-1.2.1.zip.sha256
-sha256sum -c javcms-1.2.1.zip.sha256 && unzip -q javcms-1.2.1.zip
+curl -fLO https://github.com/avdbapi-com/javcms/releases/download/v1.2.2/javcms-1.2.2.zip
+curl -fLO https://github.com/avdbapi-com/javcms/releases/download/v1.2.2/javcms-1.2.2.zip.sha256
+sha256sum -c javcms-1.2.2.zip.sha256 && unzip -q javcms-1.2.2.zip
 ```
 
-`unzip` runs only when the check prints `javcms-1.2.1.zip: OK`. No `curl` on your server? `wget` works with the same
+`unzip` runs only when the check prints `javcms-1.2.2.zip: OK`. No `curl` on your server? `wget` works with the same
 two addresses. Then go on with step 3 from point 3 and delete both downloaded files. For a newer release, write its
-version number everywhere instead of `1.2.1` (the release page shows the number).
+version number everywhere instead of `1.2.2` (the release page shows the number).
 
 Earlier releases: JavCMS 1.1.0 and older are not on GitHub and are not offered for download.
 

@@ -13,7 +13,7 @@ return array (
     'name' => 'JAVCMS',
     'copyright' => 'JAVCMS.NET',
     'url' => 'https://github.com/avdbapi-com/javcms',
-    'code' => '1.2.1',
+    'code' => '1.2.2',
     'license' => 'JavCMS Community License 1.0',
 );
 ?>
