@@ -174,7 +174,7 @@ JavCMS 1.2.0 has no updater yet. It gets the one-click updater with a single fil
 6. Type the founder password, tick the confirmation and click **Update now**. Keep the page open.
 
 When the update is done, the bridge has replaced itself with the new release's `install.php`, and the admin has the
-Updates page (opened now, `install.php` says "The update to JavCMS 1.2.2 is finished." (the newest version) with a link to the admin;
+Updates page (opened now, `install.php` says "The update to JavCMS 1.2.3 is finished." (the newest version) with a link to the admin;
 later, and for everybody else, "This site is installed"). Reloading the page during the update is fine: it shows the
 update's progress and, when it lost its key, asks for your password to continue. If the update fails, 1.2.0 stays
 exactly as it was; the bridge page says why and offers **Restore the original install.php**.
@@ -374,14 +374,14 @@ Keep the downloaded log of the run (**Download the log**) for support.
 
 ## Update by hand
 
-A manual update is always possible, for example on a host where the updater cannot run. From 1.2.0 or 1.2.1 to 1.2.2:
+A manual update is always possible, for example on a host where the updater cannot run. From 1.2.0, 1.2.1 or 1.2.2 to 1.2.3:
 
 1. Back up your database and your files (step 1 of "From 1.1.0: by hand" below).
-2. Download `javcms-1.2.2.zip` from GitHub ([INSTALL.md](INSTALL.md), "Download JavCMS") and extract it on your
+2. Download `javcms-1.2.3.zip` from GitHub ([INSTALL.md](INSTALL.md), "Download JavCMS") and extract it on your
    computer.
 3. Delete from the extracted files: `application/database.php`, `application/route.php` and every file in
-   `application/extra/` **except `version.php`** (the new `version.php` holds the version number 1.2.2 that the admin
-   and the updater read; without it your site would still call itself 1.2.0 or 1.2.1). Keep everything else: the new
+   `application/extra/` **except `version.php`** (the new `version.php` holds the version number 1.2.3 that the admin
+   and the updater read; without it your site would still call itself 1.2.0, 1.2.1 or 1.2.2). Keep everything else: the new
    `application/data/`, `upload/` and `runtime/` folders contain only new example files and empty placeholders, and
    the release has no `install.lock` and no `addons/`, so yours stay in place.
 4. Upload the rest into your site folder and replace the existing files. If you upload in parts, upload `static/`
@@ -392,6 +392,10 @@ A manual update is always possible, for example on a host where the updater cann
 6. With a terminal, run `php tools/upgrade.php` once: it adds the new setting of the visitor theme switcher (step
    "1b. Settings"); the rest of it was already done by your 1.2.0 upgrade, and it does nothing twice. Without a
    terminal nothing else is needed: a site that has not run it uses the same default.
+
+### Theme files changed in 1.2.3
+
+No theme file changes in 1.2.3 ([CHANGELOG.md](CHANGELOG.md)): an edited theme keeps working; compare your copy with the lists below only when you come from 1.2.0.
 
 ### Theme files changed in 1.2.2
 

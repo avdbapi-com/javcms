@@ -1,5 +1,22 @@
 # Changelog
 
+## 1.2.3 (2026-11-01)
+
+Everything that changed since 1.2.2 (2026-10-26). Sites on 1.2.1 or 1.2.2 get this release with one click (**Admins & backup › Updates**); a site on 1.2.0 gets there once with the update bridge `javcms-update.php` from the release page. How to update by hand: [UPGRADE.md](UPGRADE.md), "Update by hand".
+
+### Imports by id get every video
+
+- avdbapi.com and xvidapi.com answer every request with at most 100 videos per page, whatever page size is asked for. JavCMS 1.2.0 to 1.2.2 asked for up to 500 or 1,000 videos by id in one request and read only the first page of the answer. Three things were affected:
+  - **The presence check** (it finds videos the provider removed) counted 400 of every 500 checked videos as no longer listed. Nothing was hidden: the safety stop (more than 2 % or more than 5,000 videos) ended each such check with the notice "The provider no longer lists ... Nothing was hidden". The next presence check after the update clears these marks.
+  - **Importing selected videos** imported 100 of every 1,000 selected ids; the others got "Selected video was not returned by the provider."
+  - **xvidapi id windows** (the whole catalog without the snapshot files) imported at most 100 videos of every window of 500 ids.
+- JavCMS now asks for at most 100 ids per request (one provider page) and asks again for every id that a shorter page left out. xvidapi id windows are 100 ids, one request each.
+- The import estimate counts id windows of 100 videos, so it shows the real provider time of an import by id windows (6.6 million videos: about 92 hours at one request every 5 seconds, where 1.2.2 showed 18 hours).
+- The update replaces only the import code (`application/common/util/AvdbProvider.php`, `XvidClient.php`, `application/common/model/AvdbImport.php`), the version files and the docs. Themes and settings are not touched.
+- Tiếng Việt: Nhập theo ID không còn bỏ sót video: AVDB và xvidapi trả tối đa 100 video mỗi trang; từ 1.2.3 JavCMS hỏi tối đa 100 ID mỗi lần (kiểm tra video bị gỡ, nhập video đã chọn, cửa sổ ID của xvidapi).
+- 简体中文：按 ID 导入不再漏掉视频：AVDB 和 xvidapi 每页最多返回 100 个视频；1.2.3 起 JavCMS 每次最多请求 100 个 ID（下架检测、导入所选视频、xvidapi 的 ID 窗口）。
+- 繁體中文：按 ID 匯入不再漏掉影片：AVDB 與 xvidapi 每頁最多回傳 100 個影片；1.2.3 起 JavCMS 每次最多請求 100 個 ID（下架檢測、匯入所選影片、xvidapi 的 ID 視窗）。
+
 ## 1.2.2 (2026-10-26)
 
 Everything that changed since 1.2.1 (2026-10-25). Sites on 1.2.1 get this release with one click (**Admins & backup › Updates**); a site on 1.2.0 gets there once with the update bridge `javcms-update.php` from the release page. How to update by hand: [UPGRADE.md](UPGRADE.md), "Update by hand".

@@ -27,7 +27,7 @@ Under **Choose what to import**:
 
 | Choice | Videos | Database space (about) | Requests to xvidapi | Where it runs |
 |---|---|---|---|---|
-| **Whole catalog (recommended)** | 6,596,643 (all, no filters) | 12.1 GB (9.0 GB with the slim-index tool), plus room while it runs | 66 snapshot files, or 13,194 id windows (18.3 h) | this page or command line |
+| **Whole catalog (recommended)** | 6,596,643 (all, no filters) | 12.1 GB (9.0 GB with the slim-index tool), plus room while it runs | 66 snapshot files, or 65,967 id windows (91.6 h) | this page or command line |
 | Newest 10,000 videos | 10,000 | 19 MB | 10 (1 min) | this page or command line |
 | Newest 50,000 videos | 50,000 | 94 MB | 50 (4 min) | this page or command line |
 | Newest 100,000 videos | 100,000 | 188 MB | 100 (8 min) | this page or command line |
@@ -150,8 +150,8 @@ a running import before it replaces files, so the cron line can stay as it is.
   512 MB buffer pool (each 100,000 at 307-359 per second), every video once.
   The whole catalog takes **about 6 to 6.4 hours**, plus about 2 hours for the search index at the end. The test
   machine was not limited to 2 cores and the test videos had shorter texts than real ones: allow more time on a small VPS.
-- **Without the snapshot** (older xvidapi), JavCMS asks for the videos in id windows of 500: 13,194 requests at one
-  every 5 seconds = 18.3 h, so the first import takes **about 18-24 hours**.
+- **Without the snapshot** (older xvidapi), JavCMS asks for the videos in id windows of 100 (one provider page): 65,967
+  requests at one every 5 seconds = 91.6 h, so the first import takes **about 4 days**.
 
 1. On a big catalog, run the slim-index tool first (the estimate offers it).
 2. Keep **Whole catalog (recommended)** and check the estimate (videos, where it stops, times, disk).

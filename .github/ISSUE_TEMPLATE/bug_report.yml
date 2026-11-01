@@ -17,6 +17,8 @@ body:
       label: JavCMS version
       description: Shown in the Version row on the admin home page and in application/extra/version.php.
       options:
+        - "1.2.3"
+        - "1.2.2"
         - "1.2.1"
         - "1.2.0"
         - "1.1.0"

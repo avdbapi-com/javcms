@@ -22,6 +22,12 @@ class AvdbProvider implements ImportProvider
 {
     const KEY = 'avdb';
     const IDS_MAX = 1000;
+    /**
+     * Ids in one lookup request (1.2.3): avdbapi.com answers every query in pages of at most 100 rows, whatever pagesize
+     * asks for, so a lookup of more ids comes back cut (400 of 500 presence ids looked "missing"). byIds() asks in chunks
+     * of this size, and `selected` imports use it as ids_max (one request per discovery unit).
+     */
+    const IDS_PAGE = 100;
     const EXPORT_LIMIT = 1000;
 
     private $client;
@@ -61,7 +67,7 @@ class AvdbProvider implements ImportProvider
         $locales = array_values(array_diff(array_keys(AvdbClient::languages()), ['en']));
         return [
             'stable_cursor' => 'export',
-            'ids_max' => self::IDS_MAX,
+            'ids_max' => self::IDS_PAGE,
             'details_in_list' => true,
             'hours_filter' => 'h',
             'translations' => $locales,
@@ -103,14 +109,35 @@ class AvdbProvider implements ImportProvider
         return self::cut($data, isset($filters['pagesize']) ? (int)$filters['pagesize'] : self::IDS_MAX, null);
     }
 
+    /**
+     * Rows of up to IDS_MAX ids with every existing id answered: one request per IDS_PAGE ids (one provider page). When the
+     * provider answers a full page that is smaller than the ids asked for (its page size went below IDS_PAGE), the ids it
+     * did not answer are asked again in chunks of the page size it reported (AvdbClient::fetchImport: the caller chunks
+     * the remaining ids by the reported limit). 'missing' = requested ids the provider does not list.
+     */
     public function byIds(array $ids)
     {
         $ids = array_values(array_unique(array_map('intval', $ids)));
         if (!$ids || count($ids) > self::IDS_MAX) { throw new \InvalidArgumentException('Ask for 1 to ' . self::IDS_MAX . ' ids at once.'); }
-        $data = $this->call(function () use ($ids) { return $this->client->fetchImport(['ids' => $ids], 'en'); });
-        $answer = self::cut($data, count($ids), $ids);
-        $found = [];
-        foreach ($answer['list'] as $row) { $found[(int)$row['vod_id']] = true; }
+        $queue = array_chunk($ids, self::IDS_PAGE);
+        // every re-asked chunk is smaller than the one before it; the cap only stops a provider that never converges
+        $cap = count($ids) + count($queue) + 1; $requests = 0;
+        $answer = null; $rows = []; $found = []; $ignored = 0;
+        while ($queue) {
+            $chunk = array_shift($queue);
+            if (++$requests > $cap) { throw new \RuntimeException('AVDB kept answering id pages without the requested ids.'); }
+            $data = $this->call(function () use ($chunk) { return $this->client->fetchImport(['ids' => $chunk], 'en'); });
+            $part = self::cut($data, count($chunk), $chunk);
+            if ($answer === null) { $answer = $part; }
+            $ignored += (int)$part['ignored'];
+            foreach ($part['list'] as $row) { $id = (int)$row['vod_id']; if (!isset($found[$id])) { $found[$id] = true; $rows[] = $row; } }
+            $limit = (int)($data['reported_limit'] ?? $data['limit'] ?? 0);
+            if ($limit > 0 && $limit < count($chunk) && count((array)$data['list']) >= $limit) {
+                $left = array_values(array_filter($chunk, function ($id) use ($found) { return !isset($found[$id]); }));
+                if ($left) { $queue = array_merge(array_chunk($left, $limit), $queue); }
+            }
+        }
+        $answer['list'] = $rows; $answer['ignored'] = $ignored; $answer['rejected'] = []; $answer['total'] = count($rows);
         $answer['missing'] = array_values(array_filter($ids, function ($id) use ($found) { return !isset($found[$id]); }));
         return $answer;
     }

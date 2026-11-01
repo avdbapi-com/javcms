@@ -24,6 +24,12 @@ class XvidClient implements ImportProvider
     const ROWS_URL = 'https://xvidapi.com/api.php/provide1/vod/';
     const LIST_URL = 'https://xvidapi.com/api.php/provide/vod/';
     const IDS_MAX = 500;
+    /**
+     * Ids in one lookup request and in one id window (1.2.3): xvidapi.com answers every query in pages of at most 100
+     * rows, whatever pagesize asks for, so a lookup or window of more ids comes back cut (D-I2 windows of 500 kept 100
+     * rows). byIds() asks in chunks of this size; windows and `selected` imports (ids_max) use one chunk per request.
+     */
+    const IDS_PAGE = 100;
     const PAGE_ROWS = 1000;
     /** Galloping probe width (ids per probe) and the bound rule of D-I2: max(2 x reported total, 20,000,000). */
     const PROBE_IDS = 100;
@@ -130,7 +136,7 @@ class XvidClient implements ImportProvider
     {
         return [
             'stable_cursor' => 'id_windows',
-            'ids_max' => self::IDS_MAX,
+            'ids_max' => self::IDS_PAGE,
             'details_in_list' => true,
             'hours_filter' => 'h',
             'translations' => [],
@@ -513,11 +519,13 @@ class XvidClient implements ImportProvider
         return self::validateAnswer($data, $size ?? self::PAGE_ROWS);
     }
 
-    /** Detail rows for <= 500 ids (D-I2 window request). Missing ids are gaps or hidden videos, never errors. */
+    /**
+     * Detail rows for <= 500 ids, every existing id answered (one request per IDS_PAGE ids, lookup()). Missing ids are gaps
+     * or hidden videos, never errors.
+     */
     public function byIds(array $ids)
     {
-        $ids = self::idList($ids, self::IDS_MAX);
-        return $this->idsAnswer($ids, $this->request(self::idsUrl($ids)));
+        return $this->lookup(self::idList($ids, self::IDS_MAX));
     }
 
     private static function idsUrl(array $ids)
@@ -525,11 +533,33 @@ class XvidClient implements ImportProvider
         return self::ROWS_URL . '?' . http_build_query(['ac' => 'detail', 'locale' => 'en'], '', '&', PHP_QUERY_RFC3986) . '&ids=' . implode(',', $ids);
     }
 
-    private function idsAnswer(array $ids, $data)
+    /**
+     * Complete ids answer: one request per IDS_PAGE ids. When the provider answers a full page that is smaller than the ids
+     * asked for (its page size went below IDS_PAGE), the ids it did not answer are asked again in chunks of the page size it
+     * reported. $first = the answer already received for the first chunk (a collected prefetch). Rows keep request order;
+     * 'missing' = requested ids without a valid row.
+     */
+    private function lookup(array $ids, $first = null)
     {
-        $answer = self::validateAnswer($data, count($ids), $ids);
-        $found = [];
-        foreach ($answer['list'] as $row) { $found[(int)$row['vod_id']] = true; }
+        $queue = array_chunk($ids, self::IDS_PAGE);
+        // every re-asked chunk is smaller than the one before it; the cap only stops a provider that never converges
+        $cap = count($ids) + count($queue) + 1; $requests = 0;
+        $answer = null; $rows = []; $found = []; $rejected = []; $ignored = 0;
+        while ($queue) {
+            $chunk = array_shift($queue);
+            if (++$requests > $cap) { throw new ProviderHttpException('xvidapi kept answering id pages without the requested ids.', ProviderHttpException::MALFORMED, 200, 0); }
+            if ($first !== null) { $data = $first; $first = null; } else { $data = $this->request(self::idsUrl($chunk)); }
+            $part = self::validateAnswer($data, count($chunk), $chunk);
+            if ($answer === null) { $answer = $part; }
+            $ignored += (int)$part['ignored']; $rejected += $part['rejected'];
+            foreach ($part['list'] as $row) { $id = (int)$row['vod_id']; if (!isset($found[$id])) { $found[$id] = true; $rows[] = $row; } }
+            $limit = (int)$part['limit'];
+            if ($limit > 0 && $limit < count($chunk) && count($data['list']) >= $limit) {
+                $left = array_values(array_filter($chunk, function ($id) use ($found, $rejected) { return !isset($found[$id]) && !isset($rejected[$id]); }));
+                if ($left) { $queue = array_merge(array_chunk($left, $limit), $queue); }
+            }
+        }
+        $answer['list'] = $rows; $answer['rejected'] = $rejected; $answer['ignored'] = $ignored; $answer['total'] = count($rows);
         $answer['missing'] = array_values(array_filter($ids, function ($id) use ($found) { return !isset($found[$id]); }));
         return $answer;
     }
@@ -545,7 +575,7 @@ class XvidClient implements ImportProvider
     {
         $key = (int)$cursor . ':' . (int)$upper;
         if ($this->prefetch) { return $this->prefetch['key'] === $key; }
-        $w = self::window($cursor, $upper, self::IDS_MAX);
+        $w = self::window($cursor, $upper, self::IDS_PAGE);
         if ($this->pacer && !$this->pacer->tryAcquire()) { return false; }
         $ids = range($w['high'], $w['low']);
         $this->prefetch = ['key' => $key, 'ids' => $ids, 'handle' => $this->http->start(self::idsUrl($ids))];
@@ -562,10 +592,10 @@ class XvidClient implements ImportProvider
     /** Drop a prefetched request that will not be collected (end of a run). */
     public function abandonPrefetch() { $this->prefetch = null; $this->http->abandon(); }
 
-    /** One id window walking down from $cursor (0 = start at $upper). */
+    /** One id window of IDS_PAGE ids (one provider page) walking down from $cursor (0 = start at $upper). */
     public function cursorPage($cursor, $upper)
     {
-        $w = self::window($cursor, $upper, self::IDS_MAX);
+        $w = self::window($cursor, $upper, self::IDS_PAGE);
         $key = (int)$cursor . ':' . (int)$upper;
         if ($this->prefetch && $this->prefetch['key'] === $key) {
             $p = $this->prefetch; $this->prefetch = null;
@@ -573,7 +603,7 @@ class XvidClient implements ImportProvider
             try { $data = $this->http->finishJson($p['handle'], '1', $meta); }
             catch (\Throwable $e) { if ($this->pacer) { $this->pacer->failure($e); } throw $e; }
             if ($this->pacer) { $this->pacer->markSent($meta['sent_at']); $this->pacer->success((int)$meta['ms'], (int)$meta['status']); }
-            $answer = $this->idsAnswer($p['ids'], $data);
+            $answer = $this->lookup($p['ids'], $data);
         } else {
             if ($this->prefetch) { $this->abandonPrefetch(); }
             $answer = $this->byIds(range($w['high'], $w['low']));

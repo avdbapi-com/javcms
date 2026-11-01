@@ -2061,7 +2061,7 @@ class AvdbImport
     }
     /**
      * Discovery of the 1.2.0 scopes. selected: byIds chunks of ids_max. recent <= 100,000: pages of 1,000 newest first
-     * (D-I3); recent above 100,000 and windows: id windows of 500 walking down from the upper id found once per run by
+     * (D-I3); recent above 100,000 and windows: id windows of one provider page (100 ids, 1.2.3) walking down from the upper id found once per run by
      * galloping (D-I2); category: `t=` pages per chosen category (web: first 50,000 of the category); incremental:
      * recent(h) pages until a short page (D-I7). The job stops at estimate x 1.2 videos (se-R11b).
      */
@@ -2394,7 +2394,7 @@ class AvdbImport
         }
         if ($s['phase']==='range') {
             // the shard could not be used (sha mismatch twice, gone without a new manifest): its id window through the
-            // keyset export API (fixed upper id, rows < cursor), else id windows of 500
+            // keyset export API (fixed upper id, rows < cursor), else id windows (XvidClient::IDS_PAGE ids, one provider page)
             $lo=(int)$sh['lo']; $hi=(int)$sh['hi'];
             if (empty($s['k_off']) && method_exists($p,'exportPage')) {
                 try {

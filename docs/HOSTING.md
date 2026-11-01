@@ -203,7 +203,7 @@ A normal VPS disk reads faster than the test disk, so your pages are usually at 
 | category page 1 | 0.12-0.2 s | |
 | video page and watch page | 0.05-0.23 s (PHP 8) | 0.15-0.44 s |
 | cached pages per second | 1,100-1,880 (2 cores, PHP 8) | |
-| import, command line | with the xvidapi snapshot: 285-359 new videos per second for each 100,000 (1,500,000 measured; test machine not limited to 2 cores), about 6 to 6.4 hours for 6.6 million; with id windows the provider's pace of one request every 5 seconds makes it about 18 hours (the importer alone on 2 cores: about 425 new videos per second, 2,440 per second for unchanged videos, about 4.3 hours for 6.6 million) | |
+| import, command line | with the xvidapi snapshot: 285-359 new videos per second for each 100,000 (1,500,000 measured; test machine not limited to 2 cores), about 6 to 6.4 hours for 6.6 million; with id windows (100 videos per request since 1.2.3) the provider's pace of one request every 5 seconds makes it about 92 hours (the importer alone on 2 cores: about 425 new videos per second, 2,440 per second for unchanged videos, about 4.3 hours for 6.6 million) | |
 | rebuild of the search index | 2 hours for 7.9 million videos (MySQL 8.0), about 3 hours on MariaDB 10.6 | |
 | upgrade 1.1.0 to 1.2.0 | | 28-52 s for 524,000 AVDB videos with 16 languages |
 | the whole `php tools/upgrade.php` (with the search index backfill, sitemap files and deep-page maps) | about 16-17 min for 525,000 AVDB videos with 16 languages (search index about 13 min, sitemap files 2 min); `--no-search-backfill` / `--no-deep-maps` leave those parts for later | |
